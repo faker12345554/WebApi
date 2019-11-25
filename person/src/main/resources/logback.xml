@@ -1,0 +1,330 @@
+<configuration>
+	<!-- 每个logger都关联到logger上下文，默认上下文名称为“default”,用于区分不同应用程序的记录。一旦设置，不能修改 -->
+	<contextName>bailout</contextName>
+    <!--配置常量，在后面的配置中使用 -->
+    <property name="PROJECT_NAME" value="bailout" />
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
+    <property name="LOG_HOME" value="/app/log/${PROJECT_NAME}" />
+    <!--定义日志输出格式 
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{ip}] [%thread] %-5level %logger{60} - %msg%n" />-->	
+    <property name="LOG_PATTERN" value="[%-5p] - %d{yyyy-MM-dd HH:mm:ss,SSS} - %msg%n" />
+    <!-- 定义日志输出字符集 -->
+    <property name="LOG_CHARSET" value="UTF-8" />
+    <!-- <include resource="org/springframework/boot/logging/logback/base.xml"/> -->
+
+    <!-- 控制台输出 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>${LOG_CHARSET}</charset>
+        </encoder>
+    </appender>
+    
+    <!-- 全量日志 -->
+    <appender name="PROJECT-COMMON" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${PROJECT_NAME}-common.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>${LOG_CHARSET}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-common_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+    
+    <!-- 错误日志 -->
+    <appender name="PROJECT-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${PROJECT_NAME}-error.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>${LOG_CHARSET}</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-error_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+    
+	<!-- 业务日志 -->
+    <appender name="PROJECT-BIZ" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${PROJECT_NAME}-biz.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>${LOG_CHARSET}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-biz_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+    
+    <!-- 持久层日志 -->
+    <appender name="PROJECT-DAL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${PROJECT_NAME}-dal.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>${LOG_CHARSET}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-dal_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+    
+    <!-- 调用dubbo日志 -->
+    <appender name="PROJECT-INTEG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${PROJECT_NAME}-integ.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>${LOG_CHARSET}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-integ_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+    
+	<appender name="PROJECT-SHIRO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${PROJECT_NAME}-shiro.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>${LOG_CHARSET}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-shiro_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="PROJECT-CAS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${PROJECT_NAME}-cas.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>${LOG_CHARSET}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-cas_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="PROJECT-MYBATIS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${PROJECT_NAME}-mybatis.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>${LOG_CHARSET}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-mybatis_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="PROJECT-DUBBO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${PROJECT_NAME}-dubbo.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>${LOG_CHARSET}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-dubbo_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="PROJECT-APACHECOMMON" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${PROJECT_NAME}-apachecommon.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>${LOG_CHARSET}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-apachecommon_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="PROJECT-ZOOKEEPER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${PROJECT_NAME}-zookeeper.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>${LOG_CHARSET}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-zookeeper_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="PROJECT-SPRING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${PROJECT_NAME}-spring.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>${LOG_CHARSET}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-spring_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="PROJECT-QUARTZ" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${PROJECT_NAME}-quartz.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>${LOG_CHARSET}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-quartz_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+    
+    <appender name="PROJECT-APACHEHTTP" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${PROJECT_NAME}-apachehttp.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>${LOG_CHARSET}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-apachehttp_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+    
+    <appender name="PROJECT-OTHER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${PROJECT_NAME}-other.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>${LOG_CHARSET}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-other_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+	<!-- 为logstash输出的JSON格式的Appender -->
+    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>192.168.12.106:5044</destination>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" />
+        <keepAliveDuration>5 minutes</keepAliveDuration>
+        <!-- 日志输出编码 
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <pattern>
+                    <pattern>
+                        {
+	                        "severity": "%level",
+	                        "service": "${springAppName:-}",
+	                        "trace": "%X{X-B3-TraceId:-}",
+	                        "span": "%X{X-B3-SpanId:-}",
+	                        "exportable": "%X{X-Span-Export:-}",
+	                        "pid": "${PID:-}",
+	                        "thread": "%thread",
+	                        "class": "%logger{40}",
+	                        "rest": "%message"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+        -->
+    </appender>
+    
+	<!-- （1）root中只配置控制台日志，其他所有的日志把additivity设置为true都打到控制台，方便开发阶段定位问题。 
+			 addtivity:是否向上级loger（root）传递打印信息。默认是true
+	-->
+    <!-- （2）第三方框架的日志抽取到单独的文件中，并且级别为ERROR。 -->
+    <!-- root:也是<loger>元素，但是它是根loger。只有一个level属性，应为已经被命名为"root",默认为DEBUG -->
+    <!-- 说明：为“INFO”及大于“INFO”的日志信息打印输出 -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="PROJECT-COMMON" />
+        <appender-ref ref="PROJECT-ERROR" />
+    </root>
+    
+    <!-- 项目自己的日志：logger用来设置某一个包或者具体的某一个类的日志打印级别、以及指定<appender>。< -->
+    <!-- 业务日志 -->
+    <logger name="com.donwait.controller" level="INFO" additivity="true">
+        <appender-ref ref="PROJECT-BIZ" />
+        <appender-ref ref="PROJECT-ERROR" />
+        <appender-ref ref="logstash" />
+    </logger>
+
+    <!-- 其他开源框架的日志不打印到PROJECT-COMMON，但错误级别的会打印到PROJECT-ERROR -->
+    <!-- shiro日志 -->
+    <logger name="org.apache.shiro" level="INFO" additivity="false">
+        <appender-ref ref="PROJECT-SHIRO" />
+        <appender-ref ref="PROJECT-ERROR" />
+    </logger>
+    <!-- jasig.cas的日志，error级别 -->
+    <logger name="org.jasig.cas" level="INFO" additivity="false">
+        <appender-ref ref="PROJECT-CAS" />
+        <appender-ref ref="PROJECT-ERROR" />
+    </logger>
+    <!-- mybatis的日志 -->
+    <logger name="org.mybatis" level="debug" additivity="false">
+        <appender-ref ref="PROJECT-MYBATIS" />
+        <appender-ref ref="PROJECT-ERROR" />
+    </logger>
+    <!-- zookeeper的日志，因为会比较多所以是error级别 -->
+    <logger name="org.apache.zookeeper" level="debug" additivity="false">
+        <appender-ref ref="PROJECT-ZOOKEEPER" />
+        <appender-ref ref="PROJECT-ERROR" />
+    </logger>
+    <logger name="org.I0Itec.zkclient" level="debug" additivity="false">
+        <appender-ref ref="PROJECT-ZOOKEEPER" />
+        <appender-ref ref="PROJECT-ERROR" />
+    </logger>
+    <!-- dubbo的日志，error级别 -->
+    <logger name="com.alibaba.dubbo" level="debug" additivity="false">
+        <appender-ref ref="PROJECT-DUBBO" />
+        <appender-ref ref="PROJECT-ERROR" />
+    </logger>
+    <!-- apache-common的日志，error级别 -->
+    <logger name="org.apache.commons" level="debug" additivity="false">
+        <appender-ref ref="PROJECT-APACHECOMMON" />
+        <appender-ref ref="PROJECT-ERROR" />
+    </logger>
+    <!-- spring的日志，error级别 -->
+    <logger name="org.springframework" level="debug" additivity="false">
+        <appender-ref ref="PROJECT-SPRING" />
+        <appender-ref ref="PROJECT-ERROR" />
+    </logger>
+    <!-- quartz的日志，error级别 -->
+    <logger name="org.quartz" level="debug" additivity="false">
+        <appender-ref ref="PROJECT-QUARTZ" />
+        <appender-ref ref="PROJECT-ERROR" />
+    </logger>
+    <logger name="org.apache.http" level="debug" additivity="false">
+        <appender-ref ref="PROJECT-APACHEHTTP" />
+        <appender-ref ref="PROJECT-ERROR" />
+    </logger>
+    <logger name="com.baidu.disconf" level="info" additivity="false">
+        <appender-ref ref="PROJECT-COMMON" />
+        <appender-ref ref="PROJECT-ERROR" />
+    </logger>
+</configuration>
