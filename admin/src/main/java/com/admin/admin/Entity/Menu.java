@@ -77,8 +77,28 @@ public class Menu {
         this.order_id = order_id;
     }
 
+    public boolean isAffix() {
+        return affix;
+    }
+
+    public int getTop_id() {
+        return Top_id;
+    }
+
+    public void setTop_id(int top_id) {
+        Top_id = top_id;
+    }
+
     public boolean isStatus() {
         return status;
+    }
+
+    public String getComponent() {
+        return component;
+    }
+
+    public void setComponent(String component) {
+        this.component = component;
     }
 
     public void setStatus(boolean status) {
@@ -89,5 +109,7 @@ public class Menu {
     private boolean affix;
     private boolean hidden;
     private int order_id;
+    private int Top_id;
     private boolean status;
+    private String component;
 }
