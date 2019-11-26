@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 @RequestMapping("/UserRole")
@@ -46,6 +47,7 @@ public class UserRoleController {
     public ResponseResult<Menu> GetList(@RequestParam(required = false) int UserId,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
+        List<Menu> MenuList=userRoleService.GetList(UserId);
         return result.setData(userRoleService.GetList(UserId));
     }
 
