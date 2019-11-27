@@ -82,11 +82,12 @@ public class Menu {
     }
 
     public int getTop_id() {
-        return Top_id;
+        return top_id;
     }
 
-    public void setTop_id(int top_id) {
-        Top_id = top_id;
+    public Menu setTop_id(int top_id) {
+        this.top_id = top_id;
+        return this;
     }
 
     public boolean isStatus() {
@@ -109,7 +110,7 @@ public class Menu {
     private boolean affix;
     private boolean hidden;
     private int order_id;
-    private int Top_id;
+    private int top_id;
     private boolean status;
     private String component;
 }

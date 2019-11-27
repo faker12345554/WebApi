@@ -2,9 +2,9 @@ package com.person.person.Personnel.Controller;
 
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
-import com.person.person.Personnel.Entity.Guaranteeinformation;
 import com.person.person.Personnel.Entity.Personinformation;
 import com.person.person.Personnel.Service.PersoinfoService;
+import com.person.person.model.ParamterModel;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,25 +22,25 @@ public class PersonController {
     private ResponseResult result=new ResponseResult();
 
     //新增
-    @PostMapping("/AddPersion")
-    public ResponseResult AddPersion(@RequestBody(required = false) Personinformation personinformation,HttpServletResponse response){
+    @PostMapping("/Persons") //另外不要这种写法，你很难调试的
+    public ResponseResult AddPersion(@RequestBody Personinformation personinformation){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(persoinfoService.AddPersion(personinformation));
+        return result.setData(persoinfoService.Addpersion(personinformation));
     }
     //修改
     @PostMapping("/UpdatePersion")
     public ResponseResult UpdatePersion(@RequestBody(required = false) Personinformation personinformation, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(persoinfoService.UpdatePersion(personinformation));
+        return result.setData(persoinfoService.Updatepersion(personinformation));
     }
     //删除
-    @GetMapping("/DelPersion")
-    public ResponseResult DelPersion(@RequestParam(required = false) int id,@RequestParam(required = false) boolean flag,HttpServletResponse response){
+    @PostMapping("/DelPersion")
+    public ResponseResult DelPersion(@RequestBody(required = false) ParamterModel paramterModel,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(persoinfoService.DelPersion(id, flag));
+        return result.setData(persoinfoService.Delpersion(paramterModel));
     }
 
     //获取
@@ -48,6 +48,6 @@ public class PersonController {
     public ResponseResult GetPersoin(@RequestParam(required = false) int id,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return  result.setData(persoinfoService.GetPersoin(id));
+        return  result.setData(persoinfoService.Getpersoin(id));
     }
 }

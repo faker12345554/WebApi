@@ -48,16 +48,16 @@ public class UserController {
         return result.setData(userService.GetUser(id));
     }
     //新增用户
-    @PostMapping("/AddUser")
-    public ResponseResult AddUser(@RequestBody(required = false) User user, HttpServletResponse response){
+    @PostMapping("/Add")
+    public ResponseResult AddUser(@RequestBody User user, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(userService.AddUser(user));
     }
 
     //修改
-    @PostMapping("/UpdateUser")
-    public ResponseResult UpdateUser(@RequestBody(required = false) User user, HttpServletResponse response){
+    @PostMapping("/Update")
+    public ResponseResult UpdateUser(@RequestBody User user, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(userService.UpdateUser(user));
