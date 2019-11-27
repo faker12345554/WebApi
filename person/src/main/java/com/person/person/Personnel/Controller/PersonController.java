@@ -24,6 +24,8 @@ public class PersonController {
     //新增
     @PostMapping("/Persons") //另外不要这种写法，你很难调试的
     public ResponseResult AddPersion(@RequestBody Personinformation personinformation){
+        // 所以说我不太清楚是因为什么原因你这变成小写的参数才可以接收，你的电脑好卡啊，打字都打不了。。。。。
+        System.out.println(personinformation.getAge());
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(persoinfoService.Addpersion(personinformation));

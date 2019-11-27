@@ -1,5 +1,5 @@
 server:
-  port: 10086
+  port: 8081
 
 spring:
   datasource:
@@ -7,19 +7,9 @@ spring:
     url: jdbc:postgresql://192.168.10.88:5432/legal
     username: postgres
     password: 123456
-  http:
-    multipart:
-      maxRequestSize: 100Mb
-      max-file-size: 100Mb
 
 swagger:
   enabled: true
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-
-
-
-
-
-debug: true

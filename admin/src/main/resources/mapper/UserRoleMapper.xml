@@ -11,7 +11,7 @@
     </update>
 
     <update id="DelUserRole" parameterType="com.admin.model.ParamterModel">
-        update t_userrole set status=#{status} where role_id=#{role_id}
+        update t_userrole set status=#{flag} where role_id=#{id}
     </update>
     <select id="GetList" resultType="com.admin.admin.Entity.Menu"  parameterType="int" >
         select M.* from t_user as U

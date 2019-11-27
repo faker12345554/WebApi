@@ -63,8 +63,8 @@ public class UserController {
         return result.setData(userService.UpdateUser(user));
     }
     //删除
-    @GetMapping("/DelUser")
-    public ResponseResult DelUser(@RequestParam(required = false) ParamterModel Paramter, HttpServletResponse response){
+    @PostMapping("/DelUser")
+    public ResponseResult DelUser(@RequestBody(required = false) ParamterModel Paramter, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(userService.DelUser(Paramter));

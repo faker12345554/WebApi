@@ -3,9 +3,27 @@ package com.admin.admin.Entity;
 public class User {
     private int id;
     private String account_name;
-
     private String password;
+
+    private int permission_id;
+    private int createid;
+    private String createname;
+    private String areacode;
+    private String phone;
+    private boolean status;
+
+    public String getAccount_name() {
+        return account_name;
+    }
+
+    public User setAccount_name(String account_name) {
+        this.account_name = account_name;
+        return this;
+    }
+
     private String alias_name;
+
+
 
     public int getId() {
         return id;
@@ -15,13 +33,7 @@ public class User {
         this.id = id;
     }
 
-    public String getAccount_name() {
-        return account_name;
-    }
 
-    public void setAccount_name(String account_name) {
-        this.account_name = account_name;
-    }
 
     public String getPassword() {
         return password;
@@ -35,16 +47,26 @@ public class User {
         return alias_name;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public User setPhone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
     public void setAlias_name(String alias_name) {
         this.alias_name = alias_name;
     }
 
-    public String getPermission_id() {
+    public int getPermission_id() {
         return permission_id;
     }
 
-    public void setPermission_id(String permission_id) {
+    public User setPermission_id(int permission_id) {
         this.permission_id = permission_id;
+        return this;
     }
 
     public int getCreateid() {
@@ -79,9 +101,5 @@ public class User {
         this.status = status;
     }
 
-    private String permission_id;
-    private int createid;
-    private String createname;
-    private String areacode;
-    private boolean status;
+
 }

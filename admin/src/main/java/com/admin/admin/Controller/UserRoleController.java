@@ -36,8 +36,8 @@ public class UserRoleController {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(userRoleService.UpdateUserRole(userRole));
 }
-    @GetMapping("/DelUserRole")
-    public ResponseResult DelUserRole(@RequestParam(required = false) ParamterModel Paramter, HttpServletResponse response){
+    @PostMapping("/DelUserRole")
+    public ResponseResult DelUserRole(@RequestBody(required = false) ParamterModel Paramter, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(userRoleService.DelUserRole(Paramter));

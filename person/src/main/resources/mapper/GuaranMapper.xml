@@ -10,8 +10,8 @@
         update t_guaranteeinformation set guarantee_name=#{guarantee_name},Money=#{Money},Card=#{Card},Contact=#{Contact},Workunit=#{Workunit},
     </update>
 
-    <update id="DelGuara" parameterType="int">
-        update t_guaranteeinformation set status=#{status} where id=#{id}
+    <update id="DelGuara" parameterType="com.person.person.model.ParamterModel">
+        update t_guaranteeinformation set status=#{flag} where id=#{id}
     </update>
 
     <select id="GetGuara" parameterType="int" resultType="com.person.person.Personnel.Entity.Guaranteeinformation">

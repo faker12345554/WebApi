@@ -11,11 +11,11 @@ import java.util.List;
 public interface UserPermissionGroupDao {
 
     //新增
-    int AddUserGroup(@Param("userGroup") UserPermissionGroup userGroup);
+    int AddUserGroup( UserPermissionGroup userGroup);
     //修改
-    int UpdateGroup(@Param("userGroup")UserPermissionGroup  userGroup);
+    int UpdateGroup(UserPermissionGroup  userGroup);
     //删除
-    int DelGroup(@Param("Paramter") ParamterModel Paramter);
+    int DelGroup(ParamterModel Paramter);
 
     //获取
     UserPermissionGroup GetGroup(@Param("id") int id);
