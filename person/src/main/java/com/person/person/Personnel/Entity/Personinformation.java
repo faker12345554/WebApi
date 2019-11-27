@@ -6,9 +6,9 @@ public class Personinformation {
     private int  personid;
     private String person_name;
     private String gender;
-    private int Age;
-    private Date Birthdate;
-    private String Card;
+    private int age;
+    private Date birthdate;
+    private String card;
 
     public int getPersonid() {
         return personid;
@@ -35,27 +35,27 @@ public class Personinformation {
     }
 
     public int getAge() {
-        return Age;
+        return age;
     }
 
     public void setAge(int age) {
-        Age = age;
+        this.age = age;
     }
 
     public Date getBirthdate() {
-        return Birthdate;
+        return birthdate;
     }
 
     public void setBirthdate(Date birthdate) {
-        Birthdate = birthdate;
+        this.birthdate = birthdate;
     }
 
     public String getCard() {
-        return Card;
+        return card;
     }
 
     public void setCard(String card) {
-        Card = card;
+        this.card = card;
     }
 
     public String getWorkunit() {

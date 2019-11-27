@@ -3,10 +3,10 @@ package com.person.person.Personnel.Entity;
 public class Guaranteeinformation {
     private int id;
     private String guarantee_name;
-    private int Money;
-    private String Card;
-    private String Contact;
-    private String Workunit;
+    private int money;
+    private String card;
+    private String contact;
+    private String workunit;
 
     public int getId() {
         return id;
@@ -25,35 +25,35 @@ public class Guaranteeinformation {
     }
 
     public int getMoney() {
-        return Money;
+        return money;
     }
 
     public void setMoney(int money) {
-        Money = money;
+        this.money = money;
     }
 
     public String getCard() {
-        return Card;
+        return card;
     }
 
     public void setCard(String card) {
-        Card = card;
+        this.card = card;
     }
 
     public String getContact() {
-        return Contact;
+        return contact;
     }
 
     public void setContact(String contact) {
-        Contact = contact;
+        this.contact = contact;
     }
 
     public String getWorkunit() {
-        return Workunit;
+        return workunit;
     }
 
     public void setWorkunit(String workunit) {
-        Workunit = workunit;
+        this.workunit = workunit;
     }
 
     public String getAddress() {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.person.person.Personnel.Dao.LeaveDao">
+    <select id="GetLeave" parameterType="int" resultType="com.person.person.Personnel.Entity.Leaveinformation">
+        select * from t_leave where id=#{person_id}
+    </select>
+    <update id="UpdateLeave" parameterType="com.person.person.Personnel.Entity.Leaveinformation">
+        update t_leave set leaveorder=#{leaveorder},reason=#{reason},leavedestination=#{leavedestination},starttimestamp=#{starttimestamp},endtimestamp=#{endtimestamp}
+    </update>
+</mapper>
