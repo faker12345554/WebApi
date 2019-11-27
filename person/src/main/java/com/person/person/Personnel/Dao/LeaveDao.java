@@ -13,6 +13,6 @@ public interface LeaveDao {
     // 我觉得不应该指定名称，mybatis读取不到你的参数 它这里不是一样的嘛   因为你直接全额限定名的路径了com.person.person.Personnel.Entity.Leaveinformation
     int UpdateLeave( Leaveinformation leaveinformation);
 
-    int Addauditor(AuditorInformation auditorInformation);
+    int Addauditor( AuditorInformation auditorInformation);
 
 }

@@ -17,10 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 public class AddressController {
     @Autowired
     private AddressService addressService;
-    private ResponseResult result= new ResponseResult();
+    private ResponseResult result = new ResponseResult();
 
     @PostMapping("/Addlocation")
-    public ResponseResult Addlocation(@RequestBody(required = false) AddressInformation addressInformation, HttpServletResponse response){
+    public ResponseResult Addlocation(@RequestBody(required = false) AddressInformation addressInformation, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(addressService.Addlocation(addressInformation));

@@ -8,4 +8,7 @@
     <update id="UpdateLeave" parameterType="com.person.person.Personnel.Entity.Leaveinformation">
         update t_leave set leaveorder=#{leaveorder},reason=#{reason},leavedestination=#{leavedestination},starttimestamp=#{starttimestamp},endtimestamp=#{endtimestamp}
     </update>
+    <insert id="Addauditor" parameterType="com.person.person.Personnel.Entity.AuditorInformation">
+        insert into t_auditor(leaveorder,account_name,auditordatetime,leavingmessage,statuscode,states) VALUES (#{leaveorder},#{account_name},#{auditordatetime},#{leavingmessage},#{statuscode},#{states})
+    </insert>
 </mapper>

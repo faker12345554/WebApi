@@ -19,14 +19,14 @@ public class LeaveController {
 
     private ResponseResult result = new ResponseResult();
 
-    @GetMapping("/GetLeave")// 这个方法吗
+    @GetMapping("/GetLeave")
     public ResponseResult GetLeave(@RequestParam(required = false) int person_id, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(leaveService.GetLeave(person_id));
     }
 
-    @PostMapping("/UpdateLeave")//什么问题.先吃饭了，有问题的话你艾特我
+    @PostMapping("/UpdateLeave")
     public ResponseResult UpdateLeave(@RequestBody Leaveinformation leaveinformation) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
