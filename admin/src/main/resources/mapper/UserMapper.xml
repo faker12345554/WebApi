@@ -11,16 +11,16 @@
     </select>
 
     <insert id="AddUser" parameterType="com.admin.admin.Entity.User">
-       INSERT into t_user(account_name,password,alias_name,permission_id,
-        Create_id,Create_name,areacode,phone,status) values (#{account_name},#{password},#{alias_name},#{permission_id},#{Create_id},#{Create_name},#{areacode},#{phone},#{status})
+     INSERT into t_user(account_name,password,alias_name,permission_id,
+       createid,create_name,areacode,phone,status) values (#{user.account_name},#{user.password},#{user.alias_name},#{user.permission_id},#{user.createid},#{user.createname},#{user.areacode},#{user.phone},#{user.status})
     </insert>
     <update id="UpdateUser" parameterType="com.admin.admin.Entity.User">
-        UPDATE t_user set account_name=#{account_name},password=#{password},alias_name=#{alias_name},permission_id=#{permission_id},
-        Create_id=#{Create_id},Create_name=#{Create_name},areacode=#{areacode},phone=#{phone},status=#{status} where id=#{id}
+        UPDATE t_user set account_name=#{user.account_name}, password=#{user.password},alias_name=#{user.alias_name},permission_id=#{user.permission_id},
+        createid=#{user.createid},create_name=#{user.createname},areacode=#{user.areacode},phone=#{user.phone},status=#{user.status} where id=#{user.id}
     </update>
 
     <update id="DelUser" parameterType="com.admin.model.ParamterModel">
-        update t_user set status=#{falg} where id=#{id}
+        update t_user set status=#{Paramter.falg} where id=#{Paramter.id}
     </update>
 
 <select id="Login" resultType="com.admin.admin.Entity.User" parameterType="String">

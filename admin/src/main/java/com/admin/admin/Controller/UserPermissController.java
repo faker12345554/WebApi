@@ -32,8 +32,8 @@ public class UserPermissController {
         return  result.setData(groupService.UpdateGroup(group));
     }
 
-    @GetMapping("/DelGroup")
-    public ResponseResult DelGroup(@RequestParam(required = false) ParamterModel Paramter, HttpServletResponse response){
+    @PostMapping("/DelGroup")
+    public ResponseResult DelGroup(@RequestBody(required = false) ParamterModel Paramter, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
 

@@ -1,17 +1,18 @@
 package com.person.person.Personnel.Dao;
 
 import com.person.person.Personnel.Entity.Guaranteeinformation;
+import com.person.person.model.ParamterModel;
 import org.apache.ibatis.annotations.Param;
 
 public interface GuarantDao {
 
     //新增
-    int AddGuarant(@Param("model")Guaranteeinformation model);
+    int Addguarant(Guaranteeinformation model);
     //修改
-    int UpdateGuara(@Param("model")Guaranteeinformation model);
+    int Updateguara(Guaranteeinformation model);
     //删除
-    int DelGuara(@Param("id")int id,@Param("flag") boolean flag);
+    int Delguara(ParamterModel paramterModel);
 
     //获取人员信息
-    Guaranteeinformation GetGuara(@Param("id") int id);
+    Guaranteeinformation Getguara(@Param("id") int id);
 }

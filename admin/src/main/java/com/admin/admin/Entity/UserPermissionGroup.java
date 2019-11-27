@@ -7,55 +7,62 @@ public class UserPermissionGroup {
     private String permission_name;
     private Date create_time;
     private int create_id;
+    private String create_name;
+    private boolean status;
 
     public int getPermission_id() {
         return permission_id;
     }
 
-    public void setPermission_id(int permission_id) {
+    public UserPermissionGroup setPermission_id(int permission_id) {
         this.permission_id = permission_id;
+        return this;
     }
 
     public String getPermission_name() {
         return permission_name;
     }
 
-    public void setPermission_name(String permission_name) {
+    public UserPermissionGroup setPermission_name(String permission_name) {
         this.permission_name = permission_name;
+        return this;
     }
 
     public Date getCreate_time() {
         return create_time;
     }
 
-    public void setCreate_time(Date create_time) {
+    public UserPermissionGroup setCreate_time(Date create_time) {
         this.create_time = create_time;
+        return this;
     }
 
     public int getCreate_id() {
         return create_id;
     }
 
-    public void setCreate_id(int create_id) {
+    public UserPermissionGroup setCreate_id(int create_id) {
         this.create_id = create_id;
+        return this;
     }
 
-    public String getCreate_persion() {
-        return create_persion;
+    public String getCreate_name() {
+        return create_name;
     }
 
-    public void setCreate_persion(String create_persion) {
-        this.create_persion = create_persion;
+    public UserPermissionGroup setCreate_name(String create_name) {
+        this.create_name = create_name;
+        return this;
     }
 
     public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public UserPermissionGroup setStatus(boolean status) {
         this.status = status;
+        return this;
     }
 
-    private String create_persion;
-    private boolean status;
+
 }

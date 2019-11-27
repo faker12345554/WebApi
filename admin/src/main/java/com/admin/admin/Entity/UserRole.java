@@ -6,7 +6,10 @@ public class UserRole {
 
     private int role_id;
     private String role_name;
-    private String menu_id;
+    private int menu_id;
+    private Date createtime;
+    private boolean status;
+    private int permission_id;
 
     public int getRole_id() {
         return role_id;
@@ -24,12 +27,13 @@ public class UserRole {
         this.role_name = role_name;
     }
 
-    public String getMenu_id() {
+    public int getMenu_id() {
         return menu_id;
     }
 
-    public void setMenu_id(String menu_id) {
+    public UserRole setMenu_id(int menu_id) {
         this.menu_id = menu_id;
+        return this;
     }
 
     public Date getCreatetime() {
@@ -56,7 +60,5 @@ public class UserRole {
         this.permission_id = permission_id;
     }
 
-    private Date createtime;
-    private boolean status;
-    private int permission_id;
+
 }

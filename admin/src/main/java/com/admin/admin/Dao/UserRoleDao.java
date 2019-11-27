@@ -15,12 +15,12 @@ public interface UserRoleDao {
     List<Menu> GetList(@Param("UserId")  int UserId);
 
     //新增
-    int AddUserRole( @Param("userRole") UserRole userRole);
+    int AddUserRole(  UserRole userRole);
 
     //修改
-    int UpdateUserRole(@Param("userRole") UserRole userRole);
+    int UpdateUserRole( UserRole userRole);
     //删除
-    int DelUserRole(@Param("Paramter") ParamterModel Paramter);
+    int DelUserRole(ParamterModel Paramter);
     //获取当前用户的权限
     List<UserRoleModel> GetRoleList(@Param("id") int id);
 
