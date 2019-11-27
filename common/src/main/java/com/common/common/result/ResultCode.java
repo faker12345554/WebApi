@@ -1,10 +1,11 @@
 package com.common.common.result;
+
 /**
  * @ClassName ResultCode
  * @Author Wen.GD
  * @Date 2019/5/27 20:20
  **/
-public enum  ResultCode {
+public enum ResultCode {
     SUCCESS(200, "成功"),
     NO_PERMISSION(211, "权限不足"),
     SERVER_ERROR(10000, "服务器异常"),
