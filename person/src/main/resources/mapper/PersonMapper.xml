@@ -2,23 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.person.person.Personnel.Dao.PersonDao">
-    <insert id="AddPersion" parameterType="com.person.person.Personnel.Entity.Personinformation">
+    <insert id="Addpersion" parameterType="com.person.person.Personnel.Entity.Personinformation">
         INSERT into t_personinformation(person_name,gender,Age,Birthdate,Card,Workunit,Bailoutbegindate,Bailoutenddate,Sponsor,sponsor_alarm,Contact,Address,wechat_number,qq_number,status)
         values (#{person_name},#{gender},#{Age},#{Birthdate},#{Card},#{Workunit},#{Bailoutbegindate},#{Bailoutenddate},#{Sponsor},#{sponsor_alarm},#{Contact},#{Address},#{wechat_number},#{qq_number},#{status})
     </insert>
 
-    <update id="UpdatePersion" parameterType="com.person.person.Personnel.Entity.Personinformation">
+    <update id="Updatepersion" parameterType="com.person.person.Personnel.Entity.Personinformation">
         UPDATE t_personinformation set person_name=#{person_name},gender=#{gender},Age=#{Age},Birthdate=#{Birthdate},Card=#{Card},Workunit=#{Workunit},Bailoutbegindate=#{Bailoutbegindate},
         Bailoutenddate=#{Bailoutenddate},Sponsor=#{Sponsor},sponsor_alarm=#{sponsor_alarm},Contact=#{Contact},Address=#{Address},wechat_number=#{wechat_number},qq_number=#{qq_number},status=#{status}
         where personid=#{personid}
     </update>
 
-    <update id="DelPersion" parameterType="int" >
-        update t_personinformation set status=#{status} where personid=#{personid}
+    <update id="Delpersion" parameterType="com.person.person.model.ParamterModel" >
+        update t_personinformation set status=#{flag} where personid=#{id}
     </update>
 
-    <select id="GetPersoin" parameterType="int" resultType="com.person.person.Personnel.Entity.Personinformation">
-        select * from t_personinformation where personid=#{personid}
+    <select id="Getpersoin" parameterType="int" resultType="com.person.person.Personnel.Entity.Personinformation">
+        select * from t_personinformation where personid=#{id}
     </select>
 
 </mapper>

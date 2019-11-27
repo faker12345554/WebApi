@@ -1,6 +1,7 @@
 package com.person.person.Personnel.Dao;
 
 import com.person.person.Personnel.Entity.Personinformation;
+import com.person.person.model.ParamterModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -8,11 +9,11 @@ import org.apache.ibatis.annotations.Param;
 public interface PersonDao {
 
     //新增
-    int AddPersion(@Param("personinformation") Personinformation personinformation);
+    int Addpersion( Personinformation personinformation);
     //修改
-    int UpdatePersion(@Param("personinformation") Personinformation personinformation );
+    int Updatepersion(Personinformation personinformation );
     //删除
-    int DelPersion(@Param("id") int id,@Param("flag") boolean flag);
+    int Delpersion(ParamterModel paramterModel);
     //查询
-    Personinformation GetPersoin(@Param("id") int id);
+    Personinformation Getpersoin(@Param("id") int id);
 }

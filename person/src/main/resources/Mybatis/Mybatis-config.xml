@@ -3,14 +3,14 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-    <settings>
-        <!--使用JDBC的getGeneratedKeys获取数据库自增主键-->
+    <!--<settings>
+        &lt;!&ndash;使用JDBC的getGeneratedKeys获取数据库自增主键&ndash;&gt;
         <setting name="useGeneratedKeys" value="true"/>
-        <!--使用列标签替换列别名-->
+        &lt;!&ndash;使用列标签替换列别名&ndash;&gt;
         <setting name="useColumnLabel" value="ture" />
-        <!--开启驼峰转换-->
+        &lt;!&ndash;开启驼峰转换&ndash;&gt;
         <setting name="mapUnderscoreToCamelCase" value="true" />
-    </settings>
+    </settings>-->
     <!-- 加载映射文件 mapper -->
     <mappers>
         <mapper resource="mapper/PersonMapper.xml" />

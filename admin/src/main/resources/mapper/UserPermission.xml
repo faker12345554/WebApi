@@ -9,11 +9,11 @@
     <select id="GetGroup" parameterType="int" resultType="com.admin.admin.Entity.UserPermissionGroup">
         SELECT * from t_userpermissiongroup WHERE status=TRUE and permission_id=#{id}
     </select>
-    <insert id="AddUserGroup" parameterType="com.admin.admin.Entity.UserPermissionGroup" >
-        insert into t_userpermissiongroup(permission_name,create_time,create_id,create_persion,status) values (#{permission_name},#{create_time},#{create_id},#{create_persion},#{status})
+    <insert id="AddUserGroup" parameterType="com.admin.admin.Entity.UserPermissionGroup">
+        insert into t_userpermissiongroup(create_id,create_time,permission_name,create_name,status) values (#{create_id},#{create_time},#{permission_name},#{create_name},#{status})
     </insert>
     <update id="UpdateGroup" parameterType="com.admin.admin.Entity.UserPermissionGroup">
-        update t_userpermissiongroup set permission_name=#{permission_name},create_time=#{create_time},create_id=#{create_id},create_persion=#{create_persion},status=#{status} where permission_id=#{permission_id}
+        update t_userpermissiongroup set permission_name=#{permission_name},create_time=#{create_time},create_id=#{create_id},create_name=#{create_name},status=#{status} where permission_id=#{permission_id}
     </update>
     <update id="DelGroup" parameterType="com.admin.model.ParamterModel">
         update t_userpermissiongroup set status=#{flag} where permission_id=#{id}
