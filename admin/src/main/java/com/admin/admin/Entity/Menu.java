@@ -31,9 +31,7 @@ public class Menu {
         this.path = path;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
     public void setName(String name) {
         this.name = name;
@@ -55,11 +53,11 @@ public class Menu {
         this.icon = icon;
     }
 
-    public String getAffix() {
+    public boolean getAffix() {
         return affix;
     }
 
-    public void setAffix(String affix) {
+    public void setAffix(boolean affix) {
         this.affix = affix;
     }
 
@@ -88,7 +86,7 @@ public class Menu {
     }
 
     private String icon;
-    private String affix;
+    private boolean affix;
     private boolean hidden;
     private int order_id;
     private boolean status;
