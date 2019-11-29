@@ -18,10 +18,10 @@ public class SinginControll {
     private SinginService singinService;
     private ResponseResult result = new ResponseResult();
 
-    @GetMapping("/GetSingin")
-    public ResponseResult GetSingin(@RequestParam(required = false) int person_id, HttpServletResponse response) {
+    @GetMapping("/getSingin")
+    public ResponseResult getSingin(@RequestParam(required = false) int person_id, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(singinService.GetSingin(person_id));
+        return result.setData(singinService.getSingin(person_id));
     }
 }

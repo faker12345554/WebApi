@@ -11,5 +11,5 @@ public class SinginService {
     private SinginDao singinDao;
 
     //获取
-    public SinginInformation GetSingin(int person_id){return singinDao.GetSingin(person_id);}
+    public SinginInformation getSingin(int person_id){return singinDao.getSingin(person_id);}
 }

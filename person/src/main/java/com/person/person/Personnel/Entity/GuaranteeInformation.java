@@ -1,6 +1,6 @@
 package com.person.person.Personnel.Entity;
 
-public class Guaranteeinformation {
+public class GuaranteeInformation {
     private int id;
     private String guarantee_name;
     private int money;

@@ -2,7 +2,7 @@ package com.person.person.Personnel.Controller;
 
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
-import com.person.person.Personnel.Entity.Guaranteeinformation;
+import com.person.person.Personnel.Entity.GuaranteeInformation;
 import com.person.person.Personnel.Service.GuaranService;
 import com.person.person.model.ParamterModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,32 +18,32 @@ public class GuarantController {
 
     private ResponseResult result=new ResponseResult();
 
-    @PostMapping("/AddGuarant")
-    public ResponseResult AddGuarant(@RequestBody(required = false) Guaranteeinformation guaranteeinformation, HttpServletResponse response){
+    @PostMapping("/addGuarant")
+    public ResponseResult insertGuarant(@RequestBody(required = false) GuaranteeInformation guaranteeinformation, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(guaranService.AddGuarant(guaranteeinformation));
+        return result.setData(guaranService.insertGuarant(guaranteeinformation));
     }
 
-    @PostMapping("/UpdateGuara")
-    public ResponseResult UpdateGuara(@RequestBody(required = false) Guaranteeinformation guaranteeinformation, HttpServletResponse response){
+    @PostMapping("/updateGuara")
+    public ResponseResult updateGuara(@RequestBody(required = false) GuaranteeInformation guaranteeinformation, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(guaranService.UpdateGuara(guaranteeinformation));
+        return result.setData(guaranService.updateGuara(guaranteeinformation));
     }
 
-    @PostMapping("/DelGuara")
-    public ResponseResult DelGuara(@RequestBody(required = false) ParamterModel paramterModel, HttpServletResponse response){
+    @PostMapping("/deleteGuara")
+    public ResponseResult deleteGuara(@RequestBody(required = false) ParamterModel paramterModel, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(guaranService.DelGuara(paramterModel));
+        return result.setData(guaranService.deleteGuara(paramterModel));
     }
 
-    @GetMapping("/GetGuara")
-    public ResponseResult GetGuara(@RequestParam(required = false) int id,HttpServletResponse response){
+    @GetMapping("/getGuara")
+    public ResponseResult getGuara(@RequestParam(required = false) int id,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(guaranService.GetGuara(id));
+        return result.setData(guaranService.getGuara(id));
     }
 
 }
