@@ -1,8 +1,8 @@
-package com.person.person.Personnel.Controller;
+package com.person.person.personnel.controller;
 
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
-import com.person.person.Personnel.Service.SinginService;
+import com.person.person.personnel.service.SinginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

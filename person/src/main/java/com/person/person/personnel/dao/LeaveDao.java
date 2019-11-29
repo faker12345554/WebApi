@@ -1,7 +1,7 @@
-package com.person.person.Personnel.Dao;
+package com.person.person.personnel.dao;
 
-import com.person.person.Personnel.Entity.AuditorInformation;
-import com.person.person.Personnel.Entity.LeaveInformation;
+import com.person.person.personnel.entity.AuditorInformation;
+import com.person.person.personnel.entity.LeaveInformation;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

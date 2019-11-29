@@ -1,6 +1,6 @@
-package com.person.person.Personnel.Dao;
+package com.person.person.personnel.dao;
 
-import com.person.person.Personnel.Entity.GuaranteeInformation;
+import com.person.person.personnel.entity.GuaranteeInformation;
 import com.person.person.model.ParamterModel;
 import org.apache.ibatis.annotations.Param;
 
