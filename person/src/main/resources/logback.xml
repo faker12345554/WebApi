@@ -1,8 +1,8 @@
 <configuration>
 	<!-- 每个logger都关联到logger上下文，默认上下文名称为“default”,用于区分不同应用程序的记录。一旦设置，不能修改 -->
-	<contextName>bailout</contextName>
+	<contextName>Persion</contextName>
     <!--配置常量，在后面的配置中使用 -->
-    <property name="PROJECT_NAME" value="bailout" />
+    <property name="PROJECT_NAME" value="Persion" />
     <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
     <property name="LOG_HOME" value="/app/log/${PROJECT_NAME}" />
     <!--定义日志输出格式 

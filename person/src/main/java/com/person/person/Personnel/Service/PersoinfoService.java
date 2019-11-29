@@ -13,13 +13,13 @@ public class PersoinfoService {
     private PersonDao personDao;
 
     //新增
-    public int Addpersion(Personinformation personinformation){
-        return personDao.Addpersion(personinformation);
+    public int insertPersion(Personinformation personinformation){
+        return personDao.insertPersion(personinformation);
     }
     //修改
-    public int Updatepersion(Personinformation personinformation){return personDao.Updatepersion(personinformation);}
+    public int updatePersion(Personinformation personinformation){return personDao.updatePersion(personinformation);}
     //删除
-    public int Delpersion(ParamterModel paramterModel){return personDao.Delpersion(paramterModel);}
+    public int deletePersion(ParamterModel paramterModel){return personDao.deletePersion(paramterModel);}
     //获取人员信息
-    public Personinformation Getpersoin(int id){return personDao.Getpersoin(id);}
+    public Personinformation getPersoin(int id){return personDao.getPersoin(id);}
 }

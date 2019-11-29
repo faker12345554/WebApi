@@ -2,7 +2,7 @@ package com.person.person.Personnel.Entity;
 
 import java.util.Date;
 
-public class Leaveinformation {
+public class LeaveInformation {
     private int id;
     private String leaveorder;
     private String reason;

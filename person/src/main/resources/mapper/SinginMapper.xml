@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.person.person.Personnel.Dao.SinginDao">
-    <select id="GetSingin" parameterType="int" resultType="com.person.person.Personnel.Entity.SinginInformation">
+    <select id="getSingin" parameterType="int" resultType="com.person.person.Personnel.Entity.SinginInformation">
         select * from t_singin where person_id=#{person_id}
     </select>
 

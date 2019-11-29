@@ -10,7 +10,7 @@ public class AddressService {
     @Autowired
     private AddressDao addressDao;
 
-    public int Addlocation(AddressInformation addressInformation) {
-        return addressDao.Addlocation(addressInformation);
+    public int insertLocation(AddressInformation addressInformation) {
+        return addressDao.insertLocation(addressInformation);
     }
 }
