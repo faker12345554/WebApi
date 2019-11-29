@@ -50,7 +50,7 @@ public class LogAspectConfig {
         第三个.* 表示路径下,所有包下的所有类的方法
         (..) 表示不限方法参数
     */
-    @Pointcut("execution(public * com.person.person.Personnel.controller.*.*(..))")
+    @Pointcut("execution(public * com.person.person.personnel.controller.*.*(..))")
     public void adminControllerLog() {
     }
 

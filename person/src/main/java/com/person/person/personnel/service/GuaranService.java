@@ -1,7 +1,7 @@
-package com.person.person.Personnel.Service;
+package com.person.person.personnel.service;
 
-import com.person.person.Personnel.Dao.GuarantDao;
-import com.person.person.Personnel.Entity.GuaranteeInformation;
+import com.person.person.personnel.dao.GuarantDao;
+import com.person.person.personnel.entity.GuaranteeInformation;
 import com.person.person.model.ParamterModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

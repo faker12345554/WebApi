@@ -1,10 +1,9 @@
-package com.person.person.Personnel.Controller;
+package com.person.person.personnel.controller;
 
-import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
-import com.person.person.Personnel.Entity.Personinformation;
-import com.person.person.Personnel.Service.PersoinfoService;
+import com.person.person.personnel.entity.Personinformation;
+import com.person.person.personnel.service.PersoinfoService;
 import com.person.person.model.ParamterModel;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,40 +17,39 @@ import javax.servlet.http.HttpServletResponse;
 public class PersonController {
 
     @Autowired
-    private PersoinfoService persoinfoService;
+    private PersoinfoService persoinfoService;//
 
     private ResponseResult result=new ResponseResult();
 
     //新增
-    @PostMapping("/Persons") //另外不要这种写法，你很难调试的
-    public ResponseResult AddPersion(@RequestBody Personinformation personinformation){
+    @PostMapping("/insertPersion") //另外不要这种写法，你很难调试的
+    public ResponseResult insertPersion(@RequestBody Personinformation personinformation){
         // 所以说我不太清楚是因为什么原因你这变成小写的参数才可以接收，你的电脑好卡啊，打字都打不了。。。。。
         System.out.println(personinformation.getAge());
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(persoinfoService.Addpersion(personinformation));
+        return result.setData(persoinfoService.insertPersion(personinformation));
     }
     //修改
-    @UserLoginToken
-    @PostMapping("/UpdatePersion")
-    public ResponseResult UpdatePersion(@RequestBody(required = false) Personinformation personinformation, HttpServletResponse response){
+    @PostMapping("/updatePersion")
+    public ResponseResult updatePersion(@RequestBody(required = false) Personinformation personinformation, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(persoinfoService.Updatepersion(personinformation));
+        return result.setData(persoinfoService.updatePersion(personinformation));
     }
     //删除
-    @PostMapping("/DelPersion")
-    public ResponseResult DelPersion(@RequestBody(required = false) ParamterModel paramterModel,HttpServletResponse response){
+    @PostMapping("/deletePersion")
+    public ResponseResult deletePersion(@RequestBody(required = false) ParamterModel paramterModel,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(persoinfoService.Delpersion(paramterModel));
+        return result.setData(persoinfoService.deletePersion(paramterModel));
     }
 
     //获取
-    @GetMapping("/GetPersoin")
-    public ResponseResult GetPersoin(@RequestParam(required = false) int id,HttpServletResponse response){
+    @GetMapping("/getPersoin")
+    public ResponseResult getPersoin(@RequestParam(required = false) int id,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return  result.setData(persoinfoService.Getpersoin(id));
+        return  result.setData(persoinfoService.getPersoin(id));
     }
 }

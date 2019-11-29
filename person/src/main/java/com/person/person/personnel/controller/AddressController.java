@@ -1,10 +1,9 @@
-package com.person.person.Personnel.Controller;
+package com.person.person.personnel.controller;
 
-import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
-import com.person.person.Personnel.Entity.AddressInformation;
-import com.person.person.Personnel.Service.AddressService;
+import com.person.person.personnel.entity.AddressInformation;
+import com.person.person.personnel.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,14 +19,10 @@ public class AddressController {
     private AddressService addressService;
     private ResponseResult result = new ResponseResult();
 
-    /* 在这里就不起作用 还是说 那些代码我也得引用一遍  这里没引用调用admin的验证token的嘛？你是说拦截器？ 难道我整个搬过来嘛 我看看你admin模块的接口怎么验证的
-    在这个模块就没用 运行xia
-    **/
-    @UserLoginToken
-    @PostMapping("/Addlocation")
-    public ResponseResult Addlocation(@RequestBody(required = false) AddressInformation addressInformation, HttpServletResponse response) {
+    @PostMapping("/addLocation")//
+    public ResponseResult insertLocation(@RequestBody(required = false) AddressInformation addressInformation, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(addressService.Addlocation(addressInformation));
+        return result.setData(addressService.insertLocation(addressInformation));
     }
 }

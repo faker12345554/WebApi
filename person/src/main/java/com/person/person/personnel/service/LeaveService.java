@@ -1,8 +1,8 @@
-package com.person.person.Personnel.Service;
+package com.person.person.personnel.service;
 
-import com.person.person.Personnel.Dao.LeaveDao;
-import com.person.person.Personnel.Entity.AuditorInformation;
-import com.person.person.Personnel.Entity.LeaveInformation;
+import com.person.person.personnel.dao.LeaveDao;
+import com.person.person.personnel.entity.AuditorInformation;
+import com.person.person.personnel.entity.LeaveInformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

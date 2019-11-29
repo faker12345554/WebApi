@@ -1,4 +1,4 @@
-package com.person.person.Personnel.Entity;
+package com.person.person.personnel.entity;
 
 import java.util.Date;
 
