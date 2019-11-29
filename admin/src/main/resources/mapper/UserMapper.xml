@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.admin.admin.Dao.UserDao">
-    <select id="UserList" resultType="com.admin.admin.Entity.User">
+<mapper namespace="com.admin.admin.dao.UserDao">
+    <select id="ListUser" resultType="com.admin.admin.entity.User">
         SELECT * FROM "t_user" where status=#{flag}
     </select>
 
-    <select id="GetUser" parameterType="int" resultType="com.admin.admin.Entity.User">
+    <select id="GetUser" parameterType="int" resultType="com.admin.admin.entity.User">
         SELECT * FROM "t_user" where id=#{id}
     </select>
 
-    <insert id="AddUser" parameterType="com.admin.admin.Entity.User">
+    <insert id="SaveUser" parameterType="com.admin.admin.entity.User">
      INSERT into t_user(account_name,password,alias_name,permission_id,
        createid,create_name,areacode,phone,status) values (#{user.account_name},#{user.password},#{user.alias_name},#{user.permission_id},#{user.createid},#{user.createname},#{user.areacode},#{user.phone},#{user.status})
     </insert>
-    <update id="UpdateUser" parameterType="com.admin.admin.Entity.User">
+    <update id="UpdateUser" parameterType="com.admin.admin.entity.User">
         UPDATE t_user set account_name=#{user.account_name}, password=#{user.password},alias_name=#{user.alias_name},permission_id=#{user.permission_id},
         createid=#{user.createid},create_name=#{user.createname},areacode=#{user.areacode},phone=#{user.phone},status=#{user.status} where id=#{user.id}
     </update>
 
-    <update id="DelUser" parameterType="com.admin.model.ParamterModel">
+    <update id="DeleteUser" parameterType="com.admin.model.ParamterModel">
         update t_user set status=#{Paramter.falg} where id=#{Paramter.id}
     </update>
 
-<select id="Login" resultType="com.admin.admin.Entity.User" parameterType="String">
+<select id="Login" resultType="com.admin.admin.entity.User" parameterType="String">
     select * from t_user where account_name=#{UserName} and password=#{Password}
 </select>
 </mapper>
