@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.admin.admin.Dao.UserRoleDao">
-    <insert id="AddUserRole" parameterType="com.admin.admin.Entity.UserRole" >
+<mapper namespace="com.admin.admin.dao.UserRoleDao">
+    <insert id="SaveUserRole" parameterType="com.admin.admin.entity.UserRole" >
         insert into t_userrole(role_name,menu_id,createtime,status,permission_id) values (#{role_name},#{menu_id},#{createtime},#{status},#{permission_id})
     </insert>
 
-    <update id="UpdateUserRole" parameterType="com.admin.admin.Entity.UserRole">
+    <update id="UpdateUserRole" parameterType="com.admin.admin.entity.UserRole">
         update t_userrole set role_name=#{role_name},menu_id=#{menu_id},createtime=#{createtime},status=#{status},permission_id=#{permission_id} where role_id=#{role_id}
     </update>
 
-    <update id="DelUserRole" parameterType="com.admin.model.ParamterModel">
+    <update id="DeleteUserRole" parameterType="com.admin.model.ParamterModel">
         update t_userrole set status=#{flag} where role_id=#{id}
     </update>
-    <select id="GetList" resultType="com.admin.admin.Entity.Menu"  parameterType="int" >
+    <select id="ListMenu" resultType="com.admin.admin.entity.Menu" parameterType="int" >
         select M.* from t_user as U
         inner join t_userrole as R on R.permission_id=U.permission_id and  R.Status=true
         INNER JOIN t_menu as M on M.menu_id=R.menu_id and M."Status"=TRUE
         where U.id=#{UserId}
     </select>
 
-    <select id="GetRoleList" resultType="com.admin.model.UserRoleModel" parameterType="int">
+    <select id="ListUserRole" resultType="com.admin.model.UserRoleModel" parameterType="int">
         select R.role_id,R.role_name,R.createtime,M.menu_name,G.permission_name from t_user as u
         INNER JOIN t_userrole as R on R.permission_id=u.permission_id
         INNER JOIN t_menu as M on M.menu_id=R.menu_id

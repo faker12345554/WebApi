@@ -1,5 +1,6 @@
 package com.person.person.Personnel.Controller;
 
+import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.person.person.Personnel.Entity.Personinformation;
@@ -31,6 +32,7 @@ public class PersonController {
         return result.setData(persoinfoService.Addpersion(personinformation));
     }
     //修改
+    @UserLoginToken
     @PostMapping("/UpdatePersion")
     public ResponseResult UpdatePersion(@RequestBody(required = false) Personinformation personinformation, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());

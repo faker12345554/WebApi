@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.admin.admin.Dao.UserPermissionGroupDao">
-    <select id="GetList" resultType="com.admin.admin.Entity.UserPermissionGroup">
+<mapper namespace="com.admin.admin.dao.UserPermissionGroupDao">
+    <select id="ListGroup" resultType="com.admin.admin.entity.UserPermissionGroup">
         SELECT * from t_userpermissiongroup WHERE status=#{flag}
     </select>
 
-    <select id="GetGroup" parameterType="int" resultType="com.admin.admin.Entity.UserPermissionGroup">
+    <select id="GetGroup" parameterType="int" resultType="com.admin.admin.entity.UserPermissionGroup">
         SELECT * from t_userpermissiongroup WHERE status=TRUE and permission_id=#{id}
     </select>
-    <insert id="AddUserGroup" parameterType="com.admin.admin.Entity.UserPermissionGroup">
+    <insert id="SaveUserGroup" parameterType="com.admin.admin.entity.UserPermissionGroup">
         insert into t_userpermissiongroup(create_id,create_time,permission_name,create_name,status) values (#{create_id},#{create_time},#{permission_name},#{create_name},#{status})
     </insert>
-    <update id="UpdateGroup" parameterType="com.admin.admin.Entity.UserPermissionGroup">
+    <update id="UpdateGroup" parameterType="com.admin.admin.entity.UserPermissionGroup">
         update t_userpermissiongroup set permission_name=#{permission_name},create_time=#{create_time},create_id=#{create_id},create_name=#{create_name},status=#{status} where permission_id=#{permission_id}
     </update>
-    <update id="DelGroup" parameterType="com.admin.model.ParamterModel">
+    <update id="DeleteGroup" parameterType="com.admin.model.ParamterModel">
         update t_userpermissiongroup set status=#{flag} where permission_id=#{id}
     </update>
 </mapper>
