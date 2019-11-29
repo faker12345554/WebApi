@@ -9,11 +9,11 @@ import org.apache.ibatis.annotations.Param;
 public interface PersonDao {
 
     //新增
-    int Addpersion( Personinformation personinformation);
+    int insertPersion( Personinformation personinformation);
     //修改
-    int Updatepersion(Personinformation personinformation );
+    int updatePersion(Personinformation personinformation );
     //删除
-    int Delpersion(ParamterModel paramterModel);
+    int deletePersion(ParamterModel paramterModel);
     //查询
-    Personinformation Getpersoin(@Param("id") int id);
+    Personinformation getPersoin(@Param("id") int id);
 }

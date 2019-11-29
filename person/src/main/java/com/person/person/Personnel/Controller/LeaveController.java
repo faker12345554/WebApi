@@ -4,7 +4,7 @@ package com.person.person.Personnel.Controller;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.person.person.Personnel.Entity.AuditorInformation;
-import com.person.person.Personnel.Entity.Leaveinformation;
+import com.person.person.Personnel.Entity.LeaveInformation;
 import com.person.person.Personnel.Service.LeaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,24 +19,31 @@ public class LeaveController {
 
     private ResponseResult result = new ResponseResult();
 
-    @GetMapping("/GetLeave")
-    public ResponseResult GetLeave(@RequestParam(required = false) int person_id, HttpServletResponse response) {
+    @GetMapping("/getLeave")
+    public ResponseResult getLeave(@RequestParam(required = false) int personId, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(leaveService.GetLeave(person_id));
+        return result.setData(leaveService.getLeave(personId));
     }
 
-    @PostMapping("/UpdateLeave")
-    public ResponseResult UpdateLeave(@RequestBody Leaveinformation leaveinformation) {
+    @GetMapping("/listLeave")
+    public ResponseResult listLeave() {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(leaveService.UpdateLeave(leaveinformation));
+        return result.setData(leaveService.listLeave());
     }
 
-    @PostMapping("/Addauditor")
-    public ResponseResult Addauditor(@RequestBody AuditorInformation auditorInformation, HttpServletResponse response){
+    @PostMapping("/updateLeave")
+    public ResponseResult updateLeave(@RequestBody LeaveInformation leaveinformation) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(leaveService.Addauditor(auditorInformation));
+        return result.setData(leaveService.updateLeave(leaveinformation));
+    }
+
+    @PostMapping("/insertAuditor")
+    public ResponseResult insertAuditor(@RequestBody AuditorInformation auditorInformation, HttpServletResponse response){
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(leaveService.insertAuditor(auditorInformation));
     }
 }

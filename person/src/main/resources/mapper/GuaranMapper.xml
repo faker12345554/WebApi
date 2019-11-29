@@ -2,19 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.person.person.Personnel.Dao.GuarantDao">
-    <insert id="AddGuarant" parameterType="com.person.person.Personnel.Entity.Guaranteeinformation">
+    <insert id="insertGuarant" parameterType="com.person.person.Personnel.Entity.GuaranteeInformation">
         insert into t_guaranteeinformation(guarantee_name,Money,Card,Contact,Workunit,Address,status) VALUES (#{guarantee_name},#{Money},#{Card},#{Contact},#{Workunit},#{Address},#{status})
     </insert>
 
-    <update id="UpdateGuara" parameterType="com.person.person.Personnel.Entity.Guaranteeinformation">
+    <update id="updateGuara" parameterType="com.person.person.Personnel.Entity.GuaranteeInformation">
         update t_guaranteeinformation set guarantee_name=#{guarantee_name},Money=#{Money},Card=#{Card},Contact=#{Contact},Workunit=#{Workunit},
     </update>
 
-    <update id="DelGuara" parameterType="com.person.person.model.ParamterModel">
+    <update id="deleteGuara" parameterType="com.person.person.model.ParamterModel">
         update t_guaranteeinformation set status=#{flag} where id=#{id}
     </update>
 
-    <select id="GetGuara" parameterType="int" resultType="com.person.person.Personnel.Entity.Guaranteeinformation">
+    <select id="getGuara" parameterType="int" resultType="com.person.person.Personnel.Entity.GuaranteeInformation">
         select * from t_guaranteeinformation where id=#{id}
     </select>
 

@@ -1,7 +1,7 @@
 package com.person.person.Personnel.Service;
 
 import com.person.person.Personnel.Dao.GuarantDao;
-import com.person.person.Personnel.Entity.Guaranteeinformation;
+import com.person.person.Personnel.Entity.GuaranteeInformation;
 import com.person.person.model.ParamterModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,16 +12,16 @@ public class GuaranService {
     private GuarantDao guarantDao;
 
     //新增
-    public int AddGuarant(Guaranteeinformation guaranteeinformation){
-        return guarantDao.Addguarant(guaranteeinformation);
+    public int insertGuarant(GuaranteeInformation guaranteeinformation){
+        return guarantDao.insertGuarant(guaranteeinformation);
     }
     //修改
-    public int UpdateGuara(Guaranteeinformation guaranteeinformation){
-        return guarantDao.Updateguara(guaranteeinformation);
+    public int updateGuara(GuaranteeInformation guaranteeinformation){
+        return guarantDao.updateGuara(guaranteeinformation);
     }
     //删除
-    public int DelGuara(ParamterModel paramterModel){return guarantDao.Delguara(paramterModel);}
+    public int deleteGuara(ParamterModel paramterModel){return guarantDao.deleteGuara(paramterModel);}
 
     //获取
-    public Guaranteeinformation GetGuara(int id){return guarantDao.Getguara(id); }
+    public GuaranteeInformation getGuara(int id){return guarantDao.getGuara(id); }
 }

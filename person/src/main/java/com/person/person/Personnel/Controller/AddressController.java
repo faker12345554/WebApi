@@ -19,10 +19,10 @@ public class AddressController {
     private AddressService addressService;
     private ResponseResult result = new ResponseResult();
 
-    @PostMapping("/Addlocation")
-    public ResponseResult Addlocation(@RequestBody(required = false) AddressInformation addressInformation, HttpServletResponse response) {
+    @PostMapping("/addLocation")
+    public ResponseResult insertLocation(@RequestBody(required = false) AddressInformation addressInformation, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(addressService.Addlocation(addressInformation));
+        return result.setData(addressService.insertLocation(addressInformation));
     }
 }
