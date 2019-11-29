@@ -1,9 +1,9 @@
-package com.person.person.Personnel.Controller;
+package com.person.person.personnel.controller;
 
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
-import com.person.person.Personnel.Entity.GuaranteeInformation;
-import com.person.person.Personnel.Service.GuaranService;
+import com.person.person.personnel.entity.GuaranteeInformation;
+import com.person.person.personnel.service.GuaranService;
 import com.person.person.model.ParamterModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

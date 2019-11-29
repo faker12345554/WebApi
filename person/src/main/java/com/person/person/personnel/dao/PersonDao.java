@@ -1,6 +1,6 @@
-package com.person.person.Personnel.Dao;
+package com.person.person.personnel.dao;
 
-import com.person.person.Personnel.Entity.Personinformation;
+import com.person.person.personnel.entity.Personinformation;
 import com.person.person.model.ParamterModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

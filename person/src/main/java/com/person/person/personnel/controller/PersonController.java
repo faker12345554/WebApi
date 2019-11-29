@@ -1,9 +1,9 @@
-package com.person.person.Personnel.Controller;
+package com.person.person.personnel.controller;
 
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
-import com.person.person.Personnel.Entity.Personinformation;
-import com.person.person.Personnel.Service.PersoinfoService;
+import com.person.person.personnel.entity.Personinformation;
+import com.person.person.personnel.service.PersoinfoService;
 import com.person.person.model.ParamterModel;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class PersonController {
 
     @Autowired
-    private PersoinfoService persoinfoService;
+    private PersoinfoService persoinfoService;//
 
     private ResponseResult result=new ResponseResult();
 

@@ -1,11 +1,11 @@
-package com.person.person.Personnel.Controller;
+package com.person.person.personnel.controller;
 
 
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
-import com.person.person.Personnel.Entity.AuditorInformation;
-import com.person.person.Personnel.Entity.LeaveInformation;
-import com.person.person.Personnel.Service.LeaveService;
+import com.person.person.personnel.entity.AuditorInformation;
+import com.person.person.personnel.entity.LeaveInformation;
+import com.person.person.personnel.service.LeaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
