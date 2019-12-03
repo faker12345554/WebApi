@@ -1,7 +1,7 @@
-package com.person.person.personnel.service;
+package com.admin.admin.service.person;
 
-import com.person.person.personnel.dao.AddressDao;
-import com.person.person.personnel.entity.AddressInformation;
+import com.admin.admin.dao.person.AddressDao;
+import com.admin.admin.entity.person.AddressInformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

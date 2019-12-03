@@ -1,7 +1,7 @@
-package com.admin.admin.dao;
+package com.admin.admin.dao.user;
 
 
-import com.admin.admin.entity.User;
+import com.admin.admin.entity.user.User;
 import com.admin.model.ParamterModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

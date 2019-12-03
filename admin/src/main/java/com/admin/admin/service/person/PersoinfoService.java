@@ -1,8 +1,8 @@
-package com.person.person.personnel.service;
+package com.admin.admin.service.person;
 
-import com.person.person.personnel.dao.PersonDao;
-import com.person.person.personnel.entity.Personinformation;
-import com.person.person.model.ParamterModel;
+import com.admin.admin.dao.person.PersonDao;
+import com.admin.admin.entity.person.Personinformation;
+import com.admin.model.ParamterModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

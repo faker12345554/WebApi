@@ -2,8 +2,8 @@ package com.admin.interceptor;
 
 import com.admin.token.tation.PassToken;
 import com.admin.token.tation.UserLoginToken;
-import com.admin.admin.entity.User;
-import com.admin.admin.service.UserService;
+import com.admin.admin.entity.user.User;
+import com.admin.admin.service.user.UserService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;

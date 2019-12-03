@@ -1,9 +1,9 @@
-package com.admin.admin.controller;
+package com.admin.admin.controller.user;
 
 import com.admin.token.TokenService;
 import com.admin.token.tation.UserLoginToken;
-import com.admin.admin.entity.User;
-import com.admin.admin.service.UserService;
+import com.admin.admin.entity.user.User;
+import com.admin.admin.service.user.UserService;
 import com.admin.config.CacheUtils;
 import com.admin.model.ParamterModel;
 import com.common.common.result.ResponseResult;

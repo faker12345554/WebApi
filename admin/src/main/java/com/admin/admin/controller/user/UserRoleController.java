@@ -1,8 +1,8 @@
-package com.admin.admin.controller;
+package com.admin.admin.controller.user;
 
-import com.admin.admin.entity.Menu;
-import com.admin.admin.entity.UserRole;
-import com.admin.admin.service.UserRoleService;
+import com.admin.admin.entity.user.Menu;
+import com.admin.admin.entity.user.UserRole;
+import com.admin.admin.service.user.UserRoleService;
 import com.admin.model.*;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;

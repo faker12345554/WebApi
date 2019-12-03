@@ -1,7 +1,7 @@
-package com.admin.admin.dao;
+package com.admin.admin.dao.user;
 
-import com.admin.admin.entity.Menu;
-import com.admin.admin.entity.UserRole;
+import com.admin.admin.entity.user.Menu;
+import com.admin.admin.entity.user.UserRole;
 import com.admin.model.ParamterModel;
 import com.admin.model.UserRoleModel;
 import org.apache.ibatis.annotations.Mapper;
