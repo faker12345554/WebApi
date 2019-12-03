@@ -1,10 +1,10 @@
-package com.person.person.personnel.controller;
+package com.admin.admin.controller.person;
 
+import com.admin.admin.entity.person.Personinformation;
+import com.admin.admin.service.person.PersoinfoService;
+import com.admin.model.ParamterModel;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
-import com.person.person.personnel.entity.Personinformation;
-import com.admin.admin.service.person.PersoinfoService;
-import com.person.person.model.ParamterModel;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +39,7 @@ public class PersonController {
     }
     //删除
     @PostMapping("/deletePersion")
-    public ResponseResult deletePersion(@RequestBody(required = false) ParamterModel paramterModel,HttpServletResponse response){
+    public ResponseResult deletePersion(@RequestBody(required = false) ParamterModel paramterModel, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(persoinfoService.deletePersion(paramterModel));

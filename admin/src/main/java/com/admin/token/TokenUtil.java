@@ -2,6 +2,7 @@ package com.admin.token;
 
 
 import com.auth0.jwt.JWT;
+
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -24,4 +25,5 @@ public class TokenUtil {
                          .getRequestAttributes();
                  return requestAttributes == null ? null : requestAttributes.getRequest();
              }
+
 }

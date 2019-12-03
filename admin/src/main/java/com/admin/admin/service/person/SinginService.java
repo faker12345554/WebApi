@@ -1,7 +1,7 @@
-package com.person.person.personnel.service;
+package com.admin.admin.service.person;
 
-import com.person.person.personnel.dao.SinginDao;
-import com.person.person.personnel.entity.SinginInformation;
+import com.admin.admin.dao.person.SinginDao;
+import com.admin.admin.entity.person.SinginInformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

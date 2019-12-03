@@ -1,4 +1,4 @@
-package com.admin.admin.entity;
+package com.admin.admin.entity.user;
 
 public class Menu {
     private int menu_id;

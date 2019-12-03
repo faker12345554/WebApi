@@ -1,7 +1,7 @@
-package com.admin.admin.controller;
+package com.admin.admin.controller.user;
 
-import com.admin.admin.entity.UserPermissionGroup;
-import com.admin.admin.service.GroupService;
+import com.admin.admin.entity.user.UserPermissionGroup;
+import com.admin.admin.service.user.GroupService;
 import com.admin.model.ParamterModel;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
