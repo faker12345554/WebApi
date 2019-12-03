@@ -1,6 +1,6 @@
-package com.admin.admin.dao;
+package com.admin.admin.dao.user;
 
-import com.admin.admin.entity.UserPermissionGroup;
+import com.admin.admin.entity.user.UserPermissionGroup;
 import com.admin.model.ParamterModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

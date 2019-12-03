@@ -1,8 +1,8 @@
-package com.admin.admin.service;
+package com.admin.admin.service.user;
 
-import com.admin.admin.dao.UserRoleDao;
-import com.admin.admin.entity.Menu;
-import com.admin.admin.entity.UserRole;
+import com.admin.admin.dao.user.UserRoleDao;
+import com.admin.admin.entity.user.Menu;
+import com.admin.admin.entity.user.UserRole;
 import com.admin.model.ParamterModel;
 import com.admin.model.UserRoleModel;
 import org.springframework.beans.factory.annotation.Autowired;
