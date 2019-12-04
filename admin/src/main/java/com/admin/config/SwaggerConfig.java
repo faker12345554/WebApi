@@ -35,7 +35,7 @@ public class SwaggerConfig {
                 .enable(swaggerEnabled)
                 .select()
                 // 扫描的路径包
-                .apis(RequestHandlerSelectors.basePackage("com.admin.admin.Controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.admin.admin.controller"))
                 // 指定路径处理PathSelectors.any()代表所有的路径
                 .paths(PathSelectors.any())
                 .build()

@@ -19,9 +19,9 @@ public class SinginControll {
     private ResponseResult result = new ResponseResult();
 
     @GetMapping("/getSingin")
-    public ResponseResult getSingin(@RequestParam(required = false) int person_id, HttpServletResponse response) {
+    public ResponseResult getSingin(@RequestParam(required = false) int personId, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(singinService.getSingin(person_id));
+        return result.setData(singinService.getSingin(personId));
     }
 }

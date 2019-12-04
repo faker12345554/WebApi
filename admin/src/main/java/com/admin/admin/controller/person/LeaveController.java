@@ -46,4 +46,10 @@ public class LeaveController {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(leaveService.insertAuditor(auditorInformation));
     }
+    @PostMapping("/delectAuditor")
+    public ResponseResult delectAuditor(@RequestParam(required = false) int personId,HttpServletResponse response){
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(leaveService.delectAuditor(personId));
+    }
 }
