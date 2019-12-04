@@ -8,14 +8,13 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface LeaveDao {
 
-    LeaveInformation getLeave(@Param("personId") int personId);
+    LeaveInformation getLeave(@Param("id") int id);
 
     LeaveInformation listLeave();
 
-    //
     int updateLeave(LeaveInformation leaveinformation);
 
     int insertAuditor(AuditorInformation auditorInformation);
 
-    int delectAuditor(@Param("personId") int personId);
+    int delectAuditor(@Param("id") int id);
 }
