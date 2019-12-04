@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.person.PersonDao">
+    <insert id="insertPersion" parameterType="com.admin.admin.entity.person.Personinformation">
+        INSERT into t_personinformation(person_name,gender,Age,Birthdate,Card,Workunit,Bailoutbegindate,Bailoutenddate,Sponsor,sponsor_alarm,Contact,Address,wechat_number,qq_number,status)
+        values (#{person_name},#{gender},#{Age},#{Birthdate},#{Card},#{Workunit},#{Bailoutbegindate},#{Bailoutenddate},#{Sponsor},#{sponsor_alarm},#{Contact},#{Address},#{wechat_number},#{qq_number},#{status})
+    </insert>
+
+    <update id="updatePersion" parameterType="com.admin.admin.entity.person.Personinformation">
+        UPDATE t_personinformation set person_name=#{person_name},gender=#{gender},Age=#{Age},Birthdate=#{Birthdate},Card=#{Card},Workunit=#{Workunit},Bailoutbegindate=#{Bailoutbegindate},
+        Bailoutenddate=#{Bailoutenddate},Sponsor=#{Sponsor},sponsor_alarm=#{sponsor_alarm},Contact=#{Contact},Address=#{Address},wechat_number=#{wechat_number},qq_number=#{qq_number},status=#{status}
+        where personid=#{personid}
+    </update>
+
+    <update id="deletePersion" parameterType="com.admin.model.ParamterModel" >
+        update t_personinformation set status=#{flag} where personid=#{id}
+    </update>
+
+    <select id="getPersoin" parameterType="int" resultType="com.admin.admin.entity.person.Personinformation">
+        select * from t_personinformation where personid=#{id}
+    </select>
+
+</mapper>
