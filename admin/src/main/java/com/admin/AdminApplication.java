@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
-@MapperScan("com.admin.admin.Dao")
+@MapperScan("com.admin.admin.dao")
 @ServletComponentScan
 @SpringBootApplication/*(exclude={DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})*/
 public class AdminApplication {

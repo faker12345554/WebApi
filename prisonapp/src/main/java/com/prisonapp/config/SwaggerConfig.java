@@ -1,4 +1,4 @@
-package com.admin.config;
+package com.prisonapp.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +25,7 @@ public class SwaggerConfig {
                         // 页面标题
                         .title("微商城")
                         // 描述
-                        .description("好看的皮囊千篇一律,有趣的灵魂百里挑一。")
+                        .description("取保监居工作人员App接口")
                         // 作者信息
                         .contact(new Contact("Wen.GuoDong", "https://www.zhihu.com/people/D-Blog/posts", "2232243082@qq.com"))
                         // 版本号
@@ -35,7 +35,7 @@ public class SwaggerConfig {
                 .enable(swaggerEnabled)
                 .select()
                 // 扫描的路径包
-                .apis(RequestHandlerSelectors.basePackage("com.admin.admin.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.admin.admin.Controller"))
                 // 指定路径处理PathSelectors.any()代表所有的路径
                 .paths(PathSelectors.any())
                 .build()
