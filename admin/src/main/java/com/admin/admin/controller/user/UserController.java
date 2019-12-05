@@ -31,47 +31,47 @@ public class UserController {
 
     //用户列表
     @GetMapping("/GetList")
-    public ResponseResult<User> ListUser(@RequestParam(required = false) boolean falg,HttpServletResponse response){
+    public ResponseResult<User> listUser(@RequestParam(required = false) boolean falg,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(userService.ListUser(falg));
+        return result.setData(userService.listUser(falg));
     }
 
 
     //获取用户
     @UserLoginToken
     @GetMapping("/GetUser")
-    public ResponseResult GetUser(@RequestParam(required = false) int id, HttpServletResponse response){
+    public ResponseResult getUser(@RequestParam(required = false) int id, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(userService.GetUser(id));
+        return result.setData(userService.getUser(id));
     }
     //新增用户
     @PostMapping("/Add")
-    public ResponseResult SaveUser(@RequestBody User user, HttpServletResponse response){
+    public ResponseResult saveUser(@RequestBody User user, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(userService.SaveUser(user));
+        return result.setData(userService.saveUser(user));
     }
 
     //修改
     @PostMapping("/Update")
-    public ResponseResult UpdateUser(@RequestBody User user, HttpServletResponse response){
+    public ResponseResult updateUser(@RequestBody User user, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(userService.UpdateUser(user));
+        return result.setData(userService.updateUser(user));
     }
     //删除
     @PostMapping("/DelUser")
-    public ResponseResult DeleteUser(@RequestBody(required = false) ParamterModel Paramter, HttpServletResponse response){
+    public ResponseResult deleteUser(@RequestBody(required = false) ParamterModel Paramter, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(userService.DeleteUser(Paramter));
+        return result.setData(userService.deleteUser(Paramter));
     }
 
     //登录
     @GetMapping("/Login")
-    public ResponseResult Login(@RequestParam(required = false) String UserName,@RequestParam(required = false) String Password,@RequestParam(required = false) String Code,
+    public ResponseResult login(@RequestParam(required = false) String UserName,@RequestParam(required = false) String Password,@RequestParam(required = false) String Code,
                                 HttpServletResponse response, HttpServletRequest request){
         String VerCode= String.valueOf(CacheUtils.get("验证码"));
         if (!VerCode.equals(Code)){
@@ -82,7 +82,7 @@ public class UserController {
 
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        User user=userService.Login(UserName, Password);
+        User user=userService.login(UserName, Password);
         String token = tokenService.getToken(user);
         return result.setData(token);
     }
