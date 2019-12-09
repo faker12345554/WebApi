@@ -13,27 +13,27 @@ public class UserService {
     @Autowired
     private UserDao userDao; // 改啥名字
     //新增
-    public int SaveUser(User t_user){
-        return userDao.SaveUser(t_user);
+    public int saveUser(User t_user){
+        return userDao.saveUser(t_user);
     }
     //修改
-    public int UpdateUser(User t_user){
-        return userDao.UpdateUser(t_user);
+    public int updateUser(User t_user){
+        return userDao.updateUser(t_user);
     }
     //删除
-    public int DeleteUser(ParamterModel Paramter){
-        return userDao.DeleteUser(Paramter);
+    public int deleteUser(ParamterModel Paramter){
+        return userDao.deleteUser(Paramter);
     }
     //登录
-    public User Login(String UserName,String Password){
-        return userDao.Login(UserName, Password);
+    public User login(String UserName,String Password){
+        return userDao.login(UserName, Password);
     }
     //获取
-    public User GetUser(int id){
-        return userDao.GetUser(id);
+    public User getUser(int id){
+        return userDao.getUser(id);
     }
     //用户列表
-    public List<User> ListUser(boolean flag){
-        return userDao.ListUser(flag);
+    public List<User> listUser(boolean flag){
+        return userDao.listUser(flag);
     }
 }

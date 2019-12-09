@@ -8,13 +8,13 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface LeaveDao {
 
-    LeaveInformation getLeave(@Param("personId") int personId);
+    LeaveInformation getLeave(@Param("id") int id);
 
     LeaveInformation listLeave();
 
-    // 我觉得不应该指定名称，mybatis读取不到你的参数 它这里不是一样的嘛   因为你直接全额限定名的路径了com.person.person.Personnel.Entity.Leaveinformation
     int updateLeave(LeaveInformation leaveinformation);
 
     int insertAuditor(AuditorInformation auditorInformation);
 
+    int delectAuditor(@Param("id") int id);
 }

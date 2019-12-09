@@ -20,10 +20,10 @@ public class LeaveController {
     private ResponseResult result = new ResponseResult();
 
     @GetMapping("/getLeave")
-    public ResponseResult getLeave(@RequestParam(required = false) int personId, HttpServletResponse response) {
+    public ResponseResult getLeave(@RequestParam(required = false) int id, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(leaveService.getLeave(personId));
+        return result.setData(leaveService.getLeave(id));
     }
 
     @GetMapping("/listLeave")
@@ -45,5 +45,11 @@ public class LeaveController {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(leaveService.insertAuditor(auditorInformation));
+    }
+    @PostMapping("/delectAuditor")
+    public ResponseResult delectAuditor(@RequestParam(required = false) int id,HttpServletResponse response){
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(leaveService.delectAuditor(id));
     }
 }

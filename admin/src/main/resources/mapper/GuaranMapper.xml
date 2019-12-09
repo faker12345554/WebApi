@@ -3,16 +3,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.person.GuarantDao">
     <insert id="insertGuarant" parameterType="com.admin.admin.entity.person.GuaranteeInformation">
-        insert into t_guaranteeinformation(guarantee_name,Money,Card,Contact,Workunit,Address,status) VALUES (#{guarantee_name},#{Money},#{Card},#{Contact},#{Workunit},#{Address},#{status})
+        insert into t_guaranteeinformation(guarantee_name,money,card,contact,workunit,address,status) VALUES (#{guarantee_name},#{money},#{card},#{contact},#{workunit},#{address},#{status})
     </insert>
 
     <update id="updateGuara" parameterType="com.admin.admin.entity.person.GuaranteeInformation">
-        update t_guaranteeinformation set guarantee_name=#{guarantee_name},Money=#{Money},Card=#{Card},Contact=#{Contact},Workunit=#{Workunit},
+        update t_guaranteeinformation set guarantee_name=#{guarantee_name},money=#{money},card=#{card},contact=#{contact},workunit=#{workunit},address=#{address},status=#{status}
     </update>
 
-    <update id="deleteGuara" parameterType="com.admin.model.ParamterModel">
-        update t_guaranteeinformation set status=#{flag} where id=#{id}
-    </update>
+    <delete id="deleteGuara" parameterType="com.admin.model.ParamterModel">
+        delete from t_guaranteeinformation  where id=#{id}
+    </delete>
 
     <select id="getGuara" parameterType="int" resultType="com.admin.admin.entity.person.GuaranteeInformation">
         select * from t_guaranteeinformation where id=#{id}
