@@ -9,7 +9,7 @@ public class AuditorInformation {
     private String leavingmessage;
     private int statuscode;
     private String states;
-    private Date account_name;
+    private String account_name;
     private Date auditordatetime;
 
     public int getId() {
@@ -60,11 +60,11 @@ public class AuditorInformation {
         this.states = states;
     }
 
-    public Date getAccount_name() {
+    public String getAccount_name() {
         return account_name;
     }
 
-    public void setAccount_name(Date account_name) {
+    public void setAccount_name(String account_name) {
         this.account_name = account_name;
     }
 

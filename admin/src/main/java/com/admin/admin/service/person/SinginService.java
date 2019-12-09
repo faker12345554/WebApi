@@ -11,5 +11,5 @@ public class SinginService {
     private SinginDao singinDao;
 
     //获取
-    public SinginInformation getSingin(int person_id){return singinDao.getSingin(person_id);}
+    public SinginInformation getSingin(int personId){return singinDao.getSingin(personId);}
 }

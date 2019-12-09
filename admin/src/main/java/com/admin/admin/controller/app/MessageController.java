@@ -1,27 +1,29 @@
-package com.admin.admin.controller.person;
+package com.admin.admin.controller.app;
 
-import com.admin.admin.service.person.SinginService;
+
+import com.admin.admin.service.app.MessageService;
+import com.admin.token.TokenUtil;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-
 @RestController
-@RequestMapping("/Singin")
-public class SinginControll {
-    @Autowired
-    private SinginService singinService;
-    private ResponseResult result = new ResponseResult();
+@RequestMapping("/Message")
+public class MessageController {
 
-    @GetMapping("/getSingin")
-    public ResponseResult getSingin(@RequestParam(required = false) int personId, HttpServletResponse response) {
+    @Autowired
+    private MessageService messageService;
+    private ResponseResult result = new ResponseResult();
+    private TokenUtil tokenUtil =new TokenUtil();
+
+
+    @GetMapping("/Get")
+    public ResponseResult getNotificationList(){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(singinService.getSingin(personId));
+        return result.setData(messageService.getNotificationList());
     }
 }

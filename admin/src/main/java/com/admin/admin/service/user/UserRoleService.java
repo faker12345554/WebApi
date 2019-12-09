@@ -17,14 +17,14 @@ public class UserRoleService {
     private UserRoleDao userRoleDao;
 
     //新增
-    public int SaveUserRole(UserRole userRole){return userRoleDao.SaveUserRole(userRole);}
+    public int saveUserRole(UserRole userRole){return userRoleDao.saveUserRole(userRole);}
 
     //修改
-    public int UpdateUserRole(UserRole userRole){return userRoleDao.UpdateUserRole(userRole);}
+    public int updateUserRole(UserRole userRole){return userRoleDao.updateUserRole(userRole);}
     //删除
-    public int DeleteUserRole(ParamterModel Paramter){return userRoleDao.DeleteUserRole(Paramter);}
+    public int deleteUserRole(ParamterModel Paramter){return userRoleDao.deleteUserRole(Paramter);}
     //获取所以菜单
-    public List<Menu> ListMenu(int UserId){return userRoleDao.ListMenu(UserId);}
+    public List<Menu> listMenu(int UserId){return userRoleDao.listMenu(UserId);}
     //获取用户拥有的权限
-    public List<UserRoleModel> ListUserRole(int id){return userRoleDao.ListUserRole(id);}
+    public List<UserRoleModel> listUserRole(int id){return userRoleDao.listUserRole(id);}
 }
