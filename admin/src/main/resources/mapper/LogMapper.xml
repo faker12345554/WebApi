@@ -5,4 +5,8 @@
     <insert id="insertLog" parameterType="com.admin.admin.entity.person.LogInformation">
         insert into t_log(operator, modular, action, operatingtime) values (#{operator},#{modular},#{action},#{operatingtime})
     </insert>
+
+    <select id="listLog" parameterType="com.admin.model.LogParamModel" resultType="com.admin.model.LogReturnModel">
+        select modular,action,operatingtime from t_log where operator=#{operator} and modular=#{modular}
+    </select>
 </mapper>
