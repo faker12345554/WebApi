@@ -5,6 +5,7 @@ import com.admin.admin.service.person.AddressService;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ public class AddressController {
     private AddressService addressService;
     private ResponseResult result = new ResponseResult();
 
+    @ApiOperation(value = "上报位置")
     @PostMapping("/addLocation")//
     public ResponseResult insertLocation(@RequestBody(required = false) AddressInformation addressInformation, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
