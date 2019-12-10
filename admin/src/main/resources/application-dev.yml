@@ -12,4 +12,4 @@ swagger:
   enabled: true
 
 mybatis:
-  mapper-locations: classpath:mapper/*.xml
+  mapper-locations: classpath:mapper/**/*.xml

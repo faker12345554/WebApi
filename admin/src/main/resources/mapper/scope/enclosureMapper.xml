@@ -4,12 +4,12 @@
 <mapper namespace="com.admin.admin.dao.scope.enclosureDao">
     <insert id="saveEnclosure" parameterType="com.admin.admin.entity.scope.enclosure">
         insert into t_enclosure(person_id,type,longitude,area_name,latitude,status) values
-        (#{person_id},#{type},#{longitude},#{area_name},#{latitude},#{status})
+        (#{personId},#{type},#{longitude},#{areaName},#{latitude},#{status})
     </insert>
 
     <update id="updateEnclosure" parameterType="com.admin.admin.entity.scope.enclosure">
-        update updateEnclosure set person_id=#{person_id},type=#{type},longitude=#{longitude},
-        area_name=#{area_name},latitude=#{latitude} where id=#{id}
+        update updateEnclosure set person_id=#{personId},type=#{type},longitude=#{longitude},
+        area_name=#{areaName},latitude=#{latitude} where id=#{id}
     </update>
 
     <update id="deleteEnclosure" parameterType="int">
