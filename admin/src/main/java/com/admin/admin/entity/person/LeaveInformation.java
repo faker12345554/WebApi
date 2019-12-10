@@ -10,7 +10,7 @@ public class LeaveInformation {
     private Date starttimestamp;
     private Date endtimestamp;
     private Date subittimestamp;
-    private int person_id;
+    private String person_id;
     private String person_name;
     private int statuscode;
     private String states;
@@ -67,17 +67,19 @@ public class LeaveInformation {
         return subittimestamp;
     }
 
+    public String getPerson_id() {
+        return person_id;
+    }
+
+    public LeaveInformation setPerson_id(String person_id) {
+        this.person_id = person_id;
+        return this;
+    }
+
     public void setSubittimestamp(Date subittimestamp) {
         this.subittimestamp = subittimestamp;
     }
 
-    public int getPerson_id() {
-        return person_id;
-    }
-
-    public void setPerson_id(int person_id) {
-        this.person_id = person_id;
-    }
 
     public String getPerson_name() {
         return person_name;

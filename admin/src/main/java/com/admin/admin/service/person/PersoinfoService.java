@@ -21,5 +21,5 @@ public class PersoinfoService {
     //删除
     public int deletePersion(ParamterModel paramterModel){return personDao.deletePersion(paramterModel);}
     //获取人员信息
-    public Personinformation getPersoin(int id){return personDao.getPersoin(id);}
+    public Personinformation getPersoin(String id){return personDao.getPersoin(id);}
 }

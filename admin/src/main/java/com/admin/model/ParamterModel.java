@@ -1,18 +1,19 @@
 package com.admin.model;
 
 public class ParamterModel {
-        private  int id;
+        private  String id;
         private boolean flag;
 
-        public int getId() {
-            return id;
-        }
+    public String getId() {
+        return id;
+    }
 
-        public void setId(int id) {
-            this.id = id;
-        }
+    public ParamterModel setId(String id) {
+        this.id = id;
+        return this;
+    }
 
-        public boolean isFlag() {
+    public boolean isFlag() {
             return flag;
         }
 

@@ -7,7 +7,7 @@ public class AddressInformation {
     private String latitude;
     private String longitude;
     private String address;
-    private int person_id;
+    private String person_id;
     private Date timesta;
 
     public int getId() {
@@ -20,6 +20,15 @@ public class AddressInformation {
 
     public String getLatitude() {
         return latitude;
+    }
+
+    public String getPerson_id() {
+        return person_id;
+    }
+
+    public AddressInformation setPerson_id(String person_id) {
+        this.person_id = person_id;
+        return this;
     }
 
     public void setLatitude(String latitude) {
@@ -42,13 +51,6 @@ public class AddressInformation {
         this.address = address;
     }
 
-    public int getPerson_id() {
-        return person_id;
-    }
-
-    public void setPerson_id(int person_id) {
-        this.person_id = person_id;
-    }
 
     public Date getTimesta() {
         return timesta;

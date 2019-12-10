@@ -4,10 +4,20 @@ import java.util.Date;
 
 public class SinginInformation {
     private int id;
-    private  int person_id;
+    private  String person_id;
     private int type;
     private String face;
     private String audio;
+
+    public String getPerson_id() {
+        return person_id;
+    }
+
+    public SinginInformation setPerson_id(String person_id) {
+        this.person_id = person_id;
+        return this;
+    }
+
     private int result;
     private String filepath;
     private Date createtime;
@@ -20,13 +30,6 @@ public class SinginInformation {
         this.id = id;
     }
 
-    public int getPerson_id() {
-        return person_id;
-    }
-
-    public void setPerson_id(int person_id) {
-        this.person_id = person_id;
-    }
 
     public int getType() {
         return type;
