@@ -6,7 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class HttpURLConnectionDemo {
-    public String doPost(String URL){
+    public String doPost(String URL,String jsonStr){
         OutputStreamWriter out = null;
         BufferedReader in = null;
         StringBuilder result = new StringBuilder();
@@ -25,7 +25,7 @@ public class HttpURLConnectionDemo {
             conn.setRequestProperty("Accept", "application/json");
             //获取输出流
             out = new OutputStreamWriter(conn.getOutputStream());
-            String jsonStr = "{\"qry_by\":\"name\", \"name\":\"Tim\"}";
+           // String jsonStr = "{\"qry_by\":\"name\", \"name\":\"Tim\"}";
             out.write(jsonStr);
             out.flush();
             out.close();
@@ -109,14 +109,4 @@ public class HttpURLConnectionDemo {
     }
 
 
-    public static void main(String[] args) throws Exception {
-        HttpURLConnectionDemo http = new HttpURLConnectionDemo();
-
-        System.out.println("Testing 1 - Do Http GET request");
-        http.doGet("http://localhost:8080");
-
-        System.out.println("\nTesting 2 - Do Http POST request");
-        http.doPost("http://localhost:8080/json");
-
-    }
 }
