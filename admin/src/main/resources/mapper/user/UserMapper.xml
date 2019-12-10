@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.user.UserDao">
+    <select id="ListUser" resultType="com.admin.admin.entity.user.User">
+        SELECT * FROM "t_user" where status=#{flag}
+    </select>
+
+    <select id="GetUser" parameterType="int" resultType="com.admin.admin.entity.user.User">
+        SELECT * FROM "t_user" where id=#{id}
+    </select>
+
+    <insert id="SaveUser" parameterType="com.admin.admin.entity.user.User">
+     INSERT into t_user(account_name,password,alias_name,permission_id,
+       createid,create_name,areacode,phone,status) values (#{user.account_name},#{user.password},#{user.alias_name},#{user.permission_id},#{user.createid},#{user.createname},#{user.areacode},#{user.phone},#{user.status})
+    </insert>
+    <update id="UpdateUser" parameterType="com.admin.admin.entity.user.User">
+        UPDATE t_user set account_name=#{user.account_name}, password=#{user.password},alias_name=#{user.alias_name},permission_id=#{user.permission_id},
+        createid=#{user.createid},create_name=#{user.createname},areacode=#{user.areacode},phone=#{user.phone},status=#{user.status} where id=#{user.id}
+    </update>
+
+    <update id="DeleteUser" parameterType="com.admin.model.ParamterModel">
+        update t_user set status=#{Paramter.falg} where id=#{Paramter.id}
+    </update>
+
+<select id="Login" resultType="com.admin.admin.entity.user.User" parameterType="String">
+    select * from t_user where account_name=#{UserName} and password=#{Password}
+</select>
+</mapper>

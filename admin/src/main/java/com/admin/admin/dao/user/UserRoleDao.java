@@ -15,7 +15,7 @@ public interface UserRoleDao {
     List<Menu> ListMenu(@Param("UserId")  int UserId);
 
     //新增
-    int SaveUserRole(  UserRole userRole);
+    int SaveUserRole(UserRole userRole);
 
     //修改
     int UpdateUserRole( UserRole userRole);

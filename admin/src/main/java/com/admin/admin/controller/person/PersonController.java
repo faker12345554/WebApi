@@ -47,7 +47,7 @@ public class PersonController {
 
     //获取
     @GetMapping("/getPersoin")
-    public ResponseResult getPersoin(@RequestParam(required = false) int id,HttpServletResponse response){
+    public ResponseResult getPersoin(@RequestParam(required = false) String id,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return  result.setData(persoinfoService.getPersoin(id));

@@ -30,7 +30,7 @@ public class UserController {
     private ResponseResult result=new ResponseResult();
 
     //用户列表
-    @GetMapping("/GetList")
+    @GetMapping("/")
     public ResponseResult<User> ListUser(@RequestParam(required = false) boolean falg,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
