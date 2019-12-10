@@ -2,8 +2,9 @@ package com.admin.admin.dao.person;
 
 import com.admin.admin.entity.person.GuaranteeInformation;
 import com.admin.model.ParamterModel;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
+@Mapper
 public interface GuarantDao {
 
     //新增

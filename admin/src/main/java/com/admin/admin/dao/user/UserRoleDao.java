@@ -12,17 +12,17 @@ import java.util.List;
 @Mapper
 public interface UserRoleDao {
 
-    List<Menu> ListMenu(@Param("UserId")  int UserId);
+    List<Menu> listMenu(@Param("UserId")  int UserId);
 
     //新增
-    int SaveUserRole(UserRole userRole);
+    int saveUserRole(  UserRole userRole);
 
     //修改
-    int UpdateUserRole( UserRole userRole);
+    int updateUserRole( UserRole userRole);
     //删除
-    int DeleteUserRole(ParamterModel Paramter);
+    int deleteUserRole(ParamterModel Paramter);
     //获取当前用户的权限
-    List<UserRoleModel> ListUserRole(@Param("id") int id);
+    List<UserRoleModel> listUserRole(@Param("id") int id);
 
 
 }

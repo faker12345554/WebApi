@@ -20,39 +20,39 @@ public class UserPermissController {
     private ResponseResult result=new ResponseResult();
 
     @PostMapping("/AddGroup")
-    public ResponseResult SaveGroup(@RequestBody(required = false)UserPermissionGroup group, HttpServletResponse response){
+    public ResponseResult saveGroup(@RequestBody(required = false)UserPermissionGroup group, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(groupService.SaveGroup(group));
+        return result.setData(groupService.saveGroup(group));
     }
 
     @PostMapping("/UpdateGroup")
-    public ResponseResult UpdateGroup(@RequestBody(required = false) UserPermissionGroup group,HttpServletResponse response){
+    public ResponseResult updateGroup(@RequestBody(required = false) UserPermissionGroup group,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return  result.setData(groupService.UpdateGroup(group));
+        return  result.setData(groupService.updateGroup(group));
     }
 
     @PostMapping("/DelGroup")
-    public ResponseResult DeleteGroup(@RequestBody(required = false) ParamterModel Paramter, HttpServletResponse response){
+    public ResponseResult deleteGroup(@RequestBody(required = false) ParamterModel Paramter, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
 
-        return result.setData(groupService.DeleteGroup(Paramter));
+        return result.setData(groupService.deleteGroup(Paramter));
     }
 
     @GetMapping("/GetGroup")
-    public ResponseResult GetGroup(@RequestParam(required = false) int id,HttpServletResponse response){
+    public ResponseResult getGroup(@RequestParam(required = false) int id,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(groupService.GetGroup(id));
+        return result.setData(groupService.getGroup(id));
     }
 
     @GetMapping("GetList")
-    public ResponseResult ListGroup(@RequestParam(required = false) boolean flag,HttpServletResponse response){
+    public ResponseResult listGroup(@RequestParam(required = false) boolean flag,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(groupService.ListGroup(flag));
+        return result.setData(groupService.listGroup(flag));
     }
 
 }

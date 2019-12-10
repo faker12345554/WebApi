@@ -14,25 +14,25 @@ public class GroupService {
     private UserPermissionGroupDao GroupDao;
 
     //新增
-    public int SaveGroup(UserPermissionGroup UserGroup){
-        return GroupDao.SaveUserGroup(UserGroup);
+    public int saveGroup(UserPermissionGroup UserGroup){
+        return GroupDao.saveUserGroup(UserGroup);
     }
     //修改
-    public int UpdateGroup(UserPermissionGroup UserGroup){
-        return GroupDao.UpdateGroup(UserGroup);
+    public int updateGroup(UserPermissionGroup UserGroup){
+        return GroupDao.updateGroup(UserGroup);
     }
     //删除
-    public int DeleteGroup(ParamterModel Paramter) {
-        return GroupDao.DeleteGroup(Paramter);
+    public int deleteGroup(ParamterModel Paramter) {
+        return GroupDao.deleteGroup(Paramter);
     }
 
     //获取组信息
-    public UserPermissionGroup GetGroup(int id){
-        return GroupDao.GetGroup(id);
+    public UserPermissionGroup getGroup(int id){
+        return GroupDao.getGroup(id);
     }
 
     //组列表
-    public List<UserPermissionGroup> ListGroup(boolean flag){
-        return GroupDao.ListGroup(flag);
+    public List<UserPermissionGroup> listGroup(boolean flag){
+        return GroupDao.listGroup(flag);
     }
 }

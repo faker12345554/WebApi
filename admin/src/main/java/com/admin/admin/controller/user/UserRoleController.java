@@ -23,34 +23,34 @@ public class UserRoleController {
     private ResponseResult result=new ResponseResult();
 
     @PostMapping("/AddUserRole")
-    public ResponseResult SaveUserRole(@RequestBody(required = false) UserRole userRole, HttpServletResponse response){
+    public ResponseResult saveUserRole(@RequestBody(required = false) UserRole userRole, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(userRoleService.SaveUserRole(userRole));
+        return result.setData(userRoleService.saveUserRole(userRole));
     }
 
     @PostMapping("/UpdateUserRole")
-    public ResponseResult UpdateUserRole(@RequestBody(required = false) UserRole userRole, HttpServletResponse response) {
+    public ResponseResult updateUserRole(@RequestBody(required = false) UserRole userRole, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(userRoleService.UpdateUserRole(userRole));
+        return result.setData(userRoleService.updateUserRole(userRole));
 }
     @PostMapping("/DelUserRole")
-    public ResponseResult DeleteUserRole(@RequestBody(required = false) ParamterModel Paramter, HttpServletResponse response){
+    public ResponseResult deleteUserRole(@RequestBody(required = false) ParamterModel Paramter, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(userRoleService.DeleteUserRole(Paramter));
+        return result.setData(userRoleService.deleteUserRole(Paramter));
     }
 
     @GetMapping("/GetList")
-    public ResponseResult<Menu> ListMenu(@RequestParam(required = false) int UserId,HttpServletResponse response){
+    public ResponseResult<Menu> listMenu(@RequestParam(required = false) int UserId,HttpServletResponse response){
 
         List<ParentMenu> Menu=new ArrayList<ParentMenu>();
 
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         //菜单
-        List<Menu> MenuList=userRoleService.ListMenu(UserId);
+        List<Menu> MenuList=userRoleService.listMenu(UserId);
         List<Menu> mainList=new ArrayList<Menu>();
         for (Menu item : MenuList) {
             if (item.getTop_id()==0){
@@ -93,9 +93,9 @@ public class UserRoleController {
     }
 
     @GetMapping("/GetRoleList")
-    public ResponseResult<UserRoleModel> ListUserRole(@RequestParam(required = false) int id,HttpServletResponse response){
+    public ResponseResult<UserRoleModel> listUserRole(@RequestParam(required = false) int id,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(userRoleService.ListUserRole(id));
+        return result.setData(userRoleService.listUserRole(id));
     }
 }
