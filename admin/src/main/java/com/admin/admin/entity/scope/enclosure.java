@@ -8,8 +8,27 @@ public class enclosure {
   private long id;
   private String personId;
   private String type;
+
+  public String getAreaName() {
+    return areaName;
+  }
+
+  public enclosure setAreaName(String areaName) {
+    this.areaName = areaName;
+    return this;
+  }
+
+  public String getLatitude() {
+    return latitude;
+  }
+
+  public enclosure setLatitude(String latitude) {
+    this.latitude = latitude;
+    return this;
+  }
+
   private String longitude;
-  private Date areaName;
+  private String areaName;
 
   public boolean isStatus() {
     return status;
@@ -20,26 +39,8 @@ public class enclosure {
     return this;
   }
 
-  private Date latitude;
+  private String latitude;
   private boolean status;
-
-  public Date getAreaName() {
-    return areaName;
-  }
-
-  public enclosure setAreaName(Date areaName) {
-    this.areaName = areaName;
-    return this;
-  }
-
-  public Date getLatitude() {
-    return latitude;
-  }
-
-  public enclosure setLatitude(Date latitude) {
-    this.latitude = latitude;
-    return this;
-  }
 
   public long getId() {
     return id;

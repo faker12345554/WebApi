@@ -9,6 +9,7 @@ import com.admin.model.ParamterModel;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,9 @@ public class UserController {
 
     private ResponseResult result=new ResponseResult();
 
+
     //用户列表
+    @ApiParam("用户信息列表")
     @GetMapping("/GetList")
     public ResponseResult<User> listUser(@RequestParam(required = false) boolean falg,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
@@ -39,6 +42,7 @@ public class UserController {
 
 
     //获取用户
+    @ApiParam("查看用户信息")
     @UserLoginToken
     @GetMapping("/GetUser")
     public ResponseResult getUser(@RequestParam(required = false) int id, HttpServletResponse response){
@@ -47,7 +51,8 @@ public class UserController {
         return result.setData(userService.getUser(id));
     }
     //新增用户
-    @PostMapping("/Add")
+    @ApiParam("新增用户")
+    @PostMapping("/AddUser")
     public ResponseResult saveUser(@RequestBody User user, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
@@ -55,13 +60,16 @@ public class UserController {
     }
 
     //修改
-    @PostMapping("/Update")
+
+    @ApiParam("修改用户信息")
+    @PostMapping("/UpdateUser")
     public ResponseResult updateUser(@RequestBody User user, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(userService.updateUser(user));
     }
     //删除
+    @ApiParam("删除用户")
     @PostMapping("/DelUser")
     public ResponseResult deleteUser(@RequestBody(required = false) ParamterModel Paramter, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
@@ -70,6 +78,7 @@ public class UserController {
     }
 
     //登录
+    @ApiParam("登录")
     @GetMapping("/Login")
     public ResponseResult login(@RequestParam(required = false) String UserName,@RequestParam(required = false) String Password,@RequestParam(required = false) String Code,
                                 HttpServletResponse response, HttpServletRequest request){
@@ -87,6 +96,7 @@ public class UserController {
         return result.setData(token);
     }
 
+    @ApiParam("获取验证码")
     @GetMapping("/random")
     public void findRandom (HttpServletResponse response,HttpServletRequest request) throws IOException {
         // 验证码字符个数
