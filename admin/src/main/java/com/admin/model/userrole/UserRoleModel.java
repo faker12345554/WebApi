@@ -1,4 +1,4 @@
-package com.admin.model;
+package com.admin.model.userrole;
 
 import java.util.Date;
 

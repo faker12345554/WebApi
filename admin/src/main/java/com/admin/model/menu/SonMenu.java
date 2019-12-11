@@ -1,4 +1,4 @@
-package com.admin.model;
+package com.admin.model.menu;
 
 public class SonMenu {
 

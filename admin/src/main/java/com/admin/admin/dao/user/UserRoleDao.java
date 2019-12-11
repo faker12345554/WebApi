@@ -3,7 +3,7 @@ package com.admin.admin.dao.user;
 import com.admin.admin.entity.user.Menu;
 import com.admin.admin.entity.user.UserRole;
 import com.admin.model.ParamterModel;
-import com.admin.model.UserRoleModel;
+import com.admin.model.userrole.UserRoleModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
