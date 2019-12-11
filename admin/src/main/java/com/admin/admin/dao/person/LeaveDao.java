@@ -16,5 +16,5 @@ public interface LeaveDao {
 
     int insertAuditor(AuditorInformation auditorInformation);
 
-    int delectAuditor(@Param("id") int id);
+    int deleteAuditor(@Param("leaveOrder") String leaveOrder);
 }
