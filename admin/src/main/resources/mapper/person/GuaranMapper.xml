@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.person.GuarantDao">
+    <insert id="insertGuarant" parameterType="com.admin.admin.entity.person.GuaranteeInformation">
+        insert into t_guaranteeinformation(guarantee_name,money,card,contact,workunit,address,status) VALUES (#{guarantee_name},#{money},#{card},#{contact},#{workunit},#{address},#{status})
+    </insert>
+
+    <update id="updateGuara" parameterType="com.admin.admin.entity.person.GuaranteeInformation">
+        update t_guaranteeinformation set guarantee_name=#{guarantee_name},money=#{money},card=#{card},contact=#{contact},workunit=#{workunit},address=#{address},status=#{status}
+    </update>
+
+    <delete id="deleteGuara" parameterType="com.admin.model.ParamterModel">
+        delete from t_guaranteeinformation  where id=#{id}
+    </delete>
+
+    <select id="getGuara" parameterType="int" resultType="com.admin.admin.entity.person.GuaranteeInformation">
+        select * from t_guaranteeinformation where id=#{id}
+    </select>
+
+</mapper>

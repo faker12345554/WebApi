@@ -4,8 +4,13 @@ import com.admin.admin.entity.user.Menu;
 import com.admin.admin.entity.user.UserRole;
 import com.admin.admin.service.user.UserRoleService;
 import com.admin.model.*;
+import com.admin.model.menu.MenuData;
+import com.admin.model.menu.ParentMenu;
+import com.admin.model.menu.SonMenu;
+import com.admin.model.userrole.UserRoleModel;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +27,7 @@ public class UserRoleController {
 
     private ResponseResult result=new ResponseResult();
 
+    @ApiParam("新增用户权限")
     @PostMapping("/AddUserRole")
     public ResponseResult saveUserRole(@RequestBody(required = false) UserRole userRole, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
@@ -29,12 +35,14 @@ public class UserRoleController {
         return result.setData(userRoleService.saveUserRole(userRole));
     }
 
+    @ApiParam("修改用户权限")
     @PostMapping("/UpdateUserRole")
     public ResponseResult updateUserRole(@RequestBody(required = false) UserRole userRole, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(userRoleService.updateUserRole(userRole));
 }
+    @ApiParam("删除用户权限")
     @PostMapping("/DelUserRole")
     public ResponseResult deleteUserRole(@RequestBody(required = false) ParamterModel Paramter, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
@@ -42,6 +50,7 @@ public class UserRoleController {
         return result.setData(userRoleService.deleteUserRole(Paramter));
     }
 
+    @ApiParam("菜单")
     @GetMapping("/GetList")
     public ResponseResult<Menu> listMenu(@RequestParam(required = false) int UserId,HttpServletResponse response){
 
@@ -92,8 +101,9 @@ public class UserRoleController {
         return result.setData(Menu);
     }
 
+    @ApiParam("用户权限列表")
     @GetMapping("/GetRoleList")
-    public ResponseResult<UserRoleModel> listUserRole(@RequestParam(required = false) int id,HttpServletResponse response){
+    public ResponseResult<UserRoleModel> listUserRole(@RequestParam(required = false) int id, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(userRoleService.listUserRole(id));

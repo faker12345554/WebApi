@@ -7,6 +7,16 @@ public class GuaranteeInformation {
     private String card;
     private String contact;
     private String workunit;
+    private String person_id;
+
+    public String getPerson_id() {
+        return person_id;
+    }
+
+    public GuaranteeInformation setPerson_id(String person_id) {
+        this.person_id = person_id;
+        return this;
+    }
 
     public int getId() {
         return id;

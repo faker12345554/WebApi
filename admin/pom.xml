@@ -11,6 +11,7 @@
     <artifactId>admin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>admin</name>
+    <packaging>war</packaging>
     <description>Demo project for Spring Boot</description>
     <dependencies>
         <dependency>
@@ -20,9 +21,23 @@
             <scope>compile</scope>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-tomcat</artifactId>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+<!--            本地运行这一段需要注释掉-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.springframework.boot</groupId>-->
+<!--                    <artifactId>spring-boot-starter-tomcat</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
         </dependency>
 
     </dependencies>
@@ -33,6 +48,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <finalName>webApi</finalName>
     </build>
 
 </project>

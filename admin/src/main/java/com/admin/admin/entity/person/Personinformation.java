@@ -1,22 +1,98 @@
 package com.admin.admin.entity.person;
 
+import org.apache.tomcat.jni.Time;
+
 import java.util.Date;
+import java.util.Timer;
 
 public class Personinformation {
-    private int  personid;
+    private String personid;
     private String person_name;
     private String gender;
     private int age;
     private Date birthdate;
     private String card;
+    private String Workunit;
+    private Date Bailoutbegindate;
+    private Date Bailoutenddate;
 
-    public int getPersonid() {
+    public String getPersonid() {
         return personid;
     }
 
-    public void setPersonid(int personid) {
+    public Personinformation setPersonid(String personid) {
         this.personid = personid;
+        return this;
     }
+
+    public String getFounderid() {
+        return founderid;
+    }
+
+    public Personinformation setFounderid(String founderid) {
+        this.founderid = founderid;
+        return this;
+    }
+
+    public Time getFoundertime() {
+        return foundertime;
+    }
+
+    public Personinformation setFoundertime(Time foundertime) {
+        this.foundertime = foundertime;
+        return this;
+    }
+
+    public String getModifierid() {
+        return modifierid;
+    }
+
+    public Personinformation setModifierid(String modifierid) {
+        this.modifierid = modifierid;
+        return this;
+    }
+
+    public Time getModifiertime() {
+        return modifiertime;
+    }
+
+    public Personinformation setModifiertime(Time modifiertime) {
+        this.modifiertime = modifiertime;
+        return this;
+    }
+
+    public String getSuspectstatus() {
+        return suspectstatus;
+    }
+
+    public Personinformation setSuspectstatus(String suspectstatus) {
+        this.suspectstatus = suspectstatus;
+        return this;
+    }
+
+    public String getMarriage() {
+        return marriage;
+    }
+
+    public Personinformation setMarriage(String marriage) {
+        this.marriage = marriage;
+        return this;
+    }
+
+    private String Sponsor;
+    private String sponsor_alarm;
+    private String Contact;
+    private String Address;
+    private String wechat_number;
+    private String qq_number;
+    private boolean status;
+    private String founderid;
+    private Time foundertime;
+    private String modifierid;
+    private Time modifiertime;
+    private String suspectstatus;
+    private String marriage;
+
 
     public String getPerson_name() {
         return person_name;
@@ -138,14 +214,5 @@ public class Personinformation {
         this.status = status;
     }
 
-    private String Workunit;
-    private Date Bailoutbegindate;
-    private Date Bailoutenddate;
-    private String Sponsor;
-    private String sponsor_alarm;
-    private String Contact;
-    private String Address;
-    private String wechat_number;
-    private String qq_number;
-    private boolean status;
+
 }
