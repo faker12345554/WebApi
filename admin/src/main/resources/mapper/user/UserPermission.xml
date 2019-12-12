@@ -18,4 +18,7 @@
     <update id="deleteGroup" parameterType="com.admin.model.ParamterModel">
         update t_userpermissiongroup set status=#{flag} where permission_id=#{id}
     </update>
+    <select id="selectByName" parameterType="String" resultType="int">
+        select count(*) from t_userpermissiongroup where permission_name=#{Name}
+    </select>
 </mapper>
