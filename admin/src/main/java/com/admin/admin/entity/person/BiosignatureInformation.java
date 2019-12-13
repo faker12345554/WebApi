@@ -8,8 +8,8 @@ import java.util.Date;
 
 public class BiosignatureInformation {
 
-  private String person_id;
-  private String person_name;
+  private String personid;
+  private String personname;
   private long type;
   private String filepath;
 
@@ -17,24 +17,21 @@ public class BiosignatureInformation {
   //@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date createtime;
 
-
-  public String getPersonId() {
-    return person_id;
+  public String getPersonid() {
+    return personid;
   }
 
-  public void setPersonId(String person_id) {
-    this.person_id = person_id;
+  public void setPersonid(String personid) {
+    this.personid = personid;
   }
 
-
-  public String getPersonName() {
-    return person_name;
+  public String getPersonname() {
+    return personname;
   }
 
-  public void setPersonName(String person_name) {
-    this.person_name = person_name;
+  public void setPersonname(String personname) {
+    this.personname = personname;
   }
-
 
   public long getType() {
     return type;

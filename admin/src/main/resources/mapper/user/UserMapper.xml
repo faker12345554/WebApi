@@ -11,12 +11,12 @@
     </select>
 
     <insert id="saveUser" parameterType="com.admin.admin.entity.user.User">
-     INSERT into t_user(account_name,password,alias_name,permission_id,
-       createid,create_name,areacode,phone,status) values (#{user.account_name},#{user.password},#{user.alias_name},#{user.permission_id},#{user.createid},#{user.createname},#{user.areacode},#{user.phone},#{user.status})
+     INSERT into t_user(accountname,password,aliasname,permissionid,
+       createid,createname,areacode,phone,status) values (#{user.accountname},#{user.password},#{user.aliasname},#{user.permissionid},#{user.createid},#{user.createname},#{user.areacode},#{user.phone},#{user.status})
     </insert>
     <update id="updateUser" parameterType="com.admin.admin.entity.user.User">
-        UPDATE t_user set account_name=#{user.account_name}, password=#{user.password},alias_name=#{user.alias_name},permission_id=#{user.permission_id},
-        createid=#{user.createid},create_name=#{user.createname},areacode=#{user.areacode},phone=#{user.phone},status=#{user.status} where id=#{user.id}
+        UPDATE t_user set accountname=#{user.accountname}, password=#{user.password},aliasname=#{user.aliasname},permissionid=#{user.permissionid},
+        createid=#{user.createid},createname=#{user.createname},areacode=#{user.areacode},phone=#{user.phone},status=#{user.status} where id=#{user.id}
     </update>
 
     <update id="deleteUser" parameterType="com.admin.model.ParamterModel">

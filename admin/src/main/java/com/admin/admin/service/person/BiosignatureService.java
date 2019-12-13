@@ -19,7 +19,7 @@ public class BiosignatureService {
         return biosignatureDao.insertBiosignature(biosignatureInformation);
     }
 
-    public List<BiosignatureReturnModel> getBiosignature(String person_id, int type){
-        return biosignatureDao.getBiosignature(person_id, type);
+    public List<BiosignatureReturnModel> getBiosignature(String personid, int type){
+        return biosignatureDao.getBiosignature(personid, type);
     }
 }

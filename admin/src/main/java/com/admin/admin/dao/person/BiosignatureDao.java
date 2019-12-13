@@ -10,8 +10,9 @@ import java.util.List;
 
 @Mapper
 public interface BiosignatureDao {
+
     int insertBiosignature(BiosignatureInformation biosignatureInformation);
 
-    List<BiosignatureReturnModel> getBiosignature(@Param("person_id")String person_id, @Param("type")int type);
+    List<BiosignatureReturnModel> getBiosignature(@Param("personid")String personid, @Param("type")int type);
 
 }

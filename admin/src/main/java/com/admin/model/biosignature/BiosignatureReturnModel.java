@@ -5,21 +5,19 @@ import java.util.Date;
 
 public class BiosignatureReturnModel {
 
-  private String person_name;
+  private String personname;
   private String filepath;
   //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   //@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date createtime;
 
-
-  public String getPersonName() {
-    return person_name;
+  public String getPersonname() {
+    return personname;
   }
 
-  public void setPersonName(String person_name) {
-    this.person_name = person_name;
+  public void setPersonname(String personname) {
+    this.personname = personname;
   }
-
 
   public String getFilepath() {
     return filepath;

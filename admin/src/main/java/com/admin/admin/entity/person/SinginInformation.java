@@ -4,18 +4,17 @@ import java.util.Date;
 
 public class SinginInformation {
     private int id;
-    private  String person_id;
+    private  String personid;
     private int type;
     private String face;
     private String audio;
 
-    public String getPerson_id() {
-        return person_id;
+    public String getPersonid() {
+        return personid;
     }
 
-    public SinginInformation setPerson_id(String person_id) {
-        this.person_id = person_id;
-        return this;
+    public void setPersonid(String personid) {
+        this.personid = personid;
     }
 
     private int result;

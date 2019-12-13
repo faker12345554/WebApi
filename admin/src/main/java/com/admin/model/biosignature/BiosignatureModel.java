@@ -5,20 +5,18 @@ import java.util.Date;
 
 public class BiosignatureModel {
 
-  private String person_id;
+  private String personid;
   private long type;
   private String filepath;
   private Date createtime;
 
-
-  public String getPersonId() {
-    return person_id;
+  public String getPersonid() {
+    return personid;
   }
 
-  public void setPersonId(String person_id) {
-    this.person_id = person_id;
+  public void setPersonid(String personid) {
+    this.personid = personid;
   }
-
 
   public long getType() {
     return type;
