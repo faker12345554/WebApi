@@ -35,4 +35,8 @@ public class GroupService {
     public List<UserPermissionGroup> listGroup(boolean flag){
         return GroupDao.listGroup(flag);
     }
+
+    public int selectByName(String Name){
+        return GroupDao.selectByName(Name);
+    }
 }

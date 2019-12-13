@@ -2,7 +2,6 @@ package com.admin.admin.controller.app;
 
 
 import com.admin.admin.service.app.MessageService;
-import com.admin.token.TokenUtil;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
     private ResponseResult result = new ResponseResult();
-    private TokenUtil tokenUtil =new TokenUtil();
+  //  private TokenUtil tokenUtil =new TokenUtil();
 
 
     @GetMapping("/Get")
