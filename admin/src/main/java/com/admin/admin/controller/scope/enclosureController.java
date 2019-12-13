@@ -25,47 +25,45 @@ public class enclosureController {
 
     @ApiParam("新增人员行动范围信息")
     @PostMapping("/saveEnclosure")
-    public ResponseResult saveEnclosure(@RequestBody(required = false) RangeMap map, HttpServletResponse response) {
-        if (enclosureService.selectEnclosureByPersonId(map.getPersonid())>0){
+    public ResponseResult saveEnclosure(@RequestBody(required = false) enclosure enclosure, HttpServletResponse response) {
+        if (enclosureService.selectEnclosureByPersonId(enclosure.getPerson_Id())>0){
             result.setCode(400);
             result.setMessage("该成员已存在位置信息");
             return result.setData("1");
         }
-        for (Longitude iten:map.getPosition()){
-            enclosure enclosure=new enclosure();
-            enclosure.setPersonId(map.getPersonid());
-            enclosure.setAreaName(map.getAreaname());
-            enclosure.setType(map.getType());
-            enclosure.setStatus(map.isStatus());
-            enclosure.setLongitude(iten.getLongitude());
-            enclosure.setLatitude(iten.getLatitude());
-            result.setData(enclosureService.saveEnclosure(enclosure));
-            System.out.println(result.getData());
-        }
+//        for (Longitude iten:map.getPosition()){
+//            enclosure enclosure=new enclosure();
+//            enclosure.setPersonId(map.getPerson_id());
+//            enclosure.setAreaName(map.getAreaname());
+//            enclosure.setType(map.getType());
+//            enclosure.setStatus(map.isStatus());
+//            result.setData(enclosureService.saveEnclosure(enclosure));
+//            System.out.println(result.getData());
+//        }
 
 
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result;
+        return result.setData(enclosureService.saveEnclosure(enclosure));
 
     }
     @ApiParam("修改人员行动范围信息")
     @PostMapping("/updateEnclosure")
-    public ResponseResult updateEnclosure(@RequestBody(required = false) RangeMap map, HttpServletResponse response){
-        for (Longitude iten:map.getPosition()){
-            enclosure enclosure=new enclosure();
-            enclosure.setPersonId(map.getPersonid());
-            enclosure.setAreaName(map.getAreaname());
-            enclosure.setType(map.getType());
-            enclosure.setStatus(map.isStatus());
-            enclosure.setLongitude(iten.getLongitude());
-            enclosure.setLatitude(iten.getLatitude());
-            result.setData(enclosureService.saveEnclosure(enclosure));
-            System.out.println(result.getData());
-        }
+    public ResponseResult updateEnclosure(@RequestBody(required = false) enclosure enclosure, HttpServletResponse response){
+//        for (Longitude iten:map.getPosition()){
+//            enclosure enclosure=new enclosure();
+//            enclosure.setPersonId(map.getPerson_id());
+//            enclosure.setAreaName(map.getAreaname());
+//            enclosure.setType(map.getType());
+//            enclosure.setStatus(map.isStatus());
+//            enclosure.setLongitude(iten.getLongitude());
+//            enclosure.setLatitude(iten.getLatitude());
+//            result.setData(enclosureService.saveEnclosure(enclosure));
+//            System.out.println(result.getData());
+//        }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result;
+        return result.setData(enclosureService.updateEnclosure(enclosure));
     }
 
     @ApiParam("删除人员行动范围信息")
@@ -79,23 +77,23 @@ public class enclosureController {
     @ApiParam("查看人员行动范围信息")
     @GetMapping("/selectEnclosure")
     public ResponseResult selectEnclosure(@RequestParam(required = false) String personId,HttpServletResponse response){
-        List<enclosure> listEncLouSure=enclosureService.selectEnclosure(personId);
-        RangeMap rangeMap=new RangeMap();
-        List<Longitude> listLongitudes=new ArrayList<Longitude>();
+//        List<enclosure> listEncLouSure=enclosureService.selectEnclosure(personId);
+//        RangeMap rangeMap=new RangeMap();
+//        List<Longitude> listLongitudes=new ArrayList<Longitude>();
 
-        for (enclosure item:listEncLouSure){
-            rangeMap.setPersonid(item.getPersonId());
-            rangeMap.setType(item.getType());
-            rangeMap.setAreaname(item.getAreaName());
-            rangeMap.setStatus(item.isStatus());
-            Longitude longitude=new Longitude();
-            longitude.setLatitude(item.getLatitude());
-            longitude.setLongitude(item.getLongitude());
-            listLongitudes.add(longitude);
-        }
-        rangeMap.setPosition(listLongitudes);
+//        for (enclosure item:listEncLouSure){
+//            rangeMap.setPerson_id(item.getPersonId());
+//            rangeMap.setType(item.getType());
+//            rangeMap.setAreaname(item.getAreaName());
+//            rangeMap.setStatus(item.isStatus());
+//            Longitude longitude=new Longitude();
+//            longitude.setLatitude(item.getLatitude());
+//            longitude.setLongitude(item.getLongitude());
+//            listLongitudes.add(longitude);
+//        }
+//        rangeMap.setPosition(listLongitudes);
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(rangeMap);
+        return result.setData(enclosureService.selectEnclosure(personId));
     }
 }

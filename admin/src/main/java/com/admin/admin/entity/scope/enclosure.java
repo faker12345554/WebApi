@@ -1,46 +1,36 @@
 package com.admin.admin.entity.scope;
 
 
-import java.util.Date;
-
 public class enclosure {
 
   private long id;
-  private String personId;
+  private String person_Id;
   private String type;
+  private String area_name;
+  private String status;
+  private String citycode;
+  private String citylevel;
 
-  public String getAreaName() {
-    return areaName;
+  public String getPerson_Id() {
+    return person_Id;
   }
 
-  public enclosure setAreaName(String areaName) {
-    this.areaName = areaName;
+  public enclosure setPerson_Id(String person_Id) {
+    this.person_Id = person_Id;
     return this;
   }
 
-  public String getLatitude() {
-    return latitude;
+  public String getArea_name() {
+    return area_name;
   }
 
-  public enclosure setLatitude(String latitude) {
-    this.latitude = latitude;
+  public enclosure setArea_name(String area_name) {
+    this.area_name = area_name;
     return this;
   }
 
-  private String longitude;
-  private String areaName;
+  private String areaArr;
 
-  public boolean isStatus() {
-    return status;
-  }
-
-  public enclosure setStatus(boolean status) {
-    this.status = status;
-    return this;
-  }
-
-  private String latitude;
-  private boolean status;
 
   public long getId() {
     return id;
@@ -51,13 +41,6 @@ public class enclosure {
   }
 
 
-  public String getPersonId() {
-    return personId;
-  }
-
-  public void setPersonId(String personId) {
-    this.personId = personId;
-  }
 
 
   public String getType() {
@@ -69,14 +52,41 @@ public class enclosure {
   }
 
 
-  public String getLongitude() {
-    return longitude;
+
+
+  public String getStatus() {
+    return status;
   }
 
-  public void setLongitude(String longitude) {
-    this.longitude = longitude;
+  public void setStatus(String status) {
+    this.status = status;
   }
 
 
+  public String getCitycode() {
+    return citycode;
+  }
+
+  public void setCitycode(String citycode) {
+    this.citycode = citycode;
+  }
+
+
+  public String getCitylevel() {
+    return citylevel;
+  }
+
+  public void setCitylevel(String citylevel) {
+    this.citylevel = citylevel;
+  }
+
+
+  public String getAreaArr() {
+    return areaArr;
+  }
+
+  public void setAreaArr(String areaArr) {
+    this.areaArr = areaArr;
+  }
 
 }
