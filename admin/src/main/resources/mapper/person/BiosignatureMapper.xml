@@ -3,6 +3,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.person.BiosignatureDao">
     <insert id="insertBiosignature" parameterType="com.admin.admin.entity.person.BiosignatureInformation">
-        insert into t_biosignature (person_id, person_name, type, filepath, createtime, status) VALUES (#(person_id),#(person_name),#(type),#(filepath),#(createtime),#(status))
+        insert into t_biosignature (person_id, person_name, type, filepath, createtime) VALUES (#{person_id},#{person_name},#{type},#{filepath},#{createtime})
     </insert>
+
+    <select id="getBiosignature" resultType="com.admin.model.biosignature.BiosignatureReturnModel">
+        select person_name,filepath,createtime from t_biosignature where person_id=#{person_id} and type=#{type}
+    </select>
 </mapper>

@@ -2,14 +2,13 @@ package com.admin.admin.controller.person;
 
 import com.admin.admin.entity.person.BiosignatureInformation;
 import com.admin.admin.service.person.BiosignatureService;
+import com.admin.model.biosignature.BiosignatureModel;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/Biosignature")
@@ -25,5 +24,13 @@ public class BiosignatureController {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(biosignatureService.insertBiosignature(biosignatureInformation));
+    }
+
+    @ApiOperation(value = "查询生物特征信息")
+    @GetMapping("/getBiosignature")
+    public ResponseResult getBiosignature(@RequestParam(required = true)String persion_id,@RequestParam(required = true) int type){
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(biosignatureService.getBiosignature(persion_id,type));
     }
 }
