@@ -3,13 +3,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.scope.enclosureDao">
     <insert id="saveEnclosure" parameterType="com.admin.admin.entity.scope.enclosure">
-        insert into t_enclosure(person_id,type,longitude,area_name,latitude,status) values
-        (#{personId},#{type},#{longitude},#{areaName},#{latitude},#{status})
+        insert into t_enclosure(person_id,type,area_name,status,citycode,citylevel,areaarr) values
+        (#{person_Id},#{type},#{area_name},#{status},#{citycode},#{citylevel},#{areaArr})
     </insert>
 
     <update id="updateEnclosure" parameterType="com.admin.admin.entity.scope.enclosure">
-        update updateEnclosure set person_id=#{personId},type=#{type},longitude=#{longitude},
-        area_name=#{areaName},latitude=#{latitude} where id=#{id}
+        update updateEnclosure set person_id=#{person_Id},type=#{type},
+        area_name=#{area_name},citycode=#{citycode},citylevel=#{citylevel},areaarr=#{areaArr} where id=#{id}
     </update>
 
     <update id="deleteEnclosure" parameterType="String">
