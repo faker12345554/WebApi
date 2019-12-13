@@ -4,36 +4,35 @@ import java.util.Date;
 
 public class UserRole {
 
-    private int role_id;
-    private String role_name;
-    private int menu_id;
+    private int roleid;
+    private String rolename;
+    private int menuid;
     private Date createtime;
     private boolean status;
     private int permission_id;
 
-    public int getRole_id() {
-        return role_id;
+    public int getRoleid() {
+        return roleid;
     }
 
-    public void setRole_id(int role_id) {
-        this.role_id = role_id;
+    public void setRoleid(int roleid) {
+        this.roleid = roleid;
     }
 
-    public String getRole_name() {
-        return role_name;
+    public String getRolename() {
+        return rolename;
     }
 
-    public void setRole_name(String role_name) {
-        this.role_name = role_name;
+    public void setRolename(String rolename) {
+        this.rolename = rolename;
     }
 
-    public int getMenu_id() {
-        return menu_id;
+    public int getMenuid() {
+        return menuid;
     }
 
-    public UserRole setMenu_id(int menu_id) {
-        this.menu_id = menu_id;
-        return this;
+    public void setMenuid(int menuid) {
+        this.menuid = menuid;
     }
 
     public Date getCreatetime() {

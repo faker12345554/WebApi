@@ -26,14 +26,14 @@ public class enclosureController {
     @ApiParam("新增人员行动范围信息")
     @PostMapping("/saveEnclosure")
     public ResponseResult saveEnclosure(@RequestBody(required = false) RangeMap map, HttpServletResponse response) {
-        if (enclosureService.selectEnclosureByPersonId(map.getPerson_id())>0){
+        if (enclosureService.selectEnclosureByPersonId(map.getPersonid())>0){
             result.setCode(400);
             result.setMessage("该成员已存在位置信息");
             return result.setData("1");
         }
         for (Longitude iten:map.getPosition()){
             enclosure enclosure=new enclosure();
-            enclosure.setPersonId(map.getPerson_id());
+            enclosure.setPersonId(map.getPersonid());
             enclosure.setAreaName(map.getAreaname());
             enclosure.setType(map.getType());
             enclosure.setStatus(map.isStatus());
@@ -54,7 +54,7 @@ public class enclosureController {
     public ResponseResult updateEnclosure(@RequestBody(required = false) RangeMap map, HttpServletResponse response){
         for (Longitude iten:map.getPosition()){
             enclosure enclosure=new enclosure();
-            enclosure.setPersonId(map.getPerson_id());
+            enclosure.setPersonId(map.getPersonid());
             enclosure.setAreaName(map.getAreaname());
             enclosure.setType(map.getType());
             enclosure.setStatus(map.isStatus());
@@ -84,7 +84,7 @@ public class enclosureController {
         List<Longitude> listLongitudes=new ArrayList<Longitude>();
 
         for (enclosure item:listEncLouSure){
-            rangeMap.setPerson_id(item.getPersonId());
+            rangeMap.setPersonid(item.getPersonId());
             rangeMap.setType(item.getType());
             rangeMap.setAreaname(item.getAreaName());
             rangeMap.setStatus(item.isStatus());

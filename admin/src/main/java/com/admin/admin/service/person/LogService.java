@@ -7,6 +7,8 @@ import com.admin.model.LogReturnModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LogService {
     @Autowired
@@ -16,7 +18,7 @@ public class LogService {
         return logDao.insertLog(logInformation);
     }
 
-    public LogReturnModel listLog(LogParamModel logParamModel){
+    public List<LogReturnModel> listLog(LogParamModel logParamModel){
         return logDao.listLog(logParamModel);
     }
 }

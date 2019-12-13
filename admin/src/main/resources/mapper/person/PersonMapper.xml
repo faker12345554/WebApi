@@ -3,13 +3,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.person.PersonDao">
     <insert id="insertPersion" parameterType="com.admin.admin.entity.person.Personinformation">
-        INSERT into t_personinformation(person_name,gender,age,birthdate,card,workunit,bailoutbegindate,bailoutenddate,sponsor,sponsor_alarm,contact,address,wechat_number,qq_number,status)
-        values (#{person_name},#{gender},#{age},#{birthdate},#{card},#{workunit},#{bailoutbegindate},#{bailoutenddate},#{sponsor},#{sponsor_alarm},#{contact},#{address},#{wechat_number},#{qq_number},#{status})
+        INSERT into t_personinformation(personname,gender,age,birthdate,card,workunit,bailoutbegindate,bailoutenddate,sponsor,sponsoralarm,contact,address,wechatnumber,qqnumber,status)
+        values (#{personname},#{gender},#{age},#{birthdate},#{card},#{workunit},#{bailoutbegindate},#{bailoutenddate},#{sponsor},#{sponsoralarm},#{contact},#{address},#{wechatnumber},#{qqnumber},#{status})
     </insert>
 
     <update id="updatePersion" parameterType="com.admin.admin.entity.person.Personinformation">
-        UPDATE t_personinformation set person_name=#{person_name},gender=#{gender},age=#{age},birthdate=#{birthdate},card=#{card},workunit=#{workunit},bailoutbegindate=#{bailoutbegindate},
-        bailoutenddate=#{bailoutenddate},sponsor=#{sponsor},sponsor_alarm=#{sponsor_alarm},contact=#{contact},address=#{address},wechat_number=#{wechat_number},qq_number=#{qq_number},status=#{status}
+        UPDATE t_personinformation set personname=#{personname},gender=#{gender},age=#{age},birthdate=#{birthdate},card=#{card},workunit=#{workunit},bailoutbegindate=#{bailoutbegindate},
+        bailoutenddate=#{bailoutenddate},sponsor=#{sponsor},sponsoralarm=#{sponsoralarm},contact=#{contact},address=#{address},wechatnumber=#{wechatnumber},qqnumber=#{qqnumber},status=#{status}
         where personid=#{personid}
     </update>
 

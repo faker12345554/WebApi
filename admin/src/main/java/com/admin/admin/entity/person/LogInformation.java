@@ -7,21 +7,10 @@ import java.util.Date;
 
 public class LogInformation {
 
-  //private long id;
   private long operator;
   private String modular;
   private String action;
   private Date operatingtime;
-
-
-  //public long getId() {
-    //return id;
-  //}
-
-  //public void setId(long id) {
-    //this.id = id;
-  //}
-
 
   public long getOperator() {
     return operator;

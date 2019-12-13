@@ -1,27 +1,52 @@
 package com.admin.admin.entity.user;
 
 public class Menu {
-    private int menu_id;
-    private String menu_name;
+    private int menuid;
+    private String menuname;
     private String path;
     private String name;
     private String redirect;
 
     public int getMenu_id() {
-        return menu_id;
+        return menuid;
     }
 
-    public void setMenu_id(int menu_id) {
-        this.menu_id = menu_id;
+    public int getMenuid() {
+        return menuid;
     }
 
-    public String getMenu_name() {
-        return menu_name;
+    public void setMenuid(int menuid) {
+        this.menuid = menuid;
     }
 
-    public void setMenu_name(String menu_name) {
-        this.menu_name = menu_name;
+    public String getMenuname() {
+        return menuname;
     }
+
+    public void setMenuname(String menuname) {
+        this.menuname = menuname;
+    }
+
+    public int getOrderid() {
+        return orderid;
+    }
+
+    public void setOrderid(int orderid) {
+        this.orderid = orderid;
+    }
+
+    public int getTopid() {
+        return topid;
+    }
+
+    public void setTopid(int topid) {
+        this.topid = topid;
+    }
+
+
+
+
+
 
     public String getPath() {
         return path;
@@ -49,9 +74,6 @@ public class Menu {
         return icon;
     }
 
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
 
     public boolean getAffix() {
         return affix;
@@ -59,6 +81,10 @@ public class Menu {
 
     public void setAffix(boolean affix) {
         this.affix = affix;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public boolean isHidden() {
@@ -69,26 +95,13 @@ public class Menu {
         this.hidden = hidden;
     }
 
-    public int getOrder_id() {
-        return order_id;
-    }
 
-    public void setOrder_id(int order_id) {
-        this.order_id = order_id;
-    }
 
     public boolean isAffix() {
         return affix;
     }
 
-    public int getTop_id() {
-        return top_id;
-    }
 
-    public Menu setTop_id(int top_id) {
-        this.top_id = top_id;
-        return this;
-    }
 
     public boolean isStatus() {
         return status;
@@ -109,8 +122,8 @@ public class Menu {
     private String icon;
     private boolean affix;
     private boolean hidden;
-    private int order_id;
-    private int top_id;
+    private int orderid;
+    private int topid;
     private boolean status;
     private String component;
 }

@@ -5,12 +5,28 @@ import java.util.Date;
 public class AuditorInformation {
     private int id;
     private String leaveorder;
-    private String user_id;
+    private String userid;
     private String leavingmessage;
     private int statuscode;
     private String states;
-    private String account_name;
+    private String accountname;
     private Date auditordatetime;
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public String getAccountname() {
+        return accountname;
+    }
+
+    public void setAccountname(String accountname) {
+        this.accountname = accountname;
+    }
 
     public int getId() {
         return id;
@@ -28,13 +44,6 @@ public class AuditorInformation {
         this.leaveorder = leaveorder;
     }
 
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
 
     public String getLeavingmessage() {
         return leavingmessage;
@@ -60,13 +69,6 @@ public class AuditorInformation {
         this.states = states;
     }
 
-    public String getAccount_name() {
-        return account_name;
-    }
-
-    public void setAccount_name(String account_name) {
-        this.account_name = account_name;
-    }
 
     public Date getAuditordatetime() {
         return auditordatetime;

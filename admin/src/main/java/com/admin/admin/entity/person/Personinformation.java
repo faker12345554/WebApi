@@ -7,7 +7,7 @@ import java.util.Timer;
 
 public class Personinformation {
     private String personid;
-    private String person_name;
+    private String personname;
     private String gender;
     private int age;
     private Date birthdate;
@@ -23,6 +23,38 @@ public class Personinformation {
     public Personinformation setPersonid(String personid) {
         this.personid = personid;
         return this;
+    }
+
+    public String getPersonname() {
+        return personname;
+    }
+
+    public void setPersonname(String personname) {
+        this.personname = personname;
+    }
+
+    public String getSponsoralarm() {
+        return sponsoralarm;
+    }
+
+    public void setSponsoralarm(String sponsoralarm) {
+        this.sponsoralarm = sponsoralarm;
+    }
+
+    public String getWechatnumber() {
+        return wechatnumber;
+    }
+
+    public void setWechatnumber(String wechatnumber) {
+        this.wechatnumber = wechatnumber;
+    }
+
+    public String getQqnumber() {
+        return qqnumber;
+    }
+
+    public void setQqnumber(String qqnumber) {
+        this.qqnumber = qqnumber;
     }
 
     public String getFounderid() {
@@ -80,11 +112,11 @@ public class Personinformation {
     }
 
     private String Sponsor;
-    private String sponsor_alarm;
+    private String sponsoralarm;
     private String Contact;
     private String Address;
-    private String wechat_number;
-    private String qq_number;
+    private String wechatnumber;
+    private String qqnumber;
     private boolean status;
     private String founderid;
     private Time foundertime;
@@ -95,11 +127,11 @@ public class Personinformation {
 
 
     public String getPerson_name() {
-        return person_name;
+        return personname;
     }
 
     public void setPerson_name(String person_name) {
-        this.person_name = person_name;
+        this.personname = person_name;
     }
 
     public String getGender() {
@@ -166,13 +198,6 @@ public class Personinformation {
         Sponsor = sponsor;
     }
 
-    public String getSponsor_alarm() {
-        return sponsor_alarm;
-    }
-
-    public void setSponsor_alarm(String sponsor_alarm) {
-        this.sponsor_alarm = sponsor_alarm;
-    }
 
     public String getContact() {
         return Contact;
@@ -190,21 +215,6 @@ public class Personinformation {
         Address = address;
     }
 
-    public String getWechat_number() {
-        return wechat_number;
-    }
-
-    public void setWechat_number(String wechat_number) {
-        this.wechat_number = wechat_number;
-    }
-
-    public String getQq_number() {
-        return qq_number;
-    }
-
-    public void setQq_number(String qq_number) {
-        this.qq_number = qq_number;
-    }
 
     public boolean isStatus() {
         return status;

@@ -3,56 +3,51 @@ package com.admin.admin.entity.user;
 import java.util.Date;
 
 public class UserPermissionGroup {
-    private int permission_id;
-    private String permission_name;
-    private Date create_time;
-    private int create_id;
-    private String create_name;
+    private int permissionid;
+    private String permissionname;
+    private Date createtime;
+    private int createid;
+    private String createname;
     private boolean status;
 
-    public int getPermission_id() {
-        return permission_id;
+    public int getPermissionid() {
+        return permissionid;
     }
 
-    public UserPermissionGroup setPermission_id(int permission_id) {
-        this.permission_id = permission_id;
-        return this;
+    public void setPermissionid(int permissionid) {
+        this.permissionid = permissionid;
     }
 
-    public String getPermission_name() {
-        return permission_name;
+    public String getPermissionname() {
+        return permissionname;
     }
 
-    public UserPermissionGroup setPermission_name(String permission_name) {
-        this.permission_name = permission_name;
-        return this;
+    public void setPermissionname(String permissionname) {
+        this.permissionname = permissionname;
     }
 
-    public Date getCreate_time() {
-        return create_time;
+    public Date getCreatetime() {
+        return createtime;
     }
 
-    public UserPermissionGroup setCreate_time(Date create_time) {
-        this.create_time = create_time;
-        return this;
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 
-    public int getCreate_id() {
-        return create_id;
+    public int getCreateid() {
+        return createid;
     }
 
-    public UserPermissionGroup setCreate_id(int create_id) {
-        this.create_id = create_id;
-        return this;
+    public void setCreateid(int createid) {
+        this.createid = createid;
     }
 
-    public String getCreate_name() {
-        return create_name;
+    public String getCreatename() {
+        return createname;
     }
 
-    public UserPermissionGroup setCreate_name(String create_name) {
-        this.create_name = create_name;
-        return this;
+    public void setCreatename(String createname) {
+        this.createname = createname;
     }
 
     public boolean isStatus() {

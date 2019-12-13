@@ -42,15 +42,15 @@ public class PrisonappApplication {
         c.setTime(new Date());
         c.add(Calendar.DATE, 5);
         Date tomorrow = c.getTime();
-        System.out.println(new Date());
+//        System.out.println(new Date());
 
 
-        String time = "2019-12-05";
+        String time = "2019-12-12 17:13:00";
         Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(time);
 
-
+        System.out.println(date);
         Demo demo = new Demo("5dd34971570df39fe0000e36", "irieuktitblepym21ex7pav7rh27rrvv");
-        int i = demo.sendAndroidUnicast("AtMqss89NJcaerkruc7N0Bgif58Zyy00PkqfWUt5j1xz", "测试单播", "安卓测试", "今天天气不错", tomorrow);
+        int i = demo.sendAndroidUnicast("AtMqss89NJcaerkruc7N0Bgif58Zyy00PkqfWUt5j1xz", "测试单播", "安卓测试", "今天天气不错", date);
     }
 }
 
