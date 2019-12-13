@@ -62,7 +62,7 @@ public class UserRoleController {
         List<Menu> MenuList=userRoleService.listMenu(UserId);
         List<Menu> mainList=new ArrayList<Menu>();
         for (Menu item : MenuList) {
-            if (item.getTop_id()==0){
+            if (item.getTopid()==0){
                 mainList.add(item);
             }
         }
@@ -70,7 +70,7 @@ public class UserRoleController {
         for (Menu item: mainList){
             ParentMenu model=new ParentMenu();
             MenuData Title=new MenuData();
-            Title.setTitle(item.getMenu_name());
+            Title.setTitle(item.getMenuname());
             Title.setIcon(item.getIcon());
             model.setPath(item.getPath());
             model.setComponent(item.getComponent());
@@ -80,13 +80,13 @@ public class UserRoleController {
           
             List<SonMenu> SubList=new ArrayList<SonMenu>();
             for (Menu Me:MenuList){
-                if (Me.getTop_id()==item.getMenu_id()){
+                if (Me.getTopid()==item.getMenu_id()){
                     MenuData data=new MenuData();
                     SonMenu Sub=new SonMenu();
                     Sub.setPath(Me.getPath());
                     Sub.setComponent(Me.getComponent());
                     Sub.setName(Me.getName());
-                    data.setTitle(Me.getMenu_name());
+                    data.setTitle(Me.getMenuname());
                     data.setIcon(Me.getIcon());
                     Sub.setMeta(data);
                     SubList.add(Sub);

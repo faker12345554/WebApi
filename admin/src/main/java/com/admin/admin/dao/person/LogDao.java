@@ -6,11 +6,13 @@ import com.admin.model.LogParamModel;
 import com.admin.model.LogReturnModel;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface LogDao {
 
     int insertLog(LogInformation logInformation);
 
-    LogReturnModel listLog(LogParamModel logParamModel);
+    List<LogReturnModel> listLog(LogParamModel logParamModel);
 
 }

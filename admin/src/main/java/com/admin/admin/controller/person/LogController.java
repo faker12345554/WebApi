@@ -19,6 +19,7 @@ public class LogController {
 
     private ResponseResult result=new ResponseResult();
 
+    @ApiOperation(value = "增加日志")
     @PostMapping("/addLog")
     public ResponseResult insertLog(@RequestBody LogInformation logInformation, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
@@ -27,12 +28,11 @@ public class LogController {
     }
 
     @ApiOperation(value = "查询日志信息")
-    @GetMapping("/getLog")
-    public ResponseResult listLog(@RequestParam LogParamModel logParamModel, HttpServletResponse response){
+    @PostMapping("/getLog")
+    public ResponseResult listLog(@RequestBody LogParamModel logParamModel, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(logService.listLog(logParamModel));
     }
-
 
 }

@@ -3,20 +3,19 @@ package com.admin.model.coordina;
 import java.util.List;
 
 public class RangeMap {
-    private String person_id;
+    private String personid;
     private String Type;
-
-    public String getPerson_id() {
-        return person_id;
-    }
-
-    public RangeMap setPerson_id(String person_id) {
-        this.person_id = person_id;
-        return this;
-    }
 
     public String getType() {
         return Type;
+    }
+
+    public String getPersonid() {
+        return personid;
+    }
+
+    public void setPersonid(String personid) {
+        this.personid = personid;
     }
 
     public RangeMap setType(String type) {

@@ -29,5 +29,6 @@ public class LeaveService {
     public int insertAuditor(AuditorInformation auditorInformation) {
         return leaveDao.insertAuditor(auditorInformation);
     }
-    public int delectAuditor(int id){return leaveDao.delectAuditor(id);}
+
+    public int deleteAuditor(String leaveOrder){return leaveDao.deleteAuditor(leaveOrder);}
 }

@@ -7,18 +7,18 @@
     </select>
 
     <select id="getGroup" parameterType="int" resultType="com.admin.admin.entity.user.UserPermissionGroup">
-        SELECT * from t_userpermissiongroup WHERE status=TRUE and permission_id=#{id}
+        SELECT * from t_userpermissiongroup WHERE status=TRUE and permissionid=#{id}
     </select>
     <insert id="saveUserGroup" parameterType="com.admin.admin.entity.user.UserPermissionGroup">
-        insert into t_userpermissiongroup(create_id,create_time,permission_name,create_name,status) values (#{create_id},#{create_time},#{permission_name},#{create_name},#{status})
+        insert into t_userpermissiongroup(createid,createtime,permissionname,createname,status) values (#{createid},#{createtime},#{permissionname},#{createname},#{status})
     </insert>
     <update id="updateGroup" parameterType="com.admin.admin.entity.user.UserPermissionGroup">
-        update t_userpermissiongroup set permission_name=#{permission_name},create_time=#{create_time},create_id=#{create_id},create_name=#{create_name},status=#{status} where permission_id=#{permission_id}
+        update t_userpermissiongroup set permissionname=#{permissionname},createtime=#{createtime},createid=#{createid},createname=#{createname},status=#{status} where permissionid=#{permissionid}
     </update>
     <update id="deleteGroup" parameterType="com.admin.model.ParamterModel">
-        update t_userpermissiongroup set status=#{flag} where permission_id=#{id}
+        update t_userpermissiongroup set status=#{flag} where permissionid=#{id}
     </update>
     <select id="selectByName" parameterType="String" resultType="int">
-        select count(*) from t_userpermissiongroup where permission_name=#{Name}
+        select count(*) from t_userpermissiongroup where permissionname=#{Name}
     </select>
 </mapper>

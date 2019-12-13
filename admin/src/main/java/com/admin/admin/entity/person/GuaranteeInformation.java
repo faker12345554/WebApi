@@ -2,20 +2,27 @@ package com.admin.admin.entity.person;
 
 public class GuaranteeInformation {
     private int id;
-    private String guarantee_name;
+    private String guaranteename;
     private int money;
     private String card;
     private String contact;
     private String workunit;
-    private String person_id;
+    private String personid;
 
-    public String getPerson_id() {
-        return person_id;
+    public String getGuaranteename() {
+        return guaranteename;
     }
 
-    public GuaranteeInformation setPerson_id(String person_id) {
-        this.person_id = person_id;
-        return this;
+    public void setGuaranteename(String guaranteename) {
+        this.guaranteename = guaranteename;
+    }
+
+    public String getPersonid() {
+        return personid;
+    }
+
+    public void setPersonid(String personid) {
+        this.personid = personid;
     }
 
     public int getId() {
@@ -26,13 +33,6 @@ public class GuaranteeInformation {
         this.id = id;
     }
 
-    public String getGuarantee_name() {
-        return guarantee_name;
-    }
-
-    public void setGuarantee_name(String guarantee_name) {
-        this.guarantee_name = guarantee_name;
-    }
 
     public int getMoney() {
         return money;
