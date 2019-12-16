@@ -20,9 +20,9 @@ public class MessageController {
 
 
     @GetMapping("/Get")
-    public ResponseResult getNotificationList(){
+    public ResponseResult getNotificationList(String UserId){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(messageService.getNotificationList());
+        return result.setData(messageService.getNotificationList(UserId));
     }
 }
