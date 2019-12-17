@@ -10,8 +10,8 @@
         update t_userrole set rolename=#{rolename},menuid=#{menuid},createtime=#{createtime},status=#{status},permissionid=#{permissionid} where roleid=#{roleid}
     </update>
 
-    <update id="deleteUserRole" parameterType="com.admin.model.ParamterModel">
-        update t_userrole set status=#{flag} where roleid=#{id}
+    <update id="deleteUserRole" >
+        update t_userrole set status=#{flag} where roleid=#{UserRoleId}
     </update>
     <select id="listMenu" resultType="com.admin.admin.entity.user.Menu" parameterType="int" >
         select distinct M.* from t_user as U
