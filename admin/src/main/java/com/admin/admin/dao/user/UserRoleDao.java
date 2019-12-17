@@ -20,7 +20,7 @@ public interface UserRoleDao {
     //修改
     int updateUserRole( UserRole userRole);
     //删除
-    int deleteUserRole(ParamterModel Paramter);
+    int deleteUserRole(@Param("flag") boolean flag, @Param("UserRoleId") int UserRoleId);
     //获取当前用户的权限
     List<UserRoleModel> listUserRole(@Param("id") int id);
 

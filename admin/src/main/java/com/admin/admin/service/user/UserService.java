@@ -21,8 +21,8 @@ public class UserService {
         return userDao.updateUser(t_user);
     }
     //删除
-    public int deleteUser(ParamterModel Paramter){
-        return userDao.deleteUser(Paramter);
+    public int deleteUser(Boolean flag,int UserId){
+        return userDao.deleteUser(flag,UserId);
     }
     //登录
     public User login(String UserName,String Password){

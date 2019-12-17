@@ -7,6 +7,7 @@ import com.admin.model.coordina.RangeMap;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class enclosureController {
     @ApiParam("新增人员行动范围信息")
     @PostMapping("/saveEnclosure")
     public ResponseResult saveEnclosure(@RequestBody(required = false) enclosure enclosure, HttpServletResponse response) {
-        if (enclosureService.selectEnclosureByPersonId(enclosure.getPerson_Id())>0){
+        if (enclosureService.selectEnclosureByPersonId(enclosure.getPersonId())>0){
             result.setCode(400);
             result.setMessage("该成员已存在位置信息");
             return result.setData("1");
@@ -47,7 +48,7 @@ public class enclosureController {
         return result.setData(enclosureService.saveEnclosure(enclosure));
 
     }
-    @ApiParam("修改人员行动范围信息")
+    @ApiOperation("修改人员行动范围信息")
     @PostMapping("/updateEnclosure")
     public ResponseResult updateEnclosure(@RequestBody(required = false) enclosure enclosure, HttpServletResponse response){
 //        for (Longitude iten:map.getPosition()){
@@ -66,7 +67,7 @@ public class enclosureController {
         return result.setData(enclosureService.updateEnclosure(enclosure));
     }
 
-    @ApiParam("删除人员行动范围信息")
+    @ApiOperation("删除人员行动范围信息")
     @GetMapping("/deleteEnclosure")
     public ResponseResult deleteEnclosure(@RequestParam(required = false) String personId,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
@@ -74,7 +75,7 @@ public class enclosureController {
         return result.setData(enclosureService.deleteEnclosure(personId));
     }
 
-    @ApiParam("查看人员行动范围信息")
+    @ApiOperation("查看人员行动范围信息")
     @GetMapping("/selectEnclosure")
     public ResponseResult selectEnclosure(@RequestParam(required = false) String personId,HttpServletResponse response){
 //        List<enclosure> listEncLouSure=enclosureService.selectEnclosure(personId);

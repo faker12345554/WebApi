@@ -14,7 +14,7 @@ public interface PersonDao {
     //修改
     int updatePersion(Personinformation personinformation);
     //删除
-    int deletePersion(ParamterModel paramterModel);
+    int deletePersion(@Param("flag") boolean flag, @Param("PersonId") String PersonId);
     //查询
     Personinformation getPersoin(@Param("id") String id);
 }

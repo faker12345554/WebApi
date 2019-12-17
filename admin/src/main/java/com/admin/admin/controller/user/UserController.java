@@ -9,6 +9,7 @@ import com.admin.model.ParamterModel;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ import java.io.PrintWriter;
 import java.util.Random;
 
 @RestController
-@Api(value = "用户基本信息操作")
+//@Api(value = "用户基本信息操作")
 @RequestMapping("/User")
 public class UserController {
     @Autowired
@@ -31,8 +32,8 @@ public class UserController {
     private ResponseResult result=new ResponseResult();
 
 
-    //用户列表
-    @ApiParam("用户信息列表")
+    //用户列表  搬砖去了
+    @ApiOperation("用户信息列表")
     @GetMapping("/GetList")
     public ResponseResult<User> listUser(@RequestParam(required = false) boolean falg,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
@@ -42,7 +43,7 @@ public class UserController {
 
 
     //获取用户
-    @ApiParam("查看用户信息")
+    @ApiOperation("查看用户信息")
     @UserLoginToken
     @GetMapping("/GetUser")
     public ResponseResult getUser(@RequestParam(required = false) int id, HttpServletResponse response){
@@ -51,7 +52,7 @@ public class UserController {
         return result.setData(userService.getUser(id));
     }
     //新增用户
-    @ApiParam("新增用户")
+    @ApiOperation("新增用户")
     @PostMapping("/AddUser")
     public ResponseResult saveUser(@RequestBody User user, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
@@ -61,7 +62,7 @@ public class UserController {
 
     //修改
 
-    @ApiParam("修改用户信息")
+    @ApiOperation("修改用户信息")
     @PostMapping("/UpdateUser")
     public ResponseResult updateUser(@RequestBody User user, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
@@ -69,16 +70,16 @@ public class UserController {
         return result.setData(userService.updateUser(user));
     }
     //删除
-    @ApiParam("删除用户")
-    @PostMapping("/DelUser")
-    public ResponseResult deleteUser(@RequestBody(required = false) ParamterModel Paramter, HttpServletResponse response){
+    @ApiOperation("删除用户")
+    @GetMapping("/DelUser")
+    public ResponseResult deleteUser(@RequestParam(required = false) boolean flag,@RequestParam int UserId ,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(userService.deleteUser(Paramter));
+        return result.setData(userService.deleteUser(flag,UserId));
     }
 
     //登录
-    @ApiParam("登录")
+    @ApiOperation("登录")
     @GetMapping("/Login")
     public ResponseResult login(@RequestParam(required = false) String UserName,@RequestParam(required = false) String Password,@RequestParam(required = false) String Code,
                                 HttpServletResponse response, HttpServletRequest request){
@@ -92,11 +93,12 @@ public class UserController {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         User user=userService.login(UserName, Password);
+        CacheUtils.put("UserId",user.getId(),0);
         String token = tokenService.getToken(user);
         return result.setData(token);
     }
 
-    @ApiParam("获取验证码")
+    @ApiOperation("获取验证码")
     @GetMapping("/random")
     public void findRandom (HttpServletResponse response,HttpServletRequest request) throws IOException {
         // 验证码字符个数

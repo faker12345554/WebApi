@@ -19,7 +19,7 @@ public class PersoinfoService {
     //修改
     public int updatePersion(Personinformation personinformation){return personDao.updatePersion(personinformation);}
     //删除
-    public int deletePersion(ParamterModel paramterModel){return personDao.deletePersion(paramterModel);}
+    public int deletePersion(boolean flag,String PersionId){return personDao.deletePersion(flag,PersionId);}
     //获取人员信息
     public Personinformation getPersoin(String id){return personDao.getPersoin(id);}
 }

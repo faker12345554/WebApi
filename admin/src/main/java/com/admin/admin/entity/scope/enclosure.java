@@ -4,30 +4,32 @@ package com.admin.admin.entity.scope;
 public class enclosure {
 
   private long id;
-  private String person_Id;
+  private String personId;
   private String type;
-  private String area_name;
+  private String areaname;
   private String status;
   private String citycode;
+
+  public String getPersonId() {
+    return personId;
+  }
+
+  public enclosure setPersonId(String personId) {
+    this.personId = personId;
+    return this;
+  }
+
+  public String getAreaname() {
+    return areaname;
+  }
+
+  public enclosure setAreaname(String areaname) {
+    this.areaname = areaname;
+    return this;
+  }
+
   private String citylevel;
 
-  public String getPerson_Id() {
-    return person_Id;
-  }
-
-  public enclosure setPerson_Id(String person_Id) {
-    this.person_Id = person_Id;
-    return this;
-  }
-
-  public String getArea_name() {
-    return area_name;
-  }
-
-  public enclosure setArea_name(String area_name) {
-    this.area_name = area_name;
-    return this;
-  }
 
   private String areaArr;
 

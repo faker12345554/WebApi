@@ -19,11 +19,11 @@
         createid=#{user.createid},createname=#{user.createname},areacode=#{user.areacode},phone=#{user.phone},status=#{user.status} where id=#{user.id}
     </update>
 
-    <update id="deleteUser" parameterType="com.admin.model.ParamterModel">
-        update t_user set status=#{Paramter.flag} where id=#{Paramter.id}
+    <update id="deleteUser">
+        update t_user set status=#{flag} where id=#{UserId}
     </update>
 
 <select id="login" resultType="com.admin.admin.entity.user.User" parameterType="String">
-    select * from t_user where account_name=#{UserName} and password=#{Password}
+    select * from t_user where accountname=#{UserName} and password=#{Password}
 </select>
 </mapper>

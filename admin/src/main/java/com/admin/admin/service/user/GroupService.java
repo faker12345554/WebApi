@@ -22,8 +22,8 @@ public class GroupService {
         return GroupDao.updateGroup(UserGroup);
     }
     //删除
-    public int deleteGroup(ParamterModel Paramter) {
-        return GroupDao.deleteGroup(Paramter);
+    public int deleteGroup(boolean flag,int GroupId) {
+        return GroupDao.deleteGroup(flag,GroupId);
     }
 
     //获取组信息

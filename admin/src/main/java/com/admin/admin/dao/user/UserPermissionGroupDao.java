@@ -15,7 +15,7 @@ public interface UserPermissionGroupDao {
     //修改
     int updateGroup(UserPermissionGroup  userGroup);
     //删除
-    int deleteGroup(ParamterModel Paramter);
+    int deleteGroup(@Param("flag") boolean flag,@Param("PermissId")int PermissId);
 
     //获取
     UserPermissionGroup getGroup(@Param("id") int id);

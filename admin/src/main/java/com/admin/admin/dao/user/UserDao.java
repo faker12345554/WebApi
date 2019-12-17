@@ -15,7 +15,7 @@ public interface UserDao {
     //修改用户
     int updateUser(@Param("user") User user);
     //删除
-    int deleteUser(@Param("Paramter") ParamterModel Paramter);
+    int deleteUser(@Param("flag") boolean flag, @Param("UserId") int UserId);
     //登录
     User login(@Param("UserName") String UserName,@Param("Password") String Password);
 
