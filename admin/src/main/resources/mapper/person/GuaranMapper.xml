@@ -10,8 +10,8 @@
         update t_guaranteeinformation set guaranteename=#{guaranteename},money=#{money},card=#{card},contact=#{contact},workunit=#{workunit},address=#{address},status=#{status}
     </update>
 
-    <delete id="deleteGuara" parameterType="com.admin.model.ParamterModel">
-        delete from t_guaranteeinformation  where id=#{id}
+    <delete id="deleteGuara">
+        update  t_guaranteeinformation set status=#{flag}   where id=#{GuaId}
     </delete>
 
     <select id="getGuara" parameterType="int" resultType="com.admin.admin.entity.person.GuaranteeInformation">

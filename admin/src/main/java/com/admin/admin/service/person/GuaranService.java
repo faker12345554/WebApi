@@ -2,7 +2,6 @@ package com.admin.admin.service.person;
 
 import com.admin.admin.dao.person.GuarantDao;
 import com.admin.admin.entity.person.GuaranteeInformation;
-import com.admin.model.ParamterModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,7 @@ public class GuaranService {
         return guarantDao.updateGuara(guaranteeinformation);
     }
     //删除
-    public int deleteGuara(ParamterModel paramterModel){return guarantDao.deleteGuara(paramterModel);}
+    public int deleteGuara(boolean flag,int GuaId){return guarantDao.deleteGuara(flag,GuaId);}
 
     //获取
     public GuaranteeInformation getGuara(int id){return guarantDao.getGuara(id); }

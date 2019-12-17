@@ -15,8 +15,8 @@
     <update id="updateGroup" parameterType="com.admin.admin.entity.user.UserPermissionGroup">
         update t_userpermissiongroup set permissionname=#{permissionname},createtime=#{createtime},createid=#{createid},createname=#{createname},status=#{status} where permissionid=#{permissionid}
     </update>
-    <update id="deleteGroup" parameterType="com.admin.model.ParamterModel">
-        update t_userpermissiongroup set status=#{flag} where permissionid=#{id}
+    <update id="deleteGroup" >
+        update t_userpermissiongroup set status=#{flag} where permissionid=#{PermissId}
     </update>
     <select id="selectByName" parameterType="String" resultType="int">
         select count(*) from t_userpermissiongroup where permissionname=#{Name}

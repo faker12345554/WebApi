@@ -2,7 +2,6 @@ package com.admin.admin.service.user;
 
 import com.admin.admin.dao.user.UserDao;
 import com.admin.admin.entity.user.User;
-import com.admin.model.ParamterModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +20,8 @@ public class UserService {
         return userDao.updateUser(t_user);
     }
     //删除
-    public int deleteUser(ParamterModel Paramter){
-        return userDao.deleteUser(Paramter);
+    public int deleteUser(Boolean flag,int UserId){
+        return userDao.deleteUser(flag,UserId);
     }
     //登录
     public User login(String UserName,String Password){
