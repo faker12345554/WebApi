@@ -5,12 +5,9 @@ import com.admin.token.tation.UserLoginToken;
 import com.admin.admin.entity.user.User;
 import com.admin.admin.service.user.UserService;
 import com.admin.config.CacheUtils;
-import com.admin.model.ParamterModel;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

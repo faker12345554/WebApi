@@ -2,7 +2,6 @@ package com.admin.admin.service.person;
 
 import com.admin.admin.dao.person.PersonDao;
 import com.admin.admin.entity.person.Personinformation;
-import com.admin.model.ParamterModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

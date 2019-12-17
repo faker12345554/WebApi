@@ -3,7 +3,6 @@ package com.admin.admin.service.user;
 import com.admin.admin.dao.user.UserRoleDao;
 import com.admin.admin.entity.user.Menu;
 import com.admin.admin.entity.user.UserRole;
-import com.admin.model.ParamterModel;
 import com.admin.model.userrole.UserRoleModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

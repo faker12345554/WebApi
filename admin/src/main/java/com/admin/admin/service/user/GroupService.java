@@ -2,7 +2,6 @@ package com.admin.admin.service.user;
 
 import com.admin.admin.dao.user.UserPermissionGroupDao;
 import com.admin.admin.entity.user.UserPermissionGroup;
-import com.admin.model.ParamterModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

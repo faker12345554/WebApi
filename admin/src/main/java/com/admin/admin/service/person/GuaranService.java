@@ -2,7 +2,6 @@ package com.admin.admin.service.person;
 
 import com.admin.admin.dao.person.GuarantDao;
 import com.admin.admin.entity.person.GuaranteeInformation;
-import com.admin.model.ParamterModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

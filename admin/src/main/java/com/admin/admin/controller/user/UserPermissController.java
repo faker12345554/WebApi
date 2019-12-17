@@ -2,11 +2,9 @@ package com.admin.admin.controller.user;
 
 import com.admin.admin.entity.user.UserPermissionGroup;
 import com.admin.admin.service.user.GroupService;
-import com.admin.model.ParamterModel;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

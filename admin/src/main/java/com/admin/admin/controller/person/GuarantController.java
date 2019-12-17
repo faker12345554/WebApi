@@ -2,7 +2,6 @@ package com.admin.admin.controller.person;
 
 import com.admin.admin.entity.person.GuaranteeInformation;
 import com.admin.admin.service.person.GuaranService;
-import com.admin.model.ParamterModel;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.ApiOperation;
