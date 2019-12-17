@@ -1,9 +1,10 @@
-package com.prisonapp.business.controller;
+package com.prisonapp.business.controller.user;
 
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
-import com.prisonapp.business.entity.User;
-import com.prisonapp.business.service.UserService;
+import com.common.common.result.ResultSet;
+import com.prisonapp.business.entity.user.User;
+import com.prisonapp.business.service.user.UserService;
 import com.prisonapp.token.TokenService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,15 @@ public class UserController {
     private UserService userService;
     @Autowired
     private TokenService tokenService;
-    private ResponseResult result = new ResponseResult();
+    private ResultSet result = new ResultSet();
 
     @ApiOperation(value = "登录")
     @PostMapping("/login")//
-    public ResponseResult login(@RequestParam(required = false) String account, @RequestParam(required = false)  String password, HttpServletResponse response){
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        User user=userService.login(account, password);
-        String token = tokenService.getToken(user);
-        return result.setData(token);
+    public ResultSet login(@RequestParam(required = false) String account, @RequestParam(required = false)  String password, HttpServletResponse response){
+      String a="aslancanclsfnacasnsnsdlahksdg";
+       result.resultCode=0;
+       result.resultMsg="asdasdasd\\n"+a+"";
+       result.setData("{ token:"+a+"\n"+"}");
+       return result;
     }
 }

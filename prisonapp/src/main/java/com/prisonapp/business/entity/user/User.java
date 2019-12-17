@@ -1,4 +1,4 @@
-package com.prisonapp.business.entity;
+package com.prisonapp.business.entity.user;
 
 public class User {
 
