@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 @RequestMapping("/Leave")
@@ -23,10 +24,10 @@ public class LeaveController {
 
     @ApiOperation(value = "获取个人请假信息")
     @GetMapping("/getLeave")
-    public ResponseResult getLeave(@RequestParam(required = false) int id, HttpServletResponse response) {
+    public ResponseResult getLeave(@RequestParam(required = false) String personid, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(leaveService.getLeave(id));
+        return result.setData(leaveService.getLeave(personid));
     }
 
     @ApiOperation(value = "获取全部请假信息")
@@ -48,9 +49,18 @@ public class LeaveController {
     @ApiOperation(value = "增加审批信息")
     @PostMapping("/addAuditor")
     public ResponseResult insertAuditor(@RequestBody AuditorInformation auditorInformation, HttpServletResponse response){
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(leaveService.insertAuditor(auditorInformation));
+        LeaveInformation leaveInformations=leaveService.getLeaveInformation(auditorInformation);
+        if(leaveInformations!=null){
+            int updateLeaveStatus=leaveService.updateLeaveStatus(auditorInformation);
+            result.setCode(ResultCode.SUCCESS.getCode());
+            result.setMessage(ResultCode.SUCCESS.getMessage());
+            return result.setData(leaveService.insertAuditor(auditorInformation));
+        }
+        else{
+            result.setCode(ResultCode.PARAMS_ERROR.getCode());
+            result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
+            return result.setData("该请假单不存在");
+        }
     }
 
     @ApiOperation(value = "删除审批信息")
@@ -59,5 +69,13 @@ public class LeaveController {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(leaveService.deleteAuditor(leaveOrder));
+    }
+
+    @ApiOperation(value = "销假")
+    @PostMapping("cancelLeave")
+    public ResponseResult cancelAuditor(@ApiParam(name="leaveorder",value = "请假单号")@RequestParam(required = true)String leaveorder,HttpServletResponse response){
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(leaveService.cancelAuditor(leaveorder));
     }
 }

@@ -1,43 +1,14 @@
-package com.admin.admin.entity.person;
+package com.admin.model.leave;
 
 import java.util.Date;
 
-public class LeaveInformation {
-    private String leaveorder;
+public class LeavefModel {
     private String reason;
     private String leavedestination;
     private Date starttimestamp;
     private Date endtimestamp;
     private Date subittimestamp;
-    private String personid;
     private String personname;
-
-    public String getPersonid() {
-        return personid;
-    }
-
-    public void setPersonid(String personid) {
-        this.personid = personid;
-    }
-
-    public String getPersonname() {
-        return personname;
-    }
-
-    public void setPersonname(String personname) {
-        this.personname = personname;
-    }
-
-    private int statuscode;
-    private String states;
-
-    public String getLeaveorder() {
-        return leaveorder;
-    }
-
-    public void setLeaveorder(String leaveorder) {
-        this.leaveorder = leaveorder;
-    }
 
     public String getReason() {
         return reason;
@@ -75,18 +46,16 @@ public class LeaveInformation {
         return subittimestamp;
     }
 
-
     public void setSubittimestamp(Date subittimestamp) {
         this.subittimestamp = subittimestamp;
     }
 
-
-    public int getStatuscode() {
-        return statuscode;
+    public String getPersonname() {
+        return personname;
     }
 
-    public void setStatuscode(int statuscode) {
-        this.statuscode = statuscode;
+    public void setPersonname(String personname) {
+        this.personname = personname;
     }
 
     public String getStates() {
@@ -97,4 +66,14 @@ public class LeaveInformation {
         this.states = states;
     }
 
+    public String getAuditordatetime() {
+        return auditordatetime;
+    }
+
+    public void setAuditordatetime(String auditordatetime) {
+        this.auditordatetime = auditordatetime;
+    }
+
+    private String states;
+    private String auditordatetime;
 }

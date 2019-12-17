@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/User")
+@RequestMapping("/app/user")
 public class UserController {
     @Autowired
     private UserService userService;
