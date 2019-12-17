@@ -2,26 +2,19 @@ package com.admin.admin.entity.user;
 
 public class User {
     private int id;
-    private String account_name;
+    private String accountname;
     private String password;
 
-    private int permission_id;
+    private int permissionid;
     private int createid;
     private String createname;
     private String areacode;
     private String phone;
     private boolean status;
 
-    public String getAccount_name() {
-        return account_name;
-    }
 
-    public User setAccount_name(String account_name) {
-        this.account_name = account_name;
-        return this;
-    }
 
-    private String alias_name;
+    private String aliasname;
 
 
 
@@ -43,9 +36,6 @@ public class User {
         this.password = password;
     }
 
-    public String getAlias_name() {
-        return alias_name;
-    }
 
     public String getPhone() {
         return phone;
@@ -56,17 +46,28 @@ public class User {
         return this;
     }
 
-    public void setAlias_name(String alias_name) {
-        this.alias_name = alias_name;
+    public String getAccountname() {
+        return accountname;
     }
 
-    public int getPermission_id() {
-        return permission_id;
+    public void setAccountname(String accountname) {
+        this.accountname = accountname;
     }
 
-    public User setPermission_id(int permission_id) {
-        this.permission_id = permission_id;
-        return this;
+    public int getPermissionid() {
+        return permissionid;
+    }
+
+    public void setPermissionid(int permissionid) {
+        this.permissionid = permissionid;
+    }
+
+    public String getAliasname() {
+        return aliasname;
+    }
+
+    public void setAliasname(String aliasname) {
+        this.aliasname = aliasname;
     }
 
     public int getCreateid() {

@@ -4,7 +4,7 @@
 <mapper namespace="com.admin.admin.dao.person.AddressDao">
 
     <insert id="insertLocation" parameterType="com.admin.admin.entity.person.AddressInformation">
-        insert into t_location(latitude,longitude,address,person_id,timesta) VALUES (#{latitude},#{longitude},#{address},#{person_id},#{timesta})
+        insert into t_location(latitude,longitude,address,personid,timesta) VALUES (#{latitude},#{longitude},#{address},#{personid},#{timesta})
     </insert>
 
 </mapper>

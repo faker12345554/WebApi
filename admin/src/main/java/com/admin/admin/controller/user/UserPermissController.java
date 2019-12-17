@@ -23,7 +23,7 @@ public class UserPermissController {
     @ApiParam("新增组信息")
     @PostMapping("/AddGroup")
     public ResponseResult saveGroup(@RequestBody(required = false)UserPermissionGroup group, HttpServletResponse response){
-        if (groupService.selectByName(group.getPermission_name())>0){
+        if (groupService.selectByName(group.getPermissionname())>0){
             return result.setMessage("该权限组已经存在！");
         }
         result.setCode(ResultCode.SUCCESS.getCode());
