@@ -13,8 +13,8 @@
         where personid=#{personid}
     </update>
 
-    <update id="deletePersion" parameterType="com.admin.model.ParamterModel" >
-        update t_personinformation set status=#{flag} where personid=#{id}
+    <update id="deletePersion" >
+        update t_personinformation set status=#{flag} where personid=#{PersonId}
     </update>
 
     <select id="getPersoin" parameterType="int" resultType="com.admin.admin.entity.person.Personinformation">

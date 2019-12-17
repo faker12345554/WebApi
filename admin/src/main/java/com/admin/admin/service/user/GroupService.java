@@ -2,7 +2,6 @@ package com.admin.admin.service.user;
 
 import com.admin.admin.dao.user.UserPermissionGroupDao;
 import com.admin.admin.entity.user.UserPermissionGroup;
-import com.admin.model.ParamterModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +21,8 @@ public class GroupService {
         return GroupDao.updateGroup(UserGroup);
     }
     //删除
-    public int deleteGroup(ParamterModel Paramter) {
-        return GroupDao.deleteGroup(Paramter);
+    public int deleteGroup(boolean flag,int GroupId) {
+        return GroupDao.deleteGroup(flag,GroupId);
     }
 
     //获取组信息

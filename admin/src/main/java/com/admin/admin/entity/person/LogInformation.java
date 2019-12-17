@@ -7,19 +7,19 @@ import java.util.Date;
 
 public class LogInformation {
 
-  private long operator;
+  private int operator;
   private String modular;
   private String action;
   private Date operatingtime;
 
-  public long getOperator() {
+  public int getOperator() {
     return operator;
   }
 
-  public void setOperator(long operator) {
+  public LogInformation setOperator(int operator) {
     this.operator = operator;
+    return this;
   }
-
 
   public String getModular() {
     return modular;
