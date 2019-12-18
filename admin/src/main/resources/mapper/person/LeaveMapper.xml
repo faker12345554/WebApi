@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.person.LeaveDao">
-    <select id="getLeave" parameterType="int" resultType="com.admin.admin.entity.person.LeaveInformation">
-        select * from t_leave where personid=#{id}
+    <select id="getLeave" parameterType="String" resultType="com.admin.model.leave.LeavefModel">
+        SELECT a.*,b.auditordatetime FROM t_leave AS a LEFT JOIN t_auditor AS b ON a.leaveorder=b.leaveorder WHERE a.personid=#{personid}
     </select>
     <select id="listLeave" resultType="com.admin.admin.entity.person.LeaveInformation">
         select * from t_leave
@@ -11,10 +11,19 @@
     <update id="updateLeave" parameterType="com.admin.admin.entity.person.LeaveInformation">
         update t_leave set reason=#{reason},leavedestination=#{leavedestination},starttimestamp=#{starttimestamp},endtimestamp=#{endtimestamp} where leaveorder=#{leaveorder}
     </update>
-    <insert id="insertAuditor" parameterType="com.admin.admin.entity.person.LeaveInformation">
+    <insert id="insertAuditor" parameterType="com.admin.admin.entity.person.AuditorInformation">
         insert into t_auditor(leaveorder,accountname,auditordatetime,leavingmessage,statuscode,states) VALUES (#{leaveorder},#{accountname},#{auditordatetime},#{leavingmessage},#{statuscode},#{states})
     </insert>
+    <update id="updateLeaveStatus" parameterType="com.admin.admin.entity.person.AuditorInformation">
+        update t_leave set statuscode=#{statuscode},states=#{states} WHERE leaveorder=#{leaveorder}
+    </update>
     <delete id="deleteAuditor" parameterType="String">
         delete from t_auditor where leaveorder=#{leaveOrder}
     </delete>
+    <select id="getLeaveInformation" parameterType="com.admin.admin.entity.person.AuditorInformation" resultType="com.admin.admin.entity.person.LeaveInformation">
+        select * FROM t_leave WHERE leaveorder=#{leaveorder}
+    </select>
+    <update id="cancelAuditor" parameterType="String" >
+        update t_auditor set statuscode=4,states='已销假' WHERE leaveorder=#{leaveorder}
+    </update>
 </mapper>

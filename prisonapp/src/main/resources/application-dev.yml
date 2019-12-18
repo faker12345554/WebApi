@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: 8009
 
 spring:
   datasource:
@@ -12,4 +12,4 @@ swagger:
   enabled: true
 
 mybatis:
-  mapper-locations: classpath:mapper/*.xml
+  mapper-locations: classpath:mapper/**/*.xml

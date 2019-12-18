@@ -1,6 +1,6 @@
 package com.prisonapp.business.entity;
 
-public class User {
+public class UserModel {
 
   private long id;
   private String accountname;
