@@ -6,7 +6,7 @@ import com.admin.model.LogParamModel;
 import com.admin.model.LogReturnModel;
 import com.google.gson.Gson;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang3.StringUtils;
+import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;

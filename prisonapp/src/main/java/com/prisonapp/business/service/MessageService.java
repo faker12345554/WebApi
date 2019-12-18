@@ -12,15 +12,15 @@ public class MessageService {
     @Autowired
     private MessageDao messageDao;
 
-    public List<MessageModel> getNotificationList( ) {
-        return messageDao.getNotificationList();
+    public List<MessageModel> getNotificationList(String userId ) {
+        return messageDao.getNotificationList(userId);
     }
-    public List<MessageModel> getMessageList(int  type, int  count, int requestCount, String key ){
-        return messageDao.getMessageList(type,count,requestCount,key);
+    public List<MessageModel> getMessageList(int  type, int  count, int requestCount, String key,String userId ){
+        return messageDao.getMessageList(type,count,requestCount,key,userId);
     }
 
-    public int readMessage(int  type,String messageTimestamp){
-        return messageDao.readMessage(type,messageTimestamp);
+    public int readMessage(int  type,String messageTimestamp,String userId){
+        return messageDao.readMessage(type,messageTimestamp,userId);
     }
 
 }
