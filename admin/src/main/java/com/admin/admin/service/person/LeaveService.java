@@ -3,8 +3,11 @@ package com.admin.admin.service.person;
 import com.admin.admin.dao.person.LeaveDao;
 import com.admin.admin.entity.person.AuditorInformation;
 import com.admin.admin.entity.person.LeaveInformation;
+import com.admin.model.leave.LeavefModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class LeaveService {
@@ -12,8 +15,8 @@ public class LeaveService {
     private LeaveDao leaveDao;
 
     //获取
-    public LeaveInformation getLeave(int id) {
-        return leaveDao.getLeave(id);
+    public List<LeavefModel> getLeave(String personid) {
+        return leaveDao.getLeave(personid);
     }
 
     //获取列表
@@ -26,9 +29,21 @@ public class LeaveService {
         return leaveDao.updateLeave(leaveinformation);
     }
 
+    public LeaveInformation getLeaveInformation(AuditorInformation auditorInformation){
+        return leaveDao.getLeaveInformation(auditorInformation);
+    }
+
     public int insertAuditor(AuditorInformation auditorInformation) {
         return leaveDao.insertAuditor(auditorInformation);
     }
 
+    public int updateLeaveStatus(AuditorInformation auditorInformation){
+        return leaveDao.updateLeaveStatus(auditorInformation);
+    }
+
     public int deleteAuditor(String leaveOrder){return leaveDao.deleteAuditor(leaveOrder);}
+
+    public int cancelAuditor(String leaveorder){
+        return leaveDao.cancelAuditor(leaveorder);
+    }
 }

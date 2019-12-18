@@ -9,7 +9,7 @@ public class MessageService {
     @Autowired
     private MessageDao messageDao;
 
-    public int getNotificationList() {
-        return messageDao.getNotificationList();
+    public int getNotificationList(String UserId) {
+        return messageDao.getNotificationList(UserId);
     }
 }
