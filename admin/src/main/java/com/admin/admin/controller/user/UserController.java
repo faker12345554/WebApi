@@ -32,10 +32,11 @@ public class UserController {
     //用户列表  搬砖去了
     @ApiOperation("用户信息列表")
     @GetMapping("/GetList")
-    public ResponseResult<User> listUser(@RequestParam(required = false) boolean falg,HttpServletResponse response){
+    public ResponseResult<User> listUser(@RequestParam(required = false) boolean falg, int PageSize,int PageIndex,HttpServletResponse response){
+
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(userService.listUser(falg));
+        return result.setData(userService.listUser(falg,PageSize,PageIndex));
     }
 
 
