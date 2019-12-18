@@ -3,12 +3,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.prisonapp.business.dao.UserDao">
     <select id="getNotificationList" resultType="com.prisonapp.business.entity.MessageModel" >
-        select * from t_message
+        select * from t_protectionmessage where personid=#{Userid}
     </select>
     <select id="getMessageList" resultType="com.prisonapp.business.entity.MessageModel" >
-        select * from t_message
+        select * from t_protectionmessage where personid=#{Userid}
     </select>
-    <update id="getMessageList" parameterType="int" >
-        update t_message set
+    <update id="readMessage" parameterType="int" >
+        update t_protectionmessage set readmessage=true where modular=#{type}
     </update>
 </mapper>

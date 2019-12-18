@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface MessageDao {
-    List<MessageModel> getNotificationList( );
-    List<MessageModel> getMessageList(@Param("type")int  type, @Param("count") int  count, @Param("requestCount") int requestCount, @Param("key") String key);
-    int readMessage(@Param("type")int  type,@Param("messageTimestamp")String  messageTimestamp);
+    List<MessageModel> getNotificationList(@Param("userId") String userId );
+    List<MessageModel> getMessageList(@Param("type")int  type, @Param("count") int  count, @Param("requestCount") int requestCount, @Param("key") String key,@Param("Userid") String userId);
+    int readMessage(@Param("type")int  type,@Param("messageTimestamp")String  messageTimestamp,@Param("Userid")String userId );
 }
