@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.dw_enclosure.enclosureDao">
+    <insert id="saveEnclosure" parameterType="com.admin.admin.entity.dw_enclosure.enclosure">
+        insert into t_enclosure(personid,type,area_name,status,citycode,citylevel,areaarr) values
+        (#{personId},#{type},#{areaname},#{status},#{citycode},#{citylevel},#{areaArr})
+    </insert>
+
+    <update id="updateEnclosure" parameterType="com.admin.admin.entity.dw_enclosure.enclosure">
+        update updateEnclosure set personid=#{personId},type=#{type},
+        areaname=#{areaname},citycode=#{citycode},citylevel=#{citylevel},areaarr=#{areaArr} where id=#{id}
+    </update>
+
+    <update id="deleteEnclosure" parameterType="String">
+        update updateEnclosure set status=false where personid=#{personId}
+    </update>
+
+    <select id="selectEnclosureByPersonId" parameterType="String" resultType="int">
+        select count(*) from t_enclosure where personid=#{personId}
+    </select>
+
+    <select id="selectEnclosure" parameterType="String" resultType="com.admin.admin.entity.dw_enclosure.enclosure">
+        select * from t_enclosure where personid=#{personId}
+    </select>
+
+</mapper>
