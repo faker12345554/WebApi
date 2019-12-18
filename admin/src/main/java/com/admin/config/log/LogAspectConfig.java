@@ -140,7 +140,7 @@ public class LogAspectConfig {
         logInformation.setModular(methodDescribe.get());
         logInformation.setOperatingtime(new Date());
         logDao.insertLog(logInformation);
-        System.out.println(Userid);
+
         logger.info(methodDescribe.get() + "返回参数 : {}", new Gson().toJson(ret));
         // remove()方法移除当前线程的副本变量值
         methodDescribe.remove();
