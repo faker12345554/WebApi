@@ -4,11 +4,14 @@ package com.prisonapp.business.controller;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.common.common.result.ResultSet;
+import com.prisonapp.business.entity.MessageModel;
 import com.prisonapp.business.service.MessageService;
 import com.prisonapp.tool.CacheUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/app/message")
@@ -23,9 +26,11 @@ public class MessageController {
     @ApiOperation(value = "获取保外人员的通知列表")
     @PostMapping("/getNotificationList")
     public ResultSet getNotificationList( ) {
+        List<MessageModel> messageModel =messageService.getNotificationList("11");
         result.resultCode=0;
         result.resultMsg="";
-        return result.data(messageService.getNotificationList(userId));
+        result.data=messageModel;
+        return result;
     }
 
 //    @ApiOperation(value = "获取保外人员的消息列表")
