@@ -1,4 +1,4 @@
-package com.prisonapp.business.controller;
+package com.prisonapp.business.controller.test;
 
 import com.prisonapp.model.LoadModel;
 import com.prisonapp.model.MessagePush;

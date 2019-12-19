@@ -1,10 +1,11 @@
-package com.prisonapp.business.controller;
+package com.prisonapp.business.controller.user;
 
 import com.common.common.result.ResultSet;
 import com.common.common.result.TokenResult;
 import com.prisonapp.business.entity.admin.TokenModel;
-import com.prisonapp.business.entity.UserModel;
-import com.prisonapp.business.service.UserService;
+import com.prisonapp.business.entity.user.UserModel;
+import com.prisonapp.business.service.user.UserService;
+import com.prisonapp.tool.CacheUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,7 @@ public class UserController {
     @PostMapping("/login")//
     public ResultSet login(@RequestParam(required = false) String accountName,@RequestParam(required = false) String password, HttpServletResponse response){
        UserModel userModel=userService.login(accountName);
+
        if(userModel==null){
            result.resultCode=10;
            result.resultMsg="账号不存在";
@@ -34,7 +36,8 @@ public class UserController {
            return result;
        }
        else if(userModel.getPassword().equals(password)&&userModel.getStatus().equals("t")){
-           String token =tokenResult.GetToken(userModel.getAccountname(),userModel.getPhone());
+           CacheUtils.put("UserId",userModel.getId(),0);
+           String token =tokenResult.GetToken(userModel.getId()+"",userModel.getPhone());
            tokenModel.setToken(token);
            tokenModel.setrExpiresTime(token);
            tokenModel.setRefreshToken(token);

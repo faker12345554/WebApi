@@ -1,7 +1,7 @@
-package com.prisonapp.business.service;
+package com.prisonapp.business.service.user;
 
-import com.prisonapp.business.dao.UserDao;
-import com.prisonapp.business.entity.UserModel;
+import com.prisonapp.business.dao.user.UserDao;
+import com.prisonapp.business.entity.user.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prisonapp.business.dao.message.MessageDao">
+    <select id="getNotificationList" parameterType="String" resultType="com.prisonapp.business.entity.message.NotificationMessageModel" >
+       select modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName ,max(messagetime) AS sss  from t_protectionmessage where personid=#{userId} group by modular,modularname,detailtype,detailtypename ORDER BY type
+    </select>
+    <select id="getMessageList" resultType="com.prisonapp.business.entity.message.MessageListModel" >
+        select  id as code,modular as type ,modularname as typeName,content,messagetime as timesta,readmessage as isRead from t_protectionmessage where personid=#{userId} and modular=#{type}  ORDER BY timesta  desc limit #{requestCount}
+    </select>
+    <update id="readMessage" parameterType="String" >
+        update t_protectionmessage set readmessage=true where modular=#{type} and personid=#{userId}
+    </update>
+     <select id="searchNotification" resultType="com.prisonapp.business.entity.message.MessageModel" >
+        select * from t_protectionmessage where personid=#{userId} and  content like concat('%',#{key},'%') ORDER BY modular
+    </select>
+</mapper>

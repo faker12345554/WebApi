@@ -1,6 +1,6 @@
-package com.prisonapp.business.dao;
+package com.prisonapp.business.dao.user;
 
-import com.prisonapp.business.entity.UserModel;
+import com.prisonapp.business.entity.user.UserModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
