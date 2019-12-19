@@ -148,7 +148,7 @@ public class LogAspectConfig {
 
 
     /*
-        在切入点抛出异常后处理逻辑 拿我也能把这个存进数据库里 是把  可以的，你要去创建一个日志表然后写一个接口把这些输出的日志记录下来噢噢 它怎么不输出那个东西的值什么东西的 ApiOperation（..）
+        在切入点抛出异常后处理逻辑
     */
     @AfterThrowing(pointcut = "adminControllerLog()", throwing = "e")
     public void doException(JoinPoint joinPoint, Throwable e) {
