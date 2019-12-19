@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.dw_picture.PictureReportDao">
+    <select id="checkPersonId" resultType="com.admin.admin.entity.dw_person.Personinformation">
+        select * FROM t_personinformation where personid=#{personid}
+    </select>
+    <update id="postPictureReport" >
+            update t_personinformation set facepath=#{facepath} where personid =#{personid}
+    </update>
+</mapper>

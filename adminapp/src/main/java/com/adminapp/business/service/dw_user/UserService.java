@@ -1,7 +1,7 @@
-package com.adminapp.business.service.user;
+package com.adminapp.business.service.dw_user;
 
-import com.adminapp.business.dao.user.UserDao;
-import com.adminapp.business.entity.user.User;
+import com.adminapp.business.dao.dw_user.UserDao;
+import com.adminapp.business.entity.dw_user.User;
 import com.adminapp.page.PageBean;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.adminapp.token;
 
-import com.adminapp.business.entity.user.User;
+import com.adminapp.business.entity.dw_user.User;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.stereotype.Service;
