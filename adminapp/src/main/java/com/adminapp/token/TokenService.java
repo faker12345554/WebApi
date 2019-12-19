@@ -1,8 +1,8 @@
-package com.prisonapp.token;
+package com.adminapp.token;
 
+import com.adminapp.business.entity.user.User;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.prisonapp.business.entity.UserModel;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -17,7 +17,7 @@ public  class TokenService {
      * @date 2019年5月27日 下午5:40:25
      * @version V1.0
      */
-    public String getToken(UserModel user) {
+    public String getToken(User user) {
         Date start = new Date();
         long currentTime = System.currentTimeMillis() + 60* 60 * 1000;//一小时有效时间
         Date end = new Date(currentTime);

@@ -1,8 +1,8 @@
-package com.prisonapp.business.entity;
+package com.adminapp.business.entity.login;
 
-public class User {
 
-  private long id;
+public class UserInformation {
+
   private String accountname;
   private String password;
   private String aliasname;
@@ -12,15 +12,6 @@ public class User {
   private String areacode;
   private String status;
   private String phone;
-
-
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
-  }
 
 
   public String getAccountname() {

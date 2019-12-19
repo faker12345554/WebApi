@@ -1,10 +1,10 @@
 package com.prisonapp.business.controller;
 
-import com.common.common.result.ResponseResult;
-import com.common.common.result.ResultCode;
-import com.prisonapp.business.entity.User;
+import com.common.common.result.ResultSet;
+import com.common.common.result.TokenResult;
+import com.prisonapp.business.entity.admin.TokenModel;
+import com.prisonapp.business.entity.UserModel;
 import com.prisonapp.business.service.UserService;
-import com.prisonapp.token.TokenService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,17 +19,36 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private TokenService tokenService;
-    private ResponseResult result = new ResponseResult();
 
+    private ResultSet result = new ResultSet();
+    private TokenModel tokenModel=new TokenModel();
+    private TokenResult tokenResult =new TokenResult();
     @ApiOperation(value = "登录")
     @PostMapping("/login")//
-    public ResponseResult login(@RequestParam(required = false) String account, @RequestParam(required = false)  String password, HttpServletResponse response){
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        User user=userService.login(account, password);
-        String token = tokenService.getToken(user);
-        return result.setData(token);
+    public ResultSet login(@RequestParam(required = false) String accountName,@RequestParam(required = false) String password, HttpServletResponse response){
+       UserModel userModel=userService.login(accountName);
+       if(userModel==null){
+           result.resultCode=10;
+           result.resultMsg="账号不存在";
+           result.data="";
+           return result;
+       }
+       else if(userModel.getPassword().equals(password)&&userModel.getStatus().equals("t")){
+           String token =tokenResult.GetToken(userModel.getAccountname(),userModel.getPhone());
+           tokenModel.setToken(token);
+           tokenModel.setrExpiresTime(token);
+           tokenModel.setRefreshToken(token);
+           tokenModel.settExpiresTime(token);
+           result.resultCode=0;
+           result.resultMsg="";
+           result.data=tokenModel;
+           return result;
+       }else{
+           result.resultCode=11;
+           result.resultMsg="密码错误";
+           result.data="";
+           return result;
+       }
+
     }
 }
