@@ -1,9 +1,9 @@
 package com.admin.interceptor;
 
+import com.admin.admin.dao.dw_user.UserDao;
 import com.admin.token.tation.PassToken;
 import com.admin.token.tation.UserLoginToken;
-import com.admin.admin.entity.user.User;
-import com.admin.admin.service.user.UserService;
+import com.admin.admin.entity.dw_user.User;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
     @Autowired
-    UserService userService;
+    UserDao userDao;
       @Override
       public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
                  String token = httpServletRequest.getHeader("token");// 从 http 请求头中取出 token
@@ -54,7 +54,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                                      } catch (JWTDecodeException j) {
                                          throw new RuntimeException("401");
                                      }
-                                User user = userService.getUser(Integer.valueOf(userId));
+                                User user = userDao.getUser(Integer.valueOf(userId));
                                  if (user == null) {
                                          throw new RuntimeException("用户不存在，请重新登录");
                                      }

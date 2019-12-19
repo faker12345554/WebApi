@@ -3,7 +3,7 @@ package com.person.person.personnel.controller;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.person.person.personnel.entity.AddressInformation;
-import com.admin.admin.service.person.AddressService;
+import com.admin.admin.service.dw_person.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

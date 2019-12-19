@@ -14,7 +14,9 @@ public enum ResultCode {
     PARAMS_ERROR(10002, "参数错误"),
     JSON_PARSE_ERROR(10003, "JSON解析错误"),
     ILLEAGAL_STRING(15001, "非法字符串"),
-    UNKNOW_ERROR(16000, "未知错误");
+    UNKNOW_ERROR(16000, "未知错误"),
+    DATA_DUPLICATION(1,"数据重复"),
+    NULLDATA(2,"没有任何数据");
 
     private Integer code;
     private String message;
