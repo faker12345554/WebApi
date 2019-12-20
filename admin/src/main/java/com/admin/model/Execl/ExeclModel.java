@@ -1,8 +1,10 @@
 package com.admin.model.Execl;
 
+import java.util.List;
+
 public class ExeclModel {
     private String PersonId;
-    private int[] IdList;
+    private List<Integer> list;
 
     public String getPersonId() {
         return PersonId;
@@ -13,14 +15,12 @@ public class ExeclModel {
         return this;
     }
 
-    public int[] getIdList() {
-        return IdList;
+    public List<Integer> getList() {
+        return list;
     }
 
-    public ExeclModel setIdList(int[] idList) {
-        IdList = idList;
+    public ExeclModel setList(List<Integer> list) {
+        this.list = list;
         return this;
     }
-
-
 }

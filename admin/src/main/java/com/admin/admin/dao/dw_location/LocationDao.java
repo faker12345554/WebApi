@@ -15,7 +15,7 @@ public interface LocationDao {
     // 今日轨迹
     List<Locationmation> ListLocation(@Param("PersonId") String PersonId,@Param("date") String date);
     //导出列表
-    List<Locationmation> HistoricalTrack(@Param("execlModel") ExeclModel execlModel);
+    List<Locationmation> HistoricalTrack(ExeclModel execlModel);
     //查看定位信息
     Locationmation GetLocation(@Param("id") int id);
 

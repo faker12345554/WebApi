@@ -60,7 +60,7 @@ public class LocationService {
     /*
     查看当前定位信息
      */
-    public Locationmation GetLocationByPerson( String PersonId){
+    public Locationmation GetLocationByPerson(String PersonId){
 
         return locationDao.GetLocationByPerson(PersonId);
     }

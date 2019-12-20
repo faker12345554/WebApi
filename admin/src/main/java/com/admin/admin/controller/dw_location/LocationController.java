@@ -81,8 +81,8 @@ public class LocationController {
     }
 
     @ApiOperation("查看当前位置")//
-    @GetMapping("GetLocationByPerson")
-    public ResponseResult GetLocationByPerson(@RequestParam String PersonId, HttpServletResponse response) {
+    @GetMapping("GetLocationByPerson") //HttpServletResponse response 这个可以删掉了，你用不上的
+    public ResponseResult GetLocationByPerson(@RequestParam String PersonId) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(locationService.GetLocationByPerson(PersonId));
@@ -91,8 +91,8 @@ public class LocationController {
 
     //上边那个方法就是我在网上找的 但是结果全是乱码 你调用一下 这个就是控制层了 我知道，
     @ApiOperation("导出定位信息列表")
-    @GetMapping("ExportLocation")
-    public ResponseResult export( @RequestParam(required = false)ExeclModel execlModel) {
+    @PostMapping("ExportLocation")
+    public ResponseResult export( @RequestBody ExeclModel execlModel) {
         ResponseResult rtn = new ResponseResult();
         List<Locationmation> allItems = locationService.HistoricalTrack(execlModel);
         try (HSSFWorkbook workbook = new HSSFWorkbook()) {
@@ -127,12 +127,12 @@ public class LocationController {
 
             });
             String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) + ".xls";
-            File file = new File("G:\\Java\\" + dateTime);
+            File file = new File("E:\\WebApi\\admin\\src\\main\\resources\\Execl\\" + dateTime);
             workbook.write(file);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        rtn.setData(allItems);
+        rtn.setData("导出成功");
         rtn.setCode(200);
         return rtn;
     }
