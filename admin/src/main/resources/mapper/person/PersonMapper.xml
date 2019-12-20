@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.admin.admin.dao.person.PersonDao">
-    <insert id="insertPersion" parameterType="com.admin.admin.entity.person.Personinformation">
-        INSERT into t_personinformation(personname,gender,age,birthdate,card,workunit,bailoutbegindate,bailoutenddate,sponsor,sponsoralarm,contact,address,wechatnumber,qqnumber,status)
-        values (#{personname},#{gender},#{age},#{birthdate},#{card},#{workunit},#{bailoutbegindate},#{bailoutenddate},#{sponsor},#{sponsoralarm},#{contact},#{address},#{wechatnumber},#{qqnumber},#{status})
+<mapper namespace="com.admin.admin.dao.dw_person.PersonDao">
+    <insert id="insertPersion" parameterType="com.admin.admin.entity.dw_person.Personinformation">
+        INSERT into t_personinformation(personid,personname,gender,age,birthdate,card,workunit,bailoutbegindate,bailoutenddate,sponsor,sponsoralarm,contact,address,wechatnumber,qqnumber,status)
+        values (#{personid},#{personname},#{gender},#{age},#{birthdate},#{card},#{workunit},#{bailoutbegindate},#{bailoutenddate},#{sponsor},#{sponsoralarm},#{contact},#{address},#{wechatnumber},#{qqnumber},#{status})
     </insert>
 
-    <update id="updatePersion" parameterType="com.admin.admin.entity.person.Personinformation">
+    <update id="updatePersion" parameterType="com.admin.admin.entity.dw_person.Personinformation">
         UPDATE t_personinformation set personname=#{personname},gender=#{gender},age=#{age},birthdate=#{birthdate},card=#{card},workunit=#{workunit},bailoutbegindate=#{bailoutbegindate},
         bailoutenddate=#{bailoutenddate},sponsor=#{sponsor},sponsoralarm=#{sponsoralarm},contact=#{contact},address=#{address},wechatnumber=#{wechatnumber},qqnumber=#{qqnumber},status=#{status}
         where personid=#{personid}
@@ -17,8 +17,12 @@
         update t_personinformation set status=#{flag} where personid=#{PersonId}
     </update>
 
-    <select id="getPersoin" parameterType="int" resultType="com.admin.admin.entity.person.Personinformation">
+    <select id="getPersoin" parameterType="String" resultType="com.admin.admin.entity.dw_person.Personinformation">
         select * from t_personinformation where personid=#{id}
+    </select>
+
+    <select id="getPersonByCard" parameterType="String" resultType="int">
+        select count(*) from t_personinformation where card=#{Card}
     </select>
 
 </mapper>

@@ -3,7 +3,7 @@ package com.person.person.personnel.controller;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.person.person.personnel.entity.Personinformation;
-import com.admin.admin.service.person.PersoinfoService;
+import com.admin.admin.service.dw_person.PersoinfoService;
 import com.person.person.model.ParamterModel;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
