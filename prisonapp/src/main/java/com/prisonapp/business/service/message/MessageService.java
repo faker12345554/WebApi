@@ -32,4 +32,8 @@ public class MessageService {
     public List<MessageModel> unreadCount(String  type,String userId){
         return messageDao.unreadCount(type,userId);
     }
+
+    public List<MessageModel> messageTotalCount(String  type,String userId){
+        return messageDao.messageTotalCount(type,userId);
+    }
 }

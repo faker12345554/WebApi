@@ -27,4 +27,7 @@ select  modular as type ,modularname as typeName,detailtype as detailType,detail
         select * from t_protectionmessage where personid=#{userId} and  modular=#{type} and readmessage='f'
     </select>
 
+    <select id="messageTotalCount" resultType="com.prisonapp.business.entity.message.MessageModel">
+         select * from t_protectionmessage where personid=#{userId} and  modular=#{type}
+    </select>
 </mapper>

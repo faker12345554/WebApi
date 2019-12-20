@@ -19,4 +19,7 @@ public interface MessageDao {
     List<MessageModel> searchNotification(@Param("key")String key ,@Param("userId")String userId);
 
     List<MessageModel> unreadCount(@Param("type")String  type,@Param("userId")String userId);
+
+    List<MessageModel> messageTotalCount(@Param("type")String  type,@Param("userId")String userId);
+
 }

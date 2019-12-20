@@ -2,10 +2,7 @@ package com.prisonapp.business.controller.message;
 
 
 import com.common.common.result.ResultSet;
-import com.prisonapp.business.entity.message.MessageListModel;
-import com.prisonapp.business.entity.message.MessageModel;
-import com.prisonapp.business.entity.message.NotificationMessageModel;
-import com.prisonapp.business.entity.message.ResultNotificationMessageModel;
+import com.prisonapp.business.entity.message.*;
 import com.prisonapp.business.service.message.MessageService;
 import com.prisonapp.tool.CacheUtils;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +18,7 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
     private ResultSet result = new ResultSet();
-
+    private ResultMessageListModel resultMessageListModel = new ResultMessageListModel();
     private ResultNotificationMessageModel resultNotificationMessage = new ResultNotificationMessageModel();
 
     @ApiOperation(value = "获取保外人员的通知列表")
@@ -47,9 +44,12 @@ public class MessageController {
     @PostMapping("/getMessageList")
     public ResultSet getMessageList(@RequestParam(required = true)String type ,@RequestParam(required = true)int count,int requestCount,@RequestParam(required = false)String key) {
         List<MessageListModel> messageListModel =messageService.getMessageList( type, count, requestCount, key,CacheUtils.get("UserId").toString());
+        int totalCount= (messageService.messageTotalCount(type,CacheUtils.get("UserId").toString())).size();
+        resultMessageListModel.totalCount=totalCount;
+        resultMessageListModel.resultMessageListModel=messageListModel;
         result.resultCode=0;
         result.resultMsg="";
-        result.data=messageListModel;
+        result.data=resultMessageListModel;
 
         return result;
     }
