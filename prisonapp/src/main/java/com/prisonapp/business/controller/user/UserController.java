@@ -2,7 +2,7 @@ package com.prisonapp.business.controller.user;
 
 import com.common.common.result.ResultSet;
 import com.common.common.result.TokenResult;
-import com.prisonapp.business.entity.admin.TokenModel;
+import com.prisonapp.business.entity.user.TokenModel;
 import com.prisonapp.business.entity.user.UserModel;
 import com.prisonapp.business.service.user.UserService;
 import com.prisonapp.tool.CacheUtils;

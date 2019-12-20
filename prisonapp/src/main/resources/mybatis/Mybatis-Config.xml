@@ -11,4 +11,7 @@
         <!--开启驼峰转换-->
         <setting name="mapUnderscoreToCamelCase" value="true" />
     </settings>
+    <mappers>
+        <mapper resource="mapper/UserMapper.xml" />
+    </mappers>
 </configuration>

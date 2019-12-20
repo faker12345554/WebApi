@@ -1,4 +1,4 @@
-package com.prisonapp.business.entity.admin;
+package com.prisonapp.business.entity.user;
 
 public class TokenModel {
     private String token;
