@@ -1,7 +1,7 @@
 package com.adminapp.interceptor;
 
-import com.adminapp.business.entity.user.User;
-import com.adminapp.business.service.user.UserService;
+import com.adminapp.business.entity.dw_user.User;
+import com.adminapp.business.service.dw_user.UserService;
 import com.adminapp.token.tation.PassToken;
 import com.adminapp.token.tation.UserLoginToken;
 import com.auth0.jwt.JWT;

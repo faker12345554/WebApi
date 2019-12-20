@@ -16,7 +16,8 @@ public enum ResultCode {
     ILLEAGAL_STRING(15001, "非法字符串"),
     UNKNOW_ERROR(16000, "未知错误"),
     DATA_DUPLICATION(1,"数据重复"),
-    NULLDATA(2,"没有任何数据");
+    NULLDATA(2,"没有任何数据"),
+    NO_PERSONID(3, "用户不存在");
 
     private Integer code;
     private String message;

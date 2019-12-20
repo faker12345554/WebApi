@@ -1,4 +1,4 @@
-package com.adminapp.business.entity.user;
+package com.adminapp.business.entity.dw_user;
 
 public class User {
     private int id;

@@ -1,6 +1,6 @@
-package com.adminapp.business.dao.login;
+package com.adminapp.business.dao.dw_login;
 
-import com.adminapp.business.entity.login.UserInformation;
+import com.adminapp.business.entity.dw_login.UserInformation;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

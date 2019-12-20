@@ -1,6 +1,5 @@
 package com.admin.model.menu;
 
-import sun.tools.jconsole.inspector.XObject;
 
 public class MenuData {
     private String title;

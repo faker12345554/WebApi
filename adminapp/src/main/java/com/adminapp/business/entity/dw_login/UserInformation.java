@@ -1,4 +1,4 @@
-package com.adminapp.business.entity.login;
+package com.adminapp.business.entity.dw_login;
 
 
 public class UserInformation {

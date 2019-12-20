@@ -1,7 +1,7 @@
-package com.adminapp.business.controller.login;
+package com.adminapp.business.controller.dw_login;
 
-import com.adminapp.business.entity.login.UserInformation;
-import com.adminapp.business.service.login.LoginService;
+import com.adminapp.business.entity.dw_login.UserInformation;
+import com.adminapp.business.service.dw_login.LoginService;
 import com.prisonapp.business.entity.admin.TokenModel;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

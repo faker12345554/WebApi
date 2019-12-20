@@ -1,6 +1,6 @@
-package com.adminapp.business.dao.user;
+package com.adminapp.business.dao.dw_user;
 
-import com.adminapp.business.entity.user.User;
+import com.adminapp.business.entity.dw_user.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
