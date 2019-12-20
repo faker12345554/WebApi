@@ -19,7 +19,48 @@ public class SinginInformation {
 
     private int result;
     private String filepath;
+
+    public String getReporttype() {
+        return reporttype;
+    }
+
+    public SinginInformation setReporttype(String reporttype) {
+        this.reporttype = reporttype;
+        return this;
+    }
+
+    public String getReportstatus() {
+        return reportstatus;
+    }
+
+    public SinginInformation setReportstatus(String reportstatus) {
+        this.reportstatus = reportstatus;
+        return this;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public SinginInformation setAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public float getDurationtime() {
+        return durationtime;
+    }
+
+    public SinginInformation setDurationtime(float durationtime) {
+        this.durationtime = durationtime;
+        return this;
+    }
+
     private Date createtime;
+    private String reporttype;
+    private String reportstatus;
+    private String address;
+    private float durationtime;
 
     public int getId() {
         return id;

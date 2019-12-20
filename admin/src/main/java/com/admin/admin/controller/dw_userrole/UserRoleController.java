@@ -6,6 +6,7 @@ import com.admin.admin.service.dw_userrole.UserRoleService;
 import com.admin.model.userrole.UserRoleModel;
 import com.common.common.result.ResponseResult;
 
+import com.common.common.result.ResultCode;
 import io.swagger.annotations.ApiOperation;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,36 +23,56 @@ public class UserRoleController {
     private UserRoleService userRoleService;
 
 
+    private ResponseResult result = new ResponseResult();
+
+
     @ApiOperation("新增用户权限")
     @PostMapping("/AddUserRole")
     public ResponseResult saveUserRole(@RequestBody(required = false) UserRole userRole, HttpServletResponse response) {
-        return userRoleService.saveUserRole(userRole);
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(userRoleService.saveUserRole(userRole));
     }
 
     @ApiOperation("修改用户权限")
     @PostMapping("/UpdateUserRole")
     public ResponseResult updateUserRole(@RequestBody(required = false) UserRole userRole, HttpServletResponse response) {
-        return userRoleService.updateUserRole(userRole);
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData( userRoleService.updateUserRole(userRole));
     }
 
     @ApiOperation("删除用户权限")
     @GetMapping("/DelUserRole")
     public ResponseResult deleteUserRole(@RequestParam(required = false) boolean flag, @RequestParam int UserRoleId, HttpServletResponse response) {
-
-        return userRoleService.deleteUserRole(flag, UserRoleId);
+        if (flag == true) {
+            result.setCode(ResultCode.PARAMS_ERROR.getCode());
+            result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
+            return result.setData("参数'flag'输入错误");
+        }
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData( userRoleService.deleteUserRole(flag, UserRoleId));
     }
 
     @ApiOperation("菜单")
     @GetMapping("/GetList")
     public ResponseResult<Menu> listMenu(@RequestParam(required = false) int UserId, HttpServletResponse response) {
-
-        return userRoleService.listMenu(UserId);
+        if (userRoleService.listMenu(UserId).isEmpty()) {
+            result.setCode(ResultCode.NULLDATA.getCode());
+            result.setMessage(ResultCode.NULLDATA.getMessage());
+            return result.setData("该用户没有任何权限,请联系管理员");
+        }
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData( userRoleService.listMenu(UserId));
     }
 
     @ApiOperation("用户权限列表")
     @GetMapping("/GetRoleList")
     public ResponseResult<UserRoleModel> listUserRole(@RequestParam(required = false) int id, int PageSize, int PageIndex, HttpServletResponse response) {
-
-        return userRoleService.listUserRole(id, PageSize, PageIndex);
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(userRoleService.listUserRole(id, PageSize, PageIndex));
     }
 }

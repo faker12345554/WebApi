@@ -1,10 +1,13 @@
 package com.admin.admin.controller.dw_user;
 
+import com.admin.token.TokenService;
 import com.admin.token.tation.UserLoginToken;
 import com.admin.admin.entity.dw_user.User;
 import com.admin.admin.service.dw_user.UserService;
-import com.admin.config.CacheUtils;
+import com.admin.tool.CacheUtils;
 import com.common.common.result.ResponseResult;
+import com.common.common.result.ResultCode;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +19,14 @@ import java.io.PrintWriter;
 import java.util.Random;
 
 @RestController
-//@Api(value = "用户基本信息操作")
+@Api(value = "用户基本信息操作")
 @RequestMapping("/User")
 public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private TokenService tokenService;
 
     private ResponseResult result = new ResponseResult();
 
@@ -29,7 +34,9 @@ public class UserController {
     @ApiOperation("用户信息列表")
     @GetMapping("/GetList")
     public ResponseResult<User> listUser(@RequestParam(required = false) boolean falg, int PageSize, int PageIndex, HttpServletResponse response) {
-        return userService.listUser(falg, PageSize, PageIndex);
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData( userService.listUser(falg, PageSize, PageIndex));
     }
 
 
@@ -38,15 +45,23 @@ public class UserController {
     @UserLoginToken
     @GetMapping("/GetUser")
     public ResponseResult getUser(@RequestParam(required = false) int id, HttpServletResponse response) {
-
-        return userService.getUser(id);
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData( userService.getUser(id));
     }
 
     //新增用户
     @ApiOperation("新增用户")
     @PostMapping("/AddUser")
     public ResponseResult saveUser(@RequestBody User user, HttpServletResponse response) {
-        return userService.saveUser(user);
+        if (userService.GetUserByAccountName(user.getAccountname()) > 1) {
+            result.setCode(ResultCode.DATA_DUPLICATION.getCode());
+            result.setMessage(ResultCode.DATA_DUPLICATION.getMessage());
+            return result.setData("用户名已存在!");
+        }
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData( userService.saveUser(user));
     }
 
     //修改
@@ -54,15 +69,27 @@ public class UserController {
     @ApiOperation("修改用户信息")
     @PostMapping("/UpdateUser")
     public ResponseResult updateUser(@RequestBody User user, HttpServletResponse response) {
-
-        return userService.updateUser(user);
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(userService.updateUser(user));
     }
 
     //删除
     @ApiOperation("删除用户")
     @GetMapping("/DelUser")
     public ResponseResult deleteUser(@RequestParam(required = false) boolean flag, @RequestParam int UserId, HttpServletResponse response) {
-        return userService.deleteUser(flag, UserId);
+        if (flag == true) {
+            result.setCode(ResultCode.PARAMS_ERROR.getCode());
+            result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
+            return result.setData("参数'flag'输入错误");
+        } else if (userService.getUser(UserId) == null) {
+            result.setCode(ResultCode.PARAMS_ERROR.getCode());
+            result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
+            return result.setData("参数'UserId'输入错误,该用户不存在");
+        }
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData( userService.deleteUser(flag, UserId));
     }
 
     //登录
@@ -70,8 +97,19 @@ public class UserController {
     @GetMapping("/Login")
     public ResponseResult login(@RequestParam(required = false) String UserName, @RequestParam(required = false) String Password, @RequestParam(required = false) String Code,
                                 HttpServletResponse response, HttpServletRequest request) {
+        String VerCode = String.valueOf(CacheUtils.get("验证码"));
+        if (!VerCode.equals(Code)) {
+            result.setCode(ResultCode.ILLEAGAL_STRING.getCode());
+            result.setMessage(ResultCode.ILLEAGAL_STRING.getMessage());
+            return result.setData("验证码不正确!");
+        }
 
-        return userService.login(UserName, Password,Code);
+        User user = userService.login(UserName, Password);
+        CacheUtils.put("UserId", user.getId(), 0);
+        String token = tokenService.getToken(user);
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData( token);
     }
 
     @ApiOperation("获取验证码")
