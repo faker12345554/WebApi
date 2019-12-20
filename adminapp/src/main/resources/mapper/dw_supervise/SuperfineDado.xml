@@ -3,6 +3,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.adminapp.business.dao.dw_supervise.SuperfineDado">
     <select id="listPersonInformation" resultType="com.adminapp.business.entity.dw_supervise.Personinformation">
-        select * FROM t_personinformation
+        select personid AS code,personname AS name,age,gender,facepath AS headUrl,suspectstatus AS state,bailoutbegindate AS execStartDate,
+        bailoutenddate AS execEndDate,contact AS phone,persontags AS tags FROM t_personinformation
+    </select>
+    <select id="getPrisonSetting" resultType="com.adminapp.model.dw_supervise.PrisonSettingModel">
+        select id AS code,settingname AS name,settingcheck AS enable FROM t_prisonsetting WHERE personid=#{personid}
     </select>
 </mapper>

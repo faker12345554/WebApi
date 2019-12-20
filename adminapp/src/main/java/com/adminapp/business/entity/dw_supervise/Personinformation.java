@@ -1,62 +1,51 @@
 package com.adminapp.business.entity.dw_supervise;
 
 
+import com.adminapp.model.dw_supervise.PrisonSettingModel;
+
+import java.util.Date;
+import java.util.List;
+
 public class Personinformation {
 
-  private String personid;
-  private String personname;
-  private String gender;
+  private String code;
+  private String name;
+  private String number;
   private long age;
-  private java.sql.Date birthdate;
-  private String card;
-  private String workunit;
-  private java.sql.Date bailoutbegindate;
-  private java.sql.Date bailoutenddate;
-  private String sponsor;
-  private String sponsoralarm;
-  private String contact;
-  private String address;
-  private String wechatnumber;
-  private String qqnumber;
-  private String status;
-  private String founderid;
-  private java.sql.Date foundertime;
-  private String modifierid;
-  private java.sql.Date modifiertime;
-  private String suspectstatus;
-  private String marriage;
-  private String policestation;
-  private String casetype;
-  private String facepath;
-  private String persontags;
+  private String gender;
+  private String headUrl;
+  private String state;
+  public String violateCode;
+  public String violate;
+  public Date execStartDate;
+  public Date execEndDate;
+  public String phone;
+  public String tags;
+  public List<PrisonSettingModel> validWay;
 
-
-  public String getPersonid() {
-    return personid;
+  public String getCode() {
+    return code;
   }
 
-  public void setPersonid(String personid) {
-    this.personid = personid;
+  public void setCode(String code) {
+    this.code = code;
   }
 
-
-  public String getPersonname() {
-    return personname;
+  public String getName() {
+    return name;
   }
 
-  public void setPersonname(String personname) {
-    this.personname = personname;
+  public void setName(String name) {
+    this.name = name;
   }
 
-
-  public String getGender() {
-    return gender;
+  public String getNumber() {
+    return number;
   }
 
-  public void setGender(String gender) {
-    this.gender = gender;
+  public void setNumber(String code) {
+    this.number = code;
   }
-
 
   public long getAge() {
     return age;
@@ -66,202 +55,83 @@ public class Personinformation {
     this.age = age;
   }
 
-
-  public java.sql.Date getBirthdate() {
-    return birthdate;
+  public String getGender() {
+    return gender;
   }
 
-  public void setBirthdate(java.sql.Date birthdate) {
-    this.birthdate = birthdate;
+  public void setGender(String gender) {
+    this.gender = gender;
   }
 
-
-  public String getCard() {
-    return card;
+  public String getHeadUrl() {
+    return headUrl;
   }
 
-  public void setCard(String card) {
-    this.card = card;
+  public void setHeadUrl(String headUrl) {
+    this.headUrl = headUrl;
   }
 
-
-  public String getWorkunit() {
-    return workunit;
+  public String getState() {
+    return state;
   }
 
-  public void setWorkunit(String workunit) {
-    this.workunit = workunit;
+  public void setState(String state) {
+    this.state = state;
   }
 
-
-  public java.sql.Date getBailoutbegindate() {
-    return bailoutbegindate;
+  public String getViolateCode() {
+    return violateCode;
   }
 
-  public void setBailoutbegindate(java.sql.Date bailoutbegindate) {
-    this.bailoutbegindate = bailoutbegindate;
+  public void setViolateCode(String violateCode) {
+    this.violateCode = violateCode;
   }
 
-
-  public java.sql.Date getBailoutenddate() {
-    return bailoutenddate;
+  public String getViolate() {
+    return violate;
   }
 
-  public void setBailoutenddate(java.sql.Date bailoutenddate) {
-    this.bailoutenddate = bailoutenddate;
+  public void setViolate(String violate) {
+    this.violate = violate;
   }
 
-
-  public String getSponsor() {
-    return sponsor;
+  public Date getExecStartDate() {
+    return execStartDate;
   }
 
-  public void setSponsor(String sponsor) {
-    this.sponsor = sponsor;
+  public void setExecStartDate(Date execStartDate) {
+    this.execStartDate = execStartDate;
   }
 
-
-  public String getSponsoralarm() {
-    return sponsoralarm;
+  public Date getExecEndDate() {
+    return execEndDate;
   }
 
-  public void setSponsoralarm(String sponsoralarm) {
-    this.sponsoralarm = sponsoralarm;
+  public void setExecEndDate(Date execEndDate) {
+    this.execEndDate = execEndDate;
   }
 
-
-  public String getContact() {
-    return contact;
+  public String getPhone() {
+    return phone;
   }
 
-  public void setContact(String contact) {
-    this.contact = contact;
+  public void setPhone(String phone) {
+    this.phone = phone;
   }
 
-
-  public String getAddress() {
-    return address;
+  public String getTags() {
+    return tags;
   }
 
-  public void setAddress(String address) {
-    this.address = address;
+  public void setTags(String tags) {
+    this.tags = tags;
   }
 
-
-  public String getWechatnumber() {
-    return wechatnumber;
+  public List<PrisonSettingModel> getValidWay() {
+    return validWay;
   }
 
-  public void setWechatnumber(String wechatnumber) {
-    this.wechatnumber = wechatnumber;
+  public void setValidWay(List<PrisonSettingModel> validWay) {
+    this.validWay = validWay;
   }
-
-
-  public String getQqnumber() {
-    return qqnumber;
-  }
-
-  public void setQqnumber(String qqnumber) {
-    this.qqnumber = qqnumber;
-  }
-
-
-  public String getStatus() {
-    return status;
-  }
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
-
-  public String getFounderid() {
-    return founderid;
-  }
-
-  public void setFounderid(String founderid) {
-    this.founderid = founderid;
-  }
-
-
-  public java.sql.Date getFoundertime() {
-    return foundertime;
-  }
-
-  public void setFoundertime(java.sql.Date foundertime) {
-    this.foundertime = foundertime;
-  }
-
-
-  public String getModifierid() {
-    return modifierid;
-  }
-
-  public void setModifierid(String modifierid) {
-    this.modifierid = modifierid;
-  }
-
-
-  public java.sql.Date getModifiertime() {
-    return modifiertime;
-  }
-
-  public void setModifiertime(java.sql.Date modifiertime) {
-    this.modifiertime = modifiertime;
-  }
-
-
-  public String getSuspectstatus() {
-    return suspectstatus;
-  }
-
-  public void setSuspectstatus(String suspectstatus) {
-    this.suspectstatus = suspectstatus;
-  }
-
-
-  public String getMarriage() {
-    return marriage;
-  }
-
-  public void setMarriage(String marriage) {
-    this.marriage = marriage;
-  }
-
-
-  public String getPolicestation() {
-    return policestation;
-  }
-
-  public void setPolicestation(String policestation) {
-    this.policestation = policestation;
-  }
-
-
-  public String getCasetype() {
-    return casetype;
-  }
-
-  public void setCasetype(String casetype) {
-    this.casetype = casetype;
-  }
-
-
-  public String getFacepath() {
-    return facepath;
-  }
-
-  public void setFacepath(String facepath) {
-    this.facepath = facepath;
-  }
-
-
-  public String getPersontags() {
-    return persontags;
-  }
-
-  public void setPersontags(String persontags) {
-    this.persontags = persontags;
-  }
-
 }

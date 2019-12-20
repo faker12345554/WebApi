@@ -28,9 +28,19 @@ public class SuperviseController {
     public ResultSet getAgainstRule(@ApiParam(name = "type",value = "类别") @RequestParam(required = true)int type,@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true)int count,
                                     @ApiParam(name = "requestCount",value = "请求获取数据的条数") @RequestParam(required = true)int requestCount,@ApiParam(name = "key",value = "搜索关键字") @RequestParam(required = true)String key){
         List<Personinformation> personinformation=superviseService.listPersonInformation();
-        rs.resultCode=0;
-        rs.resultMsg="";
-        rs.data=personinformation;
+        for(int i=0;i<personinformation.size();i++){
+            Personinformation personinformation1=personinformation.get(i);
+            String personid=personinformation1.getCode();
+            PrisonSettingModel prisonSettingModel=superviseService.getPrisonSetting(personid);
+        }
+        if(type==1){
+
+            rs.resultCode=0;
+            rs.resultMsg="";
+            rs.data=personinformation;
+        }
+
+
         return rs;
     }
 }
