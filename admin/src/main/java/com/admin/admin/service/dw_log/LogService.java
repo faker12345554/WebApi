@@ -6,7 +6,6 @@ import com.admin.model.log.LogParamModel;
 import com.admin.model.log.LogReturnModel;
 import com.admin.page.PageBean;
 import com.common.common.result.ResponseResult;
-import com.common.common.result.ResultCode;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class LogService {
 //        return logDao.insertLog(logInformation);
 //    }
 
-    public ResponseResult<LogReturnModel> listLog(LogParamModel logParamModel) {
+    public PageBean<LogReturnModel> listLog(LogParamModel logParamModel) {
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
         PageHelper.startPage(logParamModel.getPageIndex(), logParamModel.getPageSize());
 
@@ -34,8 +33,7 @@ public class LogService {
         PageBean<LogReturnModel> pageData = new PageBean<>(logParamModel.getPageIndex(), logParamModel.getPageSize(), countNums);
         pageData.setTotalPage(info.getPages());//总页数
         pageData.setItems(allItems);
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(pageData);
+
+        return pageData;
     }
 }

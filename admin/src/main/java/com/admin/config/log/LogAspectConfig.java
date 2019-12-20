@@ -2,7 +2,7 @@ package com.admin.config.log;
 
 import com.admin.admin.dao.dw_log.LogDao;
 import com.admin.admin.entity.dw_log.LogInformation;
-import com.admin.config.CacheUtils;
+import com.admin.tool.CacheUtils;
 import com.google.gson.Gson;
 import io.swagger.annotations.ApiOperation;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;

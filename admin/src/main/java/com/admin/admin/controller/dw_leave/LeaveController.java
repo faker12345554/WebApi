@@ -25,7 +25,7 @@ public class LeaveController {
     @GetMapping("/listLeave")
     public ResponseResult listLeave(@RequestParam String personid,HttpServletResponse response) {
 
-        return leaveService.getLeave(personid);
+        return result.setData( leaveService.getLeave(personid));
     }
 
 //    @ApiOperation(value = "获取个人请假信息")
@@ -48,8 +48,17 @@ public class LeaveController {
     @ApiOperation(value = "增加审批信息")
     @PostMapping("/addAuditor")
     public ResponseResult insertAuditor(@RequestBody AuditorInformation auditorInformation, HttpServletResponse response) {
-
-        return leaveService.insertAuditor(auditorInformation);
+        LeaveInformation leaveInformations =leaveService.getLeaveInformation(auditorInformation.getLeaveorder());
+        if (leaveInformations != null) {
+            int updateLeaveStatus = leaveService.updateLeaveStatus(auditorInformation);
+            result.setCode(ResultCode.SUCCESS.getCode());
+            result.setMessage(ResultCode.SUCCESS.getMessage());
+            return result.setData(leaveService.insertAuditor(auditorInformation));
+        } else {
+            result.setCode(ResultCode.PARAMS_ERROR.getCode());
+            result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
+            return result.setData("该请假单不存在");
+        }
     }
 
     @ApiOperation(value = "删除审批信息")

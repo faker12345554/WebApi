@@ -21,7 +21,7 @@ public class Upload {
         }
 
         String fileName = file.getOriginalFilename();
-        File dest = new File(FilePath + fileName);
+        File dest = new File(FilePath, fileName);
         try {
             file.transferTo(dest);
             return "上传成功";

@@ -2,27 +2,24 @@ package com.admin.admin.service.dw_biosign;
 
 import com.admin.admin.dao.dw_biosign.BiosignatureDao;
 import com.admin.admin.entity.dw_bios.BiosignatureInformation;
-import com.common.common.result.ResponseResult;
-import com.common.common.result.ResultCode;
+import com.admin.model.biosignature.BiosignatureReturnModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BiosignatureService {
 
     @Autowired
     private BiosignatureDao biosignatureDao;
-    private ResponseResult result = new ResponseResult();
 
-    public ResponseResult insertBiosignature(BiosignatureInformation biosignatureInformation) {
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(biosignatureDao.insertBiosignature(biosignatureInformation));
+
+    public int insertBiosignature(BiosignatureInformation biosignatureInformation) {
+        return biosignatureDao.insertBiosignature(biosignatureInformation);
     }
 
-    public ResponseResult getBiosignature(String personid, int type) {
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(biosignatureDao.getBiosignature(personid, type));
+    public List<BiosignatureReturnModel> getBiosignature(String personid, int type) {
+        return biosignatureDao.getBiosignature(personid, type);
     }
 }
