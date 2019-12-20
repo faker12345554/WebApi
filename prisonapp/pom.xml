@@ -25,6 +25,7 @@
             <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
+
     </dependencies>
     <parent>
         <groupId>com.donwait</groupId>
@@ -35,7 +36,6 @@
     <artifactId>prisonapp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>prisonapp</name>
-    <description>Demo project for Spring Boot</description>
 
     <build>
         <plugins>
@@ -44,6 +44,10 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+
     </build>
 
+
 </project>
+
+
