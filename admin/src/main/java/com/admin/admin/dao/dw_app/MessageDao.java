@@ -1,4 +1,4 @@
-package com.admin.admin.dao.app;
+package com.admin.admin.dao.dw_app;
 
 import org.apache.ibatis.annotations.Mapper;
 

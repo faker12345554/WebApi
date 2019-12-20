@@ -8,8 +8,6 @@ import com.admin.model.menu.ParentMenu;
 import com.admin.model.menu.SonMenu;
 import com.admin.model.userrole.UserRoleModel;
 import com.admin.page.PageBean;
-import com.common.common.result.ResponseResult;
-import com.common.common.result.ResultCode;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,46 +22,33 @@ public class UserRoleService {
     @Autowired
     private UserRoleDao userRoleDao;
 
-    private ResponseResult result = new ResponseResult();
 
     //新增
-    public ResponseResult saveUserRole(UserRole userRole) {
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(userRoleDao.saveUserRole(userRole));
+    public int saveUserRole(UserRole userRole) {
+
+        return userRoleDao.saveUserRole(userRole);
     }
 
     //修改
-    public ResponseResult updateUserRole(UserRole userRole) {
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(userRoleDao.updateUserRole(userRole));
+    public int updateUserRole(UserRole userRole) {
+
+        return userRoleDao.updateUserRole(userRole);
     }
 
     //删除
-    public ResponseResult deleteUserRole(boolean flag, int UserRoleId) {
-        if (flag == true) {
-            result.setCode(ResultCode.PARAMS_ERROR.getCode());
-            result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
-            return result.setData("参数'flag'输入错误");
-        }
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
+    public int deleteUserRole(boolean flag, int UserRoleId) {
 
-        return result.setData(userRoleDao.deleteUserRole(flag, UserRoleId));
+
+        return userRoleDao.deleteUserRole(flag, UserRoleId);
     }
 
     //获取所以菜单
-    public ResponseResult<Menu> listMenu(int UserId) {
+    public List<ParentMenu> listMenu(int UserId) {
 
         List<ParentMenu> Menu = new ArrayList<ParentMenu>();
         //菜单
         List<Menu> MenuList = userRoleDao.listMenu(UserId);
-        if (MenuList.isEmpty()) {
-            result.setCode(ResultCode.NULLDATA.getCode());
-            result.setMessage(ResultCode.NULLDATA.getMessage());
-            return result.setData("该用户没有任何权限,请联系管理员");
-        }
+
         List<Menu> mainList = new ArrayList<Menu>();
         for (Menu item : MenuList) {
             if (item.getTopid() == 0) {
@@ -85,7 +70,7 @@ public class UserRoleService {
             List<SonMenu> SubList = new ArrayList<SonMenu>();
             for (Menu Me : MenuList) {
                 if (Me.getTopid() == item.getMenu_id()) {
-                    MenuData data = new MenuData(Me.getName(),Me.getAffix());
+                    MenuData data = new MenuData(Me.getMenuname(),Me.getAffix());
                     SonMenu Sub = new SonMenu();
                     Sub.setPath(Me.getPath());
                     Sub.setComponent(Me.getComponent());
@@ -102,14 +87,13 @@ public class UserRoleService {
 
             Menu.add(model);
         }
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(Menu);
+
+        return Menu;
     }
 
 
     //获取用户拥有的权限
-    public ResponseResult listUserRole(int id, int PageSize, int PageIndex) {
+    public PageBean listUserRole(int id, int PageSize, int PageIndex) {
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
         PageHelper.startPage(PageIndex, PageSize);
 
@@ -120,9 +104,8 @@ public class UserRoleService {
         pageData.setTotalPage(info.getPages());//总页数
         pageData.setItems(allItems);
 
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(pageData);
+
+        return pageData;
 
     }
 

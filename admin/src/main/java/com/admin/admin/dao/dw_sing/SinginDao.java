@@ -6,5 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface SinginDao {
+    //查看签到信息
     SinginInformation getSingin(@Param("personId") int personId);
 }

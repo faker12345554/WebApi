@@ -2,25 +2,21 @@ package com.admin.admin.service.dw_enclosure;
 
 import com.admin.admin.dao.dw_enclosure.enclosureDao;
 import com.admin.admin.entity.dw_enclosure.enclosure;
-import com.common.common.result.ResponseResult;
-import com.common.common.result.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class enclosureService {
 
     @Autowired
     private enclosureDao enclosureDao;
-    private ResponseResult result = new ResponseResult();
+
 
     //新增
-    public ResponseResult saveEnclosure(enclosure enclosure) {
-        if (enclosureDao.selectEnclosureByPersonId(enclosure.getPersonId()) > 0) {
-            result.setCode(ResultCode.DATA_DUPLICATION.getCode());
-            result.setMessage(ResultCode.DATA_DUPLICATION.getMessage());
-            return result.setData("已存在位置信息");
-        }
+    public int saveEnclosure(enclosure enclosure) {
+
 //        for (Longitude iten:map.getPosition()){
 //            enclosure enclosure=new enclosure();
 //            enclosure.setPersonId(map.getPerson_id());
@@ -32,13 +28,15 @@ public class enclosureService {
 //        }
 
 
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(enclosureDao.saveEnclosure(enclosure));
+
+        return enclosureDao.saveEnclosure(enclosure);
+    }
+    public int selectEnclosureByPersonId(String PersonId){
+        return  enclosureDao.selectEnclosureByPersonId(PersonId);
     }
 
     //修改
-    public ResponseResult updateEnclosure(enclosure enclosure) {
+    public int updateEnclosure(enclosure enclosure) {
         //        for (Longitude iten:map.getPosition()){
 //            enclosure enclosure=new enclosure();
 //            enclosure.setPersonId(map.getPerson_id());
@@ -50,22 +48,19 @@ public class enclosureService {
 //            result.setData(enclosureService.saveEnclosure(enclosure));
 //            System.out.println(result.getData());
 //        }
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(enclosureDao.updateEnclosure(enclosure));
+        return enclosureDao.updateEnclosure(enclosure);
     }
 
     //删除
-    public ResponseResult deleteEnclosure(String personId) {
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(enclosureDao.deleteEnclosure(personId));
+    public int deleteEnclosure(String personId) {
+
+        return enclosureDao.deleteEnclosure(personId);
     }
 
 
 
     //查看
-    public ResponseResult<enclosure> selectEnclosure(String personId) {
+    public List<enclosure> selectEnclosure(String personId) {
         //  List<enclosure> listEncLouSure=enclosureService.selectEnclosure(personId);
 //        RangeMap rangeMap=new RangeMap();
 //        List<Longitude> listLongitudes=new ArrayList<Longitude>();
@@ -81,9 +76,8 @@ public class enclosureService {
 //            listLongitudes.add(longitude);
 //        }
 //        rangeMap.setPosition(listLongitudes);
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
 
-        return result.setData(enclosureDao.selectEnclosure(personId));
+
+        return enclosureDao.selectEnclosure(personId);
     }
 }
