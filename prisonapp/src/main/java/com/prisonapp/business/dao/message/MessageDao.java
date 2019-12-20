@@ -17,4 +17,6 @@ public interface MessageDao {
     int readMessage(@Param("type")String  type,@Param("messageTimestamp")String  messageTimestamp,@Param("userId")String userId );
 
     List<MessageModel> searchNotification(@Param("key")String key ,@Param("userId")String userId);
+
+    List<MessageModel> unreadCount(@Param("type")String  type,@Param("userId")String userId);
 }

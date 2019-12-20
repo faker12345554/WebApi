@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prisonapp.business.dao.supervise.SuperviseDao">
+    <select id="getApplyLeaveList"  resultType="com.prisonapp.business.entity.supervise.GetApplyLeaveListModel">
+    select leaveorder as code,statuscode as statusCode, states as status,personname as applicant,subittimestamp as applyTimestamp,starttimestamp as  startTimestamp,endtimestamp as endTimestamp,
+    leavedestination as  address,  reason,recording as reasonAudioUrl FROM t_leave where personid=#{userId} and statuscode=#{statusCode}
+     ORDER BY subittimestamp DESC LIMIT #{requestCount} OFFSET #{count}
+    </select>
+
+    <select id="getTotalApplyLeaveList" resultType="com.prisonapp.business.entity.supervise.SuperviseModel">
+        select * FROM t_leave where personid=#{userId} and statuscode=#{statusCode}
+    </select>
+
+    <select id="applyRecord"  resultType="com.prisonapp.business.entity.supervise.ApplyRecord">
+    select  statuscode as statusCode,states as status,auditordatetime as timestamp,accountname as  person from t_auditor where leaveorder=#{code}
+     </select>
+
+    <insert id="submitApplyLeave" parameterType="com.prisonapp.business.entity.supervise.SuperviseModel">
+        INSERT INTO t_leave(personid, leaveorder,starttimestamp,endtimestamp,reason,recording,provincecode,provincename,citycode,cityname,areacode,areaname)
+        VALUES              (#{userId}, #{code},#{startDate},#{endDate},#{submitApplyLeaveModel.reason},#{submitApplyLeaveModel.reasonAudioUrl},#{submitApplyLeaveModel.provinceCode},#{submitApplyLeaveModel.province},#{submitApplyLeaveModel.cityCode},#{submitApplyLeaveModel.city},#{submitApplyLeaveModel.districtCode},#{submitApplyLeaveModel.district})
+    </insert>
+
+</mapper>

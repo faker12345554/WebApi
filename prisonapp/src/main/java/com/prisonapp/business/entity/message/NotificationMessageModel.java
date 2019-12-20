@@ -1,14 +1,15 @@
 package com.prisonapp.business.entity.message;
 
 import java.sql.Timestamp;
-
+//保外人员的通知列表
 public class NotificationMessageModel {
-    private String type;
-    private String typeName;
-    private String content;
-    private java.sql.Timestamp timestamp;
-    private long detailtype;
-    private String detailtypename;
+    public String type;
+    public String typeName;
+    public String content;
+    public java.sql.Timestamp timestamp;
+    public long detailType;
+    public String detailTypeName;
+    public int unreadCount;
 
     public String getType() {
         return type;
@@ -42,19 +43,27 @@ public class NotificationMessageModel {
         this.timestamp = timestamp;
     }
 
-    public long getDetailtype() {
-        return detailtype;
+    public long getDetailType() {
+        return detailType;
     }
 
-    public void setDetailtype(long detailtype) {
-        this.detailtype = detailtype;
+    public void setDetailType(long detailType) {
+        this.detailType = detailType;
     }
 
-    public String getDetailtypename() {
-        return detailtypename;
+    public String getDetailTypeName() {
+        return detailTypeName;
     }
 
-    public void setDetailtypename(String detailtypename) {
-        this.detailtypename = detailtypename;
+    public void setDetailTypeName(String detailTypeName) {
+        this.detailTypeName = detailTypeName;
+    }
+
+    public int getUnreadCount() {
+        return unreadCount;
+    }
+
+    public void setUnreadCount(int unreadCount) {
+        this.unreadCount = unreadCount;
     }
 }

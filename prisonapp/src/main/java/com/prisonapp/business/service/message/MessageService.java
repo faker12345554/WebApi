@@ -20,12 +20,16 @@ public class MessageService {
     public List<MessageListModel> getMessageList(String  type, int  count, int requestCount, String key, String userId ){
         return messageDao.getMessageList(type,count,requestCount,key,userId);
     }
-
+    //保外人员确认消息读取
     public int readMessage(String  type,String messageTimestamp,String userId){
         return messageDao.readMessage(type,messageTimestamp,userId);
     }
-
+    //保外人员通知搜索
     public List<MessageModel> searchNotification(String key,String userId){
         return messageDao.searchNotification(key,userId);
+    }
+    //本类型未读消息数
+    public List<MessageModel> unreadCount(String  type,String userId){
+        return messageDao.unreadCount(type,userId);
     }
 }

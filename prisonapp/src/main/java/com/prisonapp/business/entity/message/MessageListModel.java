@@ -1,17 +1,19 @@
 package com.prisonapp.business.entity.message;
 
 import java.sql.Timestamp;
-
+/**
+ * 保外人员的消息列表list
+ * */
 public class MessageListModel {
 
-    private int  code;
-    private String type;
-    private String typeName;
-    private String content;
-    private java.sql.Timestamp timestamp;
-    private long detailtype;
-    private String detailtypename;
-    private boolean isRead;
+    public int  code;
+    public String type;
+    public String typeName;
+    public String content;
+    public java.sql.Timestamp timestamp;
+    public long detailtype;
+    public String detailtypename;
+    public boolean isRead;
 
     public int getCode() {
         return code;

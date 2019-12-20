@@ -5,7 +5,7 @@ import com.common.common.result.ResultSet;
 import com.prisonapp.business.entity.message.MessageListModel;
 import com.prisonapp.business.entity.message.MessageModel;
 import com.prisonapp.business.entity.message.NotificationMessageModel;
-import com.prisonapp.business.entity.message.TotalMessageListModel;
+import com.prisonapp.business.entity.message.ResultNotificationMessageModel;
 import com.prisonapp.business.service.message.MessageService;
 import com.prisonapp.tool.CacheUtils;
 import io.swagger.annotations.ApiOperation;
@@ -21,15 +21,24 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
     private ResultSet result = new ResultSet();
-    private  List<TotalMessageListModel> totalMessageListModels;
+
+    private ResultNotificationMessageModel resultNotificationMessage = new ResultNotificationMessageModel();
 
     @ApiOperation(value = "获取保外人员的通知列表")
     @PostMapping("/getNotificationList")
     public ResultSet getNotificationList( ) {
+        int sum=0;
         List<NotificationMessageModel> notificationMessageModels =messageService.getNotificationList(CacheUtils.get("UserId").toString());
+        for(NotificationMessageModel item: notificationMessageModels){
+            int unreadCount =messageService.unreadCount(item.getType(),CacheUtils.get("UserId").toString()).size();
+            item.setUnreadCount(unreadCount);
+            sum+=unreadCount;
+        }
+        resultNotificationMessage.totalCount=sum;
+        resultNotificationMessage.list=notificationMessageModels;
         result.resultCode=0;
         result.resultMsg="";
-        result.data=notificationMessageModels;
+        result.data=resultNotificationMessage;
 
         return result;
     }
