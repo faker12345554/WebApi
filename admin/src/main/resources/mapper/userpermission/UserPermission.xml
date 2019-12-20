@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.dw_userpermission.UserPermissionGroupDao">
+    <select id="listGroup" resultType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup">
+        SELECT * from t_userpermissiongroup WHERE status=#{flag}
+    </select>
+
+    <select id="getGroup" parameterType="int" resultType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup">
+        SELECT * from t_userpermissiongroup WHERE status=TRUE and permissionid=#{id}
+    </select>
+    <insert id="saveUserGroup" parameterType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup">
+        insert into t_userpermissiongroup(createid,createtime,permissionname,createname,status) values (#{createid},#{createtime},#{permissionname},#{createname},#{status})
+    </insert>
+    <update id="updateGroup" parameterType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup">
+        update t_userpermissiongroup set permissionname=#{permissionname},createtime=#{createtime},createid=#{createid},createname=#{createname},status=#{status} where permissionid=#{permissionid}
+    </update>
+    <update id="deleteGroup" >
+        update t_userpermissiongroup set status=#{flag} where permissionid=#{PermissId}
+    </update>
+    <select id="selectByName" parameterType="String" resultType="int">
+        select count(*) from t_userpermissiongroup where permissionname=#{Name}
+    </select>
+</mapper>

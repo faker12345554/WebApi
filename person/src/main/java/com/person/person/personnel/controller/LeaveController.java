@@ -5,7 +5,7 @@ import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.person.person.personnel.entity.AuditorInformation;
 import com.person.person.personnel.entity.LeaveInformation;
-import com.admin.admin.service.person.LeaveService;
+import com.admin.admin.service.dw_person.LeaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
