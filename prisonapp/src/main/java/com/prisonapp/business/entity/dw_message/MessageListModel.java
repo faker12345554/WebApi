@@ -3,6 +3,7 @@ package com.prisonapp.business.entity.dw_message;
 import java.sql.Timestamp;
 /**
  * 保外人员的消息列表list
+ * 同时也是获取保外人员最新消息
  * */
 public class MessageListModel {
 

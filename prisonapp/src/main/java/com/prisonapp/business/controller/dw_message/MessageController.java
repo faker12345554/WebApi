@@ -9,10 +9,17 @@ import com.prisonapp.token.tation.UserLoginToken;
 import com.prisonapp.tool.CacheUtils;
 import io.swagger.annotations.ApiOperation;
 import jdk.nashorn.internal.parser.Token;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import sun.invoke.util.VerifyType;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.SimpleFormatter;
 
 @RestController
 @RequestMapping("/app/message")
@@ -112,6 +119,28 @@ public class MessageController {
         result.data=resultSearchNotificationModel;
         return result;
     }
+
+    @UserLoginToken
+    @ApiOperation(value = " 获取保外人员最新消息")
+    @PostMapping("/getNewestMessageList")
+    public  ResultSet getNewestMessageList(@RequestParam(required = true)int count,@RequestParam(required = true)int requestCount){
+        //获取今天的日期
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        String todayDate = sdf.format(new Date());
+        //获取明天的日期
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(new Date());
+        calendar.add(calendar.DATE,1);
+        String tomorrowDate= sdf.format(calendar.getTime());
+        List<MessageListModel> NewestMessageListModels = messageService.getNewestMessageList( todayDate,tomorrowDate,getUserId());
+        result.resultCode=0;
+        result.resultMsg="";
+        result.data=NewestMessageListModels;
+        return result;
+    }
+
+
+
     public String  getUserId(){
         String userId="";
         if(CacheUtils.get("UserId").toString()!=null||CacheUtils.get("UserId").toString()!="")
