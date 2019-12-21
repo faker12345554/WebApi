@@ -4,9 +4,18 @@
 <mapper namespace="com.adminapp.business.dao.dw_supervise.SuperfineDado">
     <select id="listPersonInformation" resultType="com.adminapp.business.entity.dw_supervise.Personinformation">
         select personid AS code,personname AS name,age,gender,facepath AS headUrl,suspectstatus AS state,bailoutbegindate AS execStartDate,
-        bailoutenddate AS execEndDate,contact AS phone,persontags AS tags FROM t_personinformation
+        bailoutenddate AS execEndDate,contact AS phone,persontags AS tags FROM t_personinformation WHERE sponsoralarm=#{UserId} ORDER BY t_personinformation.personname
     </select>
     <select id="getPrisonSetting" resultType="com.adminapp.model.dw_supervise.PrisonSettingModel">
         select id AS code,settingname AS name,settingcheck AS enable FROM t_prisonsetting WHERE personid=#{personid}
+    </select>
+    <select id="listLocation" resultType="com.adminapp.model.dw_supervise.ReportLocationModel">
+        select * FROM t_location WHERE personid=#{personid}
+    </select>
+    <select id="listReportSetting" resultType="com.adminapp.business.entity.dw_supervise.ReportSettingsInformation">
+        select * FROM t_reportsettings
+    </select>
+    <select id="listSingin" resultType="com.adminapp.business.entity.dw_supervise.SinginInformation">
+        select * FROM t_singin WHERE personid=#{personid} AND type=#{type}
     </select>
 </mapper>
