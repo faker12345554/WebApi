@@ -46,8 +46,7 @@ public class SuperviseController {
         cal.setTime(date);   //设置当前时间
         long time1 = cal.getTimeInMillis();
         cal.add(Calendar.MONTH, -1);  //在当前时间基础上减一个月
-        long time2 = cal.getTimeInMillis();
-        long days = (time2 - time1) / (1000 * 60 * 60 * 24);
+        ;
         Date lastDate = cal.getTime();    //取得上一个月日期
         List<Personinformation> recentPerson = new ArrayList<>();
         for (Personinformation item : personinformation) {
@@ -55,7 +54,8 @@ public class SuperviseController {
             if (lastDate.getTime() < bailoutbegindate.getTime()) {    //用监居开始时间与一月前时间比较，大于则为新增人员
                 recentPerson.add(item);
             }
-        }
+        }long time2 = cal.getTimeInMillis();
+        long days = (time2 - time1) / (1000 * 60 * 60 * 24);
 
         List<Personinformation> bailoutPerson = new ArrayList<>();
         for (Personinformation item : personinformation) {
