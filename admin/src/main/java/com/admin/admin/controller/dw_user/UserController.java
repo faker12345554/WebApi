@@ -10,6 +10,7 @@ import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,12 +35,13 @@ public class UserController {
 
 
     @ApiOperation("用户信息列表")
-    @GetMapping("/GetList")
+    @GetMapping("/GetList") // 想不出来，得找找噢噢
     public ResponseResult<User> listUser(@RequestParam(required = false) boolean falg, int PageSize, int PageIndex, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        List<User> list=userService.listUser(falg);
-        return result.setData(PageUtil.PageList(list,PageSize, PageIndex));
+     //   List<User> list=userService.listUser(falg);
+       // PageUtil.PageList(list,PageSize, PageIndex);
+        return result.setData(userService.listUser(falg,PageIndex,PageSize));
     }
 
 
