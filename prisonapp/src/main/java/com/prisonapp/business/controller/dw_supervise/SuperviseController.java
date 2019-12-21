@@ -82,7 +82,8 @@ public class SuperviseController {
     public ResultSet uploadAudio(MultipartFile file){
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(System.currentTimeMillis());
-        String url =System.getProperty("user.dir")+"\\Audio\\"+formatter.format(date);
+        String url =System.getProperty("user.dir")+"\\prisonapp\\"+"\\src\\"+"\\main\\"+"\\resources\\"+"\\uploadFile\\"+formatter.format(date);
+        //C:\Users\tjh\Desktop\新建文件夹 (6)\WebApi\prisonapp\src\main\resources\uploadFile
         File path =new File(url);
         if  (!path.exists()  && !path.isDirectory())
         {

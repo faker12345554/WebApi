@@ -38,8 +38,12 @@ public class MessageService {
         return messageDao.messageTotalCount(type,userId);
     }
 
-    public List<MessageListModel> getNewestMessageList(String  todayDate,String tomorrowDate,String userId){
-        return messageDao.getNewestMessageList(todayDate,tomorrowDate,userId);
+    public List<MessageListModel> getNewestMessageList(int count ,int requestCountString ,String  todayDate,String tomorrowDate,String userId){
+        return messageDao.getNewestMessageList(count,requestCountString,todayDate,tomorrowDate,userId);
+    }
+
+    public List<MessageListModel> newestMessageTotalCount(String  todayDate,String tomorrowDate,String userId){
+        return messageDao.newestMessageTotalCount(todayDate,tomorrowDate,userId);
     }
 
 }
