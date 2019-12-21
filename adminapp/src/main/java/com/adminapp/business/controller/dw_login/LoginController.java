@@ -2,8 +2,8 @@ package com.adminapp.business.controller.dw_login;
 
 import com.adminapp.business.entity.dw_login.UserInformation;
 import com.adminapp.business.service.dw_login.LoginService;
-
-import com.prisonapp.business.entity.user.TokenModel;
+import com.adminapp.config.CacheUtils;
+import com.prisonapp.business.entity.admin.TokenModel;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +28,7 @@ public class LoginController {
     @PostMapping("/login")
     public ResultSet Login(@ApiParam(name = "account", value = "登陆账号") @RequestParam(required = true) String account, @ApiParam(name = "password", value = "密码") @RequestParam(required = true) String password) {
         try {
+            CacheUtils.put("UserId",account);
             UserInformation user = loginService.Login(account);
             if (user != null && user.getStatus().equals("t")) {                //判断账号是否存在
                 String token = "1144556677889999";
