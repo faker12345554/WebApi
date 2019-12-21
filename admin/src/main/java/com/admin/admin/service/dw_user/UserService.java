@@ -2,9 +2,7 @@ package com.admin.admin.service.dw_user;
 
 import com.admin.admin.dao.dw_user.UserDao;
 import com.admin.admin.entity.dw_user.User;
-import com.admin.page.PageBean;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,19 +53,13 @@ public class UserService {
     }
 
     //用户列表
-    public PageBean listUser(boolean flag, int PageSize, int PageIndex) {
+    public List<User> listUser(boolean flag) {
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
-        PageHelper.startPage(PageIndex, PageSize);
 
-        List<User> allItems = userDao.listUser(flag);
-        PageInfo<User> info = new PageInfo<>(allItems);//全部商品
-        int countNums = (int) info.getTotal();            //总记录数
-        PageBean<User> pageData = new PageBean<>(PageIndex, PageSize, countNums);
-        pageData.setTotalPage(info.getPages());//总页数
-        pageData.setItems(allItems);
         //我系统封装了一个 直接丢给你试试
 
-        return pageData;
+
+        return userDao.listUser(flag);
     }
 }
 

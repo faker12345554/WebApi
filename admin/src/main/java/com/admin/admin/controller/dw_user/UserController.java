@@ -1,5 +1,6 @@
 package com.admin.admin.controller.dw_user;
 
+import com.admin.page.PageUtil;
 import com.admin.token.TokenService;
 import com.admin.token.tation.UserLoginToken;
 import com.admin.admin.entity.dw_user.User;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Random;
 
 @RestController
@@ -36,7 +38,8 @@ public class UserController {
     public ResponseResult<User> listUser(@RequestParam(required = false) boolean falg, int PageSize, int PageIndex, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData( userService.listUser(falg, PageSize, PageIndex));
+        List<User> list=userService.listUser(falg);
+        return result.setData(PageUtil.PageList(list,PageSize, PageIndex));
     }
 
 
@@ -77,7 +80,7 @@ public class UserController {
     //删除
     @ApiOperation("删除用户")
     @GetMapping("/DelUser")
-    public ResponseResult deleteUser(@RequestParam(required = false) boolean flag, @RequestParam int UserId, HttpServletResponse response) {
+    public ResponseResult deleteUser(@RequestParam boolean flag, @RequestParam int UserId, HttpServletResponse response) {
         if (flag == true) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
             result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
@@ -95,7 +98,7 @@ public class UserController {
     //登录
     @ApiOperation("登录")
     @GetMapping("/Login")
-    public ResponseResult login(@RequestParam(required = false) String UserName, @RequestParam(required = false) String Password, @RequestParam(required = false) String Code,
+    public ResponseResult login(@RequestParam String UserName, @RequestParam String Password, @RequestParam String Code,
                                 HttpServletResponse response, HttpServletRequest request) {
         String VerCode = String.valueOf(CacheUtils.get("验证码"));
         if (!VerCode.equals(Code)) {
