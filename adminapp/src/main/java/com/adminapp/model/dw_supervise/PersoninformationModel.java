@@ -1,8 +1,8 @@
-package com.adminapp.business.entity.dw_supervise;
+package com.adminapp.model.dw_supervise;
 
 import java.util.Date;
 
-public class Personinformation {
+public class PersoninformationModel {
 
   private String code;
   private String name;
@@ -118,9 +118,7 @@ public class Personinformation {
     return tags;
   }
 
-  public void setTags(String tags) {
-    String[] a=tags.split("，");
-    this.tags = a;
+  public void setTags(String[] tags) {
+    this.tags = tags;
   }
-
 }
