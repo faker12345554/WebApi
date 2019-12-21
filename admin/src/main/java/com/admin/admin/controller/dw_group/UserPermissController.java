@@ -21,7 +21,7 @@ public class UserPermissController {
 
     @ApiOperation("新增组信息")
     @PostMapping("/AddGroup")
-    public ResponseResult saveGroup(@RequestBody(required = false) UserPermissionGroup group, HttpServletResponse response) {
+    public ResponseResult saveGroup(@RequestBody UserPermissionGroup group, HttpServletResponse response) {
 
         if (groupService.selectByName(group.getPermissionname()) > 0) {
             result.setCode(ResultCode.DATA_DUPLICATION.getCode());
@@ -35,7 +35,7 @@ public class UserPermissController {
 
     @ApiOperation("修改组信息")
     @PostMapping("/UpdateGroup")
-    public ResponseResult updateGroup(@RequestBody(required = false) UserPermissionGroup group, HttpServletResponse response) {
+    public ResponseResult updateGroup(@RequestBody UserPermissionGroup group, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( groupService.updateGroup(group));
@@ -43,7 +43,7 @@ public class UserPermissController {
 
     @ApiOperation("删除组信息")
     @GetMapping("/DelGroup")
-    public ResponseResult deleteGroup(@RequestParam(required = false) boolean flag,
+    public ResponseResult deleteGroup(@RequestParam boolean flag,
                                       @RequestParam int GroupId, HttpServletResponse response) {
         if (flag == true) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
@@ -61,7 +61,7 @@ public class UserPermissController {
 
     @ApiOperation("获取组信息")
     @GetMapping("/GetGroup")
-    public ResponseResult getGroup(@RequestParam(required = false) int id, HttpServletResponse response) {
+    public ResponseResult getGroup(@RequestParam int id, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( groupService.getGroup(id));
@@ -69,7 +69,7 @@ public class UserPermissController {
 
     @ApiOperation("权限组列表")
     @GetMapping("GetList")
-    public ResponseResult listGroup(@RequestParam(required = false) boolean flag, int PageSize, int PageIndex, HttpServletResponse response) {
+    public ResponseResult listGroup(@RequestParam boolean flag, int PageSize, int PageIndex, HttpServletResponse response) {
 
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());

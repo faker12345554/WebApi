@@ -20,7 +20,7 @@ public class GuarantController {
 
     @ApiOperation(value = "新增担保信息")
     @PostMapping("/addGuarant")
-    public ResponseResult insertGuarant(@RequestBody(required = false) GuaranteeInformation guaranteeinformation, HttpServletResponse response) {
+    public ResponseResult insertGuarant(@RequestBody GuaranteeInformation guaranteeinformation, HttpServletResponse response) {
 
         if(guaranService.getGuaByPersonId(guaranteeinformation.getPersonid())>=1){
             result.setCode(ResultCode.DATA_DUPLICATION.getCode());
@@ -35,7 +35,7 @@ public class GuarantController {
 
     @ApiOperation(value = "修改担保信息")
     @PostMapping("/updateGuara")
-    public ResponseResult updateGuara(@RequestBody(required = false) GuaranteeInformation guaranteeinformation, HttpServletResponse response) {
+    public ResponseResult updateGuara(@RequestBody GuaranteeInformation guaranteeinformation, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(guaranService.updateGuara(guaranteeinformation));
@@ -43,7 +43,7 @@ public class GuarantController {
 
     @ApiOperation(value = "删除担保信息")
     @GetMapping("/deleteGuara")
-    public ResponseResult deleteGuara(@RequestParam(required = false) boolean flag,
+    public ResponseResult deleteGuara(@RequestParam boolean flag,
                                       @RequestParam int GuaId, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
@@ -53,7 +53,7 @@ public class GuarantController {
 
     @ApiOperation(value = "获取担保信息")
     @GetMapping("/getGuara")
-    public ResponseResult getGuara(@RequestParam(required = false) int id, HttpServletResponse response) {
+    public ResponseResult getGuara(@RequestParam int id, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( guaranService.getGuara(id));

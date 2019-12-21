@@ -63,7 +63,7 @@ public class LeaveController {
 
     @ApiOperation(value = "删除审批信息")
     @PostMapping("/deleteAuditor")
-    public ResponseResult deleteAuditor(@ApiParam(name = "leaveOrder", value = "请假单号") @RequestParam(required = false) String leaveOrder, HttpServletResponse response) {
+    public ResponseResult deleteAuditor(@ApiParam(name = "leaveOrder", value = "请假单号") @RequestParam String leaveOrder, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(leaveService.deleteAuditor(leaveOrder));

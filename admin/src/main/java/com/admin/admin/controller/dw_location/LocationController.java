@@ -32,7 +32,7 @@ public class LocationController {
      */
     @ApiOperation("定位信息列表")
     @GetMapping("/LocationList")
-    public ResponseResult listLocationModel(@RequestParam(required = false) String Condition, @RequestParam int PageSize, @RequestParam int PageIndex,
+    public ResponseResult listLocationModel(@RequestParam String Condition, @RequestParam int PageSize, @RequestParam int PageIndex,
                                             HttpServletResponse response) {
 
         System.out.println(Condition);

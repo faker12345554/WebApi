@@ -24,7 +24,7 @@ public class AddressController {
 
     @ApiOperation(value = "上报位置")
     @PostMapping("/addLocation")//
-    public ResponseResult insertLocation(@RequestBody(required = false) AddressInformation addressInformation, HttpServletResponse response) {
+    public ResponseResult insertLocation(@RequestBody AddressInformation addressInformation, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( addressService.insertLocation(addressInformation));

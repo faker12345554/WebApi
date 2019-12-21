@@ -2,8 +2,11 @@ package com.admin.admin.service.dw_person;
 
 import com.admin.admin.dao.dw_person.PersonDao;
 import com.admin.admin.entity.dw_person.Personinformation;
+import com.admin.tool.CacheUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class PersoinfoService {
@@ -15,11 +18,15 @@ public class PersoinfoService {
 
     //新增
     public int insertPersion(Personinformation personinformation){
+        personinformation.setFounderid(CacheUtils.get("UserId").toString());
+        personinformation.setFoundertime(new Date());
 
         return personDao.insertPersion(personinformation);
     }
     //修改
     public int updatePersion(Personinformation personinformation){
+        personinformation.setFounderid(CacheUtils.get("UserId").toString());
+        personinformation.setFoundertime(new Date());
 
         return personDao.updatePersion(personinformation);
     }
