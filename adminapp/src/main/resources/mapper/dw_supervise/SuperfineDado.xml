@@ -18,4 +18,16 @@
     <select id="listSingin" resultType="com.adminapp.business.entity.dw_supervise.SinginInformation">
         select * FROM t_singin WHERE personid=#{personid} AND type=#{type}
     </select>
+    <select id="listCiteRecord" resultType="com.adminapp.business.entity.dw_supervise.SummonsInformation">
+        select *FROM t_summons
+    </select>
+    <select id="listKeyCiteRecord" resultType="com.adminapp.business.entity.dw_supervise.SummonsInformation">
+        select * FROM t_summons WHERE personname LIKE'%${key}%'
+    </select>
+    <select id="getPersonInformation" resultType="com.adminapp.model.dw_supervise.PersonAllInformationModel">
+        select * FROM t_personinformation WHERE personid=#{personid}
+    </select>
+    <insert id="insertCiteRecord" parameterType="com.adminapp.model.dw_supervise.CiteRecordSubmitModel" useGeneratedKeys="true" keyProperty="date.id">
+        insert into t_summons(personid,personname,summontime) VALUES (#{date.personid},#{date.personname},#{date.summonsTime})
+    </insert>
 </mapper>
