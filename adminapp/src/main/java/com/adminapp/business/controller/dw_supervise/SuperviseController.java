@@ -292,22 +292,29 @@ public class SuperviseController {
     @PostMapping("/submitCiteRecord")
     public ResultSet postCiteRecord(@ApiParam(name = "code",value = "保外人员编码")@RequestParam(required = true)String code){
         PersonAllInformationModel personinformation=superviseService.getPersonInformation(code);
-        String personName=personinformation.getPersonname();
-        Date summonsTime=new Date();
-        try {
-            CiteRecordSubmitModel citeRecordSubmitModel=new CiteRecordSubmitModel();
-            citeRecordSubmitModel.setPersonid(code);
-            citeRecordSubmitModel.setPersonname(personName);
-            citeRecordSubmitModel.setSummonsTime(summonsTime);
-            int summonsId = superviseService.insertCiteRecord(citeRecordSubmitModel);
-            CiteRecordSubmitReturnModel citeRecordSubmitReturnModel=new CiteRecordSubmitReturnModel();
-            citeRecordSubmitReturnModel.setCode(String.valueOf(citeRecordSubmitModel.getId()));
-            rs.resultCode = 0;
-            rs.resultMsg = "";
-            rs.data = citeRecordSubmitReturnModel;
-        }catch (Exception e){
+        if(personinformation!=null){
+            String personName=personinformation.getPersonname();
+            Date summonsTime=new Date();
+            try {
+                CiteRecordSubmitModel citeRecordSubmitModel=new CiteRecordSubmitModel();
+                citeRecordSubmitModel.setPersonid(code);
+                citeRecordSubmitModel.setPersonname(personName);
+                citeRecordSubmitModel.setSummonsTime(summonsTime);
+                int summonsId = superviseService.insertCiteRecord(citeRecordSubmitModel);
+                CiteRecordSubmitReturnModel citeRecordSubmitReturnModel=new CiteRecordSubmitReturnModel();
+                citeRecordSubmitReturnModel.setCode(String.valueOf(citeRecordSubmitModel.getId()));
+                rs.resultCode = 0;
+                rs.resultMsg = "";
+                rs.data = citeRecordSubmitReturnModel;
+            }catch (Exception e){
+                rs.resultCode=1;
+                rs.resultMsg=e.getMessage();
+                rs.data=null;
+            }
+        }
+        else{
             rs.resultCode=1;
-            rs.resultMsg=e.getMessage();
+            rs.resultMsg="无此监居人员";
             rs.data=null;
         }
         return rs;
