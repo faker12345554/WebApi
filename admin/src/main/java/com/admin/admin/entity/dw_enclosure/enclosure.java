@@ -7,7 +7,7 @@ public class enclosure {
   private String personId;
   private String type;
   private String areaname;
-  private String status;
+  private boolean status;
   private String citycode;
 
   public String getPersonId() {
@@ -53,17 +53,14 @@ public class enclosure {
     this.type = type;
   }
 
-
-
-
-  public String getStatus() {
+  public boolean isStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public enclosure setStatus(boolean status) {
     this.status = status;
+    return this;
   }
-
 
   public String getCitycode() {
     return citycode;

@@ -27,7 +27,7 @@
         select * from t_user where accountname=#{UserName} and password=#{Password}
     </select>
 
-    <select id="GetUserByAccountName" resultType="int" parameterType="String" >
+    <select id="GetUserByAccountName" resultType="int" parameterType="String">
         select count(*) from t_user where accountname=#{Account}
     </select>
 </mapper>

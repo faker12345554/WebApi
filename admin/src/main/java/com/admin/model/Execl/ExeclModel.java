@@ -1,8 +1,10 @@
 package com.admin.model.Execl;
 
+import com.admin.model.search.SearchModel;
+
 import java.util.List;
 
-public class ExeclModel {
+public class ExeclModel  {
     private String PersonId;
     private List<Integer> list;
 

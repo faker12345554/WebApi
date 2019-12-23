@@ -3,7 +3,49 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_sing.SinginDao">
     <select id="getSingin" parameterType="int" resultType="com.admin.admin.entity.dw_sing.SinginInformation">
-        select * from t_singin where personid=#{personId}
+        select * from t_singin where id=#{personId}
     </select>
+
+    <select id="ListSingin" parameterType="com.admin.model.search.SearchModel"
+            resultType="com.admin.model.singin.SinginModel">
+        select t.id,P.suspectstatus,P.personname,P.gender,P.age,t.reportstatus,t.reporttype,P.sponsor
+        ,t.address,t.activityarea,t.createtime from t_singin AS t
+        inner join t_personinformation AS P on p.personid=t.personid where p.status=#{flag}
+        <if test="FuzzyCondition !=null and FuzzyCondition!=''">
+
+
+            AND P.suspectstatus like concat('%',#{FuzzyCondition},'%') or
+            P.personname like concat('%',#{FuzzyCondition},'%') or
+            P.gender like concat('%',#{FuzzyCondition},'%') or
+            P.age like concat('%',#{FuzzyCondition},'%') or
+            t.reportstatus like concat('%',#{FuzzyCondition},'%') or
+            t.reporttype like concat('%',#{FuzzyCondition},'%') or
+            P.sponsor like concat('%',#{FuzzyCondition},'%') or
+            t.address like concat('%',#{FuzzyCondition},'%') or
+            t.activityarea like concat('%',#{FuzzyCondition},'%')
+
+
+        </if>
+        <if test="Condition1 !=null and Condition1 !='' and Condition2 !=null and Condition2!=''">
+            AND t.reportstatus =#{Condition1} or t.reporttype=#{Condition2}
+        </if>
+        <if test="StartTime !=null and StartTime!='' and EndTime!=null and EndTime!='' ">
+            AND t.createtime > #{StartTime} and t.createtime &lt; #{EndTime}
+        </if>
+        <if test="StartTime !=null and StartTime!='' and EndTime==null and EndTime==''">
+            AND t.createtime > #{StartTime}
+        </if>
+        <if test="StartTime ==null and StartTime=='' and EndTime !=null and EndTime!=''">
+            AND t.createtime &lt; #{EndTime}
+        </if>
+        <if test="list.size()>0">
+            and id in
+            <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+
+
 
 </mapper>

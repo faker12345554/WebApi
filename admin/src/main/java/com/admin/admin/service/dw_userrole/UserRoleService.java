@@ -37,8 +37,6 @@ public class UserRoleService {
 
     //删除
     public int deleteUserRole(boolean flag, int UserRoleId) {
-
-
         return userRoleDao.deleteUserRole(flag, UserRoleId);
     }
 
@@ -60,7 +58,7 @@ public class UserRoleService {
             ParentMenu model = new ParentMenu();
             MenuData Title = new MenuData(item.getIcon());
 //            Title.setTitle(item.getMenuname());
-           // Title.setIcon(item.getIcon());
+            // Title.setIcon(item.getIcon());
             model.setPath(item.getPath());
             model.setComponent(item.getComponent());
             model.setRedirect(item.getRedirect());
@@ -70,7 +68,7 @@ public class UserRoleService {
             List<SonMenu> SubList = new ArrayList<SonMenu>();
             for (Menu Me : MenuList) {
                 if (Me.getTopid() == item.getMenu_id()) {
-                    MenuData data = new MenuData(Me.getMenuname(),Me.getAffix());
+                    MenuData data = new MenuData(Me.getMenuname(), Me.getAffix(), Me.isHidden());
                     SonMenu Sub = new SonMenu();
                     Sub.setPath(Me.getPath());
                     Sub.setComponent(Me.getComponent());

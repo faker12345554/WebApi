@@ -3,7 +3,30 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_leave.LeaveDao">
     <select id="getLeave" parameterType="String" resultType="com.admin.model.leave.LeavefModel">
-        SELECT a.*,b.auditordatetime FROM t_leave AS a LEFT JOIN t_auditor AS b ON a.leaveorder=b.leaveorder WHERE a.personid=#{personid}
+        SELECT a.*,b.auditordatetime FROM t_leave AS a
+        LEFT JOIN t_auditor AS b ON a.leaveorder=b.leaveorder
+        WHERE a.personid=#{PersonId}
+        <if test="Condition1 !=null and Condition2!=null and Condition2!='' and StartTime!=null EndTime!=null ">
+            and a.states=#{Condition1}
+            a.personname like concat('%',#{condition2},'%') and
+            a.subittimestamp >#{StartTime} and a.subittimestamp &lt; #{EndTime}
+        </if>
+        <if test="Condition1 ==null and (Condition2!=null or Condition2=='') and StartTime!=null EndTime!=null ">
+            and a.personname like concat('%',#{condition2},'%') and
+            a.subittimestamp >#{StartTime} and a.subittimestamp &lt; #{EndTime}
+        </if>
+
+        <if test="Condition1 ==null and (Condition2==null or Condition2=='') and StartTime!=null EndTime!=null ">
+            and a.subittimestamp >#{StartTime} and a.subittimestamp &lt; #{EndTime}
+        </if>
+        <if test="Condition1 ==null and (Condition2==null or Condition2=='') and StartTime!=null EndTime==null ">
+            and a.subittimestamp >#{StartTime}
+        </if>
+        <if test="Condition1 ==null and (Condition2==null or Condition2=='') and StartTime==null EndTime!=null ">
+            and a.subittimestamp &lt; #{EndTime}
+        </if>
+
+
     </select>
     <insert id="insertAuditor" parameterType="com.admin.admin.entity.dw_auditor.AuditorInformation">
         insert into t_auditor(leaveorder,accountname,auditordatetime,leavingmessage,statuscode,states) VALUES (#{leaveorder},#{accountname},#{auditordatetime},#{leavingmessage},#{statuscode},#{states})
@@ -14,10 +37,11 @@
     <delete id="deleteAuditor" parameterType="String">
         delete from t_auditor where leaveorder=#{leaveOrder}
     </delete>
-    <select id="getLeaveInformation" parameterType="String" resultType="com.admin.admin.entity.dw_leave.LeaveInformation">
+    <select id="getLeaveInformation" parameterType="String"
+            resultType="com.admin.admin.entity.dw_leave.LeaveInformation">
         select * FROM t_leave WHERE leaveorder=#{leaveorder}
     </select>
-    <update id="cancelAuditor" parameterType="String" >
+    <update id="cancelAuditor" parameterType="String">
         update t_auditor set statuscode=4,states='已销假' WHERE leaveorder=#{leaveorder}
     </update>
 </mapper>
