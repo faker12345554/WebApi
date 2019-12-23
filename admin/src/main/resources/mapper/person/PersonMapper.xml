@@ -3,13 +3,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_person.PersonDao">
     <insert id="insertPersion" parameterType="com.admin.admin.entity.dw_person.Personinformation">
-        INSERT into t_personinformation(personid,personname,gender,age,birthdate,card,workunit,bailoutbegindate,bailoutenddate,sponsor,sponsoralarm,contact,address,wechatnumber,qqnumber,status)
-        values (#{personid},#{personname},#{gender},#{age},#{birthdate},#{card},#{workunit},#{bailoutbegindate},#{bailoutenddate},#{sponsor},#{sponsoralarm},#{contact},#{address},#{wechatnumber},#{qqnumber},#{status})
+        INSERT into t_personinformation(personid,personname,gender,age,birthdate,card,workunit,bailoutbegindate,bailoutenddate,sponsor,sponsoralarm,contact,address,wechatnumber,qqnumber,status,
+        founderid,foundertime,modifierid,modifiertime,suspectstatus,marriage,policestation,casetype,facepath,
+        persontags,gendercode)
+        values (#{personid},#{personname},#{gender},#{age},#{birthdate},#{card},#{workunit},#{bailoutbegindate},#{bailoutenddate},#{sponsor},#{sponsoralarm},#{contact},#{address},#{wechatnumber},#{qqnumber},#{status}
+        ,#{founderid},#{foundertime},#{modifierid},#{modifiertime},#{suspectstatus},#{marriage},#{policestation},#{casetype},#{facepath},#{persontags},#{gendercode})
     </insert>
 
     <update id="updatePersion" parameterType="com.admin.admin.entity.dw_person.Personinformation">
         UPDATE t_personinformation set personname=#{personname},gender=#{gender},age=#{age},birthdate=#{birthdate},card=#{card},workunit=#{workunit},bailoutbegindate=#{bailoutbegindate},
-        bailoutenddate=#{bailoutenddate},sponsor=#{sponsor},sponsoralarm=#{sponsoralarm},contact=#{contact},address=#{address},wechatnumber=#{wechatnumber},qqnumber=#{qqnumber},status=#{status}
+        bailoutenddate=#{bailoutenddate},sponsor=#{sponsor},sponsoralarm=#{sponsoralarm},contact=#{contact},address=#{address},wechatnumber=#{wechatnumber},qqnumber=#{qqnumber},status=#{status},
+        founderid=#{founderid},foundertime=#{foundertime},modifierid=#{modifierid},modifiertime=#{modifiertime},suspectstatus=#{suspectstatus},marriage=#{marriage},policestation=#{policestation},
+        casetype=#{casetype},facepath=#{facepath},persontags=#{persontags},gendercode=#{gendercode}
         where personid=#{personid}
     </update>
 

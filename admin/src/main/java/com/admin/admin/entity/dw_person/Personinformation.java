@@ -14,6 +14,24 @@ public class Personinformation {
     private String Workunit;
     private Date Bailoutbegindate;
     private Date Bailoutenddate;
+    private String Sponsor;
+    private String sponsoralarm;
+    private String Contact;
+    private String Address;
+    private String wechatnumber;
+    private String qqnumber;
+    private boolean status;
+    private String founderid;
+    private Date foundertime;
+    private String modifierid;
+    private Date modifiertime;
+    private String suspectstatus;
+    private String marriage;
+    private String policestation;
+    private String casetype;
+    private String facepath;
+    private String persontags;
+    private int gendercode;
 
     public String getPersonid() {
         return personid;
@@ -65,12 +83,21 @@ public class Personinformation {
         return this;
     }
 
-    public Time getFoundertime() {
+    public Date getFoundertime() {
         return foundertime;
     }
 
-    public Personinformation setFoundertime(Time foundertime) {
+    public Personinformation setFoundertime(Date foundertime) {
         this.foundertime = foundertime;
+        return this;
+    }
+
+    public Date getModifiertime() {
+        return modifiertime;
+    }
+
+    public Personinformation setModifiertime(Date modifiertime) {
+        this.modifiertime = modifiertime;
         return this;
     }
 
@@ -83,14 +110,7 @@ public class Personinformation {
         return this;
     }
 
-    public Time getModifiertime() {
-        return modifiertime;
-    }
 
-    public Personinformation setModifiertime(Time modifiertime) {
-        this.modifiertime = modifiertime;
-        return this;
-    }
 
     public String getSuspectstatus() {
         return suspectstatus;
@@ -110,19 +130,54 @@ public class Personinformation {
         return this;
     }
 
-    private String Sponsor;
-    private String sponsoralarm;
-    private String Contact;
-    private String Address;
-    private String wechatnumber;
-    private String qqnumber;
-    private boolean status;
-    private String founderid;
-    private Time foundertime;
-    private String modifierid;
-    private Time modifiertime;
-    private String suspectstatus;
-    private String marriage;
+
+
+    public String getPolicestation() {
+        return policestation;
+    }
+
+    public Personinformation setPolicestation(String policestation) {
+        this.policestation = policestation;
+        return this;
+    }
+
+    public String getCasetype() {
+        return casetype;
+    }
+
+    public Personinformation setCasetype(String casetype) {
+        this.casetype = casetype;
+        return this;
+    }
+
+    public String getFacepath() {
+        return facepath;
+    }
+
+    public Personinformation setFacepath(String facepath) {
+        this.facepath = facepath;
+        return this;
+    }
+
+    public String getPersontags() {
+        return persontags;
+    }
+
+    public Personinformation setPersontags(String persontags) {
+        this.persontags = persontags;
+        return this;
+    }
+
+    public int getGendercode() {
+        return gendercode;
+    }
+
+    public Personinformation setGendercode(int gendercode) {
+        this.gendercode = gendercode;
+        return this;
+    }
+
+
 
 
     public String getPerson_name() {

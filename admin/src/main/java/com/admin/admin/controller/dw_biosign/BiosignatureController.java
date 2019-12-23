@@ -18,7 +18,7 @@ public class BiosignatureController {
 
     @ApiOperation(value = "新增生物特征信息")
     @PostMapping("/addBiosignature")
-    public ResponseResult insertBiosignature(@RequestBody(required = false) BiosignatureInformation biosignatureInformation) {
+    public ResponseResult insertBiosignature(@RequestBody BiosignatureInformation biosignatureInformation) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( biosignatureService.insertBiosignature(biosignatureInformation));

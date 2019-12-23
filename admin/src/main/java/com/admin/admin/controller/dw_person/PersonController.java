@@ -37,7 +37,7 @@ public class PersonController {
     //修改
     @ApiOperation("修改人员信息")
     @PostMapping("/updatePersion")
-    public ResponseResult updatePersion(@RequestBody(required = false) Personinformation personinformation, HttpServletResponse response){
+    public ResponseResult updatePersion(@RequestBody Personinformation personinformation, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( persoinfoService.updatePersion(personinformation));
@@ -46,7 +46,7 @@ public class PersonController {
     //删除
     @ApiOperation("删除人员信息")
     @GetMapping("/deletePersion")
-    public ResponseResult deletePersion(@RequestParam(required = false) boolean flag, @RequestParam String PersonId, HttpServletResponse response){
+    public ResponseResult deletePersion(@RequestParam boolean flag, @RequestParam String PersonId, HttpServletResponse response){
         if (flag==true){
             result.setCode(ResultCode.DATA_DUPLICATION.getCode());
             result.setMessage(ResultCode.DATA_DUPLICATION.getMessage());
@@ -60,7 +60,7 @@ public class PersonController {
     //获取
     @ApiOperation("获取人员信息")
     @GetMapping("/getPersoin")
-    public ResponseResult getPersoin(@RequestParam(required = false) String id,HttpServletResponse response){
+    public ResponseResult getPersoin(@RequestParam String id,HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return  result.setData( persoinfoService.getPersoin(id));

@@ -1,10 +1,7 @@
 package com.prisonapp.business.service.dw_supervise;
 
 import com.prisonapp.business.dao.dw_supervise.SuperviseDao;
-import com.prisonapp.business.entity.dw_supervise.ApplyRecord;
-import com.prisonapp.business.entity.dw_supervise.GetApplyLeaveListModel;
-import com.prisonapp.business.entity.dw_supervise.SubmitApplyLeaveModel;
-import com.prisonapp.business.entity.dw_supervise.SuperviseModel;
+import com.prisonapp.business.entity.dw_supervise.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +22,15 @@ public class SuperviseService {
     }
 
     //外出申请列表的第三级
-    public List<ApplyRecord> applyRecord( String code){
+    public List<ApplyRecordModel> applyRecord(String code){
         return superviseDao.applyRecord(code);
     }
 
-    public int submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel, Date startDate,Date endDate, String code, String useId){
-        return superviseDao.submitApplyLeave(submitApplyLeaveModel,startDate,endDate,code,useId);
+    public int submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel, Date startDate,Date endDate, String code, String userId){
+        return superviseDao.submitApplyLeave(submitApplyLeaveModel,startDate,endDate,code,userId);
     }
 
+    public List<TReportsettingsModel> getSuperviseTask(){
+        return superviseDao.getSuperviseTask();
+    }
 }
