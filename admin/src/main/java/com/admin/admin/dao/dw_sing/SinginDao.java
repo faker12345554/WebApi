@@ -1,11 +1,34 @@
 package com.admin.admin.dao.dw_sing;
 
 import com.admin.admin.entity.dw_sing.SinginInformation;
+import com.admin.model.search.SearchModel;
+import com.admin.model.singin.SinginModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 @Mapper
 public interface SinginDao {
-    //查看签到信息
-    SinginInformation getSingin(@Param("personId") int personId);
+    /*
+    列表
+     */
+    List<SinginModel> ListSingin(SearchModel searchModel);
+
+    /*
+    查看
+     */
+    SinginInformation getSingin(@Param("id") int Id);
+
+    /*
+    音视频管理
+     */
+    List<SinginModel> ListAudio(SearchModel searchModel);
+
+
+
+
+
+
+
 }

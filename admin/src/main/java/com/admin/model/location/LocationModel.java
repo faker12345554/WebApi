@@ -1,52 +1,15 @@
 package com.admin.model.location;
 
-public class LocationModel {
-    private String suspectstatus;
-    private String personname;
-    private String gender;
-    private int age;
+import com.admin.model.person.PersonModel;
+
+public class LocationModel extends PersonModel {
     private String address;
     private String policestation;
-    private String sponsor_alarm;
     private String areaname;
     private String Starttime;
     private String casetype;
 
-    public String getSuspectstatus() {
-        return suspectstatus;
-    }
 
-    public LocationModel setSuspectstatus(String suspectstatus) {
-        this.suspectstatus = suspectstatus;
-        return this;
-    }
-
-    public String getPersonname() {
-        return personname;
-    }
-
-    public LocationModel setPersonname(String personname) {
-        this.personname = personname;
-        return this;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public LocationModel setGender(String gender) {
-        this.gender = gender;
-        return this;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public LocationModel setAge(int age) {
-        this.age = age;
-        return this;
-    }
 
     public String getAddress() {
         return address;
@@ -75,14 +38,6 @@ public class LocationModel {
         return this;
     }
 
-    public String getSponsor_alarm() {
-        return sponsor_alarm;
-    }
-
-    public LocationModel setSponsor_alarm(String sponsor_alarm) {
-        this.sponsor_alarm = sponsor_alarm;
-        return this;
-    }
 
     public String getAreaname() {
         return areaname;

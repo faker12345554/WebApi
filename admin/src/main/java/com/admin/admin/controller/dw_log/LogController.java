@@ -2,6 +2,7 @@ package com.admin.admin.controller.dw_log;
 
 import com.admin.admin.service.dw_log.LogService;
 import com.admin.model.log.LogParamModel;
+import com.admin.page.PageBean;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.ApiOperation;
@@ -29,9 +30,17 @@ public class LogController {
     @ApiOperation(value = "查询日志信息")
     @PostMapping("/getLog")
     public ResponseResult listLog(@RequestBody LogParamModel logParamModel, HttpServletResponse response){
+        PageBean pageBean=logService.listLog(logParamModel);
+        if (pageBean.getItems().size()<=0){
+            result.setCode(ResultCode.NULLDATA.getCode());
+            result.setMessage(ResultCode.NULLDATA.getMessage());
+            return result.setData("" );
+        }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData( logService.listLog(logParamModel));
+        return result.setData(pageBean);
+
+
     }
 
 }

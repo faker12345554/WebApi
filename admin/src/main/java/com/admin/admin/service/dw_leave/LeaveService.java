@@ -4,6 +4,7 @@ import com.admin.admin.dao.dw_leave.LeaveDao;
 import com.admin.admin.entity.dw_auditor.AuditorInformation;
 import com.admin.admin.entity.dw_leave.LeaveInformation;
 import com.admin.model.leave.LeavefModel;
+import com.admin.model.search.SearchModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +17,9 @@ public class LeaveService {
 
 
     //获取
-    public List<LeavefModel> getLeave(String personid) {
+    public List<LeavefModel> getLeave(SearchModel searchModel) {
 
-        return leaveDao.getLeave(personid);
+        return leaveDao.getLeave(searchModel);
 
     }
 

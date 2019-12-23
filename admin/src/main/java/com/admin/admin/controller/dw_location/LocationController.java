@@ -3,6 +3,7 @@ package com.admin.admin.controller.dw_location;
 import com.admin.admin.entity.dw_location.Locationmation;
 import com.admin.admin.service.dw_location.LocationService;
 import com.admin.model.Execl.ExeclModel;
+import com.admin.model.search.SearchModel;
 import com.admin.page.PageBean;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
@@ -35,42 +36,65 @@ public class LocationController {
     public ResponseResult listLocationModel(@RequestParam String Condition, @RequestParam int PageSize, @RequestParam int PageIndex,
                                             HttpServletResponse response) {
 
-        System.out.println(Condition);
+        PageBean pageBean = locationService.listLocationModel(Condition, PageSize, PageIndex);
+        if (pageBean.getItems().size() == 0) {
+            result.setCode(ResultCode.NULLDATA.getCode());
+            result.setMessage(ResultCode.NULLDATA.getMessage());
+            return result.setData("");
+        }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(locationService.listLocationModel(Condition, PageSize, PageIndex));
+        return result.setData(pageBean);
     }
 
     @ApiOperation("查看今日轨迹")
     @GetMapping("/TrackToday")
-    public ResponseResult ListLocation(String PersonId, @RequestParam(required = false) String date, @RequestParam(required = false) int PageSize, @RequestParam(required = false) int PageIndex, HttpServletResponse response) {
+    public ResponseResult ListLocation(String PersonId, String date, HttpServletResponse response) {
 
-        if (date != null && date != "") {
-            result.setCode(ResultCode.SUCCESS.getCode());
-            result.setMessage(ResultCode.SUCCESS.getMessage());
-            return result.setData(locationService.ListLocation(PersonId, date));
+        if (locationService.ListLocation(PersonId, date).size() == 0) {
+            result.setCode(ResultCode.NULLDATA.getCode());
+            result.setMessage(ResultCode.NULLDATA.getMessage());
+            return result.setData("");
         }
-        //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
-        PageHelper.startPage(PageIndex, PageSize);
 
-        List<Locationmation> allItems = locationService.ListLocation(PersonId, date);
-        PageInfo<Locationmation> info = new PageInfo<>(allItems);//全部商品
-        int countNums = (int) info.getTotal();            //总记录数
-        PageBean<Locationmation> pageData = new PageBean<>(PageIndex, PageSize, countNums);
-        pageData.setTotalPage(info.getPages());//总页数
-        pageData.setItems(allItems);
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(pageData);
-
+        return result.setData(locationService.ListLocation(PersonId, date));
 
     }
 
-//    @ApiOperation("历史轨迹列表")
-//    @GetMapping("/HistoricalTrack")
-//    public ResponseResult HistoricalTrack(@RequestParam String PersonId,HttpServletResponse response){
-//
-//    }
+
+    @ApiOperation("历史轨迹列表")
+    @PostMapping("/HistoricalTrack")
+    public ResponseResult HistoricalTrack(@RequestBody SearchModel searchModel, HttpServletResponse response) {
+
+        List<Locationmation> allItems = locationService.HistoricalTrack(searchModel);
+        try {
+            if (allItems.size() == 0) {
+                result.setCode(ResultCode.NULLDATA.getCode());
+                result.setMessage(ResultCode.NULLDATA.getMessage());
+                return result.setData("");
+            }
+            //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
+            PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
+
+
+            PageInfo<Locationmation> info = new PageInfo<>(allItems);//全部商品
+            int countNums = (int) info.getTotal();            //总记录数
+            PageBean<Locationmation> pageData = new PageBean<>(searchModel.getPageIndex(), searchModel.getPageSize(), countNums);
+            pageData.setTotalPage(info.getPages());//总页数
+            pageData.setItems(allItems);
+            result.setCode(ResultCode.SUCCESS.getCode());
+            result.setMessage(ResultCode.SUCCESS.getMessage());
+            return result.setData(pageData);
+        } catch (Exception ex) {
+            result.setCode(ResultCode.UNKNOW_ERROR.getCode());
+            result.setMessage(ResultCode.UNKNOW_ERROR.getMessage());
+            return result.setData(ex.toString());
+        }
+
+
+    }
 
     @ApiOperation("查看定位信息")
     @GetMapping("/GetLocation")
@@ -80,8 +104,8 @@ public class LocationController {
         return result.setData(locationService.GetLocation(PersonId));
     }
 
-    @ApiOperation("查看当前位置")//
-    @GetMapping("GetLocationByPerson") //HttpServletResponse response 这个可以删掉了，你用不上的
+    @ApiOperation("查看当前位置")
+    @GetMapping("GetLocationByPerson")
     public ResponseResult GetLocationByPerson(@RequestParam String PersonId) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
@@ -89,12 +113,11 @@ public class LocationController {
     }
 
 
-    //上边那个方法就是我在网上找的 但是结果全是乱码 你调用一下 这个就是控制层了 我知道，
     @ApiOperation("导出定位信息列表")
     @PostMapping("ExportLocation")
-    public ResponseResult export( @RequestBody ExeclModel execlModel) {
+    public ResponseResult export(@RequestBody SearchModel searchModel) {
         ResponseResult rtn = new ResponseResult();
-        List<Locationmation> allItems = locationService.HistoricalTrack(execlModel);
+        List<Locationmation> allItems = locationService.HistoricalTrack(searchModel);
         try (HSSFWorkbook workbook = new HSSFWorkbook()) {
             HSSFSheet sheet = workbook.createSheet("打印历史定位信息");
             HSSFRow row = sheet.createRow(0);

@@ -2,7 +2,7 @@ package com.admin.model.log;
 
 public class LogParamModel {
 
-  private int operator;
+  private String operator;
   private String modular;
 
   public int getPageSize() {
@@ -18,6 +18,15 @@ public class LogParamModel {
     return PageIndex;
   }
 
+  public String getOperator() {
+    return operator;
+  }
+
+  public LogParamModel setOperator(String operator) {
+    this.operator = operator;
+    return this;
+  }
+
   public LogParamModel setPageIndex(int pageIndex) {
     PageIndex = pageIndex;
     return this;
@@ -26,13 +35,6 @@ public class LogParamModel {
   private int PageSize;
   private int PageIndex;
 
-  public int getOperator() {
-    return operator;
-  }
-
-  public void setOperator(int operator) {
-    this.operator = operator;
-  }
 
   public String getModular() {
     return modular;

@@ -6,6 +6,13 @@ public class Menu {
     private String path;
     private String name;
     private String redirect;
+    private String icon;
+    private boolean affix;
+    private boolean hidden;
+    private int orderid;
+    private int topid;
+    private boolean status;
+    private String component;
 
     public int getMenu_id() {
         return menuid;
@@ -119,11 +126,5 @@ public class Menu {
         this.status = status;
     }
 
-    private String icon;
-    private boolean affix;
-    private boolean hidden;
-    private int orderid;
-    private int topid;
-    private boolean status;
-    private String component;
+
 }

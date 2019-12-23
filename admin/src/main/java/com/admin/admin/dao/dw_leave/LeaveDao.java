@@ -3,6 +3,7 @@ package com.admin.admin.dao.dw_leave;
 import com.admin.admin.entity.dw_auditor.AuditorInformation;
 import com.admin.admin.entity.dw_leave.LeaveInformation;
 import com.admin.model.leave.LeavefModel;
+import com.admin.model.search.SearchModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface LeaveDao {
     //列表
-    List<LeavefModel> getLeave(@Param("personid") String personid);
+    List<LeavefModel> getLeave(SearchModel searchModel);
 
 //    LeaveInformation listLeave();
 
