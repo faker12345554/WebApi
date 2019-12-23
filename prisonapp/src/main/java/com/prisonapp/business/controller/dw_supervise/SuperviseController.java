@@ -83,7 +83,7 @@ public class SuperviseController {
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(System.currentTimeMillis());
         String url =System.getProperty("user.dir")+"\\prisonapp\\"+"\\src\\"+"\\main\\"+"\\resources\\"+"\\uploadFile\\"+formatter.format(date);
-        //C:\Users\tjh\Desktop\新建文件夹 (6)\WebApi\prisonapp\src\main\resources\uploadFile
+        /*//C:\\Users\\tjh\\Desktop\\新建文件夹 (6)\\WebApi\\prisonapp\\src\\main\\resources\\uploadFile*/
         File path =new File(url);
         if  (!path.exists()  && !path.isDirectory())
         {
