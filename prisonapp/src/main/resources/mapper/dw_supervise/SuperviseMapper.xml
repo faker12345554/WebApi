@@ -12,7 +12,7 @@
         select * FROM t_leave where personid=#{userId} and statuscode=#{statusCode}
     </select>
 
-    <select id="applyRecord"  resultType="com.prisonapp.business.entity.dw_supervise.ApplyRecord">
+    <select id="applyRecord"  resultType="com.prisonapp.business.entity.dw_supervise.ApplyRecordModel">
     select  statuscode as statusCode,states as status,auditordatetime as timestamp,accountname as  person from t_auditor where leaveorder=#{code}
      </select>
 
@@ -21,4 +21,7 @@
         VALUES              (#{userId}, #{code},#{startDate},#{endDate},#{submitApplyLeaveModel.reason},#{submitApplyLeaveModel.reasonAudioUrl},#{submitApplyLeaveModel.provinceCode},#{submitApplyLeaveModel.province},#{submitApplyLeaveModel.cityCode},#{submitApplyLeaveModel.city},#{submitApplyLeaveModel.districtCode},#{submitApplyLeaveModel.district})
     </insert>
 
+    <select id="getSuperviseTask" resultType="com.prisonapp.business.entity.dw_supervise.TReportsettingsModel">
+        select * from  t_reportsettings
+    </select>
 </mapper>

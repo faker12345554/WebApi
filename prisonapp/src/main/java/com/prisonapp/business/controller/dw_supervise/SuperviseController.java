@@ -3,10 +3,7 @@ package com.prisonapp.business.controller.dw_supervise;
 
 import com.common.common.Uploadfiles.Upload;
 import com.common.common.result.ResultSet;
-import com.prisonapp.business.entity.dw_supervise.ApplyRecord;
-import com.prisonapp.business.entity.dw_supervise.GetApplyLeaveListModel;
-import com.prisonapp.business.entity.dw_supervise.ResultGetApplyLeaveListModel;
-import com.prisonapp.business.entity.dw_supervise.SubmitApplyLeaveModel;
+import com.prisonapp.business.entity.dw_supervise.*;
 import com.prisonapp.business.service.dw_supervise.SuperviseService;
 import com.prisonapp.tool.CacheUtils;
 import io.swagger.annotations.ApiOperation;
@@ -16,8 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/app/supervise")
@@ -28,6 +24,7 @@ public class SuperviseController {
     private SuperviseService superviseService;
 
     private ResultGetApplyLeaveListModel resultGetApplyLeaveListModel = new ResultGetApplyLeaveListModel();
+    private ResultGetSuperviseTaskModel resultGetSuperviseTaskModel =new ResultGetSuperviseTaskModel();
     private ResultSet result = new ResultSet();
     private Upload upload =new Upload();
 
@@ -37,7 +34,7 @@ public class SuperviseController {
         List<GetApplyLeaveListModel> ApplyLeaveListModels =superviseService.getApplyLeaveList(statusCode,count,requestCount,CacheUtils.get("UserId").toString());
         int totalCount =(superviseService.getTotalApplyLeaveList(statusCode,CacheUtils.get("UserId").toString())).size();
         for (GetApplyLeaveListModel item: ApplyLeaveListModels) {
-            List<ApplyRecord> applyRecords = superviseService.applyRecord(item.getCode());//取出请假申请
+            List<ApplyRecordModel> applyRecords = superviseService.applyRecord(item.getCode());//取出请假申请
             int days =(int)((item.getEndTimestamp().getTime()-item.getStartTimestamp().getTime())/86400000);
             //(int) ((oDate.getTime() - fDate.getTime()) / 24 * 3600 * 1000)
             item.setApplyRecord(applyRecords);
@@ -102,5 +99,33 @@ public class SuperviseController {
         }
         return result;
     }
+
+    @ApiOperation(value = "获取保外人员的执行任务")
+    @GetMapping("/getSuperviseTask")
+    public  ResultSet getSuperviseTask(){
+        List<GetSuperviseTaskModel> getSuperviseTaskModel = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        List<TReportsettingsModel> tReportsettingsModels =superviseService.getSuperviseTask();
+        for(TReportsettingsModel item: tReportsettingsModels){
+            GetSuperviseTaskModel getSuperviseTaskModel1=new GetSuperviseTaskModel();
+            getSuperviseTaskModel1.setStartDate(item.getBegindate());
+            //算出结束日期
+            calendar.setTime(item.getBegindate());
+            calendar.add(calendar.DATE,5); //把日期往后增加一天,整数  往后推,负数往前移动
+
+            getSuperviseTaskModel1.setEndDate(calendar.getTime());
+            getSuperviseTaskModel1.setType(item.getType());
+            getSuperviseTaskModel1.setTypeName(item.getTypename());
+            getSuperviseTaskModel.add(getSuperviseTaskModel1);
+        }
+        Collections.reverse(getSuperviseTaskModel);
+        resultGetSuperviseTaskModel.setTotalCount(tReportsettingsModels.size());
+        resultGetSuperviseTaskModel.setList(getSuperviseTaskModel);
+        result.resultCode=0;
+        result.resultMsg="";
+        result.data=resultGetSuperviseTaskModel;
+        return result;
+    }
+
 
 }
