@@ -6,12 +6,12 @@
     <select id="getReminder" resultType="com.admin.admin.entity.dw_reminder.Remindersettings">
         select * from "t_ remindersettings"
     </select>
-    <delete id="deleteReminder" >
-        delete  t_ remindersettings where id=#{id,intger}
+    <delete id="deleteReminder" parameterType="int" >
+        delete  t_ remindersettings where id=#{id}
     </delete>
 
     <insert id="SaveReminder" parameterType="com.admin.admin.entity.dw_reminder.Remindersettings">
-        INSERT into "t_ remindersettings"(code,settingname,settingday,settingtime) VALUES(#{code},#{settingname},#{settingday},#{settingtime})
+        INSERT into t_ remindersettings(code,settingname,settingday,settingtime) VALUES(#{code},#{settingname},#{settingday},#{settingtime})
     </insert>
 
     <update id="UpdateReminder" parameterType="com.admin.admin.entity.dw_reminder.Remindersettings">

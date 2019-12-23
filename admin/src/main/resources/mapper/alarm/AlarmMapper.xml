@@ -15,7 +15,7 @@
         update t_ alarmsettings set code=#{code},alarmname=#{alarmname},alarmcount=#{alarmcount},continuous=#{continuous} where id=#{id}
     </update>
     <insert id="SaveAlarm" parameterType="com.admin.admin.entity.dw_alarm.Alarmsettings">
-        INSERT INTO "t_ alarmsettings"(code,alarmname,alarmcount,continuous) VALUES(#{code},#{alarmname},#{alarmcount},#{continuous})
+        INSERT INTO t_ alarmsettings(code,alarmname,alarmcount,continuous) VALUES(#{code},#{alarmname},#{alarmcount},#{continuous})
     </insert>
 
 </mapper>
