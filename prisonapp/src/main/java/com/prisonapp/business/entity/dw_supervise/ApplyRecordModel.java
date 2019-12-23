@@ -2,7 +2,7 @@ package com.prisonapp.business.entity.dw_supervise;
 
 import java.sql.Timestamp;
 
-public class ApplyRecord {
+public class ApplyRecordModel {
     public int statusCode;
     public String  status;
     public java.sql.Timestamp timestamp;

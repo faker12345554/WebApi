@@ -14,7 +14,7 @@ public class GetApplyLeaveListModel {
     public int days;
     public String address;
     public String reason;
-    public List<ApplyRecord> applyRecord;
+    public List<ApplyRecordModel> applyRecord;
 
     public String getCode() {
         return code;
@@ -96,11 +96,11 @@ public class GetApplyLeaveListModel {
         this.reason = reason;
     }
 
-    public List<ApplyRecord> getApplyRecord() {
+    public List<ApplyRecordModel> getApplyRecord() {
         return applyRecord;
     }
 
-    public void setApplyRecord(List<ApplyRecord> applyRecord) {
+    public void setApplyRecord(List<ApplyRecordModel> applyRecord) {
         this.applyRecord = applyRecord;
     }
 
