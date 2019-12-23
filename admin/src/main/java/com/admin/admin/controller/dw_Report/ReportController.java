@@ -4,10 +4,12 @@ import com.admin.admin.entity.dw_report.Reportsettings;
 import com.admin.admin.service.dw_Report.ReportService;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@Api("信息上报设置")
 @RestController
 @RequestMapping("/Report")
 public class ReportController {

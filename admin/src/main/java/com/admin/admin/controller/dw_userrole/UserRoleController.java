@@ -56,7 +56,7 @@ public class UserRoleController {
         return result.setData( userRoleService.deleteUserRole(flag, UserRoleId));
     }
 
-    @UserLoginToken
+
     @ApiOperation("菜单")
     @GetMapping("/GetList")
     public ResponseResult<Menu> listMenu(@RequestParam int UserId, HttpServletResponse response) {
