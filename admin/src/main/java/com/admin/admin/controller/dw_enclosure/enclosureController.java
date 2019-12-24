@@ -22,7 +22,7 @@ public class enclosureController {
     private ResponseResult result = new ResponseResult();
     @ApiParam("新增人员行动范围信息")
     @PostMapping("/saveEnclosure")
-    public ResponseResult saveEnclosure(@RequestBody(required = false) enclosure enclosure, HttpServletResponse response) {
+    public ResponseResult saveEnclosure(@RequestBody enclosure enclosure, HttpServletResponse response) {
         if (enclosureService.selectEnclosureByPersonId(enclosure.getPersonId()) > 0) {
             result.setCode(ResultCode.DATA_DUPLICATION.getCode());
             result.setMessage(ResultCode.DATA_DUPLICATION.getMessage());
@@ -36,7 +36,7 @@ public class enclosureController {
 
     @ApiOperation("修改人员行动范围信息")
     @PostMapping("/updateEnclosure")
-    public ResponseResult updateEnclosure(@RequestBody(required = false) enclosure enclosure, HttpServletResponse response) {
+    public ResponseResult updateEnclosure(@RequestBody enclosure enclosure, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( enclosureService.updateEnclosure(enclosure));
@@ -44,7 +44,7 @@ public class enclosureController {
 
     @ApiOperation("删除人员行动范围信息")
     @GetMapping("/deleteEnclosure")
-    public ResponseResult deleteEnclosure(@RequestParam(required = false) String personId, HttpServletResponse response) {
+    public ResponseResult deleteEnclosure(@RequestParam String personId, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(enclosureService.deleteEnclosure(personId));
@@ -52,7 +52,7 @@ public class enclosureController {
 
     @ApiOperation("查看人员行动范围信息")
     @GetMapping("/selectEnclosure")
-    public ResponseResult selectEnclosure(@RequestParam(required = false) String personId, HttpServletResponse response) {
+    public ResponseResult selectEnclosure(@RequestParam String personId, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( enclosureService.selectEnclosure(personId));
