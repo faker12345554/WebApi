@@ -9,11 +9,16 @@ import com.prisonapp.token.geiuserid.GetUserId;
 import com.prisonapp.tool.CacheUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.http.entity.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -58,7 +63,7 @@ public class SuperviseController {
 
     @ApiOperation(value = "提交保外人员外出申请")
     @PostMapping("/submitApplyLeave")
-    public ResultSet submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel,@ApiParam(name = "startDate",value = "起始时间戳")String  startDate,@ApiParam(name = "endDate",value = "结束时间戳") String endDate){
+    public ResultSet submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel,@ApiParam(name = "startDate",value = "起始时间戳")@RequestParam(required = true)String  startDate,@ApiParam(name = "endDate",value = "结束时间戳") @RequestParam(required = true)String endDate){
         String code="qj"+System.currentTimeMillis();
         Long  longStartDate =Long.valueOf(startDate);
         Date dateStartDate = new Date(Long.valueOf(longStartDate));
@@ -81,7 +86,12 @@ public class SuperviseController {
 
     @ApiOperation(value = "上传录音文件")
     @PostMapping("/uploadAudio")
-    public ResultSet uploadAudio(MultipartFile file){
+    public ResultSet uploadAudio(byte[] testFile) throws IOException {
+
+
+        InputStream inputStream = new ByteArrayInputStream(testFile);
+        MultipartFile file = new MockMultipartFile(ContentType.APPLICATION_OCTET_STREAM.toString(), inputStream);
+
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(System.currentTimeMillis());
         String url =System.getProperty("user.dir")+"\\prisonapp\\"+"\\src\\"+"\\main\\"+"\\resources\\"+"\\uploadFile\\"+formatter.format(date);
