@@ -1,6 +1,7 @@
 package com.prisonapp.business.entity.dw_supervise;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 public class GetApplyLeaveListModel {
@@ -8,9 +9,9 @@ public class GetApplyLeaveListModel {
     public String  statuscode;
     public String status;
     public String applicant;
-    public java.sql.Timestamp applyTimestamp;
-    public java.sql.Timestamp startTimestamp;
-    public java.sql.Timestamp endTimestamp;
+    public String applyTimestamp;
+    public String startTimestamp;
+    public String endTimestamp;
     public int days;
     public String address;
     public String reason;
@@ -48,28 +49,31 @@ public class GetApplyLeaveListModel {
         this.applicant = applicant;
     }
 
-    public Timestamp getApplyTimestamp() {
+    public String getApplyTimestamp() {
         return applyTimestamp;
     }
 
-    public void setApplyTimestamp(Timestamp applyTimestamp) {
-        this.applyTimestamp = applyTimestamp;
+    public void setApplyTimestamp(Date applyTimestamp) {
+        String a =String.valueOf(applyTimestamp.getTime());
+        this.applyTimestamp = a;
     }
 
-    public Timestamp getStartTimestamp() {
+    public String getStartTimestamp() {
         return startTimestamp;
     }
 
-    public void setStartTimestamp(Timestamp startTimestamp) {
-        this.startTimestamp = startTimestamp;
+    public void setStartTimestamp(Date startTimestamp) {
+        String a =String.valueOf(startTimestamp.getTime());
+        this.startTimestamp = a;
     }
 
-    public Timestamp getEndTimestamp() {
+    public String getEndTimestamp() {
         return endTimestamp;
     }
 
-    public void setEndTimestamp(Timestamp endTimestamp) {
-        this.endTimestamp = endTimestamp;
+    public void setEndTimestamp(Date endTimestamp) {
+        String a =String.valueOf(endTimestamp.getTime());
+        this.endTimestamp = a;
     }
 
     public int getDays() {

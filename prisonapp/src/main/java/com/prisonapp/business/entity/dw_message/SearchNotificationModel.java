@@ -1,5 +1,7 @@
 package com.prisonapp.business.entity.dw_message;
 
+import java.util.Date;
+
 public class SearchNotificationModel {
     private String type;
     private String typeName;
@@ -61,7 +63,8 @@ public class SearchNotificationModel {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setTimestamp(Date timestamp) {
+        String a = String.valueOf(timestamp.getTime());
+        this.timestamp = a;
     }
 }

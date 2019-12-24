@@ -6,7 +6,7 @@ import java.util.List;
  * */
 public class ResultMessageListModel {
     public   int totalCount;
-    public List<MessageListModel> resultMessageListModel;
+    public List<MessageListModel> list;
 
     public int getTotalCount() {
         return totalCount;
@@ -16,11 +16,12 @@ public class ResultMessageListModel {
         this.totalCount = totalCount;
     }
 
-    public List getResultMessageListModel() {
-        return resultMessageListModel;
+    public List<MessageListModel> getList() {
+        return list;
     }
 
-    public void setResultMessageListModel(List resultMessageListModel) {
-        resultMessageListModel = resultMessageListModel;
+    public void setList(List<MessageListModel> list) {
+        this.list = list;
     }
+
 }

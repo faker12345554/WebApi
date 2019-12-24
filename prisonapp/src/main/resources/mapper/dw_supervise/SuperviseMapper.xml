@@ -22,6 +22,10 @@
     </insert>
 
     <select id="getSuperviseTask" resultType="com.prisonapp.business.entity.dw_supervise.TReportsettingsModel">
-        select * from  t_reportsettings
+        select * from  t_reportsettings where type=2 or type =3
+    </select>
+
+    <select id="faceRecognize" resultType="com.prisonapp.business.entity.dw_supervise.FaceRecognizeModel">
+    select * from t_singin
     </select>
 </mapper>
