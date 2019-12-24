@@ -9,6 +9,7 @@ import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+@Api(value="定位信息controller",tags={"定位信息管理"})
 @RestController
 @RequestMapping("/Location")
 public class LocationController {

@@ -9,7 +9,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@Api("信息上报设置")
+
+@Api(value="信息上报设置Controller",tags={"位置上报设置"})
 @RestController
 @RequestMapping("/Report")
 public class ReportController {

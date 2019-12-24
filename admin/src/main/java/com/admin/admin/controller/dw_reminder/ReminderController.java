@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@Api("待办提醒设置")
+@Api(value="待办提醒设置Controller",tags={"待办提醒设置"})
 @RestController
 @RequestMapping("/Reminder")
 public class ReminderController {
@@ -20,14 +20,14 @@ public class ReminderController {
     private ResponseResult result = new ResponseResult();
 
     @PostMapping("/SaveOrUpdateReminder")
-    @ApiOperation("修改或者新增")
+    @ApiOperation("修改或者新增待办提醒设置")
     public ResponseResult SaveOrUpdateReminder(@RequestBody Remindersettings remindersettings){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( reminderService.SaveOrUpdateReminder(remindersettings));
     }
 
-    @ApiOperation("删除")
+    @ApiOperation("删除待办提醒设置")
     @GetMapping("deleteReminder")
     public ResponseResult deleteReminder(@RequestParam  int id){
         result.setCode(ResultCode.SUCCESS.getCode());
@@ -35,7 +35,7 @@ public class ReminderController {
         return result.setData( reminderService.DeleteReminder(id));
     }
 
-    @ApiOperation("查看")
+    @ApiOperation("查看待办提醒设置")
     @GetMapping("getReminder")
     public ResponseResult getReminder (@RequestBody int id){
         result.setCode(ResultCode.SUCCESS.getCode());

@@ -57,6 +57,7 @@ public class UserRoleService {
         for (Menu item : mainList) {
             ParentMenu model = new ParentMenu();
             MenuData Title = new MenuData(item.getIcon());
+            Title.setTitle(item.getMenuname());
 //            Title.setTitle(item.getMenuname());
             // Title.setIcon(item.getIcon());
             model.setPath(item.getPath());

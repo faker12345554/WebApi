@@ -12,6 +12,30 @@ public class SinginModel extends PersonModel {
     private String activityarea;
     private Date createtime;
     private float durationtime;
+    private String filepath;
+    private int type;
+
+
+    public int getType() {
+        return type;
+    }
+
+    public SinginModel setType(int type) {
+        this.type = type;
+        return this;
+    }
+
+
+    public String getFilepath() {
+        return filepath;
+    }
+
+    public SinginModel setFilepath(String filepath) {
+        this.filepath = filepath;
+        return this;
+    }
+
+
     public float getDurationtime() {
         return durationtime;
     }

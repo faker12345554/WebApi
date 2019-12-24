@@ -5,6 +5,7 @@ import com.admin.admin.service.dw_address.AddressService;
 import com.common.common.result.ResponseResult;
 
 import com.common.common.result.ResultCode;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 
+@Api("")
 @RestController
 @RequestMapping("/Address")
 public class AddressController {

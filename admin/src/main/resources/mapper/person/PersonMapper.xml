@@ -30,4 +30,8 @@
         select count(*) from t_personinformation where card=#{Card}
     </select>
 
+    <select id="getEnum" resultType="com.admin.admin.entity.dw_sysenum.Dictionary" >
+        SELECT * FROM "dictionary"  where  kind='T0'   or  kind ='05'  or kind='T304'  or kind ='xjtj_xl'  or  kind='04'  or kind='08' or kind='T6'
+    </select>
+
 </mapper>
