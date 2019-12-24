@@ -315,6 +315,109 @@ public class SuperviseController {
         else{
             rs.resultCode=1;
             rs.resultMsg="无此监居人员";
+
+            rs.data=null;
+        }
+        return rs;
+    }
+
+    @ApiOperation(value = "获取保外人员的外出申请列表")
+    @GetMapping("/getApplyLeaveList")
+    public ResultSet getApplyLeaveList(@RequestParam(required = true)String status,@RequestParam(required = false)String key,
+                                       @RequestParam(required = true)int count,@RequestParam(required = true)int requestCount){
+        List<LeaveListModel> leaveListModels=new ArrayList<>();
+        if(key==null){   //没有key关键字
+            if(status.equals("0")){       //全部外出申请列表数据
+                leaveListModels=superviseService.getLeaveList();
+            }
+            if(status.equals("1")){    //"待审批"申请列表
+                leaveListModels=superviseService.listLeaveType("1");
+            }
+            if(status.equals("2")){    //"审批通过"申请列表
+                leaveListModels=superviseService.listLeaveType("2");
+            }
+            if(status.equals("3")){   //"审批未通过"申请列表
+                leaveListModels=superviseService.listLeaveType("3");
+            }
+        }
+        else{      //有key关键字
+            if(status.equals("0")){
+                leaveListModels=superviseService.getKeyLeaveList(key);
+            }
+            if(status.equals("1")){
+                leaveListModels=superviseService.listKeyLeaveType(key,"1");
+            }
+            if(status.equals("2")){
+                leaveListModels=superviseService.listKeyLeaveType(key,"2");
+            }
+            if(status.equals("3")){
+                leaveListModels=superviseService.listKeyLeaveType(key,"3");
+            }
+        }
+        for (LeaveListModel item:leaveListModels) {
+            long startDate=Long.parseLong(item.getStartTimestamp());
+            long endDate=Long.parseLong(item.getEndTimestamp());
+            long days = (endDate/1000 - startDate/1000) / (60 * 60 * 24)+1;
+            int Days=Integer.parseInt(String.valueOf(days));
+            item.setDays(Days);
+            String leaveOrder=item.getCode();
+            List<AuditorRecordModel> getAuditorList=superviseService.getAuditorList(leaveOrder);
+            item.setApplyRecord(getAuditorList);
+        }
+        List<LeaveListModel> newLeaveList=new ArrayList<>();
+        if(leaveListModels.size()>count&&leaveListModels.size()<count+requestCount){
+            for(int i=count;i<leaveListModels.size();i++){
+                LeaveListModel summonsInformation=leaveListModels.get(i);
+                newLeaveList.add(summonsInformation);
+            }
+        }
+        if(leaveListModels.size()>count+requestCount){
+            for(int i=count;i<count+requestCount;i++){
+                LeaveListModel summonsInformation=leaveListModels.get(i);
+                newLeaveList.add(summonsInformation);
+            }
+        }
+        LeaveListReturnModel leaveListReturnModel=new LeaveListReturnModel();
+        leaveListReturnModel.setTotalCount(leaveListModels.size());
+        leaveListReturnModel.setList(newLeaveList);
+        rs.resultCode=0;
+        rs.resultMsg="";
+        rs.data=leaveListReturnModel;
+        return rs;
+    }
+
+    @ApiOperation(value = "审批保外人员外出申请")
+    @PostMapping("/approveApplyLeave")
+    public ResultSet approveApplyLeave(@ApiParam(name = "code",value = "外出申请单号")@RequestParam(required = true)String code,
+                                       @ApiParam(name = "isApprove",value = "是否通过")@RequestParam(required = true)boolean isApprove){
+        LeaveListModel leaveInformation=superviseService.getLeaveInformation(code);
+        if(leaveInformation!=null){
+            if(leaveInformation.getCode().equals("1")){    //判断该请假单是否为待审批状态
+                String userId=CacheUtils.get("UserId").toString();
+                String userName = CacheUtils.get("UserName").toString();
+                Date date=new Date();
+                String message=leaveInformation.getReason();
+                if(isApprove){    //审批为通过
+                    int updateLeaveInformation=superviseService.updateLeaveInformation(code,"2","审批通过");  //修改请假单信息
+                    int insertAuditorInformation=superviseService.insertAuditorInformation(code,userId,userName,date,message,"2","审批通过");
+                }
+                else{      //审批不通过
+                    int updateLeaveInformation=superviseService.updateLeaveInformation(code,"3","审批未通过"); //修改请假单信息
+                    int insertAuditorInformation=superviseService.insertAuditorInformation(code,userId,userName,date,message,"3","审批不通过");
+                }
+                rs.resultCode=0;
+                rs.resultMsg="";
+                rs.data=null;
+            }
+            else{
+                rs.resultCode=1;
+                rs.resultMsg="该请假单已审批";
+                rs.data=null;
+            }
+        }
+        else {
+            rs.resultCode=1;
+            rs.resultMsg="该请假单不存在";
             rs.data=null;
         }
         return rs;
