@@ -5,6 +5,7 @@ import com.prisonapp.business.entity.dw_message.MessageListModel;
 import com.prisonapp.business.entity.dw_message.MessageModel;
 import com.prisonapp.business.entity.dw_message.NotificationMessageModel;
 import com.prisonapp.business.entity.dw_message.SearchNotificationModel;
+import com.prisonapp.business.entity.dw_supervise.FaceRecognizeModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,5 +46,7 @@ public class MessageService {
     public List<MessageListModel> newestMessageTotalCount(String  todayDate,String tomorrowDate,String userId){
         return messageDao.newestMessageTotalCount(todayDate,tomorrowDate,userId);
     }
+
+
 
 }
