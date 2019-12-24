@@ -6,7 +6,10 @@
         insert into t_log(operator, modular, action, operatingtime) values (#{operator},#{modular},#{action},#{operatingtime})
     </insert>
 
-    <select id="listLog" parameterType="com.admin.model.log.LogParamModel" resultType="com.admin.model.log.LogReturnModel">
-        select * from t_log where operator=#{operator} and modular=#{modular}
+    <select id="listLog" parameterType="com.admin.model.log.LogParamModel"
+            resultType="com.admin.model.log.LogReturnModel">
+        select u.accountname as operator,l.modular,l.action,l.operatingtime  from t_log as l
+        inner join t_user as u on u.id=l.operator
+        where u.accountname=#{operator} and modular=#{modular}
     </select>
 </mapper>

@@ -4,6 +4,7 @@ import com.prisonapp.business.entity.dw_message.MessageListModel;
 import com.prisonapp.business.entity.dw_message.MessageModel;
 import com.prisonapp.business.entity.dw_message.NotificationMessageModel;
 import com.prisonapp.business.entity.dw_message.SearchNotificationModel;
+import com.prisonapp.business.entity.dw_supervise.FaceRecognizeModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -26,4 +27,6 @@ public interface MessageDao {
     List<MessageListModel> getNewestMessageList(@Param("count")int count,@Param("requestCount")int requestCount, @Param("todayDate")String  todayDate,@Param("tomorrowDate")String tomorrowDate,@Param("userId")String userId);
 
     List<MessageListModel> newestMessageTotalCount(@Param("todayDate")String  todayDate,@Param("tomorrowDate")String tomorrowDate,@Param("userId")String userId);
+
+
 }

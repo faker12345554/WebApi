@@ -26,13 +26,16 @@ public class enclosureService {
 //            result.setData(enclosureService.saveEnclosure(enclosure));
 //            System.out.println(result.getData());
 //        }
-
+        if (enclosure.getId() != 0) {
+            return enclosureDao.updateEnclosure(enclosure);
+        }
 
 
         return enclosureDao.saveEnclosure(enclosure);
     }
-    public int selectEnclosureByPersonId(String PersonId){
-        return  enclosureDao.selectEnclosureByPersonId(PersonId);
+
+    public int selectEnclosureByPersonId(String PersonId) {
+        return enclosureDao.selectEnclosureByPersonId(PersonId);
     }
 
     //修改
@@ -56,7 +59,6 @@ public class enclosureService {
 
         return enclosureDao.deleteEnclosure(personId);
     }
-
 
 
     //查看

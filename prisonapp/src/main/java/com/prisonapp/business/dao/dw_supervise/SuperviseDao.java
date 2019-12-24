@@ -15,7 +15,9 @@ public interface SuperviseDao {
 
     List<ApplyRecordModel> applyRecord(@Param("code")String  code);
 
-     int submitApplyLeave(@Param("submitApplyLeaveModel")SubmitApplyLeaveModel submitApplyLeaveModel, @Param("startDate") Date startDate,@Param("endDate") Date endDate, @Param("code") String code, @Param("userId")String userId);
+    int submitApplyLeave(@Param("submitApplyLeaveModel")SubmitApplyLeaveModel submitApplyLeaveModel, @Param("startDate") Date startDate,@Param("endDate") Date endDate, @Param("code") String code, @Param("userId")String userId);
 
     List<TReportsettingsModel> getSuperviseTask();
+
+    List<FaceRecognizeModel> faceRecognize(@Param("userId")String userId);
 }

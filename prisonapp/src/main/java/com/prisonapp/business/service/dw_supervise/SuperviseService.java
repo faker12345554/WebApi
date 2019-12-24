@@ -33,4 +33,8 @@ public class SuperviseService {
     public List<TReportsettingsModel> getSuperviseTask(){
         return superviseDao.getSuperviseTask();
     }
+
+    public List<FaceRecognizeModel> faceRecognize(String userId){
+        return superviseDao.faceRecognize(userId);
+    }
 }

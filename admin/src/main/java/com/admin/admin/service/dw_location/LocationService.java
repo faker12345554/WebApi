@@ -4,6 +4,7 @@ import com.admin.admin.dao.dw_location.LocationDao;
 import com.admin.admin.entity.dw_location.Locationmation;
 import com.admin.model.Execl.ExeclModel;
 import com.admin.model.location.LocationModel;
+import com.admin.model.search.SearchModel;
 import com.admin.page.PageBean;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -44,8 +45,8 @@ public class LocationService {
     /*
     导出 历史轨迹信息
      */
-    public List<Locationmation> HistoricalTrack( ExeclModel execlModel){
-        return locationDao.HistoricalTrack(execlModel);
+    public List<Locationmation> HistoricalTrack( SearchModel searchModel){
+        return locationDao.HistoricalTrack(searchModel);
     }
 
     /*

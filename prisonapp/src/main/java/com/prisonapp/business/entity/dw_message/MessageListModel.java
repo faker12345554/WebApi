@@ -1,6 +1,7 @@
 package com.prisonapp.business.entity.dw_message;
 
-import java.sql.Timestamp;
+import java.util.Date;
+
 /**
  * 保外人员的消息列表list
  * 同时也是获取保外人员最新消息
@@ -11,8 +12,8 @@ public class MessageListModel {
     public String type;
     public String typeName;
     public String content;
-    public java.sql.Timestamp timestamp;
-    public long detailtype;
+    public String  timestamp;
+    public int detailtype;
     public String detailtypename;
     public boolean isRead;
 
@@ -48,19 +49,20 @@ public class MessageListModel {
         this.content = content;
     }
 
-    public Timestamp getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+        public void setTimestamp(Date timestamp) {
+        String timeStamp=String.valueOf(timestamp.getTime());
+        this.timestamp = timeStamp;
     }
 
-    public long getDetailtype() {
+    public int getDetailtype() {
         return detailtype;
     }
 
-    public void setDetailtype(long detailtype) {
+    public void setDetailtype(int detailtype) {
         this.detailtype = detailtype;
     }
 

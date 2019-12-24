@@ -1,13 +1,15 @@
 package com.prisonapp.business.entity.dw_message;
 
 import java.sql.Timestamp;
+import java.util.Date;
+
 //保外人员的通知列表
 public class NotificationMessageModel {
     public String type;
     public String typeName;
     public String content;
-    public java.sql.Timestamp timestamp;
-    public long detailType;
+    public String timestamp;
+    public int detailType;
     public String detailTypeName;
     public int unreadCount;
 
@@ -35,19 +37,20 @@ public class NotificationMessageModel {
         this.content = content;
     }
 
-    public Timestamp getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+    public void setTimestamp(Date timestamp) {
+        String timeStamp =String.valueOf(timestamp.getTime());
+        this.timestamp = timeStamp;
     }
 
-    public long getDetailType() {
+    public int getDetailType() {
         return detailType;
     }
 
-    public void setDetailType(long detailType) {
+    public void setDetailType(int detailType) {
         this.detailType = detailType;
     }
 

@@ -5,13 +5,20 @@ import com.common.common.Uploadfiles.Upload;
 import com.common.common.result.ResultSet;
 import com.prisonapp.business.entity.dw_supervise.*;
 import com.prisonapp.business.service.dw_supervise.SuperviseService;
+import com.prisonapp.token.geiuserid.GetUserId;
 import com.prisonapp.tool.CacheUtils;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.apache.http.entity.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -23,6 +30,7 @@ public class SuperviseController {
     @Autowired
     private SuperviseService superviseService;
 
+    private GetUserId getUserId = new GetUserId();
     private ResultGetApplyLeaveListModel resultGetApplyLeaveListModel = new ResultGetApplyLeaveListModel();
     private ResultGetSuperviseTaskModel resultGetSuperviseTaskModel =new ResultGetSuperviseTaskModel();
     private ResultSet result = new ResultSet();
@@ -30,12 +38,14 @@ public class SuperviseController {
 
     @ApiOperation(value = "获取保外人员的外出申请列表")
     @GetMapping("/getApplyLeaveList")
-    public ResultSet getApplyLeaveList( @RequestParam(required = true)String statusCode,@RequestParam(required = true)int count,@RequestParam(required = true)int requestCount) {
-        List<GetApplyLeaveListModel> ApplyLeaveListModels =superviseService.getApplyLeaveList(statusCode,count,requestCount,CacheUtils.get("UserId").toString());
-        int totalCount =(superviseService.getTotalApplyLeaveList(statusCode,CacheUtils.get("UserId").toString())).size();
+    public ResultSet getApplyLeaveList(@ApiParam(name = "statusCode",value = "审批状态编号") @RequestParam(required = true)String statusCode,@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true)int count,@ApiParam(name = "requestCount",value = "请求获取数据的条数") @RequestParam(required = true)int requestCount) {
+        List<GetApplyLeaveListModel> ApplyLeaveListModels =superviseService.getApplyLeaveList(statusCode,count,requestCount,getUserId.getUserId());
+        int totalCount =(superviseService.getTotalApplyLeaveList(statusCode,getUserId.getUserId())).size();
         for (GetApplyLeaveListModel item: ApplyLeaveListModels) {
             List<ApplyRecordModel> applyRecords = superviseService.applyRecord(item.getCode());//取出请假申请
-            int days =(int)((item.getEndTimestamp().getTime()-item.getStartTimestamp().getTime())/86400000);
+            Long End =Long.parseLong(item.getEndTimestamp());
+            Long Start =Long.parseLong(item.getStartTimestamp());
+            int days =(int)((End-Start)/86400000);
             //(int) ((oDate.getTime() - fDate.getTime()) / 24 * 3600 * 1000)
             item.setApplyRecord(applyRecords);
             item.setDays(days);
@@ -52,8 +62,8 @@ public class SuperviseController {
 
 
     @ApiOperation(value = "提交保外人员外出申请")
-    @GetMapping("/submitApplyLeave")
-    public ResultSet submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel,String  startDate, String endDate){
+    @PostMapping("/submitApplyLeave")
+    public ResultSet submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel,@ApiParam(name = "startDate",value = "起始时间戳")@RequestParam(required = true)String  startDate,@ApiParam(name = "endDate",value = "结束时间戳") @RequestParam(required = true)String endDate){
         String code="qj"+System.currentTimeMillis();
         Long  longStartDate =Long.valueOf(startDate);
         Date dateStartDate = new Date(Long.valueOf(longStartDate));
@@ -76,7 +86,12 @@ public class SuperviseController {
 
     @ApiOperation(value = "上传录音文件")
     @PostMapping("/uploadAudio")
-    public ResultSet uploadAudio(MultipartFile file){
+    public ResultSet uploadAudio(byte[] testFile) throws IOException {
+
+
+        InputStream inputStream = new ByteArrayInputStream(testFile);
+        MultipartFile file = new MockMultipartFile(ContentType.APPLICATION_OCTET_STREAM.toString(), inputStream);
+
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(System.currentTimeMillis());
         String url =System.getProperty("user.dir")+"\\prisonapp\\"+"\\src\\"+"\\main\\"+"\\resources\\"+"\\uploadFile\\"+formatter.format(date);
@@ -127,5 +142,14 @@ public class SuperviseController {
         return result;
     }
 
+    @ApiOperation(value = " 保外人员人脸识别签到")
+    @PostMapping("/faceRecognize")
+    public ResultSet faceRecognize(MultipartFile file){
+        List<FaceRecognizeModel> faceRecognizeModels = superviseService.faceRecognize(getUserId.getUserId());
+        result.resultCode = 0;
+        result.resultMsg = "";
+        result.data = faceRecognizeModels;
+        return result;
+    }
 
 }
