@@ -5,10 +5,7 @@ import com.adminapp.business.entity.dw_supervise.Personinformation;
 import com.adminapp.business.entity.dw_supervise.ReportSettingsInformation;
 import com.adminapp.business.entity.dw_supervise.SinginInformation;
 import com.adminapp.business.entity.dw_supervise.SummonsInformation;
-import com.adminapp.model.dw_supervise.CiteRecordSubmitModel;
-import com.adminapp.model.dw_supervise.PersonAllInformationModel;
-import com.adminapp.model.dw_supervise.PrisonSettingModel;
-import com.adminapp.model.dw_supervise.ReportLocationModel;
+import com.adminapp.model.dw_supervise.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,5 +64,44 @@ public class SuperviseService {
 //    }
     public int insertCiteRecord(CiteRecordSubmitModel citeRecordSubmitModel){
         return superfineDado.insertCiteRecord(citeRecordSubmitModel);
+    }
+
+    //获取外出申请列表
+    public List<LeaveListModel> getLeaveList(){
+        return superfineDado.getLeaveList();
+    }
+
+    //外出申请单审批状态列表
+    public List<AuditorRecordModel> getAuditorList(String leaveOrder){
+        return superfineDado.getAuditorList(leaveOrder);
+    }
+
+    //根据状态编码查找外出申请记录
+    public List<LeaveListModel> listLeaveType(String statusCode){
+        return superfineDado.listLeaveType(statusCode);
+    }
+
+    //根据key查找对应申请人姓名的申请列表
+    public List<LeaveListModel> getKeyLeaveList(String key){
+        return superfineDado.getKeyLeaveList(key);
+    }
+
+    //根据key和状态编码查找申请记录
+    public List<LeaveListModel> listKeyLeaveType(String key,String statusCode){
+        return superfineDado.listKeyLeaveType(key, statusCode);
+    }
+
+    //根据单号查找具体请假记录
+    public LeaveListModel getLeaveInformation(String leaveOrder){
+        return superfineDado.getLeaveInformation(leaveOrder);
+    }
+
+    //更新请假表状态信息
+    public int updateLeaveInformation(String leaveOrder,String statusCode,String status){
+        return superfineDado.updateLeaveInformation(leaveOrder, statusCode, status);
+    }
+
+    public int insertAuditorInformation(String leaveOrder,String userId,String accountName,Date auditorDateTime,String leavingMessage,String statusCode,String status){
+        return superfineDado.insertAuditorInformation(leaveOrder,userId,accountName,auditorDateTime,leavingMessage,statusCode,status);
     }
 }

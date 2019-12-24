@@ -8,6 +8,7 @@ import com.adminapp.model.dw_supervise.*;
 import org.apache.ibatis.annotations.Param;
 import org.mapstruct.Mapper;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -29,6 +30,22 @@ public interface SuperfineDado {
 
     PersonAllInformationModel getPersonInformation(@Param("personid")String personid);
 
-
     int insertCiteRecord(@Param("date")CiteRecordSubmitModel citeRecordSubmitModel);
+
+    List<LeaveListModel> getLeaveList();
+
+    List<AuditorRecordModel> getAuditorList(@Param("leaveOrder") String leaveOrder);
+
+    List<LeaveListModel> listLeaveType(@Param("statusCode")String statusCode);
+
+    List<LeaveListModel> getKeyLeaveList(@Param("key")String key);
+
+    List<LeaveListModel> listKeyLeaveType(@Param("key")String key,@Param("statusCode")String statusCode);
+
+    LeaveListModel getLeaveInformation(@Param("leaveOrder")String leaveOrder);
+
+    int updateLeaveInformation(@Param("leaveOrder")String leaveOrder,@Param("statusCode")String statusCode,@Param("status")String status);
+
+    int insertAuditorInformation(@Param("leaveOrder")String leaveOrder, @Param("userId")String userId, @Param("accountName")String accountName, @Param("auditorDateTime")Date auditorDateTime,
+                                 @Param("leavingMessage")String leavingMessage,@Param("statusCode")String statusCode,@Param("status")String status);
 }
