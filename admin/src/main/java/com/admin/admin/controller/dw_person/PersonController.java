@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
+
+@Api(value="保外人员Controller",tags={"保外人员信息管理"})
 @RestController
-@Api(value = "人员信息")
 @RequestMapping("/Person")
 public class PersonController {
 
@@ -64,5 +65,13 @@ public class PersonController {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return  result.setData( persoinfoService.getPersoin(id));
+    }
+
+    @ApiOperation("获取需要的枚举信息")
+    @GetMapping("/getEnum")
+    public ResponseResult getEnum(){
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return  result.setData( persoinfoService.getEnum());
     }
 }

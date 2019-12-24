@@ -2,11 +2,13 @@ package com.admin.admin.service.dw_person;
 
 import com.admin.admin.dao.dw_person.PersonDao;
 import com.admin.admin.entity.dw_person.Personinformation;
+import com.admin.admin.entity.dw_sysenum.Dictionary;
 import com.admin.tool.CacheUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class PersoinfoService {
@@ -44,5 +46,10 @@ public class PersoinfoService {
     public int getPersonByCard(String Card){
 
         return personDao.getPersonByCard(Card);
+    }
+
+    //获取枚举数据
+    public List<Dictionary> getEnum(){
+        return personDao.getEnum();
     }
 }

@@ -5,12 +5,14 @@ import com.admin.model.log.LogParamModel;
 import com.admin.page.PageBean;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
+@Api(value="操作日志controller",tags={"查看操作日志"})
 @RestController
 @RequestMapping("/Log")
 public class LogController {

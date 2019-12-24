@@ -8,6 +8,7 @@ import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 
 import com.common.common.result.ResultCode;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
 
+@Api(value="用户权限管理Controller",tags={"用户权限管理"})
 @RestController
 @RequestMapping("/UserRole")
 public class UserRoleController {

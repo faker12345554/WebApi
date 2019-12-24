@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Random;
 
 @RestController
-@Api(value = "用户基本信息操作")
+@Api(value="用户信息管理Controller",tags={"用户信息管理"})
 @RequestMapping("/User")
 public class UserController {
     @Autowired
