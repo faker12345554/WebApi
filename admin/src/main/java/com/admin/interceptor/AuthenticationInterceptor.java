@@ -16,7 +16,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /* 这个是用来拦截的  那就是这个咯  在引用到这里的拦截*/
 
@@ -26,7 +35,23 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
       @Override
       public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
                  String token = httpServletRequest.getHeader("token");// 从 http 请求头中取出 token
-                 // 如果不是映射到方法直接通过
+                //得到参数
+
+          Map<String,String[]> map = httpServletRequest.getParameterMap();
+          if(map.size()>0)
+          {
+              if (getAllRequestParam(map)) {
+                  throw new RuntimeException("数据中含有空格，请重新填写");
+              }
+          }
+
+          InputStream inputStream= httpServletRequest.getInputStream();
+          if(inputStream.read()>0) {
+              if (getAllRequestParamlist(inputStream)) {
+                  throw new RuntimeException("数据中含有空格，请重新填写");
+              }
+          }
+                // 如果不是映射到方法直接通过
                  if(!(object instanceof HandlerMethod)){
                          return true;
                      }
@@ -71,6 +96,59 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                  return true;
              }
 
+        private  boolean getAllRequestParam(Map<String,String[]> map)
+        {
+            boolean res=true;
+            Set<String> keys = map.keySet();
+            for (String key : keys)
+            {
+                String[] value = map.get(key);
+                if(value[0].indexOf(" ") >-1) {
+                    res=  false;
+                }
+            }
+            return  res;
+        }
+
+
+        private  boolean getAllRequestParamlist(InputStream inputStream) throws IOException {
+            boolean res=true;
+            StringBuilder sb = new StringBuilder();
+            BufferedReader reader  = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
+            String line=new String();
+            try {
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                    if(!line.equals("")) {
+                        if (line.split(":")[1].indexOf(" ") > -1) {
+                            res = false;
+                        }
+                    }
+                }
+            }
+            catch (JWTVerificationException e) {
+                throw new RuntimeException("用户不存在，请重新登录");
+            }
+            return  res;
+        }
+
+  /*  private Map<String, String> getAllRequestParam(final HttpServletRequest request) {
+        Map<String, String> res = new HashMap<String, String>();
+        Enumeration<?> temp = request.getParameterNames();
+        if (null != temp) {
+            while (temp.hasMoreElements()) {
+                String en = (String) temp.nextElement();
+                String value = request.getParameter(en);
+                res.put(en, value);
+                //如果字段的值为空，判断若值为空，则删除这个字段>
+                if (null == res.get(en) || "".equals(res.get(en))) {
+                    res.remove(en);
+                }
+            }
+        }
+        return res;
+     }
+   */
              @Override
      public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
 
