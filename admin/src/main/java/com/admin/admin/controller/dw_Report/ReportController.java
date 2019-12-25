@@ -29,14 +29,14 @@ public class ReportController {
     }
 
     @ApiOperation("删除上报设置")
-    @PostMapping("/DeleteReport")
+    @GetMapping("/DeleteReport")
     public ResponseResult DeleteReport( @RequestParam  int id){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( reportService.deleteReport(id));
     }
     @ApiOperation("查看上报设置")
-    @PostMapping("getReport")
+    @GetMapping("getReport")
     public ResponseResult getReport(){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());

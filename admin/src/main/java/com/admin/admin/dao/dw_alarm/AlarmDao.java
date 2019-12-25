@@ -1,6 +1,7 @@
 package com.admin.admin.dao.dw_alarm;
 
 import com.admin.admin.entity.dw_alarm.Alarmsettings;
+import org.apache.ibatis.annotations.Param;
 
 public interface AlarmDao {
 
@@ -21,5 +22,5 @@ public interface AlarmDao {
     /*
     作废
      */
-    int deleteAlarm(int id);
+    int deleteAlarm(@Param("id") int id);
 }

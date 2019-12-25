@@ -7,7 +7,7 @@
         select * from "t_remindersettings"
     </select>
     <delete id="deleteReminder" parameterType="int" >
-        delete  t_remindersettings where id=#{id}
+        delete from  t_remindersettings where id=#{id}
     </delete>
 
     <insert id="SaveReminder" parameterType="com.admin.admin.entity.dw_reminder.Remindersettings">

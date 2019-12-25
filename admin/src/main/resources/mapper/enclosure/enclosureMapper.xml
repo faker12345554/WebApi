@@ -8,12 +8,12 @@
     </insert>
 
     <update id="updateEnclosure" parameterType="com.admin.admin.entity.dw_enclosure.enclosure">
-        update updateEnclosure set personid=#{personId},type=#{type},
+        update Enclosure set personid=#{personId},type=#{type},
         areaname=#{areaname},citycode=#{citycode},citylevel=#{citylevel},areaarr=#{areaArr} where id=#{id}
     </update>
 
     <update id="deleteEnclosure" parameterType="String">
-        update updateEnclosure set status=false where personid=#{personId}
+        update Enclosure set status=false where personid=#{personId}
     </update>
 
     <select id="selectEnclosureByPersonId" parameterType="String" resultType="int">

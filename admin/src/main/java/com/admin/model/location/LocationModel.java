@@ -4,7 +4,6 @@ import com.admin.model.person.PersonModel;
 
 public class LocationModel extends PersonModel {
     private String address;
-    private String policestation;
     private String areaname;
     private String Starttime;
     private String casetype;
@@ -20,14 +19,6 @@ public class LocationModel extends PersonModel {
         return this;
     }
 
-    public String getPolicestation() {
-        return policestation;
-    }
-
-    public LocationModel setPolicestation(String policestation) {
-        this.policestation = policestation;
-        return this;
-    }
 
     public String getStarttime() {
         return Starttime;
