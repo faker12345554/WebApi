@@ -37,9 +37,9 @@ public class ReminderController {
 
     @ApiOperation("查看待办提醒设置")
     @GetMapping("getReminder")
-    public ResponseResult getReminder (@RequestBody int id){
+    public ResponseResult getReminder (){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData( reminderService.DeleteReminder(id));
+        return result.setData( reminderService.getReminder());
     }
 }

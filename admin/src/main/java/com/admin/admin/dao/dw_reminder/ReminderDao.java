@@ -2,6 +2,7 @@ package com.admin.admin.dao.dw_reminder;
 
 import com.admin.admin.entity.dw_reminder.Remindersettings;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface ReminderDao {
@@ -17,7 +18,7 @@ public interface ReminderDao {
     /*
     作废
      */
-    int deleteReminder(int id);
+    int deleteReminder(@Param("id") int id);
 
     /*
     查看待办提醒设置

@@ -2,6 +2,7 @@ package com.admin.admin.dao.dw_violation;
 
 import com.admin.admin.entity.dw_violation.Violationfens;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,12 +22,12 @@ public interface ViolationDao {
     /*
     作废违规分数
      */
-    int deleteViolation(int id);
+    int deleteViolation(@Param("id") int id);
 
     /*
     查看
      */
-    Violationfens selectViolation(int id);
+    Violationfens selectViolation(@Param("id") int id);
 
     /*
     列表

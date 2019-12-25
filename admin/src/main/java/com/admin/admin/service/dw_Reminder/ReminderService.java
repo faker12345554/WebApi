@@ -31,7 +31,7 @@ public class ReminderService {
     /*
     查看
      */
-    public Remindersettings getReminder(int id){
+    public Remindersettings getReminder(){
         return reminderDao.getReminder();
     }
 }
