@@ -205,14 +205,14 @@ import javax.crypto.Mac;
 
         public static void main(String[] args) throws Exception {
             // 发送POST请求示例
-            String ak_id = "NMV.............5jv"; //用户ak
-            String ak_secret = "Fgs...............3zu"; // 用户ak_secret
+            String ak_id = ""; //用户ak
+            String ak_secret = ""; // 用户ak_secret
             String url = "https://shujuapi.aliyun.com/org_code/service_code/api_name";
             String body = "{\"param1\": \"xxx\", \"param2\":\"xxx\"}";
             System.out.println("response body:" + sendPost(url, body, ak_id, ak_secret));
             // 发送GET请求
-            String ak_id1 = "NMV.............5jv"; //用户ak
-            String ak_secret1 = "Fgs...............3zu"; // 用户ak_secret
+            String ak_id1 = ""; //用户ak
+            String ak_secret1 = ""; // 用户ak_secret
             String url1 = "https://shujuapi.aliyun.com/org_code/service_code/api_name?param1=xxx&param2=xxx";
             System.out.println("response body:" + sendGet(url1, ak_id1, ak_secret1));
         }

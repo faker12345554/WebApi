@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prisonapp.business.dao.dw_enum.EnumDao">
+    <select id="getProvice" resultType="com.prisonapp.business.entity.dw_enum.AreaAddressInfo">
+        SELECT * FROM area_addressinfo where level ='1'
+    </select>
+    <select id="getCity" resultType="com.prisonapp.business.entity.dw_enum.AreaAddressInfo">
+        SELECT * FROM area_addressinfo where level ='2'
+    </select>
+    <select id="getDistrict" resultType="com.prisonapp.business.entity.dw_enum.AreaAddressInfo">
+        SELECT * FROM area_addressinfo where level ='3'
+    </select>
+</mapper>

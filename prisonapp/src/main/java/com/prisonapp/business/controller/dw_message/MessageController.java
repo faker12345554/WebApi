@@ -6,11 +6,13 @@ import com.common.common.result.ResultSet;
 import com.prisonapp.business.entity.dw_message.*;
 import com.prisonapp.business.service.dw_message.MessageService;
 import com.prisonapp.token.getuserid.GetUserId;
+import com.prisonapp.token.tation.PassToken;
 import com.prisonapp.token.tation.UserLoginToken;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import javafx.scene.control.DialogPane;
+import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,16 +36,19 @@ public class MessageController {
     private ResultSearchNotificationModel resultSearchNotificationModel = new ResultSearchNotificationModel();
     private ResultMessageListModel resultMessageListModel = new ResultMessageListModel();
     private ResultNotificationMessageModel resultNotificationMessage = new ResultNotificationMessageModel();
-//    private DialogPane httpServletRequest;
-//    private String token = httpServletRequest.getHeader("token");// 从 http 请求头中取出 token
+    private Request httpServletRequest;
+    //  private DialogPane httpServletRequest;
 
-    
-    @UserLoginToken
+
+    //@PassToken
+  //  @UserLoginToken
     @ApiOperation(value = "获取保外人员的通知列表")
     @GetMapping("/getNotificationList")
     public ResultSet getNotificationList() {
 
-       // String token =JWT.create().withAudience( String.valueOf(id ) );
+        String token = httpServletRequest.getHeader("token");// 从 http 请求头中取出 token
+        System.out.println(token);
+//        String token =JWT.create().withAudience( String.valueOf(id ) );
         int sum = 0;
         List<NotificationMessageModel> notificationMessageModels = messageService.getNotificationList(getUserId.getUserId());
         for (NotificationMessageModel item : notificationMessageModels) {
@@ -61,7 +66,7 @@ public class MessageController {
     }
 
 
-    @UserLoginToken
+   // @UserLoginToken
     @ApiOperation(value = "获取保外人员的消息列表")
     @GetMapping("/getMessageList")
     public ResultSet getMessageList(@ApiParam(name = "type",value = "类型编号") @RequestParam(required = true) String type,@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true) int count,@ApiParam(name = "requestCount",value = "请求获取数据的条数") @RequestParam(required = true) int requestCount,@ApiParam(name = "key",value = "搜索关键字") @RequestParam(required = false) String key) {
@@ -81,7 +86,7 @@ public class MessageController {
         return result;
     }
 
-    @UserLoginToken
+   // @UserLoginToken
     @ApiOperation(value = "保外人员确认消息读取")
     @PostMapping("/readMessage")
     public ResultSet readMessage(@ApiParam(name = "type",value = "类型编号") @RequestParam(required = true) String type,@ApiParam(name = "messageTimestamp",value = "最新一条已获取的消息的时间戳") @RequestParam(required = true) String messageTimestamp) {
@@ -107,10 +112,10 @@ public class MessageController {
         return result;
     }
 
-    @UserLoginToken
+   // @UserLoginToken
     @ApiOperation(value = " 保外人员通知搜索")
     @GetMapping("/searchNotification")
-    public ResultSet searchNotification(@ApiParam(name = "key",value = "搜索关键字") @RequestParam(required = true) String key) {
+    public ResultSet searchNotification(@ApiParam(name = "key",value = "搜索关键字") @RequestParam(required = false) String key) {
         List<SearchNotificationModel> searchNotificationModels = messageService.searchNotification(key, getUserId.getUserId());
         int sum = 0;
         for (SearchNotificationModel item : searchNotificationModels) {
@@ -126,7 +131,7 @@ public class MessageController {
         return result;
     }
 
-    @UserLoginToken
+   // @UserLoginToken
     @ApiOperation(value = " 获取保外人员最新消息")
     @GetMapping("/getNewestMessageList")
     public ResultSet getNewestMessageList(@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true) int count,@ApiParam(name = "requestCount",value = "请求获取数据的条数") @RequestParam(required = true) int requestCount) {

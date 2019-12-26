@@ -35,7 +35,7 @@ public class SuperviseController {
     private ResultSet result = new ResultSet();
     private Upload upload =new Upload();
 
-    @UserLoginToken
+  //  @UserLoginToken
     @ApiOperation(value = "获取保外人员的外出申请列表")
     @GetMapping("/getApplyLeaveList")
     public ResultSet getApplyLeaveList(@ApiParam(name = "statusCode",value = "审批状态编号") @RequestParam(required = true)String statusCode,@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true)int count,@ApiParam(name = "requestCount",value = "请求获取数据的条数") @RequestParam(required = true)int requestCount) {
@@ -60,7 +60,7 @@ public class SuperviseController {
         return result;
     }
 
-    @UserLoginToken
+  //  @UserLoginToken
     @ApiOperation(value = "提交保外人员外出申请")
     @PostMapping("/submitApplyLeave")
     public ResultSet submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel,@ApiParam(name = "startDate",value = "起始时间戳")@RequestParam(required = true)String  startDate,@ApiParam(name = "endDate",value = "结束时间戳") @RequestParam(required = true)String endDate){
@@ -84,7 +84,7 @@ public class SuperviseController {
         return  result;
     }
 
-    @UserLoginToken
+   // @UserLoginToken
     @ApiOperation(value = "上传录音文件")
     @PostMapping("/uploadAudio")
     public ResultSet uploadAudio(MultipartFile file)  {
@@ -111,7 +111,7 @@ public class SuperviseController {
         return result;
     }
 
-    @UserLoginToken
+   // @UserLoginToken
     @ApiOperation(value = "获取保外人员的执行任务")
     @GetMapping("/getSuperviseTask")
     public  ResultSet getSuperviseTask(){
