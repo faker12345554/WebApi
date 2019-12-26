@@ -1,4 +1,4 @@
-package com.prisonapp.token.geiuserid;
+package com.prisonapp.token.getuserid;
 
 import com.prisonapp.token.TokenUtil;
 import com.prisonapp.tool.CacheUtils;

@@ -1,29 +1,24 @@
 package com.prisonapp.business.controller.dw_message;
 
 
+import com.auth0.jwt.JWT;
 import com.common.common.result.ResultSet;
 import com.prisonapp.business.entity.dw_message.*;
-import com.prisonapp.business.entity.dw_supervise.FaceRecognizeModel;
 import com.prisonapp.business.service.dw_message.MessageService;
-import com.prisonapp.token.TokenUtil;
-import com.prisonapp.token.geiuserid.GetUserId;
+import com.prisonapp.token.getuserid.GetUserId;
 import com.prisonapp.token.tation.UserLoginToken;
-import com.prisonapp.tool.CacheUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import jdk.nashorn.internal.parser.Token;
-import org.apache.ibatis.annotations.Param;
+import javafx.scene.control.DialogPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import sun.invoke.util.VerifyType;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.logging.SimpleFormatter;
 
 @Api(value="消息controller",tags={"消息及通知"})
 @RestController
@@ -39,12 +34,16 @@ public class MessageController {
     private ResultSearchNotificationModel resultSearchNotificationModel = new ResultSearchNotificationModel();
     private ResultMessageListModel resultMessageListModel = new ResultMessageListModel();
     private ResultNotificationMessageModel resultNotificationMessage = new ResultNotificationMessageModel();
+//    private DialogPane httpServletRequest;
+//    private String token = httpServletRequest.getHeader("token");// 从 http 请求头中取出 token
 
+    
     @UserLoginToken
     @ApiOperation(value = "获取保外人员的通知列表")
     @GetMapping("/getNotificationList")
     public ResultSet getNotificationList() {
 
+       // String token =JWT.create().withAudience( String.valueOf(id ) );
         int sum = 0;
         List<NotificationMessageModel> notificationMessageModels = messageService.getNotificationList(getUserId.getUserId());
         for (NotificationMessageModel item : notificationMessageModels) {
