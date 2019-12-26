@@ -6,7 +6,9 @@ import com.common.common.result.ResultSet;
 import com.prisonapp.business.entity.dw_supervise.*;
 import com.prisonapp.business.service.dw_supervise.SuperviseService;
 import com.prisonapp.token.geiuserid.GetUserId;
+import com.prisonapp.token.tation.UserLoginToken;
 import com.prisonapp.tool.CacheUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.http.entity.ContentType;
@@ -22,6 +24,8 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+
+@Api(value="监督controller",tags={"监督保外人员的请假"})
 @RestController
 @RequestMapping("/app/supervise")
 public class SuperviseController {
@@ -36,6 +40,7 @@ public class SuperviseController {
     private ResultSet result = new ResultSet();
     private Upload upload =new Upload();
 
+    @UserLoginToken
     @ApiOperation(value = "获取保外人员的外出申请列表")
     @GetMapping("/getApplyLeaveList")
     public ResultSet getApplyLeaveList(@ApiParam(name = "statusCode",value = "审批状态编号") @RequestParam(required = true)String statusCode,@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true)int count,@ApiParam(name = "requestCount",value = "请求获取数据的条数") @RequestParam(required = true)int requestCount) {
@@ -60,7 +65,7 @@ public class SuperviseController {
         return result;
     }
 
-
+    @UserLoginToken
     @ApiOperation(value = "提交保外人员外出申请")
     @PostMapping("/submitApplyLeave")
     public ResultSet submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel,@ApiParam(name = "startDate",value = "起始时间戳")@RequestParam(required = true)String  startDate,@ApiParam(name = "endDate",value = "结束时间戳") @RequestParam(required = true)String endDate){
@@ -84,14 +89,10 @@ public class SuperviseController {
         return  result;
     }
 
+    @UserLoginToken
     @ApiOperation(value = "上传录音文件")
     @PostMapping("/uploadAudio")
-    public ResultSet uploadAudio(byte[] testFile) throws IOException {
-
-
-        InputStream inputStream = new ByteArrayInputStream(testFile);
-        MultipartFile file = new MockMultipartFile(ContentType.APPLICATION_OCTET_STREAM.toString(), inputStream);
-
+    public ResultSet uploadAudio(MultipartFile file)  {
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(System.currentTimeMillis());
         String url =System.getProperty("user.dir")+"\\prisonapp\\"+"\\src\\"+"\\main\\"+"\\resources\\"+"\\uploadFile\\"+formatter.format(date);
@@ -115,6 +116,7 @@ public class SuperviseController {
         return result;
     }
 
+    @UserLoginToken
     @ApiOperation(value = "获取保外人员的执行任务")
     @GetMapping("/getSuperviseTask")
     public  ResultSet getSuperviseTask(){
@@ -142,6 +144,7 @@ public class SuperviseController {
         return result;
     }
 
+    @UserLoginToken
     @ApiOperation(value = " 保外人员人脸识别签到")
     @PostMapping("/faceRecognize")
     public ResultSet faceRecognize(MultipartFile file){

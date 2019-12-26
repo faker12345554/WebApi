@@ -8,4 +8,6 @@ import org.apache.ibatis.annotations.Param;
 public interface UserDao {
 
     UserModel login(@Param("userName") String userName);
+
+    UserModel getUser(@Param("id") int id);
 }

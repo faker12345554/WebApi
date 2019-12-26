@@ -9,6 +9,7 @@ import com.prisonapp.token.TokenUtil;
 import com.prisonapp.token.geiuserid.GetUserId;
 import com.prisonapp.token.tation.UserLoginToken;
 import com.prisonapp.tool.CacheUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import jdk.nashorn.internal.parser.Token;
@@ -24,6 +25,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.SimpleFormatter;
 
+@Api(value="消息controller",tags={"消息及通知"})
 @RestController
 @RequestMapping("/app/message")
 public class MessageController {
