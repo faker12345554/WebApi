@@ -1,9 +1,6 @@
 package com.adminapp.business.dao.dw_supervise;
 
-import com.adminapp.business.entity.dw_supervise.Personinformation;
-import com.adminapp.business.entity.dw_supervise.ReportSettingsInformation;
-import com.adminapp.business.entity.dw_supervise.SinginInformation;
-import com.adminapp.business.entity.dw_supervise.SummonsInformation;
+import com.adminapp.business.entity.dw_supervise.*;
 import com.adminapp.model.dw_supervise.*;
 import org.apache.ibatis.annotations.Param;
 import org.mapstruct.Mapper;
@@ -48,4 +45,8 @@ public interface SuperfineDado {
 
     int insertAuditorInformation(@Param("leaveOrder")String leaveOrder, @Param("userId")String userId, @Param("accountName")String accountName, @Param("auditorDateTime")Date auditorDateTime,
                                  @Param("leavingMessage")String leavingMessage,@Param("statusCode")String statusCode,@Param("status")String status);
+
+    List<ReminderSettingsInformation> listSummonSetting();
+
+    List<ViolationFensInformation> listViolationFensInformation(@Param("violationName")String violationName);
 }
