@@ -18,7 +18,7 @@
         where personid=#{personid}
     </update>
 
-    <update id="deletePersion" >
+    <update id="deletePersion">
         update t_personinformation set status=#{flag} where personid=#{PersonId}
     </update>
 
@@ -28,6 +28,37 @@
 
     <select id="getPersonByCard" parameterType="String" resultType="int">
         select count(*) from t_personinformation where card=#{Card}
+    </select>
+
+    <select id="getEnum" resultType="com.admin.admin.entity.dw_sysenum.Dictionary">
+        SELECT * FROM "dictionary"  where  kind='T0'   or  kind ='05'  or kind='T304'  or kind ='xjtj_xl'  or  kind='04'  or kind='08' or kind='T6'
+    </select>
+
+    <update id="updateSponsor" parameterType="String">
+        update t_personinformation set sponsor=#{Name},sponsoralarm=#{id} where personid=#{PersonId}
+    </update>
+
+    <insert id="insertprison" parameterType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting" useGeneratedKeys="true" keyProperty="data.id">
+        insert into t_prisonsetting(personid, settingname, settingcheck, settingtime) values(#{data.personid},#{data.settingname},#{data.settingcheck},#{data.settingtime})
+    </insert>
+
+    <select id="ListPerson" parameterType="String" resultType="com.admin.admin.entity.dw_person.Personinformation">
+        select * from t_personinformation
+        <if test=" Condition !=null and Condition!=''">
+            <where>
+                personname like concat('%',#{Condition},'%') or
+                suspectstatus like concat('%',#{Condition},'%') or
+                gender like concat('%',#{Condition},'%') or
+                sponsor like concat('%',#{Condition},'%') or
+                casetype like concat('%',#{Condition},'%') or
+                modifierid like concat('%',#{Condition},'%')
+            </where>
+        </if>
+
+    </select>
+
+    <select id="ListPrison" parameterType="String" resultType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting">
+        select * from t_prisonsetting where personid=#{PersonId}
     </select>
 
 </mapper>

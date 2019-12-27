@@ -21,14 +21,6 @@ public class MenuData {
         return this;
     }
 
-    public boolean isHidden() {
-        return hidden;
-    }
-
-    public MenuData setHidden(boolean hidden) {
-        this.hidden = hidden;
-        return this;
-    }
 
     public MenuData setAffix(boolean affix) {
         this.affix = affix;
@@ -44,7 +36,6 @@ public class MenuData {
 
     private String icon;
 
-    private boolean hidden;
     public MenuData(){
 
     }
@@ -53,10 +44,9 @@ public class MenuData {
        this.icon=icon;
 
     }
-    public MenuData(String title,boolean affix,boolean hidden){
+    public MenuData(String title,boolean affix){
         this.title=title;
         this.affix=affix;
-        this.hidden=hidden;
 
     }
 

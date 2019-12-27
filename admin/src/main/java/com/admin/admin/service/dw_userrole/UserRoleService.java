@@ -57,6 +57,7 @@ public class UserRoleService {
         for (Menu item : mainList) {
             ParentMenu model = new ParentMenu();
             MenuData Title = new MenuData(item.getIcon());
+            Title.setTitle(item.getMenuname());
 //            Title.setTitle(item.getMenuname());
             // Title.setIcon(item.getIcon());
             model.setPath(item.getPath());
@@ -68,11 +69,12 @@ public class UserRoleService {
             List<SonMenu> SubList = new ArrayList<SonMenu>();
             for (Menu Me : MenuList) {
                 if (Me.getTopid() == item.getMenu_id()) {
-                    MenuData data = new MenuData(Me.getMenuname(), Me.getAffix(), Me.isHidden());
+                    MenuData data = new MenuData(Me.getMenuname(), Me.getAffix());
                     SonMenu Sub = new SonMenu();
                     Sub.setPath(Me.getPath());
                     Sub.setComponent(Me.getComponent());
                     Sub.setName(Me.getName());
+                    Sub.setHidden(Me.isHidden());
 //                    data.setTitle(Me.getMenuname());
 //                    data.setAffix(Me.getAffix());
 //                    data.setIcon(Me.getIcon());

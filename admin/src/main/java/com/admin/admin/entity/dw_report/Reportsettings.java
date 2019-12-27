@@ -1,6 +1,8 @@
 package com.admin.admin.entity.dw_report;
 
 
+import java.util.Date;
+
 public class Reportsettings {
 
   private long id;
@@ -9,7 +11,28 @@ public class Reportsettings {
   private long reportcount;
   private long reporttype;
   private long reportday;
-  private java.sql.Timestamp begindate;
+  private Date begindate;
+  private String typename;
+
+  public String getTypename() {
+    return typename;
+  }
+
+  public Reportsettings setTypename(String typename) {
+    this.typename = typename;
+    return this;
+  }
+
+  public Date getBegindate() {
+    return begindate;
+  }
+
+  public Reportsettings setBegindate(Date begindate) {
+    this.begindate = begindate;
+    return this;
+  }
+
+
 
 
   public long getId() {
@@ -66,12 +89,5 @@ public class Reportsettings {
   }
 
 
-  public java.sql.Timestamp getBegindate() {
-    return begindate;
-  }
-
-  public void setBegindate(java.sql.Timestamp begindate) {
-    this.begindate = begindate;
-  }
 
 }

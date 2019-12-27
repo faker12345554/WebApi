@@ -1,6 +1,8 @@
 package com.admin.admin.entity.dw_violation;
 
 
+import java.util.Date;
+
 public class Violationfens {
 
   private long id;
@@ -9,7 +11,8 @@ public class Violationfens {
   private String rangefens;
   private long createperson;
   private String accountname;
-  private java.sql.Timestamp createtime;
+  private Date createtime;
+  private boolean status;
 
   public boolean isStatus() {
     return status;
@@ -20,8 +23,16 @@ public class Violationfens {
     return this;
   }
 
-  private boolean status;
 
+
+  public Date getCreatetime() {
+    return createtime;
+  }
+
+  public Violationfens setCreatetime(Date createtime) {
+    this.createtime = createtime;
+    return this;
+  }
 
   public long getId() {
     return id;
@@ -77,12 +88,5 @@ public class Violationfens {
   }
 
 
-  public java.sql.Timestamp getCreatetime() {
-    return createtime;
-  }
-
-  public void setCreatetime(java.sql.Timestamp createtime) {
-    this.createtime = createtime;
-  }
 
 }

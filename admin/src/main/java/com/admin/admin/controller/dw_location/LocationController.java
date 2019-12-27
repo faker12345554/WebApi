@@ -9,6 +9,7 @@ import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+@Api(value="定位信息controller",tags={"定位信息管理"})
 @RestController
 @RequestMapping("/Location")
 public class LocationController {
@@ -33,7 +35,7 @@ public class LocationController {
      */
     @ApiOperation("定位信息列表")
     @GetMapping("/LocationList")
-    public ResponseResult listLocationModel(@RequestParam String Condition, @RequestParam int PageSize, @RequestParam int PageIndex,
+    public ResponseResult listLocationModel(@RequestParam(required = false) String Condition, @RequestParam int PageSize, @RequestParam int PageIndex,
                                             HttpServletResponse response) {
 
         PageBean pageBean = locationService.listLocationModel(Condition, PageSize, PageIndex);
@@ -77,8 +79,6 @@ public class LocationController {
             }
             //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
             PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
-
-
             PageInfo<Locationmation> info = new PageInfo<>(allItems);//全部商品
             int countNums = (int) info.getTotal();            //总记录数
             PageBean<Locationmation> pageData = new PageBean<>(searchModel.getPageIndex(), searchModel.getPageSize(), countNums);

@@ -7,8 +7,16 @@ public class Alarmsettings {
   private String code;
   private String alarmname;
   private double alarmcount;
-  private String continuous;
+  private boolean continuous;
 
+  public boolean isContinuous() {
+    return continuous;
+  }
+
+  public Alarmsettings setContinuous(boolean continuous) {
+    this.continuous = continuous;
+    return this;
+  }
 
   public long getId() {
     return id;
@@ -46,12 +54,5 @@ public class Alarmsettings {
   }
 
 
-  public String getContinuous() {
-    return continuous;
-  }
-
-  public void setContinuous(String continuous) {
-    this.continuous = continuous;
-  }
 
 }

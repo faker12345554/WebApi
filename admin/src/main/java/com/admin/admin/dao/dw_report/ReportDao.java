@@ -2,6 +2,7 @@ package com.admin.admin.dao.dw_report;
 
 import com.admin.admin.entity.dw_report.Reportsettings;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface ReportDao {
@@ -17,7 +18,7 @@ public interface ReportDao {
     /*
     作废
      */
-    int deleteReport(int id);
+    int deleteReport(@Param("id") int id);
 
     /*
     查看设置

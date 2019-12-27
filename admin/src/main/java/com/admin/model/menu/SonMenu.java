@@ -5,9 +5,19 @@ public class SonMenu {
     private String path;
     private String component;
     private String name;
+    private boolean hidden;
 
     public String getPath() {
         return path;
+    }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public SonMenu setHidden(boolean hidden) {
+        this.hidden = hidden;
+        return this;
     }
 
     public SonMenu setPath(String path) {

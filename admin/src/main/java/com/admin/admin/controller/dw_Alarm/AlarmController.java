@@ -4,10 +4,12 @@ import com.admin.admin.entity.dw_alarm.Alarmsettings;
 import com.admin.admin.service.dw_Alarm.AlarmService;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@Api(value="报警提醒controller",tags={"报警提醒设置"})
 @RestController
 @RequestMapping("/Alarm")
 public class AlarmController {

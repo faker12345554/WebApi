@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@Api("行动范围信息")
+@Api(value="行动范围信息controller",tags={"行动范围信息"})
 @RestController
 @RequestMapping("/enclosure")
 public class enclosureController {

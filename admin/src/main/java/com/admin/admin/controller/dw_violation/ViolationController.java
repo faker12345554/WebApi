@@ -5,10 +5,12 @@ import com.admin.admin.entity.dw_violation.Violationfens;
 import com.admin.admin.service.dw_violation.ViolationService;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@Api(value="违规分数设置Controller",tags={"违规分数设置"})
 @RestController
 @RequestMapping("/Violation")
 public class ViolationController {
