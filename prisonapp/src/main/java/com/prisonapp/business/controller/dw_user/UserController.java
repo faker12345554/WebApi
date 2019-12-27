@@ -1,13 +1,16 @@
 package com.prisonapp.business.controller.dw_user;
 
 import com.common.common.result.ResultSet;
-import com.common.common.result.TokenResult;
 import com.prisonapp.business.entity.dw_user.TokenModel;
 import com.prisonapp.business.entity.dw_user.UserModel;
 import com.prisonapp.business.service.dw_user.UserService;
 import com.prisonapp.token.TokenService;
+import com.prisonapp.token.tation.PassToken;
+import com.prisonapp.token.tation.UserLoginToken;
 import com.prisonapp.tool.CacheUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 
+
+@Api(value="登录controller",tags={"用户登录及应用"})
+@PassToken
 @RestController
 @RequestMapping("/app/user")
 public class UserController {
@@ -27,10 +33,12 @@ public class UserController {
     private ResultSet result = new ResultSet();
     private TokenModel tokenModel=new TokenModel();
     //private TokenResult tokenResult =new TokenResult();
+
+
     @ApiOperation(value = "登录")
     @PostMapping("/login")//
-    public ResultSet login(@RequestParam(required = false) String accountName,@RequestParam(required = false) String password, HttpServletResponse response){
-       UserModel userModel=userService.login(accountName);
+    public ResultSet login(@ApiParam(name = "account",value = "账号")@RequestParam(required = false) String account,@ApiParam(name = "password",value = "密码") @RequestParam(required = false) String password, HttpServletResponse response){
+       UserModel userModel=userService.login(account);
 
        if(userModel==null){
            result.resultCode=10;
@@ -40,8 +48,8 @@ public class UserController {
        }
        else if(userModel.getPassword().equals(password)&&userModel.getStatus().equals("t")){
            CacheUtils.put("UserId",userModel.getId(),0);
-          // String token =tokenResult.GetToken(userModel.getId()+"",userModel.getPhone());
            String token =tokenService.getToken(userModel);
+
            tokenModel.setToken(token);
            tokenModel.setrExpiresTime(token);
            tokenModel.setRefreshToken(token);
@@ -58,4 +66,10 @@ public class UserController {
        }
 
     }
+
+//    public ResultSet getUserInfo(){
+//
+//    }
+
+
 }

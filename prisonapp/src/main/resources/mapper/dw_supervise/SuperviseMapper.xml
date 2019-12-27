@@ -25,7 +25,7 @@
     </insert>
 
     <select id="getSuperviseTask" resultType="com.prisonapp.business.entity.dw_supervise.TReportsettingsModel">
-        select * from  t_reportsettings where type=2 or type =3
+        select * from  t_reportsettings where (type=2 or type =3) and  begindate between  current_date and  (current_date+1)
     </select>
 
     <select id="faceRecognize" resultType="com.prisonapp.business.entity.dw_supervise.FaceRecognizeModel">
