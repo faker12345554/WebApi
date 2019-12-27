@@ -48,9 +48,7 @@ public class UserController {
        }
        else if(userModel.getPassword().equals(password)&&userModel.getStatus().equals("t")){
            CacheUtils.put("UserId",userModel.getId(),0);
-          // String token =tokenResult.GetToken(userModel.getId()+"",userModel.getPhone());
            String token =tokenService.getToken(userModel);
-           //PostMethod post = new PostMethod(reqUrl);
 
            tokenModel.setToken(token);
            tokenModel.setrExpiresTime(token);

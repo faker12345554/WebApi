@@ -72,12 +72,15 @@ import javax.crypto.Mac;
          * 发送POST请求
          */
         public static String sendPost(String url, String body, String ak_id, String ak_secret) throws Exception {
+
+
             PrintWriter out = null;
             BufferedReader in = null;
             String result = "";
             int statusCode = 200;
             try {
                 URL realUrl = new URL(url);
+
                 /*
                  * http header 参数
                  */
@@ -88,14 +91,16 @@ import javax.crypto.Mac;
                 String date = toGMTString(new Date());
                 // 1.对body做MD5+BASE64加密
                 String bodyMd5 = MD5Base64(body);
-                String stringToSign = method + "\n" + accept + "\n" + bodyMd5 + "\n" + content_type + "\n" + date + "\n"
-                        + path;
+                String stringToSign = method + "\n" + accept + "\n" + bodyMd5 + "\n" + content_type + "\n" + date + "\n" + path;
                 // 2.计算 HMAC-SHA1
                 String signature = HMACSha1(stringToSign, ak_secret);
                 // 3.得到 authorization header
                 String authHeader = "Dataplus " + ak_id + ":" + signature;
                 // 打开和URL之间的连接
-                URLConnection conn = realUrl.openConnection();
+                URLConnection conn =realUrl.openConnection();
+                //conn.disconnect();
+
+
                 // 设置通用的请求属性
                 conn.setRequestProperty("accept", accept);
                 conn.setRequestProperty("content-type", content_type);
@@ -204,17 +209,19 @@ import javax.crypto.Mac;
         }
 
         public static void main(String[] args) throws Exception {
-            // 发送POST请求示例
+           //  发送POST请求示例
             String ak_id = ""; //用户ak
             String ak_secret = ""; // 用户ak_secret
-            String url = "https://shujuapi.aliyun.com/org_code/service_code/api_name";
-            String body = "{\"param1\": \"xxx\", \"param2\":\"xxx\"}";
-            System.out.println("response body:" + sendPost(url, body, ak_id, ak_secret));
-            // 发送GET请求
-            String ak_id1 = ""; //用户ak
-            String ak_secret1 = ""; // 用户ak_secret
-            String url1 = "https://shujuapi.aliyun.com/org_code/service_code/api_name?param1=xxx&param2=xxx";
-            System.out.println("response body:" + sendGet(url1, ak_id1, ak_secret1));
+            String url = "https://dtplus-cn-shanghai.data.aliyuncs.com/face/verify";
+            String body = "{\"image_url_1\": \"http://file02.16sucai.com/d/file/2015/0128/8b0f093a8edea9f7e7458406f19098af.jpg\", \"image_url_2\":\"http://file02.16sucai.com/d/file/2015/0128/8b0f093a8edea9f7e7458406f19098af.jpg\"}";
+            String a =sendPost(url, body, ak_id, ak_secret);
+            System.out.println("response body:" + a);
+          //   发送GET请求
+//            String ak_id1 = ""; //用户ak
+//            String ak_secret1 = ""; // 用户ak_secret
+//            String url1 = "https://dtplus-cn-shanghai.data.aliyuncs.com/face/verify?param1=http://file02.16sucai.com/d/file/2015/0128/8b0f093a8edea9f7e7458406f19098af.jpg&param2=http://file02.16sucai.com/d/file/2015/0128/8b0f093a8edea9f7e7458406f19098af.jpg";
+//            String a =sendGet(url1, ak_id1, ak_secret1);
+//            System.out.println("response body:" + a);
         }
     }
 
