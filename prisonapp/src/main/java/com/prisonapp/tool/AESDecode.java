@@ -72,15 +72,12 @@ import javax.crypto.Mac;
          * 发送POST请求
          */
         public static String sendPost(String url, String body, String ak_id, String ak_secret) throws Exception {
-
-
             PrintWriter out = null;
             BufferedReader in = null;
             String result = "";
             int statusCode = 200;
             try {
                 URL realUrl = new URL(url);
-
                 /*
                  * http header 参数
                  */
@@ -91,16 +88,14 @@ import javax.crypto.Mac;
                 String date = toGMTString(new Date());
                 // 1.对body做MD5+BASE64加密
                 String bodyMd5 = MD5Base64(body);
-                String stringToSign = method + "\n" + accept + "\n" + bodyMd5 + "\n" + content_type + "\n" + date + "\n" + path;
+                String stringToSign = method + "\n" + accept + "\n" + bodyMd5 + "\n" + content_type + "\n" + date + "\n"
+                        + path;
                 // 2.计算 HMAC-SHA1
                 String signature = HMACSha1(stringToSign, ak_secret);
                 // 3.得到 authorization header
                 String authHeader = "Dataplus " + ak_id + ":" + signature;
                 // 打开和URL之间的连接
-                URLConnection conn =realUrl.openConnection();
-                //conn.disconnect();
-
-
+                URLConnection conn = realUrl.openConnection();
                 // 设置通用的请求属性
                 conn.setRequestProperty("accept", accept);
                 conn.setRequestProperty("content-type", content_type);
@@ -116,9 +111,9 @@ import javax.crypto.Mac;
                 // flush输出流的缓冲
                 out.flush();
                 // 定义BufferedReader输入流来读取URL的响应
-                statusCode = ((HttpURLConnection) conn).getResponseCode();
-                if (statusCode != 200) {
-                    in = new BufferedReader(new InputStreamReader(((HttpURLConnection) conn).getErrorStream()));
+                statusCode = ((HttpURLConnection)conn).getResponseCode();
+                if(statusCode != 200) {
+                    in = new BufferedReader(new InputStreamReader(((HttpURLConnection)conn).getErrorStream()));
                 } else {
                     in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 }
@@ -141,12 +136,13 @@ import javax.crypto.Mac;
                 }
             }
             if (statusCode != 200) {
-                throw new IOException("\nHttp StatusCode: " + statusCode + "\nErrorMessage: " + result);
+                throw new IOException("\nHttp StatusCode: "+ statusCode + "\nErrorMessage: " + result);
             }
             return result;
         }
 
-        /*
+
+    /*
          * GET请求
          */
         public static String sendGet(String url, String ak_id, String ak_secret) throws Exception {
@@ -210,15 +206,18 @@ import javax.crypto.Mac;
 
         public static void main(String[] args) throws Exception {
            //  发送POST请求示例
-            String ak_id = ""; //用户ak
-            String ak_secret = ""; // 用户ak_secret
+            String ak_id = "LTAI4FcwBG5xLifmNANXAoCj"; //用户ak
+            String ak_secret = "SPNw5NtPV44DZgc3Xyd2GxDq4DW5Nu"; // 用户ak_secret
             String url = "https://dtplus-cn-shanghai.data.aliyuncs.com/face/verify";
-            String body = "{\"image_url_1\": \"http://file02.16sucai.com/d/file/2015/0128/8b0f093a8edea9f7e7458406f19098af.jpg\", \"image_url_2\":\"http://file02.16sucai.com/d/file/2015/0128/8b0f093a8edea9f7e7458406f19098af.jpg\"}";
+            String body =  "{\"type\":0,\n" +
+                    "\"image_url_1\":\"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3196725733,2224443253&fm=26&gp=0.jpg\",\n" +
+                    "\"image_url_2\":\"http://file02.16sucai.com/d/file/2015/0128/8b0f093a8edea9f7e7458406f19098af.jpg\"\n" +
+                    "}";
             String a =sendPost(url, body, ak_id, ak_secret);
             System.out.println("response body:" + a);
           //   发送GET请求
-//            String ak_id1 = ""; //用户ak
-//            String ak_secret1 = ""; // 用户ak_secret
+//            String ak_id1 = "LTAI4FcwBG5xLifmNANXAoCj"; //用户ak
+//            String ak_secret1 = "SPNw5NtPV44DZgc3Xyd2GxDq4DW5Nu"; // 用户ak_secret
 //            String url1 = "https://dtplus-cn-shanghai.data.aliyuncs.com/face/verify?param1=http://file02.16sucai.com/d/file/2015/0128/8b0f093a8edea9f7e7458406f19098af.jpg&param2=http://file02.16sucai.com/d/file/2015/0128/8b0f093a8edea9f7e7458406f19098af.jpg";
 //            String a =sendGet(url1, ak_id1, ak_secret1);
 //            System.out.println("response body:" + a);

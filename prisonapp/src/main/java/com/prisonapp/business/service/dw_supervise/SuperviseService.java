@@ -30,11 +30,28 @@ public class SuperviseService {
         return superviseDao.submitApplyLeave(submitApplyLeaveModel,startDate,endDate,code,userId);
     }
 
-    public List<TReportsettingsModel> getSuperviseTask(){
-        return superviseDao.getSuperviseTask();
+    public List<GetSuperviseTaskModel> getSuperviseTask(String userId){
+        return superviseDao.getSuperviseTask(userId);
     }
 
     public List<FaceRecognizeModel> faceRecognize(String userId){
         return superviseDao.faceRecognize(userId);
+    }
+
+    public  int autoLocation(float latitude,float longitude,int locationType,String address,String userId,Date date){
+
+        return  superviseDao.autoLocation(latitude, longitude,locationType,address,userId,date);
+    }
+
+    public int uploadLocationError(String errorCode, String errorMsg,int userId,Date date){
+        return  superviseDao.uploadLocationError(errorCode, errorMsg,userId,date);
+    }
+
+    public int uploadBattery(float percent,String userId,Date date){
+        return  superviseDao.uploadBattery(percent,userId,date);
+    }
+
+    public int batteryAlarm(){
+        return  superviseDao.batteryAlarm();
     }
 }

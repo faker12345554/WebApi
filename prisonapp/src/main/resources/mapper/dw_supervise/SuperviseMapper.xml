@@ -24,11 +24,28 @@
 
     </insert>
 
-    <select id="getSuperviseTask" resultType="com.prisonapp.business.entity.dw_supervise.TReportsettingsModel">
-        select * from  t_reportsettings where (type=2 or type =3) and  begindate between  current_date and  (current_date+1)
+    <select id="getSuperviseTask" resultType="com.prisonapp.business.entity.dw_supervise.GetSuperviseTaskModel">
+        SELECT bailoutbegindate as startDate,type,typename FROM  t_personinformation FULL JOIN   t_singin on (t_personinformation.personid = t_singin.personid) where t_personinformation.personid ='25' and createtime BETWEEN CURRENT_DATE and CURRENT_DATE+1
+
     </select>
 
     <select id="faceRecognize" resultType="com.prisonapp.business.entity.dw_supervise.FaceRecognizeModel">
     select * from t_singin
     </select>
+
+    <insert id="autoLocation" >
+        insert into t_location (latitude,longitude,locationtype,address,personid,timestamp) values (#{latitude},#{longitude},#{locationType},#{address},#{userId},#{date})
+    </insert>
+
+    <insert id="uploadLocationError">
+        insert into t_log(operator,action,operatingtime,logtype,errorcode) values(#{userId},#{errorMsg},#{date},'2',#{errorCode})
+    </insert>
+
+    <insert id="uploadBattery">
+        insert into t_location(personid,timestamp,surpluselectricity) values(#{userId},#{date},#{percent})
+    </insert>
+
+    <insert id="batteryAlarm">
+        insert into t_protectionmessage
+    </insert>
 </mapper>

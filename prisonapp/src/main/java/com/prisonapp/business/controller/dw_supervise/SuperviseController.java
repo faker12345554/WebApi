@@ -10,6 +10,7 @@ import com.prisonapp.token.tation.UserLoginToken;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -116,12 +117,12 @@ public class SuperviseController {
     @ApiOperation(value = "获取保外人员的执行任务")
     @GetMapping("/getSuperviseTask")
     public  ResultSet getSuperviseTask(){
-        List<GetSuperviseTaskModel> getSuperviseTaskModel = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-        List<TReportsettingsModel> tReportsettingsModels =superviseService.getSuperviseTask();
-        for(TReportsettingsModel item: tReportsettingsModels){
+       // List<GetSuperviseTaskModel> getSuperviseTaskModel = new ArrayList<>();
+       // Calendar calendar = Calendar.getInstance();
+        List<GetSuperviseTaskModel> getSuperviseTaskModels =superviseService.getSuperviseTask(TokenUtil.getTokenUserId().toString());
+        /*for(GetSuperviseTaskModel item: getSuperviseTaskModels){
             GetSuperviseTaskModel getSuperviseTaskModel1=new GetSuperviseTaskModel();
-            getSuperviseTaskModel1.setStartDate(item.getBegindate());
+            getSuperviseTaskModel1.setStartDate(item.getStartDate());
             //算出结束日期
             calendar.setTime(item.getBegindate());
             calendar.add(calendar.DATE,5); //把日期往后增加一天,整数  往后推,负数往前移动
@@ -130,10 +131,10 @@ public class SuperviseController {
             getSuperviseTaskModel1.setType(item.getType());
             getSuperviseTaskModel1.setTypeName(item.getTypename());
             getSuperviseTaskModel.add(getSuperviseTaskModel1);
-        }
-        Collections.reverse(getSuperviseTaskModel);
-        resultGetSuperviseTaskModel.setTotalCount(tReportsettingsModels.size());
-        resultGetSuperviseTaskModel.setList(getSuperviseTaskModel);
+        }*/
+        Collections.reverse(getSuperviseTaskModels);
+        resultGetSuperviseTaskModel.setTotalCount(getSuperviseTaskModels.size());
+        resultGetSuperviseTaskModel.setList(getSuperviseTaskModels);
         result.resultCode=0;
         result.resultMsg="";
         result.data=resultGetSuperviseTaskModel;
@@ -149,6 +150,64 @@ public class SuperviseController {
         result.resultMsg = "";
         result.data = faceRecognizeModels;
         return result;
+    }
+
+
+
+    @UserLoginToken
+    @ApiOperation(value = " 自动上报取保监居人员位置")
+    @PostMapping("/autoLocation")
+    public ResultSet autoLocation(@ApiParam(name = "latitude",value = "纬度")@RequestParam(required = true)float  latitude,@ApiParam(name = "longitude",value = "经度")@RequestParam(required = true)float longitude,@ApiParam(name = "locationType",value = "定位类型")@RequestParam(required = true)int locationType,@ApiParam(name = "address",value = "地址")@RequestParam(required = true)String address){
+
+        int a = superviseService.autoLocation(latitude,longitude,locationType,address,TokenUtil.getTokenUserId(),new Date());
+        if(a!=0){
+            result.resultCode = 0;
+            result.resultMsg = "";
+            result.data = System.currentTimeMillis();
+        }else{
+            result.resultCode = 1;
+            result.resultMsg = "上报失败";
+            //result.data = "";
+        }
+        return result;
+    }
+
+    @UserLoginToken
+    @ApiOperation(value = " 上报保外人员定位错误信息")
+    @PostMapping("/uploadLocationError")
+    public ResultSet uploadLocationError( String errorCode, String errorMsg){
+
+        int a = superviseService.uploadLocationError(errorCode,errorMsg,Integer.parseInt(TokenUtil.getTokenUserId()),new Date());
+        if(a!=0) {
+            result.resultCode = 0;
+            result.resultMsg = "";
+            result.data = "{}";
+        }
+        else
+        {
+            result.resultCode = 0;
+            result.resultMsg = "";
+            result.data = null;
+        }
+        return result;
+    }
+
+    @UserLoginToken
+    @ApiOperation(value = " 上报保外人员电量信息")
+    @PostMapping("/uploadBattery")
+    public ResultSet uploadBattery( float percent){
+        if(percent<=20.0){
+            batteryAlarm();
+        }
+        int a = superviseService.uploadBattery(percent,TokenUtil.getTokenUserId(),new Date());
+        result.resultCode = 0;
+        result.resultMsg = "";
+        result.data = "{}";
+        return result;
+    }
+
+    public void batteryAlarm(){
+        superviseService.batteryAlarm();
     }
 
 }

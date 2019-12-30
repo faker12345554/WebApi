@@ -64,11 +64,7 @@ public class  MessageController {
     @ApiOperation(value = "获取保外人员的消息列表")
     @GetMapping("/getMessageList")
     public ResultSet getMessageList(@ApiParam(name = "type",value = "类型编号") @RequestParam(required = true) String type,@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true) int count,@ApiParam(name = "requestCount",value = "请求获取数据的条数") @RequestParam(required = true) int requestCount,@ApiParam(name = "key",value = "搜索关键字") @RequestParam(required = false) String key) {
-        if ("".equals(key) || key!=null) {
 
-        }else{
-            key = "";
-        }
         List<MessageListModel> messageListModel = messageService.getMessageList(type, count, requestCount, key, TokenUtil.getTokenUserId());
         int totalCount = (messageService.messageTotalCount(type, TokenUtil.getTokenUserId())).size();
         resultMessageListModel.totalCount = totalCount;
