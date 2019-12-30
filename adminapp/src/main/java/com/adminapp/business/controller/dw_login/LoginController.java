@@ -2,8 +2,11 @@ package com.adminapp.business.controller.dw_login;
 
 import com.adminapp.business.entity.dw_login.UserInformation;
 import com.adminapp.business.entity.dw_supervise.Personinformation;
+import com.adminapp.business.entity.dw_user.User;
 import com.adminapp.business.service.dw_login.LoginService;
 import com.adminapp.config.CacheUtils;
+import com.adminapp.config.token.TokenService;
+import com.adminapp.config.token.tation.PassToken;
 import com.prisonapp.business.entity.dw_user.TokenModel;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -24,23 +27,29 @@ public class LoginController {
     public TokenModel tokenModel=new TokenModel();
     @Autowired
     public LoginService loginService;
+    @Autowired
+    public TokenService tokenService;
 
     @ApiOperation(value = "登录")
     @PostMapping("/login")
+    @PassToken
     public ResultSet Login(@ApiParam(name = "account", value = "登陆账号") @RequestParam(required = true) String account, @ApiParam(name = "password", value = "密码") @RequestParam(required = true) String password) {
         try {
             CacheUtils.put("UserId",account);
 
-            UserInformation user = loginService.Login(account);
-            String name=user.getAliasname();
+            User userInformation = loginService.login(account);
+            User user=new User();
+            user.setId(userInformation.getId());
+            user.setPassword(userInformation.getPassword());
+            String name=userInformation.getAliasname();
             CacheUtils.put("UserName",name);
-            if (user != null && user.getStatus().equals("t")) {                //判断账号是否存在
-                String token = "1144556677889999";
+            if (userInformation != null) {                //判断账号是否存在
+                String token =tokenService.getToken(user);
                 tokenModel.setToken(token);
                 tokenModel.setrExpiresTime(token);
                 tokenModel.setRefreshToken(token);
                 tokenModel.settExpiresTime(token);
-                if (user.getPassword().equals(password)) {    //判断密码是否正确
+                if (userInformation.getPassword().equals(password)) {    //判断密码是否正确
                     rs.resultCode = 0;
                     rs.resultMsg = "";
                     rs.data = tokenModel;

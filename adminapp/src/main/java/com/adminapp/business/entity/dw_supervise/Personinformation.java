@@ -7,6 +7,7 @@ public class Personinformation {
   private String code;
   private String name;
   private String number;
+  private String idCardNo;
   private long age;
   private String gender;
   private String headUrl;
@@ -16,7 +17,7 @@ public class Personinformation {
   public Date execStartDate;
   public Date execEndDate;
   public String phone;
-  public String[] tags;
+  //public String[] tags;
 
   public String getCode() {
     return code;
@@ -40,6 +41,14 @@ public class Personinformation {
 
   public void setNumber(String code) {
     this.number = code;
+  }
+
+  public String getIdCardNo() {
+    return idCardNo;
+  }
+
+  public void setIdCardNo(String idCardNo) {
+    this.idCardNo = idCardNo;
   }
 
   public long getAge() {
@@ -114,13 +123,13 @@ public class Personinformation {
     this.phone = phone;
   }
 
-  public String[] getTags() {
-    return tags;
-  }
-
-  public void setTags(String tags) {
-    String[] a=tags.split("，");
-    this.tags = a;
-  }
+//  public String[] getTags() {
+//    return tags;
+//  }
+//
+//  public void setTags(String tags) {
+//    String[] a=tags.split("，");
+//    this.tags = a;
+//  }
 
 }

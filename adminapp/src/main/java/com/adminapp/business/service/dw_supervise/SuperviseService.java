@@ -1,10 +1,7 @@
 package com.adminapp.business.service.dw_supervise;
 
 import com.adminapp.business.dao.dw_supervise.SuperfineDado;
-import com.adminapp.business.entity.dw_supervise.Personinformation;
-import com.adminapp.business.entity.dw_supervise.ReportSettingsInformation;
-import com.adminapp.business.entity.dw_supervise.SinginInformation;
-import com.adminapp.business.entity.dw_supervise.SummonsInformation;
+import com.adminapp.business.entity.dw_supervise.*;
 import com.adminapp.model.dw_supervise.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -101,7 +98,18 @@ public class SuperviseService {
         return superfineDado.updateLeaveInformation(leaveOrder, statusCode, status);
     }
 
+    //插入审批记录
     public int insertAuditorInformation(String leaveOrder,String userId,String accountName,Date auditorDateTime,String leavingMessage,String statusCode,String status){
         return superfineDado.insertAuditorInformation(leaveOrder,userId,accountName,auditorDateTime,leavingMessage,statusCode,status);
+    }
+
+    //查找所有传讯记录
+    public List<ReminderSettingsInformation> listSummonSetting(){
+        return superfineDado.listSummonSetting();
+    }
+
+    //查找传讯违规级别
+    public List<ViolationFensInformation> listViolationFensInformation(String violationName){
+        return superfineDado.listViolationFensInformation(violationName);
     }
 }

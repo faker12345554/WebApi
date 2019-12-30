@@ -11,6 +11,7 @@ import com.prisonapp.token.tation.UserLoginToken;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.ibatis.annotations.Param;
 import javafx.scene.control.DialogPane;
 import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;

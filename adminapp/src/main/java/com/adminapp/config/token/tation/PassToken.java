@@ -1,4 +1,4 @@
-package com.adminapp.token.tation;
+package com.adminapp.config.token.tation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

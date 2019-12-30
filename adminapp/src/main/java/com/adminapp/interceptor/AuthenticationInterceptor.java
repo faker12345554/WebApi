@@ -2,8 +2,8 @@ package com.adminapp.interceptor;
 
 import com.adminapp.business.dao.dw_user.UserDao;
 import com.adminapp.business.entity.dw_user.User;
-import com.adminapp.token.tation.PassToken;
-import com.adminapp.token.tation.UserLoginToken;
+import com.adminapp.config.token.tation.PassToken;
+import com.adminapp.config.token.tation.UserLoginToken;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
