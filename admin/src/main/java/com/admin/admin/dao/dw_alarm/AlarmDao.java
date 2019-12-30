@@ -3,12 +3,14 @@ package com.admin.admin.dao.dw_alarm;
 import com.admin.admin.entity.dw_alarm.Alarmsettings;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface AlarmDao {
 
     /*
     新增
      */
-    int SaveAlarm(Alarmsettings alarmsettings);
+    int SaveAlarm( Alarmsettings alarmsettings);
 
     /*
     修改
@@ -18,9 +20,9 @@ public interface AlarmDao {
     /*
     查看
      */
-    Alarmsettings getAlarm();
+    List<Alarmsettings> getAlarm();
     /*
     作废
      */
-    int deleteAlarm(@Param("id") int id);
+    int deleteAlarm();
 }

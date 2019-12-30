@@ -4,14 +4,15 @@
 <mapper namespace="com.admin.admin.dao.dw_reminder.ReminderDao">
 
     <select id="getReminder" resultType="com.admin.admin.entity.dw_reminder.Remindersettings">
-        select * from "t_remindersettings"
+        select * from t_remindersettings where status=true
     </select>
-    <delete id="deleteReminder" parameterType="int" >
-        delete from  t_remindersettings where id=#{id}
-    </delete>
+    <update id="deleteReminder">
+        update t_remindersettings set status=false
+    </update>
 
-    <insert id="SaveReminder" parameterType="com.admin.admin.entity.dw_reminder.Remindersettings">
-        INSERT into t_remindersettings(code,settingname,settingday,settingtime) VALUES(#{code},#{settingname},#{settingday},#{settingtime})
+    <insert id="SaveReminder" parameterType="com.admin.admin.entity.dw_reminder.Remindersettings" useGeneratedKeys="true" keyProperty="id">
+        INSERT into t_remindersettings(code,settingname,settingday,settingtime,createtime,status)
+        VALUES (#{code},#{settingname},#{settingday},#{settingtime},#{createtime},#{status})
     </insert>
 
     <update id="UpdateReminder" parameterType="com.admin.admin.entity.dw_reminder.Remindersettings">

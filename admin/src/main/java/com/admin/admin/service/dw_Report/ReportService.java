@@ -5,6 +5,9 @@ import com.admin.admin.entity.dw_report.Reportsettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
+
 @Service
 public class ReportService {
 
@@ -14,25 +17,32 @@ public class ReportService {
     /*
     新增
      */
-    public int SaveOrUpdateReport(Reportsettings reportsettings){
-        if (reportsettings.getId()!=0){
-            return reportDao.UpdateReport(reportsettings);
+    public int SaveOrUpdateReport(List<Reportsettings> reportsettings){
+
+        reportDao.deleteReport();
+
+        for (Reportsettings item: reportsettings){
+            item.setStatus(true);
+            item.setCreattime(new Date());
+
+            reportDao.SaveReport(item);
         }
-        return reportDao.SaveReport(reportsettings);
+        Reportsettings report=new Reportsettings();
+        return report.getId();
     }
 
     /*
     删除
      */
 
-    public int deleteReport(int id){
-        return reportDao.deleteReport(id);
+    public int deleteReport(){
+        return reportDao.deleteReport();
     }
 
     /*
     查看
      */
-    public Reportsettings getReport(){
+    public List<Reportsettings> getReport(){
         return reportDao.getReport();
     }
 }

@@ -4,10 +4,12 @@ import com.admin.admin.entity.dw_reminder.Remindersettings;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 @Mapper
 public interface ReminderDao {
    /*
-新增 待办提醒
+   新增 待办提醒
   */
     int SaveReminder(Remindersettings remindersettings);
 
@@ -18,10 +20,10 @@ public interface ReminderDao {
     /*
     作废
      */
-    int deleteReminder(@Param("id") int id);
+    int deleteReminder();
 
     /*
     查看待办提醒设置
      */
-    Remindersettings getReminder();
+    List<Remindersettings> getReminder();
 }

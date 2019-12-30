@@ -12,13 +12,17 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>admin</name>
     <packaging>war</packaging>
-    <description>Demo project for Spring Boot</description>
     <dependencies>
         <dependency>
             <groupId>com.donwait</groupId>
             <artifactId>common</artifactId>
             <version>1.0.0</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.1.23</version>
         </dependency>
 
 

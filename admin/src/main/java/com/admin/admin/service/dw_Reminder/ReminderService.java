@@ -6,6 +6,9 @@ import com.admin.admin.entity.dw_report.Reportsettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
+
 @Service
 public class ReminderService {
     @Autowired
@@ -14,24 +17,32 @@ public class ReminderService {
     /*
     保存或者修改
      */
-    public int SaveOrUpdateReminder(Remindersettings remindersettings){
-        if (remindersettings.getId()!=0){
-            return reminderDao.UpdateReminder(remindersettings);
+    public int SaveOrUpdateReminder(List<Remindersettings> remindersettings) {
+        reminderDao.deleteReminder();
+        int id=0;
+        for (Remindersettings item : remindersettings) {
+            item.setStatus(true);
+            item.setCreatetime(new Date());
+//            if (item.getId()!=0){
+//                return reminderDao.UpdateReminder(item);
+//            }
+           id= reminderDao.SaveReminder(item);
         }
-        return reminderDao.SaveReminder(remindersettings);
+        return id;
+
     }
 
     /*
     作废
      */
-    public int DeleteReminder(int id){
-        return  reminderDao.deleteReminder(id);
+    public int DeleteReminder() {
+        return reminderDao.deleteReminder();
     }
 
     /*
     查看
      */
-    public Remindersettings getReminder(){
+    public List<Remindersettings> getReminder() {
         return reminderDao.getReminder();
     }
 }
