@@ -1,9 +1,10 @@
 package com.adminapp.business.dao.dw_login;
 
-import com.adminapp.business.entity.dw_login.UserInformation;
+import com.adminapp.business.entity.dw_user.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface LoginDao {
-    UserInformation Login(String account);
+    User login(@Param("account") String account);
 }
