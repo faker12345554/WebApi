@@ -4,18 +4,20 @@
 <mapper namespace="com.admin.admin.dao.dw_alarm.AlarmDao">
 
     <select id="getAlarm" resultType="com.admin.admin.entity.dw_alarm.Alarmsettings">
-        select * from t_alarmsettings
+        select * from t_alarmsettings where status=true
     </select>
 
-    <delete id="deleteAlarm" parameterType="int">
-        delete t_alarmsettings where id=#{id}
-    </delete>
+    <update id="deleteAlarm" >
+        update t_alarmsettings set status=false
+    </update>
 
     <update id="UpdateAlarm" parameterType="com.admin.admin.entity.dw_alarm.Alarmsettings">
         update from t_alarmsettings set code=#{code},alarmname=#{alarmname},alarmcount=#{alarmcount},continuous=#{continuous} where id=#{id}
     </update>
-    <insert id="SaveAlarm" parameterType="com.admin.admin.entity.dw_alarm.Alarmsettings">
-        INSERT INTO t_alarmsettings(code,alarmname,alarmcount,continuous) VALUES(#{code},#{alarmname},#{alarmcount},#{continuous})
+
+    <insert id="SaveAlarm" parameterType="com.admin.admin.entity.dw_alarm.Alarmsettings" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_alarmsettings(code,alarmname,alarmcount,continuous,createtime,status)
+        VALUES(#{code},#{alarmname},#{alarmcount},#{continuous},#{createtime},#{status})
     </insert>
 
 </mapper>

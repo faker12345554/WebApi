@@ -4,16 +4,17 @@
 <mapper namespace="com.admin.admin.dao.dw_report.ReportDao">
 
     <select id="getReport" resultType="com.admin.admin.entity.dw_report.Reportsettings">
-        select * from t_reportsettings
+        select * from t_reportsettings where status=true
     </select>
 
-    <delete id="deleteReport" parameterType="int">
-        delete from t_reportsettings where id=#{id}
-    </delete>
+    <update id="deleteReport" >
+        update t_reportsettings set status=false
+    </update>
 
-    <insert id="SaveReport" parameterType="com.admin.admin.entity.dw_report.Reportsettings">
-        INSERT INTO t_reportsettings(type,locationstime,reportcount,reporttype,reportday,begindate,typename)
-        VALUES(#{type},#{locationstime},#{reportcount},#{reporttype},#{reportday}#{begindate},#{typename})
+    <insert id="SaveReport" parameterType="com.admin.admin.entity.dw_report.Reportsettings" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_reportsettings(type,locationstime,reportcount,reporttype,reportday,begindate,typename,creattime,status)
+        VALUES(#{type},#{locationstime},#{reportcount},#{reporttype},#{reportday},#{begindate},#{typename}
+        ,#{creattime},#{status})
     </insert>
 
     <update id="UpdateReport" parameterType="com.admin.admin.entity.dw_report.Reportsettings">

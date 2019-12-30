@@ -4,11 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <dependencies>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
-        </dependency>
+
         <dependency>
             <groupId>com.vaadin.external.google</groupId>
             <artifactId>android-json</artifactId>
@@ -57,7 +53,6 @@
     </parent>
     <groupId>com.prisonapp</groupId>
     <artifactId>prisonapp</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>prisonapp</name>
     <packaging>war</packaging>
     <build>
