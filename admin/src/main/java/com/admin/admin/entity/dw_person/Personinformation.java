@@ -193,14 +193,6 @@ public class Personinformation {
 
 
 
-    public String getPerson_name() {
-        return personname;
-    }
-
-    public void setPerson_name(String person_name) {
-        this.personname = person_name;
-    }
-
     public String getGender() {
         return gender;
     }

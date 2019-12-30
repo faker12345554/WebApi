@@ -34,7 +34,7 @@ public interface PersonDao {
     /*
     列表
      */
-    List<Personinformation> ListPerson(@Param("Condition") String Condition);
+    List<Personinformation> ListPerson(SearchModel searchModel );
 
     /*
     批量设置

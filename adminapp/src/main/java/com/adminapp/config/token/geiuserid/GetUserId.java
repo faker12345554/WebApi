@@ -1,7 +1,7 @@
 package com.adminapp.config.token.geiuserid;
 
+import com.adminapp.config.CacheUtils;
 import com.adminapp.config.token.TokenUtil;
-import com.prisonapp.tool.CacheUtils;
 
 public class GetUserId {
 

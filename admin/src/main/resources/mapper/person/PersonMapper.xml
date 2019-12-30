@@ -42,16 +42,16 @@
         insert into t_prisonsetting(personid, settingname, settingcheck, settingtime) values(#{data.personid},#{data.settingname},#{data.settingcheck},#{data.settingtime})
     </insert>
 
-    <select id="ListPerson" parameterType="String" resultType="com.admin.admin.entity.dw_person.Personinformation">
+    <select id="ListPerson" parameterType="com.admin.model.search.SearchModel" resultType="com.admin.admin.entity.dw_person.Personinformation">
         select * from t_personinformation
-        <if test=" Condition !=null and Condition!=''">
+        <if test=" FuzzyCondition !=null and FuzzyCondition !=''">
             <where>
-                personname like concat('%',#{Condition},'%') or
-                suspectstatus like concat('%',#{Condition},'%') or
-                gender like concat('%',#{Condition},'%') or
-                sponsor like concat('%',#{Condition},'%') or
-                casetype like concat('%',#{Condition},'%') or
-                modifierid like concat('%',#{Condition},'%')
+                personname like concat('%',#{FuzzyCondition},'%') or
+                suspectstatus like concat('%',#{FuzzyCondition},'%') or
+                gender like concat('%',#{FuzzyCondition},'%') or
+                sponsor like concat('%',#{FuzzyCondition},'%') or
+                casetype like concat('%',#{FuzzyCondition},'%') or
+                modifierid like concat('%',#{FuzzyCondition},'%')
             </where>
         </if>
 

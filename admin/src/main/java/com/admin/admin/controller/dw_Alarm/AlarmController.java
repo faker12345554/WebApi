@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Api(value="报警提醒controller",tags={"报警提醒设置"})
 @RestController
 @RequestMapping("/Alarm")
@@ -20,19 +22,19 @@ public class AlarmController {
 
     @PostMapping("/SaveOrUpdateAlarm")
     @ApiOperation("保存或修改报警提醒设置")
-    public ResponseResult SaveOrUpdateAlarm( @RequestBody  Alarmsettings alarmsettings){
+    public ResponseResult SaveOrUpdateAlarm( @RequestBody List<Alarmsettings> alarmsettings){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(alarmService.SaveOrUpdateAlarm(alarmsettings));
     }
 
-    @GetMapping("/deleteAlarm")
-    @ApiOperation("删除报警提醒设置")
-    public ResponseResult deleteAlarm(@RequestParam int id){
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(alarmService.DeleteAlarm(id));
-    }
+//    @GetMapping("/deleteAlarm")
+//    @ApiOperation("删除报警提醒设置")
+//    public ResponseResult deleteAlarm(){
+//        result.setCode(ResultCode.SUCCESS.getCode());
+//        result.setMessage(ResultCode.SUCCESS.getMessage());
+//        return result.setData(alarmService.DeleteAlarm());
+//    }
 
     @ApiOperation("获取报警提醒设置")
     @GetMapping("/getAlarm")
