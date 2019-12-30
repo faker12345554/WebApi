@@ -10,7 +10,6 @@ public class SummonsInformation {
   private String personid;
   private String personname;
 
-
   public String getPersonname() {
     return personname;
   }

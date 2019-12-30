@@ -1,9 +1,6 @@
 package com.adminapp.business.controller.dw_supervise;
 
-import com.adminapp.business.entity.dw_supervise.Personinformation;
-import com.adminapp.business.entity.dw_supervise.ReportSettingsInformation;
-import com.adminapp.business.entity.dw_supervise.SinginInformation;
-import com.adminapp.business.entity.dw_supervise.SummonsInformation;
+import com.adminapp.business.entity.dw_supervise.*;
 import com.adminapp.business.service.dw_supervise.SuperviseService;
 import com.adminapp.config.CacheUtils;
 import com.adminapp.model.dw_supervise.*;
@@ -106,6 +103,9 @@ public class SuperviseController {
                 voiceSingin = 0;
             }
         }
+        //获取签到违规规则
+
+
         if (key == null) {
             //superviseReturnModel.setTotalCount(totalCount);
             if (type == 0) {       //所有人员列表
@@ -228,21 +228,21 @@ public class SuperviseController {
         List<SummonsInformation> newSummonsInformations=new ArrayList<>();    //经过时间筛选之后的传讯记录
         if(startDate!=null&&endDate==null){    //开始日期不为空
             for (SummonsInformation item:summonsInformations) {
-                if(Long.parseLong(startDate)<(item.getSummontime()).getTime()/1000){
+                if(Long.parseLong(startDate)<=(item.getSummontime()).getTime()){
                     newSummonsInformations.add(item);
                 }
             }
         }
         if(startDate==null&&endDate!=null){   //结束日期不为空
             for (SummonsInformation item:summonsInformations) {
-                if(Long.parseLong(endDate)>(item.getSummontime()).getTime()/1000){
+                if(Long.parseLong(endDate)>(item.getSummontime()).getTime()){
                     newSummonsInformations.add(item);
                 }
             }
         }
         if(startDate!=null&&endDate!=null){    //都不为空
             for (SummonsInformation item:summonsInformations) {
-                if(Long.parseLong(startDate)<(item.getSummontime()).getTime()/1000&&Long.parseLong(endDate)>(item.getSummontime()).getTime()/1000){
+                if(Long.parseLong(startDate)<=(item.getSummontime()).getTime()&&Long.parseLong(endDate)>(item.getSummontime()).getTime()){
                     newSummonsInformations.add(item);
                 }
             }
@@ -257,7 +257,7 @@ public class SuperviseController {
         ) {
             CiteRecordsModel citeRecordsModel1=new CiteRecordsModel();
             citeRecordsModel1.setName(item.getPersonname());
-            long arrivedTime=(item.getSummontime()).getTime()/1000;
+            long arrivedTime=(item.getSummontime()).getTime();
             citeRecordsModel1.setArrivedTime(Long.toString(arrivedTime));
             PersonAllInformationModel personinformation=superviseService.getPersonInformation(item.getPersonid());
             citeRecordsModel1.setIdCardNo(personinformation.getCard());
@@ -274,7 +274,7 @@ public class SuperviseController {
                 summonsInformations1.add(summonsInformation);
             }
         }
-        if(citeRecordsModel.size()>count+requestCount){
+        if(citeRecordsModel.size()>=count+requestCount){
             for(int i=count;i<count+requestCount;i++){
                 CiteRecordsModel summonsInformation=citeRecordsModel.get(i);
                 summonsInformations1.add(summonsInformation);
@@ -319,6 +319,132 @@ public class SuperviseController {
             rs.data=null;
         }
         return rs;
+    }
+
+//    @ApiOperation(value = "获取保外人员未到案统计")
+//    @GetMapping("/getCiteNotArrived")
+//    public ResultSet getCiteNotArrived(@ApiParam(name="startDate",value = "开始日期时间戳")@RequestParam(required = true)String startDate,
+//                                       @ApiParam(name="endDate",value = "结束日期时间戳")@RequestParam(required = true)String endDate){
+//        List<ReminderSettingsInformation> allSettingInformation=superviseService.listSummonSetting();
+//        ReminderSettingsInformation summonSetting=new ReminderSettingsInformation();    //符合条件的传讯设置日期
+//        for (ReminderSettingsInformation item:allSettingInformation) {
+//            if(item.getCreatetime().getTime()>=Long.parseLong(startDate)&&item.getCreatetime().getTime()<Long.parseLong(endDate)){
+//                summonSetting=item;
+//            }
+//            else if(item.isStatus()){
+//                summonSetting=item;
+//            }
+//        }
+//        int summonSettingTimes=summonSetting.getSettingday().toCharArray().length;   //需要传讯次数 //将传讯设置日期转为数组计算日期个数
+//
+//        List<SummonsInformation> summonsInformations=superviseService.listCiteRecord();
+//        List<SummonsInformation> newSummonsInformations=new ArrayList<>();     //筛选规定时间内的传讯数据
+//        for (SummonsInformation item:summonsInformations
+//             ) {
+//            if(item.getReporttime().getTime()>=Long.parseLong(startDate)&&item.getReporttime().getTime()<Long.parseLong(endDate)){
+//                newSummonsInformations.add(item);
+//            }
+//        }
+//
+//        List<SummonsInformation> newTemp=new ArrayList<>();    //筛选重复数据
+//        for(int i=0;i<newSummonsInformations.size();i++){
+//            SummonsInformation listTemp=newSummonsInformations.get(i);
+//            for (SummonsInformation item:newTemp
+//                 ) {
+//                if(item.getPersonid()!=listTemp.getPersonid()){
+//                    newTemp.add(listTemp);
+//                }
+//            }
+//        }
+//
+//        int slightFens=0;   //轻微级别次数
+//        int seriousFens=0;  //严重级别次数
+//        List<ViolationFensInformation> violationFensInformations=superviseService.listViolationFensInformation("传讯未报道");  //查找传讯违规的程度级别
+//        for (ViolationFensInformation item:violationFensInformations
+//             ) {
+//            if(item.getCode().equals("1")){
+//                slightFens=item.getRangefens();
+//            }
+//            if(item.getCode().equals("2")){
+//                seriousFens=item.getRangefens();
+//            }
+//        }
+//        int totalCount=0;
+//        int summonsTimes=0;   //个人实际传讯次数
+//        int missSummonsTimes=0;  //缺少的传讯次数
+//        List<CiteNotArrivedModel> citeNotArrivedModels=new ArrayList<>();
+//        for (SummonsInformation item:newTemp
+//             ) {
+//            for (SummonsInformation temp:newSummonsInformations
+//                 ) {
+//                if(item.getPersonid()==temp.getPersonid()){  //
+//                    summonsTimes++;
+//                }
+//            }
+//            missSummonsTimes=summonSettingTimes-summonsTimes;   //缺少的传讯次数=需要传讯次数-个人实际传讯次数
+//            totalCount+=missSummonsTimes;
+//            CiteNotArrivedModel citeNotArrivedModel=new CiteNotArrivedModel();
+//            citeNotArrivedModel.setName(item.getPersonname());
+//            if(missSummonsTimes==0&&missSummonsTimes<slightFens){
+//                citeNotArrivedModel.setViolateCode("0");
+//                citeNotArrivedModel.setViolate("正常");
+//                citeNotArrivedModel.setNotArrivedCount(missSummonsTimes);
+//            }
+//            if(missSummonsTimes<seriousFens&&missSummonsTimes>=slightFens){
+//                citeNotArrivedModel.setViolateCode("1");
+//                citeNotArrivedModel.setViolate("轻微");
+//                citeNotArrivedModel.setNotArrivedCount(missSummonsTimes);
+//            }
+//            if(missSummonsTimes>=seriousFens){
+//                citeNotArrivedModel.setViolateCode("2");
+//                citeNotArrivedModel.setViolate("严重");
+//                citeNotArrivedModel.setNotArrivedCount(missSummonsTimes);
+//            }
+//            citeNotArrivedModels.add(citeNotArrivedModel);
+//        }
+//        CiteNotArrivedReturnModel citeNotArrivedReturnModel=new CiteNotArrivedReturnModel();
+//        citeNotArrivedReturnModel.setTotalCount(totalCount);
+//        citeNotArrivedReturnModel.setList(citeNotArrivedModels);
+//        rs.resultCode=0;
+//        rs.resultMsg="";
+//        rs.data=citeNotArrivedReturnModel;
+//        return rs;
+//    }
+
+    @ApiOperation(value = "获取保外人员未到案统计")
+    @GetMapping("/getCiteNotArrived")
+    public ResultSet getCiteNotArrived(@ApiParam(name="startDate",value = "开始日期时间戳")@RequestParam(required = true)String startDate,
+                                       @ApiParam(name="endDate",value = "结束日期时间戳")@RequestParam(required = true)String endDate,
+                                       @ApiParam(name="count",value = "当前已获取的数据条数")@RequestParam(required = true)int count,
+                                       @ApiParam(name="requestCount",value = "请求获取数据的条数")@RequestParam(required = true)int requestCount,
+                                       @ApiParam(name="key",value = "搜索关键字")@RequestParam(required = false)String key) {
+        if(key==null) {   //关键字为空
+            List<SummonsInformation> summonsInformations = superviseService.listCiteRecord();
+            List<SummonsInformation> newSummonsInformations = new ArrayList<>();     //筛选规定时间内的传讯数据
+            for (SummonsInformation item : summonsInformations
+            ) {
+                if (item.getReporttime().getTime() >= Long.parseLong(startDate) && item.getReporttime().getTime() < Long.parseLong(endDate)) {
+                    newSummonsInformations.add(item);
+                }
+            }
+            List<SummonsInformation> newTemp = new ArrayList<>();    //筛选重复数据
+            for (int i = 0; i < newSummonsInformations.size(); i++) {
+                SummonsInformation listTemp = newSummonsInformations.get(i);
+                for (SummonsInformation item : newTemp
+                ) {
+                    if (item.getPersonid() != listTemp.getPersonid()) {
+                        newTemp.add(listTemp);
+                    }
+                }
+            }
+            for (SummonsInformation item:newTemp
+                 ) {
+                //Personinformation personinformation=superviseService.listPersonInformation(item.getPersonid());
+            }
+        }
+        else{
+
+        }
     }
 
     @ApiOperation(value = "获取保外人员的外出申请列表")

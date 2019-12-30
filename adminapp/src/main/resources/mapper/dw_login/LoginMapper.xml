@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.adminapp.business.dao.dw_login.LoginDao">
-    <select id="Login" parameterType="String" resultType="com.adminapp.business.entity.dw_login.UserInformation">
-        select * FROM t_user WHERE accountname=#{accountname}
+    <select id="login" resultType="com.adminapp.business.entity.dw_user.User">
+        select id,accountname,password,aliasname,phone FROM t_user WHERE accountname=#{account} AND status=true
     </select>
 </mapper>

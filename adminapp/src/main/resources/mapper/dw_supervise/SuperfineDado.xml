@@ -3,8 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.adminapp.business.dao.dw_supervise.SuperfineDado">
     <select id="listPersonInformation" resultType="com.adminapp.business.entity.dw_supervise.Personinformation">
-        select personid AS code,personname AS name,age,gender,facepath AS headUrl,suspectstatus AS state,bailoutbegindate AS execStartDate,
-        bailoutenddate AS execEndDate,contact AS phone,persontags AS tags FROM t_personinformation WHERE sponsoralarm=#{UserId} ORDER BY t_personinformation.personname
+        select personid AS code,personname AS name,card AS idCardNo,age,gender,facepath AS headUrl,suspectstatus AS state,bailoutbegindate AS execStartDate,
+        bailoutenddate AS execEndDate,contact AS phone FROM t_personinformation WHERE sponsoralarm=#{UserId} ORDER BY t_personinformation.personname
     </select>
     <select id="getPrisonSetting" resultType="com.adminapp.model.dw_supervise.PrisonSettingModel">
         select id AS code,settingname AS name,settingcheck AS enable FROM t_prisonsetting WHERE personid=#{personid}
@@ -19,10 +19,10 @@
         select * FROM t_singin WHERE personid=#{personid} AND type=#{type}
     </select>
     <select id="listCiteRecord" resultType="com.adminapp.business.entity.dw_supervise.SummonsInformation">
-        select *FROM t_summons
+        select * FROM t_summons ORDER BY t_summons.summontime DESC
     </select>
     <select id="listKeyCiteRecord" resultType="com.adminapp.business.entity.dw_supervise.SummonsInformation">
-        select * FROM t_summons WHERE personname LIKE'%${key}%'
+        select * FROM t_summons WHERE personname LIKE'%${key}%' ORDER BY t_summons.summontime DESC
     </select>
     <select id="getPersonInformation" resultType="com.adminapp.model.dw_supervise.PersonAllInformationModel">
         select * FROM t_personinformation WHERE personid=#{personid}
@@ -59,4 +59,10 @@
     <insert id="insertAuditorInformation">
         insert into t_auditor (leaveorder, userid, leavingmessage, statuscode, states, accountname, auditordatetime) VALUES (#{leaveOrder},#{userId},#{leavingMessage},#{statusCode},#{status},#{accountName},#{auditorDateTime})
     </insert>
+    <select id="listSummonSetting" resultType="com.adminapp.business.entity.dw_supervise.ReminderSettingsInformation">
+        select * FROM t_remindersettings WHERE code='0000000003'
+    </select>
+    <select id="listViolationFensInformation" resultType="com.adminapp.business.entity.dw_supervise.ViolationFensInformation">
+        select * FROM t_violationfens WHERE violationname=#{violationName}
+    </select>
 </mapper>

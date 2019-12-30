@@ -7,8 +7,11 @@
         <!--使用JDBC的getGeneratedKeys获取数据库自增主键-->
         <setting name="useGeneratedKeys" value="true"/>
         <!--使用列标签替换列别名-->
-        <setting name="useColumnLabel" value="ture" />
+        <setting name="useColumnLabel" value="true" />
         <!--开启驼峰转换-->
         <setting name="mapUnderscoreToCamelCase" value="true" />
     </settings>
+    <mappers>
+        <mapper resource="mapper/dw_login/LoginMapper.xml" />
+    </mappers>
 </configuration>

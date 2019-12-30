@@ -1,4 +1,4 @@
-package com.adminapp.token;
+package com.adminapp.config.token;
 
 
 import com.auth0.jwt.JWT;
