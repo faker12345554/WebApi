@@ -48,5 +48,5 @@ public interface SuperfineDado {
 
     List<ReminderSettingsInformation> listSummonSetting();
 
-    List<ViolationFensInformation> listViolationFensInformation(@Param("violationName")String violationName);
+    int listViolationFensInformation(@Param("violationName")String violationName,@Param("Code")String Code);
 }

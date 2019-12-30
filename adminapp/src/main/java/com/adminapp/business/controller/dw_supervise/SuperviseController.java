@@ -3,6 +3,7 @@ package com.adminapp.business.controller.dw_supervise;
 import com.adminapp.business.entity.dw_supervise.*;
 import com.adminapp.business.service.dw_supervise.SuperviseService;
 import com.adminapp.config.CacheUtils;
+import com.adminapp.config.token.TokenUtil;
 import com.adminapp.model.dw_supervise.*;
 import com.common.common.result.ResultSet;
 import io.swagger.annotations.ApiOperation;
@@ -418,6 +419,15 @@ public class SuperviseController {
                                        @ApiParam(name="count",value = "当前已获取的数据条数")@RequestParam(required = true)int count,
                                        @ApiParam(name="requestCount",value = "请求获取数据的条数")@RequestParam(required = true)int requestCount,
                                        @ApiParam(name="key",value = "搜索关键字")@RequestParam(required = false)String key) {
+        String userId= TokenUtil.getTokenUserId();
+        int locationViolateSlight=superviseService.listViolationFensInformation("脱离管控区域","1");  //上报设置中位置轻微违规次数
+        int locationViolateSerious =superviseService.listViolationFensInformation("脱离管控区域","2"); //上报设置中位置严重违规次数
+        int summonsViolateSlight=superviseService.listViolationFensInformation("传讯取证未报到","1");   //上报设置中传讯轻微违规次数
+        int summonsViolateSerious=superviseService.listViolationFensInformation("传讯取证未报到","2");  //上报设置中传讯严重违规次数
+        int faceSinginSlight =superviseService.listViolationFensInformation("视频签到缺勤","1");    //上报设置中人脸签到轻微违规次数
+        int faceSinginSerious =superviseService.listViolationFensInformation("视频签到缺勤","2");   //上报设置中人脸签到严重违规次数
+        int voiceSinginSlight =superviseService.listViolationFensInformation("语音签到缺勤","1");   //上报设置中声纹签到轻微违规次数
+        int voiceSinginSerious =superviseService.listViolationFensInformation("语音签到缺勤","2");  //上报设置中声纹签到严重违规次数
         if(key==null) {   //关键字为空
             List<SummonsInformation> summonsInformations = superviseService.listCiteRecord();
             List<SummonsInformation> newSummonsInformations = new ArrayList<>();     //筛选规定时间内的传讯数据
@@ -437,14 +447,52 @@ public class SuperviseController {
                     }
                 }
             }
+            //寻找该工作人员管理的监居人员
+            List<Personinformation> personinformations=new ArrayList<>();
             for (SummonsInformation item:newTemp
                  ) {
-                //Personinformation personinformation=superviseService.listPersonInformation(item.getPersonid());
+                PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(item.getPersonid());
+                if(personAllInformationModel.getSponsoralarm()==userId){
+                    Personinformation personinformation=new Personinformation();
+                    personinformation.setCode(personAllInformationModel.getPersonid());
+                    personinformation.setName(personAllInformationModel.getPersonname());
+                    personinformation.setNumber(personAllInformationModel.getPersonid());
+                    personinformation.setIdCardNo(personAllInformationModel.getCard());
+                    personinformation.setAge(personAllInformationModel.getAge());
+                    personinformation.setGender(personAllInformationModel.getGender());
+                    personinformation.setHeadUrl(personAllInformationModel.getFacepath());
+                    personinformation.setState(personAllInformationModel.getStatus());
+                    personinformation.setExecStartDate(personAllInformationModel.getBailoutbegindate());
+                    personinformation.setExecEndDate(personAllInformationModel.getBailoutenddate());
+                    personinformation.setPhone(personAllInformationModel.getContact());
+                    personinformations.add(personinformation);
+                }
+            }
+            int locationViolateCount=0;   //位置违规次数
+            for (Personinformation item:personinformations
+                 ) {
+                List<ReportLocationModel> reportLocationModels = superviseService.listLocation(item.getCode());     //获取位置信息列表
+
+                for (int j = 0; j < reportLocationModels.size(); j++) {         //计算位置定位违规次数
+                    ReportLocationModel reportLocationModel = reportLocationModels.get(j);
+                    boolean Fscope = reportLocationModel.isFscope();
+                    if (!reportLocationModel.isFscope()) {     //判断定位位置是否在范围内
+                        locationViolateCount += 1;
+                    }
+                }
+                int violateStatus=0;    //违规状态为正常
+                if(locationViolateCount>=locationViolateSlight&&locationViolateCount<locationViolateSerious){
+                    violateStatus=1;   //违规状态为轻微
+                }
+                if(locationViolateCount>=locationViolateSerious){
+                    violateStatus=2;  //违规状态为严重
+                }
             }
         }
         else{
 
         }
+        return  rs;
     }
 
     @ApiOperation(value = "获取保外人员的外出申请列表")

@@ -109,7 +109,7 @@ public class SuperviseService {
     }
 
     //查找传讯违规级别
-    public List<ViolationFensInformation> listViolationFensInformation(String violationName){
-        return superfineDado.listViolationFensInformation(violationName);
+    public int listViolationFensInformation(String violationName,String Code){
+        return superfineDado.listViolationFensInformation(violationName,Code);
     }
 }

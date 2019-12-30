@@ -62,7 +62,7 @@
     <select id="listSummonSetting" resultType="com.adminapp.business.entity.dw_supervise.ReminderSettingsInformation">
         select * FROM t_remindersettings WHERE code='0000000003'
     </select>
-    <select id="listViolationFensInformation" resultType="com.adminapp.business.entity.dw_supervise.ViolationFensInformation">
-        select * FROM t_violationfens WHERE violationname=#{violationName}
+    <select id="listViolationFensInformation" resultType="int">
+        select rangefens FROM t_violationfens WHERE violationname=#{violationName} AND code=#{Code}
     </select>
 </mapper>
