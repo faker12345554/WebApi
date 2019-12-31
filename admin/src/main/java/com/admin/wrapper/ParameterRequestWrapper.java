@@ -41,6 +41,7 @@ public class ParameterRequestWrapper extends HttpServletRequestWrapper {
         }
         //为空，直接返回
         String json = IOUtils.toString(super.getInputStream(), "utf-8");
+        System.out.println(1);
         if (StringUtils.isEmpty(json)) {
             return super.getInputStream();
         }

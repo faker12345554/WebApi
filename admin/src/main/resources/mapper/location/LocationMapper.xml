@@ -31,13 +31,13 @@
         </if>
     </select>
 
-    <select id="HistoricalTrack" parameterType="com.admin.model.Execl.ExeclModel"
+    <select id="HistoricalTrack" parameterType="com.admin.model.search.SearchModel"
             resultType="com.admin.admin.entity.dw_location.Locationmation">
         SELECT
         l.id,l.latitude,l.longitude,l.address,l.timestamp,l.locationtype,l.devicecoding,l.alarmstate,l.surpluselectricity,l.signalintensity,
         l.fscope,l.goout,P.personname as personid from t_location AS l
         inner join t_personinformation AS P on l.personid=P.personid
-        where personid = #{PersonId}
+        where l.personid = #{PersonId}
         <if test="FuzzyCondition !=null and FuzzyCondition !=''">
             and l.latitude like concat('%',#{FuzzyCondition},'%') or
             l.longitude like concat('%',#{FuzzyCondition},'%') or
@@ -54,10 +54,10 @@
         <if test="StartTime !=null and StartTime!='' and EndTime !=null and EndTime!=''">
             and l.timestamp>StartTime and l.timestamp &lt; EndTime
         </if>
-        <if test="StartTime !=null and StartTime!='' and EndTime==null or EndTime==''">
+        <if test="StartTime !=null and StartTime!='' and (EndTime==null or EndTime=='')">
             and l.timestamp > StartTime &lt; EndTime
         </if>
-        <if test="StartTime ==null or StartTime=='' and EndTime!=null and EndTime!=''">
+        <if test="(StartTime ==null or StartTime=='') and EndTime!=null and EndTime!=''">
             and l.timestamp
         </if>
         <if test="list.size()>0">
