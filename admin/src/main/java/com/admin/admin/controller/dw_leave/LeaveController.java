@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@Api(value="审核请假记录controller",tags={"审核请假记录"})
+@Api(value="审核请假记录controller",tags={"外出记录管理"})
 
 @RestController
 @RequestMapping("/Leave")
@@ -34,7 +34,7 @@ public class LeaveController {
 
     @ApiOperation(value = "获取全部请假信息")
     @PostMapping("/listLeave")
-    public ResponseResult listLeave(@RequestParam SearchModel searchModel) {
+    public ResponseResult listLeave(@RequestBody SearchModel searchModel) {
 
         List<LeavefModel> allItems = leaveService.getLeave(searchModel);
         try {
