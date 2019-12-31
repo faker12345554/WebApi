@@ -9,7 +9,7 @@ public class Locationmation {
   private String latitude;
   private String longitude;
   private String address;
-  private long personid;
+  private String personid;
   private Date timestamp;
   private String locationtype;
   private String devicecoding;
@@ -63,18 +63,14 @@ public class Locationmation {
     return timestamp;
   }
 
-
-
-  public long getPersonid() {
+  public String getPersonid() {
     return personid;
   }
 
-  public void setPersonid(long personid) {
+  public Locationmation setPersonid(String personid) {
     this.personid = personid;
+    return this;
   }
-
-
-
 
   public String getLocationtype() {
     return locationtype;

@@ -26,7 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 
-@Api(value="签到信息管理Controller",tags={"签到信息管理"})
+@Api(value="签到信息管理Controller",tags={"报到信息管理"})
 @RestController
 @RequestMapping("/Singin")
 public class SinginControll {
@@ -36,10 +36,10 @@ public class SinginControll {
 
     @ApiOperation("查看签到信息")
     @GetMapping("/getSingin")
-    public ResponseResult getSingin(@RequestParam int personId, HttpServletResponse response) {
+    public ResponseResult getSingin(@RequestParam int Id, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(singinService.getSingin(personId));
+        return result.setData(singinService.getSingin(Id));
     }
 
     @ApiOperation("签到信息列表")
