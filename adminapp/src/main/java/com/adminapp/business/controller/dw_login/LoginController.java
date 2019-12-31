@@ -2,7 +2,9 @@ package com.adminapp.business.controller.dw_login;
 
 import com.adminapp.business.entity.dw_user.TokenModel;
 import com.adminapp.business.entity.dw_user.User;
+import com.adminapp.business.entity.dw_user.UserModel;
 import com.adminapp.business.service.dw_login.LoginService;
+import com.adminapp.business.service.dw_user.UserService;
 import com.adminapp.config.CacheUtils;
 import com.adminapp.config.token.TokenService;
 import com.adminapp.config.token.tation.PassToken;
@@ -28,6 +30,8 @@ public class LoginController {
     @Autowired
     public TokenService tokenService;
 
+    public UserService userService;
+
     @ApiOperation(value = "登录")
     @PostMapping("/login")
     @PassToken
@@ -35,8 +39,8 @@ public class LoginController {
         try {
             CacheUtils.put("UserId",account);
 
-            User userInformation = loginService.login(account);
-            User user=new User();
+            UserModel userInformation = userService.login(account);
+            UserModel user=new UserModel();
             user.setId(userInformation.getId());
             user.setPassword(userInformation.getPassword());
             String name=userInformation.getAliasname();

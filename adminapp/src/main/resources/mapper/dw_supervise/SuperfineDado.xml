@@ -28,7 +28,7 @@
         select * FROM t_personinformation WHERE personid=#{personid}
     </select>
     <insert id="insertCiteRecord" parameterType="com.adminapp.model.dw_supervise.CiteRecordSubmitModel" useGeneratedKeys="true" keyProperty="date.id">
-        insert into t_summons(personid,personname,summontime) VALUES (#{date.personid},#{date.personname},#{date.summonsTime})
+        insert into t_summons(personid,personname,reporttime) VALUES (#{date.personid},#{date.personname},#{date.summonsTime})
     </insert>
     <select id="getLeaveList" resultType="com.adminapp.model.dw_supervise.LeaveListModel">
         select leaveorder AS code,statuscode AS statusCode,states AS status,personname AS applicant,subittimestamp AS applyTimestamp,starttimestamp AS startTimestamp,endtimestamp AS endTimestamp,
@@ -64,5 +64,17 @@
     </select>
     <select id="listViolationFensInformation" resultType="int">
         select rangefens FROM t_violationfens WHERE violationname=#{violationName} AND code=#{Code}
+    </select>
+    <select id="listPersonSingin" resultType="com.adminapp.business.entity.dw_supervise.SinginInformation">
+        select * FROM t_singin WHERE personid=#{personId} AND type=#{type}
+    </select>
+    <select id="getSummonsInformation" resultType="com.adminapp.business.entity.dw_supervise.SummonsInformation">
+        SELECT * FROM t_summons WHERE personid=#{personId}
+    </select>
+    <select id="getAreaFence" resultType="String">
+        SELECT areaarr FROM t_enclosure WHERE personid=#{personId} AND status=TRUE
+    </select>
+    <select id="listLocationRecord" resultType="com.adminapp.model.dw_supervise.LocationRecordModel">
+        SELECT latitude,longitude,locationtype AS locationType,address,fscope AS isOutBound,timestamp FROM t_location WHERE personid=#{personId} ORDER BY t_location.timestamp DESC
     </select>
 </mapper>

@@ -18,7 +18,7 @@ public  class TokenService {
      * @date 2019年5月27日 下午5:40:25
      * @version V1.0
      */
-    public String getToken(User user) {
+    public String getToken(UserModel user) {
         Date start = new Date();
         long currentTime = System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000;//7天有效时间
         Date end = new Date(currentTime);
