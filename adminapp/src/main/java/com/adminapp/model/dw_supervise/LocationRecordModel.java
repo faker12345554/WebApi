@@ -44,12 +44,12 @@ public class LocationRecordModel {
         this.address = address;
     }
 
-    public boolean isOutBound() {
+    public boolean getIsOutBound() {
         return isOutBound;
     }
 
-    public void setOutBound(boolean outBound) {
-        isOutBound = outBound;
+    public void setIsOutBound(boolean isOutBound) {
+        this.isOutBound = isOutBound;
     }
 
     public String getTimestamp() {

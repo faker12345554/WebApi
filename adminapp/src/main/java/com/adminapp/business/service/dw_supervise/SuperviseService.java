@@ -131,4 +131,9 @@ public class SuperviseService {
     public List<LocationRecordModel> listLocationRecord(String personId){
         return superfineDado.listLocationRecord(personId);
     }
+
+    //获取监居人员越界定位信息
+    public List<LocationInformation> listViolateLocationRecord(String personId){
+        return superfineDado.listViolateLocationRecord(personId);
+    }
 }

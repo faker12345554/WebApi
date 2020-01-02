@@ -216,8 +216,8 @@ public class SuperviseController {
 //    }
     @UserLoginToken
     @ApiOperation(value = "获取保外人员列表")
-    @GetMapping("/getAgainstRule")
-    public ResultSet getAgainstRule(@ApiParam(name = "type",value = "类别") @RequestParam(required = true)int type,@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true)int count,
+    @GetMapping("/getSuperviseList")
+    public ResultSet getSuperviseList(@ApiParam(name = "type",value = "类别") @RequestParam(required = true)int type,@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true)int count,
                                     @ApiParam(name = "requestCount",value = "请求获取数据的条数") @RequestParam(required = true)int requestCount,@ApiParam(name = "key",value = "搜索关键字") @RequestParam(required = false)String key) {
         String userId=TokenUtil.getTokenUserId();
         List<Personinformation> newPerson = new ArrayList<>();  //符合条件所有监居人员列表
@@ -238,14 +238,14 @@ public class SuperviseController {
         int voiceSinginSlight =superviseService.listViolationFensInformation("语音签到缺勤","1");   //上报设置中声纹签到轻微违规次数
         int voiceSinginSerious =superviseService.listViolationFensInformation("语音签到缺勤","2");  //上报设置中声纹签到严重违规次数
 
-        int locationViolateCount=0;
+        int locationViolateCount=0;    //位置违规次数
         for (Personinformation item:personinformation
              ) {
             List<ReportLocationModel> reportLocationModels = superviseService.listLocation(item.getCode());     //获取位置信息列表
             for (int j = 0; j < reportLocationModels.size(); j++) {         //计算位置定位违规次数
                 ReportLocationModel reportLocationModel = reportLocationModels.get(j);
                 boolean Fscope = reportLocationModel.isFscope();
-                if (!reportLocationModel.isFscope()) {     //判断定位位置是否在范围内
+                if (reportLocationModel.isFscope()) {     //判断定位位置是否在范围内
                     locationViolateCount += 1;
                 }
             }
@@ -991,7 +991,7 @@ public class SuperviseController {
             }
         }
         List<LeaveListModel> newLeaveList=new ArrayList<>();
-        if(leaveListModels.size()>count&&leaveListModels.size()<count+requestCount){
+        if(leaveListModels.size()>count&&leaveListModels.size()<=count+requestCount){
             for(int i=count;i<leaveListModels.size();i++){
                 LeaveListModel summonsInformation=leaveListModels.get(i);
                 newLeaveList.add(summonsInformation);
@@ -1115,7 +1115,7 @@ public class SuperviseController {
             if (type == 1) {    //越界数据
                 for (LocationRecordModel item : newLocationRecords
                 ) {
-                    if (!item.isOutBound()) {
+                    if (item.getIsOutBound()) {
                         locationRecordModels1.add(item);
                     }
                 }
@@ -1141,6 +1141,7 @@ public class SuperviseController {
                  ) {
                 item.setArea(areaFenceModelList);
             }
+
             LocationRecordReturnModel locationRecordReturnModel = new LocationRecordReturnModel();
             locationRecordReturnModel.setTotalCount(locationRecordModels1.size());
             locationRecordReturnModel.setList(locationRecordModels2);
@@ -1155,4 +1156,274 @@ public class SuperviseController {
         }
         return rs;
     }
+
+    @UserLoginToken
+    @ApiOperation(value = "获取违规记录统计")
+    @GetMapping("/getAgainstRule")
+    public ResultSet getAgainstRule(@ApiParam(name="code",value = "监居人员编号")@RequestParam(required = true)String code){
+
+        PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(code);
+        if(personAllInformationModel!=null) {
+            List<AgainstRuleModel> againstRuleModels = new ArrayList<>();
+            int locationViolateSlight = superviseService.listViolationFensInformation("脱离管控区域", "1");  //上报设置中位置轻微违规次数
+            int locationViolateSerious = superviseService.listViolationFensInformation("脱离管控区域", "2"); //上报设置中位置严重违规次数
+            int summonsViolateSlight = superviseService.listViolationFensInformation("传讯取证未报到", "1");   //上报设置中传讯轻微违规次数
+            int summonsViolateSerious = superviseService.listViolationFensInformation("传讯取证未报到", "2");  //上报设置中传讯严重违规次数
+
+            List<ReportLocationModel> reportLocationModels = superviseService.listLocation(code);    //获取监居人员定位信息
+            int locationViolateCount = 0;    //位置违规次数
+            for (int j = 0; j < reportLocationModels.size(); j++) {         //计算位置定位违规次数
+                ReportLocationModel reportLocationModel = reportLocationModels.get(j);
+                boolean Fscope = reportLocationModel.isFscope();
+                if (reportLocationModel.isFscope()) {     //判断定位位置是否违规
+                    locationViolateCount += 1;
+                }
+            }
+            AgainstRuleModel againstRuleModel1 = new AgainstRuleModel();
+            againstRuleModel1.setTypeCode("1");
+            againstRuleModel1.setType("越界记录");
+            againstRuleModel1.setViolateCode("0");
+            againstRuleModel1.setViolate("正常");
+            againstRuleModel1.setCount(locationViolateCount);
+            int locationViolateStatus = 0;    //违规状态为正常
+            if (locationViolateCount >= locationViolateSlight && locationViolateCount < locationViolateSerious) {   //位置违规次数
+                locationViolateStatus = 1;   //违规状态为轻微
+                againstRuleModel1.setViolateCode("1");
+                againstRuleModel1.setViolate("轻微");
+            }
+            if (locationViolateCount >= locationViolateSerious) {
+                locationViolateStatus = 2;  //违规状态为严重
+                againstRuleModel1.setViolateCode("2");
+                againstRuleModel1.setViolate("严重");
+            }
+            againstRuleModels.add(againstRuleModel1);
+
+            int summonsViolateTimes = 0;    //传讯违规次数
+            List<SummonsInformation> summonsInformations = superviseService.getSummonsInformation(code);
+            for (SummonsInformation item3 : summonsInformations
+            ) {
+                if (item3.getReporttime() == null) {
+                    summonsViolateTimes++;
+                }
+            }
+            AgainstRuleModel againstRuleModel2 = new AgainstRuleModel();
+            againstRuleModel2.setTypeCode("2");
+            againstRuleModel2.setType("传讯未及时到案记录");
+            againstRuleModel2.setViolateCode("0");
+            againstRuleModel2.setViolate("正常");
+            againstRuleModel2.setCount(summonsViolateTimes);
+            int summonsViolateStatus = 0;   //传讯违规状态
+            if (summonsViolateTimes >= summonsViolateSlight && summonsViolateTimes < summonsViolateSerious) {
+                summonsViolateStatus = 1;
+                againstRuleModel2.setViolateCode("1");
+                againstRuleModel2.setViolate("轻微");
+            }
+            if (summonsViolateTimes >= summonsViolateSerious) {
+                summonsViolateStatus = 2;
+                againstRuleModel2.setViolateCode("2");
+                againstRuleModel2.setViolate("严重");
+            }
+            againstRuleModels.add(againstRuleModel2);
+
+            Collections.sort(againstRuleModels, new Comparator<AgainstRuleModel>() {
+                @Override
+                public int compare(AgainstRuleModel againstRuleModel, AgainstRuleModel t1) {
+                    int i=t1.getCount()-againstRuleModel.getCount();    //按照违规次数排序
+                    if(i==0){     //违规次数相等再按照类型顺序排序
+                        return Integer.parseInt(againstRuleModel.getTypeCode())-Integer.parseInt(t1.getTypeCode());
+                    }
+                    return i;
+                }
+            });
+            AgainstRuleReturnModel againstRuleReturnModel = new AgainstRuleReturnModel();
+            againstRuleReturnModel.setTotalCount(locationViolateCount + summonsViolateTimes);
+            againstRuleReturnModel.setList(againstRuleModels);
+            rs.resultCode = 0;
+            rs.resultMsg = "";
+            rs.data = againstRuleReturnModel;
+        }
+        else
+        {
+            rs.resultCode=1;
+            rs.resultMsg="无此监居人员";
+            rs.data=null;
+        }
+        return rs;
+    }
+
+    @UserLoginToken
+    @ApiOperation(value = "获取违规记录列表")
+    @GetMapping("/getAgainstRuleList")
+    public ResultSet getAgainstRuleList(@ApiParam(name="code",value = "监居人员编号")@RequestParam(required = true)String code,
+                                        @ApiParam(name="startTime",value = "开始时间戳")@RequestParam(required = false)String startTime,
+                                        @ApiParam(name="endTime",value = "结束时间戳")@RequestParam(required = false)String endTime,
+                                        @ApiParam(name="count",value = "已获取数据数")@RequestParam(required = true)int count,
+                                        @ApiParam(name="requestCount",value = "请求获取条数")@RequestParam(required = true)int requestCount,
+                                        @ApiParam(name="typeCode",value = "违规类型编号")@RequestParam(required = true)String typeCode){
+        int locationViolateSlight = superviseService.listViolationFensInformation("脱离管控区域", "1");  //上报设置中位置轻微违规次数
+        int locationViolateSerious = superviseService.listViolationFensInformation("脱离管控区域", "2"); //上报设置中位置严重违规次数
+        int summonsViolateSlight = superviseService.listViolationFensInformation("传讯取证未报到", "1");   //上报设置中传讯轻微违规次数
+        int summonsViolateSerious = superviseService.listViolationFensInformation("传讯取证未报到", "2");  //上报设置中传讯严重违规次数
+
+        PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(code);
+        if(personAllInformationModel!=null){
+            List<LocationInformation> locationRecordModels=superviseService.listViolateLocationRecord(code);   //获取监居人员越界定位信息
+            List<SummonsInformation> summonsInformations = superviseService.getSummonsInformation(code);   //获取该监居人员传讯记录
+            List<SummonsInformation> summonsViolateInformations=new ArrayList<>();    //获取该监居人员传讯违规记录
+            for (SummonsInformation item : summonsInformations
+            ) {
+                if (item.getReporttime() == null) {
+                    summonsViolateInformations.add(item);
+                }
+            }
+
+            String locationViolateStatus = "0";    //违规状态为正常
+            String locationViolateType="正常";
+            if (locationRecordModels.size() >= locationViolateSlight && locationRecordModels.size() < locationViolateSerious) {   //位置违规次数
+                locationViolateStatus = "1";   //违规状态为轻微
+                locationViolateType="轻微";
+            }
+            if (locationRecordModels.size() >= locationViolateSerious) {
+                locationViolateStatus = "2";  //违规状态为严重
+                locationViolateType="严重";
+            }
+
+            List<AgainstRuleListModel> againstRuleListModels=new ArrayList<>();
+            if(typeCode.equals("1")){
+                for (LocationInformation item:locationRecordModels
+                     ) {
+                    AgainstRuleListModel againstRuleListModel = new AgainstRuleListModel();
+                    againstRuleListModel.setTimestamp(item.getTimestamp());
+                    againstRuleListModel.setAddress(item.getAddress());
+                    againstRuleListModel.setTypeCode("1");
+                    againstRuleListModel.setType("越界记录");
+                    againstRuleListModel.setViolateCode(locationViolateStatus);
+                    againstRuleListModel.setViolate(locationViolateType);
+                    againstRuleListModels.add(againstRuleListModel);
+                }
+            }
+
+            String summonsViolateStatus = "0";   //传讯违规状态
+            String summonsViolateType="正常";    //传讯违规描述
+            if (summonsViolateInformations.size() >= summonsViolateSlight && summonsViolateInformations.size() < summonsViolateSerious) {
+                summonsViolateStatus = "1";
+                summonsViolateType="轻微";
+            }
+            if (summonsViolateInformations.size() >= summonsViolateSerious) {
+                summonsViolateStatus = "2";
+                summonsViolateType="严重";
+            }
+            if(typeCode.equals("2")){
+                for (SummonsInformation item:summonsViolateInformations
+                     ) {
+                    AgainstRuleListModel againstRuleListModel = new AgainstRuleListModel();
+                    againstRuleListModel.setTimestamp(String.valueOf(item.getSummontime().getTime()));
+                    againstRuleListModel.setTypeCode("2");
+                    againstRuleListModel.setType("传讯未及时到案记录");
+                    againstRuleListModel.setViolateCode(summonsViolateStatus);
+                    againstRuleListModel.setViolate(summonsViolateType);
+                    againstRuleListModels.add(againstRuleListModel);
+                }
+            }
+            if(typeCode.equals("0")){
+                for (LocationInformation item:locationRecordModels
+                ) {
+                    AgainstRuleListModel againstRuleListModel = new AgainstRuleListModel();
+                    againstRuleListModel.setTimestamp(item.getTimestamp());
+                    againstRuleListModel.setAddress(item.getAddress());
+                    againstRuleListModel.setTypeCode("1");
+                    againstRuleListModel.setType("越界记录");
+                    againstRuleListModel.setViolateCode(locationViolateStatus);
+                    againstRuleListModel.setViolate(locationViolateType);
+                    againstRuleListModels.add(againstRuleListModel);
+                }
+                for (SummonsInformation item:summonsViolateInformations
+                ) {
+                    AgainstRuleListModel againstRuleListModel = new AgainstRuleListModel();
+                    againstRuleListModel.setTimestamp(String.valueOf(item.getSummontime().getTime()));
+                    againstRuleListModel.setTypeCode("2");
+                    againstRuleListModel.setType("传讯未及时到案记录");
+                    againstRuleListModel.setViolateCode(summonsViolateStatus);
+                    againstRuleListModel.setViolate(summonsViolateType);
+                    againstRuleListModels.add(againstRuleListModel);
+                }
+            }
+
+            List<AgainstRuleListModel> newAgainstRuleListModels=new ArrayList<>();  //经过时间戳筛选之后的数据列表
+            if(startTime!=null&&endTime==null){   //开始时间戳不为空
+                for (AgainstRuleListModel item:againstRuleListModels
+                     ) {
+                    if(Long.parseLong(item.getTimestamp())>=Long.parseLong(startTime)){
+                        newAgainstRuleListModels.add(item);
+                    }
+                }
+            }
+            if(startTime==null&&endTime!=null){   //结束时间戳不为空
+                for (AgainstRuleListModel item:againstRuleListModels
+                ) {
+                    if(Long.parseLong(item.getTimestamp())<Long.parseLong(endTime)){
+                        newAgainstRuleListModels.add(item);
+                    }
+                }
+            }
+            if(startTime==null&endTime==null){   //都为空
+                newAgainstRuleListModels=againstRuleListModels;
+            }
+            if(startTime!=null&&endTime!=null){  //都不为空
+                for (AgainstRuleListModel item:againstRuleListModels
+                ) {
+                    if(Long.parseLong(item.getTimestamp())>=Long.parseLong(startTime)&&Long.parseLong(item.getTimestamp())<Long.parseLong(endTime)){
+                        newAgainstRuleListModels.add(item);
+                    }
+                }
+            }
+
+            List<AgainstRuleListModel> againstRuleListModelList=new ArrayList<>();
+            if (newAgainstRuleListModels.size() > count && newAgainstRuleListModels.size() <= count + requestCount) {
+                for (int i = count; i < newAgainstRuleListModels.size(); i++) {
+                    AgainstRuleListModel summonsInformation = newAgainstRuleListModels.get(i);
+                    againstRuleListModelList.add(summonsInformation);
+                }
+            }
+            if (newAgainstRuleListModels.size() > count + requestCount) {
+                for (int i = count; i < count + requestCount; i++) {
+                    AgainstRuleListModel summonsInformation = newAgainstRuleListModels.get(i);
+                    againstRuleListModelList.add(summonsInformation);
+                }
+            }
+
+            Collections.sort(againstRuleListModelList, new Comparator<AgainstRuleListModel>() {
+                @Override
+                public int compare(AgainstRuleListModel againstRuleListModel, AgainstRuleListModel t1) {
+                    long a=Long.parseLong(t1.getTimestamp());
+                    long b=Long.parseLong(againstRuleListModel.getTimestamp());
+                    long c=a-b;
+                    return Integer.parseInt(String.valueOf(c));
+                }
+            });
+            AgainstRuleListReturnModel againstRuleListReturnModel=new AgainstRuleListReturnModel();
+            againstRuleListReturnModel.setTotalCount(newAgainstRuleListModels.size());
+            againstRuleListReturnModel.setList(againstRuleListModelList);
+            rs.resultCode=0;
+            rs.resultMsg="";
+            rs.data=againstRuleListReturnModel;
+        }
+        else{
+            rs.resultCode=1;
+            rs.resultMsg="无此监居人员";
+            rs.data=null;
+        }
+        return rs;
+    }
+
+//    @ApiOperation(value = "获取签到记录列表")
+//    @GetMapping("/getSignRecord")
+//    public ResultSet getSignRecord(@ApiParam(name="type",value = "签到类型")@RequestParam(required = true)String type,
+//                                   @ApiParam(name="startDate",value = "开始时间戳")@RequestParam(required = false)String startDate,
+//                                   @ApiParam(name="endDate",value = "结束时间戳")@RequestParam(required = false)String endDate,
+//                                   @ApiParam(name="count",value = "当前已获取数据条数")@RequestParam(required = true)int count,
+//                                   @ApiParam(name="requestCount",value = "请求获取条数")@RequestParam(required = true)int requestCount,
+//                                   @ApiParam(name="key",value = "关键字")@RequestParam(required = false)String key){
+//
+//    }
 }
