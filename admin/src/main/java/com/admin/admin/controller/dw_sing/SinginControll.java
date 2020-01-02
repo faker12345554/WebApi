@@ -46,6 +46,7 @@ public class SinginControll {
     @PostMapping("/ListSingin")
     public ResponseResult ListSingin(@RequestBody SearchModel searchModel){
         try {
+            PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
             List<SinginModel> allItems = singinService.ListSingin(searchModel);
             if (allItems.size()==0){
                 result.setCode(ResultCode.NULLDATA.getCode());
@@ -53,7 +54,7 @@ public class SinginControll {
                 return result.setData("");
             }
 
-            PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
+
 
             PageInfo<SinginModel> info = new PageInfo<>(allItems);//全部商品
             int countNums = (int) info.getTotal();            //总记录数

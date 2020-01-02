@@ -22,7 +22,7 @@ public class MessageService {
         return messageDao.getMessageList(type,count,requestCount,key,userId);
     }
     //保外人员确认消息读取
-    public int readMessage(String  type,String messageTimestamp,String userId){
+    public int readMessage(int  type,String messageTimestamp,String userId){
         return messageDao.readMessage(type,messageTimestamp,userId);
     }
     //保外人员通知搜索
@@ -30,7 +30,7 @@ public class MessageService {
         return messageDao.searchNotification(key,userId);
     }
     //本类型未读消息数
-    public List<MessageModel> unreadCount(String  type,String userId){
+    public List<MessageModel> unreadCount(int  type,String userId){
         return messageDao.unreadCount(type,userId);
     }
     //本类型消息总数

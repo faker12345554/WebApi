@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prisonapp.business.dao.dw_system.SystemDao">
+    <select id="getUpdateInfo" resultType="com.prisonapp.business.entity.dw_system.GetUpdateInfoModel">
+        select name,version,versioncode as versionCode,url,msg from t_newversion where type ='0' ORDER BY TIMESTAMP DESC limit 1
+    </select>
+
+    <select id="getUpdateRecords" resultType="com.prisonapp.business.entity.dw_system.GetUpdateRecordsModel">
+        select timestamp,version,versioncode as versionCode,msg,url from t_newversion where type ='0' ORDER BY TIMESTAMP DESC limit #{requestCount} OFFSET #{count}
+    </select>
+
+    <select id="gettotalUpdateRecords" resultType="com.prisonapp.business.entity.dw_system.GetUpdateRecordsModel">
+        select * from t_newversion where type ='0'
+    </select>
+</mapper>
