@@ -17,7 +17,19 @@ public interface SuperviseDao {
 
     int submitApplyLeave(@Param("submitApplyLeaveModel")SubmitApplyLeaveModel submitApplyLeaveModel, @Param("startDate") Date startDate,@Param("endDate") Date endDate, @Param("code") String code, @Param("userId")String userId);
 
-    List<TReportsettingsModel> getSuperviseTask();
+    List<GetSuperviseTaskModel> getSuperviseTask(String userId);
 
-    List<FaceRecognizeModel> faceRecognize(@Param("userId")String userId);
+    List<TPersoninformation> faceRecognize(@Param("userId")String userId);
+
+    int insertFaceRecognize(String userId,int type,int result ,String upLoadFaceUrl);
+
+    List<FaceRecognizeModel> getFaceRecognize(String userId,int type);
+
+    int autoLocation(float latitude,float longitude,int locationType,String address,String userId,Date date);
+
+    int uploadLocationError(String errorCode, String errorMsg,int userId,Date date);
+
+    int uploadBattery(float percent,String userId,Date date);
+
+    int batteryAlarm(String userId);
 }

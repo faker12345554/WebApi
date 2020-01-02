@@ -7,9 +7,12 @@ import com.prisonapp.business.entity.dw_supervise.*;
 import com.prisonapp.business.service.dw_supervise.SuperviseService;
 import com.prisonapp.token.TokenUtil;
 import com.prisonapp.token.tation.UserLoginToken;
+import com.prisonapp.tool.AESDecode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.poi.ss.formula.functions.T;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,6 +33,7 @@ public class SuperviseController {
 
     private ResultGetApplyLeaveListModel resultGetApplyLeaveListModel = new ResultGetApplyLeaveListModel();
     private ResultGetSuperviseTaskModel resultGetSuperviseTaskModel =new ResultGetSuperviseTaskModel();
+    private FaceRecognizeModel faceRecognizeModel =new FaceRecognizeModel();
     private ResultSet result = new ResultSet();
     private Upload upload =new Upload();
 
@@ -116,12 +120,12 @@ public class SuperviseController {
     @ApiOperation(value = "获取保外人员的执行任务")
     @GetMapping("/getSuperviseTask")
     public  ResultSet getSuperviseTask(){
-        List<GetSuperviseTaskModel> getSuperviseTaskModel = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-        List<TReportsettingsModel> tReportsettingsModels =superviseService.getSuperviseTask();
-        for(TReportsettingsModel item: tReportsettingsModels){
+       // List<GetSuperviseTaskModel> getSuperviseTaskModel = new ArrayList<>();
+       // Calendar calendar = Calendar.getInstance();
+        List<GetSuperviseTaskModel> getSuperviseTaskModels =superviseService.getSuperviseTask(TokenUtil.getTokenUserId().toString());
+        /*for(GetSuperviseTaskModel item: getSuperviseTaskModels){
             GetSuperviseTaskModel getSuperviseTaskModel1=new GetSuperviseTaskModel();
-            getSuperviseTaskModel1.setStartDate(item.getBegindate());
+            getSuperviseTaskModel1.setStartDate(item.getStartDate());
             //算出结束日期
             calendar.setTime(item.getBegindate());
             calendar.add(calendar.DATE,5); //把日期往后增加一天,整数  往后推,负数往前移动
@@ -130,10 +134,10 @@ public class SuperviseController {
             getSuperviseTaskModel1.setType(item.getType());
             getSuperviseTaskModel1.setTypeName(item.getTypename());
             getSuperviseTaskModel.add(getSuperviseTaskModel1);
-        }
-        Collections.reverse(getSuperviseTaskModel);
-        resultGetSuperviseTaskModel.setTotalCount(tReportsettingsModels.size());
-        resultGetSuperviseTaskModel.setList(getSuperviseTaskModel);
+        }*/
+        Collections.reverse(getSuperviseTaskModels);
+        resultGetSuperviseTaskModel.setTotalCount(getSuperviseTaskModels.size());
+        resultGetSuperviseTaskModel.setList(getSuperviseTaskModels);
         result.resultCode=0;
         result.resultMsg="";
         result.data=resultGetSuperviseTaskModel;
@@ -143,12 +147,124 @@ public class SuperviseController {
     @UserLoginToken
     @ApiOperation(value = " 保外人员人脸识别签到")
     @PostMapping("/faceRecognize")
-    public ResultSet faceRecognize(MultipartFile file){
-        List<FaceRecognizeModel> faceRecognizeModels = superviseService.faceRecognize(TokenUtil.getTokenUserId());
+    public ResultSet faceRecognize(MultipartFile file) throws Exception{
+        List<TPersoninformation> tPersoninformations = superviseService.faceRecognize(TokenUtil.getTokenUserId());
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date(System.currentTimeMillis());
+            String url = System.getProperty("user.dir") + "\\prisonapp\\" + "\\src\\" + "\\main\\" + "\\resources\\" + "\\uploadFace\\" + formatter.format(date);
+          //  String url ="http:192.168.10.88:33389"+"\\uploadFace\\" + formatter.format(date);
+            File path = new File(url);
+            if (!path.exists() && !path.isDirectory()) {
+                path.mkdirs();
+            }
+            String fileName = file.getOriginalFilename();
+            String res = upload.upload(url, file);
+            if (res.equals("上传成功")) {
+                String upLoadFaceUrl = url +"\\"+ fileName;
+                if (tPersoninformations != null) {
+                    //upLoadFaceUrl=" https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4058683704,1940854212&fm=26&gp=0.jpg";
+                    //将两张图片进行对比，upLoadFaceUrl为用户传进来的图片路劲，第二个为数据库中的图片路劲
+                    String comparedRes = AESDecode.faceCompared(upLoadFaceUrl, tPersoninformations.get(0).getFacepath());
+                    //获取json中的可信度并转换成float类型
+                    JSONObject jsonObject = new JSONObject(comparedRes);
+                    String similar = jsonObject.getString("confidence");
+                    float fSimilar = Float.parseFloat(similar);
+                    if (fSimilar >= 0.75) {
+                        superviseService.insertFaceRecognize(TokenUtil.getTokenUserId(), 0, 0, upLoadFaceUrl);
+                        List<FaceRecognizeModel> faceRecognizeModels= superviseService.getFaceRecognize(TokenUtil.getTokenUserId(),0);
+                        faceRecognizeModel.setCode(faceRecognizeModels.get(0).getCode());
+                        faceRecognizeModel.setPassed(true);
+                        faceRecognizeModel.setSimilar(fSimilar);
+                        faceRecognizeModel.setUrl(upLoadFaceUrl);
+                        result.resultCode = 0;
+                        result.resultMsg = "";
+                        result.data = faceRecognizeModel;
+                    }else{
+                        superviseService.insertFaceRecognize(TokenUtil.getTokenUserId(), 0, 1, upLoadFaceUrl);
+                        List<FaceRecognizeModel> faceRecognizeModels= superviseService.getFaceRecognize(TokenUtil.getTokenUserId(),0);
+                        faceRecognizeModel.setCode(faceRecognizeModels.get(0).getCode());
+                        faceRecognizeModel.setPassed(false);
+                        faceRecognizeModel.setSimilar(fSimilar);
+                        faceRecognizeModel.setUrl(upLoadFaceUrl);
+                        result.resultCode = 0;
+                        result.resultMsg = "";
+                        result.data = faceRecognizeModel;
+                    }
+                } else {
+                    result.resultCode = 1;
+                    result.resultMsg = "该人尚未注册";
+                    result.data = null;
+                }
+            } else {
+                result.resultCode = 1;
+                result.resultMsg = "上传失败，请重试";
+                result.data = null;
+            }
+        }catch (Exception ex){
+            result.resultCode = 1;
+            result.resultMsg = ex.toString();
+            result.data = null;
+        }
+        return result;
+    }
+
+
+
+    @UserLoginToken
+    @ApiOperation(value = " 自动上报取保监居人员位置")
+    @PostMapping("/autoLocation")
+    public ResultSet autoLocation(@ApiParam(name = "latitude",value = "纬度")@RequestParam(required = true)float  latitude,@ApiParam(name = "longitude",value = "经度")@RequestParam(required = true)float longitude,@ApiParam(name = "locationType",value = "定位类型")@RequestParam(required = true)int locationType,@ApiParam(name = "address",value = "地址")@RequestParam(required = true)String address){
+
+        int a = superviseService.autoLocation(latitude,longitude,locationType,address,TokenUtil.getTokenUserId(),new Date());
+        if(a!=0){
+            result.resultCode = 0;
+            result.resultMsg = "";
+            result.data = System.currentTimeMillis();
+        }else{
+            result.resultCode = 1;
+            result.resultMsg = "上报失败";
+            //result.data = "";
+        }
+        return result;
+    }
+
+    @UserLoginToken
+    @ApiOperation(value = " 上报保外人员定位错误信息")
+    @PostMapping("/uploadLocationError")
+    public ResultSet uploadLocationError( String errorCode, String errorMsg){
+
+        int a = superviseService.uploadLocationError(errorCode,errorMsg,Integer.parseInt(TokenUtil.getTokenUserId()),new Date());
+        if(a!=0) {
+            result.resultCode = 0;
+            result.resultMsg = "";
+            result.data = "{}";
+        }
+        else
+        {
+            result.resultCode = 0;
+            result.resultMsg = "";
+            result.data = null;
+        }
+        return result;
+    }
+
+    @UserLoginToken
+    @ApiOperation(value = " 上报保外人员电量信息")
+    @PostMapping("/uploadBattery")
+    public ResultSet uploadBattery( float percent){
+        if(percent<=20.0){
+            batteryAlarm(TokenUtil.getTokenUserId());
+        }
+        int a = superviseService.uploadBattery(percent,TokenUtil.getTokenUserId(),new Date());
         result.resultCode = 0;
         result.resultMsg = "";
-        result.data = faceRecognizeModels;
+        result.data = "{}";
         return result;
+    }
+
+    public void batteryAlarm(String userId){
+        superviseService.batteryAlarm(userId);
     }
 
 }

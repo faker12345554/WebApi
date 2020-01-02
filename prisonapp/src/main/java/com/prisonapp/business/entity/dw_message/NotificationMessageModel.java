@@ -5,19 +5,19 @@ import java.util.Date;
 
 //保外人员的通知列表
 public class NotificationMessageModel {
-    public String type;
+    public int type;
     public String typeName;
-    public String content;
+    public String personcontent;
     public String timestamp;
     public int detailType;
     public String detailTypeName;
     public int unreadCount;
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
@@ -29,12 +29,12 @@ public class NotificationMessageModel {
         this.typeName = typeName;
     }
 
-    public String getContent() {
-        return content;
+    public String getPersoncontent() {
+        return personcontent;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setPersoncontent(String personcontent) {
+        this.personcontent = personcontent;
     }
 
     public String getTimestamp() {
