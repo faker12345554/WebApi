@@ -6,12 +6,22 @@ import java.util.Date;
 public class TMessage {
 
   private long id;
-  private long modular;
+  private int modular;
   private String content;
   private String personid;
+
+  public boolean isReadmessage() {
+    return readmessage;
+  }
+
+  public TMessage setReadmessage(boolean readmessage) {
+    this.readmessage = readmessage;
+    return this;
+  }
+
   private String modularname;
   private Date messagetime;
-  private String readmessage;
+  private boolean readmessage;
   private long detailtype;
   private String detailtypename;
 
@@ -25,11 +35,11 @@ public class TMessage {
   }
 
 
-  public long getModular() {
+  public int getModular() {
     return modular;
   }
 
-  public void setModular(long modular) {
+  public void setModular(int modular) {
     this.modular = modular;
   }
 
@@ -69,13 +79,6 @@ public class TMessage {
     return this;
   }
 
-  public String getReadmessage() {
-    return readmessage;
-  }
-
-  public void setReadmessage(String readmessage) {
-    this.readmessage = readmessage;
-  }
 
 
   public long getDetailtype() {

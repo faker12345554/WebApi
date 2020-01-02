@@ -3,9 +3,20 @@ package com.admin.model.location;
 import com.admin.model.person.PersonModel;
 
 public class LocationModel extends PersonModel {
+    private int id;
     private String address;
     private String areaname;
     private String Starttime;
+
+    public int getId() {
+        return id;
+    }
+
+    public LocationModel setId(int id) {
+        this.id = id;
+        return this;
+    }
+
     private String casetype;
 
 
