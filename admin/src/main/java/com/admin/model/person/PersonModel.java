@@ -1,6 +1,17 @@
 package com.admin.model.person;
 
 public class PersonModel {
+    private String personid;
+
+    public String getPersonid() {
+        return personid;
+    }
+
+    public PersonModel setPersonid(String personid) {
+        this.personid = personid;
+        return this;
+    }
+
     private String suspectstatus;
     private String personname;
     private String gender;

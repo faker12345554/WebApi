@@ -19,4 +19,16 @@
      insert into t_summons(summontime,content,reporttime,personid,personname)
      values(#{summontime},#{content},#{reporttime},#{personid},#{personname})
     </insert>
+
+    <select id="GetMessageByTime" resultType="com.admin.admin.entity.dw_message.TMessage">
+        select * from t_message where personid=#{PersonId} and modular=#{type} and messagetime  &lt; now() order by reporttime desc limit 1
+    </select>
+
+    <select id="GetSummonsByPersonId" parameterType="String" resultType="com.admin.admin.entity.dw_message.TMessage">
+        select count(*) from t_message where personid=#{PersonId}
+    </select>
+    
+    <select id="GetConfigure" parameterType="String" resultType="com.admin.admin.entity.dw_reminder.Remindersettings">
+        select * from t_remindersettings where code=#{Code} and status=true
+    </select>
 </mapper>

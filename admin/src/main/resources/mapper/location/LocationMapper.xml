@@ -4,11 +4,13 @@
 <mapper namespace="com.admin.admin.dao.dw_location.LocationDao">
 
     <select id="listLocationModel" parameterType="String" resultType="com.admin.model.location.LocationModel">
-        SELECT
+        SELECT E.id
+
         t.suspectstatus,t.personid,t.personname,t.age,t.gender,t.address,t.policestation,t.sponsor,t.casetype,E.areaname,t.bailoutbegindate
         AS Starttime
         FROM "t_personinformation" As t
         INNER JOIN t_enclosure AS E on T.personid=E.personid
+
         <if test="condition!=null and condition!=''">
             <where>
                 t.suspectstatus like concat('%',#{condition},'%') or

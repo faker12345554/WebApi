@@ -3,6 +3,7 @@ package com.admin.admin.dao.dw_task;
 import com.admin.admin.entity.dw_message.TMessage;
 import com.admin.admin.entity.dw_person.Personinformation;
 import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
+import com.admin.admin.entity.dw_reminder.Remindersettings;
 import com.admin.admin.entity.dw_summons.TSummons;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -39,6 +40,27 @@ public interface TaskDao {
      * @return
      */
     int SaveSummons(TSummons tSummons);
+
+    /**
+     * 获取最近一次传讯记录
+     * @param PersonId
+     * @return
+     */
+    TMessage GetMessageByTime(String PersonId,int type);
+
+    /**
+     *根据人员id查询
+     * @param PersonId
+     * @return
+     */
+     int GetSummonsByPersonId(String PersonId);
+
+    /**
+     * 获取配置
+     * @param Code
+     * @return
+     */
+     Remindersettings GetConfigure(String Code);
 
 
 
