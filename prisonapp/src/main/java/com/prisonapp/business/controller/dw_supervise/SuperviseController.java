@@ -5,6 +5,7 @@ import com.common.common.Uploadfiles.Upload;
 import com.common.common.result.ResultSet;
 import com.prisonapp.business.entity.dw_supervise.*;
 import com.prisonapp.business.service.dw_supervise.SuperviseService;
+import com.prisonapp.session.SessionContext;
 import com.prisonapp.token.TokenUtil;
 import com.prisonapp.token.tation.UserLoginToken;
 import com.prisonapp.tool.AESDecode;
@@ -17,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.net.ssl.SSLEngine;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -36,8 +39,7 @@ public class SuperviseController {
     private FaceRecognizeModel faceRecognizeModel =new FaceRecognizeModel();
     private ResultSet result = new ResultSet();
     private Upload upload =new Upload();
-
-
+    private HttpServletRequest request;
 
 
     @UserLoginToken
@@ -95,6 +97,8 @@ public class SuperviseController {
     public ResultSet uploadAudio(MultipartFile file)  {
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(System.currentTimeMillis());
+        //SSLEngine request = null;
+       // String x=request.getSession(true).getServletContext().getRealPath(File.separator+"upload");
         String url =System.getProperty("user.dir")+"\\prisonapp\\"+"\\src\\"+"\\main\\"+"\\resources\\"+"\\uploadFile\\"+formatter.format(date);
 
         File path =new File(url);
@@ -107,7 +111,7 @@ public class SuperviseController {
         if(res.equals("上传成功")){
             result.resultCode=0;
             result.resultMsg="";
-            result.data=url+"\\"+fileName;
+            result.data="http:192.168.10.88:8009"+"/uploadFile/"+ formatter.format(date)+"/"+fileName;
         }else {
             result.resultCode=1;
             result.resultMsg="上传失败";
@@ -152,6 +156,7 @@ public class SuperviseController {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = new Date(System.currentTimeMillis());
+            //保存图片的路径
             String url = System.getProperty("user.dir") + "\\prisonapp\\" + "\\src\\" + "\\main\\" + "\\resources\\" + "\\uploadFace\\" + formatter.format(date);
           //  String url ="http:192.168.10.88:33389"+"\\uploadFace\\" + formatter.format(date);
             File path = new File(url);
@@ -161,11 +166,12 @@ public class SuperviseController {
             String fileName = file.getOriginalFilename();
             String res = upload.upload(url, file);
             if (res.equals("上传成功")) {
-                String upLoadFaceUrl = url +"\\"+ fileName;
+                String upLoadFaceUrl = "http:192.168.10.88:8009"+"/uploadFace/"+ formatter.format(date)+"/"+fileName;
                 if (tPersoninformations != null) {
-                    //upLoadFaceUrl=" https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4058683704,1940854212&fm=26&gp=0.jpg";
+                   // upLoadFaceUrl="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4058683704,1940854212&fm=26&gp=0.jpg";
                     //将两张图片进行对比，upLoadFaceUrl为用户传进来的图片路劲，第二个为数据库中的图片路劲
                     String comparedRes = AESDecode.faceCompared(upLoadFaceUrl, tPersoninformations.get(0).getFacepath());
+                   // String comparedRes = AESDecode.faceCompared(upLoadFaceUrl, upLoadFaceUrl);
                     //获取json中的可信度并转换成float类型
                     JSONObject jsonObject = new JSONObject(comparedRes);
                     String similar = jsonObject.getString("confidence");
