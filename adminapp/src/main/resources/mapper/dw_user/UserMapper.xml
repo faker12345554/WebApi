@@ -6,6 +6,6 @@
         select * from t_user where accountname=#{userName}
     </select>
     <select id="getUser" resultType="com.adminapp.business.entity.dw_user.UserModel">
-        select * from t_user where id=#{id}
+        select * from t_user where accountname=#{userName}
     </select>
 </mapper>

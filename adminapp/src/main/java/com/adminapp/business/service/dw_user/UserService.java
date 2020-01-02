@@ -10,7 +10,8 @@ import java.util.List;
 @Service
 public class UserService {
     @Autowired
-    private UserDao userDao; // 改啥名字
+    private UserDao userDao;
+
     public UserModel login(String userName ) {
         return userDao.login(userName);
     }

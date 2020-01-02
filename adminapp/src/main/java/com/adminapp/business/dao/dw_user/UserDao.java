@@ -11,5 +11,5 @@ import java.util.List;
 public interface UserDao {
     UserModel login(@Param("userName") String userName);
 
-    UserModel getUser(@Param("id") int id);
+    UserModel getUser(@Param("userName") String userName);
 }

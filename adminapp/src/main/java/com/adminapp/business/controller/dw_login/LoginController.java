@@ -30,6 +30,7 @@ public class LoginController {
     @Autowired
     public TokenService tokenService;
 
+    @Autowired
     public UserService userService;
 
     @ApiOperation(value = "登录")
@@ -42,6 +43,7 @@ public class LoginController {
             UserModel userInformation = userService.login(account);
             UserModel user=new UserModel();
             user.setId(userInformation.getId());
+            user.setAccountname(userInformation.getAccountname());
             user.setPassword(userInformation.getPassword());
             String name=userInformation.getAliasname();
             CacheUtils.put("UserName",name);

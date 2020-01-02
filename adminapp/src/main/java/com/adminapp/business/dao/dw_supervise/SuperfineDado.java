@@ -59,4 +59,6 @@ public interface SuperfineDado {
     List<LocationRecordModel> listLocationRecord(@Param("personId")String personId);
 
     List<LocationInformation> listViolateLocationRecord(@Param("personId")String personId);
+
+    List<SinginInformation> listAllSinginInformation();
 }

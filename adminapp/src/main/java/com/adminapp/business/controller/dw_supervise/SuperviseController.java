@@ -560,21 +560,21 @@ public class SuperviseController {
         List<SummonsInformation> newSummonsInformations=new ArrayList<>();    //经过时间筛选之后的传讯记录
         if(startDate!=null&&endDate==null){    //开始日期不为空
             for (SummonsInformation item:summonsInformations) {
-                if(Long.parseLong(startDate)<=(item.getSummontime()).getTime()){
+                if(Long.parseLong(startDate)<=Long.parseLong(item.getSummontime())){
                     newSummonsInformations.add(item);
                 }
             }
         }
         if(startDate==null&&endDate!=null){   //结束日期不为空
             for (SummonsInformation item:summonsInformations) {
-                if(Long.parseLong(endDate)>(item.getSummontime()).getTime()){
+                if(Long.parseLong(endDate)>Long.parseLong(item.getSummontime())){
                     newSummonsInformations.add(item);
                 }
             }
         }
         if(startDate!=null&&endDate!=null){    //都不为空
             for (SummonsInformation item:summonsInformations) {
-                if(Long.parseLong(startDate)<=(item.getSummontime()).getTime()&&Long.parseLong(endDate)>(item.getSummontime()).getTime()){
+                if(Long.parseLong(startDate)<=Long.parseLong(item.getSummontime())&&Long.parseLong(endDate)>Long.parseLong(item.getSummontime())){
                     newSummonsInformations.add(item);
                 }
             }
@@ -589,7 +589,8 @@ public class SuperviseController {
         ) {
             CiteRecordsModel citeRecordsModel1=new CiteRecordsModel();
             citeRecordsModel1.setName(item.getPersonname());
-            long arrivedTime=(item.getSummontime()).getTime();
+            //long arrivedTime=(item.getSummontime()).getTime();
+            long arrivedTime=Long.parseLong(item.getSummontime());
             citeRecordsModel1.setArrivedTime(Long.toString(arrivedTime));
             PersonAllInformationModel personinformation=superviseService.getPersonInformation(item.getPersonid());
             citeRecordsModel1.setIdCardNo(personinformation.getCard());
@@ -767,18 +768,23 @@ public class SuperviseController {
         List<SummonsInformation> newSummonsInformations = new ArrayList<>();     //筛选规定时间内的传讯数据
         for (SummonsInformation item : summonsInformations
         ) {
-            if (item.getReporttime().getTime() >= Long.parseLong(startDate) && item.getReporttime().getTime() < Long.parseLong(endDate)) {
+            if (Long.parseLong(item.getSummontime()) >= Long.parseLong(startDate) && Long.parseLong(item.getSummontime()) < Long.parseLong(endDate)) {
                 newSummonsInformations.add(item);
             }
         }
         List<SummonsInformation> newTemp = new ArrayList<>();    //筛选重复数据
+            newTemp.add(newSummonsInformations.get(0));
         for (int i = 0; i < newSummonsInformations.size(); i++) {
             SummonsInformation listTemp = newSummonsInformations.get(i);
+            int k=0;
             for (SummonsInformation item : newTemp
             ) {
-                if (item.getPersonid() != listTemp.getPersonid()) {
-                    newTemp.add(listTemp);
+                if (item.getPersonid().equals( listTemp.getPersonid())) {
+                    k=1;   //k=1，证明有重复数据
                 }
+            }
+            if(k==0) {
+                newTemp.add(listTemp);
             }
         }
         //寻找该工作人员管理的监居人员
@@ -786,7 +792,7 @@ public class SuperviseController {
         for (SummonsInformation item:newTemp
         ) {
             PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(item.getPersonid());
-            if(personAllInformationModel.getSponsoralarm()==userId){
+            if(personAllInformationModel.getSponsoralarm().equals(userId)){
                 Personinformation personinformation=new Personinformation();
                 personinformation.setCode(personAllInformationModel.getPersonid());
                 personinformation.setName(personAllInformationModel.getPersonname());
@@ -1317,7 +1323,7 @@ public class SuperviseController {
                 for (SummonsInformation item:summonsViolateInformations
                      ) {
                     AgainstRuleListModel againstRuleListModel = new AgainstRuleListModel();
-                    againstRuleListModel.setTimestamp(String.valueOf(item.getSummontime().getTime()));
+                    againstRuleListModel.setTimestamp(item.getSummontime());
                     againstRuleListModel.setTypeCode("2");
                     againstRuleListModel.setType("传讯未及时到案记录");
                     againstRuleListModel.setViolateCode(summonsViolateStatus);
@@ -1340,7 +1346,7 @@ public class SuperviseController {
                 for (SummonsInformation item:summonsViolateInformations
                 ) {
                     AgainstRuleListModel againstRuleListModel = new AgainstRuleListModel();
-                    againstRuleListModel.setTimestamp(String.valueOf(item.getSummontime().getTime()));
+                    againstRuleListModel.setTimestamp(item.getSummontime());
                     againstRuleListModel.setTypeCode("2");
                     againstRuleListModel.setType("传讯未及时到案记录");
                     againstRuleListModel.setViolateCode(summonsViolateStatus);
@@ -1392,7 +1398,7 @@ public class SuperviseController {
                 }
             }
 
-            Collections.sort(againstRuleListModelList, new Comparator<AgainstRuleListModel>() {
+            Collections.sort(againstRuleListModelList, new Comparator<AgainstRuleListModel>() {   //排序
                 @Override
                 public int compare(AgainstRuleListModel againstRuleListModel, AgainstRuleListModel t1) {
                     long a=Long.parseLong(t1.getTimestamp());
@@ -1416,14 +1422,182 @@ public class SuperviseController {
         return rs;
     }
 
-//    @ApiOperation(value = "获取签到记录列表")
-//    @GetMapping("/getSignRecord")
-//    public ResultSet getSignRecord(@ApiParam(name="type",value = "签到类型")@RequestParam(required = true)String type,
-//                                   @ApiParam(name="startDate",value = "开始时间戳")@RequestParam(required = false)String startDate,
-//                                   @ApiParam(name="endDate",value = "结束时间戳")@RequestParam(required = false)String endDate,
-//                                   @ApiParam(name="count",value = "当前已获取数据条数")@RequestParam(required = true)int count,
-//                                   @ApiParam(name="requestCount",value = "请求获取条数")@RequestParam(required = true)int requestCount,
-//                                   @ApiParam(name="key",value = "关键字")@RequestParam(required = false)String key){
-//
-//    }
+    @UserLoginToken
+    @ApiOperation(value = "获取签到记录列表")
+    @GetMapping("/getSignRecord")
+    public ResultSet getSignRecord(@ApiParam(name="type",value = "签到类型")@RequestParam(required = true)String type,
+                                   @ApiParam(name="startDate",value = "开始时间戳")@RequestParam(required = false)String startDate,
+                                   @ApiParam(name="endDate",value = "结束时间戳")@RequestParam(required = false)String endDate,
+                                   @ApiParam(name="count",value = "当前已获取数据条数")@RequestParam(required = true)int count,
+                                   @ApiParam(name="requestCount",value = "请求获取条数")@RequestParam(required = true)int requestCount,
+                                   @ApiParam(name="key",value = "关键字")@RequestParam(required = false)String key){
+        if(type.equals("0")||type.equals("1")||type.equals("2")) {
+            String userId = TokenUtil.getTokenUserId();
+            List<SinginInformation> singinInformations = superviseService.listAllSinginInformation();   //获取全部签到数据
+            List<SinginInformation> newsinginInformations = new ArrayList<>();    //筛选重复数据
+            newsinginInformations.add(singinInformations.get(0));
+            for (int i = 0; i < singinInformations.size(); i++) {
+                SinginInformation listTemp = singinInformations.get(i);
+                int k=0;
+                for (SinginInformation item : newsinginInformations
+                ) {
+                    if (item.getPersonid().equals( listTemp.getPersonid())) {
+                        k=1;   //k=1，证明有重复数据
+                    }
+                }
+                if(k==0) {
+                    newsinginInformations.add(listTemp);
+                }
+            }
+            for (SinginInformation item : newsinginInformations   //去除不是该警员管理的监居人员
+            ) {
+                PersonAllInformationModel personAllInformationModel = superviseService.getPersonInformation(item.getPersonid());
+                if (personAllInformationModel.getSponsoralarm().equals(userId)==false) {
+                    newsinginInformations.remove(item);
+                }
+            }
+            List<SinginInformation> listAllFaceSinginInformations = new ArrayList<>();   //所有视频签到记录
+            List<SinginInformation> listAllVoiceSinginInformations = new ArrayList<>();  //所有声纹签到记录
+            for (SinginInformation item : newsinginInformations
+            ) {
+                List<SinginInformation> faceSinginInformationList = superviseService.listSingin(item.getPersonid(), 1);  //获取视频签到记录
+                for (SinginInformation item1 : faceSinginInformationList
+                ) {
+                    listAllFaceSinginInformations.add(item1);
+                }
+                List<SinginInformation> voiceSinginInformationList = superviseService.listSingin(item.getPersonid(), 2);  //获取声纹签到记录
+                for (SinginInformation item2 : voiceSinginInformationList
+                ) {
+                    listAllVoiceSinginInformations.add(item2);
+                }
+            }
+
+            List<SignRecordModel> signRecordModels = new ArrayList<>();
+            if (type.equals("1")) {     //视频签到记录
+                for (SinginInformation item : listAllFaceSinginInformations
+                ) {
+                    PersonAllInformationModel personAllInformationModel = superviseService.getPersonInformation(item.getPersonid());
+                    SignRecordModel faceSignRecordModel = new SignRecordModel();
+                    faceSignRecordModel.setPerson(personAllInformationModel.getPersonname());
+                    faceSignRecordModel.setTimestamp(String.valueOf(item.getCreatetime().getTime()));
+                    faceSignRecordModel.setType("1");
+                    faceSignRecordModel.setTypeName(item.getTypename());
+                    signRecordModels.add(faceSignRecordModel);
+                }
+            }
+            if (type.equals("2")) {   //语音签到记录
+                for (SinginInformation item : listAllVoiceSinginInformations
+                ) {
+                    PersonAllInformationModel personAllInformationModel = superviseService.getPersonInformation(item.getPersonid());
+                    SignRecordModel voiceSignRecordModel = new SignRecordModel();
+                    voiceSignRecordModel.setPerson(personAllInformationModel.getPersonname());
+                    voiceSignRecordModel.setTimestamp(String.valueOf(item.getCreatetime().getTime()));
+                    voiceSignRecordModel.setType("2");
+                    voiceSignRecordModel.setTypeName(item.getTypename());
+                    signRecordModels.add(voiceSignRecordModel);
+                }
+            }
+            if (type.equals("0")) {    //全部记录
+                for (SinginInformation item : listAllFaceSinginInformations
+                ) {
+                    PersonAllInformationModel personAllInformationModel = superviseService.getPersonInformation(item.getPersonid());
+                    SignRecordModel faceSignRecordModel = new SignRecordModel();
+                    faceSignRecordModel.setPerson(personAllInformationModel.getPersonname());
+                    faceSignRecordModel.setTimestamp(String.valueOf(item.getCreatetime().getTime()));
+                    faceSignRecordModel.setType("1");
+                    faceSignRecordModel.setTypeName(item.getTypename());
+                    signRecordModels.add(faceSignRecordModel);
+                }
+                for (SinginInformation item : listAllVoiceSinginInformations
+                ) {
+                    PersonAllInformationModel personAllInformationModel = superviseService.getPersonInformation(item.getPersonid());
+                    SignRecordModel voiceSignRecordModel = new SignRecordModel();
+                    voiceSignRecordModel.setPerson(personAllInformationModel.getPersonname());
+                    voiceSignRecordModel.setTimestamp(String.valueOf(item.getCreatetime().getTime()));
+                    voiceSignRecordModel.setType("2");
+                    voiceSignRecordModel.setTypeName(item.getTypename());
+                    signRecordModels.add(voiceSignRecordModel);
+                }
+            }
+            if (startDate != null && endDate == null) {   //开始时间不为空
+                for (SignRecordModel item : signRecordModels
+                ) {
+                    if (Long.parseLong(item.getTimestamp()) < Long.parseLong(startDate)) {
+                        signRecordModels.remove(item);   //时间戳小于开始时间，去除
+                    }
+                }
+            }
+            if (startDate == null && endDate != null) {    //结束时间不为空
+                for (SignRecordModel item : signRecordModels
+                ) {
+                    if (Long.parseLong(item.getTimestamp()) >= Long.parseLong(endDate)) {
+                        signRecordModels.remove(item);   //时间戳大于等于结束时间，去除
+                    }
+                }
+            }
+            if (startDate != null && endDate != null) {     //开始时间和结束时间都不为空
+                for (SignRecordModel item : signRecordModels
+                ) {
+                    if (Long.parseLong(item.getTimestamp()) < Long.parseLong(startDate) || Long.parseLong(item.getTimestamp()) >= Long.parseLong(endDate)) {
+                        signRecordModels.remove(item);  //时间戳小于开始时间或大于等于结束时间，去除
+                    }
+                }
+            }
+            List<SignRecordModel> newSignRecordModels = new ArrayList<>();
+            if (key == null) {
+                newSignRecordModels = signRecordModels;
+            }
+            if (key != null) {
+                for (SignRecordModel item : signRecordModels
+                ) {
+                    if (item.getPerson().contains(key)) {
+                        newSignRecordModels.add(item);
+                    }
+                }
+            }
+            List<SignRecordModel> newSignRecordModelList = new ArrayList<>();
+            if (newSignRecordModels.size() > count && newSignRecordModels.size() <= count + requestCount) {
+                for (int i = count; i < newSignRecordModels.size(); i++) {
+                    SignRecordModel summonsInformation = newSignRecordModels.get(i);
+                    newSignRecordModelList.add(summonsInformation);
+                }
+            }
+            if (newSignRecordModels.size() > count + requestCount) {
+                for (int i = count; i < count + requestCount; i++) {
+                    SignRecordModel summonsInformation = newSignRecordModels.get(i);
+                    newSignRecordModelList.add(summonsInformation);
+                }
+            }
+//            Collections.sort(againstRuleListModelList, new Comparator<AgainstRuleListModel>() {   //排序
+//                @Override
+//                public int compare(AgainstRuleListModel againstRuleListModel, AgainstRuleListModel t1) {
+//                    long a=Long.parseLong(t1.getTimestamp());
+//                    long b=Long.parseLong(againstRuleListModel.getTimestamp());
+//                    long c=a-b;
+//                    return Integer.parseInt(String.valueOf(c));
+//                }
+//            });
+            Collections.sort(newSignRecordModelList, new Comparator<SignRecordModel>() {
+                @Override
+                public int compare(SignRecordModel signRecordModel, SignRecordModel t1) {
+                    long a=Long.parseLong(t1.getTimestamp());
+                    long b=Long.parseLong(signRecordModel.getTimestamp());
+                    long c=a-b;
+                    return Integer.parseInt(String.valueOf(c));
+                }
+            });
+            SignRecordReturnModel signRecordReturnModel = new SignRecordReturnModel();
+            signRecordReturnModel.setTotalCount(signRecordModels.size());
+            signRecordReturnModel.setList(newSignRecordModelList);
+            rs.resultCode = 0;
+            rs.resultMsg = "";
+            rs.data = signRecordReturnModel;
+        }
+        else{
+            rs.resultCode=1;
+            rs.resultMsg="无此类型";
+            rs.data=null;
+        }
+        return rs;
+    }
 }

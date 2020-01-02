@@ -80,4 +80,7 @@
     <select id="listViolateLocationRecord" resultType="com.adminapp.business.entity.dw_supervise.LocationInformation">
         select * FROM t_location where personid=#{personId} AND fscope=true
     </select>
+    <select id="listAllSinginInformation" resultType="com.adminapp.business.entity.dw_supervise.SinginInformation">
+        select * FROM t_singin
+    </select>
 </mapper>

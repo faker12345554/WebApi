@@ -24,7 +24,7 @@ public  class TokenService {
         Date end = new Date(currentTime);
         String token = "";
 
-        token = JWT.create().withAudience(String.valueOf(user.getId())).withIssuedAt(start).withExpiresAt(end)
+        token = JWT.create().withClaim("userName",user.getAccountname()).withIssuedAt(start).withExpiresAt(end)
                 .sign(Algorithm.HMAC256(user.getPassword()));
         return token;
     }
