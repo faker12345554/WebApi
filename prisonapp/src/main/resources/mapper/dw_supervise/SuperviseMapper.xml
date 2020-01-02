@@ -29,8 +29,17 @@
 
     </select>
 
-    <select id="faceRecognize" resultType="com.prisonapp.business.entity.dw_supervise.FaceRecognizeModel">
-    select * from t_singin
+    <select id="faceRecognize" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation">
+    select * from t_personinformation where personid =#{userId}
+    </select>
+
+    <insert id="insertFaceRecognize">
+        insert into t_singin (personid,type,result,filepath,createtime)
+         values              (#{userId},#{type},#{result},#{upLoadFaceUrl},CURRENT_TIMESTAMP)
+    </insert>
+
+    <select id="getFaceRecognize" resultType="com.prisonapp.business.entity.dw_supervise.FaceRecognizeModel">
+    select id as code from t_singin where type=#{type} and personid =#{userId} order by createtime desc limit 1
     </select>
 
     <insert id="autoLocation" >
@@ -46,6 +55,7 @@
     </insert>
 
     <insert id="batteryAlarm">
-        insert into t_protectionmessage
+        insert into t_message (modular, workcontent,personid,modularname,messagetime,readmessage,detailtype,detailtypename,personcontent)
+        values                (2,'手机电量低于20%，请及时与其取得联系。最后一次位置：',#{userId},'报警提醒',current_timestamp,'f',1,'低电量报警通知','电池电量不足，仅剩20%的电量！')
     </insert>
 </mapper>

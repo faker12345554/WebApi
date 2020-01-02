@@ -3,6 +3,8 @@ package com.prisonapp.business.controller.dw_system;
 
 import com.common.common.result.ResultSet;
 import com.prisonapp.business.entity.dw_system.GetUpdateInfoModel;
+import com.prisonapp.business.entity.dw_system.GetUpdateRecordsModel;
+import com.prisonapp.business.entity.dw_system.ResultGetUpdateRecordsModel;
 import com.prisonapp.business.service.dw_supervise.SuperviseService;
 import com.prisonapp.business.service.dw_system.SystemService;
 import com.prisonapp.token.tation.UserLoginToken;
@@ -22,6 +24,7 @@ public class SystemController {
     @Autowired
     private SystemService systemService;
     private ResultSet result = new ResultSet();
+    private ResultGetUpdateRecordsModel resultGetUpdateRecordsModel= new ResultGetUpdateRecordsModel();
 
     @UserLoginToken
     @ApiOperation(value = "获取保外人员 App 的更新信息")
@@ -38,10 +41,13 @@ public class SystemController {
     @ApiOperation(value = "获取保外人员 App 的更新记录")
     @GetMapping("/getUpdateRecords")
     public ResultSet getUpdateRecords(int count,int requestCount){
-
+        List<GetUpdateRecordsModel> getUpdateRecordsModels = systemService.getUpdateRecords(count, requestCount);
+        int a = systemService.gettotalUpdateRecords().size();
+        resultGetUpdateRecordsModel.setTotalCount(a);
+        resultGetUpdateRecordsModel.setGetUpdateRecordsModels(getUpdateRecordsModels);
         result.resultCode=0;
         result.resultMsg="";
-        result.data="";
+        result.data=resultGetUpdateRecordsModel;
         return result;
     }
 }

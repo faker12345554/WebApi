@@ -16,11 +16,11 @@ public interface MessageDao {
 
     List<MessageListModel> getMessageList(@Param("type")String  type, @Param("count") int  count, @Param("requestCount") int requestCount, @Param("key") String key, @Param("userId") String userId);
 
-    int readMessage(@Param("type")String  type,@Param("messageTimestamp")String  messageTimestamp,@Param("userId")String userId );
+    int readMessage(@Param("type")int  type,@Param("messageTimestamp")String  messageTimestamp,@Param("userId")String userId );
 
     List<SearchNotificationModel> searchNotification(@Param("key")String key , @Param("userId")String userId);
 
-    List<MessageModel> unreadCount(@Param("type")String  type,@Param("userId")String userId);
+    List<MessageModel> unreadCount(@Param("type")int  type,@Param("userId")String userId);
 
     List<MessageModel> messageTotalCount(@Param("type")String  type,@Param("userId")String userId);
 

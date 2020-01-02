@@ -34,8 +34,16 @@ public class SuperviseService {
         return superviseDao.getSuperviseTask(userId);
     }
 
-    public List<FaceRecognizeModel> faceRecognize(String userId){
+    public List<TPersoninformation> faceRecognize(String userId){
         return superviseDao.faceRecognize(userId);
+    }
+
+    public int  insertFaceRecognize(String userId,int type,int result ,String upLoadFaceUrl){
+        return superviseDao.insertFaceRecognize(userId,type,result,upLoadFaceUrl);
+    }
+
+    public List<FaceRecognizeModel> getFaceRecognize(String userId,int  type){
+        return superviseDao.getFaceRecognize(userId,type);
     }
 
     public  int autoLocation(float latitude,float longitude,int locationType,String address,String userId,Date date){
@@ -51,7 +59,7 @@ public class SuperviseService {
         return  superviseDao.uploadBattery(percent,userId,date);
     }
 
-    public int batteryAlarm(){
-        return  superviseDao.batteryAlarm();
+    public int batteryAlarm(String userId){
+        return  superviseDao.batteryAlarm( userId);
     }
 }

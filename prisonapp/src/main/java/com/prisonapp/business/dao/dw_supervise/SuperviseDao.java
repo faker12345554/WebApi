@@ -19,7 +19,11 @@ public interface SuperviseDao {
 
     List<GetSuperviseTaskModel> getSuperviseTask(String userId);
 
-    List<FaceRecognizeModel> faceRecognize(@Param("userId")String userId);
+    List<TPersoninformation> faceRecognize(@Param("userId")String userId);
+
+    int insertFaceRecognize(String userId,int type,int result ,String upLoadFaceUrl);
+
+    List<FaceRecognizeModel> getFaceRecognize(String userId,int type);
 
     int autoLocation(float latitude,float longitude,int locationType,String address,String userId,Date date);
 
@@ -27,5 +31,5 @@ public interface SuperviseDao {
 
     int uploadBattery(float percent,String userId,Date date);
 
-    int batteryAlarm();
+    int batteryAlarm(String userId);
 }

@@ -204,23 +204,15 @@ import javax.crypto.Mac;
             return result;
         }
 
-        public static void main(String[] args) throws Exception {
-           //  发送POST请求示例
+        public static String faceCompared (String faceUrlOne,String faceUrlTow )throws Exception {
+            //  发送POST请求示例
             String ak_id = ""; //用户ak
             String ak_secret = ""; // 用户ak_secret
             String url = "https://dtplus-cn-shanghai.data.aliyuncs.com/face/verify";
-            String body =  "{\"type\":0,\n" +
-                    "\"image_url_1\":\"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3196725733,2224443253&fm=26&gp=0.jpg\",\n" +
-                    "\"image_url_2\":\"http://file02.16sucai.com/d/file/2015/0128/8b0f093a8edea9f7e7458406f19098af.jpg\"\n" +
-                    "}";
-            String a =sendPost(url, body, ak_id, ak_secret);
+            String body = "{\"type\":0,\n" + "\"image_url_1\":\"" + faceUrlOne + "\",\n" + "\"image_url_2\":\""+faceUrlTow+"\"\n" + "}";
+            String a = sendPost(url, body, ak_id, ak_secret);
             System.out.println("response body:" + a);
-          //   发送GET请求
-//            String ak_id1 = ""; //用户ak
-//            String ak_secret1 = ""; // 用户ak_secret
-//            String url1 = "https://dtplus-cn-shanghai.data.aliyuncs.com/face/verify?param1=http://file02.16sucai.com/d/file/2015/0128/8b0f093a8edea9f7e7458406f19098af.jpg&param2=http://file02.16sucai.com/d/file/2015/0128/8b0f093a8edea9f7e7458406f19098af.jpg";
-//            String a =sendGet(url1, ak_id1, ak_secret1);
-//            System.out.println("response body:" + a);
+            return  a ;
         }
     }
 
