@@ -27,6 +27,8 @@ public interface SuperfineDado {
 
     PersonAllInformationModel getPersonInformation(@Param("personid")String personid);
 
+    PersonAllInformationModel getPersonInformationFromName(@Param("personName")String personName);
+
     int insertCiteRecord(@Param("date")CiteRecordSubmitModel citeRecordSubmitModel);
 
     List<LeaveListModel> getLeaveList();
@@ -61,4 +63,16 @@ public interface SuperfineDado {
     List<LocationInformation> listViolateLocationRecord(@Param("personId")String personId);
 
     List<SinginInformation> listAllSinginInformation();
+
+    PrisonSettingInformation getPrisonValidSetting(@Param("personId")String personId,@Param("validName")String validName);
+
+    int updatePrisonSetting(@Param("personId")String personId,@Param("settingName")String settingName,@Param("settingCheck")boolean settingCheck,
+                            @Param("settingTime")Date settingTime);
+
+    int insertPrisonSetting(@Param("personId")String personId,@Param("settingName")String settingName,@Param("settingCheck")boolean settingCheck,
+                            @Param("settingTime")Date settingTime,@Param("settingCode")String settingCode);
+
+    List<PrisonSettingModel> getPrisonValidWay(@Param("personId")String personId);
+
+    LeaveListModel getApplyLeave(@Param("code")String code);
 }
