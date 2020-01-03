@@ -5,6 +5,9 @@ import com.admin.admin.entity.dw_alarm.Alarmsettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
+
 @Service
 public class AlarmService {
 
@@ -14,25 +17,34 @@ public class AlarmService {
     /*
     新增 或者修改
      */
-    public int SaveOrUpdateAlarm(Alarmsettings alarmsettings){
+    public int SaveOrUpdateAlarm(List<Alarmsettings> alarmsettings) {
+        alarmDao.deleteAlarm();
 
-        if (alarmsettings.getId()!=0){
-            return alarmDao.UpdateAlarm(alarmsettings);
+        for (Alarmsettings item : alarmsettings) {
+            item.setStatus(true);
+            item.setCreatetime(new Date());
+//            if (item.getId() != 0) {
+//                return alarmDao.UpdateAlarm(item);
+//            }
+           // alarmDao.SaveAlarm(item);
+            System.out.println( alarmDao.SaveAlarm(item));
         }
-        return alarmDao.SaveAlarm(alarmsettings);
+        Alarmsettings alarm=new Alarmsettings();
+
+        return  alarm.getId();
     }
 
     /*
     删除
      */
-    public int DeleteAlarm(int id){
-        return alarmDao.deleteAlarm(id);
+    public int DeleteAlarm() {
+        return alarmDao.deleteAlarm();
     }
     /*
     查看
      */
 
-    public Alarmsettings getAlarm(){
+    public List<Alarmsettings> getAlarm() {
         return alarmDao.getAlarm();
     }
 }

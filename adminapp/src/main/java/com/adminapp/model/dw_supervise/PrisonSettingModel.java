@@ -1,11 +1,11 @@
 package com.adminapp.model.dw_supervise;
 
 public class PrisonSettingModel {
-    private int code;
+    private String code;
     private String name;
     private boolean enable;
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
@@ -17,7 +17,7 @@ public class PrisonSettingModel {
         this.enable = enable;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

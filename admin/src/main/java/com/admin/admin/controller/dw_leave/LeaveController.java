@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@Api(value="审核请假记录controller",tags={"审核请假记录"})
+@Api(value="审核请假记录controller",tags={"外出记录管理"})
 
 @RestController
 @RequestMapping("/Leave")
@@ -34,8 +34,9 @@ public class LeaveController {
 
     @ApiOperation(value = "获取全部请假信息")
     @PostMapping("/listLeave")
-    public ResponseResult listLeave(@RequestParam SearchModel searchModel) {
-
+    public ResponseResult listLeave(@RequestBody SearchModel searchModel) {
+        //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
+        PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
         List<LeavefModel> allItems = leaveService.getLeave(searchModel);
         try {
             if (allItems.size() == 0) {
@@ -43,8 +44,7 @@ public class LeaveController {
                 result.setMessage(ResultCode.NULLDATA.getMessage());
                 return result.setData("");
             }
-            //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
-            PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
+
 
 
             PageInfo<LeavefModel> info = new PageInfo<>(allItems);//全部商品

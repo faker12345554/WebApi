@@ -1,9 +1,6 @@
 package com.adminapp.business.dao.dw_supervise;
 
-import com.adminapp.business.entity.dw_supervise.Personinformation;
-import com.adminapp.business.entity.dw_supervise.ReportSettingsInformation;
-import com.adminapp.business.entity.dw_supervise.SinginInformation;
-import com.adminapp.business.entity.dw_supervise.SummonsInformation;
+import com.adminapp.business.entity.dw_supervise.*;
 import com.adminapp.model.dw_supervise.*;
 import org.apache.ibatis.annotations.Param;
 import org.mapstruct.Mapper;
@@ -30,6 +27,8 @@ public interface SuperfineDado {
 
     PersonAllInformationModel getPersonInformation(@Param("personid")String personid);
 
+    PersonAllInformationModel getPersonInformationFromName(@Param("personName")String personName);
+
     int insertCiteRecord(@Param("date")CiteRecordSubmitModel citeRecordSubmitModel);
 
     List<LeaveListModel> getLeaveList();
@@ -48,4 +47,32 @@ public interface SuperfineDado {
 
     int insertAuditorInformation(@Param("leaveOrder")String leaveOrder, @Param("userId")String userId, @Param("accountName")String accountName, @Param("auditorDateTime")Date auditorDateTime,
                                  @Param("leavingMessage")String leavingMessage,@Param("statusCode")String statusCode,@Param("status")String status);
+
+    List<ReminderSettingsInformation> listSummonSetting();
+
+    int listViolationFensInformation(@Param("violationName")String violationName,@Param("Code")String Code);
+
+    List<SinginInformation> listPersonSingin(@Param("personId")String personId,@Param("type")int type);
+
+    List<SummonsInformation> getSummonsInformation(@Param("personId")String personId);
+
+    String getAreaFence(@Param("personId")String personId);
+
+    List<LocationRecordModel> listLocationRecord(@Param("personId")String personId);
+
+    List<LocationInformation> listViolateLocationRecord(@Param("personId")String personId);
+
+    List<SinginInformation> listAllSinginInformation();
+
+    PrisonSettingInformation getPrisonValidSetting(@Param("personId")String personId,@Param("validName")String validName);
+
+    int updatePrisonSetting(@Param("personId")String personId,@Param("settingName")String settingName,@Param("settingCheck")boolean settingCheck,
+                            @Param("settingTime")Date settingTime);
+
+    int insertPrisonSetting(@Param("personId")String personId,@Param("settingName")String settingName,@Param("settingCheck")boolean settingCheck,
+                            @Param("settingTime")Date settingTime,@Param("settingCode")String settingCode);
+
+    List<PrisonSettingModel> getPrisonValidWay(@Param("personId")String personId);
+
+    LeaveListModel getApplyLeave(@Param("code")String code);
 }

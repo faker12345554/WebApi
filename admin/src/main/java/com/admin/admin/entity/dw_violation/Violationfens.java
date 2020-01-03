@@ -1,15 +1,56 @@
 package com.admin.admin.entity.dw_violation;
 
 
+import java.util.Date;
+
 public class Violationfens {
 
-  private long id;
+  private int id;
   private String code;
   private String violationname;
-  private String rangefens;
-  private long createperson;
+
+  public String getViolationname() {
+    return violationname;
+  }
+
+  public Violationfens setViolationname(String violationname) {
+    this.violationname = violationname;
+    return this;
+  }
+
+
+  public int getRangefens() {
+    return rangefens;
+  }
+
+  public Violationfens setRangefens(int rangefens) {
+    this.rangefens = rangefens;
+    return this;
+  }
+
+  public int getCreateperson() {
+    return createperson;
+  }
+
+  public Violationfens setCreateperson(int createperson) {
+    this.createperson = createperson;
+    return this;
+  }
+
+  public String getAccountname() {
+    return accountname;
+  }
+
+  public Violationfens setAccountname(String accountname) {
+    this.accountname = accountname;
+    return this;
+  }
+
+  private int rangefens;
+  private int createperson;
   private String accountname;
-  private java.sql.Timestamp createtime;
+  private Date createtime;
+  private boolean status;
 
   public boolean isStatus() {
     return status;
@@ -20,16 +61,25 @@ public class Violationfens {
     return this;
   }
 
-  private boolean status;
 
-
-  public long getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public Violationfens setId(int id) {
     this.id = id;
+    return this;
   }
+
+  public Date getCreatetime() {
+    return createtime;
+  }
+
+  public Violationfens setCreatetime(Date createtime) {
+    this.createtime = createtime;
+    return this;
+  }
+
 
 
   public String getCode() {
@@ -41,48 +91,7 @@ public class Violationfens {
   }
 
 
-  public String getViolationname() {
-    return violationname;
-  }
-
-  public void setViolationname(String violationname) {
-    this.violationname = violationname;
-  }
 
 
-  public String getRangefens() {
-    return rangefens;
-  }
-
-  public void setRangefens(String rangefens) {
-    this.rangefens = rangefens;
-  }
-
-
-  public long getCreateperson() {
-    return createperson;
-  }
-
-  public void setCreateperson(long createperson) {
-    this.createperson = createperson;
-  }
-
-
-  public String getAccountname() {
-    return accountname;
-  }
-
-  public void setAccountname(String accountname) {
-    this.accountname = accountname;
-  }
-
-
-  public java.sql.Timestamp getCreatetime() {
-    return createtime;
-  }
-
-  public void setCreatetime(java.sql.Timestamp createtime) {
-    this.createtime = createtime;
-  }
 
 }

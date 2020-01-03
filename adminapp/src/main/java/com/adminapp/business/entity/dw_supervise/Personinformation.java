@@ -7,16 +7,17 @@ public class Personinformation {
   private String code;
   private String name;
   private String number;
+  private String idCardNo;
   private long age;
-  private String gender;
+  private int gender;
   private String headUrl;
   private String state;
   public String violateCode;
   public String violate;
-  public Date execStartDate;
-  public Date execEndDate;
+  public String execStartDate;
+  public String execEndDate;
   public String phone;
-  public String[] tags;
+  //public String[] tags;
 
   public String getCode() {
     return code;
@@ -42,6 +43,14 @@ public class Personinformation {
     this.number = code;
   }
 
+  public String getIdCardNo() {
+    return idCardNo;
+  }
+
+  public void setIdCardNo(String idCardNo) {
+    this.idCardNo = idCardNo;
+  }
+
   public long getAge() {
     return age;
   }
@@ -50,11 +59,11 @@ public class Personinformation {
     this.age = age;
   }
 
-  public String getGender() {
+  public int getGender() {
     return gender;
   }
 
-  public void setGender(String gender) {
+  public void setGender(int gender) {
     this.gender = gender;
   }
 
@@ -90,20 +99,22 @@ public class Personinformation {
     this.violate = violate;
   }
 
-  public Date getExecStartDate() {
+  public String getExecStartDate() {
     return execStartDate;
   }
 
   public void setExecStartDate(Date execStartDate) {
-    this.execStartDate = execStartDate;
+    String execstartDate=String.valueOf(execStartDate.getTime());
+    this.execStartDate = execstartDate;
   }
 
-  public Date getExecEndDate() {
+  public String getExecEndDate() {
     return execEndDate;
   }
 
   public void setExecEndDate(Date execEndDate) {
-    this.execEndDate = execEndDate;
+    String execendDate=String.valueOf(execEndDate.getTime());
+    this.execEndDate = execendDate;
   }
 
   public String getPhone() {
@@ -114,13 +125,13 @@ public class Personinformation {
     this.phone = phone;
   }
 
-  public String[] getTags() {
-    return tags;
-  }
-
-  public void setTags(String tags) {
-    String[] a=tags.split("，");
-    this.tags = a;
-  }
+//  public String[] getTags() {
+//    return tags;
+//  }
+//
+//  public void setTags(String tags) {
+//    String[] a=tags.split("，");
+//    this.tags = a;
+//  }
 
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.dw_task.TaskDao">
+    <select id="GetPerson" resultType="com.admin.admin.entity.dw_person.Personinformation">
+        select * from t_personinformation where status=true
+    </select>
+
+    <select id="GetSummons" parameterType="String" resultType="int">
+        select count(*) from t_summons where personid=#{PersonId} and summontime=#{date}
+    </select>
+
+    <insert id="SaveMessage" parameterType="com.admin.admin.entity.dw_message.TMessage">
+        insert into t_message(modular,workcontent,personid,modularname,messagetime,readmessage,detailtype,detailtypename)
+        values(#{modular},#{workcontent},#{personid},#{modularname},#{messagetime},#{readmessage},#{detailtype},#{detailtypename})
+    </insert>
+
+    <insert id="SaveSummons" parameterType="com.admin.admin.entity.dw_summons.TSummons">
+     insert into t_summons(summontime,personid,personname)
+     values(#{summontime},#{personid},#{personname})
+    </insert>
+
+    <select id="GetMessageByTime" resultType="com.admin.admin.entity.dw_message.TMessage">
+        select * from t_message where personid=#{PersonId} and modular=#{type} and messagetime  &lt; now() order by messagetime desc limit 1
+    </select>
+
+    <select id="GetSummonsByPersonId" parameterType="String" resultType="com.admin.admin.entity.dw_message.TMessage">
+        select count(*) from t_message where personid=#{PersonId}
+    </select>
+    
+    <select id="GetConfigure" parameterType="String" resultType="com.admin.admin.entity.dw_reminder.Remindersettings">
+        select * from t_remindersettings where code=#{Code} and status=true
+    </select>
+</mapper>

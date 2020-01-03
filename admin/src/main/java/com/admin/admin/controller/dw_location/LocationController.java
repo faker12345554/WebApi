@@ -35,7 +35,7 @@ public class LocationController {
      */
     @ApiOperation("定位信息列表")
     @GetMapping("/LocationList")
-    public ResponseResult listLocationModel(@RequestParam String Condition, @RequestParam int PageSize, @RequestParam int PageIndex,
+    public ResponseResult listLocationModel(@RequestParam(required = false) String Condition, @RequestParam int PageSize, @RequestParam int PageIndex,
                                             HttpServletResponse response) {
 
         PageBean pageBean = locationService.listLocationModel(Condition, PageSize, PageIndex);
@@ -69,7 +69,8 @@ public class LocationController {
     @ApiOperation("历史轨迹列表")
     @PostMapping("/HistoricalTrack")
     public ResponseResult HistoricalTrack(@RequestBody SearchModel searchModel, HttpServletResponse response) {
-
+        //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
+        PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
         List<Locationmation> allItems = locationService.HistoricalTrack(searchModel);
         try {
             if (allItems.size() == 0) {
@@ -77,9 +78,6 @@ public class LocationController {
                 result.setMessage(ResultCode.NULLDATA.getMessage());
                 return result.setData("");
             }
-            //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
-            PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
-
 
             PageInfo<Locationmation> info = new PageInfo<>(allItems);//全部商品
             int countNums = (int) info.getTotal();            //总记录数
@@ -152,7 +150,7 @@ public class LocationController {
 
             });
             String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) + ".xls";
-            File file = new File("E:\\WebApi\\admin\\src\\main\\resources\\Execl\\" + dateTime);
+            File file = new File(System.getProperty("user.dir") + "\\"+ dateTime);
             workbook.write(file);
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -1,23 +1,22 @@
 package com.adminapp.business.entity.dw_supervise;
 
 
-import java.sql.Date;
+import java.util.Date;
 
 public class SinginInformation {
 
   private int id;
   private String personid;
   private int type;
-  private String face;
-  private String audio;
   private int result;
   private String filepath;
-  private java.sql.Date createtime;
+  private Date createtime;
   private String reporttype;
   private String reportstatus;
   private String address;
   private String activityarea;
   private double durationtime;
+  private String typename;
 
   public int getId() {
     return id;
@@ -41,22 +40,6 @@ public class SinginInformation {
 
   public void setType(int type) {
     this.type = type;
-  }
-
-  public String getFace() {
-    return face;
-  }
-
-  public void setFace(String face) {
-    this.face = face;
-  }
-
-  public String getAudio() {
-    return audio;
-  }
-
-  public void setAudio(String audio) {
-    this.audio = audio;
   }
 
   public int getResult() {
@@ -121,5 +104,13 @@ public class SinginInformation {
 
   public void setDurationtime(double durationtime) {
     this.durationtime = durationtime;
+  }
+
+  public String getTypename() {
+    return typename;
+  }
+
+  public void setTypename(String typename) {
+    this.typename = typename;
   }
 }

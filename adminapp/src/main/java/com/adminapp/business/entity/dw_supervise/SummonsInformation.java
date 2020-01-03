@@ -1,15 +1,16 @@
 package com.adminapp.business.entity.dw_supervise;
 
 
+import java.util.Date;
+
 public class SummonsInformation {
 
   private long id;
-  private java.sql.Timestamp summontime;
+  private String summontime;
   private String content;
-  private java.sql.Timestamp reporttime;
+  private String reporttime;
   private String personid;
   private String personname;
-
 
   public String getPersonname() {
     return personname;
@@ -28,12 +29,13 @@ public class SummonsInformation {
   }
 
 
-  public java.sql.Timestamp getSummontime() {
+  public String getSummontime() {
     return summontime;
   }
 
-  public void setSummontime(java.sql.Timestamp summontime) {
-    this.summontime = summontime;
+  public void setSummontime(Date summontime) {
+    String summonTime=String.valueOf(summontime.getTime());
+    this.summontime = summonTime;
   }
 
 
@@ -46,12 +48,13 @@ public class SummonsInformation {
   }
 
 
-  public java.sql.Timestamp getReporttime() {
+  public String getReporttime() {
     return reporttime;
   }
 
-  public void setReporttime(java.sql.Timestamp reporttime) {
-    this.reporttime = reporttime;
+  public void setReporttime(Date reporttime) {
+    String reprotTime=String.valueOf(reporttime.getTime());
+    this.reporttime = reprotTime;
   }
 
 

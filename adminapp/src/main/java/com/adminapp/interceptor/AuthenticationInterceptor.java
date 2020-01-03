@@ -2,13 +2,15 @@ package com.adminapp.interceptor;
 
 import com.adminapp.business.dao.dw_user.UserDao;
 import com.adminapp.business.entity.dw_user.User;
-import com.adminapp.token.tation.PassToken;
-import com.adminapp.token.tation.UserLoginToken;
+import com.adminapp.business.entity.dw_user.UserModel;
+import com.adminapp.config.token.tation.PassToken;
+import com.adminapp.config.token.tation.UserLoginToken;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.common.common.result.ResultSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -25,6 +27,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     UserDao userDao;
       @Override
       public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
+          ResultSet rs=new ResultSet();
                  String token = httpServletRequest.getHeader("token");// 从 http 请求头中取出 token
                  // 如果不是映射到方法直接通过
                  if(!(object instanceof HandlerMethod)){
@@ -45,16 +48,18 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                          if (userLoginToken.required()) {
                                  // 执行认证
                                 if (token == null) {
+
                                          throw new RuntimeException("无token，请重新登录");
                                      }
                                  // 获取 token 中的 user id
-                                 String userId;
+                                 String userName;
                                 try {
-                                         userId = JWT.decode(token).getAudience().get(0);
+                                    //userName = JWT.decode(token).getAudience().get(0);
+                                    userName=JWT.decode(token).getClaim("userName").asString();
                                      } catch (JWTDecodeException j) {
                                          throw new RuntimeException("401");
                                      }
-                                User user = userDao.getUser(Integer.valueOf(userId));
+                             UserModel user = userDao.getUser(userName);
                                  if (user == null) {
                                          throw new RuntimeException("用户不存在，请重新登录");
                                      }

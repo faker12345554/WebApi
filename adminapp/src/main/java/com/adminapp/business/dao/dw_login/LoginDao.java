@@ -1,9 +1,16 @@
 package com.adminapp.business.dao.dw_login;
 
-import com.adminapp.business.entity.dw_login.UserInformation;
+import com.adminapp.business.entity.dw_user.User;
+import com.adminapp.model.dw_login.UserInformationModel;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper
 public interface LoginDao {
-    UserInformation Login(String account);
+    User login(@Param("account") String account);
+
+    UserInformationModel getUserInformation(@Param("userId")String userId);
+
+    int updateUserPassword(@Param("userId")String userId,@Param("password")String password);
 }

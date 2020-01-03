@@ -1,8 +1,10 @@
 package com.admin.admin.entity.dw_person;
 
+import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
 import org.apache.tomcat.jni.Time;
 
 import java.util.Date;
+import java.util.List;
 
 public class Personinformation {
     private String personid;
@@ -32,6 +34,17 @@ public class Personinformation {
     private String facepath;
     private String persontags;
     private int gendercode;
+    private List<String> managementStyle;
+
+    public List<String> getManagementStyle() {
+        return managementStyle;
+    }
+
+    public Personinformation setManagementStyle(List<String> managementStyle) {
+        this.managementStyle = managementStyle;
+        return this;
+    }
+
 
     public String getPersonid() {
         return personid;
@@ -179,14 +192,6 @@ public class Personinformation {
 
 
 
-
-    public String getPerson_name() {
-        return personname;
-    }
-
-    public void setPerson_name(String person_name) {
-        this.personname = person_name;
-    }
 
     public String getGender() {
         return gender;

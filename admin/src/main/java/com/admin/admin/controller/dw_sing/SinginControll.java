@@ -26,7 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 
-@Api(value="签到信息管理Controller",tags={"签到信息管理"})
+@Api(value="签到信息管理Controller",tags={"报到信息管理"})
 @RestController
 @RequestMapping("/Singin")
 public class SinginControll {
@@ -36,16 +36,17 @@ public class SinginControll {
 
     @ApiOperation("查看签到信息")
     @GetMapping("/getSingin")
-    public ResponseResult getSingin(@RequestParam int personId, HttpServletResponse response) {
+    public ResponseResult getSingin(@RequestParam int Id, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(singinService.getSingin(personId));
+        return result.setData(singinService.getSingin(Id));
     }
 
     @ApiOperation("签到信息列表")
     @PostMapping("/ListSingin")
     public ResponseResult ListSingin(@RequestBody SearchModel searchModel){
         try {
+            PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
             List<SinginModel> allItems = singinService.ListSingin(searchModel);
             if (allItems.size()==0){
                 result.setCode(ResultCode.NULLDATA.getCode());
@@ -53,7 +54,7 @@ public class SinginControll {
                 return result.setData("");
             }
 
-            PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
+
 
             PageInfo<SinginModel> info = new PageInfo<>(allItems);//全部商品
             int countNums = (int) info.getTotal();            //总记录数
@@ -110,7 +111,7 @@ public class SinginControll {
     public ResponseResult ExportSingIn(@RequestBody SearchModel searchModel){
         List<SinginModel> allItems = singinService.ListSingin(searchModel);
         String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) +"签到信息"+ ".xls";
-        File file = new File("E:\\WebApi\\admin\\src\\main\\resources\\Execl\\" + dateTime);
+        File file = new File(System.getProperty("user.dir") + "\\"+ dateTime);
         try (HSSFWorkbook workbook = new HSSFWorkbook()) {
             HSSFSheet sheet = workbook.createSheet("打印历史定位信息");
             HSSFRow row = sheet.createRow(0);

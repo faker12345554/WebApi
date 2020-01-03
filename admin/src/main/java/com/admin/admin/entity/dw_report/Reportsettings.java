@@ -1,33 +1,106 @@
 package com.admin.admin.entity.dw_report;
 
 
+import java.util.Date;
+
 public class Reportsettings {
 
-  private long id;
-  private long type;
+  private int id;
+  private int type;
   private String locationstime;
-  private long reportcount;
-  private long reporttype;
-  private long reportday;
-  private java.sql.Timestamp begindate;
+  private int reportcount;
 
-
-  public long getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public Reportsettings setId(int id) {
     this.id = id;
+    return this;
   }
 
-
-  public long getType() {
+  public int getType() {
     return type;
   }
 
-  public void setType(long type) {
+  public Reportsettings setType(int type) {
     this.type = type;
+    return this;
   }
+
+  public int getReportcount() {
+    return reportcount;
+  }
+
+  public Reportsettings setReportcount(int reportcount) {
+    this.reportcount = reportcount;
+    return this;
+  }
+
+  public int getReporttype() {
+    return reporttype;
+  }
+
+  public Reportsettings setReporttype(int reporttype) {
+    this.reporttype = reporttype;
+    return this;
+  }
+
+  public int getReportday() {
+    return reportday;
+  }
+
+  public Reportsettings setReportday(int reportday) {
+    this.reportday = reportday;
+    return this;
+  }
+
+  public Date getCreattime() {
+    return creattime;
+  }
+
+  public Reportsettings setCreattime(Date creattime) {
+    this.creattime = creattime;
+    return this;
+  }
+
+  public boolean isStatus() {
+    return status;
+  }
+
+  public Reportsettings setStatus(boolean status) {
+    this.status = status;
+    return this;
+  }
+
+  private int reporttype;
+  private int reportday;
+  private Date begindate;
+  private String typename;
+  private Date creattime;
+  private boolean status;
+
+  public String getTypename() {
+    return typename;
+  }
+
+  public Reportsettings setTypename(String typename) {
+    this.typename = typename;
+    return this;
+  }
+
+  public Date getBegindate() {
+    return begindate;
+  }
+
+  public Reportsettings setBegindate(Date begindate) {
+    this.begindate = begindate;
+    return this;
+  }
+
+
+
+
 
 
   public String getLocationstime() {
@@ -39,39 +112,8 @@ public class Reportsettings {
   }
 
 
-  public long getReportcount() {
-    return reportcount;
-  }
-
-  public void setReportcount(long reportcount) {
-    this.reportcount = reportcount;
-  }
 
 
-  public long getReporttype() {
-    return reporttype;
-  }
 
-  public void setReporttype(long reporttype) {
-    this.reporttype = reporttype;
-  }
-
-
-  public long getReportday() {
-    return reportday;
-  }
-
-  public void setReportday(long reportday) {
-    this.reportday = reportday;
-  }
-
-
-  public java.sql.Timestamp getBegindate() {
-    return begindate;
-  }
-
-  public void setBegindate(java.sql.Timestamp begindate) {
-    this.begindate = begindate;
-  }
 
 }

@@ -1,10 +1,7 @@
 package com.adminapp.business.service.dw_supervise;
 
 import com.adminapp.business.dao.dw_supervise.SuperfineDado;
-import com.adminapp.business.entity.dw_supervise.Personinformation;
-import com.adminapp.business.entity.dw_supervise.ReportSettingsInformation;
-import com.adminapp.business.entity.dw_supervise.SinginInformation;
-import com.adminapp.business.entity.dw_supervise.SummonsInformation;
+import com.adminapp.business.entity.dw_supervise.*;
 import com.adminapp.model.dw_supervise.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,6 +55,10 @@ public class SuperviseService {
         return superfineDado.getPersonInformation(personid);
     }
 
+    public PersonAllInformationModel getPersonInformationFromName(String personName){
+        return superfineDado.getPersonInformationFromName(personName);
+    }
+
     //上传传讯记录
 //    public int insertCiteRecord(String personid, String personname, Date summonsTime){
 //        return superfineDado.insertCiteRecord(personid, personname, summonsTime);
@@ -101,7 +102,72 @@ public class SuperviseService {
         return superfineDado.updateLeaveInformation(leaveOrder, statusCode, status);
     }
 
+    //插入审批记录
     public int insertAuditorInformation(String leaveOrder,String userId,String accountName,Date auditorDateTime,String leavingMessage,String statusCode,String status){
         return superfineDado.insertAuditorInformation(leaveOrder,userId,accountName,auditorDateTime,leavingMessage,statusCode,status);
+    }
+
+    //查找所有传讯记录
+    public List<ReminderSettingsInformation> listSummonSetting(){
+        return superfineDado.listSummonSetting();
+    }
+
+    //查找传讯违规级别
+    public int listViolationFensInformation(String violationName,String Code){
+        return superfineDado.listViolationFensInformation(violationName,Code);
+    }
+
+    public List<SinginInformation> listPersonSingin(String personId,int type){
+        return superfineDado.listPersonSingin(personId, type);
+    }
+
+    //获取个人传讯记录
+    public List<SummonsInformation> getSummonsInformation(String personId){
+        return superfineDado.getSummonsInformation(personId);
+    }
+
+    //获取监居人员区域围栏
+    public String getAreaFence(String personId){
+        return superfineDado.getAreaFence(personId);
+    }
+
+    //获取监居人员定位记录
+    public List<LocationRecordModel> listLocationRecord(String personId){
+        return superfineDado.listLocationRecord(personId);
+    }
+
+    //获取监居人员越界定位信息
+    public List<LocationInformation> listViolateLocationRecord(String personId){
+        return superfineDado.listViolateLocationRecord(personId);
+    }
+
+    //获取监居人员所有签到信息
+    public List<SinginInformation> listAllSinginInformation(){
+        return superfineDado.listAllSinginInformation();
+    }
+
+    //获取监居人员监居设置
+    public PrisonSettingInformation getPrisonValidSetting(String personId,String validName){
+        return superfineDado.getPrisonValidSetting(personId, validName);
+    }
+
+    //更新监居人员的监居设置
+    public int updatePrisonSetting(String personId,String settingName,boolean settingCheck,Date settingTime){
+        return superfineDado.updatePrisonSetting(personId,settingName,settingCheck,settingTime);
+    }
+
+    //插入监居人员的监居设置
+    public int insertPrisonSetting(String personId,String settingName,boolean settingCheck,Date settingTime,String settingCode){
+        return superfineDado.insertPrisonSetting(personId,settingName,settingCheck,settingTime,settingCode);
+    }
+
+    //获取监居人员的所有监居配置
+    public List<PrisonSettingModel> getPrisonValidWay(String personId){
+        return superfineDado.getPrisonValidWay(personId);
+    }
+
+    //获取保外人员申请单
+    public LeaveListModel getApplyLeave(String code){
+        return superfineDado.getApplyLeave(code);
     }
 }
