@@ -161,16 +161,40 @@ public class PersonController {
 //                dataRow.createCell(8).setCellValue(printOrder.getModifierid());
 //                dataRow.createCell(9).setCellValue(printOrder.getModifiertime());
 //                dataRow.createCell(10).setCellValue(printOrder.getAddress());
-
             });
             String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) + ".xls";
-            File file = new File("E:\\WebApi\\admin\\src\\main\\resources\\Execl\\" + dateTime);
+            File file = new File(System.getProperty("user.dir") + "\\"+ dateTime);
+            rtn.setData(file);
             workbook.write(file);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        rtn.setData("导出成功");
+        rtn.setMessage("导出成功");
         rtn.setCode(200);
+
         return rtn;
+    }
+
+    /**
+     * 获取机构
+     * @return
+     */
+    @GetMapping("/ListMechanism")
+    public ResponseResult ListMechanism(){
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(persoinfoService.ListMechanism());
+    }
+
+    /**
+     * 获取主办人
+     * @param Code
+     * @return
+     */
+    @GetMapping("/ListSponsor")
+    public ResponseResult ListSponsor(@RequestParam String Code){
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(persoinfoService.ListSponsor(Code));
     }
 }

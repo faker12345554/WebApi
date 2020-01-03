@@ -60,5 +60,21 @@
     <select id="ListPrison" parameterType="String" resultType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting">
         select * from t_prisonsetting where personid=#{PersonId}
     </select>
+    
+    <resultMap id="MechanismMap" type="HashMap">
+        <result property="bmbm" column="bmbm" jdbcType="VARCHAR" />
+        <result property="bmmc" column="bmmc" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="ListMechanism" resultMap="MechanismMap">
+        SELECT distinct on (bmbm,bmmc)bmbm,bmmc from fsga_yw_ryb
+    </select>
 
+
+    <resultMap id="SponsorMap" type="HashMap">
+        <result property="mjbh" column="mjbh" jdbcType="VARCHAR" />
+        <result property="mjmc" column="mjmc" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="ListSponsor" resultMap="SponsorMap" parameterType="String">
+        SELECT mjbh,mjmc FROM fsga_yw_ryb where bmbm=#{Code}
+    </select>
 </mapper>

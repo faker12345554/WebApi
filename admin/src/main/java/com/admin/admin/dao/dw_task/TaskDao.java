@@ -25,7 +25,7 @@ public interface TaskDao {
     /*
     查询监居人员当月已做过几次
      */
-    int GetSummons(String PersonId);
+    int GetSummons(String PersonId,String date);
 
     /**
      * 生成提醒记录

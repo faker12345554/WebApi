@@ -21,7 +21,7 @@ public class ParamsFilter  implements Filter {
 
 
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(new HashSet<>(
-            Arrays.asList("/Alarm/SaveOrUpdateAlarm", "/Reminder/SaveOrUpdateReminder", "/Report/SaveOrUpdateReport")));
+            Arrays.asList("/Alarm/SaveOrUpdateAlarm", "/Reminder/SaveOrUpdateReminder", "/Report/SaveOrUpdateReport","/Person/insertprison")));
     @Override
     public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2)
             throws IOException, ServletException {

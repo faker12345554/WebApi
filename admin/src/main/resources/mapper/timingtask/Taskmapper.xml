@@ -7,21 +7,21 @@
     </select>
 
     <select id="GetSummons" parameterType="String" resultType="int">
-        select count(*) from t_summons where and personid=#{PersonId} and summontime>=date_trunc('month',current_date) and summontime &lt;= ((date_trunc('month', now()) + interval '1 month - 1 day')::date)
+        select count(*) from t_summons where personid=#{PersonId} and summontime=#{date}
     </select>
 
     <insert id="SaveMessage" parameterType="com.admin.admin.entity.dw_message.TMessage">
-        insert into t_message(modular,content,personid,modularname,messagetime,readmessage,detailtype,detailtypename)
-        values(#{modular},#{content},#{personid},#{modularname},#{messagetime},#{readmessage},#{detailtype},#{detailtypename})
+        insert into t_message(modular,workcontent,personid,modularname,messagetime,readmessage,detailtype,detailtypename)
+        values(#{modular},#{workcontent},#{personid},#{modularname},#{messagetime},#{readmessage},#{detailtype},#{detailtypename})
     </insert>
 
     <insert id="SaveSummons" parameterType="com.admin.admin.entity.dw_summons.TSummons">
-     insert into t_summons(summontime,content,reporttime,personid,personname)
-     values(#{summontime},#{content},#{reporttime},#{personid},#{personname})
+     insert into t_summons(summontime,personid,personname)
+     values(#{summontime},#{personid},#{personname})
     </insert>
 
     <select id="GetMessageByTime" resultType="com.admin.admin.entity.dw_message.TMessage">
-        select * from t_message where personid=#{PersonId} and modular=#{type} and messagetime  &lt; now() order by reporttime desc limit 1
+        select * from t_message where personid=#{PersonId} and modular=#{type} and messagetime  &lt; now() order by messagetime desc limit 1
     </select>
 
     <select id="GetSummonsByPersonId" parameterType="String" resultType="com.admin.admin.entity.dw_message.TMessage">
