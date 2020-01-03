@@ -1,17 +1,19 @@
 package com.adminapp.model.dw_supervise;
 
 
+import java.util.Date;
+
 public class PersonAllInformationModel {
 
   private String personid;
   private String personname;
   private String gender;
   private long age;
-  private java.sql.Date birthdate;
+  private Date birthdate;
   private String card;
   private String workunit;
-  private java.sql.Date bailoutbegindate;
-  private java.sql.Date bailoutenddate;
+  private Date bailoutbegindate;
+  private Date bailoutenddate;
   private String sponsor;
   private String sponsoralarm;
   private String contact;
@@ -20,16 +22,16 @@ public class PersonAllInformationModel {
   private String qqnumber;
   private String status;
   private String founderid;
-  private java.sql.Date foundertime;
+  private Date foundertime;
   private String modifierid;
-  private java.sql.Date modifiertime;
+  private Date modifiertime;
   private String suspectstatus;
   private String marriage;
   private String policestation;
   private String casetype;
   private String facepath;
   private String persontags;
-  private long gendercode;
+  private int gendercode;
 
 
 
@@ -70,7 +72,7 @@ public class PersonAllInformationModel {
   }
 
 
-  public java.sql.Date getBirthdate() {
+  public Date getBirthdate() {
     return birthdate;
   }
 
@@ -97,7 +99,7 @@ public class PersonAllInformationModel {
   }
 
 
-  public java.sql.Date getBailoutbegindate() {
+  public Date getBailoutbegindate() {
     return bailoutbegindate;
   }
 
@@ -106,7 +108,7 @@ public class PersonAllInformationModel {
   }
 
 
-  public java.sql.Date getBailoutenddate() {
+  public Date getBailoutenddate() {
     return bailoutenddate;
   }
 
@@ -187,7 +189,7 @@ public class PersonAllInformationModel {
   }
 
 
-  public java.sql.Date getFoundertime() {
+  public Date getFoundertime() {
     return foundertime;
   }
 
@@ -205,7 +207,7 @@ public class PersonAllInformationModel {
   }
 
 
-  public java.sql.Date getModifiertime() {
+  public Date getModifiertime() {
     return modifiertime;
   }
 
@@ -268,11 +270,11 @@ public class PersonAllInformationModel {
   }
 
 
-  public long getGendercode() {
+  public int getGendercode() {
     return gendercode;
   }
 
-  public void setGendercode(long gendercode) {
+  public void setGendercode(int gendercode) {
     this.gendercode = gendercode;
   }
 

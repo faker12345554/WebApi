@@ -55,6 +55,10 @@ public class SuperviseService {
         return superfineDado.getPersonInformation(personid);
     }
 
+    public PersonAllInformationModel getPersonInformationFromName(String personName){
+        return superfineDado.getPersonInformationFromName(personName);
+    }
+
     //上传传讯记录
 //    public int insertCiteRecord(String personid, String personname, Date summonsTime){
 //        return superfineDado.insertCiteRecord(personid, personname, summonsTime);
@@ -140,5 +144,30 @@ public class SuperviseService {
     //获取监居人员所有签到信息
     public List<SinginInformation> listAllSinginInformation(){
         return superfineDado.listAllSinginInformation();
+    }
+
+    //获取监居人员监居设置
+    public PrisonSettingInformation getPrisonValidSetting(String personId,String validName){
+        return superfineDado.getPrisonValidSetting(personId, validName);
+    }
+
+    //更新监居人员的监居设置
+    public int updatePrisonSetting(String personId,String settingName,boolean settingCheck,Date settingTime){
+        return superfineDado.updatePrisonSetting(personId,settingName,settingCheck,settingTime);
+    }
+
+    //插入监居人员的监居设置
+    public int insertPrisonSetting(String personId,String settingName,boolean settingCheck,Date settingTime,String settingCode){
+        return superfineDado.insertPrisonSetting(personId,settingName,settingCheck,settingTime,settingCode);
+    }
+
+    //获取监居人员的所有监居配置
+    public List<PrisonSettingModel> getPrisonValidWay(String personId){
+        return superfineDado.getPrisonValidWay(personId);
+    }
+
+    //获取保外人员申请单
+    public LeaveListModel getApplyLeave(String code){
+        return superfineDado.getApplyLeave(code);
     }
 }

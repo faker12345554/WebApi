@@ -5,4 +5,10 @@
     <select id="login" resultType="com.adminapp.business.entity.dw_user.User">
         select id,accountname,password,aliasname,phone FROM t_user WHERE accountname=#{account} AND status=true
     </select>
+    <select id="getUserInformation" resultType="com.adminapp.model.dw_login.UserInformationModel">
+        select * from t_user where accountname=#{userId};
+    </select>
+    <update id="updateUserPassword">
+        update t_user set password=#{password} where accountname=#{userId}
+    </update>
 </mapper>
