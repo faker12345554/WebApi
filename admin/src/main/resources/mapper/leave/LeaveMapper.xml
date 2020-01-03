@@ -5,25 +5,28 @@
     <select id="getLeave" parameterType="String" resultType="com.admin.model.leave.LeavefModel">
         SELECT a.*,b.auditordatetime FROM t_leave AS a
         LEFT JOIN t_auditor AS b ON a.leaveorder=b.leaveorder
-        WHERE a.personid=#{PersonId}
+        <if test="PersonId !=null and PersonId!=''">
+            WHERE a.personid=#{PersonId}
+        </if>
+
         <if test="Condition1 !=null and Condition2!=null and Condition2!='' and StartTime!=null and EndTime!=null ">
-            and a.states=#{Condition1}
+            WHERE a.states=#{Condition1}
             a.personname like concat('%',#{condition2},'%') and
             a.subittimestamp >#{StartTime} and a.subittimestamp &lt; #{EndTime}
         </if>
         <if test="Condition1 ==null and (Condition2!=null or Condition2=='') and StartTime!=null and EndTime!=null ">
-            and a.personname like concat('%',#{condition2},'%') and
+            WHERE a.personname like concat('%',#{condition2},'%') and
             a.subittimestamp >#{StartTime} and a.subittimestamp &lt; #{EndTime}
         </if>
 
         <if test="Condition1 ==null and (Condition2==null or Condition2=='') and StartTime!=null and  EndTime!=null ">
-            and a.subittimestamp >#{StartTime} and a.subittimestamp &lt; #{EndTime}
+            WHERE a.subittimestamp >#{StartTime} and a.subittimestamp &lt; #{EndTime}
         </if>
         <if test="Condition1 ==null and (Condition2==null or Condition2=='') and StartTime!=null and EndTime==null ">
-            and a.subittimestamp >#{StartTime}
+            WHERE a.subittimestamp >#{StartTime}
         </if>
         <if test="Condition1 ==null and (Condition2==null or Condition2=='') and StartTime==null and EndTime!=null ">
-            and a.subittimestamp &lt; #{EndTime}
+            WHERE a.subittimestamp &lt; #{EndTime}
         </if>
 
 

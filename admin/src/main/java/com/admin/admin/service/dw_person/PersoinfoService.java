@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PersoinfoService {
@@ -103,5 +104,22 @@ public class PersoinfoService {
     //获取枚举数据
     public List<Dictionary> getEnum() {
         return personDao.getEnum();
+    }
+
+    /**
+     * 获取机构
+     */
+    public List<Map<String,Object>> ListMechanism(){
+        return personDao.ListMechanism();
+    }
+
+    /**
+     * 获取主办人信息
+     * @param Code
+     * @return
+     */
+
+    public List<Map<String,String>> ListSponsor(String Code){
+        return personDao.ListSponsor(Code);
     }
 }

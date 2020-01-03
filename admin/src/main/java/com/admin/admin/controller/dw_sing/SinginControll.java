@@ -111,7 +111,7 @@ public class SinginControll {
     public ResponseResult ExportSingIn(@RequestBody SearchModel searchModel){
         List<SinginModel> allItems = singinService.ListSingin(searchModel);
         String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) +"签到信息"+ ".xls";
-        File file = new File("E:\\WebApi\\admin\\src\\main\\resources\\Execl\\" + dateTime);
+        File file = new File(System.getProperty("user.dir") + "\\"+ dateTime);
         try (HSSFWorkbook workbook = new HSSFWorkbook()) {
             HSSFSheet sheet = workbook.createSheet("打印历史定位信息");
             HSSFRow row = sheet.createRow(0);

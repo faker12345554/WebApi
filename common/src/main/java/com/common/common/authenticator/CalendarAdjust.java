@@ -73,12 +73,14 @@ public class CalendarAdjust {
      *
      * @return
      */
-    public static String GetSummons(int mon) {
-        Calendar c = Calendar.getInstance();//可以对每个时间域单独修改   对时间进行加减操作
-        int year = c.get(Calendar.YEAR);
-        c.add(Calendar.MONTH, mon);
-        int month=c.get(Calendar.MONTH);
-        return year + "-" + month;
+    public static String GetSummons(int mon)throws Exception {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, mon);// 0表示当前月，-2就是当前月-2
+        calendar.set(Calendar.HOUR_OF_DAY, 9);
+        calendar.set(Calendar.MINUTE, 30);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return  GetYear(timeStamp2Date(calendar.getTimeInMillis())).substring(0,7);
     }
 
     /**

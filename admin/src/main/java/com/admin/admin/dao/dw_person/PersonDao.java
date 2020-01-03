@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface PersonDao {
@@ -45,4 +46,17 @@ public interface PersonDao {
     查询设置
      */
     List<TPrisonsetting> ListPrison(String PersonId);
+
+    /**
+     * 获取所有
+     * @return
+     */
+    List<Map<String,Object>> ListMechanism();
+
+    /**
+     * 派出所编号
+     * @param Code
+     * @return
+     */
+    List<Map<String,String>> ListSponsor(String Code);
 }

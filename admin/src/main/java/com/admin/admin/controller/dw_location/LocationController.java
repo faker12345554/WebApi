@@ -150,7 +150,7 @@ public class LocationController {
 
             });
             String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) + ".xls";
-            File file = new File("E:\\WebApi\\admin\\src\\main\\resources\\Execl\\" + dateTime);
+            File file = new File(System.getProperty("user.dir") + "\\"+ dateTime);
             workbook.write(file);
         } catch (Exception ex) {
             ex.printStackTrace();

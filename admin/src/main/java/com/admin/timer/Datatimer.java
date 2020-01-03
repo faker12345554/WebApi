@@ -23,13 +23,13 @@ public class Datatimer  {
     private Tasking tasking;
 
     //定义一个按时间执行的定时任务，在每天02:00执行一次。
-    @Scheduled(cron = "0 0 02 * * ?")
+    @Scheduled(cron = "0 0 2 * * ?")
     public void depositJob() throws Exception {
         tasking.ReminderBail();
         //执行代码
     }
     //定义一个按一定频率执行的定时任务，每隔1分钟执行一次
-    @Scheduled(cron = "0 0 02 * * ?")
+    @Scheduled(cron = "0 0 2 * * ?")
     public void job2() throws Exception {
         tasking.GeneratedRecord();
     }
@@ -38,12 +38,6 @@ public class Datatimer  {
     public void updatePayRecords() throws Exception {
         //执行代码
        // System.out.println(CalendarAdjust.GetMonth());
-        System.out.println(CalendarAdjust.GetSummons(3));
-        System.out.println(CalendarAdjust.GetSummons(4));
-        System.out.println(CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(3,1)));
-        System.out.println(CalendarAdjust.timeStamp2Date(CalendarAdjust.getNotificationTime()));
-        //执行代码
-        System.out.println("1");
-        System.out.println("3");
+
     }
 }
