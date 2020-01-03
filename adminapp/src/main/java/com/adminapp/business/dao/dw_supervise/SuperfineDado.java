@@ -48,5 +48,17 @@ public interface SuperfineDado {
 
     List<ReminderSettingsInformation> listSummonSetting();
 
-    List<ViolationFensInformation> listViolationFensInformation(@Param("violationName")String violationName);
+    int listViolationFensInformation(@Param("violationName")String violationName,@Param("Code")String Code);
+
+    List<SinginInformation> listPersonSingin(@Param("personId")String personId,@Param("type")int type);
+
+    List<SummonsInformation> getSummonsInformation(@Param("personId")String personId);
+
+    String getAreaFence(@Param("personId")String personId);
+
+    List<LocationRecordModel> listLocationRecord(@Param("personId")String personId);
+
+    List<LocationInformation> listViolateLocationRecord(@Param("personId")String personId);
+
+    List<SinginInformation> listAllSinginInformation();
 }

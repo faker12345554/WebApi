@@ -109,7 +109,36 @@ public class SuperviseService {
     }
 
     //查找传讯违规级别
-    public List<ViolationFensInformation> listViolationFensInformation(String violationName){
-        return superfineDado.listViolationFensInformation(violationName);
+    public int listViolationFensInformation(String violationName,String Code){
+        return superfineDado.listViolationFensInformation(violationName,Code);
+    }
+
+    public List<SinginInformation> listPersonSingin(String personId,int type){
+        return superfineDado.listPersonSingin(personId, type);
+    }
+
+    //获取个人传讯记录
+    public List<SummonsInformation> getSummonsInformation(String personId){
+        return superfineDado.getSummonsInformation(personId);
+    }
+
+    //获取监居人员区域围栏
+    public String getAreaFence(String personId){
+        return superfineDado.getAreaFence(personId);
+    }
+
+    //获取监居人员定位记录
+    public List<LocationRecordModel> listLocationRecord(String personId){
+        return superfineDado.listLocationRecord(personId);
+    }
+
+    //获取监居人员越界定位信息
+    public List<LocationInformation> listViolateLocationRecord(String personId){
+        return superfineDado.listViolateLocationRecord(personId);
+    }
+
+    //获取监居人员所有签到信息
+    public List<SinginInformation> listAllSinginInformation(){
+        return superfineDado.listAllSinginInformation();
     }
 }

@@ -1,54 +1,33 @@
-package com.adminapp.business.entity.dw_user;
+package com.sample;
 
-public class UserModel {
 
-  private int id;
+public class TUser {
+
+  private long id;
   private String accountname;
   private String password;
   private String aliasname;
-  private int permissionid;
-  private int createid;
+  private long permissionid;
+  private long createid;
   private String createname;
   private String areacode;
   private String status;
   private String phone;
-  private int usersystem;
+  private long usersystem;
   private String officephone;
   private String police;
   private String areaname;
   private String department;
 
-  public int getId() {
+
+  public long getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(long id) {
     this.id = id;
   }
 
-  public int getPermissionid() {
-    return permissionid;
-  }
-
-  public void setPermissionid(int permissionid) {
-    this.permissionid = permissionid;
-  }
-
-  public int getCreateid() {
-    return createid;
-  }
-
-  public void setCreateid(int createid) {
-    this.createid = createid;
-  }
-
-  public int getUsersystem() {
-    return usersystem;
-  }
-
-  public void setUsersystem(int usersystem) {
-    this.usersystem = usersystem;
-  }
 
   public String getAccountname() {
     return accountname;
@@ -76,6 +55,23 @@ public class UserModel {
     this.aliasname = aliasname;
   }
 
+
+  public long getPermissionid() {
+    return permissionid;
+  }
+
+  public void setPermissionid(long permissionid) {
+    this.permissionid = permissionid;
+  }
+
+
+  public long getCreateid() {
+    return createid;
+  }
+
+  public void setCreateid(long createid) {
+    this.createid = createid;
+  }
 
 
   public String getCreatename() {
@@ -114,6 +110,14 @@ public class UserModel {
   }
 
 
+  public long getUsersystem() {
+    return usersystem;
+  }
+
+  public void setUsersystem(long usersystem) {
+    this.usersystem = usersystem;
+  }
+
 
   public String getOfficephone() {
     return officephone;
@@ -149,4 +153,5 @@ public class UserModel {
   public void setDepartment(String department) {
     this.department = department;
   }
+
 }
