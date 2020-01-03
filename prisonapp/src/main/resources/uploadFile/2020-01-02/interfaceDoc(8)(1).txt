@@ -1,0 +1,4280 @@
+﻿# 禁毒学员 App 使用的接口文档
+# 当前接口文档版本号 v0.2.2
+
+## 目录
+- [目录](#目录)
+- [一、接口文档基本说明](#一、接口文档基本说明)
+- [二、测试接口](#二、测试接口)
+	- [1、测试 Post Json testPostJson](#2.1)
+	- [2、测试 Get testGet](#2.2)
+	- [3、测试 Post Key testPostKey](#2.3)
+- [三、正式接口](#三、正式接口)
+	- [1、获取更新信息 getUpdateInfo](#3.1)
+	- [2、登录 accountLogin](#3.2)
+	- [3、发送验证码 sendValidCode](#3.3)
+	- [4、验证注册账号 validRegisterAccount](#3.4)
+	- [5、检查验证码 confirmValidCode](#3.5)
+	- [6、注册账号 registerAccount](#3.6)
+	- [7、实名认证 registerIdentification](#3.7)
+	- [8、获取用户信息 getUserInfo](#3.8)
+	- [9、验证密码 validPassword](#3.9)
+	- [10、修改密码 modifyPassword](#3.10)
+	- [11、验证重置密码账号 validResetAccount](#3.11)
+	- [12、重置密码 resetPassword](#3.12)
+	- [13、自动上报位置 autoLocation](#3.13)
+	- [14、获取人脸特征 getFaceFeature](#3.14)
+	- [15、验证人脸 validFace](#3.15)
+	- [16、手动上报位置 manualLocation](#3.16)
+	- [17、上传文件 uploadFile](#3.17)
+	- [18、上传人脸 uploadFace](#3.18)
+	- [19、获取人脸匹配阈值 getFaceSimilar](#3.19)
+	- [20、获取用户小组 getUserGroup](#3.20)
+	- [21、获取通知消息列表 getNotifications](#3.21)
+	- [22、获取通知提醒详情 getNotificationInfo](#3.22)
+	- [23、获取省份列表 getProvince](#3.23)
+	- [24、获取城市列表 getCity](#3.24)
+	- [25、获取区县列表 getDistrict](#3.25)
+	- [26、获取镇街列表 getStreet](#3.26)
+	- [27、提交请假申请单 applyLeave](#3.27)
+	- [28、撤销请假申请但 cancelLeaveApply](#3.28)
+	- [29、获取请假申请单列表 getApplyLeaveList](#3.29)
+	- [30、获取请假申请单详情 getApplyLeaveInfo](#3.30)
+	- [31、获取帮扶类型列表 getHelpType](#3.31)
+	- [32、提交帮扶申请单 applyHelp](#3.32)
+	- [33、撤销帮扶申请单 cancelHelpApply](#3.33)
+	- [34、提交帮扶评价 ratingHelp](#3.34)
+	- [35、获取帮扶申请单列表 getApplyHelpList](#3.35)
+	- [36、获取帮扶申请单详情 getApplyHelpInfo](#3.36)
+	- [37、提交地址变更申请单 applyAddressChange](#3.37)
+	- [38、撤销地址变更申请单 cancelAddressChangeApply](#3.38)
+   	- [39、获取地址变更申请单列表 getApplyAddressChangeList](#3.39)
+   	- [40、获取地址变更申请单详情 getApplyAddressChangeInfo](#3.40)
+   	- [41、获取请假申请单状态枚举列表 getApplyLeaveStatus](#3.41)
+   	- [42、获取帮扶申请单状态枚举列表 getApplyHelpStatus](#3.42)
+   	- [43、获取地址变更申请单状态枚举列表 getApplyAddressChangeStatus](#3.43)
+	- [44、获取未读消息数 getUnReadNotifications](#3.44)
+   	- [45、提交已读消息 readNotifications](#3.45)
+	- [46、上报自动定位定位失败信息 uploadLocationError](#3.46)
+- [四、接口文档变更记录](#四、接口文档变更记录)
+	- [v0.2.3](#v0.2.3)
+	- [v0.2.2](#v0.2.2)
+	- [v0.2.1](#v0.2.1)
+	- [v0.2.0](#v0.2.0)
+	- [v0.1.9](#v0.1.9)
+	- [v0.1.8](#v0.1.8)
+	- [v0.1.7](#v0.1.7)
+	- [v0.1.6](#v0.1.6)
+	- [v0.1.5](#v0.1.5)
+	- [v0.1.4](#v0.1.4)
+	- [v0.1.3](#v0.1.3)
+	- [v0.1.2](#v0.1.2)
+	- [v0.1.1](#v0.1.1)
+	- [v0.1.0](#v0.1.0)
+- [五、测试日志](#五、测试日志)
+	- [第三次测试](#T3-2019-09-19)
+	- [第二次测试](#T2-2019-09-17)
+	- [第一次测试](#T1-2019-09-12) 
+
+
+## 一、接口文档基本说明
+1、客户端调用所有接口都会在 header 添加 Timestamp 值用来标识发送时间，格式是当前时间的毫秒数，服务器端可以斟酌使用
+可以使用[时间戳网站验证](https://tool.lu/timestamp/)
+2、所有登录后使用的接口都会在 header 上添加 AppToken，用于给服务器验证登录身份
+3、服务端接口 url 按照这样的形式 http://XXXXXX/api/v1/YYYY/ZZZZZ，其中 XXXX 为接口的域名地址，YYYY 为控制器，ZZZZ 为方法名称
+
+4、get 的请求键值对在 url 地址上
+5、post 的请求数据在请求体上
+数据形式不定，根据实际接口
+可能是键值对（例如：提交简单数据）
+可能是json（例如：提交数据等复杂的数据结构）
+可能是二进制数据（例如：上传图片之类的）
+
+6、所有 api （包括 get、post）返回参数模板：
+```json
+{	
+	// int 类型
+	// 正常为 0
+	// 因为一些规则而获取数据失败为 1
+	// token 过期无权访问为 2
+	// 抛出异常失败为 5
+	// 其他具体错误码根据实际接口指定
+	"resultCode": 0,  
+	"resultMsg": "",  // 字符串类型，正常返回空字符串，异常返回异常信息
+	"data": 		// data 为具体返回的数据
+	{
+		
+	}
+}
+```
+
+7、当请求返回的数据是一个列表时，如果找不到任何数据应该正常返回，因为此时找不到数据不代表异常，返回格式是：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": []
+}
+```
+
+当指定获取某个 id 的数据时，如果找不到指定 id 的数据就属于调用异常，应该返回：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "原因信息",
+	"data": null
+}
+```
+
+8、所有涉及用户身份验证的接口（也就是请求头包含 AppToken 的接口），如果用户身份验证不通过，Http 的返回码统一为 401 
+
+[回到目录](#目录)
+
+---
+## 二、测试接口
+
+### 2.1
+
+##### 控制器：AppTest
+
+##### 接口名称：testPostJson
+
+##### 方式：post
+
+##### header：
+```
+Timestamp		时间戳
+```
+
+##### 参数：
+```json
+{
+	"testBool": true,
+	"testInt": 456,
+	"testStr": "123",
+	"testNull": null,
+	"testArrays":[1,2,3,4]
+}
+```
+
+##### 返回：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data":        // 上面请求参数传入什么值，这里的 data 就返回什么值
+	{
+		"testBool": true,
+		"testInt": 456,
+		"testStr": "123",
+		"testNull": null,
+		"testArrays":[1,2,3,4]
+	}
+}
+```
+[回到目录](#目录)
+
+---
+### 2.2
+
+##### 控制器：AppTest
+
+##### 接口名称：testGet
+
+##### 方式：get
+
+##### header：
+```
+Timestamp		时间戳
+```
+
+##### 参数：
+```
+testBool 		布尔类型
+testInt  		整型
+testStr  		字符串类型
+```
+
+##### 返回：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data":        // 上面请求参数传入什么值，这里的 data 就返回什么值
+	{
+		"testBool": true,
+		"testInt": 456,
+		"testStr": "123"
+	}
+}
+```
+[回到目录](#目录)
+
+---
+### 2.3
+
+##### 控制器：AppTest
+
+##### 接口名称：testPostKey
+
+##### 方式：post
+
+##### header：
+```
+Timestamp		时间戳
+```
+
+##### 参数：
+```
+testBool 		布尔类型
+testInt  		整型
+testStr  		字符串类型
+```
+
+##### 返回：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data":        // 上面请求参数传入什么值，这里的 data 就返回什么值
+	{
+		"testBool": true,
+		"testInt": 456,
+		"testStr": "123"
+	}
+}
+```
+[回到目录](#目录)
+
+---
+## 三、正式接口
+### 3.1
+
+##### 控制器：AppUpdate
+
+##### 接口名称：getUpdateInfo
+
+##### 功能：获取应用更新信息
+
+##### 方式：get
+
+##### header：
+```
+Timestamp		时间戳
+Type			访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+无
+
+##### 返回参数： 
+```
+name			apk 名称			字符串类型
+version			版本编号			字符串类型
+versionCode		版本号				整型
+url				apk 更新地址		字符串类型
+msg				更新内容			字符串类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data":	
+	{
+		"name": "XXXXXX", 
+		"version": "XXXXXXXXXXXX", 
+		"versionCode": XXXXXXXXX, 
+		"url": "XXXXXXX",
+		"msg": "XXXXXXXXXXXXX"
+	}
+}
+```
+
+##### 获取失败：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXXXX",  // 一些信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.2
+
+##### 控制器：AppLogin
+
+##### 接口名称：accountLogin
+
+##### 功能：账号登录
+
+##### 方式：post
+
+##### Content-Type：application/x-www-form-urlencoded
+
+##### header：
+```
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+account		登录手机号		字符串类型（来源于用户输入）
+password  	登录密码的MD5		字符串类型（来源于用户输入的密码 + MD5 加密）
+```
+
+##### 返回参数：
+```
+token		访问的 token 串			字符串类型
+tExpiresTime	访问的 token 的过期时间戳	字符串类型
+refreshToken    刷新的 token 串			字符串类型
+rExpiresTime	刷新的 token 的过期时间戳	字符串类型
+```
+
+##### 错误码：
+- 10 - 账号错误
+- 11 - 密码错误
+
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data":
+	{
+		"token": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",   // 具体是服务端生成的token串
+		"tExpiresTime": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+		"refreshToken": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+		"rExpiresTime": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+	}
+}
+```
+
+##### 账号错误：
+```json
+{
+	"resultCode": 10,
+	"resultMsg": "账号错误",
+	"data": null
+}
+```
+
+##### 密码错误：
+```json
+{
+	"resultCode": 11,
+	"resultMsg": "密码错误",
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX", 
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.3
+
+##### 控制器：AppLogin
+
+##### 接口名称：sendValidCode
+
+##### 功能：发送验证码
+
+##### 方式：get
+
+##### header：
+```
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+phone		手机号					字符串类型（来源于用户输入）
+type		请求发送验证码的类型	 整型类型（1 为注册时发送的验证码，2 为重置密码时发送的验证码）
+```
+
+##### 返回参数：
+无
+
+##### 错误码：
+无
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": {}
+}
+```
+
+##### 发送失败：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXX", // 具体原因，是短时间获取验证码次数过多，或者是其他原因
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.4
+
+##### 控制器：AppLogin
+
+##### 接口名称：validRegisterAccount
+
+##### 功能：验证是否允许注册的姓名和账号
+
+##### 方式：post
+
+##### Content-Type：application/x-www-form-urlencoded
+
+##### header：
+```
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+account		注册手机号			字符串类型（来源于用户输入）
+name		注册用户真实姓名	 字符串类型（来源于用户输入）
+```
+
+##### 返回参数：
+无
+
+##### 错误码：
+13 - 不是允许操作的账号信息
+
+##### 返回成功例子：
+```json 
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": {}
+}
+```
+
+##### 不是允许注册的用户手机号或用户名称：
+```json 
+{
+	"resultCode": 13,
+	"resultMsg": "不是允许注册的用户手机号或用户名称", // 具体原因
+	"data": null
+}
+```
+
+##### 一般错误：
+```json 
+{
+	"resultCode": 1,
+	"resultMsg": "XXXX", // 具体原因
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json 
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.5
+
+##### 控制器：AppLogin
+
+##### 接口名称：confirmValidCode
+
+##### 功能：提交检查验证码
+
+##### 方式：post
+
+##### Content-Type：application/x-www-form-urlencoded
+
+##### header：
+```
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+phone			需要检查的手机号		字符串类型（来源于用户输入）
+validCode		需要检查的验证码		字符串类型（来源于用户输入）
+type			提交验证的类型			整型类型（1 为检查注册时发送的验证码，2 为检查重置密码时发送的验证码）
+```
+
+##### 返回参数：
+```
+validToken		提交检查成功获得的令牌	 字符串类型
+```
+
+##### 错误码：
+- 12 - 检查验证码错误
+
+##### 返回成功例子：
+```json 
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data":
+	{
+		"validToken": "XXXXXXXXXXXXXXXXXXXXXX"
+	}
+}
+```
+
+##### 检查验证码错误：
+```json 
+{
+	"resultCode": 12,
+	"resultMsg": "验证码错误", // 具体原因
+	"data": null
+}
+```
+
+##### 一般错误：
+```json 
+{
+	"resultCode": 1,
+	"resultMsg": "XXXX", // 具体原因
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json 
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.6
+
+##### 控制器：AppLogin
+
+##### 接口名称：registerAccount
+
+##### 功能：注册账号
+
+##### 方式：post
+
+##### Content-Type：application/x-www-form-urlencoded
+
+##### header：
+```
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+password	注册密码 MD5					字符串类型（来源于用户输入的密码 + MD5 加密）
+validToken	检查验证码成功的访问令牌		 字符串类型（来源于接口 confirmValidCode 的返回值）
+```
+
+##### 返回参数：
+无
+
+##### 错误码：
+无
+
+##### 返回成功例子：
+```json 
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": {}
+}
+```
+
+##### 一般错误：
+```json 
+{
+	"resultCode": 1,
+	"resultMsg": "XXXX", // 具体原因
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json 
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.7
+
+##### 控制器：AppUser
+
+##### 接口名称：registerIdentification
+
+##### 功能：实名信息认证
+
+##### Content-Type：application/x-www-form-urlencoded
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+name			姓名							字符串类型（来源于身份证图片识别）
+idCardNo		身份证号						字符串类型（来源于身份证图片识别）
+birthday		生日							字符串类型（格式：YYYY-mm-dd）（来源于身份证图片识别）
+gender			性别							字符串类型（来源于身份证图片识别）
+nation			民族							字符串类型（来源于身份证图片识别）
+signingOrg		签发机关						字符串类型（来源于身份证图片识别）
+signintDate		签发日期						字符串类型（来源于身份证图片识别）
+expirationDate	失效日期						字符串类型（来源于身份证图片识别）
+address			地址							字符串类型（来源于身份证图片识别）
+idBack			身份证背面（人像一面）的 url	  字符串类型（来源于 uploadFile 接口的返回值）
+idFront			身份证正面（国徽一面）的 url	  字符串类型（来源于 uploadFile 接口的返回值）
+face			人脸照片的 url					字符串类型（来源于 uploadFace 接口的返回值）
+faceFeature		人脸特征数据的 url				 字符串类型（来源于 uploadFace 接口的返回值）
+```
+
+##### 返回参数：
+无
+
+##### 返回成功例子：
+```json 
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": {}
+}
+```
+
+##### 认证失败：
+```json 
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXXXX",  // 一些信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json 
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.8
+
+##### 控制器：AppUser
+
+##### 接口名称：getUserInfo
+
+##### 功能：获取学员信息
+
+##### 方式： get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+无
+
+##### 返回参数：
+```
+id				学员id				整型
+name			学员姓名			字符串类型
+headUrl			学员头像			字符串类型
+phone			学员手机			字符串类型
+controlArea		学员所属区域		字符串类型
+livingPlace		学员现居住地		字符串类型
+servicePoint	学员被服务站点		字符串类型
+```
+
+##### 错误码：
+- 14 - 未实名认证
+
+##### 返回成功例子：
+```json 
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	{
+		"id": XXXX,
+		"name": "XXXXXXX",
+		"headUrl": "XXXXXXXXXX",
+		"phone": "XXXXXXXXXXXX",
+		"controlArea": "XXXXXXXXXXXXX",
+		"livingPlace": "XXXXXXXXXXXXX",
+		"servicePoint": "XXXXXXXXXXXXX"
+	}
+}
+```
+
+##### 该用户为进行实名认证：
+```json 
+{
+	"resultCode": 14,
+	"resultMsg": "当前用户未进行实名认证",
+	"data": null
+}
+```
+
+##### 获取失败：
+```json 
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXXXX",  // 一些信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json 
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.9
+
+##### 控制器：AppUser
+
+##### 接口名称：validPassword
+
+##### 功能：验证密码
+
+##### 方式：post
+
+##### Content-Type：application/x-www-form-urlencoded
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+password	当前密码的MD5		字符串类型（来源于用户输入的密码 + MD5 加密）
+```
+
+##### 返回参数：
+```
+validToken 	验证密码后获取的临时访问令牌	字符串类型
+```
+
+##### 错误码：
+- 11 - 密码错误
+
+##### 返回成功例子：
+```json 
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data":
+	{
+		"validToken": "XXXXXXXXXXXXXXXXXXXX"
+	}
+}
+```
+
+##### 原密码错误：
+```json 
+{
+	"resultCode": 11,
+	"resultMsg": "原密码错误",
+	"data": null
+}
+```
+
+##### 一般失败：
+```json 
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXXXX",  // 一些信息，具体原因
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json 
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.10
+
+##### 控制器：AppUser
+
+##### 接口名称：modifyPassword
+
+##### 功能：登录后修改密码
+
+##### 方式：post
+
+##### Content-Type：application/x-www-form-urlencoded
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+validToken 	验证密码后获取的临时访问令牌	字符串类型（来源于接口 validPassword 的返回值）
+newPassword	新密码的MD5					  字符串类型（来源于用户输入的密码 + MD5 加密）
+```
+
+##### 返回参数：
+无
+
+##### 错误码：
+无
+
+##### 返回成功例子：
+```json 
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": {}
+}
+```
+
+##### 一般失败：
+```json 
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXXXX",  // 一些信息，具体原因
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json 
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.11
+
+##### 控制器：AppLogin
+
+##### 接口名称：validResetAccount
+
+##### 功能：验证账号是否允许重置密码
+
+##### 方式：post
+
+##### Content-Type：application/x-www-form-urlencoded
+
+##### header：
+```
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+account		手机号			字符串类型（来源于用户输入）
+```
+
+##### 返回参数：
+无
+
+##### 错误码：
+- 10 - 账号错误
+
+##### 返回成功例子：
+```json 
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": {}
+}
+```
+
+##### 账号错误：
+```json 
+{
+	"resultCode": 10,
+	"resultMsg": "账号错误",  // 一些信息，具体原因
+	"data": null
+}
+```
+
+##### 一般失败：
+```json 
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXXXX",  // 一些信息，具体原因
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json 
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.12
+
+##### 控制器：AppLogin
+
+##### 接口名称：resetPassword
+
+##### 功能：忘记密码后重置密码
+
+##### 方式：post
+
+##### Content-Type：application/x-www-form-urlencoded
+
+##### header：
+```
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+password	新密码的MD5						字符串类型（来源于用户输入的密码 + MD5 加密）
+validToken	检查验证码成功的访问令牌		 字符串类型（来源于接口 confirmValidCode 的返回值）
+```
+
+##### 返回参数：
+无
+
+##### 错误码：
+无
+
+##### 返回成功例子：
+```json 
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": {}
+}
+```
+
+##### 一般失败：
+```json 
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXXXX",  // 一些信息，具体原因
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.13
+
+##### 控制器：AppSupervise	
+
+##### 接口名称：autoLocation
+
+##### 功能：自动上报定位信息
+
+##### 方式：post
+
+##### Content-Type：application/x-www-form-urlencoded
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+latitude		纬度坐标		浮点数类型（来源于手机定位）
+longitude		经度坐标		浮点数类型（来源于手机定位）
+locationType	定位类型		整型（来源于手机定位）（1 为 wifi 定位，2 为基站定位，3 为 gps 定位，4 为其他定位）
+address			定位地址		字符串类型（来源于手机定位）
+```
+
+##### 返回参数：
+```
+timestamp			上报时间的时间戳			字符串类型
+```
+
+##### 错误码：
+无
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	{
+		"timestamp": "XXXXXXXX"
+	}
+}
+```
+
+##### 上报错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.14
+
+##### 控制器：AppSupervise
+
+##### 接口名称：getFaceFeature
+
+##### 功能：获取人脸特征
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+无
+
+##### 返回参数：
+```
+url		人脸特征文件地址						字符串类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	{
+		"url": "XXXXXXXXXXXXXXXXXXXXXX" // 具体地址
+	}
+}
+```
+
+##### 获取人脸数据错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.15
+
+##### 控制器：AppSupervise
+
+##### 接口名称：validFace
+
+##### 功能：人脸验证
+- 客户端只有在人脸匹配度达到 getFaceFeature 接口返回数据 similar 的要求才会调用该接口
+- 注意，服务器只有在验证成功且相似度达到匹配阈值才返回成功，否则返回错误码为 15，验证不通过）
+
+##### 方式：post
+
+##### Content-Type：application/x-www-form-urlencoded
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+face			人脸识别的图片的 url	字符串类型（来源于 uploadFace 接口的返回值）
+faceFeature		人脸特征数据的 url		字符串类型（来源于 uploadFace 接口的返回值）
+similar			客户端验证的相似度		浮点数类型（来源于客户端人脸验证的接口）
+```
+
+##### 返回参数：
+```
+id			人脸验证记录的 id			整型类型
+similar		服务器人脸识别相似度		浮点数类型
+face		与之相匹配的人脸图片链接	字符串类型
+```
+
+##### 错误码：
+- 15 - 验证不通过
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	{
+		"id": XXX,
+		"similar": XXX.XX,
+		"face": "XXXXXXXX"
+	}
+}
+```
+
+###### 验证不通过：
+```json
+{
+	"resultCode": 15,
+	"resultMsg": "验证不通过", // 具体信息
+	"data": null
+}
+```
+
+###### 人脸识别错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.16
+
+##### 控制器：AppSupervise
+
+##### 接口名称：manualLocation
+
+##### 功能：手动上报位置
+
+##### 方式：post （该接口使用 json 的形式上传数据）
+
+##### Content-Type：application/json
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+latitude			纬度坐标					浮点数类型（来源于手机定位）
+longitude			经度坐标					浮点数类型（来源于手机定位）
+locationType		定位类型					整型（来源于手机定位）（1 为 wifi 定位，2 为基站定位，3 为 gps 定位，4 为其他定位）
+address				定位位置的文字描述		 	 字符串类型（来源于手机定位）
+activityDescription 活动描述					字符串类型（来源于用户输入）
+medias				上传视频或图片的 url 数组	 数组类型(图片或视频文件个数为 1 ~ 3 个，最少 1 个，最多 3 个)（来源于用户选择）
+recognizedId		上报人脸识别通过的id	 	 整型（来源于接口 validFace 的返回值 id）
+```
+
+##### 提交的参数形式如下：
+###### 最少：
+```json
+{
+	"latitude": XX.XX,
+	"longitude": XX.XX,
+	"locationType": XXXX,
+	"address": "XXXXXXXXXXXXXXXXXX",
+	"activityDescription": "XXXXXXXXXXXXXXXXXX",
+	"medias": [
+		"XXXXXXXXXXXXXXXXXXX"
+	],
+	"recognizedId": X
+}
+```
+###### 最多：
+```json
+{
+	"latitude": XX.XX,
+	"longitude": XX.XX,
+	"locationType": XXXX,
+	"address": "XXXXXXXXXXXXXXXXXX",
+	"activityDescription": "XXXXXXXXXXXXXXXXXX",
+	"medias": [
+		"XXXXXXXXXXXXXXXXXXX",
+		"XXXXXXXXXXXXXXXXXXX",
+		"XXXXXXXXXXXXXXXXXX"
+	],
+	"recognizedId": X
+}
+```
+
+##### 返回参数：
+```
+timestamp			上报时间的时间戳			字符串类型
+```
+
+##### 错误码：
+无
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	{
+		"timestamp": "XXXXXXXX"
+	}
+}
+```
+
+##### 上报错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.17
+
+##### 控制器：AppUpload
+
+##### 接口名称：uploadFile
+
+##### 功能：上传文件
+
+##### 方式：post
+
+##### Content-Type：multipart/form-data
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+file			图片或视频文件			文件类型（格式不定，可以是图片，可能是视频）（来源于用户选择的文件）
+```
+
+##### 返回参数：
+```
+url			上传文件的地址		字符串类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	{
+		"url": "XXXXXXXXXXXXXXXXXX" // 具体地址
+	}
+}
+```
+
+##### 上传失败：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.18
+
+##### 控制器：AppUpload
+
+##### 接口名称：uploadFace
+
+##### 功能：上传人脸数据
+
+##### 方式：post
+
+##### Content-Type：multipart/form-data
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+face			人脸图片			   文件类型（图片格式）（来源于客户端对用户进行人脸识别后得出的人脸图片）
+faceFeature		人脸特征数据文件	 	文件类型（二进制格式）（来源于客户端对用户进行人脸识别后得出的人脸特征二进制数据文件）
+```
+
+##### 返回参数：
+```
+faceUrl			人脸图片的地址			字符串类型
+faceFeatureUrl  人脸特征数据文件的地址	 字符串类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	{
+		"faceUrl": "XXXXXXXXXXXXXXXXXX", // 具体地址
+		"faceFeatureUrl": "XXXXXXXXXXXXXXXXXX"
+	}
+}
+```
+
+##### 上传失败：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.19
+
+##### 控制器：AppSupervise
+
+##### 接口名称：getFaceSimilar
+
+##### 功能：获取人脸采集相似度要求
+
+##### 方式：get
+
+##### header：
+```
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+无
+
+##### 返回参数：
+```
+similar	 	要求客户端匹配的相似度（范围 0f ~ 1f）	 浮点数类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	{
+		"similar": 0.8
+	}
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.20
+
+##### 控制器：AppUser
+
+##### 接口名称：getUserGroup
+
+##### 功能：获取学员的小组人员信息
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+无
+
+##### 返回字段：（小组中所有类型都必须返回，没有对应类型的人员或电话时，相应的人员名称或电话可以置空）
+```
+type				人员类型			字符串类型
+name				人员姓名			字符串类型
+mobilePhone			手机电话			字符串类型
+telephone			固定电话			字符串类型
+```
+
+##### 返回成功例子（目前貌似有 7 种类型，7 种类型可以通过代码直接写死，貌似现在网页端也是直接写死的，但每种类型对应的人员和电话信息需要从数据库获取）：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	[
+		{
+			"type": "XXXXXXXX",
+			"name": "XXXXXXXX",
+			"mobilePhone": "XXXXXXX",
+			"telephone": "XXXXXX"
+		},
+		{
+			"type": "XXXXXXXX",
+			"name": "XXXXXXXX",
+			"mobilePhone": "XXXXXXX",
+			"telephone": "XXXXXX"
+		},
+		{
+			"type": "XXXXXXXX",
+			"name": "XXXXXXXX",
+			"mobilePhone": "XXXXXXX",
+			"telephone": "XXXXXX"
+		},
+		{
+			"type": "XXXXXXXX",
+			"name": "XXXXXXXX",
+			"mobilePhone": "XXXXXXX",
+			"telephone": "XXXXXX"
+		}
+		{
+			"type": "XXXXXXXX",
+			"name": "XXXXXXXX",
+			"mobilePhone": "XXXXXXX",
+			"telephone": "XXXXXX"
+		},
+		{
+			"type": "XXXXXXXX",
+			"name": "XXXXXXXX",
+			"mobilePhone": "XXXXXXX",
+			"telephone": "XXXXXX"
+		},
+		{
+			"type": "XXXXXXXX",
+			"name": "XXXXXXXX",
+			"mobilePhone": "XXXXXXX",
+			"telephone": "XXXXXX"
+		}
+	]
+}
+```
+
+##### 返回成功例子（没有部分类型的小组成员时）：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	[
+		{
+			"type": "XXXXXXXX",
+			"name": "XXXXXXXX",
+			"mobilePhone": "XXXXXXX",
+			"telephone": "XXXXXX"
+		},
+		{
+			"type": "XXXXXXXX",
+			"name": "XXXXXXXX",
+			"mobilePhone": "XXXXXXX",
+			"telephone": "XXXXXX"
+		},
+		{
+			"type": "XXXXXXXX",
+			"name": "XXXXXXXX",
+			"mobilePhone": "XXXXXXX",
+			"telephone": "XXXXXX"
+		},
+		{
+			"type": "XXXXXXXX",
+			"name": "XXXXXXXX",
+			"mobilePhone": "XXXXXXX",
+			"telephone": "XXXXXX"
+		}
+		{
+			"type": "XXXXXXXX",
+			"name": "XXXXXXXX",
+			"mobilePhone": "XXXXXXX",
+			"telephone": "XXXXXX"
+		},
+		{
+			"type": "XXXXXXXX",
+			"name": "",
+			"mobilePhone": "",
+			"telephone": ""
+		},
+		{
+			"type": "XXXXXXXX",
+			"name": "",
+			"mobilePhone": "",
+			"telephone": ""
+		}
+	]
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.21
+
+##### 控制器：AppMessage
+
+##### 接口名称：getNotifications
+
+##### 功能：获取通知提醒和系统消息
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：（列表信息以时间倒序排序）
+```
+count				已获取消息数		整型类型（用于分页，意味着从第 count + 1 条开始读）（来源于用户滑动）
+requestCount		请求消息数			整型类型（用于分页，意味着请求多少条数据）（来源于客户端指定）
+```
+
+##### 返回字段：（最多返回 requestCount 条，最少返回 0 条）
+```
+id					通知提醒或系统消息的 id		 	 字符串类型
+type				消息类型				 		整型类型（1 为系统消息，2 为通知提醒）
+detailType			消息的详细类型					 整型类型（系统消息暂时有：1请假申请、2帮扶申请、3地点变更申请、4版本更新；通知提醒暂时有：5报到提醒、6尿检提醒）
+detailTypeName		消息的详细类型名称				 字符串类型（系统消息暂时有：1请假申请、2帮扶申请、3地点变更申请、4版本更新；通知提醒暂时有：5报到提醒、6尿检提醒）
+timestamp			消息的时间戳					字符串类型
+content				消息内容						字符串类型（当类型为通知提醒时，对应 getNotificationInfo 中的 content）
+contactCode			与该消息关联的 code				字符串类型（例如，申请单消息，对应是申请单号，通知提醒是对应的通知提醒的 code 或 id，类型为版本更新消息时该值为空字符串）
+isRead				是否已读						布尔值类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	[
+		{
+			"id": "XXXXXXXX",
+			"type": 1,
+			"detailType": 4,
+			"detailTypeName": "XXXXXX",
+			"timestamp": "XXXXXXXX",
+			"content": "XXXXXXXX",
+			"contactCode": "XXXXXXXX",
+			"isRead": true
+		},
+		{
+			"id": "XXXXXXXX",
+			"type": 2,
+			"detailType": 1,
+			"detailTypeName": "XXXXXX",
+			"timestamp": "XXXXXXXX",
+			"content": "XXXXXXXX",
+			"contactCode": "XXXXXXXX",
+			"isRead": false
+		},
+		{
+			"id": "XXXXXXXX",
+			"type": 2,
+			"detailType": 2,
+			"detailTypeName": "XXXXXX",
+			"timestamp": "XXXXXXXX",
+			"content": "XXXXXXXX",
+			"contactCode": "XXXXXXXX",
+			"isRead": false
+		},
+		{
+			"id": "XXXXXXXX",
+			"type": 1,
+			"detailType": 5,
+			"detailTypeName": "XXXXXX",
+			"timestamp": "XXXXXXXX",
+			"content": "XXXXXXXX",
+			"contactCode": "XXXXXXXX",
+			"isRead": true
+		}
+	]
+}
+```
+
+##### 返回成功例子（没有数据的时候）：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": []
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.22
+
+##### 控制器：AppMessage
+
+##### 接口名称：getNotificationInfo
+
+##### 功能：获取通知提醒详细信息
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+code				通知提醒的 code			 字符串类型（来源于接口 getNotifications 的返回值 contactCode）
+```
+
+##### 返回字段：（最多返回 requestCount 条，最少返回 0 条）
+```
+code				通知提醒的 code					字符串类型
+detailType			通知提醒的详细类型				整型类型（通知提醒暂时有：5报到提醒、6尿检提醒）
+timestamp			通知提醒的的时间戳				字符串类型
+content				通知提醒的内容					字符串类型
+fromName			发送人姓名						字符串类型
+toName				接收人姓名						字符串类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	{
+		"code": "XXXXXXXX",
+		"detailType": XXXXXXX,
+		"timestamp": "XXXXXXXX",
+		"content": "XXXXXXXX",
+		"fromName": "XXXXXXXX",
+		"toName": "XXXXXXXX"
+	}
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.23
+
+##### 控制器：AppAddress
+
+##### 接口名称：getProvince
+
+##### 功能：获取省份列表
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+无	
+
+##### 返回参数：（注意，这里返回的是列表数据，不是单个对象数据,返回数据若干，数量根据实际有多少就返回多少）
+```
+code	 		省份code		字符串类型
+name			省份			字符串类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data":
+	[
+		{"code": "XXXX", "name": "XXXXXXX"},
+		{"code": "XXXX", "name": "XXXXXXX"},
+		{"code": "XXXX", "name": "XXXXXXX"},
+		{"code": "XXXX", "name": "XXXXXXX"}
+	]
+}
+```
+
+##### 获取失败：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXXXX",  // 一些信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.24
+
+##### 控制器：AppAddress
+
+##### 接口名称：getCity
+
+##### 功能：获取城市列表
+
+##### 方式： get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+code			省份code		字符串类型	
+```
+
+##### 返回参数：（注意，这里返回的是列表数据，不是单个对象数据,返回数据若干，数量根据实际有多少就返回多少）
+```
+code	 		城市code		字符串类型
+name			城市			字符串类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data":
+	[
+		{"code": "XXXX", "name": "XXXXXXX"},
+		{"code": "XXXX", "name": "XXXXXXX"},
+		{"code": "XXXX", "name": "XXXXXXX"},
+		{"code": "XXXX", "name": "XXXXXXX"}
+	]
+}
+```
+
+##### 获取失败：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXXXX",  // 一些信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.25
+
+##### 控制器：AppAddress
+
+##### 接口名称：getDistrict
+
+##### 功能：获取区县列表
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+code			城市code		字符串类型	
+```
+
+##### 返回参数：（注意，这里返回的是列表数据，不是单个对象数据,返回数据若干，数量根据实际有多少就返回多少）
+```
+code	 		区县code		字符串类型
+name			区县			字符串类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data":
+	[
+		{"code": "XXXX", "name": "XXXXXXX"},
+		{"code": "XXXX", "name": "XXXXXXX"},
+		{"code": "XXXX", "name": "XXXXXXX"},
+		{"code": "XXXX", "name": "XXXXXXX"}
+	]
+}
+```
+
+##### 获取失败：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXXXX",  // 一些信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.26
+
+##### 控制器：AppAddress
+
+##### 接口名称：getStreet
+
+##### 功能：获取镇街列表
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+code			区县code		字符串类型	
+```
+
+##### 返回参数：（注意，这里返回的是列表数据，不是单个对象数据,返回数据若干，数量根据实际有多少就返回多少）
+```
+code	 		镇街code		字符串类型
+name			镇街			字符串类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data":
+	[
+		{"code": "XXXX", "name": "XXXXXXX"},
+		{"code": "XXXX", "name": "XXXXXXX"},
+		{"code": "XXXX", "name": "XXXXXXX"},
+		{"code": "XXXX", "name": "XXXXXXX"}
+	]
+}
+```
+
+##### 获取失败：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXXXX",  // 一些信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.27
+
+##### 控制器：AppApply
+
+##### 接口名称：applyLeave
+
+##### 功能：请假申请
+
+##### 方式：post（该接口使用 json 的形式上传数据）
+
+##### Content-Type：application/json
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+reason				请假事由				字符串类型（来源于用户输入）
+startTimestamp		请假起始的日期时间戳	 字符串类型（来源于用户选择）
+endTimestamp		请假结束的日期时间戳	 字符串类型（来源于用户选择）
+provinceCode		省份编码				字符串类型（来源于用户选择）
+province			省份名称				字符串类型（来源于用户选择）
+cityCode			城市编码				字符串类型（来源于用户选择）
+city				城市名称				字符串类型（来源于用户选择）
+districtCode		区县编码				字符串类型（来源于用户选择）
+district			区县名称				字符串类型（来源于用户选择）
+streetCode			镇街编码				字符串类型（来源于用户选择）
+street				镇街名称				字符串类型（来源于用户选择）
+address				详细地址				字符串类型（来源于用户输入）
+```
+
+##### 返回参数：
+```
+applyCode			请假申请的单号					字符串类型
+```
+
+##### 错误码：
+无
+
+##### 提交的参数形式如下：
+```json
+{
+	"reason": "XXXXXXXX",
+	"startTimestamp": "XXXXXXXX",
+	"endTimestamp": "XXXXXXXX",
+	"provinceCode": "XXXXXXXX",
+	"province": "XXXXXXXX",
+	"cityCode": "XXXXXXXX",
+	"city": "XXXXXXXX",
+	"districtCode": "XXXXXXXX",
+	"district": "XXXXXXXX",
+	"streetCode": "XXXXXXXX",
+	"street": "XXXXXXXX",
+	"address": "XXXXXXXX"
+}
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	{
+		"applyCode": "XXX"
+	}
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.28
+
+##### 控制器：AppApply
+
+##### 接口名称：cancelLeaveApply
+
+##### 功能：撤销请假申请单（只有当申请单处于已提交状态才能撤销，并且只能撤销本人的申请单）
+
+##### 方式：post
+
+##### Content-Type：application/x-www-form-urlencoded
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+applyCode			请假申请的单号					字符串类型（来源于接口 getApplyLeaveInfo 的返回值）
+```
+
+##### 返回参数：
+无
+
+##### 错误码：
+无
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": {}
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.29
+
+##### 控制器：AppApply
+
+##### 接口名称：getApplyLeaveList
+
+##### 功能：获取请假申请单列表（只能获取本人的申请单列表）
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：（列表信息以提交时间倒序排序）
+```
+statusCode			请假申请单状态 code	字符串类型（0 为全部类型，其他按实际的 code）（来源于用户选择）
+count				已获取消息数		整型类型（用于分页，意味着从第 count + 1 条开始读）（来源于用户滑动）
+requestCount		请求消息数			整型类型（用于分页，意味着请求多少条数据）（来源于客户端指定）
+```
+
+##### 返回字段：（最多返回 requestCount 条，最少返回 0 条）
+```
+applyCode			请假申请的单号					字符串类型
+reason				请假事由						字符串类型
+submitTimestamp		提交时间戳				 		字符串类型
+statusCode			请假申请单状态 code				字符串类型
+status				请假申请单状态名称				字符串类型
+address				外出的完整地址					字符串类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	[
+		{
+			"applyCode": "XXXXXXXX",
+			"reason": "XXXXXXX",
+			"submitTimestamp": "XXXXXX",
+			"statusCode": "XXXXXXXX",
+			"status": "XXXXXXX",
+			"address": "XXXXXXXX"
+		},
+		{
+			"applyCode": "XXXXXXXX",
+			"reason": "XXXXXXX",
+			"submitTimestamp": "XXXXXX",
+			"statusCode": "XXXXXXXX",
+			"status": "XXXXXXX",
+			"address": "XXXXXXXX"
+		},
+		{
+			"applyCode": "XXXXXXXX",
+			"reason": "XXXXXXX",
+			"submitTimestamp": "XXXXXX",
+			"statusCode": "XXXXXXXX",
+			"status": "XXXXXXX",
+			"address": "XXXXXXXX"
+		},
+		{
+			"applyCode": "XXXXXXXX",
+			"reason": "XXXXXXX",
+			"submitTimestamp": "XXXXXX",
+			"statusCode": "XXXXXXXX",
+			"status": "XXXXXXX",
+			"address": "XXXXXXXX"
+		}
+	]
+}
+```
+
+##### 返回成功例子（没有数据的情况）：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": []
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.30
+
+##### 控制器：AppApply
+
+##### 接口名称：getApplyLeaveInfo
+
+##### 功能：获取请假申请单详细信息（只能获取本人的申请单）
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+applyCode			请假申请的单号			字符串类型（来源于接口 getApplyLeaveList 的返回值）
+```
+
+##### 返回字段：（有多少个状态返回多少个状态，而且按照状态类型从小到大排序）
+```
+applyCode			请假申请单的单号		 		字符串类型
+applyName			申请人的姓名					字符串类型
+reason				请假事由						字符串类型
+startTimestamp		请假起始的日期时间戳	 		 字符串类型
+endTimestamp		请假结束的日期时间戳	 		 字符串类型
+address				外出的完整地址					字符串类型
+applyStatus			申请状态变更列表				列表类型
+[
+	statusCode			状态类型 code				 	字符串类型（1已提交，2审核中，3已同意，4不同意，5已销假，9已撤回）
+	status				状态类型名称					字符串类型（1已提交，2审核中，3已同意，4不同意，5已销假，9已撤回）
+	statusTimestamp		进入该状态的时间戳				字符串类型
+]
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	{
+		"applyCode": "XXXXXXXX",
+		"applyName": "XXXXXXX",
+		"reason": "XXXXXXX",
+		"startTimestamp": "XXXXXX",
+		"endTimestamp": "XXXXXX",
+		"address": "XXXXXXXX",
+		"applyStatus": 
+		[
+			{"statusCode": "XXXXXXXX", "status": "XXXXXXXX", "statusTimestamp": "XXXXXXXX"},
+			{"statusCode": "XXXXXXXX", "status": "XXXXXXXX", "statusTimestamp": "XXXXXXXX"},
+			{"statusCode": "XXXXXXXX", "status": "XXXXXXXX", "statusTimestamp": "XXXXXXXX"},
+			{"statusCode": "XXXXXXXX", "status": "XXXXXXXX", "statusTimestamp": "XXXXXXXX"}
+		]
+	}
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.31
+
+##### 控制器：AppEnumType
+
+##### 接口名称：getHelpType
+
+##### 功能：获取帮扶类型列表
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+无
+
+##### 返回字段：（有多少条返回多少条）
+```
+id					帮扶类型的 id			 		整型类型
+code				帮扶类型的 code					字符串类型
+name				帮扶类型的名称	 		 		字符串类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	[
+		{
+			"id": XXXXXXXX,
+			"code": "XXXXXXX",
+			"name": "XXXXXX"
+		},
+		{
+			"id": XXXXXXXX,
+			"code": "XXXXXXX",
+			"name": "XXXXXX"
+		},
+		{
+			"id": XXXXXXXX,
+			"code": "XXXXXXX",
+			"name": "XXXXXX"
+		},
+		{
+			"id": XXXXXXXX,
+			"code": "XXXXXXX",
+			"name": "XXXXXX"
+		}
+	]
+}
+```
+
+##### 返回成功例子（没有数据的情况）：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": []
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.32
+
+##### 控制器：AppApply
+
+##### 接口名称：applyHelp
+
+##### 功能：帮扶申请
+
+##### 方式：post
+
+##### Content-Type：application/x-www-form-urlencoded
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+helpTypeCode		帮扶类型的 code			字符串类型（来源于用户选择）
+content				帮扶需求内容			字符串类型（来源于用于输入）
+```
+
+##### 返回参数：
+```
+applyCode			帮扶申请单的单号		 		字符串类型
+```
+
+##### 错误码：
+无
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	{
+		"applyCode": "XXX"
+	}
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.33
+
+##### 控制器：AppApply
+
+##### 接口名称：cancelHelpApply
+
+##### 功能：撤销帮扶申请（只有当申请单处于已提交状态才能撤销，并且只能撤销本人的申请单）
+
+##### 方式：post
+
+##### Content-Type：application/x-www-form-urlencoded
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+applyCode			帮扶申请单的单号		 		字符串类型（来源于接口 getApplyHelpInfo 的返回值）
+```
+
+##### 返回参数：
+无
+
+##### 错误码：
+无
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": {}
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.34
+
+##### 控制器：AppApply
+
+##### 接口名称：ratingHelp
+
+##### 功能：评价帮扶（只有当申请单处于已完成状态才能进行该操作，并且只能评价本人的帮扶）
+
+##### 方式：post
+
+##### Content-Type：application/x-www-form-urlencoded
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+applyCode			帮扶申请单的单号		 		字符串类型（来源于接口 getApplyHelpInfo 的返回值）
+content				评价内容						字符串类型（来源于用户输入）
+level				评价等级						整型类型（来源于用户选择）（1~5，对应很差、较差、一般、较好、非常好）
+```
+
+##### 返回参数：
+无
+
+##### 错误码：
+无
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": {}
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.35
+
+##### 控制器：AppApply
+
+##### 接口名称：getApplyHelpList
+
+##### 功能：获取帮扶申请单列表（只能获取本人的申请单列表）
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：（列表信息以提交时间倒序排序）
+```
+statusCode			帮扶申请单状态 code	字符串类型（0 为全部类型，其他按实际的 code）（来源于用户选择）
+helpTypeCode		帮扶类型 code		字符串类型（0 为全部类型，其他按实际的 code）（来源于用户选择）
+count				已获取消息数		整型类型（用于分页，意味着从第 count + 1 条开始读）（来源于用户滑动）
+requestCount		请求消息数			整型类型（用于分页，意味着请求多少条数据）（来源于客户端指定）
+```
+
+##### 返回字段：（最多返回 requestCount 条，最少返回 0 条）
+```
+applyCode			帮扶申请单的单号		 		字符串类型
+submitTimestamp		提交时间戳				 		字符串类型
+helpTypeCode		帮扶类型 code					字符串类型
+helpType			帮扶类型名称					字符串类型
+statusCode			帮扶申请单状态 code				字符串类型
+status				帮扶申请单状态					字符串类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	[
+		{
+			"applyCode": "XXXXXXXX",
+			"submitTimestamp": "XXXXXX",
+			"helpTypeCode": "XXXXX",
+			"helpType": "XXXXXXXX",
+			"statusCode": "XXXXXXXX",
+			"status": "XXXXXXX"
+		},
+		{
+			"applyCode": "XXXXXXXX",
+			"submitTimestamp": "XXXXXX",
+			"helpTypeCode": "XXXXX",
+			"helpType": "XXXXXXXX",
+			"statusCode": "XXXXXXXX",
+			"status": "XXXXXXX"
+		},
+		{
+			"applyCode": "XXXXXXXX",
+			"submitTimestamp": "XXXXXX",
+			"helpTypeCode": "XXXXX",
+			"helpType": "XXXXXXXX",
+			"statusCode": "XXXXXXXX",
+			"status": "XXXXXXX"
+		},
+		{
+			"applyCode": "XXXXXXXX",
+			"submitTimestamp": "XXXXXX",
+			"helpTypeCode": "XXXXX",
+			"helpType": "XXXXXXXX",
+			"statusCode": "XXXXXXXX",
+			"status": "XXXXXXX"
+		}
+	]
+}
+```
+
+##### 返回成功例子（没有数据的情况）：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": []
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.36
+
+##### 控制器：AppApply
+
+##### 接口名称：getApplyHelpInfo
+
+##### 功能：获取帮扶申请单详细信息（只能获取本人的申请单）
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+applyCode			帮扶申请单的 code			整型类型（来源于接口 getApplyHelpList 的返回值）
+```
+
+##### 返回字段：（有多少个状态返回多少个状态，而且按照状态类型从小到大排序）
+```
+applyCode			帮扶申请单的单号		 		字符串类型
+applyName			申请人的姓名					字符串类型
+helpTypeCode		帮扶类型名称 Code				字符串类型
+helpType			帮扶类型名称					字符串类型
+content				帮扶需求内容		 		    字符串类型
+applyStatus			帮扶状态变更列表				列表类型
+[
+	statusCode			状态类型 code					字符串类型（1已提交，2处理中，3已完成，4已评价，9已撤回）
+	status				状态类型名称					字符串类型（1已提交，2处理中，3已完成，4已评价，9已撤回）
+	statusTimestamp		进入该状态的时间戳				 字符串类型
+]
+rating				帮扶评价						对象类型
+{
+	content				评价内容					字符串类型
+	level				评价级别					整型类型（1~5，对应很差、较差、一般、较好、非常好）
+}
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	{
+		"applyCode": "XXXXXXXX",
+		"applyName": "XXXXXXX",
+		"helpTypeCode": "XXXXXXX",
+		"helpType": "XXXXXXX",
+		"content": "XXXXXX",
+		"applyStatus": 
+		[
+			{"statusCode": "XXXXXXXX", "status": "XXXXXXXX", "statusTimestamp": "XXXXXXXX"},
+			{"statusCode": "XXXXXXXX", "status": "XXXXXXXX", "statusTimestamp": "XXXXXXXX"},
+			{"statusCode": "XXXXXXXX", "status": "XXXXXXXX", "statusTimestamp": "XXXXXXXX"},
+			{"statusCode": "XXXXXXXX", "status": "XXXXXXXX", "statusTimestamp": "XXXXXXXX"}
+		],
+		"rating":
+		{
+			"content": "XXXXXXXXX",
+			"level": XXXXX
+		}
+	}
+}
+```
+
+##### 返回成功例子（未进行评价时的情况）：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	{
+		"applyCode": "XXXXXXXX",
+		"helpTypeCode": "XXXXXXX",
+		"helpType": "XXXXXXX",
+		"content": "XXXXXX",
+		"applyStatus": 
+		[
+			{"statusCode": "XXXXXXXX", "status": "XXXXXXXX", "statusTimestamp": "XXXXXXXX"},
+			{"statusCode": "XXXXXXXX", "status": "XXXXXXXX", "statusTimestamp": "XXXXXXXX"},
+			{"statusCode": "XXXXXXXX", "status": "XXXXXXXX", "statusTimestamp": "XXXXXXXX"},
+			{"statusCode": "XXXXXXXX", "status": "XXXXXXXX", "statusTimestamp": "XXXXXXXX"}
+		],
+		"rating": null
+	}
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+--- 
+### 3.37
+
+##### 控制器：AppApply
+
+##### 接口名称：applyAddressChange
+
+##### 功能：地址变更申请
+
+##### 方式：post（该接口使用 json 的形式上传数据）
+
+##### Content-Type：application/json
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+reason				变更事由				字符串类型（来源于用户输入）
+provinceCode		省份编码				字符串类型（来源于用户选择）
+province			省份名称				字符串类型（来源于用户选择）
+cityCode			城市编码				字符串类型（来源于用户选择）
+city				城市名称				字符串类型（来源于用户选择）
+districtCode		区县编码				字符串类型（来源于用户选择）
+district			区县名称				字符串类型（来源于用户选择）
+streetCode			镇街编码				字符串类型（来源于用户选择）
+street				镇街名称				字符串类型（来源于用户选择）
+address				详细地址				字符串类型（来源于用户输入）
+```
+
+##### 返回参数：
+```
+applyCode			地址变更申请单的单号		 		字符串类型
+```
+
+##### 错误码：
+无
+
+##### 提交的参数形式如下：
+```json
+{
+	"reason": "XXXXXXXX",
+	"provinceCode": "XXXXXXXX",
+	"province": "XXXXXXXX",
+	"cityCode": "XXXXXXXX",
+	"city": "XXXXXXXX",
+	"districtCode": "XXXXXXXX",
+	"district": "XXXXXXXX",
+	"streetCode": "XXXXXXXX",
+	"street": "XXXXXXXX",
+	"address": "XXXXXXXX"
+}
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	{
+		"applyCode": "XXX"
+	}
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.38
+
+##### 控制器：AppApply
+
+##### 接口名称：cancelAddressChangeApply
+
+##### 功能：撤销地址变更申请单（只有当申请单处于已提交状态才能撤销，并且只能撤销本人的申请单）
+
+##### 方式：post
+
+##### Content-Type：application/x-www-form-urlencoded
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+applyCode			地址变更申请单的单号		 		字符串类型（来源于接口 getApplyAddressChangeInfo 的返回值）
+```
+
+##### 返回参数：
+无
+
+##### 错误码：
+无
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": {}
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.39
+
+##### 控制器：AppApply
+
+##### 接口名称：getApplyAddressChangeList
+
+##### 功能：获取地址变更申请单列表（只能获取本人的申请单列表）
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：（列表信息以提交时间倒序排序）
+```
+statusCode			地址变更申请单状态 code	字符串类型（0 为全部类型，其他按实际的 code）（来源于用户选择）
+count				已获取消息数			整型类型（用于分页，意味着从第 count + 1 条开始读）（来源于用户滑动）
+requestCount		请求消息数				整型类型（用于分页，意味着请求多少条数据）（来源于客户端指定）
+```
+
+##### 返回字段：（最多返回 requestCount 条，最少返回 0 条）
+```
+applyCode			地址变更申请单的单号		 	字符串类型
+submitTimestamp		提交时间戳				 		字符串类型
+statusCode			地址变更申请单状态 code			字符串类型（1已提交，2审核中，3已同意，4不同意，5已完成，9已撤回）
+status				地址变更申请单状态名称			字符串类型（1已提交，2审核中，3已同意，4不同意，5已完成，9已撤回）
+address				变更的完整地址					字符串类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	[
+		{
+			"applyCode": "XXXXXXXX",
+			"submitTimestamp": "XXXXXX",
+			"statusCode": "XXXXXXXX",
+			"status": "XXXXXXXX",
+			"address": "XXXXXXXX"
+		},
+		{
+			"applyCode": "XXXXXXXX",
+			"submitTimestamp": "XXXXXX",
+			"statusCode": "XXXXXXXX",
+			"status": "XXXXXXXX",
+			"address": "XXXXXXXX"
+		},
+		{
+			"applyCode": "XXXXXXXX",
+			"submitTimestamp": "XXXXXX",
+			"statusCode": "XXXXXXXX",
+			"status": "XXXXXXXX",
+			"address": "XXXXXXXX"
+		},
+		{
+			"applyCode": "XXXXXXXX",
+			"submitTimestamp": "XXXXXX",
+			"statusCode": "XXXXXXXX",
+			"status": "XXXXXXXX",
+			"address": "XXXXXXXX"
+		}
+	]
+}
+```
+
+##### 返回成功例子（没有数据的情况）：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": []
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.40
+
+##### 控制器：AppApply
+
+##### 接口名称：getApplyAddressChangeInfo
+
+##### 功能：获取地址变更申请单详细信息（只能获取本人的申请单）
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+applyCode			地址变更申请单的单号		 	字符串类型（来源于接口 getApplyAddressChangeList 的返回值）
+```
+
+##### 返回字段：（有多少个状态返回多少个状态，而且按照状态类型从小到大排序）
+```
+applyCode			地址变更申请单的单号		 	字符串类型
+applyName			申请人的姓名					字符串类型
+reason				变更事由						字符串类型
+address				变更的完整地址					字符串类型
+applyStatus			申请状态变更列表				列表类型
+[
+	statusCode			状态类型 code					字符串类型（1已提交，2审核中，3已同意，4不同意，5已完成，9已撤回）
+	status				状态类型名称					字符串类型（1已提交，2审核中，3已同意，4不同意，5已完成，9已撤回）
+	statusTimestamp		进入该状态的时间戳				字符串类型
+]
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	{
+		"applyCode": "XXXXXXXX",
+		"applyName": "XXXXXXX",
+		"reason": "XXXXXXX",
+		"address": "XXXXXXXX",
+		"applyStatus": 
+		[
+			{"statusCode": "XXXXXXXX", "status": "XXXXXXXX", "statusTimestamp": "XXXXXXXX"},
+			{"statusCode": "XXXXXXXX", "status": "XXXXXXXX", "statusTimestamp": "XXXXXXXX"},
+			{"statusCode": "XXXXXXXX", "status": "XXXXXXXX", "statusTimestamp": "XXXXXXXX"},
+			{"statusCode": "XXXXXXXX", "status": "XXXXXXXX", "statusTimestamp": "XXXXXXXX"}
+		]
+	}
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.41
+
+##### 控制器：AppApply
+
+##### 接口名称：getApplyLeaveStatus
+
+##### 功能：获取请假申请单状态枚举列表
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：（列表以 code 的顺序排序）
+无
+
+##### 返回字段：（返回列表）
+```
+id					状态类型的 id			 		整型类型
+code				状态类型的 code					字符串类型
+name				状态类型的名称	 		 		字符串类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	[
+		{
+			"id": XXXXXXXX,
+			"code": "XXXXXXX",
+			"name": "XXXXXX"
+		},
+		{
+			"id": XXXXXXXX,
+			"code": "XXXXXXX",
+			"name": "XXXXXX"
+		},
+		{
+			"id": XXXXXXXX,
+			"code": "XXXXXXX",
+			"name": "XXXXXX"
+		},
+		{
+			"id": XXXXXXXX,
+			"code": "XXXXXXX",
+			"name": "XXXXXX"
+		}
+	]
+}
+```
+
+##### 返回成功例子（没有数据的情况）：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": []
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.42
+
+##### 控制器：AppApply
+
+##### 接口名称：getApplyHelpStatus
+
+##### 功能：获取帮扶申请单状态枚举列表
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：（列表以 code 的顺序排序）
+无
+
+##### 返回字段：（返回列表）
+```
+id					状态类型的 id			 		整型类型
+code				状态类型的 code					字符串类型
+name				状态类型的名称	 		 		字符串类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	[
+		{
+			"id": XXXXXXXX,
+			"code": "XXXXXXX",
+			"name": "XXXXXX"
+		},
+		{
+			"id": XXXXXXXX,
+			"code": "XXXXXXX",
+			"name": "XXXXXX"
+		},
+		{
+			"id": XXXXXXXX,
+			"code": "XXXXXXX",
+			"name": "XXXXXX"
+		},
+		{
+			"id": XXXXXXXX,
+			"code": "XXXXXXX",
+			"name": "XXXXXX"
+		}
+	]
+}
+```
+
+##### 返回成功例子（没有数据的情况）：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": []
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.43
+
+##### 控制器：AppApply
+
+##### 接口名称：getApplyAddressChangeStatus
+
+##### 功能：获取地址变更申请单状态枚举列表
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：（列表以 code 的顺序排序）
+无
+
+##### 返回字段：（返回列表）
+```
+id					状态类型的 id			 		整型类型
+code				状态类型的 code					字符串类型
+name				状态类型的名称	 		 		字符串类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	[
+		{
+			"id": XXXXXXXX,
+			"code": "XXXXXXX",
+			"name": "XXXXXX"
+		},
+		{
+			"id": XXXXXXXX,
+			"code": "XXXXXXX",
+			"name": "XXXXXX"
+		},
+		{
+			"id": XXXXXXXX,
+			"code": "XXXXXXX",
+			"name": "XXXXXX"
+		},
+		{
+			"id": XXXXXXXX,
+			"code": "XXXXXXX",
+			"name": "XXXXXX"
+		}
+	]
+}
+```
+
+##### 返回成功例子（没有数据的情况）：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": []
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.44
+
+##### 控制器：AppMessage
+
+##### 接口名称：getUnReadNotifications
+
+##### 功能：获取未读消息数（只获取当前用户未读消息数）
+
+##### 方式：get
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+无
+
+##### 返回字段：
+```
+count				未读消息数			 			整型类型
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": 
+	{
+		"count": XXXXXXXX
+	}
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+--- 
+### 3.45
+
+##### 控制器：AppMessage
+
+##### 接口名称：readNotifications
+
+##### 功能：提交已读消息（只能确认当前用户自己的消息，相当于将未读消息标记为已读）
+
+##### 方式：post（该接口使用 json 的形式上传数据）
+
+##### Content-Type：application/json
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：（提交参数为 id 列表）
+```
+id					通知提醒或系统消息的 id		 	 字符串类型						
+```
+
+##### 返回参数：
+无
+
+##### 错误码：
+无
+
+##### 提交的参数形式如下：
+```json
+[
+	"id1",
+	"id2",
+	"id3",
+	"id4",
+	"id5",
+	"id6",
+	"idN"
+]
+```
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": {}
+}
+```
+
+##### 已知错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+### 3.46
+
+##### 控制器：AppSupervise	
+
+##### 接口名称：uploadLocationError
+
+##### 功能：上报自动定位定位失败信息
+
+##### 方式：post
+
+##### Content-Type：application/x-www-form-urlencoded
+
+##### header：
+```
+AppToken	验证身份的 token 串
+Timestamp	时间戳
+Type		访问设备类型（Android 端默认是：Android）
+Version		访问客户端版本号（Android 端的版本号格式是：X.Y.Z，例如：0.1.1）
+```
+
+##### 参数：
+```
+errorCode			定位失败错误码				字符串类型（来源于手机定位）
+errorMsg			定位失败错误信息			字符串类型（来源于手机定位）
+```
+
+##### 返回参数：
+无
+
+##### 错误码：
+无
+
+##### 返回成功例子：
+```json
+{
+	"resultCode": 0,
+	"resultMsg": "",
+	"data": {}
+}
+```
+
+##### 一般错误：
+```json
+{
+	"resultCode": 1,
+	"resultMsg": "XXXXX", // 具体信息
+	"data": null
+}
+```
+
+##### 其他异常错误：
+```json
+{
+	"resultCode": 5,
+	"resultMsg": "XXXXXX",
+	"data": null
+}
+```
+[回到目录](#目录)
+
+---
+## 四、接口文档变更记录
+#### v0.2.3
+_2019-09-28_
+
+- 增加接口 [获取未读消息数 getUnReadNotifications](#3.44)、[提交已读消息 readNotifications](#3.45)；
+- 调整接口 [获取通知消息列表 getNotifications](#3.21)，增加 isRead 返回参数；
+- [自动上报位置 autoLocation](#3.13) 可以开始做了；
+- [手动上报位置 manualLocation](#3.16) 修正返回例子中参数名字错误问题 time -> timestamp，增加传入参数 locationType；
+- 增加接口 [上报自动定位定位失败信息 uploadLocationError](#3.46)；
+
+
+#### v0.2.2
+_2019-09-19_
+
+- 增加[第三次测试日志](T3-2019-09-19)；
+- 使用中划线删除[第二次测试日志](#T2-2019-09-17)中已处理的问题；
+
+#### v0.2.1
+_2019-09-18_
+
+- 调整文档格式，增加文档变更记录日期；
+- 去除所有接口中关于 token 验证失败的返回例子，token 验证失败统一改为由 Http 返回 401 错误码；
+- 增加[第二次测试日志](#T2-2019-09-17)；
+- 使用中划线删除了[第一次测试日志为](#T1-2019-09-12)中已处理的问题；
+
+#### v0.2.0
+_2019-09-16_
+
+- 调整接口 [getUserGroup](#3.20) 的需求说明和返回例子说明；
+- 根据实际控制器情况，为接口文档中所有控制器补充上 App 的前缀；
+- 增加第五部分接口测试日志，记录测试接口出现的问题，[第一次测试日志为](#T1-2019-09-12)；
+- 调整文档 [getApplyHelpInfo](#3.36) 接口中入参忘记调整成 applyCode 的问题；
+- 补充获取申请单列表和申请单详情的相关权限说明，只能获取当前登录用户的申请单；
+
+#### v0.1.9
+- 由于产品改需求
+- [getNotifications](#3.21) 接口返回字段去掉 status 字段，content 字段调整说明，入参去掉 type 参数，获取的是当前用户接受到所有系统消息和通知提醒；
+- [getNotificationInfo](#3.22) 接口返回字段去掉 title 字段；
+
+#### v0.1.8
+- [getNotifications](#3.21) 接口增加关联字段 contactCode
+- [getNotificationInfo](#3.22) 接口中的 id 调整成字符串类型的 code，以适应 getNotifications 关联字段 contactCode 的类型变化；
+
+#### v0.1.7
+- 补充 [getApplyLeaveList](#3.29)、[getApplyHelpList](#3.35)、[getApplyAddressChangeList](#3.39) 列表排序说明；
+- 补充 [getApplyLeaveStatus](#3.41)、[getApplyHelpStatus](#3.42)、[getApplyAddressChangeStatus](#3.43) 枚举排序说明；
+- 接口 [getApplyLeaveInfo](#3.30)、[getApplyHelpInfo](#3.36)、[getApplyAddressChangeInfo](#3.40) 增加一个返回字段 申请人姓名 applyName；
+- 所有申请单相关接口的关联 id 改为 applyCode 申请单号；
+
+#### v0.1.6
+- 增加 markdown 目录跳转功能；
+- 调整 [getNotifications](#3.21) 接口，增加 status 返回参数；
+- 调整 [getNotificationInfo](#3.22) 接口，增加 title 返回参数，删除 detailTypeName 返回参数；
+- 纠正 [getApplyLeaveInfo](#3.30) 接口参数名称错误；
+- 补充 [getApplyHelpList](#3.35) 返回参数缺失字段；
+- 调整 [getApplyLeaveList](#3.29)、[getApplyLeaveInfo](#3.30)、[getApplyHelpList](#3.35)、[getApplyHelpInfo](#3.36)、[getApplyAddressChangeList](#3.39)、[getApplyAddressChangeInfo](#3.40) 中 status 的字段，将原有入参中 status 更改为 statusCode, 返回参数中增加 statusId 并把原有 status 改为字符串类型；
+- 调整 [getApplyHelpList](#3.35) 入参增加 helpTypeCode，getApplyHelpInfo 返回参数增加 helpTypeCode；
+- 增加 [getApplyLeaveStatus](#3.41)、[getApplyHelpStatus](#3.42)、[getApplyAddressChangeStatus](#3.43) 共三个获取申请单枚举状态列表的接口；
+- 补充 [validFace](#3.15) 接口中返回结果中漏掉的参数 face
+
+#### v0.1.5
+- 增加获取学员小组成员接口；
+- 增加获取系统消息和通知提醒相关若干接口；
+- 增加请假申请单、地址变更申请单、帮扶申请单相关若干接口；
+- 调整接口文档样式，从一般文本形式调整为 markdown 形式；
+
+#### v0.1.4
+- 调整注册相关接口，从一个接口分拆成多个；
+- 调整重置密码相关接口，从一个接口分拆成多个；
+- 调整修改密码相关接口，从一个接口分拆成多个；
+- 调整手动上报位置接口的输入参数和参数传输形式；
+
+#### v0.1.3
+- 接口细微调整
+
+#### v0.1.2
+- 新增一个接口 [getFaceSimilar](#3.19)；
+- 调整 [getFaceFeature](#3.14) 接口参数；
+- 增加 [sendValidCode](#3.3) 错误返回码；
+
+#### v0.1.1
+- 接口细微调整；
+
+#### v0.1.0
+- 初步定义登录、注册、身份认证、位置上报、修改密码功能的若干接口；
+
+[回到目录](#目录)
+
+---
+## 五、测试日志
+
+#### T3-2019-09-19
+针对 [v0.2.1](#v0.2.0) 进行测试
+
+针对[第二次测试](#T2-2019-09-17)出现的问题，本次测试后发现除了短信模板外，大部分问题都处理完毕了。经过联调，也发现一些数据关联上的问题：
+
+1、~~[getUserInfo](#3.8) 接口中，学员的所属区域应该去除横杠，学员被服务站点是缺失的，学员的姓名最好使用学员信息的姓名，而不要使用实名信息中的姓名，学员的现居住地信息需要包含省市区县等信息，不能只有详细地址（除非学员信息中没有省市区县等信息），目前的返回信息为：~~
+```json
+{
+    "resultCode": 0,
+    "resultMsg": "",
+    "data": {
+        "id": 1300,
+        "name": "刘甲付",
+        "headUrl": "http://192.168.10.88/data/Image/User/2019-09-18/2019-09-18-02-40-54ce50c20190428105451356-1.jpg",
+        "phone": "15918182252",
+        "controlArea": "广东省/中山市/中山市市区/东区/起湾社区居民委员会",
+        "livingPlace": "银湾东路5号20栋704房",
+        "servicePoint": ""
+    }
+}
+```
+~~使用的 AppToken 为：~~
+```
+riJqbvtokZgr9fodBHnwPoVePMQE0bC2wFmNa0LS5zWVJFj7HWevyW3iySpJl8nA1GdPSgXNqeNNSx8ySHWKChKCmB3N+e609BnWEIc5DIBcDK/PabEow8jaL7R7S9A+uNE5qC04phD0y0j9kLDW/Q==
+```
+
+2、~~[getNotifications](#3.21) 接口没有按照时间倒序排序~~
+
+3、~~[getNotifications](#3.21) 接口中对于通知提醒类的消息， contactCode 对应的是消息表的 id~~
+
+4、~~[getNotificationInfo](#3.22) 接口应该根据 id 获取消息表的记录，而且需要判断传入的 code 是否为整型~~
+
+5、~~[getNotificationInfo](#3.22) 接口中的发送人是社工，并不是关联用户表的~~
+
+6、~~[validFace](#3.15) 接口如果使用的图片跟注册的图片链接不一样，那么就会报错：~~
+```json
+{
+    "resultCode": 1,
+    "resultMsg": "无此图片，请重新上传",
+    "data": null
+}
+```
+
+7、~~[getApplyLeaveList](#3.29)、[getApplyHelpList](#3.35)、[getApplyAddressChangeList](#3.39) 三个接口在没数据时都会报：~~
+```json
+{
+    "resultCode": 1,
+    "resultMsg": "获取失败",
+    "data": null
+}
+```
+~~而不是：~~
+```json
+{
+    "resultCode": 0,
+    "resultMsg": "",
+    "data": []
+}
+```
+
+
+[回到目录](#目录)
+
+---
+#### T2-2019-09-17
+针对 [v0.2.0](#v0.2.0) 进行测试
+
+针对[第一次测试](#T1-2019-09-12)出现的问题，本次测试后发现大部分问题都处理了，但也有部分问题延续到本次测试。本次测试主要针对上次测试没有数据显示的接口，未作测试的接口进行测试，并发现问题如下：
+
+1、~~[validRegisterAccount](#3.4) 接口如下参数调用时有报错信息~~  
+~~参数：~~
+```
+account			15918182253
+name			林伟 健
+```
+~~报错信息：~~
+```json
+{
+    "resultCode": 5,
+    "resultMsg": "在位置 0 处没有任何行。",
+    "data": null
+}
+```
+
+2、~~[registerAccount](#3.6)、[resetPassowrd](#3.12) 接口保存的密码的方式应该与登录验证密码的方式保持一致，该接口 password 传入的同样是 MD5 字符串，而不是明文密码~~
+
+3、~~[validResetAccount](#3.11) 接口调用报错~~  
+~~调用参数：~~
+```
+phone		15918182252
+```
+~~报错信息：~~
+```json
+{
+    "resultCode": 5,
+    "resultMsg": "System.ArgumentNullException: String 引用没有设置为 String 的实例。\r\n参数名: s\r\n   在 System.Text.Encoding.GetBytes(String s)\r\n   在 AntiDrugassembly.Encrypt.AESEncrypt.BaseEncrypt(String encryptStr, String key)\r\n   在 AntiDrugassembly.Encrypt.EncryptHelper.BaseEncrypt(String encryptStr)\r\n   在 AntiDrugBusiness.AppInformation.AppLoginInformation.AppLoginInformation.validResetAccount(String account)\r\n   在 AntiDrugFactoryClass.MethodClass.AppMethod.AppLoginMethod.AppLoginMethodClass.validResetAccount(String account)\r\n   在 AntiDrugWebApi.Controllers.App.AppLogin.AppLoginController.validResetAccount(validResetAccount modul)",
+    "data": null
+}
+```
+
+4、~~[sendValidCode](#3.2) 接口类型为重置密码时，发送的短信内容依然为：“...此验证码仅用于注册账号...”~~
+
+5、~~[confirmValidCode](#3.5)~~   
+~~当我重置密码时获取验证码后，我在注册功能验证该验证码，此时接口返回验证码错误~~  
+~~然后我再在重置密码验证该验证码，依然返回验证码错误，但实际上，该验证码并没有成功使用过~~ 
+
+6、~~包括且不限于 [accountLogin](#3.2)、[validPassword](#3.9)、[modifyPassword](#3.10)、[resetPassword](#3.12)、[registerAccount](#3.6) 等涉及 MD5 参数的接口，传入的 MD5 都是全大写的，所以如果数据库存储的是小写的 MD5，请自行调整成小写后再**匹配和记录**，其中登录接口调试返回结果为：~~
+```json
+{
+    "resultCode": 11,
+    "resultMsg": "密码错误",
+    "data": null
+}
+```
+~~参数为：~~
+```
+account			13250370445
+password		5530EE7E61B525887516E915968E004C
+```
+
+7、~~[getUserGroup](#3.20) 接口调用返回错误信息：~~
+```json
+{
+    "resultCode": 1,
+    "resultMsg": "在位置 0 处没有任何行。",
+    "data": null
+}
+```
+~~调用的 AppToken 为：~~
+```
+m1NzC2jzohlhHFAXQts0XlCvNfYORYbMBc3/J8VWtnFtmdEHlicGcqr6UntZhBPaaaktF1zaA2bixzmlIyYBQ/s7ZZIzbN8TJdGWc/pP6eBcDK/PabEow8jaL7R7S9A+ha6ISH2PwU+8I5ch8EgfzA==
+```
+
+8、~~[getFaceSimilar](#3.19) 接口返回信息为：~~
+```json
+0.8
+```
+~~请根据文档返回格式的要求调整返回格式~~
+
+9、~~[getNotificationInfo](#3.22) 接口返回的是列表数据，但要求返回的并不是列表数据，请修复~~
+```json
+{
+    "resultCode": 0,
+    "resultMsg": "",
+    "data": [
+        {
+            "code": "1",
+            "detailType": 1,
+            "timestamp": "1352648215",
+            "content": "不知道写啥",
+            "fromName": "余学科",
+            "toName": "唐继豪"
+        }
+    ]
+}
+```
+
+10、~~[manualLocation](#3.16) 接口提交报错，报错信息为：~~
+```json
+{
+    "resultCode": 5,
+    "resultMsg": "不能将值 NULL 插入列 'ReportName'，表 'dw_pe_volunteer_2019.dbo.App_Location'；列不允许有 Null 值。INSERT 失败。\r\n语句已终止。",
+    "data": null
+}
+```
+~~提交参数为：~~
+```json
+{
+	"latitude": 23.020144,
+	"longitude": 113.165148,
+	"address": "广东省佛山市南海区华翠南路8号靠近天安数码城4期",
+	"activityDescription": "正常上班",
+	"medias": [
+		"http://192.168.10.88/data/Image/User/2019-09-18/2019-09-18-10-43-1157c42timgD68BSLNO.jpg"
+	],
+	"recognizedId": 32
+}
+```
+~~使用的 AppToken 为：~~
+```
+PvIVkHICNZM2PvNhiyGdHozTkac8TOlYf3yZMHHCwVS7NARI9ZAj2gOEvj7qAAOzW35BYmuCGVxxjzhzw7uICBKCmB3N+e609BnWEIc5DIBcDK/PabEow8jaL7R7S9A+M311qKW7xtuaaedCp2j7iA==
+```
+
+[回到目录](#目录)
+
+---
+#### T1-2019-09-12
+针对 [v0.1.9](#v0.1.9) 版本进行测试
+1、~~[getUpdateInfo](#3.1) 接口的 versionCode 字段返回参数应该为整型，但返回结果是字符串类型：~~
+```json
+{
+    "resultCode": 0,
+    "resultMsg": "",
+    "data": {
+        "name": "application.apk",
+        "version": "1.0.0",
+        "versionCode": "1.0",
+        "url": "http://baidu.com",
+        "msg": "登录"
+    }
+}
+
+```
+
+2、~~T_Version 这个数据表的 url 字段太短了，无法写入长 url
+（p.s. 我已经调整了 dw_pe_volunteer_2019 库中该表字段，请自行同步到其他需要使用到的库中，如果需要更新实体类，请自行更新）~~
+
+3、~~[accountLogin](#3.2) 接口传入参数 password 应该为登录密码的 MD5 值，但实际上传入明文密码才能返回成功，传入 MD5 提示密码错误：~~
+```json
+{
+    "resultCode": 11,
+    "resultMsg": "密码错误",
+    "data": null
+}
+```
+
+4、~~[accountLogin](#3.2) 接口返回成功的结果中，tExpiresTime 和 rExpiresTime 都是以秒为单位的时间戳，此处明确说明一下，所有时间错都是以毫秒为单位的时间戳：~~
+```json
+{
+    "resultCode": 0,
+    "resultMsg": "",
+    "data": {
+        "token": "qmlsvk71jt7MOX9zDsVPe3WyWpWyjdplCjUTqUcfXaNIXhfSbUhZyd5HOhOhyKGzaaktF1zaA2bixzmlIyYBQ/s7ZZIzbN8TJdGWc/pP6eBcDK/PabEow8jaL7R7S9A+uR6CmgQU1rISmI1G8oQfgg==",
+        "tExpiresTime": "1568702083",
+        "refreshToken": "qmlsvk71jt7MOX9zDsVPe3WyWpWyjdplCjUTqUcfXaNIXhfSbUhZyd5HOhOhyKGzaaktF1zaA2bixzmlIyYBQ/s7ZZIzbN8TJdGWc/pP6eBcDK/PabEow8jaL7R7S9A+uR6CmgQU1rISmI1G8oQfgg==",
+        "rExpiresTime": "1568702083"
+    }
+}
+```
+
+5、
+- ~~[sendValidCode](#3.3)~~
+- ~~[validRegisterAccount](#3.4)~~
+- ~~[confirmValidCode](#3.5)~~
+- ~~[registerAccount](#3.6)~~
+- ~~[registerIdentification](#3.7)~~
+- ~~[validResetAccount](#3.11)~~
+- ~~[resetPassword](#3.12)~~  
+~~这 7 个接口涉及数据库中手机号修改，暂未测试，留待后续测试~~
+
+6、~~[getUserInfo](#3.8) 接口提示没有任何行的错误，本次使用的 AppToken 值为~~
+```
+qmlsvk71jt7MOX9zDsVPe3WyWpWyjdplCjUTqUcfXaNIXhfSbUhZyd5HOhOhyKGzaaktF1zaA2bixzmlIyYBQ/s7ZZIzbN8TJdGWc/pP6eBcDK/PabEow8jaL7R7S9A+uR6CmgQU1rISmI1G8oQfgg==
+```
+~~返回结果为：~~
+```json
+{
+    "resultCode": 5,
+    "resultMsg": "在位置 0 处没有任何行。",
+    "data": null
+}
+```
+
+7、~~[validPassword](#3.9) 接口参数 password 的值为 000000，此处跟第 3 点一样，应该使用密码的 MD5 作为传入参数，传入 MD5 密码返回：~~
+```json
+{
+    "resultCode": 11,
+    "resultMsg": "原密码错误",
+    "data": null
+}
+```
+
+8、~~[modifyPassword](#3.10) 接口接收的 newPassword 参数应该也是 MD5，而不应该是明文密码~~
+
+9、~~[getFaceFeature](#3.14) 接口返回的链接地址无法访问~~
+```json
+{
+    "resultCode": 0,
+    "resultMsg": "",
+    "data": {
+        "url": "http://192.168.10.88/data/Image/User/2019-09-11/2019-09-11-06-55-2087125timg[10].jpg"
+    }
+}
+```
+
+10、~~[validFace](#3.15) 接口听说还没搞好，暂未测试~~
+
+11、~~[manualLocation](#3.16) 接口由于  [validFace](#3.15) 未搞好，无法测试~~
+
+12、~~[uploadFile](#3.17) 接口报错，提示：~~
+```json
+{
+    "resultCode": 5,
+    "resultMsg": "未将对象引用设置到对象的实例。",
+    "data": null
+}
+```
+~~使用 AppToken 同上，参数 file 为一个图片文件~~
+
+13、~~[uploadFace](#3.18) 接口报错，提示：~~
+```json
+{
+    "resultCode": 1,
+    "resultMsg": "System.NullReferenceException: 未将对象引用设置到对象的实例。\r\n   在 AntiDrugWebApi.Controllers.App.AppUpload.AppUploadController.uploadFace(UploadImg upload)",
+    "data": null
+}
+```
+~~使用的 AppToken 同上，参数 face 是名为 20190428105451356-1.jpg 的文件，faceFeature 是名为 20190428105451356-1.face 的文件~~
+
+14、~~[getFaceSimilar](#3.19) 接口无须验证 Token 值，但报错提示：~~
+```json
+{
+    "Message": "Token 不正确,怀疑已被非法篡改"
+}
+```
+
+15、~~[getUserGroup](#3.20) 接口调整了需求说明，请自行查看相应接口说明~~
+
+16、~~[getNotifications](#3.21)、[getNotificationInfo](#3.22) 接口需要一些合适的数据提供测试~~
+
+17、~~所有涉及 token 的接口，在没有 AppToken 的情况下应该返回：~~
+```json
+{
+	"resultCode": 2,
+	"resultMsg": "token 已失效",
+	"data": null
+}
+```
+~~而不应该返回：~~
+```json
+{
+    "Message": "Token 不正确,怀疑已被非法篡改"
+}
+```
+
+18、~~[applyLeave](#3.27) 申请单接口传入的时间戳参数为以毫秒为单位的时间戳，而不是以秒为单位的时间戳，但现在记入数据库的是使用以秒为单位的时间戳，此处可能需要调整~~
+
+19、~~[getApplyLeaveList](#3.29) 获取请假申请单列表接口返回字段名称错误，submitTimestamp1 -> statusCode~~
+```json
+{
+    "resultCode": 0,
+    "resultMsg": "",
+    "data": [
+        {
+            "applyCode": "qj20190916091657",
+            "reason": "我想请假回乡过国庆",
+            "submitTimeStamp": "1568596617",
+            "submitTimestamp1": "9",
+            "status": "已撤回",
+            "address": "广东省佛山市南海区桂城街道千灯湖片区"
+        }
+    ]
+}
+```
+
+20、~~[getApplyLeaveInfo](#3.30) 接口返回的 statusTimestamp 时间戳并不是以毫秒为单位的时间戳，应该所有获取申请单列表和获取申请单详情的接口都可能有这个问题，请调整和检查~~
+
+21、~~经测试 [applyHelp](#3.32) 接口，只要连续提交，会生成重复单号，此类申请单提交接口都可能有该问题，请修复和检查~~
+
+22、~~[getApplyHelpList](#3.35) 接口出现重复的申请单，应该由于提交申请单重复导致的，此类获取申请单列表的接口都应可能有这个问题，请修复和检查~~
+
+23、~~[getApplyHelpInfo](#3.36) 接口同样因为申请单重复的问题，到处返回参数中状态列表出现重复状态记录：~~
+```json
+{
+    "resultCode": 0,
+    "resultMsg": "",
+    "data": {
+        "applyCode": "BF20190916095421",
+        "applyName": "唐继豪",
+        "helpTypeCode": "1",
+        "helpType": "就业帮扶",
+        "content": "希望就业",
+        "applyStatus": [
+            {
+                "statusCode": "1",
+                "status": "已提交",
+                "statusTimestamp": "1568598861"
+            },
+            {
+                "statusCode": "1",
+                "status": "已提交",
+                "statusTimestamp": "1568598861"
+            },
+            {
+                "statusCode": "9",
+                "status": "已撤回",
+                "statusTimestamp": "1568599194"
+            }
+        ],
+        "rating": null
+    }
+}
+```
+~~此类获取申请单详情的接口都可能有该问题，请修复和检查~~
+
+24、~~[cancelAddressChangeApply](#3.38) 接口，输入其他用户的申请单号一样能撤销成功，应该只能撤销自己的申请单，此类撤销接口都可能有该问题，请修复和检查~~
+
+25、~~[getApplyAddressChangeInfo](#3.40) 接口，输入其他用户的申请单号，报错：~~
+```json
+{
+    "resultCode": 5,
+    "resultMsg": "在位置 0 处没有任何行。",
+    "data": null
+}
+```
+~~希望能用合适的信息提示没有权限，而不是返回异常信息~~
+
+26、~~[getApplyLeaveStatus](#3.41) 接口返回数据未按 code 顺序排序，此类获取申请单状态的接口可能都存在这个问题，请修复并检查~~
+
+[回到目录](#目录)

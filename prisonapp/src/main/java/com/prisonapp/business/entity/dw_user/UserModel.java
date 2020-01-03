@@ -12,6 +12,7 @@ public class UserModel {
   private String areacode;
   private String status;
   private String phone;
+  private String personid;
 
 
   public long getId() {
@@ -103,4 +104,11 @@ public class UserModel {
     this.phone = phone;
   }
 
+  public String getPersonid() {
+    return personid;
+  }
+
+  public void setPersonid(String personid) {
+    this.personid = personid;
+  }
 }

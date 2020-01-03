@@ -2,6 +2,8 @@ package com.prisonapp.business.service.dw_supervise;
 
 import com.prisonapp.business.dao.dw_supervise.SuperviseDao;
 import com.prisonapp.business.entity.dw_supervise.*;
+import com.prisonapp.business.entity.dw_user.UserModel;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +28,14 @@ public class SuperviseService {
         return superviseDao.applyRecord(code);
     }
 
-    public int submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel, Date startDate,Date endDate, String code, String userId){
-        return superviseDao.submitApplyLeave(submitApplyLeaveModel,startDate,endDate,code,userId);
+    public int submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel, Date startDate,Date endDate, String code, String userId,String personname){
+        return superviseDao.submitApplyLeave(submitApplyLeaveModel,startDate,endDate,code,userId,personname);
     }
+
+    public List<UserModel> getPersonname(String userId){
+        return superviseDao.getPersonname(userId);
+    }
+
 
     public List<GetSuperviseTaskModel> getSuperviseTask(String userId){
         return superviseDao.getSuperviseTask(userId);

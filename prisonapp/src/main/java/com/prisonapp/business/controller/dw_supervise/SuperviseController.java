@@ -4,6 +4,7 @@ package com.prisonapp.business.controller.dw_supervise;
 import com.common.common.Uploadfiles.Upload;
 import com.common.common.result.ResultSet;
 import com.prisonapp.business.entity.dw_supervise.*;
+import com.prisonapp.business.entity.dw_user.UserModel;
 import com.prisonapp.business.service.dw_supervise.SuperviseService;
 import com.prisonapp.session.SessionContext;
 import com.prisonapp.token.TokenUtil;
@@ -12,6 +13,7 @@ import com.prisonapp.tool.AESDecode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.catalina.User;
 import org.apache.poi.ss.formula.functions.T;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +78,8 @@ public class SuperviseController {
         Date dateStartDate = new Date(Long.valueOf(longStartDate));
         Long  longEndDate =Long.valueOf(endDate);
         Date dateEndDate= new Date(Long.valueOf(longEndDate));
-        int res =  superviseService.submitApplyLeave(submitApplyLeaveModel,dateStartDate,dateEndDate,code,TokenUtil.getTokenUserId().toString());
+        List<UserModel>  user =superviseService.getPersonname(TokenUtil.getTokenUserId());
+        int res =  superviseService.submitApplyLeave(submitApplyLeaveModel,dateStartDate,dateEndDate,code,TokenUtil.getTokenUserId(),user.get(0).getAccountname());
         if(res!=0){
             result.resultCode=0;
             result.resultMsg="";
@@ -126,7 +129,7 @@ public class SuperviseController {
     public  ResultSet getSuperviseTask(){
        // List<GetSuperviseTaskModel> getSuperviseTaskModel = new ArrayList<>();
        // Calendar calendar = Calendar.getInstance();
-        List<GetSuperviseTaskModel> getSuperviseTaskModels =superviseService.getSuperviseTask(TokenUtil.getTokenUserId().toString());
+        List<GetSuperviseTaskModel> getSuperviseTaskModels =superviseService.getSuperviseTask(TokenUtil.getTokenUserId());
         /*for(GetSuperviseTaskModel item: getSuperviseTaskModels){
             GetSuperviseTaskModel getSuperviseTaskModel1=new GetSuperviseTaskModel();
             getSuperviseTaskModel1.setStartDate(item.getStartDate());
@@ -245,7 +248,7 @@ public class SuperviseController {
         if(a!=0) {
             result.resultCode = 0;
             result.resultMsg = "";
-            result.data = "{}";
+            result.data = new Object();
         }
         else
         {
@@ -266,7 +269,7 @@ public class SuperviseController {
         int a = superviseService.uploadBattery(percent,TokenUtil.getTokenUserId(),new Date());
         result.resultCode = 0;
         result.resultMsg = "";
-        result.data = "{}";
+        result.data = new Object();
         return result;
     }
 
