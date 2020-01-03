@@ -87,7 +87,7 @@ public class  MessageController {
             if (res != 0) {
                 result.resultCode = 0;
                 result.resultMsg = "";
-                result.data = "";
+                result.data = new Object();
             } else {
                 result.resultCode = 1;
                 result.resultMsg = "失败";
@@ -144,7 +144,16 @@ public class  MessageController {
     }
 
 
+    @UserLoginToken
+    @ApiOperation(value = " 获取保外人员的某一类通知")
+    @GetMapping("/ResultSetgetNotification")
+    public ResultSet getNotification(@ApiParam(name = "type",value = "通知类型") @RequestParam(required = true) String type){
 
+        result.resultCode = 0;
+        result.resultMsg = "";
+        result.data = resultMessageListModel;
+        return result;
+    }
 
 
 }

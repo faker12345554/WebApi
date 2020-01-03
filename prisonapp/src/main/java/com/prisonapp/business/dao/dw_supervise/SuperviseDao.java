@@ -1,6 +1,8 @@
 package com.prisonapp.business.dao.dw_supervise;
 
 import com.prisonapp.business.entity.dw_supervise.*;
+import com.prisonapp.business.entity.dw_user.UserModel;
+import org.apache.catalina.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,7 +17,9 @@ public interface SuperviseDao {
 
     List<ApplyRecordModel> applyRecord(@Param("code")String  code);
 
-    int submitApplyLeave(@Param("submitApplyLeaveModel")SubmitApplyLeaveModel submitApplyLeaveModel, @Param("startDate") Date startDate,@Param("endDate") Date endDate, @Param("code") String code, @Param("userId")String userId);
+    int submitApplyLeave(@Param("submitApplyLeaveModel")SubmitApplyLeaveModel submitApplyLeaveModel, @Param("startDate") Date startDate,@Param("endDate") Date endDate, @Param("code") String code, @Param("userId")String userId,@Param("personname")String personname);
+
+    List<UserModel> getPersonname(@Param("userId")String userId);
 
     List<GetSuperviseTaskModel> getSuperviseTask(String userId);
 

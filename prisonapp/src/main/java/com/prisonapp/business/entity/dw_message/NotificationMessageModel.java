@@ -7,7 +7,7 @@ import java.util.Date;
 public class NotificationMessageModel {
     public int type;
     public String typeName;
-    public String personcontent;
+    public String content;
     public String timestamp;
     public int detailType;
     public String detailTypeName;
@@ -29,12 +29,12 @@ public class NotificationMessageModel {
         this.typeName = typeName;
     }
 
-    public String getPersoncontent() {
-        return personcontent;
+    public String getContent() {
+        return content;
     }
 
-    public void setPersoncontent(String personcontent) {
-        this.personcontent = personcontent;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getTimestamp() {

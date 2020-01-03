@@ -17,6 +17,7 @@
         <module>admin</module>
         <module>common</module>
         <module>prisonapp</module>
+        <module>adminapp</module>
     </modules>
 
     <properties>

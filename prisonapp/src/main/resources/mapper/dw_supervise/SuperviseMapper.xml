@@ -17,12 +17,16 @@
      </select>
 
     <insert id="submitApplyLeave" parameterType="com.prisonapp.business.entity.dw_supervise.SuperviseModel">
-        INSERT INTO t_leave(personid, leaveorder,starttimestamp,endtimestamp,reason,recording,provincecode,provincename,citycode,cityname,areacode,areaname)
-        VALUES              (#{userId}, #{code},#{startDate},#{endDate},#{submitApplyLeaveModel.reason},#{submitApplyLeaveModel.reasonAudioUrl},#{submitApplyLeaveModel.provinceCode},#{submitApplyLeaveModel.province},#{submitApplyLeaveModel.cityCode},#{submitApplyLeaveModel.city},#{submitApplyLeaveModel.districtCode},#{submitApplyLeaveModel.district});
+        INSERT INTO t_leave(personid, leaveorder,starttimestamp,endtimestamp,reason,recording,provincecode,provincename,citycode,cityname,areacode,areaname,statuscode,states,subittimestamp,personname)
+        VALUES              (#{userId}, #{code},#{startDate},#{endDate},#{submitApplyLeaveModel.reason},#{submitApplyLeaveModel.reasonAudioUrl},#{submitApplyLeaveModel.provinceCode},#{submitApplyLeaveModel.province},#{submitApplyLeaveModel.cityCode},#{submitApplyLeaveModel.city},#{submitApplyLeaveModel.districtCode},#{submitApplyLeaveModel.district},'1','待审核',CURRENT_Time,#{personname});
 
         INSERT INTO t_auditor(leaveorder,leavingmessage,statuscode,states) VALUES (#{code},#{submitApplyLeaveModel.reason},1,'待审核')
 
     </insert>
+
+    <select id="getPersonname" resultType="com.prisonapp.business.entity.dw_user.UserModel">
+        select * from t_user where accountname =#{userId}
+    </select>
 
     <select id="getSuperviseTask" resultType="com.prisonapp.business.entity.dw_supervise.GetSuperviseTaskModel">
         SELECT bailoutbegindate as startDate,type,typename FROM  t_personinformation FULL JOIN   t_singin on (t_personinformation.personid = t_singin.personid) where t_personinformation.personid ='25' and createtime BETWEEN CURRENT_DATE and CURRENT_DATE+1
