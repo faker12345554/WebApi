@@ -209,7 +209,14 @@ import javax.crypto.Mac;
             String ak_id = ""; //用户ak
             String ak_secret = ""; // 用户ak_secret
             String url = "https://dtplus-cn-shanghai.data.aliyuncs.com/face/verify";
-            String body = "{\"type\":0,\n" + "\"image_url_1\":\"" + faceUrlOne + "\",\n" + "\"image_url_2\":\""+faceUrlTow+"\"\n" + "}";
+//            String body1 = "{\"type\":0,\n" +
+//                    "\"image_url_1\":\"http://file02.16sucai.com/d/file/2014/0829/372edfeb74c3119b666237bd4af92be5.jpg\",\n" +
+//                    "\"image_url_2\":\"http://file02.16sucai.com/d/file/2014/0829/372edfeb74c3119b666237bd4af92be5.jpg\"\n" +
+//                    "}";
+            String body  = "{\"type\":0,\n" +
+                    "\"image_url_1\":\"" +faceUrlOne+ "\",\n" +
+                    "\"image_url_2\":\""+faceUrlTow+"\"\n" +
+                    "}";
             String a = sendPost(url, body, ak_id, ak_secret);
             System.out.println("response body:" + a);
             return  a ;

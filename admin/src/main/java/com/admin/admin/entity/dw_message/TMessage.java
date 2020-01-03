@@ -5,10 +5,16 @@ import java.util.Date;
 
 public class TMessage {
 
+
   private long id;
   private int modular;
-  private String content;
+  private String workcontent;
   private String personid;
+  private String modularname;
+  private Date messagetime;
+  private boolean readmessage;
+  private long detailtype;
+  private String detailtypename;
 
   public boolean isReadmessage() {
     return readmessage;
@@ -18,12 +24,15 @@ public class TMessage {
     this.readmessage = readmessage;
     return this;
   }
+  public String getWorkcontent() {
+    return workcontent;
+  }
 
-  private String modularname;
-  private Date messagetime;
-  private boolean readmessage;
-  private long detailtype;
-  private String detailtypename;
+  public TMessage setWorkcontent(String workcontent) {
+    this.workcontent = workcontent;
+    return this;
+  }
+
 
 
   public long getId() {
@@ -44,13 +53,6 @@ public class TMessage {
   }
 
 
-  public String getContent() {
-    return content;
-  }
-
-  public void setContent(String content) {
-    this.content = content;
-  }
 
 
   public String getPersonid() {

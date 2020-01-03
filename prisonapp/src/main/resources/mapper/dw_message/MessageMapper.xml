@@ -28,11 +28,11 @@ select  modular as type ,modularname as typeName,detailtype as detailType,detail
         update t_message set readmessage=true where modular=#{type} and personid=#{userId}
     </update>
     <select id="searchNotification" resultType="com.prisonapp.business.entity.dw_message.SearchNotificationModel">
-                select * from (SELECT content, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_message"  where modular='1'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  content like concat('%',#{key},'%')
-	 UNION ALL  select * from (SELECT content, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_message"  where modular='2'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  content like concat('%',#{key},'%')
-	 UNION ALL	select * from (SELECT content, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_message"  where modular='3'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  content like concat('%',#{key},'%')
-	 UNION ALL	select * from (SELECT content, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_message"  where modular='4'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  content like concat('%',#{key},'%')
-	 UNION ALL	select * from (SELECT content, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_message"  where modular='5'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  content like concat('%',#{key},'%')
+                select * from (SELECT personcontent, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_message"  where modular='1'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  content like concat('%',#{key},'%')
+	 UNION ALL  select * from (SELECT personcontent, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_message"  where modular='2'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  content like concat('%',#{key},'%')
+	 UNION ALL	select * from (SELECT personcontent, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_message"  where modular='3'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  content like concat('%',#{key},'%')
+	 UNION ALL	select * from (SELECT personcontent, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_message"  where modular='4'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  content like concat('%',#{key},'%')
+	 UNION ALL	select * from (SELECT personcontent, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_message"  where modular='5'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  content like concat('%',#{key},'%')
     </select>
     <select id="unreadCount" resultType="com.prisonapp.business.entity.dw_message.MessageModel">
         select * from t_message where personid=#{userId} and  modular=#{type} and readmessage='f'
@@ -43,10 +43,10 @@ select  modular as type ,modularname as typeName,detailtype as detailType,detail
     </select>
 
     <select id="getNewestMessageList" resultType="com.prisonapp.business.entity.dw_message.MessageListModel">
-    select id as code,modular as type ,modularname as typeName,content,messagetime as timestamp,readmessage as isRead from t_message where personid=#{userId} and  messagetime between to_date(#{todayDate},'yyyy-MM-dd') and to_date(#{tomorrowDate},'yyyy-MM-dd') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
+    select id as code,modular as type ,modularname as typeName,personcontent,messagetime as timestamp,readmessage as isRead from t_message where personid=#{userId} and  messagetime between to_date(#{todayDate},'yyyy-MM-dd') and to_date(#{tomorrowDate},'yyyy-MM-dd') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
     </select>
     <select id="newestMessageTotalCount" resultType="com.prisonapp.business.entity.dw_message.MessageListModel">
-    select id as code,modular as type ,modularname as typeName,content,messagetime as timestamp,readmessage as isRead from t_message where personid=#{userId} and  messagetime between to_date(#{todayDate},'yyyy-MM-dd') and to_date(#{tomorrowDate},'yyyy-MM-dd') ORDER BY timestamp  desc
+    select id as code,modular as type ,modularname as typeName,personcontent,messagetime as timestamp,readmessage as isRead from t_message where personid=#{userId} and  messagetime between to_date(#{todayDate},'yyyy-MM-dd') and to_date(#{tomorrowDate},'yyyy-MM-dd') ORDER BY timestamp  desc
     </select>
 
 </mapper>
