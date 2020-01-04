@@ -27,16 +27,16 @@ public class Datatimer  {
     private Tasking tasking;
 
     //定义一个按时间执行的定时任务，在每天02:00执行一次。
-    @Scheduled(cron = "0 0 15 * * ?")
+    @Scheduled(cron = "0 0 1 * * ?")
     public void depositJob() throws Exception {
-        System.out.println(1);
+        System.out.println(2);
         tasking.ReminderBail();
         //执行代码
     }
     //定义一个按一定频率执行的定时任务，每隔1分钟执行一次
     @Scheduled(cron = "0 0 2 * * ?")
     public void job2() throws Exception {
-        System.out.println(2);
+        System.out.println(3);
         tasking.GeneratedRecord();
     }
     //定义一个按一定频率执行的定时任务，每隔1分钟执行一次，延迟1秒执行

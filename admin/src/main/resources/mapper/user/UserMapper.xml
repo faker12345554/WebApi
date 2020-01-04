@@ -6,8 +6,12 @@
         SELECT * FROM "t_user" where status=#{flag}
     </select>
 
-    <select id="getUser" parameterType="int" resultType="com.admin.admin.entity.dw_user.User">
-        SELECT * FROM "t_user" where id=#{id}
+    <select id="getUser" parameterType="String" resultType="com.admin.admin.entity.dw_user.User">
+        SELECT * FROM "t_user" where accountname=#{UserName}
+    </select>
+
+    <select id="GetUserByid" parameterType="int" resultType="com.admin.admin.entity.dw_user.User">
+        SELECT * FROM "t_user" where id=#{Id}
     </select>
 
     <insert id="saveUser" parameterType="com.admin.admin.entity.dw_user.User">
@@ -20,7 +24,7 @@
     </update>
 
     <update id="deleteUser">
-        update t_user set status=#{flag} where id=#{UserId}
+        update t_user set status=#{flag} where accountname=#{UserName}
     </update>
 
     <select id="login" resultType="com.admin.admin.entity.dw_user.User" parameterType="String">
