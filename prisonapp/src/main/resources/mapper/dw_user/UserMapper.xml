@@ -10,12 +10,12 @@
     </select>
 
     <select id="getUserInfo" resultType="com.prisonapp.business.entity.dw_user.GetUserInfoModel">
-         SELECT personid as code,phone as account,t_personinformation.status as status,personname as name,facepath as headUrl,bailoutbegindate as startDate,bailoutenddate as endDate,sponsor as inChargePerson,
+         SELECT t_personinformatio.personid as code,phone as account,t_personinformation.status as status,personname as name,facepath as headUrl,bailoutbegindate as startDate,bailoutenddate as endDate,sponsor as inChargePerson,
          contact as inChargeContract,currentaddress as area  from t_personinformation FULL JOIN t_user ON t_personinformation.personid = t_user.id ::VARCHAR WHERE personid=#{userId}
     </select>
 
     <select id="modifyPassword" resultType="com.prisonapp.business.entity.dw_user.UserModel">
-        select * from t_user where id::varchar =#{userId} and password=#{password}
+        select * from t_user where personid =#{userId} and password=#{password}
     </select>
 
     <update id="upModifyPassword" >
