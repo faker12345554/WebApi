@@ -5,6 +5,7 @@ import com.admin.admin.service.dw_location.LocationService;
 import com.admin.model.Execl.ExeclModel;
 import com.admin.model.search.SearchModel;
 import com.admin.page.PageBean;
+import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.github.pagehelper.PageHelper;
@@ -33,6 +34,7 @@ public class LocationController {
     /*
     定位信息列表
      */
+    @UserLoginToken
     @ApiOperation("定位信息列表")
     @GetMapping("/LocationList")
     public ResponseResult listLocationModel(@RequestParam(required = false) String Condition, @RequestParam int PageSize, @RequestParam int PageIndex,
@@ -49,6 +51,7 @@ public class LocationController {
         return result.setData(pageBean);
     }
 
+    @UserLoginToken
     @ApiOperation("查看今日轨迹")
     @GetMapping("/TrackToday")
     public ResponseResult ListLocation(String PersonId, String date, HttpServletResponse response) {
@@ -66,6 +69,7 @@ public class LocationController {
     }
 
 
+    @UserLoginToken
     @ApiOperation("历史轨迹列表")
     @PostMapping("/HistoricalTrack")
     public ResponseResult HistoricalTrack(@RequestBody SearchModel searchModel, HttpServletResponse response) {
@@ -96,6 +100,7 @@ public class LocationController {
 
     }
 
+    @UserLoginToken
     @ApiOperation("查看定位信息")
     @GetMapping("/GetLocation")
     public ResponseResult GetLocation(@RequestParam int PersonId, HttpServletResponse response) {
@@ -104,6 +109,7 @@ public class LocationController {
         return result.setData(locationService.GetLocation(PersonId));
     }
 
+    @UserLoginToken
     @ApiOperation("查看当前位置")
     @GetMapping("GetLocationByPerson")
     public ResponseResult GetLocationByPerson(@RequestParam String PersonId) {
@@ -113,6 +119,7 @@ public class LocationController {
     }
 
 
+    @UserLoginToken
     @ApiOperation("导出定位信息列表")
     @PostMapping("ExportLocation")
     public ResponseResult export(@RequestBody SearchModel searchModel) {

@@ -60,11 +60,13 @@
     <select id="ListPrison" parameterType="String" resultType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting">
         select * from t_prisonsetting where personid=#{PersonId}
     </select>
-    
+
+    <!-- 我这个想返回一个 HashMap 但是结果是空,sql语句能查出来,但是这里可能没赋上值 我还真没用过HashMap 我看看 -->
     <resultMap id="MechanismMap" type="HashMap">
         <result property="bmbm" column="bmbm" jdbcType="VARCHAR" />
         <result property="bmmc" column="bmmc" jdbcType="VARCHAR"/>
     </resultMap>
+
     <select id="ListMechanism" resultMap="MechanismMap">
         SELECT distinct on (bmbm,bmmc)bmbm,bmmc from fsga_yw_ryb
     </select>

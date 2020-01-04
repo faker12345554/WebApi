@@ -2,6 +2,7 @@ package com.admin.admin.controller.dw_biosign;
 
 import com.admin.admin.entity.dw_bios.BiosignatureInformation;
 import com.admin.admin.service.dw_biosign.BiosignatureService;
+import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
@@ -18,6 +19,7 @@ public class BiosignatureController {
 
     private ResponseResult result = new ResponseResult();
 
+    @UserLoginToken
     @ApiOperation(value = "新增生物特征信息")
     @PostMapping("/addBiosignature")
     public ResponseResult insertBiosignature(@RequestBody BiosignatureInformation biosignatureInformation) {
@@ -26,6 +28,7 @@ public class BiosignatureController {
         return result.setData( biosignatureService.insertBiosignature(biosignatureInformation));
     }
 
+    @UserLoginToken
     @ApiOperation(value = "查询生物特征信息")
     @GetMapping("/getBiosignature")
     public ResponseResult getBiosignature(@RequestParam(required = true) String persion_id, @RequestParam(required = true) int type) {

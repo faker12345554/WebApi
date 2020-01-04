@@ -2,6 +2,7 @@ package com.admin.admin.controller.dw_picture;
 
 import com.admin.admin.entity.dw_person.Personinformation;
 import com.admin.admin.service.dw_picture.PictureReportService;
+import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +27,7 @@ public class PictureReportController {
 
     private ResponseResult result=new ResponseResult();
 
+    @UserLoginToken
     @ApiOperation(value = "人脸识别数据导入")
     @PostMapping("/postPictureReport")
     public ResponseResult postPictureReport(@RequestParam(required = true)String personid,@RequestParam(required = true)String facepath) throws IOException {

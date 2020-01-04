@@ -7,13 +7,14 @@ spring:
     url: jdbc:postgresql://112.74.41.177:5432/legal
     username: postgres
     password: 123456
-    initial-size: 2
-    min-idle: 1
-    max-active: 10
-    max-wait: 60000
-    time-between-eviction-runs-millis: 60000
-    min-evictable-edle-time-millis: 300000
-    filters: stat
+#    initial-size: 100
+#    min-idle: 1
+#    max-active: -1
+#    max-wait: 60000
+#    time-between-eviction-runs-millis: 60000
+#    min-evictable-edle-time-millis: 300000
+#    filters: stat
+#    MaxConnections: 90
 
 swagger:
   enabled: true

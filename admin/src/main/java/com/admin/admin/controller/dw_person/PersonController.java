@@ -7,6 +7,7 @@ import com.admin.admin.entity.dw_user.User;
 import com.admin.admin.service.dw_person.PersoinfoService;
 import com.admin.model.search.SearchModel;
 import com.admin.page.PageBean;
+import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.github.pagehelper.PageHelper;
@@ -179,6 +180,7 @@ public class PersonController {
      * 获取机构
      * @return
      */
+    @UserLoginToken
     @GetMapping("/ListMechanism")
     public ResponseResult ListMechanism(){
         result.setCode(ResultCode.SUCCESS.getCode());

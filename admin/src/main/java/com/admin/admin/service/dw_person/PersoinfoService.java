@@ -107,9 +107,10 @@ public class PersoinfoService {
     }
 
     /**
-     * 获取机构
+     * 获取机构 搞得那麽複雜 没进来吗？实在是因为那个实体又臭又长,而我需要的就两个
      */
     public List<Map<String,Object>> ListMechanism(){
+        System.out.println(personDao.ListMechanism());
         return personDao.ListMechanism();
     }
 
