@@ -65,7 +65,7 @@
 
     <insert id="batteryAlarm">
         insert into t_message (modular, workcontent,personid,modularname,messagetime,readmessage,detailtype,detailtypename,personcontent)
-        values                (2,#{persionName}+current_timestamp+'手机电量低于20%，请及时与其取得联系。最后一次位置：',#{userId},'报警提醒',current_timestamp,'f',1,'低电量报警通知','电池电量不足，仅剩20%的电量！')
+        values                (2,#{workContent},#{userId},'报警提醒',current_timestamp,'f',1,'低电量报警通知','电池电量不足，仅剩20%的电量！')
     </insert>
 
     <select id="getLocationConfig" resultType="com.prisonapp.business.entity.dw_supervise.LocationModel">

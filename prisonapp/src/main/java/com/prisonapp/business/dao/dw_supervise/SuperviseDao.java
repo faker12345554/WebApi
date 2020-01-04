@@ -37,7 +37,7 @@ public interface SuperviseDao {
 
     int uploadBattery(float percent,String userId,Date date);
 
-    int batteryAlarm(String userId,String persionName);
+    int batteryAlarm(String userId,String workContent);
 
     List<LocationModel> getLocationConfig(String userId);
 

@@ -3,6 +3,7 @@ package com.prisonapp.business.controller.dw_supervise;
 
 import com.common.common.Uploadfiles.Upload;
 import com.common.common.result.ResultSet;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.prisonapp.business.entity.dw_supervise.*;
 import com.prisonapp.business.entity.dw_user.UserModel;
 import com.prisonapp.business.service.dw_supervise.SuperviseService;
@@ -265,7 +266,6 @@ public class SuperviseController {
         }
         return result;
     }
-
     @UserLoginToken
     @ApiOperation(value = " 上报保外人员电量信息")
     @PostMapping("/uploadBattery")
@@ -282,7 +282,11 @@ public class SuperviseController {
 
     public void batteryAlarm(String userId){
         String persionName =superviseService.faceRecognize(userId).get(0).getPersonname();
-        superviseService.batteryAlarm(userId,persionName);
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
+        String nowTime = dateFormat.format( now );
+        String workContent = persionName+"于"+nowTime+"手机电量低于20%，请及时与其取得联系。最后一次位置：";
+        superviseService.batteryAlarm(userId,workContent);
     }
 
     @UserLoginToken

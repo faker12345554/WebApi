@@ -22,7 +22,7 @@ public interface MessageDao {
 
     List<MessageModel> unreadCount(@Param("type")int  type,@Param("userId")String userId);
 
-    List<MessageModel> messageTotalCount(@Param("type")String  type,@Param("userId")String userId);
+    List<MessageModel> messageTotalCount(@Param("type")int  type,@Param("userId")String userId);
 
     List<MessageListModel> getNewestMessageList(@Param("count")int count,@Param("requestCount")int requestCount, @Param("todayDate")String  todayDate,@Param("tomorrowDate")String tomorrowDate,@Param("userId")String userId);
 

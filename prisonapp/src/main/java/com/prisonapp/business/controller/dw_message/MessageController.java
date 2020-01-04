@@ -68,7 +68,7 @@ public class  MessageController {
     public ResultSet getMessageList(@ApiParam(name = "type",value = "类型编号") @RequestParam(required = true) String type,@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true) int count,@ApiParam(name = "requestCount",value = "请求获取数据的条数") @RequestParam(required = true) int requestCount,@ApiParam(name = "key",value = "搜索关键字") @RequestParam(required = false) String key) {
 
         List<MessageListModel> messageListModel = messageService.getMessageList(type, count, requestCount, key, TokenUtil.getTokenUserId());
-        int totalCount = (messageService.messageTotalCount(type, TokenUtil.getTokenUserId())).size();
+        int totalCount = (messageService.messageTotalCount(Integer.parseInt(type), TokenUtil.getTokenUserId())).size();
         resultMessageListModel.totalCount = totalCount;
         resultMessageListModel.list = messageListModel;
         result.resultCode = 0;
@@ -111,7 +111,7 @@ public class  MessageController {
         List<SearchNotificationModel> searchNotificationModels = messageService.searchNotification(key, TokenUtil.getTokenUserId());
         int sum = 0;
         for (SearchNotificationModel item : searchNotificationModels) {
-            int messageCount = messageService.messageTotalCount(item.getType(), TokenUtil.getTokenUserId()).size();
+            int messageCount = messageService.messageTotalCount(Integer.parseInt(item.getType()), TokenUtil.getTokenUserId()).size();
             item.setMessageCount(messageCount);
             sum += messageCount;
         }

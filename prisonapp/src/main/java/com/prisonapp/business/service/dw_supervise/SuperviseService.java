@@ -70,8 +70,8 @@ public class SuperviseService {
         return  superviseDao.uploadBattery(percent,userId,date);
     }
 
-    public int batteryAlarm(String userId,String persionName){
-        return  superviseDao.batteryAlarm( userId,persionName);
+    public int batteryAlarm(String userId,String workContent){
+        return  superviseDao.batteryAlarm( userId,workContent);
     }
 
     public List<LocationModel> getLocationConfig(String userId){
