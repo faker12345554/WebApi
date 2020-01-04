@@ -18,7 +18,10 @@ public class MessageService {
     public List<NotificationMessageModel> getNotificationList(String userId ) {
         return messageDao.getNotificationList(userId);
     }
-    public List<MessageListModel> getMessageList(String  type, int  count, int requestCount, String key, String userId ){
+    public List<MessageListModel>  getAllMessageList( int  count, int requestCount, String key, String userId ){
+        return messageDao.getAllMessageList(count,requestCount,key,userId);
+    }
+    public List<MessageListModel> getMessageList(int  type, int  count, int requestCount, String key, String userId ){
         return messageDao.getMessageList(type,count,requestCount,key,userId);
     }
     //保外人员确认消息读取
@@ -36,6 +39,9 @@ public class MessageService {
     //本类型消息总数
     public List<MessageModel> messageTotalCount(int  type,String userId){
         return messageDao.messageTotalCount(type,userId);
+    }
+    public List<MessageModel> messageAllTotalCount(String userId){
+        return messageDao.messageAllTotalCount(userId);
     }
 
     public List<MessageListModel> getNewestMessageList(int count ,int requestCountString ,String  todayDate,String tomorrowDate,String userId){

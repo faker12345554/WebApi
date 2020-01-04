@@ -21,6 +21,11 @@ UNION ALL
 select  modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,personcontent as content,messagetime as timestamp  from  (SELECT * FROM "t_message"  where modular='8'  and personid=#{userId}  ORDER BY  messagetime desc limit  1) as a
 
     </select>
+
+    <select id="getAllMessageList" resultType="com.prisonapp.business.entity.dw_message.MessageListModel">
+         select  id as code,modular as type ,modularname as typeName,personcontent as content,messagetime as timestamp,readmessage as isRead from t_message where personid=#{userId}  and personcontent  like concat('%',#{key},'%') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
+    </select>
+
     <select id="getMessageList" resultType="com.prisonapp.business.entity.dw_message.MessageListModel">
         select  id as code,modular as type ,modularname as typeName,personcontent as content,messagetime as timestamp,readmessage as isRead from t_message where personid=#{userId} and modular=#{type} and personcontent  like concat('%',#{key},'%') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
     </select>
@@ -40,6 +45,10 @@ select  modular as type ,modularname as typeName,detailtype as detailType,detail
 
     <select id="messageTotalCount" resultType="com.prisonapp.business.entity.dw_message.MessageModel">
          select * from t_message where personid=#{userId} and  modular=#{type}
+    </select>
+
+    <select id="messageAllTotalCount" resultType="com.prisonapp.business.entity.dw_message.MessageModel">
+         select * from t_message where personid=#{userId}
     </select>
 
     <select id="getNewestMessageList" resultType="com.prisonapp.business.entity.dw_message.MessageListModel">
