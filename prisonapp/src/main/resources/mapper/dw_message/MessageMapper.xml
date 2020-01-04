@@ -22,7 +22,7 @@ select  modular as type ,modularname as typeName,detailtype as detailType,detail
 
     </select>
     <select id="getMessageList" resultType="com.prisonapp.business.entity.dw_message.MessageListModel">
-        select  id as code,modular as type ,modularname as typeName,content,messagetime as timestamp,readmessage as isRead from t_message where personid=#{userId} and modular=#{type} and content like concat('%',#{key},'%') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
+        select  id as code,modular as type ,modularname as typeName,personcontent as content,messagetime as timestamp,readmessage as isRead from t_message where personid=#{userId} and modular=#{type} and content like concat('%',#{key},'%') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
     </select>
     <update id="readMessage" >
         update t_message set readmessage=true where modular=#{type} and personid=#{userId}
