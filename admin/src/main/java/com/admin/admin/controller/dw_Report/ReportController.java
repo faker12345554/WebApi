@@ -2,6 +2,7 @@ package com.admin.admin.controller.dw_Report;
 
 import com.admin.admin.entity.dw_report.Reportsettings;
 import com.admin.admin.service.dw_Report.ReportService;
+import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
@@ -22,6 +23,7 @@ public class ReportController {
 
     private ResponseResult result = new ResponseResult();
 
+    @UserLoginToken
     @ApiOperation("保存或者修改上报设置")
     @PostMapping("/SaveOrUpdateReport")
     public ResponseResult SaveOrUpdateReport(@RequestBody List<Reportsettings> reportsettings){
@@ -37,6 +39,7 @@ public class ReportController {
 //        result.setMessage(ResultCode.SUCCESS.getMessage());
 //        return result.setData( reportService.deleteReport());
 //    }
+    @UserLoginToken
     @ApiOperation("查看上报设置")
     @GetMapping("getReport")
     public ResponseResult getReport(){

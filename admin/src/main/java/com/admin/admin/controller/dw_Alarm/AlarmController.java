@@ -2,6 +2,7 @@ package com.admin.admin.controller.dw_Alarm;
 
 import com.admin.admin.entity.dw_alarm.Alarmsettings;
 import com.admin.admin.service.dw_Alarm.AlarmService;
+import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
@@ -20,6 +21,7 @@ public class AlarmController {
 
     private ResponseResult result = new ResponseResult();
 
+    @UserLoginToken
     @PostMapping("/SaveOrUpdateAlarm")
     @ApiOperation("保存或修改报警提醒设置")
     public ResponseResult SaveOrUpdateAlarm( @RequestBody List<Alarmsettings> alarmsettings){

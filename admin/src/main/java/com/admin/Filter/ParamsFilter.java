@@ -30,7 +30,6 @@ public class ParamsFilter  implements Filter {
         ParameterRequestWrapper parmsRequest = new ParameterRequestWrapper((HttpServletRequest) arg0);
         String path = request.getRequestURI().substring(request.getContextPath().length()).replaceAll("[/]+$", "");
         boolean allowedPath = ALLOWED_PATHS.contains(path);
-        System.out.println(path);
         if (allowedPath) {
             arg2.doFilter(arg0, arg1);
         }

@@ -28,7 +28,7 @@ public class UserRoleController {
 
     private ResponseResult result = new ResponseResult();
 
-
+    @UserLoginToken
     @ApiOperation("新增用户权限")
     @PostMapping("/AddUserRole")
     public ResponseResult saveUserRole(@RequestBody UserRole userRole, HttpServletResponse response) {
@@ -36,7 +36,7 @@ public class UserRoleController {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(userRoleService.saveUserRole(userRole));
     }
-
+    @UserLoginToken
     @ApiOperation("修改用户权限")
     @PostMapping("/UpdateUserRole")
     public ResponseResult updateUserRole(@RequestBody UserRole userRole, HttpServletResponse response) {
@@ -44,7 +44,7 @@ public class UserRoleController {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( userRoleService.updateUserRole(userRole));
     }
-
+    @UserLoginToken
     @ApiOperation("删除用户权限")
     @GetMapping("/DelUserRole")
     public ResponseResult deleteUserRole(@RequestParam boolean flag, @RequestParam int UserRoleId, HttpServletResponse response) {
@@ -58,7 +58,7 @@ public class UserRoleController {
         return result.setData( userRoleService.deleteUserRole(flag, UserRoleId));
     }
 
-
+    @UserLoginToken
     @ApiOperation("菜单")
     @GetMapping("/GetList")
     public ResponseResult<Menu> listMenu(@RequestParam int UserId, HttpServletResponse response) {
@@ -71,7 +71,7 @@ public class UserRoleController {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( userRoleService.listMenu(UserId));
     }
-
+    @UserLoginToken
     @ApiOperation("用户权限列表")
     @GetMapping("/GetRoleList")
     public ResponseResult<UserRoleModel> listUserRole(@RequestParam int id, int PageSize, int PageIndex, HttpServletResponse response) {

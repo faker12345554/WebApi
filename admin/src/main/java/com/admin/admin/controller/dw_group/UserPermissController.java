@@ -2,6 +2,7 @@ package com.admin.admin.controller.dw_group;
 
 import com.admin.admin.entity.dw_userpermission.UserPermissionGroup;
 import com.admin.admin.service.dw_group.GroupService;
+import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
@@ -22,6 +23,7 @@ public class UserPermissController {
 
     private ResponseResult result = new ResponseResult();
 
+    @UserLoginToken
     @ApiOperation("新增组信息")
     @PostMapping("/AddGroup")
     public ResponseResult saveGroup(@RequestBody UserPermissionGroup group, HttpServletResponse response) {
@@ -36,6 +38,7 @@ public class UserPermissController {
         return result.setData(groupService.saveGroup(group));
     }
 
+    @UserLoginToken
     @ApiOperation("修改组信息")
     @PostMapping("/UpdateGroup")
     public ResponseResult updateGroup(@RequestBody UserPermissionGroup group, HttpServletResponse response) {
@@ -44,6 +47,7 @@ public class UserPermissController {
         return result.setData( groupService.updateGroup(group));
     }
 
+    @UserLoginToken
     @ApiOperation("删除组信息")
     @GetMapping("/DelGroup")
     public ResponseResult deleteGroup(@RequestParam boolean flag,
@@ -62,6 +66,7 @@ public class UserPermissController {
         return result.setData(groupService.deleteGroup(flag, GroupId));
     }
 
+    @UserLoginToken
     @ApiOperation("获取组信息")
     @GetMapping("/GetGroup")
     public ResponseResult getGroup(@RequestParam int id, HttpServletResponse response) {
@@ -70,6 +75,7 @@ public class UserPermissController {
         return result.setData( groupService.getGroup(id));
     }
 
+    @UserLoginToken
     @ApiOperation("权限组列表")
     @GetMapping("GetList")
     public ResponseResult listGroup(@RequestParam boolean flag, int PageSize, int PageIndex, HttpServletResponse response) {

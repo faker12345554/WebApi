@@ -48,7 +48,7 @@ public interface PersonDao {
     List<TPrisonsetting> ListPrison(String PersonId);
 
     /**
-     * 获取所有
+     * 获取所有 一定要用 List<Map<String,Object>> ？？是的
      * @return
      */
     List<Map<String,Object>> ListMechanism();

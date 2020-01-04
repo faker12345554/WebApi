@@ -77,14 +77,13 @@ public class SinginControll {
     @PostMapping("/ListAudio")
     public ResponseResult ListAudio(@RequestBody SearchModel searchModel){
         try {
+            PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
             List<SinginModel> allItems = singinService.ListAudio(searchModel);
             if (allItems.size()==0){
                 result.setCode(ResultCode.NULLDATA.getCode());
                 result.setMessage(ResultCode.NULLDATA.getMessage());
                 return result.setData("");
             }
-
-            PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
 
             PageInfo<SinginModel> info = new PageInfo<>(allItems);//全部商品
             int countNums = (int) info.getTotal();            //总记录数

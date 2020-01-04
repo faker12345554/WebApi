@@ -9,6 +9,7 @@ import com.admin.model.leave.LeavefModel;
 import com.admin.model.search.SearchModel;
 import com.admin.page.PageBean;
 import com.admin.page.PageUtil;
+import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.github.pagehelper.PageHelper;
@@ -32,6 +33,7 @@ public class LeaveController {
 
     private ResponseResult result = new ResponseResult();
 
+    @UserLoginToken
     @ApiOperation(value = "获取全部请假信息")
     @PostMapping("/listLeave")
     public ResponseResult listLeave(@RequestBody SearchModel searchModel) {
@@ -64,6 +66,7 @@ public class LeaveController {
 
     }
 
+    @UserLoginToken
     @ApiOperation(value = "增加审批信息")
     @PostMapping("/addAuditor")
     public ResponseResult insertAuditor(@RequestBody AuditorInformation auditorInformation, HttpServletResponse response) {
@@ -80,6 +83,7 @@ public class LeaveController {
         }
     }
 
+    @UserLoginToken
     @ApiOperation(value = "删除审批信息")
     @PostMapping("/deleteAuditor")
     public ResponseResult deleteAuditor(@ApiParam(name = "leaveOrder", value = "请假单号") @RequestParam String leaveOrder, HttpServletResponse response) {
@@ -88,6 +92,7 @@ public class LeaveController {
         return result.setData(leaveService.deleteAuditor(leaveOrder));
     }
 
+    @UserLoginToken
     @ApiOperation(value = "销假")
     @PostMapping("cancelLeave")
     public ResponseResult cancelAuditor(@ApiParam(name = "leaveorder", value = "请假单号") @RequestParam(required = true) String leaveorder, HttpServletResponse response) {
