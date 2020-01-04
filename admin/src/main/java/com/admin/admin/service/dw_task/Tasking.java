@@ -29,10 +29,12 @@ public class Tasking {
         List<Personinformation> list = GetPerson();
         for (Personinformation item : list) {
             long days = CalendarAdjust.getDays(CalendarAdjust.GetYear(new Date()), CalendarAdjust.GetYear(item.getBailoutenddate()));
-            System.out.println(CalendarAdjust.getDays(CalendarAdjust.GetYear(new Date()), CalendarAdjust.GetYear(item.getBailoutenddate())));
-
+           // System.out.println(CalendarAdjust.getDays(CalendarAdjust.GetYear(new Date()), CalendarAdjust.GetYear(item.getBailoutenddate())));
+            System.out.println(item.getBailoutenddate());
             if (days == 15) {
+                System.out.println(item.getPersonid());
                 if (item.getSuspectstatus().equals("取保候审")) {
+                    System.out.println(item.getPersonid());
                     message.setModular(6);
                     message.setWorkcontent("监居人员" + item.getPersonname() + "15天后取保候审到期,请提前告知!");
                     message.setPersonid(item.getPersonid());
@@ -70,6 +72,7 @@ public class Tasking {
     public void GeneratedRecord() throws Exception {
 
         Remindersettings remindersettings = taskDao.GetConfigure("3");
+
         String[] strArr = null;
         if (remindersettings.getSettingday().indexOf(",") != -1) {
             strArr = remindersettings.getSettingday().split(",");
@@ -87,7 +90,9 @@ public class Tasking {
             //填写传讯信息
             summons.setPersonid(item.getPersonid());
             summons.setPersonname(item.getPersonname());
-            if (item.getCasetype().equals("经济案件")) {
+
+            if (item.getCasetype().equals("经济案件") && item.getCasetype()!=null) {
+
                 int mondiff = GetMessageByTime(item.getPersonid(), 5);
                 if (mondiff != 0) {
                     if (taskDao.GetSummons(item.getPersonid(),CalendarAdjust.GetSummons(1))==0) {
@@ -128,7 +133,8 @@ public class Tasking {
                     }
                 }
 
-            } else if (item.getCasetype().equals("一般案件")){
+            } else if (item.getCasetype().equals("一般案件") && item.getCasetype()!=null){
+
                 int month = GetMessageByTime(item.getPersonid(), 5);
                 if (month == 3) {
                     if (taskDao.GetSummons(item.getPersonid(), CalendarAdjust.GetSummons(1)) == 0) {

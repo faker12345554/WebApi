@@ -25,6 +25,12 @@
             t.address like concat('%',#{FuzzyCondition},'%') or
             t.activityarea like concat('%',#{FuzzyCondition},'%')
         </if>
+        <if test="Condition1==null and Condition2!=null">
+            P.personname like concat('%',#{Condition2},'%') or
+        </if>
+        <if test="Condition1!=null and Condition2==null">
+            P.personname like concat('%',#{Conditio1},'%') or
+        </if>
         <if test="Condition1 !=null and Condition1 !='' and Condition2 !=null and Condition2!=''">
             AND t.reportstatus =#{Condition1} or t.reporttype=#{Condition2}
         </if>

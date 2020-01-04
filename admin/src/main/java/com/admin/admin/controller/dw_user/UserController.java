@@ -48,10 +48,10 @@ public class UserController {
     @ApiOperation("查看用户信息")
     @UserLoginToken
     @GetMapping("/GetUser")
-    public ResponseResult getUser(@RequestParam(required = false) int id, HttpServletResponse response) {
+    public ResponseResult getUser(@RequestParam(required = false) String UserName, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData( userService.getUser(id));
+        return result.setData( userService.getUser(UserName));
     }
 
     //新增用户
@@ -84,19 +84,19 @@ public class UserController {
     @UserLoginToken
     @ApiOperation("删除用户")
     @GetMapping("/DelUser")
-    public ResponseResult deleteUser(@RequestParam boolean flag, @RequestParam int UserId, HttpServletResponse response) {
+    public ResponseResult deleteUser(@RequestParam boolean flag, @RequestParam String  UserName, HttpServletResponse response) {
         if (flag == true) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
             result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
             return result.setData("参数'flag'输入错误");
-        } else if (userService.getUser(UserId) == null) {
+        } else if (userService.getUser(UserName) == null) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
             result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
             return result.setData("参数'UserId'输入错误,该用户不存在");
         }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData( userService.deleteUser(flag, UserId));
+        return result.setData( userService.deleteUser(flag, UserName));
     }
 
     //登录

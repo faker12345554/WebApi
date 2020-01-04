@@ -7,6 +7,7 @@ import com.admin.model.Execl.ExeclModel;
 import com.admin.model.search.SearchModel;
 import com.admin.model.singin.SinginModel;
 import com.admin.page.PageBean;
+import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.github.pagehelper.PageHelper;
@@ -34,6 +35,7 @@ public class SinginControll {
     private SinginService singinService;
     private ResponseResult result = new ResponseResult();
 
+    @UserLoginToken
     @ApiOperation("查看签到信息")
     @GetMapping("/getSingin")
     public ResponseResult getSingin(@RequestParam int Id, HttpServletResponse response) {
@@ -41,7 +43,7 @@ public class SinginControll {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(singinService.getSingin(Id));
     }
-
+    @UserLoginToken
     @ApiOperation("签到信息列表")
     @PostMapping("/ListSingin")
     public ResponseResult ListSingin(@RequestBody SearchModel searchModel){
@@ -73,6 +75,7 @@ public class SinginControll {
 
     }
 
+    @UserLoginToken
     @ApiOperation("音视频列表")
     @PostMapping("/ListAudio")
     public ResponseResult ListAudio(@RequestBody SearchModel searchModel){

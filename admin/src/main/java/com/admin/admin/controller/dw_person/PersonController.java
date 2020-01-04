@@ -193,6 +193,7 @@ public class PersonController {
      * @param Code
      * @return
      */
+    @UserLoginToken
     @GetMapping("/ListSponsor")
     public ResponseResult ListSponsor(@RequestParam String Code){
         result.setCode(ResultCode.SUCCESS.getCode());
