@@ -19,7 +19,7 @@ public interface SuperviseDao {
 
     List<ApplyRecordModel> applyRecord(@Param("code")String  code);
 
-    int submitApplyLeave(@Param("submitApplyLeaveModel")SubmitApplyLeaveModel submitApplyLeaveModel, @Param("startDate") Date startDate,@Param("endDate") Date endDate, @Param("code") String code, @Param("userId")String userId,@Param("personname")String personname);
+    int submitApplyLeave(@Param("submitApplyLeaveModel")SubmitApplyLeaveModel submitApplyLeaveModel, @Param("startDate") long startDate,@Param("endDate") long endDate, @Param("code") String code, @Param("userId")String userId,@Param("personname")String personname);
 
     List<UserModel> getPersonname(@Param("userId")String userId);
 

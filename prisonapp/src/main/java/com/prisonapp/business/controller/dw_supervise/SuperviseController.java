@@ -3,19 +3,15 @@ package com.prisonapp.business.controller.dw_supervise;
 
 import com.common.common.Uploadfiles.Upload;
 import com.common.common.result.ResultSet;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.prisonapp.business.entity.dw_supervise.*;
 import com.prisonapp.business.entity.dw_user.UserModel;
 import com.prisonapp.business.service.dw_supervise.SuperviseService;
-import com.prisonapp.session.SessionContext;
 import com.prisonapp.token.TokenUtil;
 import com.prisonapp.token.tation.UserLoginToken;
 import com.prisonapp.tool.AESDecode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.catalina.User;
-import org.apache.poi.ss.formula.functions.T;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.net.ssl.SSLEngine;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -80,14 +79,13 @@ public class SuperviseController {
     @UserLoginToken
     @ApiOperation(value = "提交保外人员外出申请")
     @PostMapping("/submitApplyLeave")
-    public ResultSet submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel,@ApiParam(name = "startDate",value = "起始时间戳")@RequestParam(required = true)String  startDate,@ApiParam(name = "endDate",value = "结束时间戳") @RequestParam(required = true)String endDate){
+    public ResultSet submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel,@ApiParam(name = "startDate",value = "起始时间戳")@RequestParam(required = true)String  startDate,@ApiParam(name = "endDate",value = "结束时间戳") @RequestParam(required = true)String endDate) throws ParseException {
         String code="qj"+System.currentTimeMillis();
-        Long  longStartDate =Long.valueOf(startDate);
-        Date dateStartDate = new Date(Long.valueOf(longStartDate));
+
+        Long  longStartDate =Long.valueOf(startDate);//123456789
         Long  longEndDate =Long.valueOf(endDate);
-        Date dateEndDate= new Date(Long.valueOf(longEndDate));
         List<UserModel>  user =superviseService.getPersonname(TokenUtil.getTokenUserId());
-        int res =  superviseService.submitApplyLeave(submitApplyLeaveModel,dateStartDate,dateEndDate,code,TokenUtil.getTokenUserId(),user.get(0).getAccountname());
+        int res =  superviseService.submitApplyLeave(submitApplyLeaveModel,longStartDate,longEndDate,code,TokenUtil.getTokenUserId(),user.get(0).getAccountname());
         if(res!=0){
             result.resultCode=0;
             result.resultMsg="";

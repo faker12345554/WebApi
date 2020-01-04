@@ -32,7 +32,7 @@ public class SuperviseService {
         return superviseDao.applyRecord(code);
     }
 
-    public int submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel, Date startDate,Date endDate, String code, String userId,String personname){
+    public int submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel, long startDate,long endDate, String code, String userId,String personname){
         return superviseDao.submitApplyLeave(submitApplyLeaveModel,startDate,endDate,code,userId,personname);
     }
 
