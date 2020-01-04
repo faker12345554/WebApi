@@ -48,24 +48,31 @@ public class SuperviseController {
     @ApiOperation(value = "获取保外人员的外出申请列表")
     @GetMapping("/getApplyLeaveList")
     public ResultSet getApplyLeaveList(@ApiParam(name = "statusCode",value = "审批状态编号") @RequestParam(required = true)String statusCode,@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true)int count,@ApiParam(name = "requestCount",value = "请求获取数据的条数") @RequestParam(required = true)int requestCount) {
-        List<GetApplyLeaveListModel> ApplyLeaveListModels =superviseService.getApplyLeaveList(statusCode,count,requestCount,TokenUtil.getTokenUserId());
-        int totalCount =(superviseService.getTotalApplyLeaveList(statusCode,TokenUtil.getTokenUserId())).size();
-        for (GetApplyLeaveListModel item: ApplyLeaveListModels) {
-            List<ApplyRecordModel> applyRecords = superviseService.applyRecord(item.getCode());//取出请假申请
-            Long End =Long.parseLong(item.getEndTimestamp());
-            Long Start =Long.parseLong(item.getStartTimestamp());
-            int days =(int)((End-Start)/86400000);
-            //(int) ((oDate.getTime() - fDate.getTime()) / 24 * 3600 * 1000)
-            item.setApplyRecord(applyRecords);
-            item.setDays(days);
+        List<GetApplyLeaveListModel> ApplyLeaveListModels;
+        if (statusCode.equals("0")) {
+            ApplyLeaveListModels = superviseService.getAllApplyLeaveList(count, requestCount, TokenUtil.getTokenUserId());
+        } else {
+            ApplyLeaveListModels = superviseService.getApplyLeaveList(statusCode, count, requestCount, TokenUtil.getTokenUserId());
         }
+        if (ApplyLeaveListModels != null && !"".equals(ApplyLeaveListModels) && !"null".equals(ApplyLeaveListModels)) {
 
-        resultGetApplyLeaveListModel.totalCount=totalCount;
-        resultGetApplyLeaveListModel.list=ApplyLeaveListModels;
-        result.resultCode=0;
-        result.resultMsg="";
-        result.data=resultGetApplyLeaveListModel;
+            int totalCount = (superviseService.getTotalApplyLeaveList(statusCode, TokenUtil.getTokenUserId())).size();
+            for (GetApplyLeaveListModel item : ApplyLeaveListModels) {
+                List<ApplyRecordModel> applyRecords = superviseService.applyRecord(item.getCode());//取出请假申请
+                Long End = Long.parseLong(item.getEndTimestamp());
+                Long Start = Long.parseLong(item.getStartTimestamp());
+                int days = (int) ((End - Start) / 86400000);
+                //(int) ((oDate.getTime() - fDate.getTime()) / 24 * 3600 * 1000)
+                item.setApplyRecord(applyRecords);
+                item.setDays(days);
+            }
+            resultGetApplyLeaveListModel.totalCount = totalCount;
+            resultGetApplyLeaveListModel.list = ApplyLeaveListModels;
 
+        }
+        result.resultCode = 0;
+        result.resultMsg = "";
+        result.data = resultGetApplyLeaveListModel;
         return result;
     }
 
@@ -274,7 +281,27 @@ public class SuperviseController {
     }
 
     public void batteryAlarm(String userId){
-        superviseService.batteryAlarm(userId);
+        String persionName =superviseService.faceRecognize(userId).get(0).getPersonname();
+        superviseService.batteryAlarm(userId,persionName);
     }
 
+    @UserLoginToken
+    @ApiOperation(value = " 获取保外人员的监管配置")
+    @GetMapping("/getSuperviseConfig")
+    public ResultSet  getSuperviseConfig(){
+        List<LocationModel> locationModels = superviseService.getLocationConfig(TokenUtil.getTokenUserId());
+        GetSuperviseConfigModel getSuperviseConfigModel =superviseService.getBatteryConfigTimestamp(TokenUtil.getTokenUserId());
+        getSuperviseConfigModel.setLocation(locationModels.get(0));
+       // getSuperviseConfigModel.setBatteries(locationModels.get(1));
+        Battery battery =new Battery();
+        battery.setEnable(locationModels.get(1).isEnable());
+        battery.setTimeSpan(locationModels.get(1).getTimeSpan());
+        battery.setAlarmThreshold(20.0f);
+        getSuperviseConfigModel.setBattery(battery);
+
+        result.resultCode = 0;
+        result.resultMsg = "";
+        result.data = getSuperviseConfigModel;
+        return result;
+    }
 }

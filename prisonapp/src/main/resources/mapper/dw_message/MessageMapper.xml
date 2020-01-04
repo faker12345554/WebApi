@@ -49,4 +49,7 @@ select  modular as type ,modularname as typeName,detailtype as detailType,detail
     select id as code,modular as type ,modularname as typeName,personcontent,messagetime as timestamp,readmessage as isRead from t_message where personid=#{userId} and  messagetime between to_date(#{todayDate},'yyyy-MM-dd') and to_date(#{tomorrowDate},'yyyy-MM-dd') ORDER BY timestamp  desc
     </select>
 
+    <select id="getNotification" resultType="com.prisonapp.business.entity.dw_message.NotificationMessageModel">
+        select modular as type, modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,personcontent as content,messagetime as timestamp from t_message where personid=#{userId} and modular=#{type} ORDER BY timestamp  desc limit 1
+    </select>
 </mapper>

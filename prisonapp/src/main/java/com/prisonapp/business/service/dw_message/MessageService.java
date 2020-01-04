@@ -46,6 +46,9 @@ public class MessageService {
         return messageDao.newestMessageTotalCount(todayDate,tomorrowDate,userId);
     }
 
+    public NotificationMessageModel getNotification(String userId ,int type){
+        return messageDao.getNotification(userId,type);
+    }
 
 
 }

@@ -6,7 +6,7 @@
         select * from t_user where accountname=#{userName}
     </select>
     <select id="getUser" resultType="com.prisonapp.business.entity.dw_user.UserModel">
-        select * from t_user where id=#{id}
+        select * from t_user where personid=#{personid}
     </select>
 
     <select id="getUserInfo" resultType="com.prisonapp.business.entity.dw_user.GetUserInfoModel">

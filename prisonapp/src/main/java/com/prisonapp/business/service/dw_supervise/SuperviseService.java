@@ -18,6 +18,10 @@ public class SuperviseService {
     public List<GetApplyLeaveListModel> getApplyLeaveList(String statusCode, int count, int requestCount, String userId){
         return superviseDao.getApplyLeaveList(statusCode,count,requestCount,userId);
     }
+
+    public List<GetApplyLeaveListModel> getAllApplyLeaveList( int count, int requestCount, String userId){
+        return superviseDao.getAllApplyLeaveList(count,requestCount,userId);
+    }
     //外出申请列表的总数
     public List<SuperviseModel> getTotalApplyLeaveList(String statusCode, String userId){
         return superviseDao.getTotalApplyLeaveList(statusCode,userId);
@@ -66,7 +70,14 @@ public class SuperviseService {
         return  superviseDao.uploadBattery(percent,userId,date);
     }
 
-    public int batteryAlarm(String userId){
-        return  superviseDao.batteryAlarm( userId);
+    public int batteryAlarm(String userId,String persionName){
+        return  superviseDao.batteryAlarm( userId,persionName);
+    }
+
+    public List<LocationModel> getLocationConfig(String userId){
+        return  superviseDao.getLocationConfig(userId );
+    }
+    public  GetSuperviseConfigModel getBatteryConfigTimestamp(String userId){
+        return  superviseDao.getBatteryConfigTimestamp( userId);
     }
 }

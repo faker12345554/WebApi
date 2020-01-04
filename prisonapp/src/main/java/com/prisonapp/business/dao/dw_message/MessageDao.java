@@ -28,5 +28,5 @@ public interface MessageDao {
 
     List<MessageListModel> newestMessageTotalCount(@Param("todayDate")String  todayDate,@Param("tomorrowDate")String tomorrowDate,@Param("userId")String userId);
 
-
+    NotificationMessageModel getNotification(@Param("userId")String userId,@Param("type")int  type);
 }

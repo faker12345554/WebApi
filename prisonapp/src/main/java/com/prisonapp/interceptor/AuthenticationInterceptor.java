@@ -54,7 +54,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                                      } catch (JWTDecodeException j) {
                                          throw new RuntimeException("401");
                                      }
-                                UserModel user = userDao.getUser(Integer.valueOf(userId));
+                                UserModel user = userDao.getUser(userId);
                                  if (user == null) {
                                          throw new RuntimeException("用户不存在，请重新登录");
                                      }

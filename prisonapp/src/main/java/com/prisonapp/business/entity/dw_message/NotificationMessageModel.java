@@ -3,7 +3,7 @@ package com.prisonapp.business.entity.dw_message;
 import java.sql.Timestamp;
 import java.util.Date;
 
-//保外人员的通知列表
+//保外人员的通知列表、获取保外人员的某一类通知
 public class NotificationMessageModel {
     public int type;
     public String typeName;

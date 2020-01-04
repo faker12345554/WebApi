@@ -7,6 +7,11 @@
     leavedestination as  address,  reason,recording as reasonAudioUrl FROM t_leave where personid=#{userId} and statuscode=#{statusCode}
      ORDER BY subittimestamp DESC LIMIT #{requestCount} OFFSET #{count}
     </select>
+    <select id="getAllApplyLeaveList"  resultType="com.prisonapp.business.entity.dw_supervise.GetApplyLeaveListModel">
+    select leaveorder as code,statuscode as statusCode, states as status,personname as applicant,subittimestamp as applyTimestamp,starttimestamp as  startTimestamp,endtimestamp as endTimestamp,
+    leavedestination as  address,  reason,recording as reasonAudioUrl FROM t_leave where personid=#{userId}
+     ORDER BY subittimestamp DESC LIMIT #{requestCount} OFFSET #{count}
+    </select>
 
     <select id="getTotalApplyLeaveList" resultType="com.prisonapp.business.entity.dw_supervise.SuperviseModel">
         select * FROM t_leave where personid=#{userId} and statuscode=#{statusCode}
@@ -60,6 +65,14 @@
 
     <insert id="batteryAlarm">
         insert into t_message (modular, workcontent,personid,modularname,messagetime,readmessage,detailtype,detailtypename,personcontent)
-        values                (2,'手机电量低于20%，请及时与其取得联系。最后一次位置：',#{userId},'报警提醒',current_timestamp,'f',1,'低电量报警通知','电池电量不足，仅剩20%的电量！')
+        values                (2,#{persionName}+current_timestamp+'手机电量低于20%，请及时与其取得联系。最后一次位置：',#{userId},'报警提醒',current_timestamp,'f',1,'低电量报警通知','电池电量不足，仅剩20%的电量！')
     </insert>
+
+    <select id="getLocationConfig" resultType="com.prisonapp.business.entity.dw_supervise.LocationModel">
+        SELECT t_prisonsetting.settingcheck as enable ,t_reportsettings.locationstime as timeSpan FROM t_prisonsetting FULL JOIN t_reportsettings ON t_prisonsetting.settingcode =t_reportsettings.type WHERE personid=#{userId} and status='t' ORDER BY type ASC
+    </select>
+    <select id="getBatteryConfigTimestamp" resultType="com.prisonapp.business.entity.dw_supervise.GetSuperviseConfigModel">
+         SELECT settingtime as lastEditTime FROM t_prisonsetting FULL JOIN t_reportsettings ON t_prisonsetting.settingcode =t_reportsettings.type WHERE personid=#{userId} and status='t' ORDER BY settingtime DESC limit 1
+
+    </select>
 </mapper>

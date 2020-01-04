@@ -13,6 +13,8 @@ import java.util.List;
 public interface SuperviseDao {
     List<GetApplyLeaveListModel> getApplyLeaveList(@Param("statusCode")String  statusCode,@Param("count")int count,@Param("requestCount")int requestCount, @Param("userId")String userId);
 
+    List<GetApplyLeaveListModel> getAllApplyLeaveList(@Param("count")int count,@Param("requestCount")int requestCount, @Param("userId")String userId);
+
     List<SuperviseModel> getTotalApplyLeaveList(@Param("statusCode")String  statusCode, @Param("userId")String userId);
 
     List<ApplyRecordModel> applyRecord(@Param("code")String  code);
@@ -35,5 +37,9 @@ public interface SuperviseDao {
 
     int uploadBattery(float percent,String userId,Date date);
 
-    int batteryAlarm(String userId);
+    int batteryAlarm(String userId,String persionName);
+
+    List<LocationModel> getLocationConfig(String userId);
+
+    GetSuperviseConfigModel getBatteryConfigTimestamp(String userId);
 }

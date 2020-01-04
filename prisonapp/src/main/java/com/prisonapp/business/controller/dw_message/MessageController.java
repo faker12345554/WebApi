@@ -32,7 +32,8 @@ public class  MessageController {
     private MessageService messageService;
 
     private ResultSet result = new ResultSet();
-    private SearchNotificationModel searchNotificationModel = new SearchNotificationModel();
+    //private SearchNotificationModel searchNotificationModel = new SearchNotificationModel();
+   // private NotificationMessageModel notificationMessageModel =new NotificationMessageModel();
     private ResultSearchNotificationModel resultSearchNotificationModel = new ResultSearchNotificationModel();
     private ResultMessageListModel resultMessageListModel = new ResultMessageListModel();
     private ResultNotificationMessageModel resultNotificationMessage = new ResultNotificationMessageModel();
@@ -147,12 +148,25 @@ public class  MessageController {
 
     @UserLoginToken
     @ApiOperation(value = " 获取保外人员的某一类通知")
-    @GetMapping("/ResultSetgetNotification")
+    @GetMapping("/getNotification")
     public ResultSet getNotification(@ApiParam(name = "type",value = "通知类型") @RequestParam(required = true) String type){
+        int iType = Integer.parseInt(type);
+        NotificationMessageModel notificationMessageModels =messageService.getNotification(TokenUtil.getTokenUserId(),iType);
+        if(notificationMessageModels!=null){
+            int a =messageService.unreadCount(iType,TokenUtil.getTokenUserId()).size();
+            notificationMessageModels.setUnreadCount(a);
+            result.resultCode = 0;
+            result.resultMsg = "";
+            result.data = notificationMessageModels;
+        }else{
+            NotificationMessageModel notificationMessageModelList =new NotificationMessageModel();
+            notificationMessageModelList.setType(iType);
+            notificationMessageModelList.setTypeName(Notification.getName(iType));
+            result.resultCode = 0;
+            result.resultMsg = "";
+            result.data = notificationMessageModelList;
+        }
 
-        result.resultCode = 0;
-        result.resultMsg = "";
-        result.data = resultMessageListModel;
         return result;
     }
 
