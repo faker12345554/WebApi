@@ -32,7 +32,8 @@ public class  MessageController {
     private MessageService messageService;
 
     private ResultSet result = new ResultSet();
-    private SearchNotificationModel searchNotificationModel = new SearchNotificationModel();
+    //private SearchNotificationModel searchNotificationModel = new SearchNotificationModel();
+   // private NotificationMessageModel notificationMessageModel =new NotificationMessageModel();
     private ResultSearchNotificationModel resultSearchNotificationModel = new ResultSearchNotificationModel();
     private ResultMessageListModel resultMessageListModel = new ResultMessageListModel();
     private ResultNotificationMessageModel resultNotificationMessage = new ResultNotificationMessageModel();
@@ -65,9 +66,17 @@ public class  MessageController {
     @ApiOperation(value = "获取保外人员的消息列表")
     @GetMapping("/getMessageList")
     public ResultSet getMessageList(@ApiParam(name = "type",value = "类型编号") @RequestParam(required = true) String type,@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true) int count,@ApiParam(name = "requestCount",value = "请求获取数据的条数") @RequestParam(required = true) int requestCount,@ApiParam(name = "key",value = "搜索关键字") @RequestParam(required = false) String key) {
+        List<MessageListModel> messageListModel;
+        int totalCount =0;
+        if(type.equals("0")){
+            messageListModel = messageService.getAllMessageList( count, requestCount, key, TokenUtil.getTokenUserId());
+            totalCount = (messageService.messageAllTotalCount( TokenUtil.getTokenUserId())).size();
+        }else{
+         messageListModel = messageService.getMessageList(Integer.parseInt(type), count, requestCount, key, TokenUtil.getTokenUserId());
+            totalCount = (messageService.messageTotalCount(Integer.parseInt(type), TokenUtil.getTokenUserId())).size();
+        }
 
-        List<MessageListModel> messageListModel = messageService.getMessageList(type, count, requestCount, key, TokenUtil.getTokenUserId());
-        int totalCount = (messageService.messageTotalCount(type, TokenUtil.getTokenUserId())).size();
+
         resultMessageListModel.totalCount = totalCount;
         resultMessageListModel.list = messageListModel;
         result.resultCode = 0;
@@ -110,7 +119,7 @@ public class  MessageController {
         List<SearchNotificationModel> searchNotificationModels = messageService.searchNotification(key, TokenUtil.getTokenUserId());
         int sum = 0;
         for (SearchNotificationModel item : searchNotificationModels) {
-            int messageCount = messageService.messageTotalCount(item.getType(), TokenUtil.getTokenUserId()).size();
+            int messageCount = messageService.messageTotalCount(Integer.parseInt(item.getType()), TokenUtil.getTokenUserId()).size();
             item.setMessageCount(messageCount);
             sum += messageCount;
         }
@@ -147,12 +156,25 @@ public class  MessageController {
 
     @UserLoginToken
     @ApiOperation(value = " 获取保外人员的某一类通知")
-    @GetMapping("/ResultSetgetNotification")
+    @GetMapping("/getNotification")
     public ResultSet getNotification(@ApiParam(name = "type",value = "通知类型") @RequestParam(required = true) String type){
+        int iType = Integer.parseInt(type);
+        NotificationMessageModel notificationMessageModels =messageService.getNotification(TokenUtil.getTokenUserId(),iType);
+        if(notificationMessageModels!=null){
+            int a =messageService.unreadCount(iType,TokenUtil.getTokenUserId()).size();
+            notificationMessageModels.setUnreadCount(a);
+            result.resultCode = 0;
+            result.resultMsg = "";
+            result.data = notificationMessageModels;
+        }else{
+            NotificationMessageModel notificationMessageModelList =new NotificationMessageModel();
+            notificationMessageModelList.setType(iType);
+            notificationMessageModelList.setTypeName(Notification.getName(iType));
+            result.resultCode = 0;
+            result.resultMsg = "";
+            result.data = notificationMessageModelList;
+        }
 
-        result.resultCode = 0;
-        result.resultMsg = "";
-        result.data = resultMessageListModel;
         return result;
     }
 

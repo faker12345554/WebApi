@@ -13,11 +13,13 @@ import java.util.List;
 public interface SuperviseDao {
     List<GetApplyLeaveListModel> getApplyLeaveList(@Param("statusCode")String  statusCode,@Param("count")int count,@Param("requestCount")int requestCount, @Param("userId")String userId);
 
+    List<GetApplyLeaveListModel> getAllApplyLeaveList(@Param("count")int count,@Param("requestCount")int requestCount, @Param("userId")String userId);
+
     List<SuperviseModel> getTotalApplyLeaveList(@Param("statusCode")String  statusCode, @Param("userId")String userId);
 
     List<ApplyRecordModel> applyRecord(@Param("code")String  code);
 
-    int submitApplyLeave(@Param("submitApplyLeaveModel")SubmitApplyLeaveModel submitApplyLeaveModel, @Param("startDate") Date startDate,@Param("endDate") Date endDate, @Param("code") String code, @Param("userId")String userId,@Param("personname")String personname);
+    int submitApplyLeave(@Param("submitApplyLeaveModel")SubmitApplyLeaveModel submitApplyLeaveModel, @Param("startDate") long startDate,@Param("endDate") long endDate, @Param("code") String code, @Param("userId")String userId,@Param("personname")String personname);
 
     List<UserModel> getPersonname(@Param("userId")String userId);
 
@@ -35,5 +37,9 @@ public interface SuperviseDao {
 
     int uploadBattery(float percent,String userId,Date date);
 
-    int batteryAlarm(String userId);
+    int batteryAlarm(String userId,String workContent);
+
+    List<LocationModel> getLocationConfig(String userId);
+
+    GetSuperviseConfigModel getBatteryConfigTimestamp(String userId);
 }

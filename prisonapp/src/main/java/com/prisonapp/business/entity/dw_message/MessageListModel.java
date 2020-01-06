@@ -9,7 +9,7 @@ import java.util.Date;
 public class MessageListModel {
 
     public int  code;
-    public String type;
+    public int type;
     public String typeName;
     public String content;
     public String  timestamp;
@@ -25,11 +25,11 @@ public class MessageListModel {
         this.code = code;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
