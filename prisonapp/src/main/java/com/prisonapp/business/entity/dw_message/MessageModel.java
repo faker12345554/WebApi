@@ -4,7 +4,7 @@ package com.prisonapp.business.entity.dw_message;
 public class MessageModel {
 
     private long id;
-    private String modular;
+    private int modular;
     private String modularname;
     private String content;
     private String personid;
@@ -22,15 +22,13 @@ public class MessageModel {
         this.id = id;
     }
 
-
-    public String getModular() {
+    public int getModular() {
         return modular;
     }
 
-    public void setModular(String modular) {
+    public void setModular(int modular) {
         this.modular = modular;
     }
-
 
     public String getModularname() {
         return modularname;

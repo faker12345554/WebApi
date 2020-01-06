@@ -6,15 +6,12 @@ import com.common.common.result.ResultSet;
 import com.prisonapp.business.entity.dw_supervise.*;
 import com.prisonapp.business.entity.dw_user.UserModel;
 import com.prisonapp.business.service.dw_supervise.SuperviseService;
-import com.prisonapp.session.SessionContext;
 import com.prisonapp.token.TokenUtil;
 import com.prisonapp.token.tation.UserLoginToken;
 import com.prisonapp.tool.AESDecode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.catalina.User;
-import org.apache.poi.ss.formula.functions.T;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.net.ssl.SSLEngine;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -48,38 +48,44 @@ public class SuperviseController {
     @ApiOperation(value = "获取保外人员的外出申请列表")
     @GetMapping("/getApplyLeaveList")
     public ResultSet getApplyLeaveList(@ApiParam(name = "statusCode",value = "审批状态编号") @RequestParam(required = true)String statusCode,@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true)int count,@ApiParam(name = "requestCount",value = "请求获取数据的条数") @RequestParam(required = true)int requestCount) {
-        List<GetApplyLeaveListModel> ApplyLeaveListModels =superviseService.getApplyLeaveList(statusCode,count,requestCount,TokenUtil.getTokenUserId());
-        int totalCount =(superviseService.getTotalApplyLeaveList(statusCode,TokenUtil.getTokenUserId())).size();
-        for (GetApplyLeaveListModel item: ApplyLeaveListModels) {
-            List<ApplyRecordModel> applyRecords = superviseService.applyRecord(item.getCode());//取出请假申请
-            Long End =Long.parseLong(item.getEndTimestamp());
-            Long Start =Long.parseLong(item.getStartTimestamp());
-            int days =(int)((End-Start)/86400000);
-            //(int) ((oDate.getTime() - fDate.getTime()) / 24 * 3600 * 1000)
-            item.setApplyRecord(applyRecords);
-            item.setDays(days);
+        List<GetApplyLeaveListModel> ApplyLeaveListModels;
+        if (statusCode.equals("0")) {
+            ApplyLeaveListModels = superviseService.getAllApplyLeaveList(count, requestCount, TokenUtil.getTokenUserId());
+        } else {
+            ApplyLeaveListModels = superviseService.getApplyLeaveList(statusCode, count, requestCount, TokenUtil.getTokenUserId());
         }
+        if (ApplyLeaveListModels != null && !"".equals(ApplyLeaveListModels) && !"null".equals(ApplyLeaveListModels)) {
 
-        resultGetApplyLeaveListModel.totalCount=totalCount;
-        resultGetApplyLeaveListModel.list=ApplyLeaveListModels;
-        result.resultCode=0;
-        result.resultMsg="";
-        result.data=resultGetApplyLeaveListModel;
+            int totalCount = (superviseService.getTotalApplyLeaveList(statusCode, TokenUtil.getTokenUserId())).size();
+            for (GetApplyLeaveListModel item : ApplyLeaveListModels) {
+                List<ApplyRecordModel> applyRecords = superviseService.applyRecord(item.getCode());//取出请假申请
+                Long End = Long.parseLong(item.getEndTimestamp());
+                Long Start = Long.parseLong(item.getStartTimestamp());
+                int days = (int) ((End - Start) / 86400000);
+                //(int) ((oDate.getTime() - fDate.getTime()) / 24 * 3600 * 1000)
+                item.setApplyRecord(applyRecords);
+                item.setDays(days);
+            }
+            resultGetApplyLeaveListModel.totalCount = totalCount;
+            resultGetApplyLeaveListModel.list = ApplyLeaveListModels;
 
+        }
+        result.resultCode = 0;
+        result.resultMsg = "";
+        result.data = resultGetApplyLeaveListModel;
         return result;
     }
 
     @UserLoginToken
     @ApiOperation(value = "提交保外人员外出申请")
     @PostMapping("/submitApplyLeave")
-    public ResultSet submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel,@ApiParam(name = "startDate",value = "起始时间戳")@RequestParam(required = true)String  startDate,@ApiParam(name = "endDate",value = "结束时间戳") @RequestParam(required = true)String endDate){
+    public ResultSet submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel,@ApiParam(name = "startDate",value = "起始时间戳")@RequestParam(required = true)String  startDate,@ApiParam(name = "endDate",value = "结束时间戳") @RequestParam(required = true)String endDate) throws ParseException {
         String code="qj"+System.currentTimeMillis();
-        Long  longStartDate =Long.valueOf(startDate);
-        Date dateStartDate = new Date(Long.valueOf(longStartDate));
+
+        Long  longStartDate =Long.valueOf(startDate);//123456789
         Long  longEndDate =Long.valueOf(endDate);
-        Date dateEndDate= new Date(Long.valueOf(longEndDate));
         List<UserModel>  user =superviseService.getPersonname(TokenUtil.getTokenUserId());
-        int res =  superviseService.submitApplyLeave(submitApplyLeaveModel,dateStartDate,dateEndDate,code,TokenUtil.getTokenUserId(),user.get(0).getAccountname());
+        int res =  superviseService.submitApplyLeave(submitApplyLeaveModel,longStartDate,longEndDate,code,TokenUtil.getTokenUserId(),user.get(0).getAccountname());
         if(res!=0){
             result.resultCode=0;
             result.resultMsg="";
@@ -258,7 +264,6 @@ public class SuperviseController {
         }
         return result;
     }
-
     @UserLoginToken
     @ApiOperation(value = " 上报保外人员电量信息")
     @PostMapping("/uploadBattery")
@@ -274,7 +279,31 @@ public class SuperviseController {
     }
 
     public void batteryAlarm(String userId){
-        superviseService.batteryAlarm(userId);
+        String persionName =superviseService.faceRecognize(userId).get(0).getPersonname();
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
+        String nowTime = dateFormat.format( now );
+        String workContent = persionName+"于"+nowTime+"手机电量低于20%，请及时与其取得联系。最后一次位置：";
+        superviseService.batteryAlarm(userId,workContent);
     }
 
+    @UserLoginToken
+    @ApiOperation(value = " 获取保外人员的监管配置")
+    @GetMapping("/getSuperviseConfig")
+    public ResultSet  getSuperviseConfig(){
+        List<LocationModel> locationModels = superviseService.getLocationConfig(TokenUtil.getTokenUserId());
+        GetSuperviseConfigModel getSuperviseConfigModel =superviseService.getBatteryConfigTimestamp(TokenUtil.getTokenUserId());
+        getSuperviseConfigModel.setLocation(locationModels.get(0));
+       // getSuperviseConfigModel.setBatteries(locationModels.get(1));
+        Battery battery =new Battery();
+        battery.setEnable(locationModels.get(1).isEnable());
+        battery.setTimeSpan(locationModels.get(1).getTimeSpan());
+        battery.setAlarmThreshold(20.0f);
+        getSuperviseConfigModel.setBattery(battery);
+
+        result.resultCode = 0;
+        result.resultMsg = "";
+        result.data = getSuperviseConfigModel;
+        return result;
+    }
 }

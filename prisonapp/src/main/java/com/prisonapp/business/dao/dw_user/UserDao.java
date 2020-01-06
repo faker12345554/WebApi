@@ -12,7 +12,7 @@ public interface UserDao {
 
     UserModel login(@Param("userName") String userName);
 
-    UserModel getUser(@Param("id") int id);
+    UserModel getUser(@Param("personid") String personid);
 
     GetUserInfoModel getUserInfo(String userId);
 
