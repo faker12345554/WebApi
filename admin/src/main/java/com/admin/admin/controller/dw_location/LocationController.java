@@ -157,12 +157,13 @@ public class LocationController {
 
             });
             String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) + ".xls";
-            File file = new File(System.getProperty("user.dir") + "\\"+ dateTime);
+            File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);
+            result.setData(dateTime);
             workbook.write(file);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        rtn.setData("导出成功");
+        rtn.setMessage("导出成功");
         rtn.setCode(200);
         return rtn;
     }

@@ -33,8 +33,8 @@ public class AddressController {
         return result.setData( addressService.insertLocation(addressInformation));
     }
 
-    @GetMapping("/test")
-    public void GeneratedRecord() throws Exception{
-        tasking.GeneratedRecord();
-    }
+//    @GetMapping("/test")
+//    public void GeneratedRecord() throws Exception{
+//        tasking.GeneratedRecord();
+//    }
 }
