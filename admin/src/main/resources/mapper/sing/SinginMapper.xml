@@ -27,10 +27,10 @@
             t.activityarea like concat('%',#{FuzzyCondition},'%')
         </if>
         <if test="Condition1==null and Condition2!=null">
-            P.personname like concat('%',#{Condition2},'%')
+            and P.personname like concat('%',#{Condition2},'%')
         </if>
         <if test="Condition1!=null and Condition2==null">
-            P.personname like concat('%',#{Conditio1},'%')
+            and P.personname like concat('%',#{Conditio1},'%')
         </if>
         <if test="Condition1 !=null and Condition1 !='' and Condition2 !=null and Condition2!=''">
             AND t.reportstatus =#{Condition1} or t.reporttype=#{Condition2}
