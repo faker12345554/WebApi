@@ -39,8 +39,16 @@
             <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.60</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
+
+
     <parent>
         <groupId>com.donwait</groupId>
         <artifactId>donwait</artifactId>

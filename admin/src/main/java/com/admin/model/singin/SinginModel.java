@@ -13,7 +13,18 @@ public class SinginModel extends PersonModel {
     private Date createtime;
     private float durationtime;
     private String filepath;
+
+    public String getRemark() {
+        return Remark;
+    }
+
+    public SinginModel setRemark(String remark) {
+        Remark = remark;
+        return this;
+    }
+
     private int type;
+    private String Remark;
 
 
     public int getType() {

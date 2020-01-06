@@ -113,7 +113,8 @@ public class SinginControll {
     public ResponseResult ExportSingIn(@RequestBody SearchModel searchModel){
         List<SinginModel> allItems = singinService.ListSingin(searchModel);
         String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) +"签到信息"+ ".xls";
-        File file = new File(System.getProperty("user.dir") + "\\"+ dateTime);
+        File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);
+        result.setData(dateTime);
         try (HSSFWorkbook workbook = new HSSFWorkbook()) {
             HSSFSheet sheet = workbook.createSheet("打印历史定位信息");
             HSSFRow row = sheet.createRow(0);
@@ -148,12 +149,13 @@ public class SinginControll {
 
 
             workbook.write(file);
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         result.setData("导出成功");
         result.setCode(200);
-        return result.setData(file);
+        return result;
     }
 
 }

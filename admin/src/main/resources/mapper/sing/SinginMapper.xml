@@ -9,7 +9,8 @@
     <select id="ListSingin" parameterType="com.admin.model.search.SearchModel"
             resultType="com.admin.model.singin.SinginModel">
         select t.id,P.suspectstatus,P.personname,P.gender,P.age,t.reportstatus,t.reporttype,P.sponsor
-        ,t.address,t.activityarea,t.createtime,t.type from t_singin AS t
+        ,t.address,t.activityarea,t.createtime,t.type,(CASE  (SELECT Count(*) from t_leave where personid=t.personid and starttimestamp<=createtime AND createtime<=endtimestamp)
+        WHEN 0 THEN '正常签到' ELSE '已请假' END) as Remark from t_singin AS t
         inner join t_personinformation AS P on p.personid=t.personid where p.status=#{flag}
         <if test="PersonId !=null and PersonId!=''">
             and t.personid=#{PersonId}
@@ -26,10 +27,10 @@
             t.activityarea like concat('%',#{FuzzyCondition},'%')
         </if>
         <if test="Condition1==null and Condition2!=null">
-            P.personname like concat('%',#{Condition2},'%') or
+            P.personname like concat('%',#{Condition2},'%')
         </if>
         <if test="Condition1!=null and Condition2==null">
-            P.personname like concat('%',#{Conditio1},'%') or
+            P.personname like concat('%',#{Conditio1},'%')
         </if>
         <if test="Condition1 !=null and Condition1 !='' and Condition2 !=null and Condition2!=''">
             AND t.reportstatus =#{Condition1} or t.reporttype=#{Condition2}

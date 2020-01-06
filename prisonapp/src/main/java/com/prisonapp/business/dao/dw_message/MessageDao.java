@@ -14,7 +14,9 @@ import java.util.List;
 public interface MessageDao {
     List<NotificationMessageModel> getNotificationList(@Param("userId") String userId );
 
-    List<MessageListModel> getMessageList(@Param("type")String  type, @Param("count") int  count, @Param("requestCount") int requestCount, @Param("key") String key, @Param("userId") String userId);
+    List<MessageListModel> getAllMessageList( @Param("count") int  count, @Param("requestCount") int requestCount, @Param("key") String key, @Param("userId") String userId);
+
+    List<MessageListModel> getMessageList(@Param("type")int  type, @Param("count") int  count, @Param("requestCount") int requestCount, @Param("key") String key, @Param("userId") String userId);
 
     int readMessage(@Param("type")int  type,@Param("messageTimestamp")String  messageTimestamp,@Param("userId")String userId );
 
@@ -22,11 +24,14 @@ public interface MessageDao {
 
     List<MessageModel> unreadCount(@Param("type")int  type,@Param("userId")String userId);
 
-    List<MessageModel> messageTotalCount(@Param("type")String  type,@Param("userId")String userId);
+    List<MessageModel> messageTotalCount(@Param("type")int  type,@Param("userId")String userId);
+
+    List<MessageModel> messageAllTotalCount(@Param("userId")String userId);
+
 
     List<MessageListModel> getNewestMessageList(@Param("count")int count,@Param("requestCount")int requestCount, @Param("todayDate")String  todayDate,@Param("tomorrowDate")String tomorrowDate,@Param("userId")String userId);
 
     List<MessageListModel> newestMessageTotalCount(@Param("todayDate")String  todayDate,@Param("tomorrowDate")String tomorrowDate,@Param("userId")String userId);
 
-
+    NotificationMessageModel getNotification(@Param("userId")String userId,@Param("type")int  type);
 }
