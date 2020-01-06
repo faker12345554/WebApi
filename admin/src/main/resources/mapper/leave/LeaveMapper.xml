@@ -8,6 +8,9 @@
         <if test="PersonId !=null and PersonId!=''">
             WHERE a.personid=#{PersonId}
         </if>
+        <if test="Condition1 ==null and Condition2!=null ">
+            where a.personname like concat('%',#{condition2},'%')
+        </if>
 
         <if test="Condition1 !=null and Condition2!=null and Condition2!='' and StartTime!=null and EndTime!=null ">
             WHERE a.states=#{Condition1}
@@ -27,6 +30,12 @@
         </if>
         <if test="Condition1 ==null and (Condition2==null or Condition2=='') and StartTime==null and EndTime!=null ">
             WHERE a.subittimestamp &lt; #{EndTime}
+        </if>
+        <if test="list.size()>0">
+            where a.id in
+            <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
         </if>
 
 

@@ -92,7 +92,7 @@ public class PersonController {
     }
 
     @ApiOperation("配置管理方式")
-    @GetMapping("/insertprison")
+    @PostMapping("/insertprison")
     public ResponseResult insertprison(@RequestBody List<TPrisonsetting> List) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage("配置成功");
@@ -164,8 +164,8 @@ public class PersonController {
 //                dataRow.createCell(10).setCellValue(printOrder.getAddress());
             });
             String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) + ".xls";
-            File file = new File(System.getProperty("user.dir") + "\\"+ dateTime);
-            rtn.setData(file);
+            File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);
+            rtn.setData(dateTime);
             workbook.write(file);
         } catch (Exception ex) {
             ex.printStackTrace();
