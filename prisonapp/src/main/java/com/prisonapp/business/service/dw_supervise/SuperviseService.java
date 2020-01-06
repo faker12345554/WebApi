@@ -70,8 +70,8 @@ public class SuperviseService {
         return  superviseDao.uploadBattery(percent,userId,date);
     }
 
-    public int batteryAlarm(String userId,String workContent){
-        return  superviseDao.batteryAlarm( userId,workContent);
+    public int batteryAlarm(String userId,String content){
+        return  superviseDao.batteryAlarm( userId,content);
     }
 
     public List<LocationModel> getLocationConfig(String userId){
@@ -80,4 +80,14 @@ public class SuperviseService {
     public  GetSuperviseConfigModel getBatteryConfigTimestamp(String userId){
         return  superviseDao.getBatteryConfigTimestamp( userId);
     }
+    public  TEnclosure getPolygon(String userId){
+        return  superviseDao.getPolygon( userId);
+    }
+    public  int updateFscope(String userId,boolean fscope){
+        return  superviseDao.updateFscope( userId,fscope);
+    }
+    public int insertFscope(String userId,String content){
+        return  superviseDao.insertFscope( userId,content);
+    }
+
 }

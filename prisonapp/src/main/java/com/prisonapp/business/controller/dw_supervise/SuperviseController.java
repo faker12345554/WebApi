@@ -19,7 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.net.ssl.SSLEngine;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.geom.Point2D;
 import java.io.File;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -240,7 +242,7 @@ public class SuperviseController {
         }else{
             result.resultCode = 1;
             result.resultMsg = "上报失败";
-            //result.data = "";
+            result.data = new Object();
         }
         return result;
     }
@@ -283,8 +285,8 @@ public class SuperviseController {
         Date now = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
         String nowTime = dateFormat.format( now );
-        String workContent = persionName+"于"+nowTime+"手机电量低于20%，请及时与其取得联系。最后一次位置：";
-        superviseService.batteryAlarm(userId,workContent);
+        String content = persionName+"于"+nowTime+"手机电量低于20%，请及时与其取得联系。最后一次位置：";
+        superviseService.batteryAlarm(userId,content);
     }
 
     @UserLoginToken
@@ -305,5 +307,66 @@ public class SuperviseController {
         result.resultMsg = "";
         result.data = getSuperviseConfigModel;
         return result;
+    }
+
+    @UserLoginToken
+    @ApiOperation(value = " 判断是否越界")
+    @GetMapping("/getPolygon")
+    public ResultSet getPolygon(@ApiParam(name = "latitude",value = "纬度")float latitude,@ApiParam(name = "longitude",value = "经度")float longitude){
+
+        //点的转型
+        BigDecimal bLatitude = new BigDecimal(String.valueOf(latitude));
+        double dLatitude = bLatitude.doubleValue();
+        BigDecimal bLongitude = new BigDecimal(String.valueOf(longitude));
+        double dLongitude = bLongitude.doubleValue();
+        Point2D.Double point = new Point2D.Double(dLatitude, dLongitude);
+        //画区域
+        List<Point2D.Double> polygon =new ArrayList<Point2D.Double>();
+        TEnclosure tEnclosure =superviseService.getPolygon(TokenUtil.getTokenUserId());
+        String str = tEnclosure.getAreaarr();
+        String[] strArray = str.split(",");
+        for(int i=0 ;i<strArray.length;i+=2){
+            double polygonPoint_x=Double.parseDouble(strArray[i]);
+            double polygonPoint_y=Double.parseDouble(strArray[i+1]);
+            Point2D.Double polygonPoint = new Point2D.Double(polygonPoint_x,polygonPoint_y);
+            polygon.add(polygonPoint);
+        }
+        boolean a = checkWithJdkGeneralPath( point,  polygon);
+        if(a){
+            superviseService.updateFscope(TokenUtil.getTokenUserId(),false);
+            result.resultCode = 0;
+            result.resultMsg = "没有越界";
+            result.data = new Object();
+        }else{
+            //生成报警内容
+            String persionName =superviseService.faceRecognize(TokenUtil.getTokenUserId()).get(0).getPersonname();
+            Date now = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
+            String nowTime = dateFormat.format( now );
+            String content = persionName+"于"+nowTime+"未经批准离开限定区域，请及时与其取得联系。最后一次位置：";
+
+            superviseService.updateFscope(TokenUtil.getTokenUserId(),true);
+            superviseService.insertFscope(TokenUtil.getTokenUserId(),content);
+            result.resultCode = 0;
+            result.resultMsg = "越界了";
+            result.data = new Object();
+        }
+
+        return result;
+    }
+
+
+
+    public static boolean checkWithJdkGeneralPath(Point2D.Double point, List<Point2D.Double> polygon) {
+        java.awt.geom.GeneralPath p = new java.awt.geom.GeneralPath();
+        Point2D.Double first = polygon.get(0);
+        p.moveTo(first.x, first.y);
+        polygon.remove(0);
+        for (Point2D.Double d : polygon) {
+            p.lineTo(d.x, d.y);
+        }
+        p.lineTo(first.x, first.y);
+        p.closePath();
+        return p.contains(point);
     }
 }

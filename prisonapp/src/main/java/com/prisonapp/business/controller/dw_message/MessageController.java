@@ -100,7 +100,7 @@ public class  MessageController {
                 result.data = new Object();
             } else {
                 result.resultCode = 1;
-                result.resultMsg = "失败";
+                result.resultMsg = "无最新消息";
                 result.data = null;
             }
 

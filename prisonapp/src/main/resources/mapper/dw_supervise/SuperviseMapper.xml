@@ -64,8 +64,10 @@
     </insert>
 
     <insert id="batteryAlarm">
-        insert into t_message (modular, workcontent,personid,modularname,messagetime,readmessage,detailtype,detailtypename,personcontent)
-        values                (2,#{workContent},#{userId},'报警提醒',current_timestamp,'f',1,'低电量报警通知','电池电量不足，仅剩20%的电量！')
+        insert into t_personmessage (modular,personid,modularname,messagetime,readmessage,detailtype,detailtypename,content)
+        values                (2,#{userId},'报警提醒',current_timestamp,'f',1,'低电量报警通知','电池电量不足，仅剩20%的电量！')
+        insert into t_message (modular, content,personid,modularname,messagetime,readmessage,detailtype,detailtypename)
+        values                (2,#{workContent},#{userId},'报警提醒',current_timestamp,'f',3,'低电量报警通知')
     </insert>
 
     <select id="getLocationConfig" resultType="com.prisonapp.business.entity.dw_supervise.LocationModel">
@@ -75,4 +77,19 @@
          SELECT settingtime as lastEditTime FROM t_prisonsetting FULL JOIN t_reportsettings ON t_prisonsetting.settingcode =t_reportsettings.type WHERE personid=#{userId} and status='t' ORDER BY settingtime DESC limit 1
 
     </select>
+
+    <select id="getPolygon" resultType="com.prisonapp.business.entity.dw_supervise.TEnclosure">
+        select * from t_enclosure where personid =#{userId}
+    </select>
+
+    <update id="updateFscope">
+        update t_location set fscope =#{fscope} where timestamp= (SELECT MAX(timestamp) FROM t_location where personid =#{userId})
+    </update>
+
+    <insert id="insertFscope">
+        insert into t_personmessage (modular,personid,modularname,messagetime,readmessage,detailtype,detailtypename,content)
+        values                (2,#{userId},'报警提醒',current_timestamp,'f',1,'越界报警通知','系统检测您的行走轨迹并未返回管控地，已报警处置，请尽快与民警取得联系，否则您的保证金将被没收，且有可能被予以拘留。');
+        insert into t_message (modular, content,personid,modularname,messagetime,readmessage,detailtype,detailtypename)
+        values                (2,#{content},#{userId},'报警提醒',current_timestamp,'f',3,'越界报警通知')
+    </insert>
 </mapper>

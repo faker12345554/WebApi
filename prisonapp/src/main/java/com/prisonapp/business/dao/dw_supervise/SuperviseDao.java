@@ -37,9 +37,15 @@ public interface SuperviseDao {
 
     int uploadBattery(float percent,String userId,Date date);
 
-    int batteryAlarm(String userId,String workContent);
+    int batteryAlarm(String userId,String content);
 
     List<LocationModel> getLocationConfig(String userId);
 
     GetSuperviseConfigModel getBatteryConfigTimestamp(String userId);
+
+    TEnclosure getPolygon(String userId);
+
+    int updateFscope(String userId,boolean fscope) ;
+
+    int insertFscope(String userId,String content);
 }
