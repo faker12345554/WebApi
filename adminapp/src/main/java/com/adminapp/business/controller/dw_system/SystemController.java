@@ -11,11 +11,14 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -80,30 +83,11 @@ public class SystemController {
     }
 
     @PostMapping("/submitAdvice")
-    public ResultSet submitAdvice(@RequestParam(required = false)File file){
-        byte[] be=null;
-        try {
-            if(file==null){
-                return null;
-            }
-            FileInputStream in=new FileInputStream(file);
-            ByteArrayOutputStream out=new ByteArrayOutputStream(4000);
-            byte[] b=new byte[4000];
-            int n;
-            while((n=in.read(b))!=-1){
-                out.write(b,0,n);
-            }
-            in.close();;
-            out.close();
-            be=out.toByteArray();
-            int a=systemService.insertPicture(be);
-            rs.resultCode=0;
-            rs.resultMsg="";
-            rs.data=null;
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+    public ResultSet submitAdvice(@RequestParam(required = false) MultipartFile file){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(System.currentTimeMillis());
+        //保存图片的路径
+        String url = System.getProperty("user.dir") + "\\adminapp\\" + "\\src\\" + "\\main\\" + "\\resources\\" + "\\uploadFace\\" + formatter.format(date);
         return rs;
     }
 }
