@@ -1087,18 +1087,6 @@ public class SuperviseController {
         String userId=TokenUtil.getTokenUserId();
         PersonAllInformationModel personinformation=superviseService.getPersonInformation(code);
         if(personinformation!=null) {
-            String areaFence = superviseService.getAreaFence(code);   //获取监居人员区域围栏
-            List<AreaFenceModel> areaFenceModelList = new ArrayList<>();
-            if (areaFence.equals("")==false) {
-                String[] area = areaFence.split(",");
-                for (int i = 0; i < area.length; i = i + 2) {
-                    AreaFenceModel areaFenceModel = new AreaFenceModel();
-                    areaFenceModel.setLatitude(Float.valueOf(area[i]));
-                    areaFenceModel.setLongitude(Float.valueOf(area[i + 1]));
-                    areaFenceModelList.add(areaFenceModel);
-                }
-            }
-
             List<LocationRecordModel> locationRecordModels = superviseService.listLocationRecord(code);  //获取监居人员所有定位信息
 
             List<LocationRecordModel> newLocationRecords = new ArrayList<>();
@@ -1162,9 +1150,27 @@ public class SuperviseController {
                     locationRecordModels2.add(summonsInformation);
                 }
             }
-            for (LocationRecordModel item:locationRecordModels2
-                 ) {
-                item.setArea(areaFenceModelList);
+            String areaFence = superviseService.getAreaFence(code);   //获取监居人员区域围栏
+            String areaCode=superviseService.getAreaCode(code);     //获取监居人员区域编码
+            List<AreaFenceModel> areaFenceModelList = new ArrayList<>();
+            if (areaFence.equals("")==false) {   //区域围栏不为空为空
+                String[] area = areaFence.split(",");
+                for (int i = 0; i < area.length; i = i + 2) {
+                    AreaFenceModel areaFenceModel = new AreaFenceModel();
+                    areaFenceModel.setLatitude(Float.valueOf(area[i]));
+                    areaFenceModel.setLongitude(Float.valueOf(area[i + 1]));
+                    areaFenceModelList.add(areaFenceModel);
+                }
+                for (LocationRecordModel item:locationRecordModels2
+                ) {
+                    item.setArea(areaFenceModelList);
+                }
+            }
+            else{     //区域围栏为空，传区域编码
+                for (LocationRecordModel item:locationRecordModels2
+                ) {
+                    item.setAreaCode(areaCode);
+                }
             }
 
             LocationRecordReturnModel locationRecordReturnModel = new LocationRecordReturnModel();

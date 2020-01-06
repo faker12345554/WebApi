@@ -12,17 +12,15 @@ import com.adminapp.config.token.TokenUtil;
 import com.adminapp.config.token.tation.PassToken;
 import com.adminapp.config.token.tation.UserLoginToken;
 import com.adminapp.model.dw_login.UserInformationModel;
+import com.adminapp.model.dw_login.WorkUserModel;
 import com.adminapp.model.dw_supervise.PersonAllInformationModel;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 import com.common.common.result.ResultSet;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/app/admin/user")
@@ -113,4 +111,27 @@ public class LoginController {
         }
         return rs;
     }
+
+    @UserLoginToken
+    @ApiOperation(value = "获取工作人员信息")
+    @GetMapping("/getUserInfo")
+    public ResultSet getUserInfo(){
+        String userId=TokenUtil.getTokenUserId();
+        UserInformationModel userInformationModel=loginService.getUserInformation(userId);
+        String roleName=loginService.getRoleName(userInformationModel.getPermissionid());
+        WorkUserModel workUserModel=new WorkUserModel();
+        workUserModel.setCode(userId);
+        workUserModel.setAccount(userId);
+        workUserModel.setPoliceNum(userId);
+        workUserModel.setName(userInformationModel.getAliasname());
+        workUserModel.setRole(roleName);
+        workUserModel.setArea(userInformationModel.getAreaname());
+        workUserModel.setUnits(userInformationModel.getPolice());
+        workUserModel.setDepartment(userInformationModel.getDepartment());
+        rs.resultCode=0;
+        rs.resultMsg="";
+        rs.data=workUserModel;
+        return rs;
+    }
+
 }

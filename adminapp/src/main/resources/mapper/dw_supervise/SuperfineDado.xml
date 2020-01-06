@@ -77,6 +77,9 @@
     <select id="getAreaFence" resultType="String">
         SELECT areaarr FROM t_enclosure WHERE personid=#{personId} AND status=TRUE
     </select>
+    <select id="getAreaCode" resultType="String">
+        SELECT citycode FROM t_enclosure WHERE personid=#{personId} AND status=TRUE
+    </select>
     <select id="listLocationRecord" resultType="com.adminapp.model.dw_supervise.LocationRecordModel">
         SELECT latitude,longitude,locationtype AS locationType,address,fscope AS isOutBound,timestamp FROM t_location WHERE personid=#{personId} ORDER BY t_location.timestamp DESC
     </select>

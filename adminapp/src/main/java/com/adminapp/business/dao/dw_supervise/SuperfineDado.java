@@ -58,6 +58,8 @@ public interface SuperfineDado {
 
     String getAreaFence(@Param("personId")String personId);
 
+    String getAreaCode(@Param("personId")String personId);
+
     List<LocationRecordModel> listLocationRecord(@Param("personId")String personId);
 
     List<LocationInformation> listViolateLocationRecord(@Param("personId")String personId);

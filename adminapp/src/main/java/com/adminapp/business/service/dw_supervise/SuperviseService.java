@@ -131,6 +131,11 @@ public class SuperviseService {
         return superfineDado.getAreaFence(personId);
     }
 
+    //获取监居人员区域编码
+    public String getAreaCode(String personId){
+        return superfineDado.getAreaCode(personId);
+    }
+
     //获取监居人员定位记录
     public List<LocationRecordModel> listLocationRecord(String personId){
         return superfineDado.listLocationRecord(personId);
