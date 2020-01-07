@@ -82,13 +82,16 @@ public class SuperviseController {
     @UserLoginToken
     @ApiOperation(value = "提交保外人员外出申请")
     @PostMapping("/submitApplyLeave")
-    public ResultSet submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel, @ApiParam(name = "startDate", value = "起始时间戳") @RequestParam(required = true) String startDate, @ApiParam(name = "endDate", value = "结束时间戳") @RequestParam(required = true) String endDate) throws ParseException {
+    public ResultSet submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel) throws ParseException {
         String code = "qj" + System.currentTimeMillis();
 
-        Long longStartDate = Long.valueOf(startDate);//123456789
-        Long longEndDate = Long.valueOf(endDate);
-        List<UserModel> user = superviseService.getPersonname(TokenUtil.getTokenUserId());
-        int res = superviseService.submitApplyLeave(submitApplyLeaveModel, longStartDate, longEndDate, code, TokenUtil.getTokenUserId(), user.get(0).getAccountname());
+//        Long longStartDate = Long.valueOf(submitApplyLeaveModel.getStartDate());//123456789
+//        Long longEndDate = Long.valueOf(submitApplyLeaveModel.getEndDate());
+        List<TPersoninformation> person = superviseService.getPersonname(TokenUtil.getTokenUserId());
+        int res = superviseService.submitApplyLeave(submitApplyLeaveModel.getCity(),    submitApplyLeaveModel.getCityCode(),    submitApplyLeaveModel.getDistrict(),submitApplyLeaveModel.getDistrictCode(),
+                                                    submitApplyLeaveModel.getProvince(),submitApplyLeaveModel.getProvinceCode(),submitApplyLeaveModel.getReason(),  submitApplyLeaveModel.getReasonAudioUrl(),
+                                                    submitApplyLeaveModel.getEndDate(), submitApplyLeaveModel.getStartDate(),code,
+                                                    TokenUtil.getTokenUserId(), person.get(0).getPersonname());
         if (res != 0) {
             result.resultCode = 0;
             result.resultMsg = "";

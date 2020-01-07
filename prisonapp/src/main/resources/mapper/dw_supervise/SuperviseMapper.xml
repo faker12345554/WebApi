@@ -21,16 +21,36 @@
     select  statuscode as statusCode,states as status,auditordatetime as timestamp,accountname as  person from t_auditor where leaveorder=#{code}
      </select>
 
-    <insert id="submitApplyLeave" parameterType="com.prisonapp.business.entity.dw_supervise.SuperviseModel">
-        INSERT INTO t_leave(personid, leaveorder,starttimestamp,endtimestamp,reason,recording,provincecode,provincename,citycode,cityname,areacode,areaname,statuscode,states,subittimestamp,personname)
-        VALUES              (#{userId}, #{code},to_timestamp(#{startDate}),to_timestamp(#{endDate}),#{submitApplyLeaveModel.reason},#{submitApplyLeaveModel.reasonAudioUrl},#{submitApplyLeaveModel.provinceCode},#{submitApplyLeaveModel.province},#{submitApplyLeaveModel.cityCode},#{submitApplyLeaveModel.city},#{submitApplyLeaveModel.districtCode},#{submitApplyLeaveModel.district},'1','待审核',CURRENT_Date,#{personname});
+<!--    <insert id="2323324342342" >-->
+<!--       /* INSERT INTO t_leave (personid, leaveorder,starttimestamp,endtimestamp,-->
+<!--        reason,recording,provincecode,provincename,-->
+<!--        citycode,cityname,areacode,areaname,personname,-->
+<!--        statuscode,states,subittimestamp)-->
+<!--         VALUES (#{userId}, #{code},to_timestamp(#{startDate}),to_timestamp(#{endDate}),-->
+<!--         #{reason},#{reasonAudioUrl},#{provinceCode},#{province},-->
+<!--         #{cityCode},#{city},#{districtCode},#{district},#{personName},-->
+<!--         '1','待审核',current_timestamp)*/-->
 
-        INSERT INTO t_auditor(leaveorder,leavingmessage,statuscode,states) VALUES (#{code},#{submitApplyLeaveModel.reason},1,'待审核')
+<!--&#45;&#45;         INSERT INTO t_auditor(leaveorder,leavingmessage,statuscode,states) VALUES (#{code},#{submitApplyLeaveModel.reason},1,'待审核')-->
+<!--INSERT INTO t_leave (personid,cityname)-->
+<!--         VALUES (#{userId},#{city})-->
 
+<!--    </insert>-->
+
+    <insert id="submitApplyLeave">
+        insert into t_leave(personid,leaveorder,starttimestamp,endtimestamp,
+        reason,recording,provincecode,provincename,
+        citycode,cityname,areacode,areaname,
+        personname,statuscode,states,subittimestamp)
+        values (#{userId},#{code},to_timestamp(#{startDate}),to_timestamp(#{endDate}),
+        #{reason},#{reasonAudioUrl},#{provinceCode},#{province},
+        #{cityCode},#{city},#{districtCode},#{district},#{personName},
+        '1','待审核',current_timestamp);
+        INSERT INTO t_auditor(leaveorder,leavingmessage,statuscode,states) VALUES (#{code},#{reason},1,'待审核')
     </insert>
 
-    <select id="getPersonname" resultType="com.prisonapp.business.entity.dw_user.UserModel">
-        select * from t_user where personid =#{userId}
+    <select id="getPersonname" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation">
+        select * from t_personinformation where personid =#{userId}
     </select>
 
     <select id="getSuperviseTask" resultType="com.prisonapp.business.entity.dw_supervise.GetSuperviseTaskModel">

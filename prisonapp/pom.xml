@@ -3,8 +3,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <dependencies>
-
-
         <dependency>
             <groupId>com.vaadin.external.google</groupId>
             <artifactId>android-json</artifactId>
@@ -50,36 +48,34 @@
             <version>1.60</version>
             <scope>compile</scope>
         </dependency>
-
         <dependency>
             <groupId>net.sf.json-lib</groupId>
             <artifactId>json-lib</artifactId>
             <version>2.4</version>
             <classifier>jdk15</classifier>
+            <scope>compile</scope>
         </dependency>
-
-             <dependency>  
-                    <groupId>commons-collections</groupId>  
-                    <artifactId>commons-collections</artifactId>  
-                    <version>3.2.1</version>  
-                </dependency>  
-
-                <dependency>  
-                    <groupId>commons-lang</groupId>  
-                    <artifactId>commons-lang</artifactId>  
-                    <version>2.6</version>  
-                </dependency>  
-
-                <dependency>  
-                    <groupId>commons-logging</groupId>  
-                    <artifactId>commons-logging</artifactId>  
-                    <version>1.1.1</version>  
-                </dependency>  
-                <dependency>  
-                    <groupId>net.sf.ezmorph</groupId>  
-                    <artifactId>ezmorph</artifactId>  
-                    <version>1.0.6</version>  
-                </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ezmorph</groupId>
+            <artifactId>ezmorph</artifactId>
+            <version>1.0.6</version>
+        </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -92,13 +88,19 @@
             <version>2.3</version>
             <scope>compile</scope>
         </dependency>
-             
-                
-
-
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.1.23</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.minidev</groupId>
+            <artifactId>json-smart</artifactId>
+            <version>2.3</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
-
-
     <parent>
         <groupId>com.donwait</groupId>
         <artifactId>donwait</artifactId>

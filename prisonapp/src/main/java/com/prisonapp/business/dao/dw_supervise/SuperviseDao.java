@@ -19,9 +19,20 @@ public interface SuperviseDao {
 
     List<ApplyRecordModel> applyRecord(@Param("code")String  code);
 
-    int submitApplyLeave(@Param("submitApplyLeaveModel")SubmitApplyLeaveModel submitApplyLeaveModel, @Param("startDate") long startDate,@Param("endDate") long endDate, @Param("code") String code, @Param("userId")String userId,@Param("personname")String personname);
+//    int submitApplyLeave(@Param("city")String city,@Param("cityCode")String cityCode,@Param("district")String district,@Param("districtCode")String districtCode,
+//                         @Param("province")String province,@Param("provinceCode")String provinceCode,@Param("reason")String reason,@Param("reasonAudioUrl")String reasonAudioUrl ,
+//                         @Param("endDate")long endDate,@Param("startDate")long startDate,  @Param("code") String code,
+//                         @Param("userId")String userId,@Param("personName")String personName);
 
-    List<UserModel> getPersonname(@Param("userId")String userId);
+   // int submitApplyLeave(@Param("userId")String userId);
+
+
+    int submitApplyLeave (@Param("city")String city,@Param("cityCode")String cityCode,@Param("district")String district,@Param("districtCode")String districtCode,
+                         @Param("province")String province,@Param("provinceCode")String provinceCode,@Param("reason")String reason,@Param("reasonAudioUrl")String reasonAudioUrl ,
+                         @Param("endDate")long endDate,@Param("startDate")long startDate,  @Param("code") String code,
+                         @Param("userId")String userId,@Param("personName")String personName);
+
+    List<TPersoninformation> getPersonname(@Param("userId")String userId);
 
     List<GetSuperviseTaskModel> getSuperviseTask(String userId);
 
