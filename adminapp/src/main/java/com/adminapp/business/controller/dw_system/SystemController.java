@@ -1,10 +1,10 @@
 package com.adminapp.business.controller.dw_system;
 
 import com.adminapp.business.service.dw_system.SystemService;
+import com.adminapp.config.token.TokenUtil;
 import com.adminapp.config.token.tation.UserLoginToken;
-import com.adminapp.model.dw_system.UpdateInformationModel;
-import com.adminapp.model.dw_system.UpdateRecordModel;
-import com.adminapp.model.dw_system.UpdateRecordReturnModel;
+import com.adminapp.model.dw_system.*;
+import com.common.common.Uploadfiles.Upload;
 import com.common.common.result.ResultSet;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiOperation;
@@ -13,9 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +27,8 @@ public class SystemController {
     private SystemService systemService;
 
     private ResultSet rs=new ResultSet();
+
+    private Upload upload=new Upload();
 
     @UserLoginToken
     @ApiOperation(value = "获取工作人员 App 更新信息")
@@ -82,12 +83,58 @@ public class SystemController {
         return rs;
     }
 
+    @UserLoginToken
+    @ApiOperation(value = "意见反馈")
     @PostMapping("/submitAdvice")
-    public ResultSet submitAdvice(@RequestParam(required = false) MultipartFile file){
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date(System.currentTimeMillis());
-        //保存图片的路径
-        String url = System.getProperty("user.dir") + "\\adminapp\\" + "\\src\\" + "\\main\\" + "\\resources\\" + "\\uploadFace\\" + formatter.format(date);
+    public ResultSet submitAdvice(@ApiParam(name = "type",value = "反馈类型")@RequestParam(required = true)String type,
+                                  @ApiParam(name = "content",value = "反馈内容")@RequestParam(required = false)String content,
+                                  @ApiParam(name="picture",value = "图片")@RequestParam(required = false) List<MultipartFile> picture,
+                                  @ApiParam(name = "phone",value = "联系电话")@RequestParam(required = false)String phone){
+        if(type.equals("1")||type.equals("2")) {
+            String userId = TokenUtil.getTokenUserId();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date(System.currentTimeMillis());
+            //保存图片的路径
+            String url = System.getProperty("user.dir") + "\\adminapp\\" + "\\src\\" + "\\main\\" + "\\resources\\" + "\\uploadFace\\" + formatter.format(date);
+            File path = new File(url);
+            if (!path.exists() && !path.isDirectory()) {
+                path.mkdirs();
+            }
+            String completeFilePath = "";
+            if (picture.size() != 0) {
+                String res = upload.multiUpload(url, picture);    //上传照片
+                for (int i = 0; i < picture.size(); i++) {
+                    MultipartFile file = picture.get(i);
+                    String fileName = file.getOriginalFilename();
+                    String filePath = url + fileName;
+                    if (i != 0) {
+                        completeFilePath = completeFilePath + "," + filePath;
+                    } else {
+                        completeFilePath = completeFilePath + filePath;
+                    }
+                }
+            }
+            Date date1 = new Date();
+            Timestamp timeStamp = new Timestamp(date1.getTime());
+            SubmitAdviceModel submitAdviceModel = new SubmitAdviceModel();
+            submitAdviceModel.setUserId(userId);
+            submitAdviceModel.setType(type);
+            submitAdviceModel.setContent(content);
+            submitAdviceModel.setPicture(completeFilePath);
+            submitAdviceModel.setPhone(phone);
+            submitAdviceModel.setTimeStamp(timeStamp);
+            int submitAdvice = systemService.submitAdvice(submitAdviceModel);
+            SubmitAdviceReturnModel submitAdviceReturnModel = new SubmitAdviceReturnModel();
+            submitAdviceReturnModel.setCode(String.valueOf(submitAdviceModel.getId()));
+            rs.resultCode = 0;
+            rs.resultMsg = "";
+            rs.data = submitAdviceReturnModel;
+        }
+        else{
+            rs.resultCode=1;
+            rs.resultMsg="无此类型";
+            rs.data=null;
+        }
         return rs;
     }
 }

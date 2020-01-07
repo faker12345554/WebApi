@@ -77,4 +77,10 @@ public interface SuperfineDado {
     List<PrisonSettingModel> getPrisonValidWay(@Param("personId")String personId);
 
     LeaveListModel getApplyLeave(@Param("code")String code);
+
+    SuperviseCaseInformation getPersonCaseInformation(@Param("personId")String personId);
+
+    SuperviseBailPersonInformation getBailPersonInformation(@Param("personId")String personId);
+
+    SuperviseBailMoneyInformation getBailMoneyInformation(@Param("personId")String personId);
 }

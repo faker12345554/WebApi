@@ -1,6 +1,7 @@
 package com.adminapp.business.service.dw_system;
 
 import com.adminapp.business.dao.dw_system.SystemDao;
+import com.adminapp.model.dw_system.SubmitAdviceModel;
 import com.adminapp.model.dw_system.UpdateInformationModel;
 import com.adminapp.model.dw_system.UpdateRecordModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,8 @@ public class SystemService {
         return systemDao.getUpdateRecord(type);
     }
 
-    public int insertPicture(byte[] file){
-        return systemDao.insertPicture(file);
+    //提交意见反馈
+    public int submitAdvice(SubmitAdviceModel submitAdviceModel){
+        return systemDao.submitAdvice(submitAdviceModel);
     }
 }

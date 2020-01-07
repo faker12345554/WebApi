@@ -1,5 +1,6 @@
 package com.adminapp.business.dao.dw_system;
 
+import com.adminapp.model.dw_system.SubmitAdviceModel;
 import com.adminapp.model.dw_system.UpdateInformationModel;
 import com.adminapp.model.dw_system.UpdateRecordModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -14,5 +15,7 @@ public interface SystemDao {
 
     List<UpdateRecordModel> getUpdateRecord(@Param("type")int type);
 
-    int insertPicture(@Param("file")byte[] file);
+    int submitAdvice(@Param("date")SubmitAdviceModel submitAdviceModel);
+
+
 }
