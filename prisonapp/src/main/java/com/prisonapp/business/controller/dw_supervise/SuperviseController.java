@@ -304,16 +304,22 @@ public class SuperviseController {
     @ApiOperation(value = " 获取保外人员的监管配置")
     @GetMapping("/getSuperviseConfig")
     public ResultSet getSuperviseConfig() {
-        List<LocationModel> locationModels = superviseService.getLocationConfig(TokenUtil.getTokenUserId());
-        GetSuperviseConfigModel getSuperviseConfigModel = superviseService.getBatteryConfigTimestamp(TokenUtil.getTokenUserId());
-        getSuperviseConfigModel.setLocation(locationModels.get(0));
-        // getSuperviseConfigModel.setBatteries(locationModels.get(1));
+        TRemindersettings tRemindersettings = superviseService.getLocationConfig();//获取待办提醒的所有数据
+        //取出定位的数据
+        LocationModel locationModels =new LocationModel();
+        locationModels.setEnable(tRemindersettings.isStatus());
+        locationModels.setTimeSpan(tRemindersettings.getSettingday());
+        //设置电量的数据
         Battery battery = new Battery();
-        battery.setEnable(locationModels.get(1).isEnable());
-        battery.setTimeSpan(locationModels.get(1).getTimeSpan());
+        battery.setEnable(true);
+        battery.setTimeSpan("20");
         battery.setAlarmThreshold(20.0f);
-        getSuperviseConfigModel.setBattery(battery);
 
+        GetSuperviseConfigModel getSuperviseConfigModel = new GetSuperviseConfigModel(); // = superviseService.getBatteryConfigTimestamp(TokenUtil.getTokenUserId());
+        getSuperviseConfigModel.setLocation(locationModels);
+        getSuperviseConfigModel.setBattery(battery);
+        //最后时间
+        getSuperviseConfigModel.setLastEditTime(tRemindersettings.getCreatetime());
         result.resultCode = 0;
         result.resultMsg = "";
         result.data = getSuperviseConfigModel;

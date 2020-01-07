@@ -19,4 +19,5 @@ public class LocationModel {
     public void setTimeSpan(String timeSpan) {
         this.timeSpan = timeSpan;
     }
+
 }

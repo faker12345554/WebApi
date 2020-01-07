@@ -70,13 +70,13 @@
         values                (2,#{workContent},#{userId},'报警提醒',current_timestamp,'f',3,'低电量报警通知')
     </insert>
 
-    <select id="getLocationConfig" resultType="com.prisonapp.business.entity.dw_supervise.LocationModel">
-        SELECT t_prisonsetting.settingcheck as enable ,t_reportsettings.locationstime as timeSpan FROM t_prisonsetting FULL JOIN t_reportsettings ON t_prisonsetting.settingcode =t_reportsettings.type WHERE personid=#{userId} and status='t' ORDER BY type ASC
+    <select id="getLocationConfig" resultType="com.prisonapp.business.entity.dw_supervise.TRemindersettings">
+        SELECT * FROM t_remindersettings WHERE  status='t' and code='4'
     </select>
-    <select id="getBatteryConfigTimestamp" resultType="com.prisonapp.business.entity.dw_supervise.GetSuperviseConfigModel">
-         SELECT settingtime as lastEditTime FROM t_prisonsetting FULL JOIN t_reportsettings ON t_prisonsetting.settingcode =t_reportsettings.type WHERE personid=#{userId} and status='t' ORDER BY settingtime DESC limit 1
+<!--    <select id="getBatteryConfigTimestamp" resultType="com.prisonapp.business.entity.dw_supervise.GetSuperviseConfigModel">-->
+<!--         SELECT settingtime as lastEditTime FROM t_prisonsetting FULL JOIN t_reportsettings ON t_prisonsetting.settingcode =t_reportsettings.type WHERE personid=#{userId} and status='t' ORDER BY settingtime DESC limit 1-->
 
-    </select>
+<!--    </select>-->
 
     <select id="getPolygon" resultType="com.prisonapp.business.entity.dw_supervise.TEnclosure">
         select * from t_enclosure where personid =#{userId} and status='t'

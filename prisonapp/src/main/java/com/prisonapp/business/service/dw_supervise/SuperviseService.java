@@ -74,13 +74,13 @@ public class SuperviseService {
         return  superviseDao.batteryAlarm( userId,content);
     }
 
-    public List<LocationModel> getLocationConfig(String userId){
-        return  superviseDao.getLocationConfig(userId );
+    public TRemindersettings getLocationConfig( ){
+        return  superviseDao.getLocationConfig();
     }
 
-    public  GetSuperviseConfigModel getBatteryConfigTimestamp(String userId){
-        return  superviseDao.getBatteryConfigTimestamp( userId);
-    }
+//    public  GetSuperviseConfigModel getBatteryConfigTimestamp(String userId){
+//        return  superviseDao.getBatteryConfigTimestamp( userId);
+//    }
     public  TEnclosure getPolygon(String userId){
         return  superviseDao.getPolygon( userId);
     }

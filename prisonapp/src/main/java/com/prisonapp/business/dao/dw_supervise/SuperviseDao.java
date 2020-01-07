@@ -39,9 +39,9 @@ public interface SuperviseDao {
 
     int batteryAlarm(String userId,String content);
 
-    List<LocationModel> getLocationConfig(String userId);
+    TRemindersettings getLocationConfig();
 
-    GetSuperviseConfigModel getBatteryConfigTimestamp(String userId);
+  //  GetSuperviseConfigModel getBatteryConfigTimestamp(String userId);
 
     TEnclosure getPolygon(String userId);
 
