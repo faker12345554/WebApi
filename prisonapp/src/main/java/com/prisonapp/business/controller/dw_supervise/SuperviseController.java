@@ -322,7 +322,7 @@ public class SuperviseController {
         List<Point2D.Double> polygon = new ArrayList<Point2D.Double>();
         TEnclosure tEnclosure = superviseService.getPolygon(TokenUtil.getTokenUserId());
         if (tEnclosure.getAreaarr() == null || "".equals(tEnclosure.getAreaarr())) {
-            String path = "https://restapi.amap.com/v3/config/district?key=f0bc84013740494ba5c697ce6b707606&keywords="+tEnclosure.getAreaname()+"&subdistrict=0&extensions=all";
+            String path = "https://restapi.amap.com/v3/config/district?key=a525728e108e551001a5cb0e10cf1884&keywords="+tEnclosure.getAreaname()+"&subdistrict=0&extensions=all";
             net.sf.json.JSONObject josnResult = AddressResolutionUtil.getHttps(path);//高德api返回的结果集
             JSONArray jsonArray = josnResult.getJSONArray("districts");
             String coordinates = "";
