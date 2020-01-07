@@ -311,64 +311,69 @@ public class SuperviseController {
     @GetMapping("/getPolygon")
     public ResultSet getPolygon(@ApiParam(name = "latitude", value = "纬度") float latitude, @ApiParam(name = "longitude", value = "经度") float longitude) throws MalformedURLException {
 
+        try {
+            //点的转型
+            BigDecimal bLatitude = new BigDecimal(String.valueOf(latitude));
+            double dLatitude = bLatitude.doubleValue();
+            BigDecimal bLongitude = new BigDecimal(String.valueOf(longitude));
+            double dLongitude = bLongitude.doubleValue();
+            Point2D.Double point = new Point2D.Double(dLatitude, dLongitude);
+            //画区域
+            List<Point2D.Double> polygon = new ArrayList<Point2D.Double>();
+            TEnclosure tEnclosure = superviseService.getPolygon(TokenUtil.getTokenUserId());
+            if (tEnclosure.getAreaarr() == null || "".equals(tEnclosure.getAreaarr())) {//数据库中没有坐标，只有地方名的情况
+                String path = "https://restapi.amap.com/v3/config/district?key=f0bc84013740494ba5c697ce6b707606&keywords=" + tEnclosure.getAreaname() + "&subdistrict=0&extensions=all";
+                net.sf.json.JSONObject josnResult = AddressResolutionUtil.getHttps(path);//高德api返回的结果集
+                JSONArray jsonArray = josnResult.getJSONArray("districts");
+                String coordinates = "";
+                for (int i = 0; i < jsonArray.size(); i++) {
+                    net.sf.json.JSONObject obj = jsonArray.getJSONObject(i);
+                    coordinates = obj.getString("polyline");//边界坐标
+                }
+                String[] coordinatesArray = coordinates.split(";");
+                for (int j = 0; j < coordinatesArray.length; j++) {
+                    String[] everyCoordinates = coordinatesArray[j].split(",");
+                    double polygonPoint_x = Double.parseDouble(everyCoordinates[0]);
+                    double polygonPoint_y = Double.parseDouble(everyCoordinates[1]);
+                    Point2D.Double polygonPoint = new Point2D.Double(polygonPoint_x, polygonPoint_y);
+                    polygon.add(polygonPoint);
+                }
+            } else {
+                //数据库中存有坐标的情况
+                String str = tEnclosure.getAreaarr();
+                String[] strArray = str.split(",");
+                for (int i = 0; i < strArray.length; i += 2) {
+                    double polygonPoint_x = Double.parseDouble(strArray[i]);
+                    double polygonPoint_y = Double.parseDouble(strArray[i + 1]);
+                    Point2D.Double polygonPoint = new Point2D.Double(polygonPoint_x, polygonPoint_y);
+                    polygon.add(polygonPoint);
+                }
+            }
+            boolean a = checkWithJdkGeneralPath(point, polygon);
+            if (a) {
+                superviseService.updateFscope(TokenUtil.getTokenUserId(), false);
+                result.resultCode = 0;
+                result.resultMsg = "没有越界";
+                result.data = new Object();
+            } else {
+                //生成报警内容
+                String persionName = superviseService.faceRecognize(TokenUtil.getTokenUserId()).get(0).getPersonname();
+                Date now = new Date();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
+                String nowTime = dateFormat.format(now);
+                String content = persionName + "于" + nowTime + "未经批准离开限定区域，请及时与其取得联系。最后一次位置：";
 
-        //点的转型
-        BigDecimal bLatitude = new BigDecimal(String.valueOf(latitude));
-        double dLatitude = bLatitude.doubleValue();
-        BigDecimal bLongitude = new BigDecimal(String.valueOf(longitude));
-        double dLongitude = bLongitude.doubleValue();
-        Point2D.Double point = new Point2D.Double(dLatitude, dLongitude);
-        //画区域
-        List<Point2D.Double> polygon = new ArrayList<Point2D.Double>();
-        TEnclosure tEnclosure = superviseService.getPolygon(TokenUtil.getTokenUserId());
-        if (tEnclosure.getAreaarr() == null || "".equals(tEnclosure.getAreaarr())) {
-            String path = "https://restapi.amap.com/v3/config/district?key=a525728e108e551001a5cb0e10cf1884&keywords="+tEnclosure.getAreaname()+"&subdistrict=0&extensions=all";
-            net.sf.json.JSONObject josnResult = AddressResolutionUtil.getHttps(path);//高德api返回的结果集
-            JSONArray jsonArray = josnResult.getJSONArray("districts");
-            String coordinates = "";
-            for (int i = 0; i < jsonArray.size(); i++) {
-                net.sf.json.JSONObject obj = jsonArray.getJSONObject(i);
-                coordinates = obj.getString("polyline");//边界坐标
+                superviseService.updateFscope(TokenUtil.getTokenUserId(), true);
+                superviseService.insertFscope(TokenUtil.getTokenUserId(), content);
+                result.resultCode = 0;
+                result.resultMsg = "越界了";
+                result.data = new Object();
             }
-            String[] coordinatesArray = coordinates.split(";");
-            for(int j=0;j<coordinatesArray.length;j++){
-                String[] everyCoordinates =coordinatesArray[j].split(",");
-                double polygonPoint_x = Double.parseDouble(everyCoordinates[0]);
-                double polygonPoint_y = Double.parseDouble(everyCoordinates[1]);
-                Point2D.Double polygonPoint = new Point2D.Double(polygonPoint_x, polygonPoint_y);
-                polygon.add(polygonPoint);
-            }
-        } else {
-            String str = tEnclosure.getAreaarr();
-            String[] strArray = str.split(",");
-            for (int i = 0; i < strArray.length; i += 2) {
-                double polygonPoint_x = Double.parseDouble(strArray[i]);
-                double polygonPoint_y = Double.parseDouble(strArray[i + 1]);
-                Point2D.Double polygonPoint = new Point2D.Double(polygonPoint_x, polygonPoint_y);
-                polygon.add(polygonPoint);
-            }
-        }
-        boolean a = checkWithJdkGeneralPath(point, polygon);
-        if (a) {
-            superviseService.updateFscope(TokenUtil.getTokenUserId(), false);
-            result.resultCode = 0;
-            result.resultMsg = "没有越界";
+        }catch (Exception ex){
+            result.resultCode = 1;
+            result.resultMsg = ex.toString();
             result.data = new Object();
-        } else {
-            //生成报警内容
-            String persionName = superviseService.faceRecognize(TokenUtil.getTokenUserId()).get(0).getPersonname();
-            Date now = new Date();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
-            String nowTime = dateFormat.format(now);
-            String content = persionName + "于" + nowTime + "未经批准离开限定区域，请及时与其取得联系。最后一次位置：";
-
-            superviseService.updateFscope(TokenUtil.getTokenUserId(), true);
-            superviseService.insertFscope(TokenUtil.getTokenUserId(), content);
-            result.resultCode = 0;
-            result.resultMsg = "越界了";
-            result.data = new Object();
         }
-
         return result;
     }
 
