@@ -57,9 +57,9 @@ public class SuperviseService {
         return superviseDao.getFaceRecognize(userId,type);
     }
 
-    public  int autoLocation(float latitude,float longitude,int locationType,String address,String userId,Date date){
+    public  int autoLocation(float latitude,float longitude,int locationType,String address,String userId,Date date,boolean fScope){
 
-        return  superviseDao.autoLocation(latitude, longitude,locationType,address,userId,date);
+        return  superviseDao.autoLocation(latitude, longitude,locationType,address,userId,date,fScope);
     }
 
     public int uploadLocationError(String errorCode, String errorMsg,int userId,Date date){
@@ -77,15 +77,17 @@ public class SuperviseService {
     public List<LocationModel> getLocationConfig(String userId){
         return  superviseDao.getLocationConfig(userId );
     }
+
     public  GetSuperviseConfigModel getBatteryConfigTimestamp(String userId){
         return  superviseDao.getBatteryConfigTimestamp( userId);
     }
     public  TEnclosure getPolygon(String userId){
         return  superviseDao.getPolygon( userId);
     }
-    public  int updateFscope(String userId,boolean fscope){
-        return  superviseDao.updateFscope( userId,fscope);
-    }
+
+//    public  int updateFscope(String userId,boolean fscope){
+//        return  superviseDao.updateFscope( userId,fscope);
+//    }
     public int insertFscope(String userId,String content){
         return  superviseDao.insertFscope( userId,content);
     }

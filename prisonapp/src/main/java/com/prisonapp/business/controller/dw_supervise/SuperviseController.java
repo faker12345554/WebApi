@@ -230,9 +230,23 @@ public class SuperviseController {
     @UserLoginToken
     @ApiOperation(value = " 自动上报取保监居人员位置")
     @PostMapping("/autoLocation")
-    public ResultSet autoLocation(@ApiParam(name = "latitude", value = "纬度") @RequestParam(required = true) float latitude, @ApiParam(name = "longitude", value = "经度") @RequestParam(required = true) float longitude, @ApiParam(name = "locationType", value = "定位类型") @RequestParam(required = true) int locationType, @ApiParam(name = "address", value = "地址") @RequestParam(required = true) String address) {
+    public ResultSet autoLocation(@ApiParam(name = "latitude", value = "纬度") @RequestParam(required = true) float latitude, @ApiParam(name = "longitude", value = "经度") @RequestParam(required = true) float longitude, @ApiParam(name = "locationType", value = "定位类型") @RequestParam(required = true) int locationType, @ApiParam(name = "address", value = "地址") @RequestParam(required = true) String address) throws MalformedURLException {
+       boolean fScope = getPolygon(latitude,longitude);
+        if (fScope) {
+          //  superviseService.updateFscope(TokenUtil.getTokenUserId(), false);
 
-        int a = superviseService.autoLocation(latitude, longitude, locationType, address, TokenUtil.getTokenUserId(), new Date());
+        } else {
+            //生成报警内容
+            String persionName = superviseService.faceRecognize(TokenUtil.getTokenUserId()).get(0).getPersonname();
+            Date now = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
+            String nowTime = dateFormat.format(now);
+            String content = persionName + "于" + nowTime + "未经批准离开限定区域，请及时与其取得联系。最后一次位置：";
+         //   superviseService.updateFscope(TokenUtil.getTokenUserId(), true);
+            superviseService.insertFscope(TokenUtil.getTokenUserId(), content);
+
+        }
+        int a = superviseService.autoLocation(latitude, longitude, locationType, address, TokenUtil.getTokenUserId(), new Date(),fScope);
         if (a != 0) {
             result.resultCode = 0;
             result.resultMsg = "";
@@ -309,8 +323,8 @@ public class SuperviseController {
     @UserLoginToken
     @ApiOperation(value = " 判断是否越界")
     @GetMapping("/getPolygon")
-    public ResultSet getPolygon(@ApiParam(name = "latitude", value = "纬度") float latitude, @ApiParam(name = "longitude", value = "经度") float longitude) throws MalformedURLException {
-
+    public  boolean getPolygon(@ApiParam(name = "latitude", value = "纬度") float latitude, @ApiParam(name = "longitude", value = "经度") float longitude) throws MalformedURLException {
+        boolean fScope =false;
         try {
             //点的转型
             BigDecimal bLatitude = new BigDecimal(String.valueOf(latitude));
@@ -328,7 +342,7 @@ public class SuperviseController {
                 String coordinates = "";
                 for (int i = 0; i < jsonArray.size(); i++) {
                     net.sf.json.JSONObject obj = jsonArray.getJSONObject(i);
-                    coordinates = obj.getString("polyline");//边界坐标
+                    coordinates = obj.getString("polyline").replace('|',';');//边界坐标
                 }
                 String[] coordinatesArray = coordinates.split(";");
                 for (int j = 0; j < coordinatesArray.length; j++) {
@@ -349,8 +363,8 @@ public class SuperviseController {
                     polygon.add(polygonPoint);
                 }
             }
-            boolean a = checkWithJdkGeneralPath(point, polygon);
-            if (a) {
+             fScope = checkWithJdkGeneralPath(point, polygon);//点是否在区域内，则返回true时不越界，反之越界
+   /*         if (a) {
                 superviseService.updateFscope(TokenUtil.getTokenUserId(), false);
                 result.resultCode = 0;
                 result.resultMsg = "没有越界";
@@ -368,16 +382,18 @@ public class SuperviseController {
                 result.resultCode = 0;
                 result.resultMsg = "越界了";
                 result.data = new Object();
-            }
+            }*/
         }catch (Exception ex){
-            result.resultCode = 1;
-            result.resultMsg = ex.toString();
-            result.data = new Object();
+            throw ex;
         }
-        return result;
+        return fScope;
     }
 
-
+    /**
+     * Param1:点的位置（经纬度）
+     * Param2：区域的边界点
+     * 该方法用于查看是否越界
+     * */
     public static boolean checkWithJdkGeneralPath(Point2D.Double point, List<Point2D.Double> polygon) {
         java.awt.geom.GeneralPath p = new java.awt.geom.GeneralPath();
         Point2D.Double first = polygon.get(0);

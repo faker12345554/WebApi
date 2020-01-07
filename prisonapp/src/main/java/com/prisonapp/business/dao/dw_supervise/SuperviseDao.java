@@ -31,7 +31,7 @@ public interface SuperviseDao {
 
     List<FaceRecognizeModel> getFaceRecognize(String userId,int type);
 
-    int autoLocation(float latitude,float longitude,int locationType,String address,String userId,Date date);
+    int autoLocation(float latitude,float longitude,int locationType,String address,String userId,Date date,boolean fScope);
 
     int uploadLocationError(String errorCode, String errorMsg,int userId,Date date);
 
@@ -45,7 +45,7 @@ public interface SuperviseDao {
 
     TEnclosure getPolygon(String userId);
 
-    int updateFscope(String userId,boolean fscope) ;
+  //  int updateFscope(String userId,boolean fscope) ;
 
     int insertFscope(String userId,String content);
 }
