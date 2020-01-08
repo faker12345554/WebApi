@@ -43,7 +43,7 @@ public class SinginControll {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(singinService.getSingin(Id));
     }
-    @UserLoginToken
+   // @UserLoginToken
     @ApiOperation("签到信息列表")
     @PostMapping("/ListSingin")
     public ResponseResult ListSingin(@RequestBody SearchModel searchModel){

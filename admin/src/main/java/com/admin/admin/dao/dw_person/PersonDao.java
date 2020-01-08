@@ -26,7 +26,7 @@ public interface PersonDao {
     int getPersonByCard(@Param("Card") String Card);
 
     //获取枚举数据
-    List<Dictionary> getEnum();
+    List<Map<String,Object>> getEnum();
     /*
     变更主办人
     */
@@ -40,7 +40,7 @@ public interface PersonDao {
     /*
     批量设置
      */
-    int insertprison( @Param("data")TPrisonsetting tPrisonsetting);
+    int insertprison(@Param("data")TPrisonsetting tPrisonsetting);
 
     /*
     查询设置

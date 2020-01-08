@@ -113,6 +113,7 @@ public class UserController {
 
         User user = userService.login(UserName, Password);
         CacheUtils.put("UserId", user.getId(), 0);
+        CacheUtils.put("UserName",user.getAliasname());
         String token = tokenService.getToken(user);
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());

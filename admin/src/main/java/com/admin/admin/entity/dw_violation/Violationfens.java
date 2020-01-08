@@ -6,33 +6,57 @@ import java.util.Date;
 public class Violationfens {
 
   private int id;
-  private String code;
+  private String violationcode;
+
+  public Date getCreatetime() {
+    return createtime;
+  }
+
+  public Violationfens setCreatetime(Date createtime) {
+    this.createtime = createtime;
+    return this;
+  }
+
   private String violationname;
+  private int slightfens;
+  private int seriousfens;
+  private String createperson;
+  private String accountname;
+  private boolean status;
+  private Date createtime;
 
-  public String getViolationname() {
-    return violationname;
+  public String getViolationcode() {
+    return violationcode;
   }
 
-  public Violationfens setViolationname(String violationname) {
-    this.violationname = violationname;
+  public Violationfens setViolationcode(String violationcode) {
+    this.violationcode = violationcode;
     return this;
   }
 
-
-  public int getRangefens() {
-    return rangefens;
+  public int getSlightfens() {
+    return slightfens;
   }
 
-  public Violationfens setRangefens(int rangefens) {
-    this.rangefens = rangefens;
+  public Violationfens setSlightfens(int slightfens) {
+    this.slightfens = slightfens;
     return this;
   }
 
-  public int getCreateperson() {
+  public int getSeriousfens() {
+    return seriousfens;
+  }
+
+  public Violationfens setSeriousfens(int seriousfens) {
+    this.seriousfens = seriousfens;
+    return this;
+  }
+
+  public String getCreateperson() {
     return createperson;
   }
 
-  public Violationfens setCreateperson(int createperson) {
+  public Violationfens setCreateperson(String createperson) {
     this.createperson = createperson;
     return this;
   }
@@ -46,11 +70,22 @@ public class Violationfens {
     return this;
   }
 
-  private int rangefens;
-  private int createperson;
-  private String accountname;
-  private Date createtime;
-  private boolean status;
+
+
+  public String getViolationname() {
+    return violationname;
+  }
+
+  public Violationfens setViolationname(String violationname) {
+    this.violationname = violationname;
+    return this;
+  }
+
+
+
+
+
+
 
   public boolean isStatus() {
     return status;
@@ -71,24 +106,10 @@ public class Violationfens {
     return this;
   }
 
-  public Date getCreatetime() {
-    return createtime;
-  }
-
-  public Violationfens setCreatetime(Date createtime) {
-    this.createtime = createtime;
-    return this;
-  }
 
 
 
-  public String getCode() {
-    return code;
-  }
 
-  public void setCode(String code) {
-    this.code = code;
-  }
 
 
 

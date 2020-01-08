@@ -102,7 +102,7 @@ public class PersoinfoService {
     }
 
     //获取枚举数据
-    public List<Dictionary> getEnum() {
+    public List<Map<String,Object>> getEnum() {
         return personDao.getEnum();
     }
 

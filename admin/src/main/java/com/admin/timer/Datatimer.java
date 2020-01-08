@@ -40,11 +40,10 @@ public class Datatimer  {
         tasking.GeneratedRecord();
     }
     //定义一个按一定频率执行的定时任务，每隔1分钟执行一次，延迟1秒执行
-    @Scheduled(fixedRate = 1000 * 60,initialDelay = 1000)
-    public void updatePayRecords() throws Exception {
-        //执行代码
-       // System.out.println(CalendarAdjust.GetMonth());
-        System.out.println(1);
-
-    }
+//    @Scheduled(fixedRate = 1000 * 60,initialDelay = 1000)
+//    public void updatePayRecords() throws Exception {
+//        //执行代码
+//       // System.out.println(CalendarAdjust.GetMonth());
+//
+//    }
 }

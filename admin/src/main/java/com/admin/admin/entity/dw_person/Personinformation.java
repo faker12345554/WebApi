@@ -34,7 +34,198 @@ public class Personinformation {
     private String facepath;
     private String persontags;
     private int gendercode;
+
+    private String beforename;
+    private String nation;
+    private String degreeeducation;
+    private String nativeplace;
+    private String occupation;
+    private String nationality;
+    private String registeredarea;
+    private String permanentaddress;
+    private String currentaddress;
+    private String nowaddress;
+    private String yjsponsoralarm;
+    private String exectype;
+    private String keepaddress;
+    private String appointaddress;
+    private String province;
+    private String city;
+    private String area;
+    private String monitoraddress;
+    private String suspectstatuscode;
     private List<String> managementStyle;
+
+    public String getBeforename() {
+        return beforename;
+    }
+
+    public Personinformation setBeforename(String beforename) {
+        this.beforename = beforename;
+        return this;
+    }
+
+    public String getNation() {
+        return nation;
+    }
+
+    public Personinformation setNation(String nation) {
+        this.nation = nation;
+        return this;
+    }
+
+    public String getDegreeeducation() {
+        return degreeeducation;
+    }
+
+    public Personinformation setDegreeeducation(String degreeeducation) {
+        this.degreeeducation = degreeeducation;
+        return this;
+    }
+
+    public String getNativeplace() {
+        return nativeplace;
+    }
+
+    public Personinformation setNativeplace(String nativeplace) {
+        this.nativeplace = nativeplace;
+        return this;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public Personinformation setOccupation(String occupation) {
+        this.occupation = occupation;
+        return this;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public Personinformation setNationality(String nationality) {
+        this.nationality = nationality;
+        return this;
+    }
+
+    public String getRegisteredarea() {
+        return registeredarea;
+    }
+
+    public Personinformation setRegisteredarea(String registeredarea) {
+        this.registeredarea = registeredarea;
+        return this;
+    }
+
+    public String getPermanentaddress() {
+        return permanentaddress;
+    }
+
+    public Personinformation setPermanentaddress(String permanentaddress) {
+        this.permanentaddress = permanentaddress;
+        return this;
+    }
+
+    public String getCurrentaddress() {
+        return currentaddress;
+    }
+
+    public Personinformation setCurrentaddress(String currentaddress) {
+        this.currentaddress = currentaddress;
+        return this;
+    }
+
+    public String getNowaddress() {
+        return nowaddress;
+    }
+
+    public Personinformation setNowaddress(String nowaddress) {
+        this.nowaddress = nowaddress;
+        return this;
+    }
+
+    public String getYjsponsoralarm() {
+        return yjsponsoralarm;
+    }
+
+    public Personinformation setYjsponsoralarm(String yjsponsoralarm) {
+        this.yjsponsoralarm = yjsponsoralarm;
+        return this;
+    }
+
+    public String getExectype() {
+        return exectype;
+    }
+
+    public Personinformation setExectype(String exectype) {
+        this.exectype = exectype;
+        return this;
+    }
+
+    public String getKeepaddress() {
+        return keepaddress;
+    }
+
+    public Personinformation setKeepaddress(String keepaddress) {
+        this.keepaddress = keepaddress;
+        return this;
+    }
+
+    public String getAppointaddress() {
+        return appointaddress;
+    }
+
+    public Personinformation setAppointaddress(String appointaddress) {
+        this.appointaddress = appointaddress;
+        return this;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public Personinformation setProvince(String province) {
+        this.province = province;
+        return this;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public Personinformation setCity(String city) {
+        this.city = city;
+        return this;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public Personinformation setArea(String area) {
+        this.area = area;
+        return this;
+    }
+
+    public String getMonitoraddress() {
+        return monitoraddress;
+    }
+
+    public Personinformation setMonitoraddress(String monitoraddress) {
+        this.monitoraddress = monitoraddress;
+        return this;
+    }
+
+    public String getSuspectstatuscode() {
+        return suspectstatuscode;
+    }
+
+    public Personinformation setSuspectstatuscode(String suspectstatuscode) {
+        this.suspectstatuscode = suspectstatuscode;
+        return this;
+    }
 
     public List<String> getManagementStyle() {
         return managementStyle;

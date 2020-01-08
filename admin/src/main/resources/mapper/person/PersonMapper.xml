@@ -3,18 +3,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_person.PersonDao">
     <insert id="insertPersion" parameterType="com.admin.admin.entity.dw_person.Personinformation">
-        INSERT into t_personinformation(personid,personname,gender,age,birthdate,card,workunit,bailoutbegindate,bailoutenddate,sponsor,sponsoralarm,contact,address,wechatnumber,qqnumber,status,
-        founderid,foundertime,modifierid,modifiertime,suspectstatus,marriage,policestation,casetype,facepath,
-        persontags,gendercode)
-        values (#{personid},#{personname},#{gender},#{age},#{birthdate},#{card},#{workunit},#{bailoutbegindate},#{bailoutenddate},#{sponsor},#{sponsoralarm},#{contact},#{address},#{wechatnumber},#{qqnumber},#{status}
-        ,#{founderid},#{foundertime},#{modifierid},#{modifiertime},#{suspectstatus},#{marriage},#{policestation},#{casetype},#{facepath},#{persontags},#{gendercode})
+        INSERT into t_personinformation(personid,personname,gender,age,birthdate,card,workunit,bailoutbegindate,bailoutenddate,sponsor,sponsoralarm,contact,address,wechatnumber,
+        qqnumber,status,founderid,foundertime,modifierid,modifiertime,suspectstatus,marriage,policestation,casetype,facepath,persontags,gendercode,beforename,nation,degreeeducation,
+        nativeplace,occupation,nationality,registeredarea,permanentaddress,currentaddress,nowaddress,yjsponsoralarm,exectype,keepaddress,appointaddress,province,city,area,
+        monitoraddress,suspectstatuscode)
+        values (#{personid},#{personname},#{gender},#{age},#{birthdate},#{card},#{workunit},#{bailoutbegindate},#{bailoutenddate},#{sponsor},#{sponsoralarm},#{contact},#{address},
+        #{wechatnumber},#{qqnumber},#{status},#{founderid},#{foundertime},#{modifierid},#{modifiertime},#{suspectstatus},#{marriage},#{policestation},#{casetype},#{facepath},
+        #{persontags},#{gendercode},#{beforename},#{nation},#{degreeeducation},#{nativeplace},#{occupation},#{nationality},#{registeredarea},#{permanentaddress},#{currentaddress},
+        #{nowaddress},#{yjsponsoralarm},#{exectype},#{keepaddress},#{appointaddress},#{province},#{city},#{area},#{monitoraddress},#{suspectstatuscode})
     </insert>
 
     <update id="updatePersion" parameterType="com.admin.admin.entity.dw_person.Personinformation">
         UPDATE t_personinformation set personname=#{personname},gender=#{gender},age=#{age},birthdate=#{birthdate},card=#{card},workunit=#{workunit},bailoutbegindate=#{bailoutbegindate},
         bailoutenddate=#{bailoutenddate},sponsor=#{sponsor},sponsoralarm=#{sponsoralarm},contact=#{contact},address=#{address},wechatnumber=#{wechatnumber},qqnumber=#{qqnumber},status=#{status},
         founderid=#{founderid},foundertime=#{foundertime},modifierid=#{modifierid},modifiertime=#{modifiertime},suspectstatus=#{suspectstatus},marriage=#{marriage},policestation=#{policestation},
-        casetype=#{casetype},facepath=#{facepath},persontags=#{persontags},gendercode=#{gendercode}
+        casetype=#{casetype},facepath=#{facepath},persontags=#{persontags},gendercode=#{gendercode},beforename=#{beforename},nation=#{nation},degreeeducation=#{degreeeducation},
+        nativeplace=#{nativeplace},occupation=#{occupation},nationality=#{nationality},registeredarea=#{registeredarea},permanentaddress=#{permanentaddress},currentaddress=#{currentaddress},
+        nowaddress=#{nowaddress},yjsponsoralarm=#{yjsponsoralarm},exectype=#{exectype},keepaddress=#{keepaddress},appointaddress=#{appointaddress},province=#{province},city=#{city},
+        area=#{area},monitoraddress=#{monitoraddress},suspectstatuscode=#{suspectstatuscode}
         where personid=#{personid}
     </update>
 
@@ -29,20 +35,17 @@
     <select id="getPersonByCard" parameterType="String" resultType="int">
         select count(*) from t_personinformation where card=#{Card}
     </select>
-
-    <select id="getEnum" resultType="com.admin.admin.entity.dw_sysenum.Dictionary">
-        SELECT * FROM "dictionary"  where  kind='T0'   or  kind ='05'  or kind='T304'  or kind ='xjtj_xl'  or  kind='04'  or kind='08' or kind='T6'
-    </select>
-
     <update id="updateSponsor" parameterType="String">
         update t_personinformation set sponsor=#{Name},sponsoralarm=#{id} where personid=#{PersonId}
     </update>
 
-    <insert id="insertprison" parameterType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting" useGeneratedKeys="true" keyProperty="data.id">
+    <insert id="insertprison" parameterType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting"
+            useGeneratedKeys="true" keyProperty="id">
         insert into t_prisonsetting(personid, settingname, settingcheck, settingtime) values(#{data.personid},#{data.settingname},#{data.settingcheck},#{data.settingtime})
     </insert>
 
-    <select id="ListPerson" parameterType="com.admin.model.search.SearchModel" resultType="com.admin.admin.entity.dw_person.Personinformation">
+    <select id="ListPerson" parameterType="com.admin.model.search.SearchModel"
+            resultType="com.admin.admin.entity.dw_person.Personinformation">
         select * from t_personinformation
         <if test=" FuzzyCondition !=null and FuzzyCondition !=''">
             <where>
@@ -54,6 +57,12 @@
                 modifierid like concat('%',#{FuzzyCondition},'%')
             </where>
         </if>
+        <if test="list.size()>0">
+            where personid in
+            <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
 
     </select>
 
@@ -61,22 +70,5 @@
         select * from t_prisonsetting where personid=#{PersonId}
     </select>
 
-    <!-- 我这个想返回一个 HashMap 但是结果是空,sql语句能查出来,但是这里可能没赋上值 我还真没用过HashMap 我看看 -->
-    <resultMap id="MechanismMap" type="HashMap">
-        <result property="bmbm" column="bmbm" jdbcType="VARCHAR" />
-        <result property="bmmc" column="bmmc" jdbcType="VARCHAR"/>
-    </resultMap>
 
-    <select id="ListMechanism" resultMap="MechanismMap">
-        SELECT distinct on (bmbm,bmmc)bmbm,bmmc from fsga_yw_ryb
-    </select>
-
-
-    <resultMap id="SponsorMap" type="HashMap">
-        <result property="mjbh" column="mjbh" jdbcType="VARCHAR" />
-        <result property="mjmc" column="mjmc" jdbcType="VARCHAR"/>
-    </resultMap>
-    <select id="ListSponsor" resultMap="SponsorMap" parameterType="String">
-        SELECT mjbh,mjmc FROM fsga_yw_ryb where bmbm=#{Code}
-    </select>
 </mapper>

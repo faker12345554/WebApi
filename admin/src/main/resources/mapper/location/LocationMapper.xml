@@ -52,13 +52,13 @@
 
         </if>
         <if test="StartTime !=null and StartTime!='' and EndTime !=null and EndTime!=''">
-            and l.timestamp>StartTime and l.timestamp &lt; EndTime
+            and l.timestamp > TO_TIMESTAMP (#{StartTime}, 'YYYY-MM-DD HH24:MI:SS') and l.timestamp &lt; TO_TIMESTAMP(#{EndTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="StartTime !=null and StartTime!='' and (EndTime==null or EndTime=='')">
-            and l.timestamp > StartTime &lt; EndTime
+            and l.timestamp > TO_TIMESTAMP(#{StartTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="(StartTime ==null or StartTime=='') and EndTime!=null and EndTime!=''">
-            and l.timestamp
+            and l.timestamp &lt; TO_TIMESTAMP(#{EndTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="list.size()>0">
             and id in

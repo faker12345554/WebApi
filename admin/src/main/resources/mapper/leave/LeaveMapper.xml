@@ -15,21 +15,21 @@
         <if test="Condition1 !=null and Condition2!=null and Condition2!='' and StartTime!=null and EndTime!=null ">
             WHERE a.states=#{Condition1}
             a.personname like concat('%',#{condition2},'%') and
-            a.subittimestamp >#{StartTime} and a.subittimestamp &lt; #{EndTime}
+            a.subittimestamp > #{StartTime} and a.subittimestamp &lt; #{EndTime}
         </if>
         <if test="Condition1 ==null and (Condition2!=null or Condition2=='') and StartTime!=null and EndTime!=null ">
             WHERE a.personname like concat('%',#{condition2},'%') and
-            a.subittimestamp >#{StartTime} and a.subittimestamp &lt; #{EndTime}
+            a.subittimestamp &gt; #{StartTime} and a.subittimestamp &lt; #{EndTime}
         </if>
 
         <if test="Condition1 ==null and (Condition2==null or Condition2=='') and StartTime!=null and  EndTime!=null ">
-            WHERE a.subittimestamp >#{StartTime} and a.subittimestamp &lt; #{EndTime}
+            WHERE a.subittimestamp > TO_TIMESTAMP(#{StartTime}, 'YYYY-MM-DD HH24:MI:SS') and a.subittimestamp &lt; TO_TIMESTAMP(#{EndTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="Condition1 ==null and (Condition2==null or Condition2=='') and StartTime!=null and EndTime==null ">
-            WHERE a.subittimestamp >#{StartTime}
+            WHERE a.subittimestamp > TO_TIMESTAMP(#{StartTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="Condition1 ==null and (Condition2==null or Condition2=='') and StartTime==null and EndTime!=null ">
-            WHERE a.subittimestamp &lt; #{EndTime}
+            WHERE a.subittimestamp &lt; TO_TIMESTAMP(#{EndTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="list.size()>0">
             where a.id in

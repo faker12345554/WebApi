@@ -10,8 +10,6 @@ import com.common.common.authenticator.CalendarAdjust;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -128,7 +126,7 @@ public class Tasking {
                             }
 
                         }
-                        summons.setSummontime(CalendarAdjust.GetSummons(2));
+                        summons.setSummontime(CalendarAdjust.GetSummons(1));
                         taskDao.SaveSummons(summons);
                     }
                 }
@@ -136,7 +134,7 @@ public class Tasking {
             } else if (item.getCasetype().equals("一般案件") && item.getCasetype()!=null){
 
                 int month = GetMessageByTime(item.getPersonid(), 5);
-                if (month == 3) {
+                if (month == 2) {
                     if (taskDao.GetSummons(item.getPersonid(), CalendarAdjust.GetSummons(1)) == 0) {
                         if (strArr == null || strArr.length == 0) {
                             message.setMessagetime(
@@ -156,11 +154,11 @@ public class Tasking {
                         taskDao.SaveSummons(summons);
                     }
                 } else if (month == 0) {
-                    if (taskDao.GetSummons(item.getPersonid(), CalendarAdjust.GetSummons(4)) == 0) {
+                    if (taskDao.GetSummons(item.getPersonid(), CalendarAdjust.GetSummons(3)) == 0) {
 
                         if (strArr == null || strArr.length == 0) {
                             message.setMessagetime(
-                                    CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(3, Integer.parseInt(remindersettings.getSettingday()))));
+                                    CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(2, Integer.parseInt(remindersettings.getSettingday()))));
                             taskDao.SaveMessage(message);
 
 
@@ -168,12 +166,12 @@ public class Tasking {
                             for (int i = 0; i < strArr.length; i++) {
 
                                 message.setMessagetime(
-                                        CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(3, Integer.parseInt(strArr[i]))));
+                                        CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(2, Integer.parseInt(strArr[i]))));
                                 taskDao.SaveMessage(message);
                             }
 
                         }
-                        summons.setSummontime(CalendarAdjust.GetSummons(4));
+                        summons.setSummontime(CalendarAdjust.GetSummons(3));
 
                         taskDao.SaveSummons(summons);
                     }

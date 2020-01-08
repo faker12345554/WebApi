@@ -8,11 +8,30 @@ public class SearchModel extends ExeclModel {
 
     private String Condition1;
     private String Condition2;
-    private Date StartTime;
-    private Date EndTime;
+    private String StartTime;
+    private String EndTime;
     private String FuzzyCondition;
     private boolean flag;
     private int PageSize;
+
+    public String getStartTime() {
+        return StartTime;
+    }
+
+    public SearchModel setStartTime(String startTime) {
+        StartTime = startTime;
+        return this;
+    }
+
+    public String getEndTime() {
+        return EndTime;
+    }
+
+    public SearchModel setEndTime(String endTime) {
+        EndTime = endTime;
+        return this;
+    }
+
     private int PageIndex;
 
 
@@ -54,23 +73,6 @@ public class SearchModel extends ExeclModel {
         return this;
     }
 
-    public Date getStartTime() {
-        return StartTime;
-    }
-
-    public SearchModel setStartTime(Date startTime) {
-        StartTime = startTime;
-        return this;
-    }
-
-    public Date getEndTime() {
-        return EndTime;
-    }
-
-    public SearchModel setEndTime(Date endTime) {
-        EndTime = endTime;
-        return this;
-    }
 
     public String getFuzzyCondition() {
         return FuzzyCondition;
