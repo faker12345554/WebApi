@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adminapp.business.dao.dw_system.SystemDao">
+    <select id="getUpdateInformation" resultType="com.adminapp.model.dw_system.UpdateInformationModel">
+        select name,version,versioncode AS versionCode,url,msg FROM t_newversion WHERE type=#{type} order by timestamp DESC
+    </select>
+    <select id="getUpdateRecord" resultType="com.adminapp.model.dw_system.UpdateRecordModel">
+        select timestamp,version,versioncode AS versionCode,msg,url FROM t_newversion WHERE type=#{type} order by timestamp DESC
+    </select>
+    <insert id="submitAdvice" parameterType="com.adminapp.model.dw_system.SubmitAdviceModel" useGeneratedKeys="true" keyProperty="date.id">
+        insert into t_feedback (userid,type,content,picturepath,phone,timestamp) VALUES (#{date.userId},#{date.type},#{date.content},#{date.picture},#{date.phone},#{date.timeStamp})
+    </insert>
+</mapper>

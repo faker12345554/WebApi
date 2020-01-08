@@ -58,6 +58,8 @@ public interface SuperfineDado {
 
     String getAreaFence(@Param("personId")String personId);
 
+    String getAreaCode(@Param("personId")String personId);
+
     List<LocationRecordModel> listLocationRecord(@Param("personId")String personId);
 
     List<LocationInformation> listViolateLocationRecord(@Param("personId")String personId);
@@ -75,4 +77,10 @@ public interface SuperfineDado {
     List<PrisonSettingModel> getPrisonValidWay(@Param("personId")String personId);
 
     LeaveListModel getApplyLeave(@Param("code")String code);
+
+    SuperviseCaseInformation getPersonCaseInformation(@Param("personId")String personId);
+
+    SuperviseBailPersonInformation getBailPersonInformation(@Param("personId")String personId);
+
+    SuperviseBailMoneyInformation getBailMoneyInformation(@Param("personId")String personId);
 }

@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.adminapp.business.dao.dw_supervise.SuperfineDado">
     <select id="listPersonInformation" resultType="com.adminapp.business.entity.dw_supervise.Personinformation">
-        select personid AS code,personname AS name,card AS idCardNo,age,gender,facepath AS headUrl,suspectstatus AS state,bailoutbegindate AS execStartDate,
+        select personid AS code,personname AS name,card AS idCardNo,age,gendercode AS gender,facepath AS headUrl,suspectstatuscode AS stateCode,suspectstatus AS state,bailoutbegindate AS execStartDate,
         bailoutenddate AS execEndDate,contact AS phone FROM t_personinformation WHERE sponsoralarm=#{UserId} ORDER BY t_personinformation.personname
     </select>
     <select id="getPrisonSetting" resultType="com.adminapp.model.dw_supervise.PrisonSettingModel">
@@ -77,6 +77,9 @@
     <select id="getAreaFence" resultType="String">
         SELECT areaarr FROM t_enclosure WHERE personid=#{personId} AND status=TRUE
     </select>
+    <select id="getAreaCode" resultType="String">
+        SELECT citycode FROM t_enclosure WHERE personid=#{personId} AND status=TRUE
+    </select>
     <select id="listLocationRecord" resultType="com.adminapp.model.dw_supervise.LocationRecordModel">
         SELECT latitude,longitude,locationtype AS locationType,address,fscope AS isOutBound,timestamp FROM t_location WHERE personid=#{personId} ORDER BY t_location.timestamp DESC
     </select>
@@ -102,5 +105,16 @@
         select leaveorder AS code,statuscode AS statusCode,states AS status,personname AS applicant,subittimestamp AS applyTimestamp,
         starttimestamp AS startTimestamp,endtimestamp AS endTimestamp,leavedestination AS address,reason,recording AS reasonAudioUrl
         FROM t_leave WHERE leaveorder=#{code}
+    </select>
+    <select id="getPersonCaseInformation" resultType="com.adminapp.model.dw_supervise.SuperviseCaseInformation">
+        select casecategory AS caseCategory,casetype AS caseType,casename AS caseName,caseno AS caseNo,receivedtime AS receivedTime,handleunit AS handleUnit,
+        handlepeson AS handlePeson,casedescription AS caseDescription FROM t_caseinfo WHERE personid=#{personId}
+    </select>
+    <select id="getBailPersonInformation" resultType="com.adminapp.model.dw_supervise.SuperviseBailPersonInformation">
+        select guaranteename AS name,gender,card AS idCardNo,address,workunit AS unit,job,contact,relatetionship AS relationship FROM t_guaranteeinformation
+        where personid=#{personId}
+    </select>
+    <select id="getBailMoneyInformation" resultType="com.adminapp.model.dw_supervise.SuperviseBailMoneyInformation">
+        select money AS amount,receiptunit AS receiptUnit,paydate AS payDate,keepbank AS keepBank FROM t_guaranteeinformation WHERE personid=#{personId}
     </select>
 </mapper>

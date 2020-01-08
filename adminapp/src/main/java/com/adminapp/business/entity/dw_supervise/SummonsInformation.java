@@ -1,6 +1,8 @@
 package com.adminapp.business.entity.dw_supervise;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SummonsInformation {
@@ -33,8 +35,11 @@ public class SummonsInformation {
     return summontime;
   }
 
-  public void setSummontime(Date summontime) {
-    String summonTime=String.valueOf(summontime.getTime());
+  public void setSummontime(String summontime) throws ParseException {
+    //String summonTime=String.valueOf(summontime.getTime());
+    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM");
+    Date date=sdf.parse(summontime);
+    String summonTime=String.valueOf(date.getTime());
     this.summontime = summonTime;
   }
 
