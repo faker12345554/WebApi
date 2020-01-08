@@ -317,7 +317,6 @@ public class SuperviseController {
         battery.setEnable(true);
         battery.setTimeSpan("20");
         battery.setAlarmThreshold(20.0f);
-
         GetSuperviseConfigModel getSuperviseConfigModel = new GetSuperviseConfigModel(); // = superviseService.getBatteryConfigTimestamp(TokenUtil.getTokenUserId());
         getSuperviseConfigModel.setLocation(locationModels);
         getSuperviseConfigModel.setBattery(battery);
