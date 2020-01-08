@@ -2,7 +2,7 @@ package com.prisonapp.business.entity.dw_supervise;
 
 public class SubmitApplyLeaveModel {
 
-    private int days;
+   // private int days;
     private String provinceCode;
     private String province;
     private String cityCode;
@@ -11,14 +11,16 @@ public class SubmitApplyLeaveModel {
     private String district;
     private String reason ;
     private String reasonAudioUrl;
-
-    public int getDays() {
-        return days;
-    }
-
-    public void setDays(int days) {
-        this.days = days;
-    }
+    private long startDate;
+    private long endDate;
+//
+//    public int getDays() {
+//        return days;
+//    }
+//
+//    public void setDays(int days) {
+//        this.days = days;
+//    }
 
     public String getProvinceCode() {
         return provinceCode;
@@ -82,5 +84,23 @@ public class SubmitApplyLeaveModel {
 
     public void setReasonAudioUrl(String reasonAudioUrl) {
         this.reasonAudioUrl = reasonAudioUrl;
+    }
+
+    public long getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        Long longStartDate = Long.valueOf(startDate);
+        this.startDate = longStartDate;
+    }
+
+    public long getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        Long longEndDate = Long.valueOf(endDate);
+        this.endDate = longEndDate;
     }
 }

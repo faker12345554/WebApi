@@ -4,61 +4,61 @@
 <mapper namespace="com.prisonapp.business.dao.dw_message.MessageDao">
     <select id="getNotificationList" parameterType="String" resultType="com.prisonapp.business.entity.dw_message.NotificationMessageModel">
 
-      select  modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,personcontent as content,messagetime as timestamp from  (SELECT * FROM "t_message"  where modular='1'  and personid=#{userId}  ORDER BY  messagetime desc  limit  1) as a
+      select  modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,content,messagetime as timestamp from  (SELECT * FROM "t_personmessage"  where modular='1'  and personid=#{userId}  ORDER BY  messagetime desc  limit  1) as a
 UNION ALL
-select  modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,personcontent as content,messagetime as timestamp  from  (SELECT * FROM "t_message"  where modular='2'  and personid=#{userId}  ORDER BY  messagetime desc limit  1) as a
+select  modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,content,messagetime as timestamp  from  (SELECT * FROM "t_personmessage"  where modular='2'  and personid=#{userId}  ORDER BY  messagetime desc limit  1) as a
 UNION ALL
-select  modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,personcontent as content,messagetime as timestamp  from  (SELECT * FROM "t_message"  where modular='3'  and personid=#{userId}  ORDER BY  messagetime desc limit  1) as a
+select  modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,content,messagetime as timestamp  from  (SELECT * FROM "t_personmessage"  where modular='3'  and personid=#{userId}  ORDER BY  messagetime desc limit  1) as a
 UNION ALL
-select  modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,personcontent as content,messagetime as timestamp  from  (SELECT * FROM "t_message"  where modular='4'  and personid=#{userId}  ORDER BY  messagetime desc limit  1) as a
+select  modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,content,messagetime as timestamp  from  (SELECT * FROM "t_personmessage"  where modular='4'  and personid=#{userId}  ORDER BY  messagetime desc limit  1) as a
 UNION ALL
-select  modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,personcontent as content,messagetime as timestamp  from  (SELECT * FROM "t_message"  where modular='5'  and personid=#{userId}  ORDER BY  messagetime desc limit  1) as a
+select  modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,content,messagetime as timestamp  from  (SELECT * FROM "t_personmessage"  where modular='5'  and personid=#{userId}  ORDER BY  messagetime desc limit  1) as a
 UNION ALL
-select  modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,personcontent as content,messagetime as timestamp  from  (SELECT * FROM "t_message"  where modular='6'  and personid=#{userId}  ORDER BY  messagetime desc limit  1) as a
+select  modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,content,messagetime as timestamp  from  (SELECT * FROM "t_personmessage"  where modular='6'  and personid=#{userId}  ORDER BY  messagetime desc limit  1) as a
 UNION ALL
-select  modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,personcontent as content,messagetime as timestamp  from  (SELECT * FROM "t_message"  where modular='7'  and personid=#{userId}  ORDER BY  messagetime desc limit  1) as a
+select  modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,content,messagetime as timestamp  from  (SELECT * FROM "t_personmessage"  where modular='7'  and personid=#{userId}  ORDER BY  messagetime desc limit  1) as a
 UNION ALL
-select  modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,personcontent as content,messagetime as timestamp  from  (SELECT * FROM "t_message"  where modular='8'  and personid=#{userId}  ORDER BY  messagetime desc limit  1) as a
+select  modular as type ,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,content,messagetime as timestamp  from  (SELECT * FROM "t_personmessage"  where modular='8'  and personid=#{userId}  ORDER BY  messagetime desc limit  1) as a
 
     </select>
 
     <select id="getAllMessageList" resultType="com.prisonapp.business.entity.dw_message.MessageListModel">
-         select  id as code,modular as type ,modularname as typeName,personcontent as content,messagetime as timestamp,readmessage as isRead from t_message where personid=#{userId}  and personcontent  like concat('%',#{key},'%') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
+         select  id as code,modular as type ,modularname as typeName,content,messagetime as timestamp,readmessage as isRead from t_personmessage where personid=#{userId}  and content  like concat('%',#{key},'%') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
     </select>
 
     <select id="getMessageList" resultType="com.prisonapp.business.entity.dw_message.MessageListModel">
-        select  id as code,modular as type ,modularname as typeName,personcontent as content,messagetime as timestamp,readmessage as isRead from t_message where personid=#{userId} and modular=#{type} and personcontent  like concat('%',#{key},'%') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
+        select  id as code,modular as type ,modularname as typeName,content,messagetime as timestamp,readmessage as isRead from t_personmessage where personid=#{userId} and modular=#{type} and content  like concat('%',#{key},'%') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
     </select>
     <update id="readMessage" >
-        update t_message set readmessage=true where modular=#{type} and personid=#{userId}
+        update t_personmessage set readmessage=true where modular=#{type} and personid=#{userId}
     </update>
     <select id="searchNotification" resultType="com.prisonapp.business.entity.dw_message.SearchNotificationModel">
-                select * from (SELECT personcontent, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_message"  where modular='1'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  personcontent like concat('%',#{key},'%')
-	 UNION ALL  select * from (SELECT personcontent, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_message"  where modular='2'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  personcontent like concat('%',#{key},'%')
-	 UNION ALL	select * from (SELECT personcontent, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_message"  where modular='3'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  personcontent like concat('%',#{key},'%')
-	 UNION ALL	select * from (SELECT personcontent, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_message"  where modular='4'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  personcontent like concat('%',#{key},'%')
-	 UNION ALL	select * from (SELECT personcontent, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_message"  where modular='5'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  personcontent like concat('%',#{key},'%')
+                select * from (SELECT content, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_personmessage"  where modular='1'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  content like concat('%',#{key},'%')
+	 UNION ALL  select * from (SELECT content, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_personmessage"  where modular='2'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  content like concat('%',#{key},'%')
+	 UNION ALL	select * from (SELECT content, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_personmessage"  where modular='3'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  content like concat('%',#{key},'%')
+	 UNION ALL	select * from (SELECT content, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_personmessage"  where modular='4'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  content like concat('%',#{key},'%')
+	 UNION ALL	select * from (SELECT content, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_personmessage"  where modular='5'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  content like concat('%',#{key},'%')
     </select>
     <select id="unreadCount" resultType="com.prisonapp.business.entity.dw_message.MessageModel">
-        select * from t_message where personid=#{userId} and  modular=#{type} and readmessage='f'
+        select * from t_personmessage where personid=#{userId} and  modular=#{type} and readmessage='f'
     </select>
 
     <select id="messageTotalCount" resultType="com.prisonapp.business.entity.dw_message.MessageModel">
-         select * from t_message where personid=#{userId} and  modular=#{type}
+         select * from t_personmessage where personid=#{userId} and  modular=#{type}
     </select>
 
     <select id="messageAllTotalCount" resultType="com.prisonapp.business.entity.dw_message.MessageModel">
-         select * from t_message where personid=#{userId}
+         select * from t_personmessage where personid=#{userId}
     </select>
 
     <select id="getNewestMessageList" resultType="com.prisonapp.business.entity.dw_message.MessageListModel">
-    select id as code,modular as type ,modularname as typeName,personcontent,messagetime as timestamp,readmessage as isRead from t_message where personid=#{userId} and  messagetime between to_date(#{todayDate},'yyyy-MM-dd') and to_date(#{tomorrowDate},'yyyy-MM-dd') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
+    select id as code,modular as type ,modularname as typeName,content,messagetime as timestamp,readmessage as isRead ,detailtype,detailtypename from t_personmessage where personid=#{userId} and  messagetime between to_date(#{todayDate},'yyyy-MM-dd') and to_date(#{tomorrowDate},'yyyy-MM-dd') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
     </select>
     <select id="newestMessageTotalCount" resultType="com.prisonapp.business.entity.dw_message.MessageListModel">
-    select id as code,modular as type ,modularname as typeName,personcontent,messagetime as timestamp,readmessage as isRead from t_message where personid=#{userId} and  messagetime between to_date(#{todayDate},'yyyy-MM-dd') and to_date(#{tomorrowDate},'yyyy-MM-dd') ORDER BY timestamp  desc
+    select id as code,modular as type ,modularname as typeName,content,messagetime as timestamp,readmessage as isRead from t_personmessage where personid=#{userId} and  messagetime between to_date(#{todayDate},'yyyy-MM-dd') and to_date(#{tomorrowDate},'yyyy-MM-dd') ORDER BY timestamp  desc
     </select>
 
     <select id="getNotification" resultType="com.prisonapp.business.entity.dw_message.NotificationMessageModel">
-        select modular as type, modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,personcontent as content,messagetime as timestamp from t_message where personid=#{userId} and modular=#{type} ORDER BY timestamp  desc limit 1
+        select modular as type, modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,content,messagetime as timestamp from t_personmessage where personid=#{userId} and modular=#{type} ORDER BY timestamp  desc limit 1
     </select>
 </mapper>
