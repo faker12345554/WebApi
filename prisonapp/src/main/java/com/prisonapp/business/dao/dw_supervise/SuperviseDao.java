@@ -19,9 +19,20 @@ public interface SuperviseDao {
 
     List<ApplyRecordModel> applyRecord(@Param("code")String  code);
 
-    int submitApplyLeave(@Param("submitApplyLeaveModel")SubmitApplyLeaveModel submitApplyLeaveModel, @Param("startDate") long startDate,@Param("endDate") long endDate, @Param("code") String code, @Param("userId")String userId,@Param("personname")String personname);
+//    int submitApplyLeave(@Param("city")String city,@Param("cityCode")String cityCode,@Param("district")String district,@Param("districtCode")String districtCode,
+//                         @Param("province")String province,@Param("provinceCode")String provinceCode,@Param("reason")String reason,@Param("reasonAudioUrl")String reasonAudioUrl ,
+//                         @Param("endDate")long endDate,@Param("startDate")long startDate,  @Param("code") String code,
+//                         @Param("userId")String userId,@Param("personName")String personName);
 
-    List<UserModel> getPersonname(@Param("userId")String userId);
+   // int submitApplyLeave(@Param("userId")String userId);
+
+
+    int submitApplyLeave (@Param("city")String city,@Param("cityCode")String cityCode,@Param("district")String district,@Param("districtCode")String districtCode,
+                         @Param("province")String province,@Param("provinceCode")String provinceCode,@Param("reason")String reason,@Param("reasonAudioUrl")String reasonAudioUrl ,
+                         @Param("endDate")long endDate,@Param("startDate")long startDate,  @Param("code") String code,
+                         @Param("userId")String userId,@Param("personName")String personName);
+
+    List<TPersoninformation> getPersonname(@Param("userId")String userId);
 
     List<GetSuperviseTaskModel> getSuperviseTask(String userId);
 
@@ -31,15 +42,21 @@ public interface SuperviseDao {
 
     List<FaceRecognizeModel> getFaceRecognize(String userId,int type);
 
-    int autoLocation(float latitude,float longitude,int locationType,String address,String userId,Date date);
+    int autoLocation(float latitude,float longitude,int locationType,String address,String userId,Date date,boolean fScope);
 
     int uploadLocationError(String errorCode, String errorMsg,int userId,Date date);
 
     int uploadBattery(float percent,String userId,Date date);
 
-    int batteryAlarm(String userId,String workContent);
+    int batteryAlarm(String userId,String content);
 
-    List<LocationModel> getLocationConfig(String userId);
+    TRemindersettings getLocationConfig();
 
-    GetSuperviseConfigModel getBatteryConfigTimestamp(String userId);
+  //  GetSuperviseConfigModel getBatteryConfigTimestamp(String userId);
+
+    TEnclosure getPolygon(String userId);
+
+  //  int updateFscope(String userId,boolean fscope) ;
+
+    int insertFscope(String userId,String content);
 }

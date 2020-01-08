@@ -88,7 +88,7 @@ public class  MessageController {
 
     @UserLoginToken
     @ApiOperation(value = "保外人员确认消息读取")
-    @PostMapping("/readMessage")
+    @GetMapping("/readMessage")
     public ResultSet readMessage(@ApiParam(name = "type",value = "类型编号") @RequestParam(required = true) int type,@ApiParam(name = "messageTimestamp",value = "最新一条已获取的消息的时间戳") @RequestParam(required = true) String messageTimestamp) {
         long longMessageTimestamp = Long.parseLong(messageTimestamp);
         if (System.currentTimeMillis() - longMessageTimestamp >= 0)//当前时间戳减掉传入的时间戳，如果大于零，则传入的时间戳小于当前时间戳
@@ -100,7 +100,7 @@ public class  MessageController {
                 result.data = new Object();
             } else {
                 result.resultCode = 1;
-                result.resultMsg = "失败";
+                result.resultMsg = "无最新消息";
                 result.data = null;
             }
 

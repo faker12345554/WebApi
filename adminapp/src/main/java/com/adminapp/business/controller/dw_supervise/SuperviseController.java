@@ -801,6 +801,7 @@ public class SuperviseController {
                 personinformation.setAge(personAllInformationModel.getAge());
                 personinformation.setGender(personAllInformationModel.getGendercode());
                 personinformation.setHeadUrl(personAllInformationModel.getFacepath());
+                personinformation.setStateCode(personAllInformationModel.getSuspectstatuscode());
                 personinformation.setState(personAllInformationModel.getStatus());
                 personinformation.setExecStartDate(personAllInformationModel.getBailoutbegindate());
                 personinformation.setExecEndDate(personAllInformationModel.getBailoutenddate());
@@ -1087,18 +1088,6 @@ public class SuperviseController {
         String userId=TokenUtil.getTokenUserId();
         PersonAllInformationModel personinformation=superviseService.getPersonInformation(code);
         if(personinformation!=null) {
-            String areaFence = superviseService.getAreaFence(code);   //获取监居人员区域围栏
-            List<AreaFenceModel> areaFenceModelList = new ArrayList<>();
-            if (areaFence.equals("")==false) {
-                String[] area = areaFence.split(",");
-                for (int i = 0; i < area.length; i = i + 2) {
-                    AreaFenceModel areaFenceModel = new AreaFenceModel();
-                    areaFenceModel.setLatitude(Float.valueOf(area[i]));
-                    areaFenceModel.setLongitude(Float.valueOf(area[i + 1]));
-                    areaFenceModelList.add(areaFenceModel);
-                }
-            }
-
             List<LocationRecordModel> locationRecordModels = superviseService.listLocationRecord(code);  //获取监居人员所有定位信息
 
             List<LocationRecordModel> newLocationRecords = new ArrayList<>();
@@ -1162,9 +1151,27 @@ public class SuperviseController {
                     locationRecordModels2.add(summonsInformation);
                 }
             }
-            for (LocationRecordModel item:locationRecordModels2
-                 ) {
-                item.setArea(areaFenceModelList);
+            String areaFence = superviseService.getAreaFence(code);   //获取监居人员区域围栏
+            String areaCode=superviseService.getAreaCode(code);     //获取监居人员区域编码
+            List<AreaFenceModel> areaFenceModelList = new ArrayList<>();
+            if (areaFence.equals("")==false) {   //区域围栏不为空为空
+                String[] area = areaFence.split(",");
+                for (int i = 0; i < area.length; i = i + 2) {
+                    AreaFenceModel areaFenceModel = new AreaFenceModel();
+                    areaFenceModel.setLatitude(Float.valueOf(area[i]));
+                    areaFenceModel.setLongitude(Float.valueOf(area[i + 1]));
+                    areaFenceModelList.add(areaFenceModel);
+                }
+                for (LocationRecordModel item:locationRecordModels2
+                ) {
+                    item.setArea(areaFenceModelList);
+                }
+            }
+            else{     //区域围栏为空，传区域编码
+                for (LocationRecordModel item:locationRecordModels2
+                ) {
+                    item.setAreaCode(areaCode);
+                }
             }
 
             LocationRecordReturnModel locationRecordReturnModel = new LocationRecordReturnModel();
@@ -1682,6 +1689,7 @@ public class SuperviseController {
             personinformation.setAge(personAllInformationModel.getAge());
             personinformation.setGender(personAllInformationModel.getGendercode());
             personinformation.setHeadUrl(personAllInformationModel.getFacepath());
+            personinformation.setStateCode(personAllInformationModel.getSuspectstatuscode());
             personinformation.setState(personAllInformationModel.getStatus());
             personinformation.setExecStartDate(personAllInformationModel.getBailoutbegindate());
             personinformation.setExecEndDate(personAllInformationModel.getBailoutenddate());
@@ -1815,4 +1823,156 @@ public class SuperviseController {
         return rs;
     }
 
+    @UserLoginToken
+    @ApiOperation(value = " 获取保外人员详细信息")
+    @GetMapping("/getSuperviseDetail")
+    public ResultSet getSuperviseDetail(@ApiParam(name = "code",value = "监居人员编号")@RequestParam(required = true)String code){
+        PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(code);
+        SuperviseBaseInformation superviseBaseInformation=new SuperviseBaseInformation();
+        int locationViolateSlight = superviseService.listViolationFensInformation("脱离管控区域", "1");  //上报设置中位置轻微违规次数
+        int locationViolateSerious = superviseService.listViolationFensInformation("脱离管控区域", "2"); //上报设置中位置严重违规次数
+        int summonsViolateSlight = superviseService.listViolationFensInformation("传讯取证未报到", "1");   //上报设置中传讯轻微违规次数
+        int summonsViolateSerious = superviseService.listViolationFensInformation("传讯取证未报到", "2");  //上报设置中传讯严重违规次数
+        int faceSinginSlight =superviseService.listViolationFensInformation("视频签到缺勤","1");    //上报设置中人脸签到轻微违规次数
+        int faceSinginSerious =superviseService.listViolationFensInformation("视频签到缺勤","2");   //上报设置中人脸签到严重违规次数
+        int voiceSinginSlight =superviseService.listViolationFensInformation("语音签到缺勤","1");   //上报设置中声纹签到轻微违规次数
+        int voiceSinginSerious =superviseService.listViolationFensInformation("语音签到缺勤","2");  //上报设置中声纹签到严重违规次数
+
+        List<ReportLocationModel> reportLocationModels = superviseService.listLocation(code);    //获取监居人员定位信息
+        int locationViolateCount = 0;    //位置违规次数
+        for (int j = 0; j < reportLocationModels.size(); j++) {         //计算位置定位违规次数
+            ReportLocationModel reportLocationModel = reportLocationModels.get(j);
+            boolean Fscope = reportLocationModel.isFscope();
+            if (reportLocationModel.isFscope()) {     //判断定位位置是否违规
+                locationViolateCount += 1;
+            }
+        }
+        int locationViolateStatus = 0;    //违规状态为正常
+        if (locationViolateCount >= locationViolateSlight && locationViolateCount < locationViolateSerious) {   //位置违规次数
+            locationViolateStatus = 1;   //违规状态为轻微
+        }
+        if (locationViolateCount >= locationViolateSerious) {
+            locationViolateStatus = 2;  //违规状态为严重
+        }
+        int summonsViolateTimes = 0;    //传讯违规次数
+        List<SummonsInformation> summonsInformations = superviseService.getSummonsInformation(code);
+        for (SummonsInformation item3 : summonsInformations
+        ) {
+            if (item3.getReporttime() == null) {
+                summonsViolateTimes++;
+            }
+        }
+        int summonsViolateStatus = 0;   //传讯违规状态
+        if (summonsViolateTimes >= summonsViolateSlight && summonsViolateTimes < summonsViolateSerious) {
+            summonsViolateStatus = 1;
+        }
+        if (summonsViolateTimes >= summonsViolateSerious) {
+            summonsViolateStatus = 2;
+        }
+        List<SinginInformation> faceSinginInformations=superviseService.listPersonSingin(code,0);   //获取人脸签到记录
+        int faceViolateTimes=0;   //人脸签到违规次数
+        for (SinginInformation item5:faceSinginInformations
+        ) {
+            if(item5.getResult()==1){     //签到状态为1时是违规状态
+                faceViolateTimes++;
+            }
+        }
+        int faceViolateStatus=0;   //人脸违规状态
+        if(faceViolateTimes>=faceSinginSlight&&faceViolateTimes<faceSinginSerious){
+            faceViolateStatus=1;
+        }
+        if(faceViolateTimes>=faceSinginSerious){
+            faceViolateStatus=2;
+        }
+        List<SinginInformation> voiceSinginInformations=superviseService.listPersonSingin(code,1);   //获取声纹签到记录
+        int voiceViolateTimes=0;   //声纹签到违规次数
+        for (SinginInformation item7:voiceSinginInformations
+        ) {
+            if(item7.getResult()==1){
+                voiceViolateTimes++;
+            }
+        }
+        int voiceViolateStatus=0;    //声纹违规状态
+        if(voiceViolateTimes>=voiceSinginSlight&&voiceViolateTimes<voiceSinginSerious){
+            voiceViolateStatus=1;
+        }
+        if(voiceViolateTimes>=voiceSinginSerious){
+            voiceViolateStatus=2;
+        }
+        if(locationViolateStatus==0&&summonsViolateStatus==0&&faceViolateStatus==0&&voiceViolateStatus==0){
+            superviseBaseInformation.setViolateCode("0");
+            superviseBaseInformation.setViolate("正常");
+        }
+        if(locationViolateStatus==1||summonsViolateStatus==1||faceViolateStatus==1||voiceViolateStatus==1){
+            superviseBaseInformation.setViolateCode("1");
+            superviseBaseInformation.setViolate("轻微");
+        }
+        if(locationViolateStatus==1||summonsViolateStatus==2||faceViolateStatus==2||voiceViolateStatus==2){
+            superviseBaseInformation.setViolateCode("2");
+            superviseBaseInformation.setViolate("严重");
+        }
+        superviseBaseInformation.setCode(personAllInformationModel.getPersonid());
+        superviseBaseInformation.setHeadUrl(personAllInformationModel.getFacepath());
+        superviseBaseInformation.setStateCode(personAllInformationModel.getSuspectstatuscode());
+        superviseBaseInformation.setState(personAllInformationModel.getSuspectstatus());
+        superviseBaseInformation.setNumber(personAllInformationModel.getPersonid());
+        superviseBaseInformation.setIdCardNo(personAllInformationModel.getCard());
+        superviseBaseInformation.setName(personAllInformationModel.getPersonname());
+        superviseBaseInformation.setPreName(personAllInformationModel.getBeforname());
+        superviseBaseInformation.setBirthday(String.valueOf(personAllInformationModel.getBirthdate().getTime()));
+        superviseBaseInformation.setAge(personAllInformationModel.getAge());
+        superviseBaseInformation.setGender(personAllInformationModel.getGendercode());
+        superviseBaseInformation.setNation(personAllInformationModel.getNation());
+        superviseBaseInformation.setMaritalStatus(personAllInformationModel.getMarriage());
+        superviseBaseInformation.setEducation(personAllInformationModel.getDegreeeducation());
+        superviseBaseInformation.setBirthPlace(personAllInformationModel.getNativeplace());
+        superviseBaseInformation.setJob(personAllInformationModel.getOccupation());
+        superviseBaseInformation.setContact(personAllInformationModel.getContact());
+        superviseBaseInformation.setUnit(personAllInformationModel.getWorkunit());
+        superviseBaseInformation.setNationality(personAllInformationModel.getNationality());
+        superviseBaseInformation.setHouseholdAddressArea(personAllInformationModel.getRegisteredarea());
+        superviseBaseInformation.setHouseholdAddress(personAllInformationModel.getPermanentaddress());
+        superviseBaseInformation.setResidentAddressArea(personAllInformationModel.getCurrentaddress());
+        superviseBaseInformation.setResidentAddress(personAllInformationModel.getNowaddress());
+
+        SuperviseCaseInformation superviseCaseInformation=superviseService.getPersonCaseInformation(code);  //获取监居人员案件基本信息
+
+        SuperviseBailInformation superviseBailInformation=new SuperviseBailInformation();
+        superviseBailInformation.setExecStartDate(String.valueOf(personAllInformationModel.getBailoutbegindate().getTime()));
+        superviseBailInformation.setExecEndDate(String.valueOf(personAllInformationModel.getBailoutenddate().getTime()));
+        superviseBailInformation.setExecUnit(personAllInformationModel.getPolicestation());
+        superviseBailInformation.setInChargePerson(personAllInformationModel.getSponsor());
+        superviseBailInformation.setBailCaseType(personAllInformationModel.getCasetype());
+        superviseBailInformation.setExecType(personAllInformationModel.getExectype());
+        if(personAllInformationModel.getSuspectstatus().equals("监视居住")){
+            superviseBailInformation.setKeepAddress(personAllInformationModel.getKeepaddress());
+            superviseBailInformation.setAppointAddress(personAllInformationModel.getAppointaddress());
+        }
+        SuperviseBailPersonInformation superviseBailPersonInformation=new SuperviseBailPersonInformation();
+        if(personAllInformationModel.getSuspectstatus().equals("监视居住")||personAllInformationModel.getExectype().equals("财保")){
+            superviseBailPersonInformation=null;
+        }
+        else{
+            superviseBailPersonInformation=superviseService.getBailPersonInformation(code);
+        }
+        SuperviseBailMoneyInformation superviseBailMoneyInformation=new SuperviseBailMoneyInformation();
+        if(personAllInformationModel.getSuspectstatus().equals("监视居住")||personAllInformationModel.getExectype().equals("人保")){
+            superviseBailMoneyInformation=null;
+        }
+        else{
+            superviseBailMoneyInformation=superviseService.getBailMoneyInformation(code);
+        }
+
+        SuperviseDetailModel superviseDetailModel=new SuperviseDetailModel();
+        superviseDetailModel.setBase(superviseBaseInformation);
+        superviseDetailModel.setCaseInfo(superviseCaseInformation);
+        superviseDetailModel.setBailInfo(superviseBailInformation);
+        superviseDetailModel.setBailPerson(superviseBailPersonInformation);
+        superviseDetailModel.setBailMoney(superviseBailMoneyInformation);
+        superviseDetailModel.setLastUpdateTime(String.valueOf(personAllInformationModel.getModifiertime().getTime()));
+        rs.resultCode=0;
+        rs.resultMsg="";
+        rs.data=superviseDetailModel;
+        return rs;
+    }
 }

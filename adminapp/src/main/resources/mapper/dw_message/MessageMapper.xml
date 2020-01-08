@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adminapp.business.dao.dw_message.MessageDao">
+    <select id="getUserControlPerson" resultType="com.adminapp.model.dw_supervise.PersonAllInformationModel">
+        select * FROM t_personinformation WHERE sponsoralarm=#{userId}
+    </select>
+    <select id="listNotifications" resultType="com.adminapp.business.entity.dw_message.MessageInformation">
+       select * FROM t_message where personid=#{personId}
+    </select>
+    <select id="listAllMessages" resultType="com.adminapp.model.dw_message.MessageListModel">
+        select id AS code,modular AS type,modularname AS typeName,detailtype AS detailType,detailtypename AS detailTypeName,workcontent AS content,
+        messagetime AS timestamp,personid AS personCode,readmessage AS isRead FROM t_message where personid=#{personId}
+    </select>
+    <update id="updateReadMessage">
+        update t_message set readmessage=true WHERE id=#{id}
+    </update>
+</mapper>

@@ -24,4 +24,9 @@ public class LoginService {
     public int updateUserPassword(String userId,String password){
         return loginDao.updateUserPassword(userId, password);
     }
+
+    //获取用户角色
+    public String getRoleName(int permissionId){
+        return loginDao.getRoleName(permissionId);
+    }
 }

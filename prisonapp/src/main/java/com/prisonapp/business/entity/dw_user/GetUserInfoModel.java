@@ -59,7 +59,7 @@ public class GetUserInfoModel {
     }
 
     public void setStartDate(Date startDate) {
-        String a = String.valueOf(startDate);
+        String a = String.valueOf(startDate.getTime());
         this.startDate = a;
     }
 
@@ -68,7 +68,7 @@ public class GetUserInfoModel {
     }
 
     public void setEndDate(Date endDate) {
-        String a = String.valueOf(endDate);
+        String a = String.valueOf(endDate.getTime());
         this.endDate = a;
     }
 

@@ -3,7 +3,6 @@ package com.prisonapp.business.service.dw_supervise;
 import com.prisonapp.business.dao.dw_supervise.SuperviseDao;
 import com.prisonapp.business.entity.dw_supervise.*;
 import com.prisonapp.business.entity.dw_user.UserModel;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,11 +31,15 @@ public class SuperviseService {
         return superviseDao.applyRecord(code);
     }
 
-    public int submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel, long startDate,long endDate, String code, String userId,String personname){
-        return superviseDao.submitApplyLeave(submitApplyLeaveModel,startDate,endDate,code,userId,personname);
+    public int submitApplyLeave(String city,    String cityCode,    String district,String districtCode,
+                                String province,String provinceCode,String reason,  String reasonAudioUrl ,
+                                long   endDate, long startDate,     String code,    String userId,
+                                String personName){
+        //return superviseDao.submitApplyLeave(city,cityCode,district,districtCode,province,provinceCode,reason,reasonAudioUrl,endDate,startDate,code,userId,personName);
+        return superviseDao.submitApplyLeave(city,cityCode,district,districtCode,province,provinceCode,reason,reasonAudioUrl,endDate,startDate,code,userId,personName);
     }
 
-    public List<UserModel> getPersonname(String userId){
+    public List<TPersoninformation> getPersonname(String userId){
         return superviseDao.getPersonname(userId);
     }
 
@@ -57,9 +60,9 @@ public class SuperviseService {
         return superviseDao.getFaceRecognize(userId,type);
     }
 
-    public  int autoLocation(float latitude,float longitude,int locationType,String address,String userId,Date date){
+    public  int autoLocation(float latitude,float longitude,int locationType,String address,String userId,Date date,boolean fScope){
 
-        return  superviseDao.autoLocation(latitude, longitude,locationType,address,userId,date);
+        return  superviseDao.autoLocation(latitude, longitude,locationType,address,userId,date,fScope);
     }
 
     public int uploadLocationError(String errorCode, String errorMsg,int userId,Date date){
@@ -70,14 +73,26 @@ public class SuperviseService {
         return  superviseDao.uploadBattery(percent,userId,date);
     }
 
-    public int batteryAlarm(String userId,String workContent){
-        return  superviseDao.batteryAlarm( userId,workContent);
+    public int batteryAlarm(String userId,String content){
+        return  superviseDao.batteryAlarm( userId,content);
     }
 
-    public List<LocationModel> getLocationConfig(String userId){
-        return  superviseDao.getLocationConfig(userId );
+    public TRemindersettings getLocationConfig( ){
+        return  superviseDao.getLocationConfig();
     }
-    public  GetSuperviseConfigModel getBatteryConfigTimestamp(String userId){
-        return  superviseDao.getBatteryConfigTimestamp( userId);
+
+//    public  GetSuperviseConfigModel getBatteryConfigTimestamp(String userId){
+//        return  superviseDao.getBatteryConfigTimestamp( userId);
+//    }
+    public  TEnclosure getPolygon(String userId){
+        return  superviseDao.getPolygon( userId);
     }
+
+//    public  int updateFscope(String userId,boolean fscope){
+//        return  superviseDao.updateFscope( userId,fscope);
+//    }
+    public int insertFscope(String userId,String content){
+        return  superviseDao.insertFscope( userId,content);
+    }
+
 }

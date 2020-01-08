@@ -21,16 +21,36 @@
     select  statuscode as statusCode,states as status,auditordatetime as timestamp,accountname as  person from t_auditor where leaveorder=#{code}
      </select>
 
-    <insert id="submitApplyLeave" parameterType="com.prisonapp.business.entity.dw_supervise.SuperviseModel">
-        INSERT INTO t_leave(personid, leaveorder,starttimestamp,endtimestamp,reason,recording,provincecode,provincename,citycode,cityname,areacode,areaname,statuscode,states,subittimestamp,personname)
-        VALUES              (#{userId}, #{code},to_timestamp(#{startDate}),to_timestamp(#{endDate}),#{submitApplyLeaveModel.reason},#{submitApplyLeaveModel.reasonAudioUrl},#{submitApplyLeaveModel.provinceCode},#{submitApplyLeaveModel.province},#{submitApplyLeaveModel.cityCode},#{submitApplyLeaveModel.city},#{submitApplyLeaveModel.districtCode},#{submitApplyLeaveModel.district},'1','待审核',CURRENT_Date,#{personname});
+<!--    <insert id="2323324342342" >-->
+<!--       /* INSERT INTO t_leave (personid, leaveorder,starttimestamp,endtimestamp,-->
+<!--        reason,recording,provincecode,provincename,-->
+<!--        citycode,cityname,areacode,areaname,personname,-->
+<!--        statuscode,states,subittimestamp)-->
+<!--         VALUES (#{userId}, #{code},to_timestamp(#{startDate}),to_timestamp(#{endDate}),-->
+<!--         #{reason},#{reasonAudioUrl},#{provinceCode},#{province},-->
+<!--         #{cityCode},#{city},#{districtCode},#{district},#{personName},-->
+<!--         '1','待审核',current_timestamp)*/-->
 
-        INSERT INTO t_auditor(leaveorder,leavingmessage,statuscode,states) VALUES (#{code},#{submitApplyLeaveModel.reason},1,'待审核')
+<!--&#45;&#45;         INSERT INTO t_auditor(leaveorder,leavingmessage,statuscode,states) VALUES (#{code},#{submitApplyLeaveModel.reason},1,'待审核')-->
+<!--INSERT INTO t_leave (personid,cityname)-->
+<!--         VALUES (#{userId},#{city})-->
 
+<!--    </insert>-->
+
+    <insert id="submitApplyLeave">
+        insert into t_leave(personid,leaveorder,starttimestamp,endtimestamp,
+        reason,recording,provincecode,provincename,
+        citycode,cityname,areacode,areaname,
+        personname,statuscode,states,subittimestamp)
+        values (#{userId},#{code},to_timestamp(#{startDate}),to_timestamp(#{endDate}),
+        #{reason},#{reasonAudioUrl},#{provinceCode},#{province},
+        #{cityCode},#{city},#{districtCode},#{district},#{personName},
+        '1','待审核',current_timestamp);
+        INSERT INTO t_auditor(leaveorder,leavingmessage,statuscode,states) VALUES (#{code},#{reason},1,'待审核')
     </insert>
 
-    <select id="getPersonname" resultType="com.prisonapp.business.entity.dw_user.UserModel">
-        select * from t_user where personid =#{userId}
+    <select id="getPersonname" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation">
+        select * from t_personinformation where personid =#{userId}
     </select>
 
     <select id="getSuperviseTask" resultType="com.prisonapp.business.entity.dw_supervise.GetSuperviseTaskModel">
@@ -52,7 +72,7 @@
     </select>
 
     <insert id="autoLocation" >
-        insert into t_location (latitude,longitude,locationtype,address,personid,timestamp) values (#{latitude},#{longitude},#{locationType},#{address},#{userId},#{date})
+        insert into t_location (latitude,longitude,locationtype,address,personid,timestamp,fscope) values (#{latitude},#{longitude},#{locationType},#{address},#{userId},#{date},#{fScope})
     </insert>
 
     <insert id="uploadLocationError">
@@ -64,15 +84,32 @@
     </insert>
 
     <insert id="batteryAlarm">
-        insert into t_message (modular, workcontent,personid,modularname,messagetime,readmessage,detailtype,detailtypename,personcontent)
-        values                (2,#{workContent},#{userId},'报警提醒',current_timestamp,'f',1,'低电量报警通知','电池电量不足，仅剩20%的电量！')
+        insert into t_personmessage (modular,personid,modularname,messagetime,readmessage,detailtype,detailtypename,content)
+        values                (2,#{userId},'报警提醒',current_timestamp,'f',1,'低电量报警通知','电池电量不足，仅剩20%的电量！')
+        insert into t_message (modular, content,personid,modularname,messagetime,readmessage,detailtype,detailtypename)
+        values                (2,#{workContent},#{userId},'报警提醒',current_timestamp,'f',3,'低电量报警通知')
     </insert>
 
-    <select id="getLocationConfig" resultType="com.prisonapp.business.entity.dw_supervise.LocationModel">
-        SELECT t_prisonsetting.settingcheck as enable ,t_reportsettings.locationstime as timeSpan FROM t_prisonsetting FULL JOIN t_reportsettings ON t_prisonsetting.settingcode =t_reportsettings.type WHERE personid=#{userId} and status='t' ORDER BY type ASC
+    <select id="getLocationConfig" resultType="com.prisonapp.business.entity.dw_supervise.TRemindersettings">
+        SELECT * FROM t_remindersettings WHERE  status='t' and code='4'
     </select>
-    <select id="getBatteryConfigTimestamp" resultType="com.prisonapp.business.entity.dw_supervise.GetSuperviseConfigModel">
-         SELECT settingtime as lastEditTime FROM t_prisonsetting FULL JOIN t_reportsettings ON t_prisonsetting.settingcode =t_reportsettings.type WHERE personid=#{userId} and status='t' ORDER BY settingtime DESC limit 1
+<!--    <select id="getBatteryConfigTimestamp" resultType="com.prisonapp.business.entity.dw_supervise.GetSuperviseConfigModel">-->
+<!--         SELECT settingtime as lastEditTime FROM t_prisonsetting FULL JOIN t_reportsettings ON t_prisonsetting.settingcode =t_reportsettings.type WHERE personid=#{userId} and status='t' ORDER BY settingtime DESC limit 1-->
 
+<!--    </select>-->
+
+    <select id="getPolygon" resultType="com.prisonapp.business.entity.dw_supervise.TEnclosure">
+        select * from t_enclosure where personid =#{userId} and status='t'
     </select>
+
+<!--    <update id="updateFscope">-->
+<!--        update t_location set fscope =#{fscope} where timestamp= (SELECT MAX(timestamp) FROM t_location where personid =#{userId})-->
+<!--    </update>-->
+
+    <insert id="insertFscope">
+        insert into t_personmessage (modular,personid,modularname,messagetime,readmessage,detailtype,detailtypename,content)
+        values                (2,#{userId},'报警提醒',current_timestamp,'f',1,'越界报警通知','系统检测您的行走轨迹并未返回管控地，已报警处置，请尽快与民警取得联系，否则您的保证金将被没收，且有可能被予以拘留。');
+        insert into t_message (modular, content,personid,modularname,messagetime,readmessage,detailtype,detailtypename)
+        values                (2,#{content},#{userId},'报警提醒',current_timestamp,'f',3,'越界报警通知')
+    </insert>
 </mapper>

@@ -3,6 +3,7 @@ package com.adminapp.business.service.dw_supervise;
 import com.adminapp.business.dao.dw_supervise.SuperfineDado;
 import com.adminapp.business.entity.dw_supervise.*;
 import com.adminapp.model.dw_supervise.*;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -131,6 +132,11 @@ public class SuperviseService {
         return superfineDado.getAreaFence(personId);
     }
 
+    //获取监居人员区域编码
+    public String getAreaCode(String personId){
+        return superfineDado.getAreaCode(personId);
+    }
+
     //获取监居人员定位记录
     public List<LocationRecordModel> listLocationRecord(String personId){
         return superfineDado.listLocationRecord(personId);
@@ -169,5 +175,19 @@ public class SuperviseService {
     //获取保外人员申请单
     public LeaveListModel getApplyLeave(String code){
         return superfineDado.getApplyLeave(code);
+    }
+
+    public SuperviseCaseInformation getPersonCaseInformation(String personId){
+        return superfineDado.getPersonCaseInformation(personId);
+    }
+
+    //获取监居人员保证人信息
+    public SuperviseBailPersonInformation getBailPersonInformation(String personId){
+        return superfineDado.getBailPersonInformation(personId);
+    }
+
+    //获取监居人员取保金额信息
+    public SuperviseBailMoneyInformation getBailMoneyInformation(String personId){
+        return superfineDado.getBailMoneyInformation(personId);
     }
 }
