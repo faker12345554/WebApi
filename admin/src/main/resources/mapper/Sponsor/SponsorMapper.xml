@@ -27,6 +27,6 @@
         <result property="detail" column="detail" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="getEnum"  resultMap="EnumMap">
-        SELECT kind,detail FROM "dictionary"  where  kind='T0'   or  kind ='05'  or kind='T304'  or kind ='xjtj_xl'  or  kind='04'  or kind='08' or kind='T6'
+        SELECT kind,detail FROM "dictionary"  where  kind='T0'   or  kind ='05'  or kind='T304'  or kind ='xjtj_xl'  or  kind='04'  or kind='08'
     </select>
 </mapper>
