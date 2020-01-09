@@ -17,4 +17,8 @@ public class EnumService {
     public List<Map<String,Object>> GetEnum(String Code){
         return enumDao.GetEnum(Code);
     }
+
+    public List<Map<String,Object>> GetPolice(String PoliceStation){
+        return enumDao.GetPolice(PoliceStation);
+    }
 }

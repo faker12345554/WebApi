@@ -6,8 +6,8 @@ import java.util.Date;
 
 public class SearchModel extends ExeclModel {
 
-    private String Condition1;
-    private String Condition2;
+    private String Condition;
+    private String PersonName;
     private String StartTime;
     private String EndTime;
     private String FuzzyCondition;
@@ -48,6 +48,24 @@ public class SearchModel extends ExeclModel {
         return PageIndex;
     }
 
+    public String getCondition() {
+        return Condition;
+    }
+
+    public SearchModel setCondition(String condition) {
+        Condition = condition;
+        return this;
+    }
+
+    public String getPersonName() {
+        return PersonName;
+    }
+
+    public SearchModel setPersonName(String personName) {
+        PersonName = personName;
+        return this;
+    }
+
     public SearchModel setPageIndex(int pageIndex) {
         PageIndex = pageIndex;
         return this;
@@ -55,23 +73,6 @@ public class SearchModel extends ExeclModel {
 
 
 
-    public String getCondition1() {
-        return Condition1;
-    }
-
-    public SearchModel setCondition1(String condition1) {
-        Condition1 = condition1;
-        return this;
-    }
-
-    public String getCondition2() {
-        return Condition2;
-    }
-
-    public SearchModel setCondition2(String condition2) {
-        Condition2 = condition2;
-        return this;
-    }
 
 
     public String getFuzzyCondition() {

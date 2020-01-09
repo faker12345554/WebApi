@@ -26,10 +26,17 @@ public class EnumController {
      */
     @UserLoginToken
     @GetMapping("/GetEnum")
-    public ResponseResult GetEnum(@RequestParam(required = false) String Code){
+    public ResponseResult GetEnum(@RequestParam String Code){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(enumService.GetEnum(Code));
+    }
+    @UserLoginToken
+    @GetMapping("/GetPolice")
+    public ResponseResult GetPolice(@RequestParam String PoliceStation){
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(enumService.GetPolice(PoliceStation));
     }
 
 }

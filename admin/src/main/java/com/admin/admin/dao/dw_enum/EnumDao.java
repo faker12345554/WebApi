@@ -11,5 +11,7 @@ public interface EnumDao {
     //获取枚举值
     List<Map<String,Object>> GetEnum(String Code);
 
+    List<Map<String,Object>> GetPolice(String PoliceStation);
+
 
 }

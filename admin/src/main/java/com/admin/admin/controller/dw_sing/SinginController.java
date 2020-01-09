@@ -30,7 +30,7 @@ import java.util.List;
 @Api(value="签到信息管理Controller",tags={"报到信息管理"})
 @RestController
 @RequestMapping("/Singin")
-public class SinginControll {
+public class SinginController {
     @Autowired
     private SinginService singinService;
     private ResponseResult result = new ResponseResult();
@@ -75,7 +75,7 @@ public class SinginControll {
 
     }
 
-    @UserLoginToken
+   //@UserLoginToken
     @ApiOperation("音视频列表")
     @PostMapping("/ListAudio")
     public ResponseResult ListAudio(@RequestBody SearchModel searchModel){
