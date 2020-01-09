@@ -8,6 +8,15 @@ public class ExeclModel  {
     private String PersonId;
     private List<Integer> list;
 
+    public List<Integer> getList() {
+        return list;
+    }
+
+    public ExeclModel setList(List<Integer> list) {
+        this.list = list;
+        return this;
+    }
+
     public String getPersonId() {
         return PersonId;
     }
@@ -17,12 +26,5 @@ public class ExeclModel  {
         return this;
     }
 
-    public List<Integer> getList() {
-        return list;
-    }
 
-    public ExeclModel setList(List<Integer> list) {
-        this.list = list;
-        return this;
-    }
 }

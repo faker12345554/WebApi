@@ -30,7 +30,7 @@
            and P.personname like concat('%',#{Condition2},'%')
         </if>
         <if test="Condition1!=null and Condition2==null">
-           and P.personname like concat('%',#{Conditio1},'%')
+           and t.reportstatus like concat('%',#{Conditio1},'%')
         </if>
         <if test="Condition1 !=null and Condition1 !='' and Condition2 !=null and Condition2!=''">
             AND t.reportstatus =#{Condition1} or t.reporttype=#{Condition2}
@@ -47,7 +47,7 @@
         <if test="list.size()>0">
             and id in
             <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
-                #{id}
+                 #{id}
             </foreach>
         </if>
     </select>
@@ -56,14 +56,20 @@
             resultType="com.admin.model.singin.SinginModel" >
             select  t.id,P.suspectstatus,P.personname,P.gender,P.sponsor,P.policestation,t.reporttype,P.yjsponsoralarm,t.durationtime,t.createtime,t.filepath,t.type from t_singin AS t
               inner join t_personinformation AS P on p.personid=t.personid where p.status=#{flag}
+        <if test="Condition1 ==null and Condition2 !=null">
+            and P.personname like concat('%',#{Condition2},'%')
+        </if>
+        <if test="Condition1 !=null and Condition2 ==null">
+            and t.type like concat('%',#{Condition1},'%')
+        </if>
         <if test="Condition1 !=null and Condition2 !=null and StartTime!=null and EndTime!=null">
-            and t.type=#{Condition1} and P.personname like concat('%',#{Condition2},'%') and t.createtime > StartTime and t.createtime&lt; EndTime
+            and t.type=#{Condition1} and P.personname like concat('%',#{Condition2},'%') and t.createtime > TO_TIMESTAMP(#{StartTime}, 'YYYY-MM-DD HH24:MI:SS') and t.createtime&lt; TO_TIMESTAMP(#{EndTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="Condition1 ==null and Condition2 !=null and StartTime!=null and EndTime!=null">
-            and P.personname like concat('%',#{Condition2},'%') and t.createtime > StartTime and t.createtime &lt; EndTime
+            and P.personname like concat('%',#{Condition2},'%') and t.createtime > TO_TIMESTAMP(#{StartTime}, 'YYYY-MM-DD HH24:MI:SS') and t.createtime &lt; TO_TIMESTAMP(#{EndTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="Condition1 ==null and Condition2 ==null and StartTime!=null and EndTime!=null">
-            and t.createtime > StartTime and t.createtime &lt; EndTime
+            and t.createtime > TO_TIMESTAMP(#{StartTime}, 'YYYY-MM-DD HH24:MI:SS') and t.createtime &lt; TO_TIMESTAMP(#{EndTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
 
 

@@ -6,9 +6,6 @@ public class LeavefModel {
     private int Id;
     private String reason;
     private String leavedestination;
-
-
-
     private Date starttimestamp;
     private Date endtimestamp;
     private Date subittimestamp;

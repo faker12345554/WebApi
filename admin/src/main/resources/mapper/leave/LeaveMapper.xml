@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_leave.LeaveDao">
-    <select id="getLeave" parameterType="String" resultType="com.admin.model.leave.LeavefModel">
+    <select id="getLeave" parameterType="com.admin.model.search.SearchModel" resultType="com.admin.model.leave.LeavefModel">
         SELECT a.*,b.auditordatetime FROM t_leave AS a
         LEFT JOIN t_auditor AS b ON a.leaveorder=b.leaveorder
         <if test="PersonId !=null and PersonId!=''">
@@ -11,6 +11,11 @@
         <if test="Condition1 ==null and Condition2!=null ">
             where a.personname like concat('%',#{condition2},'%')
         </if>
+        <if test="Condition1 !=null and Condition2==null ">
+            where a.states like concat('%',#{condition1},'%')
+        </if>
+
+
 
         <if test="Condition1 !=null and Condition2!=null and Condition2!='' and StartTime!=null and EndTime!=null ">
             WHERE a.states=#{Condition1}
