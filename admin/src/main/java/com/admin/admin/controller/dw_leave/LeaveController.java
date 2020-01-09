@@ -41,7 +41,7 @@ public class LeaveController {
 
     private ResponseResult result = new ResponseResult();
 
-    @UserLoginToken
+   // @UserLoginToken
     @ApiOperation(value = "获取全部请假信息")
     @PostMapping("/listLeave")
     public ResponseResult listLeave(@RequestBody SearchModel searchModel) {
@@ -97,14 +97,14 @@ public class LeaveController {
         return result.setData(leaveService.deleteAuditor(leaveOrder));
     }
 
-    @UserLoginToken
-    @ApiOperation(value = "销假")
-    @PostMapping("cancelLeave")
-    public ResponseResult cancelAuditor(@ApiParam(name = "leaveorder", value = "请假单号") @RequestParam(required = true) String leaveorder, HttpServletResponse response) {
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(leaveService.cancelAuditor(leaveorder));
-    }
+//    @UserLoginToken
+//    @ApiOperation(value = "销假")
+//    @PostMapping("cancelLeave")
+//    public ResponseResult cancelAuditor(@ApiParam(name = "leaveorder", value = "请假单号") @RequestParam(required = true) String leaveorder, HttpServletResponse response) {
+//        result.setCode(ResultCode.SUCCESS.getCode());
+//        result.setMessage(ResultCode.SUCCESS.getMessage());
+//        return result.setData(leaveService.cancelAuditor(leaveorder));
+//    }
 
     @ApiOperation(value = "导出请假信息")
     @PostMapping("/ExportExecl")
@@ -152,7 +152,7 @@ public class LeaveController {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        result.setData("导出成功");
+        result.setMessage("导出成功");
         result.setCode(200);
         return result;
     }

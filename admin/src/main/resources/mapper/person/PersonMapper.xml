@@ -60,7 +60,7 @@
         <if test="list.size()>0">
             where personid in
             <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
-                #{id}
+                CAST (#{id} as text)
             </foreach>
         </if>
 

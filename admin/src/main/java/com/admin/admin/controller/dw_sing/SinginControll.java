@@ -153,7 +153,7 @@ public class SinginControll {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        result.setData("导出成功");
+        result.setMessage("导出成功");
         result.setCode(200);
         return result;
     }
