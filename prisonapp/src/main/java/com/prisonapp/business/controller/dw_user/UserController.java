@@ -42,7 +42,7 @@ public class UserController {
 
        if(userModel==null){
            result.resultCode=10;
-           result.resultMsg="账号不存在";
+           result.resultMsg="账号错误";
            result.data="";
            return result;
        }

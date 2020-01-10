@@ -13,8 +13,9 @@ public class MessageListModel {
     public String typeName;
     public String content;
     public String  timestamp;
-    public int detailtype;
-    public String detailtypename;
+    public int detailType;
+    public String detailTypeName;
+    private String contactCode;
     public boolean isRead;
 
     public int getCode() {
@@ -58,20 +59,28 @@ public class MessageListModel {
         this.timestamp = timeStamp;
     }
 
-    public int getDetailtype() {
-        return detailtype;
+    public int getDetailType() {
+        return detailType;
     }
 
-    public void setDetailtype(int detailtype) {
-        this.detailtype = detailtype;
+    public void setDetailType(int detailType) {
+        this.detailType = detailType;
     }
 
-    public String getDetailtypename() {
-        return detailtypename;
+    public String getDetailTypeName() {
+        return detailTypeName;
     }
 
-    public void setDetailtypename(String detailtypename) {
-        this.detailtypename = detailtypename;
+    public void setDetailTypeName(String detailTypeName) {
+        this.detailTypeName = detailTypeName;
+    }
+
+    public String getContactCode() {
+        return contactCode;
+    }
+
+    public void setContactCode(String contactCode) {
+        this.contactCode = contactCode;
     }
 
     public boolean getIsRead() {

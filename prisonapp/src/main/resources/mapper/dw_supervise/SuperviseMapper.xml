@@ -18,7 +18,7 @@
     </select>
 
     <select id="applyRecord"  resultType="com.prisonapp.business.entity.dw_supervise.ApplyRecordModel">
-    select  statuscode as statusCode,states as status,auditordatetime as timestamp,accountname as  person from t_auditor where leaveorder=#{code}
+    select  statuscode as statusCode,states as status,auditordatetime as timestamp,accountname as  person from t_auditor where leaveorder=#{code} order by auditordatetime
      </select>
 
 <!--    <insert id="2323324342342" >-->
@@ -46,7 +46,8 @@
         #{reason},#{reasonAudioUrl},#{provinceCode},#{province},
         #{cityCode},#{city},#{districtCode},#{district},#{personName},
         '1','待审核',current_timestamp);
-        INSERT INTO t_auditor(leaveorder,leavingmessage,statuscode,states) VALUES (#{code},#{reason},1,'待审核')
+        INSERT INTO t_auditor(leaveorder,leavingmessage,statuscode,states) VALUES (#{code},#{reason},1,'待审核');
+        INSERT INTO t_message (modular,personid,modularname,messagetime,readmessage,detailtype,detailtypename,leaveorder) VALUES (3,#{userId},'审批提醒',current_timestamp,'f',1,'外出审批通知',#{code})
     </insert>
 
     <select id="getPersonname" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation">

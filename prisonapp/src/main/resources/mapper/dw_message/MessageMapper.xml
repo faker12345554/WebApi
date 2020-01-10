@@ -23,11 +23,11 @@ select  modular as type ,modularname as typeName,detailtype as detailType,detail
     </select>
 
     <select id="getAllMessageList" resultType="com.prisonapp.business.entity.dw_message.MessageListModel">
-         select  id as code,modular as type ,modularname as typeName,content,messagetime as timestamp,readmessage as isRead from t_personmessage where personid=#{userId}  and content  like concat('%',#{key},'%') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
+         select  id as code,modular as type ,modularname as typeName,content,messagetime as timestamp,detailtype as detailType,detailtypename as detailTypeName,leaveorder as contactCode,readmessage as isRead from t_personmessage where personid=#{userId}  and content  like concat('%',#{key},'%') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
     </select>
 
     <select id="getMessageList" resultType="com.prisonapp.business.entity.dw_message.MessageListModel">
-        select  id as code,modular as type ,modularname as typeName,content,messagetime as timestamp,readmessage as isRead from t_personmessage where personid=#{userId} and modular=#{type} and content  like concat('%',#{key},'%') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
+        select  id as code,modular as type ,modularname as typeName,content,messagetime as timestamp,detailtype as detailType,detailtypename as detailTypeName,leaveorder as contactCode, readmessage as isRead from t_personmessage where personid=#{userId} and modular=#{type} and content  like concat('%',#{key},'%') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
     </select>
     <update id="readMessage" >
         update t_personmessage set readmessage=true where modular=#{type} and personid=#{userId}
@@ -52,7 +52,7 @@ select  modular as type ,modularname as typeName,detailtype as detailType,detail
     </select>
 
     <select id="getNewestMessageList" resultType="com.prisonapp.business.entity.dw_message.MessageListModel">
-    select id as code,modular as type ,modularname as typeName,content,messagetime as timestamp,readmessage as isRead ,detailtype,detailtypename from t_personmessage where personid=#{userId} and  messagetime between to_date(#{todayDate},'yyyy-MM-dd') and to_date(#{tomorrowDate},'yyyy-MM-dd') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
+    select id as code,modular as type ,modularname as typeName,content,messagetime as timestamp,leaveorder as contactCode, readmessage as isRead ,detailtype,detailtypename from t_personmessage where personid=#{userId} and  messagetime between to_date(#{todayDate},'yyyy-MM-dd') and to_date(#{tomorrowDate},'yyyy-MM-dd') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
     </select>
     <select id="newestMessageTotalCount" resultType="com.prisonapp.business.entity.dw_message.MessageListModel">
     select id as code,modular as type ,modularname as typeName,content,messagetime as timestamp,readmessage as isRead from t_personmessage where personid=#{userId} and  messagetime between to_date(#{todayDate},'yyyy-MM-dd') and to_date(#{tomorrowDate},'yyyy-MM-dd') ORDER BY timestamp  desc
