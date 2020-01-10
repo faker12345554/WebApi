@@ -7,7 +7,7 @@
     </select>
 
     <select id="getUser" parameterType="String" resultType="com.admin.admin.entity.dw_user.User">
-        SELECT t.*,f.bmmc FROM "t_user" as t inner join fsga_yw_ryb as f on f.mjbh=t.accountname where accountname=#{UserName}
+        SELECT t.*,f.bmmc FROM "t_user" as t left join fsga_yw_ryb as f on f.mjbh=t.accountname where accountname=#{UserName}
     </select>
 
     <select id="GetUserByid" parameterType="int" resultType="com.admin.admin.entity.dw_user.User">
