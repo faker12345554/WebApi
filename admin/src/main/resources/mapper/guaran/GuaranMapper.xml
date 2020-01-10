@@ -14,7 +14,7 @@
         update  t_guaranteeinformation set status=#{flag}   where id=#{GuaId}
     </delete>
 
-    <select id="getGuara" parameterType="int" resultType="com.admin.admin.entity.dw_guarant.GuaranteeInformation">
+    <select id="getGuara" parameterType="String" resultType="com.admin.admin.entity.dw_guarant.GuaranteeInformation">
         select * from t_guaranteeinformation where personid=#{id}
     </select>
     <select id="getGuaByPersonId" parameterType="String" resultType="int">
