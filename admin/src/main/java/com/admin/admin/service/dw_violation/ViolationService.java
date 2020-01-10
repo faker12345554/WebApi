@@ -24,18 +24,18 @@ public class ViolationService {
     新增或者修改
      */
     public int SaveViolation(List<Violationfens> violationfens){
-        violationDao.deleteViolation();
+
         for (Violationfens item : violationfens) {
             item.setStatus(true);
             item.setCreatetime(new Date());
             item.setCreateperson(CacheUtils.get("UserId").toString());
             item.setAccountname(CacheUtils.get("UserName").toString());
 
-//            if (item.getId() != 0) {
-//                return alarmDao.UpdateAlarm(item);
-//            }
+            if (item.getId() != 0) {
+                return violationDao.UpdateViolation(item);
+            }
             // alarmDao.SaveAlarm(item);
-            System.out.println(violationDao.SaveViolation(item));
+            violationDao.SaveViolation(item);
         }
         Violationfens alarm=new Violationfens();
 
@@ -48,7 +48,7 @@ public class ViolationService {
     删除
      */
     public int deleteViolation(int id){
-        return violationDao.UpdateViolation(id);
+        return violationDao.deleteViolation(id);
     }
 
     /*
@@ -62,16 +62,7 @@ public class ViolationService {
      */
 
     public List<Violationfens> ListViolation(){
-        //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
-//        PageHelper.startPage(PageIndex, PageSize);
-//
-//        List<Violationfens> allItems =
-//        PageInfo<Violationfens> info = new PageInfo<>(allItems);//全部商品
-//        int countNums = (int) info.getTotal();            //总记录数
-//        PageBean<Violationfens> pageData = new PageBean<>(PageIndex, PageSize, countNums);
-//        pageData.setTotalPage(info.getPages());//总页数
-//        pageData.setItems(allItems);
-        //我系统封装了一个 直接丢给你试试
+
 
         return violationDao.ListViolation();
     }

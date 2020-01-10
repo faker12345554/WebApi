@@ -1,5 +1,7 @@
 package com.admin.admin.entity.dw_person;
 
+import com.admin.admin.entity.dw_case.TCaseinfo;
+import com.admin.admin.entity.dw_guarant.GuaranteeInformation;
 import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
 import org.apache.tomcat.jni.Time;
 
@@ -34,7 +36,6 @@ public class Personinformation {
     private String facepath;
     private String persontags;
     private int gendercode;
-
     private String beforename;
     private String nation;
     private String degreeeducation;
@@ -54,6 +55,8 @@ public class Personinformation {
     private String area;
     private String monitoraddress;
     private String suspectstatuscode;
+    private TCaseinfo tCaseinfo;
+    private GuaranteeInformation guaranteeInformation;
     private List<String> managementStyle;
 
     public String getBeforename() {
@@ -98,6 +101,14 @@ public class Personinformation {
 
     public Personinformation setOccupation(String occupation) {
         this.occupation = occupation;
+        return this;
+    }
+    public GuaranteeInformation getGuaranteeInformation() {
+        return guaranteeInformation;
+    }
+
+    public Personinformation setGuaranteeInformation(GuaranteeInformation guaranteeInformation) {
+        this.guaranteeInformation = guaranteeInformation;
         return this;
     }
 
@@ -472,6 +483,14 @@ public class Personinformation {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+    public TCaseinfo gettCaseinfo() {
+        return tCaseinfo;
+    }
+
+    public Personinformation settCaseinfo(TCaseinfo tCaseinfo) {
+        this.tCaseinfo = tCaseinfo;
+        return this;
     }
 
 

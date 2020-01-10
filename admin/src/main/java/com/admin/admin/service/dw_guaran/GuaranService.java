@@ -29,7 +29,7 @@ public class GuaranService {
     }
 
     //获取
-    public GuaranteeInformation getGuara(int id) {
+    public GuaranteeInformation getGuara(String id) {
 
         return guarantDao.getGuara(id);
     }
