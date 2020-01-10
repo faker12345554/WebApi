@@ -13,7 +13,7 @@
         personid=#{personid},casetype=#{casetype},casedescription=#{casedescription} where personid=#{personid}
     </update>
 
-    <select id="GetCase" parameterType="com.admin.admin.entity.dw_case.TCaseinfo">
+    <select id="GetCase" parameterType="String" resultType="com.admin.admin.entity.dw_case.TCaseinfo">
         select * from t_caseinfo where personid=#{PersonId}
     </select>
 </mapper>
