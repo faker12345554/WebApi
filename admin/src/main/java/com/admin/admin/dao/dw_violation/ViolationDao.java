@@ -17,7 +17,7 @@ public interface ViolationDao {
     /*
     修改违规分数设置
      */
-    int UpdateViolation(Violationfens violationfens);
+    int UpdateViolation(int id);
 
     /*
     作废违规分数
@@ -27,7 +27,7 @@ public interface ViolationDao {
     /*
     查看
      */
-    Violationfens selectViolation(@Param("id") int id);
+   // Violationfens selectViolation(@Param("id") int id);
 
     /*
     列表

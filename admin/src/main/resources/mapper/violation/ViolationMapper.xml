@@ -16,9 +16,8 @@
         (#{violationcode},#{violationname},#{slightfens},#{seriousfens},#{createperson},#{accountname},#{createtime},#{status})
     </insert>
 
-    <update id="UpdateViolation" parameterType="com.admin.admin.entity.dw_violation.Violationfens">
-        update t_violationfens set violationcode=#{violationcode},violationname=#{violationname},slightfens=#{slightfens},seriousfens=#{seriousfens},createperson=#{createperson},
-        accountname=#{accountname},createtime=#{createtime} where id=#{id}
+    <update id="UpdateViolation" parameterType="int">
+          update t_violationfens set status=false where id=#{id}
     </update>
 
     <update id="deleteViolation" parameterType="int">

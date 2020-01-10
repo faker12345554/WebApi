@@ -32,14 +32,14 @@ public class ViolationController {
         return  result.setData(violationService.SaveViolation(violationfens));
     }
 
-//    @UserLoginToken
-//    @ApiOperation("作废违规分数")
-//    @GetMapping("/DeleteViolation")
-//    public ResponseResult DeleteViolation(@RequestParam  int id){
-//        result.setCode(ResultCode.SUCCESS.getCode());
-//        result.setMessage(ResultCode.SUCCESS.getMessage());
-//        return  result.setData(violationService.deleteViolation(id));
-//    }
+    @UserLoginToken
+    @ApiOperation("作废违规分数")
+    @GetMapping("/DeleteViolation")
+    public ResponseResult DeleteViolation(@RequestParam  int id){
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return  result.setData(violationService.deleteViolation(id));
+    }
 
 //    @UserLoginToken
 //    @ApiOperation("获取违规分数信息")
@@ -53,10 +53,10 @@ public class ViolationController {
     @UserLoginToken
     @ApiOperation("违规分数信息列表")
     @GetMapping("/ListViolation")
-    public ResponseResult ListViolation(@RequestParam int PageSize,@RequestParam int PageIndex){
+    public ResponseResult ListViolation(){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return  result.setData(violationService.ListViolation(PageSize,PageIndex));
+        return  result.setData(violationService.ListViolation());
 
     }
 }
