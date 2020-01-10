@@ -83,4 +83,6 @@ public interface SuperfineDado {
     SuperviseBailPersonInformation getBailPersonInformation(@Param("personId")String personId);
 
     SuperviseBailMoneyInformation getBailMoneyInformation(@Param("personId")String personId);
+
+    String getViolateName(@Param("typeCode")String typeCode,@Param("enumCode")String enumCode);
 }

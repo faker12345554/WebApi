@@ -227,94 +227,99 @@ public class SuperviseController {
 
         List<Personinformation> personinformation = superviseService.listPersonInformation(userId);  //获取该工作人员负责的所有监居人员列表
         SuperviseReturnModel superviseReturnModel = new SuperviseReturnModel();
-        int totalCount =0;
+//        int totalCount =0;
+//
+//        int locationViolateSlight=superviseService.listViolationFensInformation("脱离管控区域","1");  //上报设置中位置轻微违规次数
+//        int locationViolateSerious =superviseService.listViolationFensInformation("脱离管控区域","2"); //上报设置中位置严重违规次数
+//        int summonsViolateSlight=superviseService.listViolationFensInformation("传讯取证未报到","1");   //上报设置中传讯轻微违规次数
+//        int summonsViolateSerious=superviseService.listViolationFensInformation("传讯取证未报到","2");  //上报设置中传讯严重违规次数
+//        int faceSinginSlight =superviseService.listViolationFensInformation("视频签到缺勤","1");    //上报设置中人脸签到轻微违规次数
+//        int faceSinginSerious =superviseService.listViolationFensInformation("视频签到缺勤","2");   //上报设置中人脸签到严重违规次数
+//        int voiceSinginSlight =superviseService.listViolationFensInformation("语音签到缺勤","1");   //上报设置中声纹签到轻微违规次数
+//        int voiceSinginSerious =superviseService.listViolationFensInformation("语音签到缺勤","2");  //上报设置中声纹签到严重违规次数
 
-        int locationViolateSlight=superviseService.listViolationFensInformation("脱离管控区域","1");  //上报设置中位置轻微违规次数
-        int locationViolateSerious =superviseService.listViolationFensInformation("脱离管控区域","2"); //上报设置中位置严重违规次数
-        int summonsViolateSlight=superviseService.listViolationFensInformation("传讯取证未报到","1");   //上报设置中传讯轻微违规次数
-        int summonsViolateSerious=superviseService.listViolationFensInformation("传讯取证未报到","2");  //上报设置中传讯严重违规次数
-        int faceSinginSlight =superviseService.listViolationFensInformation("视频签到缺勤","1");    //上报设置中人脸签到轻微违规次数
-        int faceSinginSerious =superviseService.listViolationFensInformation("视频签到缺勤","2");   //上报设置中人脸签到严重违规次数
-        int voiceSinginSlight =superviseService.listViolationFensInformation("语音签到缺勤","1");   //上报设置中声纹签到轻微违规次数
-        int voiceSinginSerious =superviseService.listViolationFensInformation("语音签到缺勤","2");  //上报设置中声纹签到严重违规次数
-
-        int locationViolateCount=0;    //位置违规次数
+//        int locationViolateCount=0;    //位置违规次数
         for (Personinformation item:personinformation
              ) {
-            List<ReportLocationModel> reportLocationModels = superviseService.listLocation(item.getCode());     //获取位置信息列表
-            for (int j = 0; j < reportLocationModels.size(); j++) {         //计算位置定位违规次数
-                ReportLocationModel reportLocationModel = reportLocationModels.get(j);
-                boolean Fscope = reportLocationModel.isFscope();
-                if (reportLocationModel.isFscope()) {     //判断定位位置是否在范围内
-                    locationViolateCount += 1;
-                }
-            }
-            int locationViolateStatus=0;    //违规状态为正常
-            if(locationViolateCount>=locationViolateSlight&&locationViolateCount<locationViolateSerious){   //位置违规次数
-                locationViolateStatus=1;   //违规状态为轻微
-            }
-            if(locationViolateCount>=locationViolateSerious){
-                locationViolateStatus=2;  //违规状态为严重
-            }
-            int summonsViolateTimes=0;    //传讯违规次数
+            String violateCode=item.getViolateCode();
+            String violateName=superviseService.getViolateName("WGCD-001",violateCode);
+            item.setViolate(violateName);
 
-            List<SummonsInformation> summonsInformations=superviseService.getSummonsInformation(item.getCode());
-            for (SummonsInformation item3:summonsInformations
-            ) {
-                if(item3.getReporttime()==null){
-                    summonsViolateTimes++;
-                }
-            }
-            int summonsViolateStatus=0;   //传讯违规状态
-            if(summonsViolateTimes>=summonsViolateSlight&&summonsViolateTimes<summonsViolateSerious){
-                summonsViolateStatus=1;
-            }
-            if(summonsViolateTimes>=summonsViolateSerious){
-                summonsViolateStatus=2;
-            }
-            List<SinginInformation> faceSinginInformations=superviseService.listPersonSingin(item.getCode(),0);   //获取人脸签到记录
-            int faceViolateTimes=0;   //人脸签到违规次数
-            for (SinginInformation item5:faceSinginInformations
-            ) {
-                if(item5.getResult()==1){     //签到状态为1时是违规状态
-                    faceViolateTimes++;
-                }
-            }
-            int faceViolateStatus=0;   //人脸违规状态
-            if(faceViolateTimes>=faceSinginSlight&&faceViolateTimes<faceSinginSerious){
-                faceViolateStatus=1;
-            }
-            if(faceViolateTimes>=faceSinginSerious){
-                faceViolateStatus=2;
-            }
-            List<SinginInformation> voiceSinginInformations=superviseService.listPersonSingin(item.getCode(),1);   //获取声纹签到记录
-            int voiceViolateTimes=0;   //声纹签到违规次数
-            for (SinginInformation item7:voiceSinginInformations
-            ) {
-                if(item7.getResult()==1){
-                    voiceViolateTimes++;
-                }
-            }
-            int voiceViolateStatus=0;    //声纹违规状态
-            if(voiceViolateTimes>=voiceSinginSlight&&voiceViolateTimes<voiceSinginSerious){
-                voiceViolateStatus=1;
-            }
-            if(voiceViolateTimes>=voiceSinginSerious){
-                voiceViolateStatus=2;
-            }
-            if(locationViolateStatus==0&&summonsViolateStatus==0&&faceViolateStatus==0&&voiceViolateStatus==0){
-                item.setViolateCode("0");
-                item.setViolate("正常");
-            }
-            if(locationViolateStatus==1||summonsViolateStatus==1||faceViolateStatus==1||voiceViolateStatus==1){
-                item.setViolateCode("1");
-                item.setViolate("轻微");
-            }
-            if(locationViolateStatus==1||summonsViolateStatus==2||faceViolateStatus==2||voiceViolateStatus==2){
-                item.setViolateCode("2");
-                item.setViolate("严重");
-            }
         }
+//            List<ReportLocationModel> reportLocationModels = superviseService.listLocation(item.getCode());     //获取位置信息列表
+//            for (int j = 0; j < reportLocationModels.size(); j++) {         //计算位置定位违规次数
+//                ReportLocationModel reportLocationModel = reportLocationModels.get(j);
+//                boolean Fscope = reportLocationModel.isFscope();
+//                if (reportLocationModel.isFscope()) {     //判断定位位置是否在范围内
+//                    locationViolateCount += 1;
+//                }
+//            }
+//            int locationViolateStatus=0;    //违规状态为正常
+//            if(locationViolateCount>=locationViolateSlight&&locationViolateCount<locationViolateSerious){   //位置违规次数
+//                locationViolateStatus=1;   //违规状态为轻微
+//            }
+//            if(locationViolateCount>=locationViolateSerious){
+//                locationViolateStatus=2;  //违规状态为严重
+//            }
+//            int summonsViolateTimes=0;    //传讯违规次数
+//
+//            List<SummonsInformation> summonsInformations=superviseService.getSummonsInformation(item.getCode());
+//            for (SummonsInformation item3:summonsInformations
+//            ) {
+//                if(item3.getReporttime()==null){
+//                    summonsViolateTimes++;
+//                }
+//            }
+//            int summonsViolateStatus=0;   //传讯违规状态
+//            if(summonsViolateTimes>=summonsViolateSlight&&summonsViolateTimes<summonsViolateSerious){
+//                summonsViolateStatus=1;
+//            }
+//            if(summonsViolateTimes>=summonsViolateSerious){
+//                summonsViolateStatus=2;
+//            }
+//            List<SinginInformation> faceSinginInformations=superviseService.listPersonSingin(item.getCode(),0);   //获取人脸签到记录
+//            int faceViolateTimes=0;   //人脸签到违规次数
+//            for (SinginInformation item5:faceSinginInformations
+//            ) {
+//                if(item5.getResult()==1){     //签到状态为1时是违规状态
+//                    faceViolateTimes++;
+//                }
+//            }
+//            int faceViolateStatus=0;   //人脸违规状态
+//            if(faceViolateTimes>=faceSinginSlight&&faceViolateTimes<faceSinginSerious){
+//                faceViolateStatus=1;
+//            }
+//            if(faceViolateTimes>=faceSinginSerious){
+//                faceViolateStatus=2;
+//            }
+//            List<SinginInformation> voiceSinginInformations=superviseService.listPersonSingin(item.getCode(),1);   //获取声纹签到记录
+//            int voiceViolateTimes=0;   //声纹签到违规次数
+//            for (SinginInformation item7:voiceSinginInformations
+//            ) {
+//                if(item7.getResult()==1){
+//                    voiceViolateTimes++;
+//                }
+//            }
+//            int voiceViolateStatus=0;    //声纹违规状态
+//            if(voiceViolateTimes>=voiceSinginSlight&&voiceViolateTimes<voiceSinginSerious){
+//                voiceViolateStatus=1;
+//            }
+//            if(voiceViolateTimes>=voiceSinginSerious){
+//                voiceViolateStatus=2;
+//            }
+//            if(locationViolateStatus==0&&summonsViolateStatus==0&&faceViolateStatus==0&&voiceViolateStatus==0){
+//                item.setViolateCode("0");
+//                item.setViolate("正常");
+//            }
+//            if(locationViolateStatus==1||summonsViolateStatus==1||faceViolateStatus==1||voiceViolateStatus==1){
+//                item.setViolateCode("1");
+//                item.setViolate("轻微");
+//            }
+//            if(locationViolateStatus==1||summonsViolateStatus==2||faceViolateStatus==2||voiceViolateStatus==2){
+//                item.setViolateCode("2");
+//                item.setViolate("严重");
+//            }
+//        }
 
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
@@ -551,12 +556,22 @@ public class SuperviseController {
             summonsInformations=superviseService.listKeyCiteRecord(key);
         }
 
-        for (SummonsInformation item:summonsInformations   //筛选出属于该工作人员管理的传讯记录
-        ) {
-            if(item.getPersonid()!=userId){
-                summonsInformations.remove(item);
+//        for (SummonsInformation item:summonsInformations   //筛选出属于该工作人员管理的传讯记录
+//        ) {
+//            if(item.getPersonid().equals(userId)==false){
+//                summonsInformations.remove(item);
+//            }
+//        }
+
+        for(int i=0;i<summonsInformations.size();i++){
+            SummonsInformation summonsInformation=summonsInformations.get(i);
+            PersonAllInformationModel personAllInformationModel1=superviseService.getPersonInformation(summonsInformation.getPersonid());
+            if(personAllInformationModel1.getSponsoralarm().equals(userId)==false){
+                summonsInformations.remove(summonsInformation);
+                i=i-1;
             }
         }
+
         List<SummonsInformation> newSummonsInformations=new ArrayList<>();    //经过时间筛选之后的传讯记录
         if(startDate!=null&&endDate==null){    //开始日期不为空
             for (SummonsInformation item:summonsInformations) {
@@ -1060,7 +1075,7 @@ public class SuperviseController {
                 }
                 rs.resultCode=0;
                 rs.resultMsg="";
-                rs.data=null;
+                rs.data=new Object();
             }
             else{
                 rs.resultCode=1;
@@ -1154,7 +1169,7 @@ public class SuperviseController {
             String areaFence = superviseService.getAreaFence(code);   //获取监居人员区域围栏
             String areaCode=superviseService.getAreaCode(code);     //获取监居人员区域编码
             List<AreaFenceModel> areaFenceModelList = new ArrayList<>();
-            if (areaFence.equals("")==false) {   //区域围栏不为空为空
+            if (areaFence!=null) {   //区域围栏不为空为空
                 String[] area = areaFence.split(",");
                 for (int i = 0; i < area.length; i = i + 2) {
                     AreaFenceModel areaFenceModel = new AreaFenceModel();

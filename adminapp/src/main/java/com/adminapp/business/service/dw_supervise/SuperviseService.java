@@ -190,4 +190,8 @@ public class SuperviseService {
     public SuperviseBailMoneyInformation getBailMoneyInformation(String personId){
         return superfineDado.getBailMoneyInformation(personId);
     }
+
+    public String getViolateName(String typeCode,String enumCode){
+        return superfineDado.getViolateName(typeCode, enumCode);
+    }
 }

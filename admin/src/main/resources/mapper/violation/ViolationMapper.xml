@@ -7,9 +7,9 @@
         select * from t_violationfens where status=true
     </select>
 
-    <select id="selectViolation" resultType="com.admin.admin.entity.dw_violation.Violationfens" parameterType="int">
-        select * from t_violationfens where id=#{id}
-    </select>
+<!--    <select id="selectViolation" resultType="com.admin.admin.entity.dw_violation.Violationfens" parameterType="int">-->
+<!--        select * from t_violationfens where id=#{id}-->
+<!--    </select>-->
 
     <insert id="SaveViolation" parameterType="com.admin.admin.entity.dw_violation.Violationfens">
         INSERT INTO t_violationfens(violationcode,violationname,slightfens,seriousfens,createperson,accountname,createtime, status) VALUES

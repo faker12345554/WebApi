@@ -13,7 +13,7 @@ swagger:
 
 logging:
   level:
-    root: debug
+    root: Info
 
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml

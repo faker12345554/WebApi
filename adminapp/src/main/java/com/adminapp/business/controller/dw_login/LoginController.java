@@ -84,9 +84,9 @@ public class LoginController {
     public ResultSet modifyPassword(@ApiParam(name="password",value = "原密码MD5")@RequestParam(required = true)String password,
                                     @ApiParam(name="newPassword",value = "新密码MD5")@RequestParam(required = true)String newPassword){
         String userId= TokenUtil.getTokenUserId();
-        if(password.equals(newPassword)) {
+        if(password.equals(newPassword)==false) {
             UserInformationModel userInformationModel = loginService.getUserInformation(userId);
-            if (userInformationModel.getPassword().equals(password)==false) {
+            if (userInformationModel.getPassword().equals(password)) {
                 int udpateUserPassword=loginService.updateUserPassword(userId,newPassword);
                 if(udpateUserPassword!=0){
                     rs.resultCode=0;
