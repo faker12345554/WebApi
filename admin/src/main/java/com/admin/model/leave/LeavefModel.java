@@ -12,6 +12,7 @@ public class LeavefModel {
     private String personname;
     private String states;
     private String auditordatetime;
+    private String leaveorder;
     public int getId() {
         return Id;
     }
