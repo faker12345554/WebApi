@@ -32,7 +32,8 @@ public class ViolationService {
             item.setAccountname(CacheUtils.get("UserName").toString());
 
             if (item.getId() != 0) {
-                return violationDao.UpdateViolation(item);
+               violationDao.UpdateViolation(item);
+               continue;
             }
             // alarmDao.SaveAlarm(item);
             violationDao.SaveViolation(item);
