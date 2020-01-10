@@ -59,7 +59,7 @@ public class GuarantController {
     @UserLoginToken
     @ApiOperation(value = "获取担保信息")
     @GetMapping("/getGuara")
-    public ResponseResult getGuara(@RequestParam int id, HttpServletResponse response) {
+    public ResponseResult getGuara(@RequestParam String id, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( guaranService.getGuara(id));

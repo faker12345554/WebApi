@@ -14,7 +14,7 @@ public interface GuarantDao {
     int deleteGuara(@Param("flag") boolean flag, @Param("GuaId") int GuaId);
 
     //获取人员信息
-    GuaranteeInformation getGuara(@Param("id") int id);
+    GuaranteeInformation getGuara(@Param("id") String id);
 
     //查重
     int getGuaByPersonId(@Param("PersonId") String PersonId);

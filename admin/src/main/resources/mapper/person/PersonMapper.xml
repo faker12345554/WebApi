@@ -46,19 +46,19 @@
 
     <select id="ListPerson" parameterType="com.admin.model.search.SearchModel"
             resultType="com.admin.admin.entity.dw_person.Personinformation">
-        select * from t_personinformation
+        select * from t_personinformation where sponsoralarm=#{PersonName}
         <if test=" FuzzyCondition !=null and FuzzyCondition !=''">
-            <where>
+            and
                 personname like concat('%',#{FuzzyCondition},'%') or
                 suspectstatus like concat('%',#{FuzzyCondition},'%') or
                 gender like concat('%',#{FuzzyCondition},'%') or
                 sponsor like concat('%',#{FuzzyCondition},'%') or
                 casetype like concat('%',#{FuzzyCondition},'%') or
                 modifierid like concat('%',#{FuzzyCondition},'%')
-            </where>
+
         </if>
         <if test="list.size()>0">
-            where personid in
+            and personid in
             <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
                 CAST (#{id} as text)
             </foreach>

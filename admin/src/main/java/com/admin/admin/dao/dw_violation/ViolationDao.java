@@ -17,12 +17,12 @@ public interface ViolationDao {
     /*
     修改违规分数设置
      */
-    int UpdateViolation(int id);
+    int UpdateViolation(Violationfens violationfens);
 
     /*
     作废违规分数
      */
-    int deleteViolation();
+    int deleteViolation(int id);
 
     /*
     查看
