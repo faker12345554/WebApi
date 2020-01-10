@@ -179,8 +179,8 @@ public class SuperviseController {
             String fileName = file.getOriginalFilename();
             String res = upload.upload(url, file);
             if (res.equals("上传成功")) {
-                // String upLoadFaceUrl = "http:192.168.10.88:8009"+"/uploadFace/"+ formatter.format(date)+"/"+fileName;//这是真正有用的
-                String upLoadFaceUrl = "http://sf.cnnc626.com/Data/image/2019-08-05/1.jpg";
+                 String upLoadFaceUrl = "http://sf.cnnc626.com/uploadFace/"+ formatter.format(date)+"/"+fileName;//这是真正有用的
+              //  String upLoadFaceUrl = "http://sf.cnnc626.com/Data/image/2019-08-05/1.jpg";
                 if (tPersoninformations != null) {
                     // upLoadFaceUrl="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4058683704,1940854212&fm=26&gp=0.jpg";
                     //将两张图片进行对比，upLoadFaceUrl为用户传进来的图片路劲，第二个为数据库中的图片路劲
