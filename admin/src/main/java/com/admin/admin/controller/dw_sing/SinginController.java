@@ -108,6 +108,58 @@ public class SinginController {
 
 
 
+    @ApiOperation("导出音视频信息")
+    @PostMapping("ExportAudio")
+    public ResponseResult ExportAudio(@RequestBody SearchModel searchModel){
+        List<SinginModel> allItems = singinService.ListAudio(searchModel);
+        String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) +"音视频信息"+ ".xls";
+        File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);
+        result.setData(dateTime);
+        try (HSSFWorkbook workbook = new HSSFWorkbook()) {
+            HSSFSheet sheet = workbook.createSheet("导出音视频信息");
+            HSSFRow row = sheet.createRow(0);
+            row.createCell(0).setCellValue("序号");
+            row.createCell(1).setCellValue("嫌疑人状态");
+            row.createCell(2).setCellValue("姓名");
+            row.createCell(3).setCellValue("性别");
+            row.createCell(4).setCellValue("主办人");
+            row.createCell(5).setCellValue("执行单位");
+            row.createCell(6).setCellValue("通话方式");
+            row.createCell(7).setCellValue("动作");
+            row.createCell(8).setCellValue("联系民警");
+            row.createCell(9).setCellValue("通话时长");
+            row.createCell(10).setCellValue("接通时间");
+
+
+            allItems.forEach(printOrder -> {
+                int lastRowNum = sheet.getLastRowNum();
+                HSSFRow dataRow = sheet.createRow(lastRowNum + 1);
+                dataRow.createCell(0).setCellValue(printOrder.getId());
+                dataRow.createCell(1).setCellValue(printOrder.getSuspectstatus());
+                dataRow.createCell(2).setCellValue(printOrder.getPersonname());
+                dataRow.createCell(3).setCellValue(printOrder.getGender());
+                dataRow.createCell(4).setCellValue(printOrder.getSponsor());
+                dataRow.createCell(5).setCellValue(printOrder.getPolicestation());
+                dataRow.createCell(6).setCellValue(printOrder.getReporttype());
+                dataRow.createCell(7).setCellValue(printOrder.getReportstatus());
+                dataRow.createCell(8).setCellValue(printOrder.getSponsor());
+                dataRow.createCell(9).setCellValue(printOrder.getDurationtime());
+                dataRow.createCell(10).setCellValue(printOrder.getCreatetime());
+
+
+            });
+
+
+            workbook.write(file);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        result.setMessage("导出成功");
+        result.setCode(200);
+        return result;
+    }
+
     @ApiOperation("导出签到信息")
     @PostMapping("ExportSingIn")
     public ResponseResult ExportSingIn(@RequestBody SearchModel searchModel){
@@ -141,9 +193,10 @@ public class SinginController {
                 dataRow.createCell(4).setCellValue(printOrder.getAge());
                 dataRow.createCell(5).setCellValue(printOrder.getReporttype());
                 dataRow.createCell(6).setCellValue(printOrder.getReportstatus());
-                dataRow.createCell(7).setCellValue(printOrder.getActivityarea());
-                dataRow.createCell(8).setCellValue(printOrder.getAddress());
-                dataRow.createCell(9).setCellValue(printOrder.getCreatetime());
+                dataRow.createCell(7).setCellValue(printOrder.getSponsor());
+                dataRow.createCell(8).setCellValue(printOrder.getActivityarea());
+                dataRow.createCell(9).setCellValue(printOrder.getAddress());
+                dataRow.createCell(10).setCellValue(printOrder.getCreatetime());
 
             });
 
@@ -157,5 +210,6 @@ public class SinginController {
         result.setCode(200);
         return result;
     }
+
 
 }

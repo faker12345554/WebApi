@@ -56,7 +56,7 @@ public class Datatimer  {
         }
         if (violationlist.size()!=0){
             for (Violationfens item:violationlist){
-                violationDao.updateStatus(false,false,item.getId());
+                violationDao.updateStatus(false,true,item.getId());
             }
         }
        // System.out.println(CalendarAdjust.GetMonth());

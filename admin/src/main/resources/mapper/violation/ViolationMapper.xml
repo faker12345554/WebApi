@@ -4,7 +4,7 @@
 <mapper namespace="com.admin.admin.dao.dw_violation.ViolationDao">
 
     <select id="ListViolation"  resultType="com.admin.admin.entity.dw_violation.Violationfens">
-        select * from t_violationfens where status=true and enabled=false
+        select * from t_violationfens where enabled=false
     </select>
 
     <select id="enabledViolationList" resultType="com.admin.admin.entity.dw_violation.Violationfens">
