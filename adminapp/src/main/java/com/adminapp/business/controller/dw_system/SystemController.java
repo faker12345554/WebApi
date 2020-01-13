@@ -107,7 +107,8 @@ public class SystemController {
                 for (int i = 0; i < picture.size(); i++) {
                     MultipartFile file = picture.get(i);
                     String fileName = file.getOriginalFilename();
-                    String filePath = url + fileName;
+                    String filePath="https://pardon.cnnc626.com:8443/mypicture/adminapp/"+ formatter.format(date)+"/"+fileName;
+                    //String filePath = url + fileName;
                     if (i != 0) {
                         completeFilePath = completeFilePath + "," + filePath;
                     } else {
