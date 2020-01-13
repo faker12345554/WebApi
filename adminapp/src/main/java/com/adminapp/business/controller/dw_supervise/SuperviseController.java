@@ -1066,11 +1066,12 @@ public class SuperviseController {
     @PostMapping("/approveApplyLeave")
     public ResultSet approveApplyLeave(@ApiParam(name = "code",value = "外出申请单号")@RequestParam(required = true)String code,
                                        @ApiParam(name = "isApprove",value = "是否通过")@RequestParam(required = true)boolean isApprove){
+        String userId=TokenUtil.getTokenUserId();
         LeaveListModel leaveInformation=superviseService.getLeaveInformation(code);
         if(leaveInformation!=null){
-            if(leaveInformation.getCode().equals("1")){    //判断该请假单是否为待审批状态
-                String userId=CacheUtils.get("UserId").toString();
-                String userName = CacheUtils.get("UserName").toString();
+            if(leaveInformation.getStatusCode().equals("1")){    //判断该请假单是否为待审批状态
+                //String userId=CacheUtils.get("UserId").toString();
+                String userName =leaveInformation.getApplicant();
                 Date date=new Date();
                 String message=leaveInformation.getReason();
                 if(isApprove){    //审批为通过
@@ -1585,10 +1586,17 @@ public class SuperviseController {
                 }
             }
             if (startDate != null && endDate != null) {     //开始时间和结束时间都不为空
-                for (SignRecordModel item : signRecordModels
-                ) {
-                    if (Long.parseLong(item.getTimestamp()) < Long.parseLong(startDate) || Long.parseLong(item.getTimestamp()) >= Long.parseLong(endDate)) {
-                        signRecordModels.remove(item);  //时间戳小于开始时间或大于等于结束时间，去除
+//                for (SignRecordModel item : signRecordModels
+//                ) {
+//                    if (Long.parseLong(item.getTimestamp()) < Long.parseLong(startDate) || Long.parseLong(item.getTimestamp()) >= Long.parseLong(endDate)) {
+//                        signRecordModels.remove(item);  //时间戳小于开始时间或大于等于结束时间，去除
+//                    }
+//                }
+                for(int i=0;i<signRecordModels.size();i++){
+                    SignRecordModel item=signRecordModels.get(i);
+                    if(Long.parseLong(item.getTimestamp()) < Long.parseLong(startDate) || Long.parseLong(item.getTimestamp()) >= Long.parseLong(endDate)){
+                        signRecordModels.remove(item);
+                        i=i-1;
                     }
                 }
             }
@@ -1658,7 +1666,7 @@ public class SuperviseController {
                     int status=superviseService.updatePrisonSetting(personId,item.getName(),item.isEnable(),date);
                 }
                 else{
-                    int status=superviseService.insertPrisonSetting(personId,item.getName(),item.isEnable(),date,item.getCode());
+                    int status=superviseService.insertPrisonSetting(personId,item.getName(),item.isEnable(),date,Integer.parseInt(item.getCode()));
                 }
             }
             rs.resultCode=0;

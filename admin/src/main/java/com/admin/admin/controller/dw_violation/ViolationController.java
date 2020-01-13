@@ -23,7 +23,7 @@ public class ViolationController {
 
     private ResponseResult result = new ResponseResult();
 
-    @UserLoginToken
+   // @UserLoginToken
     @ApiOperation("新增违规分数")
     @PostMapping("/SaveViolation")
     public ResponseResult SaveViolation(@RequestBody List<Violationfens> violationfens){
@@ -32,13 +32,13 @@ public class ViolationController {
         return  result.setData(violationService.SaveViolation(violationfens));
     }
 
-    @UserLoginToken
+   // @UserLoginToken
     @ApiOperation("作废违规分数")
     @GetMapping("/DeleteViolation")
-    public ResponseResult DeleteViolation(@RequestParam  int id){
+    public ResponseResult DeleteViolation(@RequestParam  int id,boolean flag){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return  result.setData(violationService.deleteViolation(id));
+        return  result.setData(violationService.deleteViolation(id,flag));
     }
 
 //    @UserLoginToken

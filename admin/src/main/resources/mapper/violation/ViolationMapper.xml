@@ -4,7 +4,7 @@
 <mapper namespace="com.admin.admin.dao.dw_violation.ViolationDao">
 
     <select id="ListViolation"  resultType="com.admin.admin.entity.dw_violation.Violationfens">
-        select * from t_violationfens where status=true
+        select * from t_violationfens
     </select>
 
 <!--    <select id="selectViolation" resultType="com.admin.admin.entity.dw_violation.Violationfens" parameterType="int">-->
@@ -24,7 +24,7 @@
 
 
     <update id="deleteViolation">
-      update t_violationfens set status=false where id=#{id}
+      update t_violationfens set status=#{flag} where id=#{Id}
     </update>
 
 

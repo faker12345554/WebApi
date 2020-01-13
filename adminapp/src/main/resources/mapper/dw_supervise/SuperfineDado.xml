@@ -38,7 +38,7 @@
         leavedestination AS address,reason,recording AS reasonAudioUrl FROM t_leave ORDER BY t_leave.subittimestamp DESC
     </select>
     <select id="getAuditorList" resultType="com.adminapp.model.dw_supervise.AuditorRecordModel">
-        select statuscode AS statusCode,states AS status,auditordatetime AS timestamp,accountname AS person FROM t_auditor WHERE leaveorder=#{leaveOrder} ORDER BY statuscode DESC
+        select statuscode AS statusCode,states AS status,auditordatetime AS timestamp,accountname AS person FROM t_auditor WHERE leaveorder=#{leaveOrder} ORDER BY auditordatetime
     </select>
     <select id="listLeaveType" resultType="com.adminapp.model.dw_supervise.LeaveListModel">
         select leaveorder AS code,statuscode AS statusCode,states AS status,personname AS applicant,subittimestamp AS applyTimestamp,starttimestamp AS startTimestamp,endtimestamp AS endTimestamp,
@@ -57,7 +57,7 @@
         leavedestination AS address,reason,recording AS reasonAudioUrl FROM t_leave WHERE leaveorder=#{leaveOrder}
     </select>
     <update id="updateLeaveInformation">
-        update t_leave set statuscode=#{statusCode},status=#{status} WHERE leaveorder=#{leaveOrder}
+        update t_leave set statuscode=#{statusCode},states=#{status} WHERE leaveorder=#{leaveOrder}
     </update>
     <insert id="insertAuditorInformation">
         insert into t_auditor (leaveorder, userid, leavingmessage, statuscode, states, accountname, auditordatetime) VALUES (#{leaveOrder},#{userId},#{leavingMessage},#{statusCode},#{status},#{accountName},#{auditorDateTime})

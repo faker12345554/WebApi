@@ -95,9 +95,10 @@ public class SystemController {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = new Date(System.currentTimeMillis());
             //保存图片的路径
-            String url = System.getProperty("user.dir") + "\\adminapp\\" + "\\src\\" + "\\main\\" + "\\resources\\" + "\\uploadFace\\" + formatter.format(date);
+            String url = System.getProperty("user.dir") + "/../webapps/mypicture/adminapp/" + formatter.format(date)+"/";
             File path = new File(url);
             if (!path.exists() && !path.isDirectory()) {
+                path.setWritable(true,false);
                 path.mkdirs();
             }
             String completeFilePath = "";

@@ -22,7 +22,7 @@ public interface ViolationDao {
     /*
     作废违规分数
      */
-    int deleteViolation(int id);
+    int deleteViolation(@Param("Id") int id, @Param("flag") boolean flag);
 
     /*
     查看
