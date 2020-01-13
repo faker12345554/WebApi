@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.adminapp.business.dao.dw_supervise.SuperfineDado">
     <select id="listPersonInformation" resultType="com.adminapp.business.entity.dw_supervise.Personinformation">
-        select personid AS code,personname AS name,card AS idCardNo,age,gendercode AS gender,facepath AS headUrl,suspectstatuscode AS stateCode,suspectstatus AS state,bailoutbegindate AS execStartDate,
+        select personid AS code,personname AS name,card AS idCardNo,age,gendercode AS gender,facepath AS headUrl,suspectstatuscode AS stateCode,violationcode AS violateCode,suspectstatus AS state,bailoutbegindate AS execStartDate,
         bailoutenddate AS execEndDate,contact AS phone FROM t_personinformation WHERE sponsoralarm=#{UserId} ORDER BY t_personinformation.personname
     </select>
     <select id="getPrisonSetting" resultType="com.adminapp.model.dw_supervise.PrisonSettingModel">
@@ -38,7 +38,7 @@
         leavedestination AS address,reason,recording AS reasonAudioUrl FROM t_leave ORDER BY t_leave.subittimestamp DESC
     </select>
     <select id="getAuditorList" resultType="com.adminapp.model.dw_supervise.AuditorRecordModel">
-        select statuscode AS statusCode,states AS status,auditordatetime AS timestamp,accountname AS person FROM t_auditor WHERE leaveorder=#{leaveOrder} ORDER BY statuscode DESC
+        select statuscode AS statusCode,states AS status,auditordatetime AS timestamp,accountname AS person FROM t_auditor WHERE leaveorder=#{leaveOrder} ORDER BY auditordatetime
     </select>
     <select id="listLeaveType" resultType="com.adminapp.model.dw_supervise.LeaveListModel">
         select leaveorder AS code,statuscode AS statusCode,states AS status,personname AS applicant,subittimestamp AS applyTimestamp,starttimestamp AS startTimestamp,endtimestamp AS endTimestamp,
@@ -57,7 +57,7 @@
         leavedestination AS address,reason,recording AS reasonAudioUrl FROM t_leave WHERE leaveorder=#{leaveOrder}
     </select>
     <update id="updateLeaveInformation">
-        update t_leave set statuscode=#{statusCode},status=#{status} WHERE leaveorder=#{leaveOrder}
+        update t_leave set statuscode=#{statusCode},states=#{status} WHERE leaveorder=#{leaveOrder}
     </update>
     <insert id="insertAuditorInformation">
         insert into t_auditor (leaveorder, userid, leavingmessage, statuscode, states, accountname, auditordatetime) VALUES (#{leaveOrder},#{userId},#{leavingMessage},#{statusCode},#{status},#{accountName},#{auditorDateTime})
@@ -116,5 +116,8 @@
     </select>
     <select id="getBailMoneyInformation" resultType="com.adminapp.model.dw_supervise.SuperviseBailMoneyInformation">
         select money AS amount,receiptunit AS receiptUnit,paydate AS payDate,keepbank AS keepBank FROM t_guaranteeinformation WHERE personid=#{personId}
+    </select>
+    <select id="getViolateName" resultType="String">
+        select enumname FROM t_enum WHERE typecode=#{typeCode} AND enumcode=#{enumCode}
     </select>
 </mapper>

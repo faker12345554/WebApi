@@ -72,7 +72,7 @@ public interface SuperfineDado {
                             @Param("settingTime")Date settingTime);
 
     int insertPrisonSetting(@Param("personId")String personId,@Param("settingName")String settingName,@Param("settingCheck")boolean settingCheck,
-                            @Param("settingTime")Date settingTime,@Param("settingCode")String settingCode);
+                            @Param("settingTime")Date settingTime,@Param("settingCode")int settingCode);
 
     List<PrisonSettingModel> getPrisonValidWay(@Param("personId")String personId);
 
@@ -83,4 +83,6 @@ public interface SuperfineDado {
     SuperviseBailPersonInformation getBailPersonInformation(@Param("personId")String personId);
 
     SuperviseBailMoneyInformation getBailMoneyInformation(@Param("personId")String personId);
+
+    String getViolateName(@Param("typeCode")String typeCode,@Param("enumCode")String enumCode);
 }

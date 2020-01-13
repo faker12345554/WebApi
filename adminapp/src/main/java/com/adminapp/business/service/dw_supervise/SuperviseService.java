@@ -163,7 +163,7 @@ public class SuperviseService {
     }
 
     //插入监居人员的监居设置
-    public int insertPrisonSetting(String personId,String settingName,boolean settingCheck,Date settingTime,String settingCode){
+    public int insertPrisonSetting(String personId,String settingName,boolean settingCheck,Date settingTime,int settingCode){
         return superfineDado.insertPrisonSetting(personId,settingName,settingCheck,settingTime,settingCode);
     }
 
@@ -189,5 +189,9 @@ public class SuperviseService {
     //获取监居人员取保金额信息
     public SuperviseBailMoneyInformation getBailMoneyInformation(String personId){
         return superfineDado.getBailMoneyInformation(personId);
+    }
+
+    public String getViolateName(String typeCode,String enumCode){
+        return superfineDado.getViolateName(typeCode, enumCode);
     }
 }

@@ -47,6 +47,8 @@ public class PersonAllInformationModel {
   private String keepaddress;
   private String appointaddress;
   private String suspectstatuscode;
+  private String guid;
+  private String violationcode;
 
   public String getPersonid() {
     return personid;
@@ -408,5 +410,21 @@ public class PersonAllInformationModel {
 
   public void setSuspectstatuscode(String suspectstatuscode) {
     this.suspectstatuscode = suspectstatuscode;
+  }
+
+  public String getGuid() {
+    return guid;
+  }
+
+  public void setGuid(String guid) {
+    this.guid = guid;
+  }
+
+  public String getViolationcode() {
+    return violationcode;
+  }
+
+  public void setViolationcode(String violationcode) {
+    this.violationcode = violationcode;
   }
 }
