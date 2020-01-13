@@ -322,20 +322,11 @@ public class CalendarAdjust {
 
     }
 
-
-
-    public static void main(String[] args) {
-        Long currentTime = System.currentTimeMillis();
-        System.out.println("Current Time : " + currentTime + " = " + timestampToStr(currentTime, "GMT+8"));
-        Long dailyStart = getDailyStartTime(currentTime, "GMT+8:00");
-        Long dailyEnd = getDailyEndTime(currentTime, "GMT+8:00");
-        Long monthStart = getMonthStartTime(currentTime, "GMT+8:00");
-        Long monthEnd = getMonthEndTime(currentTime, "GMT+8:00");
-        Long yearStart = getYearStartTime(currentTime, "GMT+8:00");
-        Long yearEnd = getYearEndTime(currentTime, "GMT+8:00");
-
-        System.out.println("Daily Start : " + dailyStart + " = " + timestampToStr(dailyStart, "GMT+8") + " Daily End : " + dailyEnd + " = " + timestampToStr(dailyEnd, "GMT+8"));
-        System.out.println("Month Start : " + monthStart + " = " + timestampToStr(monthStart, "GMT+8") + " Month End : " + monthEnd + " = " + timestampToStr(monthEnd, "GMT+8"));
-        System.out.println("Year Start : " + yearStart + " = " + timestampToStr(yearStart, "GMT+8") + " Year End : " + yearEnd + " = " + timestampToStr(yearEnd, "GMT+8"));
+    public static Date GetDate(String Time) throws ParseException{
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date d1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(Time);
+        return d1;
     }
+
+
 }

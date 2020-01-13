@@ -118,14 +118,7 @@ public class PersonController {
         return result.setData(pageData);
     }
 
-    //@ApiOperation("获取需要的枚举信息")
-    @UserLoginToken
-    @GetMapping("/getEnum")
-    public ResponseResult getEnum() {
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(persoinfoService.getEnum());
-    }
+
     @UserLoginToken
     @ApiOperation("导出监居人员信息")
     @PostMapping("/ExportPerson")
@@ -181,28 +174,5 @@ public class PersonController {
         return rtn;
     }
 
-    /**
-     * 获取机构
-     * @return
-     */
-    @UserLoginToken
-    @GetMapping("/ListMechanism")
-    public ResponseResult ListMechanism(){
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(persoinfoService.ListMechanism());
-    }
 
-    /**
-     * 获取主办人
-     * @param Code
-     * @return
-     */
-    @UserLoginToken
-    @GetMapping("/ListSponsor")
-    public ResponseResult ListSponsor(@RequestParam String Code){
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(persoinfoService.ListSponsor(Code));
-    }
 }
