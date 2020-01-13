@@ -4,7 +4,11 @@
 <mapper namespace="com.admin.admin.dao.dw_violation.ViolationDao">
 
     <select id="ListViolation"  resultType="com.admin.admin.entity.dw_violation.Violationfens">
-        select * from t_violationfens where status=true
+        select * from t_violationfens where status=true and enabled=false
+    </select>
+
+    <select id="enabledViolationList"  resultType="com.admin.admin.entity.dw_violation.Violationfens">
+        select * from t_violationfens where status=true and enabled=true
     </select>
 
 <!--    <select id="selectViolation" resultType="com.admin.admin.entity.dw_violation.Violationfens" parameterType="int">-->
@@ -17,14 +21,19 @@
     </update>
 
     <insert id="SaveViolation" parameterType="com.admin.admin.entity.dw_violation.Violationfens">
-        INSERT INTO t_violationfens(violationcode,violationname,slightfens,seriousfens,createperson,accountname,createtime, status) VALUES
-        (#{violationcode},#{violationname},#{slightfens},#{seriousfens},#{createperson},#{accountname},#{createtime},#{status})
+        INSERT INTO t_violationfens(violationcode,violationname,slightfens,seriousfens,createperson,accountname,createtime, status,updatemonth,enabled) VALUES
+        (#{violationcode},#{violationname},#{slightfens},#{seriousfens},#{createperson},#{accountname},#{createtime},#{status},#{updatemonth},#{enabled})
     </insert>
 
 
 
     <update id="deleteViolation">
       update t_violationfens set status=false where id=#{id}
+    </update>
+
+
+    <update id="updateStatus">
+     update t_violationfens set status=#{flag},enabled=#{enabled} where id=#{id}
     </update>
 
 

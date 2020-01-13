@@ -28,7 +28,16 @@ public interface ViolationDao {
     查看
      */
    // Violationfens selectViolation(@Param("id") int id);
+    /*
+    获取下月生效的记录
+     */
 
+    /*
+    修改状态
+     */
+    int updateStatus(@Param("flag") boolean flag,@Param("enabled") boolean enabled,@Param("id") int id);
+
+    List<Violationfens> enabledViolationList();
     /*
     列表
      */
