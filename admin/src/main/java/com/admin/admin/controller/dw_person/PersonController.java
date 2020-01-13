@@ -127,7 +127,7 @@ public class PersonController {
         List<Personinformation> allItems = persoinfoService.ListPerson(searchModel);
 
         try (HSSFWorkbook workbook = new HSSFWorkbook()) {
-            HSSFSheet sheet = workbook.createSheet("打印取保监居人员信息");
+            HSSFSheet sheet = workbook.createSheet("导出取保监居人员信息");
             HSSFRow row = sheet.createRow(0);
             row.createCell(0).setCellValue("姓名");
             row.createCell(1).setCellValue("嫌疑人状态");
@@ -137,9 +137,9 @@ public class PersonController {
             row.createCell(5).setCellValue("执行开始时间");
             row.createCell(6).setCellValue("案件类型");
             row.createCell(7).setCellValue("采取管理方式");
-//            row.createCell(8).setCellValue("违规程度");
-//            row.createCell(9).setCellValue("修改人");
-//            row.createCell(10).setCellValue("修改时间");
+            row.createCell(8).setCellValue("违规程度");
+            row.createCell(9).setCellValue("修改人");
+            row.createCell(10).setCellValue("修改时间");
 
             allItems.forEach(printOrder -> {
                 int lastRowNum = sheet.getLastRowNum();
@@ -153,6 +153,9 @@ public class PersonController {
                 dataRow.createCell(6).setCellValue(printOrder.getCasetype());
                 String type = "";
                 dataRow.createCell(7).setCellValue(type);
+                dataRow.createCell(8).setCellValue(printOrder.getCasetype());
+                dataRow.createCell(9).setCellValue(printOrder.getModifierid());
+                dataRow.createCell(10).setCellValue(printOrder.getModifiertime());
                 for (String item : printOrder.getManagementStyle()) {
                     type += item + ',';
                 }
@@ -162,7 +165,7 @@ public class PersonController {
 //                dataRow.createCell(10).setCellValue(printOrder.getAddress());
             });
             String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) + ".xls";
-            File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);
+            File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\监居人员"+ dateTime);
             rtn.setData(dateTime);
             workbook.write(file);
         } catch (Exception ex) {
