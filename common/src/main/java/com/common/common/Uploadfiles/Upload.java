@@ -46,7 +46,7 @@ public class Upload {
             }
             String fileName = file.getOriginalFilename();
 
-            File dest = new File(FilePath + fileName);
+            File dest = new File(FilePath , fileName);
             try {
                 file.transferTo(dest);
                 //LOGGER.info("第" + (i + 1) + "个文件上传成功");

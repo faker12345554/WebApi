@@ -95,9 +95,10 @@ public class SystemController {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = new Date(System.currentTimeMillis());
             //保存图片的路径
-            String url = System.getProperty("user.dir") + "\\adminapp\\" + "\\src\\" + "\\main\\" + "\\resources\\" + "\\uploadFace\\" + formatter.format(date);
+            String url = System.getProperty("user.dir") + "/../webapps/mypicture/adminapp/" + formatter.format(date)+"/";
             File path = new File(url);
             if (!path.exists() && !path.isDirectory()) {
+                path.setWritable(true,false);
                 path.mkdirs();
             }
             String completeFilePath = "";
@@ -106,7 +107,8 @@ public class SystemController {
                 for (int i = 0; i < picture.size(); i++) {
                     MultipartFile file = picture.get(i);
                     String fileName = file.getOriginalFilename();
-                    String filePath = url + fileName;
+                    String filePath="https://pardon.cnnc626.com:8443/mypicture/adminapp/"+ formatter.format(date)+"/"+fileName;
+                    //String filePath = url + fileName;
                     if (i != 0) {
                         completeFilePath = completeFilePath + "," + filePath;
                     } else {

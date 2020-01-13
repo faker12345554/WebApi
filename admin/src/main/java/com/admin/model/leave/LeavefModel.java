@@ -7,6 +7,15 @@ public class LeavefModel {
     private String reason;
     private String leavedestination;
     private Date starttimestamp;
+
+    public String getLeaveorder() {
+        return leaveorder;
+    }
+
+    public void setLeaveorder(String leaveorder) {
+        this.leaveorder = leaveorder;
+    }
+
     private Date endtimestamp;
     private Date subittimestamp;
     private String personname;

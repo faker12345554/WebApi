@@ -4,7 +4,6 @@ import com.admin.admin.entity.dw_report.Reportsettings;
 import com.admin.admin.entity.dw_violation.Violationfens;
 import com.admin.admin.service.dw_violation.ViolationService;
 import com.admin.token.tation.UserLoginToken;
-import com.common.common.authenticator.CalendarAdjust;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
@@ -12,8 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 
 @Api(value="违规分数设置Controller",tags={"违规分数设置"})
@@ -26,43 +23,22 @@ public class ViolationController {
 
     private ResponseResult result = new ResponseResult();
 
-    @UserLoginToken
+   // @UserLoginToken
     @ApiOperation("新增违规分数")
     @PostMapping("/SaveViolation")
-    public ResponseResult SaveViolation(@RequestBody List<Violationfens> violationfens) throws ParseException {
-
-        List<Violationfens> violationlist = violationService.ListViolation();
-        List<Violationfens> violation = violationService.enabledViolationList();
-        for (Violationfens item : violationfens) {
-            if (violationlist.size() == 0) {
-                item.setStatus(true);
-                item.setEnabled(false);
-                violationService.SaveViolation(item);
-                result.setMessage(ResultCode.SUCCESS.getMessage());
-            } else if (CalendarAdjust.getMonthDiff(CalendarAdjust.GetDate(item.getUpdatemonth()), new Date()) == 0 && violation.size() == 0) {
-                item.setStatus(true);
-                item.setModificationtime(new Date());
-                item.setEnabled(true);
-                violationService.SaveViolation(item);
-                result.setMessage(ResultCode.SUCCESS.getMessage());
-            } else {
-                result.setMessage("本月已修改过,不能再修改");
-            }
-        }
-        result.setCode(ResultCode.SUCCESS.getCode());
-        return result;
-    }
-
-
-
-
-    @UserLoginToken
-    @ApiOperation("作废违规分数")
-    @GetMapping("/DeleteViolation")
-    public ResponseResult DeleteViolation(@RequestParam  int id){
+    public ResponseResult SaveViolation(@RequestBody List<Violationfens> violationfens){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return  result.setData(violationService.deleteViolation(id));
+        return  result.setData(violationService.SaveViolation(violationfens));
+    }
+
+   // @UserLoginToken
+    @ApiOperation("作废违规分数")
+    @GetMapping("/DeleteViolation")
+    public ResponseResult DeleteViolation(@RequestParam  int id,boolean flag){
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return  result.setData(violationService.deleteViolation(id,flag));
     }
 
 //    @UserLoginToken

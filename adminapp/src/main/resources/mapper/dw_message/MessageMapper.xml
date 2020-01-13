@@ -9,7 +9,7 @@
        select * FROM t_message where personid=#{personId}
     </select>
     <select id="listAllMessages" resultType="com.adminapp.model.dw_message.MessageListModel">
-        select id AS code,modular AS type,modularname AS typeName,detailtype AS detailType,detailtypename AS detailTypeName,workcontent AS content,
+        select id AS code,modular AS type,modularname AS typeName,detailtype AS detailType,detailtypename AS detailTypeName,content,
         messagetime AS timestamp,personid AS personCode,readmessage AS isRead FROM t_message where personid=#{personId}
     </select>
     <update id="updateReadMessage">
