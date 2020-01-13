@@ -4,7 +4,11 @@
 <mapper namespace="com.admin.admin.dao.dw_violation.ViolationDao">
 
     <select id="ListViolation"  resultType="com.admin.admin.entity.dw_violation.Violationfens">
-        select * from t_violationfens
+        select * from t_violationfens where status=true and enabled=false
+    </select>
+
+    <select id="enabledViolationList" resultType="com.admin.admin.entity.dw_violation.Violationfens">
+            select * from t_violationfens where status=true and enabled=true
     </select>
 
 <!--    <select id="selectViolation" resultType="com.admin.admin.entity.dw_violation.Violationfens" parameterType="int">-->
@@ -13,15 +17,18 @@
 
     <update id="UpdateViolation" parameterType="com.admin.admin.entity.dw_violation.Violationfens">
         update t_violationfens set violationcode=#{violationcode},violationname=#{violationname},slightfens=#{slightfens},seriousfens=#{seriousfens},createperson=#{createperson}
-        ,accountname=#{accountname},createtime=#{createtime} where id=#{id}
+        ,accountname=#{accountname},createtime=#{createtime},updatemonth=#{updatemonth},enabled=#{enabled} where id=#{id}
     </update>
 
     <insert id="SaveViolation" parameterType="com.admin.admin.entity.dw_violation.Violationfens">
-        INSERT INTO t_violationfens(violationcode,violationname,slightfens,seriousfens,createperson,accountname,createtime, status) VALUES
-        (#{violationcode},#{violationname},#{slightfens},#{seriousfens},#{createperson},#{accountname},#{createtime},#{status})
+        INSERT INTO t_violationfens(violationcode,violationname,slightfens,seriousfens,createperson,accountname,createtime, status,updatemonth,enabled) VALUES
+        (#{violationcode},#{violationname},#{slightfens},#{seriousfens},#{createperson},#{accountname},#{createtime},#{status},#{Modificationtime},#{enabled})
     </insert>
 
 
+    <update id="updateStatus">
+      update t_violationfens set status=#{flag},enabled=#{enabled}  where id=#{id}
+    </update>
 
     <update id="deleteViolation">
       update t_violationfens set status=#{flag} where id=#{Id}

@@ -78,7 +78,7 @@ public class PersonController {
     }
 
     //获取
-   // @UserLoginToken
+  //  @UserLoginToken
     @ApiOperation("获取人员信息")
     @GetMapping("/getPersoin")
     public ResponseResult getPersoin(@RequestParam String id, HttpServletResponse response) {

@@ -37,6 +37,7 @@ public interface ViolationDao {
      */
     int updateStatus(@Param("flag") boolean flag,@Param("enabled") boolean enabled,@Param("id") int id);
 
+
     List<Violationfens> enabledViolationList();
     /*
     列表

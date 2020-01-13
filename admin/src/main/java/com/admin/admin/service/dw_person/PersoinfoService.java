@@ -34,6 +34,8 @@ public class PersoinfoService {
     private GuarantDao guarantDao;
 
 
+
+
     //新增
     public int insertPersion(Personinformation personinformation) {
         String PersonId= java.util.UUID.randomUUID().toString();
@@ -74,7 +76,9 @@ public class PersoinfoService {
         personinformation.setGuaranteeInformation(guaranteeInformation);
         TCaseinfo tCaseinfo=caseDao.GetCase(id);
         personinformation.settCaseinfo(tCaseinfo);
-        personinformation.setFounderid(CacheUtils.get("UserName").toString());
+        if (CacheUtils.get("UserName").toString()!=null) {
+            personinformation.setFounderid(CacheUtils.get("UserName").toString());
+        }
         return personinformation;
     }
 
