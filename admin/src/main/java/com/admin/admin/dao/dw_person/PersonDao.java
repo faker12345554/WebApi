@@ -25,8 +25,7 @@ public interface PersonDao {
 
     int getPersonByCard(@Param("Card") String Card);
 
-    //获取枚举数据
-    List<Map<String,Object>> getEnum();
+
     /*
     变更主办人
     */
@@ -47,16 +46,7 @@ public interface PersonDao {
      */
     List<TPrisonsetting> ListPrison(String PersonId);
 
-    /**
-     * 获取所有 一定要用 List<Map<String,Object>> ？？是的
-     * @return
-     */
-    List<Map<String,Object>> ListMechanism();
 
-    /**
-     * 派出所编号
-     * @param Code
-     * @return
-     */
-    List<Map<String,String>> ListSponsor(String Code);
+
+
 }

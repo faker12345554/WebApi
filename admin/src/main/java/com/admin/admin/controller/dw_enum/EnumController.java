@@ -39,4 +39,37 @@ public class EnumController {
         return result.setData(enumService.GetPolice(PoliceStation));
     }
 
+    /**
+     * 获取机构
+     * @return
+     */
+    @UserLoginToken
+    @GetMapping("/ListMechanism")
+    public ResponseResult ListMechanism(){
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(enumService.ListMechanism());
+    }
+    //@ApiOperation("获取需要的枚举信息")
+    @UserLoginToken
+    @GetMapping("/getEnum")
+    public ResponseResult getEnum() {
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(enumService.getEnum());
+    }
+
+    /**
+     * 获取主办人
+     * @param Code
+     * @return
+     */
+    @UserLoginToken
+    @GetMapping("/ListSponsor")
+    public ResponseResult ListSponsor(@RequestParam String Code){
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(enumService.ListSponsor(Code));
+    }
+
 }
