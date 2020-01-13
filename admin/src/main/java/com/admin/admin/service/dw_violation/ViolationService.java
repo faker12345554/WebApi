@@ -23,27 +23,8 @@ public class ViolationService {
     /*
     新增或者修改
      */
-    public String SaveViolation(List<Violationfens> violationfens){
-
-        String result="";
-        for (Violationfens item : violationfens) {
-            item.setStatus(true);
-            item.setCreatetime(new Date());
-            item.setCreateperson(CacheUtils.get("UserId").toString());
-            item.setAccountname(CacheUtils.get("UserName").toString());
-
-            if (item.getId() != 0) {
-                result="修改成功!";
-             int id= violationDao.UpdateViolation(item);
-               continue;
-            }
-            result="新增成功!";
-            // alarmDao.SaveAlarm(item);
-            violationDao.SaveViolation(item);
-        }
-        Violationfens alarm=new Violationfens();
-
-        return result;
+    public int SaveViolation(Violationfens violationfens){
+        return   violationDao.SaveViolation(violationfens);
 
 
     }
@@ -64,6 +45,10 @@ public class ViolationService {
     /*
     列表
      */
+
+    public List<Violationfens> enabledViolationList(){
+        return violationDao.enabledViolationList();
+    }
 
     public List<Violationfens> ListViolation(){
 

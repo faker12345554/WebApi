@@ -59,10 +59,10 @@ public class ViolationController {
     @UserLoginToken
     @ApiOperation("作废违规分数")
     @GetMapping("/DeleteViolation")
-    public ResponseResult DeleteViolation(@RequestParam  int id){
+    public ResponseResult DeleteViolation(@RequestParam  int id,boolean flag){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return  result.setData(violationService.deleteViolation(id));
+        return  result.setData(violationService.deleteViolation(id,flag));
     }
 
 //    @UserLoginToken
