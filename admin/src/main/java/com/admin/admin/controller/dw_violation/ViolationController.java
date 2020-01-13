@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class ViolationController {
     @UserLoginToken
     @ApiOperation("新增违规分数")
     @PostMapping("/SaveViolation")
-    public ResponseResult SaveViolation(@RequestBody List<Violationfens> violationfens) {
+    public ResponseResult SaveViolation(@RequestBody List<Violationfens> violationfens) throws ParseException {
 
         List<Violationfens> violationlist = violationService.ListViolation();
         List<Violationfens> violation = violationService.enabledViolationList();
@@ -38,9 +39,9 @@ public class ViolationController {
                 item.setEnabled(false);
                 violationService.SaveViolation(item);
                 result.setMessage(ResultCode.SUCCESS.getMessage());
-            } else if (CalendarAdjust.getMonthDiff(item.getUpdatemonth(), new Date()) == 0 && violation.size() == 0) {
+            } else if (CalendarAdjust.getMonthDiff(CalendarAdjust.GetDate(item.getUpdatemonth()), new Date()) == 0 && violation.size() == 0) {
                 item.setStatus(true);
-                item.setUpdatemonth(new Date());
+                item.setModificationtime(new Date());
                 item.setEnabled(true);
                 violationService.SaveViolation(item);
                 result.setMessage(ResultCode.SUCCESS.getMessage());

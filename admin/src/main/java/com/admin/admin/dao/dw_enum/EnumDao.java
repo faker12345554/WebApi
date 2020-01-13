@@ -13,5 +13,21 @@ public interface EnumDao {
 
     List<Map<String,Object>> GetPolice(String PoliceStation);
 
+    //获取枚举数据
+    List<Map<String,Object>> getEnum();
+
+    /**
+     * 获取所有 一定要用 List<Map<String,Object>> ？？是的
+     * @return
+     */
+    List<Map<String,Object>> ListMechanism();
+
+    /**
+     * 派出所编号
+     * @param Code
+     * @return
+     */
+    List<Map<String,String>> ListSponsor(String Code);
+
 
 }

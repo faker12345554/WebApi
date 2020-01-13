@@ -17,12 +17,12 @@
 
     <update id="UpdateViolation" parameterType="com.admin.admin.entity.dw_violation.Violationfens">
         update t_violationfens set violationcode=#{violationcode},violationname=#{violationname},slightfens=#{slightfens},seriousfens=#{seriousfens},createperson=#{createperson}
-        ,accountname=#{accountname},createtime=#{createtime} where id=#{id}
+        ,accountname=#{accountname},createtime=#{Modificationtime} where id=#{id}
     </update>
 
     <insert id="SaveViolation" parameterType="com.admin.admin.entity.dw_violation.Violationfens">
         INSERT INTO t_violationfens(violationcode,violationname,slightfens,seriousfens,createperson,accountname,createtime, status,updatemonth,enabled) VALUES
-        (#{violationcode},#{violationname},#{slightfens},#{seriousfens},#{createperson},#{accountname},#{createtime},#{status},#{updatemonth},#{enabled})
+        (#{violationcode},#{violationname},#{slightfens},#{seriousfens},#{createperson},#{accountname},#{createtime},#{status},#{Modificationtime},#{enabled})
     </insert>
 
 

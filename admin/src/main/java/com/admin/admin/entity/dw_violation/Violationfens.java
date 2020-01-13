@@ -33,22 +33,35 @@ public class Violationfens {
 
   private String accountname;
   private boolean status;
+
+  public Date getModificationtime() {
+    return Modificationtime;
+  }
+
+  public Violationfens setModificationtime(Date modificationtime) {
+    Modificationtime = modificationtime;
+    return this;
+  }
+
   private Date createtime;
-  private Date updatemonth;
+  private Date Modificationtime;
+  private String updatemonth;
+
+  public String getUpdatemonth() {
+    return updatemonth;
+  }
+
+  public Violationfens setUpdatemonth(String updatemonth) {
+    this.updatemonth = updatemonth;
+    return this;
+  }
+
   private boolean enabled;
 
   public String getViolationcode() {
     return violationcode;
   }
 
-  public Date getUpdatemonth() {
-    return updatemonth;
-  }
-
-  public Violationfens setUpdatemonth(Date updatemonth) {
-    this.updatemonth = updatemonth;
-    return this;
-  }
 
   public Violationfens setViolationcode(String violationcode) {
     this.violationcode = violationcode;

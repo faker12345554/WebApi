@@ -127,26 +127,5 @@ public class PersoinfoService {
         return personList;
     }
 
-    //获取枚举数据
-    public List<Map<String,Object>> getEnum() {
-        return personDao.getEnum();
-    }
 
-    /**
-     * 获取机构 搞得那麽複雜 没进来吗？实在是因为那个实体又臭又长,而我需要的就两个
-     */
-    public List<Map<String,Object>> ListMechanism(){
-        System.out.println(personDao.ListMechanism());
-        return personDao.ListMechanism();
-    }
-
-    /**
-     * 获取主办人信息
-     * @param Code
-     * @return
-     */
-
-    public List<Map<String,String>> ListSponsor(String Code){
-        return personDao.ListSponsor(Code);
-    }
 }
