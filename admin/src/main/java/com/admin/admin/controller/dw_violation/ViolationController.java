@@ -26,7 +26,7 @@ public class ViolationController {
 
     private ResponseResult result = new ResponseResult();
 
-    @UserLoginToken
+    //@UserLoginToken
     @ApiOperation("新增违规分数")
     @PostMapping("/SaveViolation")
     public ResponseResult SaveViolation(@RequestBody List<Violationfens> violationfens) throws ParseException {
@@ -44,7 +44,7 @@ public class ViolationController {
                 item.setModificationtime(new Date());
                 item.setEnabled(true);
                 violationService.SaveViolation(item);
-                result.setMessage(ResultCode.SUCCESS.getMessage());
+                result.setMessage("修改成功,下月起生效");
             } else {
                 result.setMessage("本月已修改过,不能再修改");
             }
