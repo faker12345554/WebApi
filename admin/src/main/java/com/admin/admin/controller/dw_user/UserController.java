@@ -34,13 +34,12 @@ public class UserController {
     private ResponseResult result = new ResponseResult();
 
 
+    @UserLoginToken
     @ApiOperation("用户信息列表")
-    @GetMapping("/GetList") // 想不出来，得找找噢噢
+    @GetMapping("/GetList")
     public ResponseResult<User> listUser(@RequestParam(required = false) boolean falg, int PageSize, int PageIndex, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-     //   List<User> list=userService.listUser(falg);
-       // PageUtil.PageList(list,PageSize, PageIndex);
         return result.setData(userService.listUser(falg,PageIndex,PageSize));
     }
 
@@ -49,13 +48,14 @@ public class UserController {
     @ApiOperation("查看用户信息")
     @UserLoginToken
     @GetMapping("/GetUser")
-    public ResponseResult getUser(@RequestParam(required = false) int id, HttpServletResponse response) {
+    public ResponseResult getUser(@RequestParam(required = false) String UserName, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData( userService.getUser(id));
+        return result.setData( userService.getUser(UserName));
     }
 
     //新增用户
+    @UserLoginToken
     @ApiOperation("新增用户")
     @PostMapping("/AddUser")
     public ResponseResult saveUser(@RequestBody User user, HttpServletResponse response) {
@@ -71,6 +71,7 @@ public class UserController {
 
     //修改
 
+    @UserLoginToken
     @ApiOperation("修改用户信息")
     @PostMapping("/UpdateUser")
     public ResponseResult updateUser(@RequestBody User user, HttpServletResponse response) {
@@ -80,37 +81,39 @@ public class UserController {
     }
 
     //删除
+    @UserLoginToken
     @ApiOperation("删除用户")
     @GetMapping("/DelUser")
-    public ResponseResult deleteUser(@RequestParam boolean flag, @RequestParam int UserId, HttpServletResponse response) {
+    public ResponseResult deleteUser(@RequestParam boolean flag, @RequestParam String  UserName, HttpServletResponse response) {
         if (flag == true) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
             result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
             return result.setData("参数'flag'输入错误");
-        } else if (userService.getUser(UserId) == null) {
+        } else if (userService.getUser(UserName) == null) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
             result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
             return result.setData("参数'UserId'输入错误,该用户不存在");
         }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData( userService.deleteUser(flag, UserId));
+        return result.setData( userService.deleteUser(flag, UserName));
     }
 
     //登录
     @ApiOperation("登录")
     @GetMapping("/Login")
-    public ResponseResult login(@RequestParam String UserName, @RequestParam String Password, @RequestParam String Code,
+    public ResponseResult login(@RequestParam String UserName, @RequestParam String Password,
                                 HttpServletResponse response, HttpServletRequest request) {
-        String VerCode = String.valueOf(CacheUtils.get("验证码"));
-        if (!VerCode.equals(Code)) {
-            result.setCode(ResultCode.ILLEAGAL_STRING.getCode());
-            result.setMessage(ResultCode.ILLEAGAL_STRING.getMessage());
-            return result.setData("验证码不正确!");
-        }
+//        String VerCode = String.valueOf(CacheUtils.get("验证码"));
+//        if (!VerCode.equals(Code)) {
+//            result.setCode(ResultCode.ILLEAGAL_STRING.getCode());
+//            result.setMessage(ResultCode.ILLEAGAL_STRING.getMessage());
+//            return result.setData("验证码不正确!");
+//        }
 
         User user = userService.login(UserName, Password);
         CacheUtils.put("UserId", user.getId(), 0);
+        CacheUtils.put("UserName",user.getAliasname());
         String token = tokenService.getToken(user);
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());

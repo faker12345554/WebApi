@@ -5,12 +5,22 @@ public class User {
     private String accountname;
     private String password;
 
+    public String getBmmc() {
+        return bmmc;
+    }
+
+    public User setBmmc(String bmmc) {
+        this.bmmc = bmmc;
+        return this;
+    }
+
     private int permissionid;
     private int createid;
     private String createname;
     private String areacode;
     private String phone;
     private boolean status;
+    private String bmmc;
 
 
 

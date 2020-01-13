@@ -6,13 +6,32 @@ import java.util.Date;
 
 public class SearchModel extends ExeclModel {
 
-    private String Condition1;
-    private String Condition2;
-    private Date StartTime;
-    private Date EndTime;
+    private String Condition;
+    private String PersonName;
+    private String StartTime;
+    private String EndTime;
     private String FuzzyCondition;
     private boolean flag;
     private int PageSize;
+
+    public String getStartTime() {
+        return StartTime;
+    }
+
+    public SearchModel setStartTime(String startTime) {
+        StartTime = startTime;
+        return this;
+    }
+
+    public String getEndTime() {
+        return EndTime;
+    }
+
+    public SearchModel setEndTime(String endTime) {
+        EndTime = endTime;
+        return this;
+    }
+
     private int PageIndex;
 
 
@@ -29,6 +48,24 @@ public class SearchModel extends ExeclModel {
         return PageIndex;
     }
 
+    public String getCondition() {
+        return Condition;
+    }
+
+    public SearchModel setCondition(String condition) {
+        Condition = condition;
+        return this;
+    }
+
+    public String getPersonName() {
+        return PersonName;
+    }
+
+    public SearchModel setPersonName(String personName) {
+        PersonName = personName;
+        return this;
+    }
+
     public SearchModel setPageIndex(int pageIndex) {
         PageIndex = pageIndex;
         return this;
@@ -36,41 +73,7 @@ public class SearchModel extends ExeclModel {
 
 
 
-    public String getCondition1() {
-        return Condition1;
-    }
 
-    public SearchModel setCondition1(String condition1) {
-        Condition1 = condition1;
-        return this;
-    }
-
-    public String getCondition2() {
-        return Condition2;
-    }
-
-    public SearchModel setCondition2(String condition2) {
-        Condition2 = condition2;
-        return this;
-    }
-
-    public Date getStartTime() {
-        return StartTime;
-    }
-
-    public SearchModel setStartTime(Date startTime) {
-        StartTime = startTime;
-        return this;
-    }
-
-    public Date getEndTime() {
-        return EndTime;
-    }
-
-    public SearchModel setEndTime(Date endTime) {
-        EndTime = endTime;
-        return this;
-    }
 
     public String getFuzzyCondition() {
         return FuzzyCondition;

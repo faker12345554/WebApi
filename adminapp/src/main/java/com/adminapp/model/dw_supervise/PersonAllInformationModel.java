@@ -8,7 +8,7 @@ public class PersonAllInformationModel {
   private String personid;
   private String personname;
   private String gender;
-  private long age;
+  private int age;
   private Date birthdate;
   private String card;
   private String workunit;
@@ -32,9 +32,23 @@ public class PersonAllInformationModel {
   private String facepath;
   private String persontags;
   private int gendercode;
-
-
-
+  private String beforname;
+  private String nation;
+  private String degreeeducation;
+  private String nativeplace;
+  private String occupation;
+  private String nationality;
+  private String registeredarea;
+  private String permanentaddress;
+  private String currentaddress;
+  private String nowaddress;
+  private String yjsponsoralarm;
+  private String exectype;
+  private String keepaddress;
+  private String appointaddress;
+  private String suspectstatuscode;
+  private String guid;
+  private String violationcode;
 
   public String getPersonid() {
     return personid;
@@ -63,11 +77,11 @@ public class PersonAllInformationModel {
   }
 
 
-  public long getAge() {
+  public int getAge() {
     return age;
   }
 
-  public void setAge(long age) {
+  public void setAge(int age) {
     this.age = age;
   }
 
@@ -211,7 +225,7 @@ public class PersonAllInformationModel {
     return modifiertime;
   }
 
-  public void setModifiertime(java.sql.Date modifiertime) {
+  public void setModifiertime(Date modifiertime) {
     this.modifiertime = modifiertime;
   }
 
@@ -278,4 +292,139 @@ public class PersonAllInformationModel {
     this.gendercode = gendercode;
   }
 
+  public String getBeforname() {
+    return beforname;
+  }
+
+  public void setBeforname(String beforname) {
+    this.beforname = beforname;
+  }
+
+  public String getNation() {
+    return nation;
+  }
+
+  public void setNation(String nation) {
+    this.nation = nation;
+  }
+
+  public String getDegreeeducation() {
+    return degreeeducation;
+  }
+
+  public void setDegreeeducation(String degreeeducation) {
+    this.degreeeducation = degreeeducation;
+  }
+
+  public String getNativeplace() {
+    return nativeplace;
+  }
+
+  public void setNativeplace(String nativeplace) {
+    this.nativeplace = nativeplace;
+  }
+
+  public String getOccupation() {
+    return occupation;
+  }
+
+  public void setOccupation(String occupation) {
+    this.occupation = occupation;
+  }
+
+  public String getNationality() {
+    return nationality;
+  }
+
+  public void setNationality(String nationality) {
+    this.nationality = nationality;
+  }
+
+  public String getRegisteredarea() {
+    return registeredarea;
+  }
+
+  public void setRegisteredarea(String registeredarea) {
+    this.registeredarea = registeredarea;
+  }
+
+  public String getPermanentaddress() {
+    return permanentaddress;
+  }
+
+  public void setPermanentaddress(String permanentaddress) {
+    this.permanentaddress = permanentaddress;
+  }
+
+  public String getCurrentaddress() {
+    return currentaddress;
+  }
+
+  public void setCurrentaddress(String currentaddress) {
+    this.currentaddress = currentaddress;
+  }
+
+  public String getNowaddress() {
+    return nowaddress;
+  }
+
+  public void setNowaddress(String nowaddress) {
+    this.nowaddress = nowaddress;
+  }
+
+  public String getYjsponsoralarm() {
+    return yjsponsoralarm;
+  }
+
+  public void setYjsponsoralarm(String yjsponsoralarm) {
+    this.yjsponsoralarm = yjsponsoralarm;
+  }
+
+  public String getExectype() {
+    return exectype;
+  }
+
+  public void setExectype(String exectype) {
+    this.exectype = exectype;
+  }
+
+  public String getKeepaddress() {
+    return keepaddress;
+  }
+
+  public void setKeepaddress(String keepaddress) {
+    this.keepaddress = keepaddress;
+  }
+
+  public String getAppointaddress() {
+    return appointaddress;
+  }
+
+  public void setAppointaddress(String appointaddress) {
+    this.appointaddress = appointaddress;
+  }
+
+  public String getSuspectstatuscode() {
+    return suspectstatuscode;
+  }
+
+  public void setSuspectstatuscode(String suspectstatuscode) {
+    this.suspectstatuscode = suspectstatuscode;
+  }
+
+  public String getGuid() {
+    return guid;
+  }
+
+  public void setGuid(String guid) {
+    this.guid = guid;
+  }
+
+  public String getViolationcode() {
+    return violationcode;
+  }
+
+  public void setViolationcode(String violationcode) {
+    this.violationcode = violationcode;
+  }
 }

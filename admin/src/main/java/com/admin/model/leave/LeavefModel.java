@@ -3,12 +3,33 @@ package com.admin.model.leave;
 import java.util.Date;
 
 public class LeavefModel {
+    private int Id;
     private String reason;
     private String leavedestination;
     private Date starttimestamp;
+
+    public String getLeaveorder() {
+        return leaveorder;
+    }
+
+    public void setLeaveorder(String leaveorder) {
+        this.leaveorder = leaveorder;
+    }
+
     private Date endtimestamp;
     private Date subittimestamp;
     private String personname;
+    private String states;
+    private String auditordatetime;
+    private String leaveorder;
+    public int getId() {
+        return Id;
+    }
+
+    public LeavefModel setId(int id) {
+        Id = id;
+        return this;
+    }
 
     public String getReason() {
         return reason;
@@ -74,6 +95,5 @@ public class LeavefModel {
         this.auditordatetime = auditordatetime;
     }
 
-    private String states;
-    private String auditordatetime;
+
 }

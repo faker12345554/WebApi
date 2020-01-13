@@ -2,31 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_leave.LeaveDao">
-    <select id="getLeave" parameterType="String" resultType="com.admin.model.leave.LeavefModel">
+    <select id="getLeave" parameterType="com.admin.model.search.SearchModel" resultType="com.admin.model.leave.LeavefModel">
         SELECT a.*,b.auditordatetime FROM t_leave AS a
         LEFT JOIN t_auditor AS b ON a.leaveorder=b.leaveorder
         <if test="PersonId !=null and PersonId!=''">
             WHERE a.personid=#{PersonId}
         </if>
-
-        <if test="Condition1 !=null and Condition2!=null and Condition2!='' and StartTime!=null and EndTime!=null ">
-            WHERE a.states=#{Condition1}
-            a.personname like concat('%',#{condition2},'%') and
-            a.subittimestamp >#{StartTime} and a.subittimestamp &lt; #{EndTime}
+        <if test="Condition ==null and PersonName!=null ">
+            where a.personname like concat('%',#{PersonName},'%')
         </if>
-        <if test="Condition1 ==null and (Condition2!=null or Condition2=='') and StartTime!=null and EndTime!=null ">
-            WHERE a.personname like concat('%',#{condition2},'%') and
-            a.subittimestamp >#{StartTime} and a.subittimestamp &lt; #{EndTime}
+        <if test="Condition !=null and PersonName==null ">
+            where a.states like concat('%',#{condition},'%')
         </if>
 
-        <if test="Condition1 ==null and (Condition2==null or Condition2=='') and StartTime!=null and  EndTime!=null ">
-            WHERE a.subittimestamp >#{StartTime} and a.subittimestamp &lt; #{EndTime}
+
+
+        <if test="Condition !=null and PersonName!=null and PersonName!='' and StartTime!=null and EndTime!=null ">
+            WHERE a.states=#{Condition}
+            a.personname like concat('%',#{PersonName},'%') and
+            a.subittimestamp > #{StartTime} and a.subittimestamp &lt; #{EndTime}
         </if>
-        <if test="Condition1 ==null and (Condition2==null or Condition2=='') and StartTime!=null and EndTime==null ">
-            WHERE a.subittimestamp >#{StartTime}
+        <if test="Condition ==null and (PersonName!=null or PersonName=='') and StartTime!=null and EndTime!=null ">
+            WHERE a.personname like concat('%',#{PersonName},'%') and
+            a.subittimestamp &gt; #{StartTime} and a.subittimestamp &lt; #{EndTime}
         </if>
-        <if test="Condition1 ==null and (Condition2==null or Condition2=='') and StartTime==null and EndTime!=null ">
-            WHERE a.subittimestamp &lt; #{EndTime}
+
+        <if test="Condition ==null and (PersonName==null or PersonName=='') and StartTime!=null and  EndTime!=null ">
+            WHERE a.subittimestamp > TO_TIMESTAMP(#{StartTime}, 'YYYY-MM-DD HH24:MI:SS') and a.subittimestamp &lt; TO_TIMESTAMP(#{EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="Condition ==null and (PersonName==null or PersonName=='') and StartTime!=null and EndTime==null ">
+            WHERE a.subittimestamp > TO_TIMESTAMP(#{StartTime}, 'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="Condition ==null and (PersonName==null or PersonName=='') and StartTime==null and EndTime!=null ">
+            WHERE a.subittimestamp &lt; TO_TIMESTAMP(#{EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="list.size()>0">
+            where a.id in
+            <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
         </if>
 
 

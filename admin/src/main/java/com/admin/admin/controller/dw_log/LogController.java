@@ -3,6 +3,7 @@ package com.admin.admin.controller.dw_log;
 import com.admin.admin.service.dw_log.LogService;
 import com.admin.model.log.LogParamModel;
 import com.admin.page.PageBean;
+import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
@@ -28,7 +29,7 @@ public class LogController {
 ////        result.setMessage(ResultCode.SUCCESS.getMessage());
 ////        return result.setData(logService.insertLog(logInformation));
 ////    }
-
+    @UserLoginToken
     @ApiOperation(value = "查询日志信息")
     @PostMapping("/getLog")
     public ResponseResult listLog(@RequestBody LogParamModel logParamModel, HttpServletResponse response){

@@ -10,6 +10,7 @@ public class LocationRecordModel {
     private String address;
     private boolean isOutBound;
     private String timestamp;
+    private String areaCode;
     private List<AreaFenceModel> area;
 
     public float getLatitude() {
@@ -59,6 +60,14 @@ public class LocationRecordModel {
     public void setTimestamp(Date timestamp) {
         String timeStamp=String.valueOf(timestamp.getTime());
         this.timestamp = timeStamp;
+    }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
     }
 
     public List<AreaFenceModel> getArea() {

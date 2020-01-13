@@ -22,13 +22,22 @@ public interface ViolationDao {
     /*
     作废违规分数
      */
-    int deleteViolation(@Param("id") int id);
+    int deleteViolation(@Param("Id") int id, @Param("flag") boolean flag);
 
     /*
     查看
      */
-    Violationfens selectViolation(@Param("id") int id);
+   // Violationfens selectViolation(@Param("id") int id);
+    /*
+    获取下月生效的记录
+     */
 
+    /*
+    修改状态
+     */
+    int updateStatus(@Param("flag") boolean flag,@Param("enabled") boolean enabled,@Param("id") int id);
+
+    List<Violationfens> enabledViolationList();
     /*
     列表
      */

@@ -1,4 +1,4 @@
-package com.sample;
+package com.admin.admin.entity.dw_sponsor;
 
 
 public class FsgaYwRyb {

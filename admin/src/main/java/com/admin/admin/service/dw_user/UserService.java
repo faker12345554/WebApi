@@ -37,9 +37,9 @@ public class UserService {
     }
 
     //删除
-    public int deleteUser(Boolean flag, int UserId) {
+    public int deleteUser(Boolean flag, String UserName) {
 
-        return userDao.deleteUser(flag, UserId);
+        return userDao.deleteUser(flag, UserName);
     }
 
     //登录
@@ -50,10 +50,10 @@ public class UserService {
     }
 
     //获取
-    public User getUser(int id) {
+    public User getUser(String UserName) {
 
 
-        return userDao.getUser(id);
+        return userDao.getUser(UserName);
     }
 
     //用户列表

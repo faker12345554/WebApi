@@ -21,7 +21,7 @@ public class ParamsFilter  implements Filter {
 
 
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(new HashSet<>(
-            Arrays.asList("/Alarm/SaveOrUpdateAlarm", "/Reminder/SaveOrUpdateReminder", "/Report/SaveOrUpdateReport","/Person/insertprison")));
+            Arrays.asList("/Alarm/SaveOrUpdateAlarm", "/Reminder/SaveOrUpdateReminder", "/Report/SaveOrUpdateReport","/Person/insertprison","/Violation/SaveViolation")));
     @Override
     public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2)
             throws IOException, ServletException {
@@ -30,7 +30,6 @@ public class ParamsFilter  implements Filter {
         ParameterRequestWrapper parmsRequest = new ParameterRequestWrapper((HttpServletRequest) arg0);
         String path = request.getRequestURI().substring(request.getContextPath().length()).replaceAll("[/]+$", "");
         boolean allowedPath = ALLOWED_PATHS.contains(path);
-        System.out.println(path);
         if (allowedPath) {
             arg2.doFilter(arg0, arg1);
         }

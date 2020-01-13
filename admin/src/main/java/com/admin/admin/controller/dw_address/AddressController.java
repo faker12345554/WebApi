@@ -2,16 +2,14 @@ package com.admin.admin.controller.dw_address;
 
 import com.admin.admin.entity.dw_address.AddressInformation;
 import com.admin.admin.service.dw_address.AddressService;
+import com.admin.admin.service.dw_task.Tasking;
 import com.common.common.result.ResponseResult;
 
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,6 +20,9 @@ public class AddressController {
     @Autowired
     private AddressService addressService;
 
+    @Autowired
+    private Tasking tasking;
+
     private ResponseResult result = new ResponseResult();
 
     @ApiOperation(value = "上报位置")
@@ -31,4 +32,9 @@ public class AddressController {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( addressService.insertLocation(addressInformation));
     }
+
+//    @GetMapping("/test")
+//    public void GeneratedRecord() throws Exception{
+//        tasking.GeneratedRecord();
+//    }
 }

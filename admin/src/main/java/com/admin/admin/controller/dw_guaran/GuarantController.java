@@ -2,6 +2,7 @@ package com.admin.admin.controller.dw_guaran;
 
 import com.admin.admin.entity.dw_guarant.GuaranteeInformation;
 import com.admin.admin.service.dw_guaran.GuaranService;
+import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
@@ -20,6 +21,7 @@ public class GuarantController {
 
     private ResponseResult result = new ResponseResult();
 
+    @UserLoginToken
     @ApiOperation(value = "新增担保信息")
     @PostMapping("/addGuarant")
     public ResponseResult insertGuarant(@RequestBody GuaranteeInformation guaranteeinformation, HttpServletResponse response) {
@@ -34,7 +36,7 @@ public class GuarantController {
         return result.setData(guaranService.insertGuarant(guaranteeinformation));
 
     }
-
+    @UserLoginToken
     @ApiOperation(value = "修改担保信息")
     @PostMapping("/updateGuara")
     public ResponseResult updateGuara(@RequestBody GuaranteeInformation guaranteeinformation, HttpServletResponse response) {
@@ -43,6 +45,7 @@ public class GuarantController {
         return result.setData(guaranService.updateGuara(guaranteeinformation));
     }
 
+    @UserLoginToken
     @ApiOperation(value = "删除担保信息")
     @GetMapping("/deleteGuara")
     public ResponseResult deleteGuara(@RequestParam boolean flag,
@@ -53,9 +56,10 @@ public class GuarantController {
         return result.setData( guaranService.deleteGuara(flag, GuaId));
     }
 
+    @UserLoginToken
     @ApiOperation(value = "获取担保信息")
     @GetMapping("/getGuara")
-    public ResponseResult getGuara(@RequestParam int id, HttpServletResponse response) {
+    public ResponseResult getGuara(@RequestParam String id, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( guaranService.getGuara(id));

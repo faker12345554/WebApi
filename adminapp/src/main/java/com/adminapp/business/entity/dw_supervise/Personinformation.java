@@ -11,6 +11,7 @@ public class Personinformation {
   private long age;
   private int gender;
   private String headUrl;
+  private String stateCode;
   private String state;
   public String violateCode;
   public String violate;
@@ -73,6 +74,14 @@ public class Personinformation {
 
   public void setHeadUrl(String headUrl) {
     this.headUrl = headUrl;
+  }
+
+  public String getStateCode() {
+    return stateCode;
+  }
+
+  public void setStateCode(String stateCode) {
+    this.stateCode = stateCode;
   }
 
   public String getState() {

@@ -7,6 +7,7 @@ import com.admin.admin.entity.dw_user.User;
 import com.admin.admin.service.dw_person.PersoinfoService;
 import com.admin.model.search.SearchModel;
 import com.admin.page.PageBean;
+import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.github.pagehelper.PageHelper;
@@ -36,7 +37,9 @@ public class PersonController {
 
     private ResponseResult result = new ResponseResult();
 
+
     //新增
+    @UserLoginToken
     @ApiOperation("新增人员信息")
     @PostMapping("/insertPersion")
     public ResponseResult insertPersion(@RequestBody Personinformation personinformation) {
@@ -60,6 +63,7 @@ public class PersonController {
     }
 
     //删除
+    @UserLoginToken
     @ApiOperation("删除人员信息")
     @GetMapping("/deletePersion")
     public ResponseResult deletePersion(@RequestParam boolean flag, @RequestParam String PersonId, HttpServletResponse response) {
@@ -74,6 +78,7 @@ public class PersonController {
     }
 
     //获取
+   // @UserLoginToken
     @ApiOperation("获取人员信息")
     @GetMapping("/getPersoin")
     public ResponseResult getPersoin(@RequestParam String id, HttpServletResponse response) {
@@ -81,7 +86,7 @@ public class PersonController {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(persoinfoService.getPersoin(id));
     }
-
+    @UserLoginToken
     @ApiOperation("变更主办人")
     @GetMapping("/updateSponsor")
     public ResponseResult updateSponsor(@RequestParam String Name, String id, String PersonId) {
@@ -89,15 +94,15 @@ public class PersonController {
         result.setMessage("变更成功");
         return result.setData(persoinfoService.updateSponsor(Name, id, PersonId));
     }
-
+    @UserLoginToken
     @ApiOperation("配置管理方式")
-    @GetMapping("/insertprison")
+    @PostMapping("/insertprison")
     public ResponseResult insertprison(@RequestBody List<TPrisonsetting> List) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage("配置成功");
         return result.setData(persoinfoService.insertprison(List));
     }
-
+    @UserLoginToken
     @ApiOperation("人员信息列表")
     @PostMapping("/ListPerson")
     public ResponseResult ListPerson(@RequestBody(required = false) SearchModel searchModel) {
@@ -113,14 +118,8 @@ public class PersonController {
         return result.setData(pageData);
     }
 
-    @ApiOperation("获取需要的枚举信息")
-    @GetMapping("/getEnum")
-    public ResponseResult getEnum() {
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(persoinfoService.getEnum());
-    }
 
+    @UserLoginToken
     @ApiOperation("导出监居人员信息")
     @PostMapping("/ExportPerson")
     public ResponseResult ExportExcel(@RequestBody SearchModel searchModel) {
@@ -163,8 +162,8 @@ public class PersonController {
 //                dataRow.createCell(10).setCellValue(printOrder.getAddress());
             });
             String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) + ".xls";
-            File file = new File(System.getProperty("user.dir") + "\\"+ dateTime);
-            rtn.setData(file);
+            File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);
+            rtn.setData(dateTime);
             workbook.write(file);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -175,26 +174,5 @@ public class PersonController {
         return rtn;
     }
 
-    /**
-     * 获取机构
-     * @return
-     */
-    @GetMapping("/ListMechanism")
-    public ResponseResult ListMechanism(){
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(persoinfoService.ListMechanism());
-    }
 
-    /**
-     * 获取主办人
-     * @param Code
-     * @return
-     */
-    @GetMapping("/ListSponsor")
-    public ResponseResult ListSponsor(@RequestParam String Code){
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(persoinfoService.ListSponsor(Code));
-    }
 }

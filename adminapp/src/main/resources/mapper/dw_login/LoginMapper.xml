@@ -11,4 +11,7 @@
     <update id="updateUserPassword">
         update t_user set password=#{password} where accountname=#{userId}
     </update>
+    <select id="getRoleName" resultType="String">
+        select permissionname FROM t_userpermissiongroup WHERE permissionid=#{permissionId}
+    </select>
 </mapper>

@@ -14,7 +14,7 @@ public interface UserDao {
     //修改用户
     int updateUser(@Param("user") User user);
     //删除
-    int deleteUser(@Param("flag") boolean flag, @Param("UserId") int UserId);
+    int deleteUser(@Param("flag") boolean flag, @Param("UserName") String UserName);
     //登录
     User login(@Param("UserName") String UserName,@Param("Password") String Password);
 
@@ -22,7 +22,10 @@ public interface UserDao {
     List<User> listUser(@Param("flag") boolean flag);
 
     //查看
-    User getUser(@Param("id") int id);
+    User getUser(@Param("UserName") String UserName);
     //根据用户名获取用户 查重
     int GetUserByAccountName(@Param("Account") String Account);
+
+    //查询用户信息
+    User GetUserByid(@Param("Id")int id);
 }

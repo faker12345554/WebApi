@@ -2,6 +2,7 @@ package com.admin.admin.controller.dw_enclosure;
 
 import com.admin.admin.entity.dw_enclosure.enclosure;
 import com.admin.admin.service.dw_enclosure.enclosureService;
+import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
@@ -22,6 +23,7 @@ public class enclosureController {
 
     private ResponseResult result = new ResponseResult();
 
+    @UserLoginToken
     @ApiParam("新增人员行动范围信息")
     @PostMapping("/saveEnclosure")
     public ResponseResult saveEnclosure(@RequestBody enclosure enclosure, HttpServletResponse response) {
@@ -39,6 +41,7 @@ public class enclosureController {
 //        return result.setData( enclosureService.updateEnclosure(enclosure));
 //    }
 
+    @UserLoginToken
     @ApiOperation("删除人员行动范围信息")
     @GetMapping("/deleteEnclosure")
     public ResponseResult deleteEnclosure(@RequestParam String personId, HttpServletResponse response) {
@@ -47,6 +50,7 @@ public class enclosureController {
         return result.setData(enclosureService.deleteEnclosure(personId));
     }
 
+    @UserLoginToken
     @ApiOperation("查看人员行动范围信息")
     @GetMapping("/selectEnclosure")
     public ResponseResult selectEnclosure(@RequestParam String personId, HttpServletResponse response) {

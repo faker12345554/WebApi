@@ -4,25 +4,27 @@
 <mapper namespace="com.admin.admin.dao.dw_violation.ViolationDao">
 
     <select id="ListViolation"  resultType="com.admin.admin.entity.dw_violation.Violationfens">
-        select * from t_violationfens where status=true
+        select * from t_violationfens
     </select>
 
-    <select id="selectViolation" resultType="com.admin.admin.entity.dw_violation.Violationfens" parameterType="int">
-        select * from t_violationfens where id=#{id}
-    </select>
-
-    <insert id="SaveViolation" parameterType="com.admin.admin.entity.dw_violation.Violationfens">
-        INSERT INTO t_violationfens(code,violationname,rangefens,createperson,accountname,createtime,status) VALUES
-        (#{code},#{violationname},#{rangefens},#{createperson},#{accountname},#{createtime},#{status})
-    </insert>
+<!--    <select id="selectViolation" resultType="com.admin.admin.entity.dw_violation.Violationfens" parameterType="int">-->
+<!--        select * from t_violationfens where id=#{id}-->
+<!--    </select>-->
 
     <update id="UpdateViolation" parameterType="com.admin.admin.entity.dw_violation.Violationfens">
-        update t_violationfens set code=#{code},violationname=#{violationname},rangefens=#{rangefens},createperson=#{createperson},
-        accountname=#{accountname},createtime=#{createtime} where id=#{id}
+        update t_violationfens set violationcode=#{violationcode},violationname=#{violationname},slightfens=#{slightfens},seriousfens=#{seriousfens},createperson=#{createperson}
+        ,accountname=#{accountname},createtime=#{createtime} where id=#{id}
     </update>
 
-    <update id="deleteViolation" parameterType="int">
-        update t_violationfens set status=false where id=#{id}
+    <insert id="SaveViolation" parameterType="com.admin.admin.entity.dw_violation.Violationfens">
+        INSERT INTO t_violationfens(violationcode,violationname,slightfens,seriousfens,createperson,accountname,createtime, status) VALUES
+        (#{violationcode},#{violationname},#{slightfens},#{seriousfens},#{createperson},#{accountname},#{createtime},#{status})
+    </insert>
+
+
+
+    <update id="deleteViolation">
+      update t_violationfens set status=#{flag} where id=#{Id}
     </update>
 
 

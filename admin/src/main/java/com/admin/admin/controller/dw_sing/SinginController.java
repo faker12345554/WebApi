@@ -7,6 +7,7 @@ import com.admin.model.Execl.ExeclModel;
 import com.admin.model.search.SearchModel;
 import com.admin.model.singin.SinginModel;
 import com.admin.page.PageBean;
+import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.github.pagehelper.PageHelper;
@@ -29,11 +30,12 @@ import java.util.List;
 @Api(value="签到信息管理Controller",tags={"报到信息管理"})
 @RestController
 @RequestMapping("/Singin")
-public class SinginControll {
+public class SinginController {
     @Autowired
     private SinginService singinService;
     private ResponseResult result = new ResponseResult();
 
+    @UserLoginToken
     @ApiOperation("查看签到信息")
     @GetMapping("/getSingin")
     public ResponseResult getSingin(@RequestParam int Id, HttpServletResponse response) {
@@ -41,7 +43,7 @@ public class SinginControll {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(singinService.getSingin(Id));
     }
-
+   // @UserLoginToken
     @ApiOperation("签到信息列表")
     @PostMapping("/ListSingin")
     public ResponseResult ListSingin(@RequestBody SearchModel searchModel){
@@ -73,18 +75,18 @@ public class SinginControll {
 
     }
 
+   //@UserLoginToken
     @ApiOperation("音视频列表")
     @PostMapping("/ListAudio")
     public ResponseResult ListAudio(@RequestBody SearchModel searchModel){
         try {
+            PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
             List<SinginModel> allItems = singinService.ListAudio(searchModel);
             if (allItems.size()==0){
                 result.setCode(ResultCode.NULLDATA.getCode());
                 result.setMessage(ResultCode.NULLDATA.getMessage());
                 return result.setData("");
             }
-
-            PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
 
             PageInfo<SinginModel> info = new PageInfo<>(allItems);//全部商品
             int countNums = (int) info.getTotal();            //总记录数
@@ -111,7 +113,8 @@ public class SinginControll {
     public ResponseResult ExportSingIn(@RequestBody SearchModel searchModel){
         List<SinginModel> allItems = singinService.ListSingin(searchModel);
         String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) +"签到信息"+ ".xls";
-        File file = new File(System.getProperty("user.dir") + "\\"+ dateTime);
+        File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);
+        result.setData(dateTime);
         try (HSSFWorkbook workbook = new HSSFWorkbook()) {
             HSSFSheet sheet = workbook.createSheet("打印历史定位信息");
             HSSFRow row = sheet.createRow(0);
@@ -146,12 +149,13 @@ public class SinginControll {
 
 
             workbook.write(file);
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        result.setData("导出成功");
+        result.setMessage("导出成功");
         result.setCode(200);
-        return result.setData(file);
+        return result;
     }
 
 }
