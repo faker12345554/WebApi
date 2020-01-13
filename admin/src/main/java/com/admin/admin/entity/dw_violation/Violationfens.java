@@ -21,12 +21,33 @@ public class Violationfens {
   private int slightfens;
   private int seriousfens;
   private String createperson;
+
+  public boolean isEnabled() {
+    return enabled;
+  }
+
+  public Violationfens setEnabled(boolean enabled) {
+    this.enabled = enabled;
+    return this;
+  }
+
   private String accountname;
   private boolean status;
   private Date createtime;
+  private Date updatemonth;
+  private boolean enabled;
 
   public String getViolationcode() {
     return violationcode;
+  }
+
+  public Date getUpdatemonth() {
+    return updatemonth;
+  }
+
+  public Violationfens setUpdatemonth(Date updatemonth) {
+    this.updatemonth = updatemonth;
+    return this;
   }
 
   public Violationfens setViolationcode(String violationcode) {

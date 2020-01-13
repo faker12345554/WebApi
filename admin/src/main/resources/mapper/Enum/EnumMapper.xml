@@ -15,7 +15,7 @@
         <result property="mjbh" column="mjbh" jdbcType="VARCHAR" />
         <result property="mjmc" column="mjmc" jdbcType="VARCHAR"/>
     </resultMap>
-    <select id="ListSponsor" resultMap="SponsorMap" parameterType="String">
+    <select id="GetPolice" resultMap="SponsorMap" parameterType="String">
         SELECT mjbh,mjmc FROM fsga_yw_ryb where bmmc=#{PoliceStation}
     </select>
 
