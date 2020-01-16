@@ -1,6 +1,7 @@
 package com.prisonapp.business.service.dw_user;
 
 import com.prisonapp.business.dao.dw_user.UserDao;
+import com.prisonapp.business.entity.dw_supervise.TPersoninformation;
 import com.prisonapp.business.entity.dw_user.GetUserInfoModel;
 import com.prisonapp.business.entity.dw_user.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class UserService {
     public GetUserInfoModel getUserInfo(String userId){
         return userDao.getUserInfo(userId);
     }
+
+
 
     public List<UserModel> modifyPassword(String userId, String password){
         return userDao.modifyPassword(userId,password);

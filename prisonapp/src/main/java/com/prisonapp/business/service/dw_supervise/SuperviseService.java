@@ -95,4 +95,8 @@ public class SuperviseService {
         return  superviseDao.insertFscope( userId,content);
     }
 
+    public TPersoninformation RelatedId(String accountName){
+        return  superviseDao.RelatedId( accountName);
+    }
+
 }

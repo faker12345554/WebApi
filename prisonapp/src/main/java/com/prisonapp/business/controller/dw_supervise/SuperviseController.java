@@ -38,7 +38,6 @@ public class SuperviseController {
 
     @Autowired
     private SuperviseService superviseService;
-
     private ResultGetApplyLeaveListModel resultGetApplyLeaveListModel = new ResultGetApplyLeaveListModel();
     private ResultGetSuperviseTaskModel resultGetSuperviseTaskModel = new ResultGetSuperviseTaskModel();
     private FaceRecognizeModel faceRecognizeModel = new FaceRecognizeModel();
@@ -53,7 +52,7 @@ public class SuperviseController {
     public ResultSet getApplyLeaveList(@ApiParam(name = "statusCode", value = "审批状态编号") @RequestParam(required = true) String statusCode, @ApiParam(name = "count", value = "当前已经获取的数据条数") @RequestParam(required = true) int count, @ApiParam(name = "requestCount", value = "请求获取数据的条数") @RequestParam(required = true) int requestCount) {
         List<GetApplyLeaveListModel> ApplyLeaveListModels;
         if (statusCode.equals("0")) {
-            ApplyLeaveListModels = superviseService.getAllApplyLeaveList(count, requestCount, TokenUtil.getTokenUserId());
+            ApplyLeaveListModels = superviseService.getAllApplyLeaveList(count, requestCount, getPersonId());
         } else {
             ApplyLeaveListModels = superviseService.getApplyLeaveList(statusCode, count, requestCount, TokenUtil.getTokenUserId());
         }
@@ -428,4 +427,11 @@ public class SuperviseController {
 //        System.out.println("result");
 //
 //    }
+
+    public  String getPersonId(){
+
+        TPersoninformation tPersoninformation = superviseService.RelatedId(TokenUtil.getTokenUserId());//根据user中的手机号去取出personid
+        String personid = tPersoninformation.getPersonid();
+        return personid;
+    }
 }

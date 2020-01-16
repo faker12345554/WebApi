@@ -1,6 +1,7 @@
 package com.prisonapp.business.controller.dw_user;
 
 import com.common.common.result.ResultSet;
+import com.prisonapp.business.controller.dw_supervise.SuperviseController;
 import com.prisonapp.business.entity.dw_user.TokenModel;
 import com.prisonapp.business.entity.dw_user.UserModel;
 import com.prisonapp.business.entity.dw_user.GetUserInfoModel;
@@ -30,9 +31,9 @@ public class UserController {
 
     @Autowired
     private TokenService tokenService;
+    private SuperviseController superviseController =new SuperviseController();
     private ResultSet result = new ResultSet();
     private TokenModel tokenModel=new TokenModel();
-    //private TokenResult tokenResult =new TokenResult();
 
 
     @ApiOperation(value = "登录")
@@ -71,7 +72,7 @@ public class UserController {
     @ApiOperation(value = "获取保外人员信息")
     @GetMapping("/getUserInfo")
     public ResultSet getUserInfo(){
-          GetUserInfoModel getUserInfoModels = userService.getUserInfo(TokenUtil.getTokenUserId());
+          GetUserInfoModel getUserInfoModels = userService.getUserInfo(superviseController.getPersonId());
         result.resultCode=0;
         result.resultMsg="";
         result.data=getUserInfoModels;
@@ -82,9 +83,9 @@ public class UserController {
     @ApiOperation(value = "保外人员修改密码")
     @GetMapping("/modifyPassword")
     public ResultSet modifyPassword(@ApiParam(name = "password",value = "旧密码")@RequestParam(required = false)String password,@ApiParam(name = "newPassword",value = "新密码")@RequestParam(required = false)String newPassword){
-        List<UserModel> userModel =userService.modifyPassword(TokenUtil.getTokenUserId(),password);
+        List<UserModel> userModel =userService.modifyPassword(superviseController.getPersonId(),password);
         if(userModel.size()!=0){
-          int a = userService.upModifyPassword(TokenUtil.getTokenUserId(),newPassword);
+          int a = userService.upModifyPassword(superviseController.getPersonId(),newPassword);
           if(a!=0){
               result.resultCode=0;
               result.resultMsg="";

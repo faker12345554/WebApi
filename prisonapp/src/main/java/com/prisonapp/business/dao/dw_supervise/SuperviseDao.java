@@ -59,4 +59,6 @@ public interface SuperviseDao {
   //  int updateFscope(String userId,boolean fscope) ;
 
     int insertFscope(String userId,String content);
+
+    TPersoninformation RelatedId(@Param("accountName")String accountName);
 }

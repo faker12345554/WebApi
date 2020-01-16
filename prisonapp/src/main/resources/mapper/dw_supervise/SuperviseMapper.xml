@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.prisonapp.business.dao.dw_supervise.SuperviseDao">
-    <select id="getApplyLeaveList"  resultType="com.prisonapp.business.entity.dw_supervise.GetApplyLeaveListModel">
+    <select id="getApplyLeaveList" resultType="com.prisonapp.business.entity.dw_supervise.GetApplyLeaveListModel">
     select leaveorder as code,statuscode as statusCode, states as status,personname as applicant,subittimestamp as applyTimestamp,starttimestamp as  startTimestamp,endtimestamp as endTimestamp,
     leavedestination as  address,  reason,recording as reasonAudioUrl FROM t_leave where personid=#{userId} and statuscode=#{statusCode}
      ORDER BY subittimestamp DESC LIMIT #{requestCount} OFFSET #{count}
     </select>
-    <select id="getAllApplyLeaveList"  resultType="com.prisonapp.business.entity.dw_supervise.GetApplyLeaveListModel">
+    <select id="getAllApplyLeaveList" resultType="com.prisonapp.business.entity.dw_supervise.GetApplyLeaveListModel">
     select leaveorder as code,statuscode as statusCode, states as status,personname as applicant,subittimestamp as applyTimestamp,starttimestamp as  startTimestamp,endtimestamp as endTimestamp,
     leavedestination as  address,  reason,recording as reasonAudioUrl FROM t_leave where personid=#{userId}
      ORDER BY subittimestamp DESC LIMIT #{requestCount} OFFSET #{count}
@@ -17,25 +17,25 @@
         select * FROM t_leave where personid=#{userId} and statuscode=#{statusCode}
     </select>
 
-    <select id="applyRecord"  resultType="com.prisonapp.business.entity.dw_supervise.ApplyRecordModel">
+    <select id="applyRecord" resultType="com.prisonapp.business.entity.dw_supervise.ApplyRecordModel">
     select  statuscode as statusCode,states as status,auditordatetime as timestamp,accountname as  person from t_auditor where leaveorder=#{code} order by auditordatetime
      </select>
 
-<!--    <insert id="2323324342342" >-->
-<!--       /* INSERT INTO t_leave (personid, leaveorder,starttimestamp,endtimestamp,-->
-<!--        reason,recording,provincecode,provincename,-->
-<!--        citycode,cityname,areacode,areaname,personname,-->
-<!--        statuscode,states,subittimestamp)-->
-<!--         VALUES (#{userId}, #{code},to_timestamp(#{startDate}),to_timestamp(#{endDate}),-->
-<!--         #{reason},#{reasonAudioUrl},#{provinceCode},#{province},-->
-<!--         #{cityCode},#{city},#{districtCode},#{district},#{personName},-->
-<!--         '1','待审核',current_timestamp)*/-->
+    <!--    <insert id="2323324342342" >-->
+    <!--       /* INSERT INTO t_leave (personid, leaveorder,starttimestamp,endtimestamp,-->
+    <!--        reason,recording,provincecode,provincename,-->
+    <!--        citycode,cityname,areacode,areaname,personname,-->
+    <!--        statuscode,states,subittimestamp)-->
+    <!--         VALUES (#{userId}, #{code},to_timestamp(#{startDate}),to_timestamp(#{endDate}),-->
+    <!--         #{reason},#{reasonAudioUrl},#{provinceCode},#{province},-->
+    <!--         #{cityCode},#{city},#{districtCode},#{district},#{personName},-->
+    <!--         '1','待审核',current_timestamp)*/-->
 
-<!--&#45;&#45;         INSERT INTO t_auditor(leaveorder,leavingmessage,statuscode,states) VALUES (#{code},#{submitApplyLeaveModel.reason},1,'待审核')-->
-<!--INSERT INTO t_leave (personid,cityname)-->
-<!--         VALUES (#{userId},#{city})-->
+    <!--&#45;&#45;         INSERT INTO t_auditor(leaveorder,leavingmessage,statuscode,states) VALUES (#{code},#{submitApplyLeaveModel.reason},1,'待审核')-->
+    <!--INSERT INTO t_leave (personid,cityname)-->
+    <!--         VALUES (#{userId},#{city})-->
 
-<!--    </insert>-->
+    <!--    </insert>-->
 
     <insert id="submitApplyLeave">
         insert into t_leave(personid,leaveorder,starttimestamp,endtimestamp,
@@ -72,7 +72,7 @@
     select id as code from t_singin where type=#{type} and personid =#{userId} order by createtime desc limit 1
     </select>
 
-    <insert id="autoLocation" >
+    <insert id="autoLocation">
         insert into t_location (latitude,longitude,locationtype,address,personid,timestamp,fscope) values (#{latitude},#{longitude},#{locationType},#{address},#{userId},#{date},#{fScope})
     </insert>
 
@@ -94,18 +94,18 @@
     <select id="getLocationConfig" resultType="com.prisonapp.business.entity.dw_supervise.TRemindersettings">
         SELECT * FROM t_remindersettings WHERE  status='t' and code='4'
     </select>
-<!--    <select id="getBatteryConfigTimestamp" resultType="com.prisonapp.business.entity.dw_supervise.GetSuperviseConfigModel">-->
-<!--         SELECT settingtime as lastEditTime FROM t_prisonsetting FULL JOIN t_reportsettings ON t_prisonsetting.settingcode =t_reportsettings.type WHERE personid=#{userId} and status='t' ORDER BY settingtime DESC limit 1-->
+    <!--    <select id="getBatteryConfigTimestamp" resultType="com.prisonapp.business.entity.dw_supervise.GetSuperviseConfigModel">-->
+    <!--         SELECT settingtime as lastEditTime FROM t_prisonsetting FULL JOIN t_reportsettings ON t_prisonsetting.settingcode =t_reportsettings.type WHERE personid=#{userId} and status='t' ORDER BY settingtime DESC limit 1-->
 
-<!--    </select>-->
+    <!--    </select>-->
 
     <select id="getPolygon" resultType="com.prisonapp.business.entity.dw_supervise.TEnclosure">
         select * from t_enclosure where personid =#{userId} and status='t'
     </select>
 
-<!--    <update id="updateFscope">-->
-<!--        update t_location set fscope =#{fscope} where timestamp= (SELECT MAX(timestamp) FROM t_location where personid =#{userId})-->
-<!--    </update>-->
+    <!--    <update id="updateFscope">-->
+    <!--        update t_location set fscope =#{fscope} where timestamp= (SELECT MAX(timestamp) FROM t_location where personid =#{userId})-->
+    <!--    </update>-->
 
     <insert id="insertFscope">
         insert into t_personmessage (modular,personid,modularname,messagetime,readmessage,detailtype,detailtypename,content)
@@ -113,4 +113,9 @@
         insert into t_message (modular, content,personid,modularname,messagetime,readmessage,detailtype,detailtypename)
         values                (2,#{content},#{userId},'报警提醒',current_timestamp,'f',3,'越界报警通知')
     </insert>
+
+    <select id="RelatedId" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation" parameterType="String">
+        select * from t_personinformation where contact=#{accountName}
+    </select>
+
 </mapper>
