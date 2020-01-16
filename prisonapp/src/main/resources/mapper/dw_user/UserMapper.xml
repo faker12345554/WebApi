@@ -21,4 +21,8 @@
     <update id="upModifyPassword" >
         update t_user set password=#{newPassword} where personid =#{userId}
     </update>
+
+    <select id="RelatedId" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation" parameterType="String">
+        select * from t_personinformation where contact=#{accountName}
+    </select>
 </mapper>

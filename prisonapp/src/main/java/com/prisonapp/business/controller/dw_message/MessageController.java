@@ -4,7 +4,9 @@ package com.prisonapp.business.controller.dw_message;
 import com.common.common.result.ResultSet;
 import com.prisonapp.business.controller.dw_supervise.SuperviseController;
 import com.prisonapp.business.entity.dw_message.*;
+import com.prisonapp.business.entity.dw_supervise.TPersoninformation;
 import com.prisonapp.business.service.dw_message.MessageService;
+import com.prisonapp.business.service.dw_supervise.SuperviseService;
 import com.prisonapp.token.TokenUtil;
 import com.prisonapp.token.tation.UserLoginToken;
 import io.swagger.annotations.Api;
@@ -27,7 +29,6 @@ public class  MessageController {
     @Autowired
     private MessageService messageService;
     private ResultSet result = new ResultSet();
-    private SuperviseController superviseController=new SuperviseController();
     private ResultSearchNotificationModel resultSearchNotificationModel = new ResultSearchNotificationModel();
     private ResultMessageListModel resultMessageListModel = new ResultMessageListModel();
     private ResultNotificationMessageModel resultNotificationMessage = new ResultNotificationMessageModel();
@@ -40,9 +41,10 @@ public class  MessageController {
     @GetMapping("/getNotificationList")
     public ResultSet getNotificationList() {
         int sum = 0;
-        List<NotificationMessageModel> notificationMessageModels = messageService.getNotificationList(superviseController.getPersonId());
+        String a=TokenUtil.getTokenUserId();
+        List<NotificationMessageModel> notificationMessageModels = messageService.getNotificationList(getPersonId());
         for (NotificationMessageModel item : notificationMessageModels) {
-            int unreadCount = messageService.unreadCount(item.getType(), superviseController.getPersonId()).size();
+            int unreadCount = messageService.unreadCount(item.getType(),getPersonId()).size();
             item.setUnreadCount(unreadCount);
             sum += unreadCount;
         }
@@ -61,13 +63,14 @@ public class  MessageController {
     @GetMapping("/getMessageList")
     public ResultSet getMessageList(@ApiParam(name = "type",value = "类型编号") @RequestParam(required = true) String type,@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true) int count,@ApiParam(name = "requestCount",value = "请求获取数据的条数") @RequestParam(required = true) int requestCount,@ApiParam(name = "key",value = "搜索关键字") @RequestParam(required = false) String key) {
         List<MessageListModel> messageListModel;
+        String a=TokenUtil.getTokenUserId();
         int totalCount =0;
         if(type.equals("0")){
-            messageListModel = messageService.getAllMessageList( count, requestCount, key, superviseController.getPersonId());
-            totalCount = (messageService.messageAllTotalCount( superviseController.getPersonId())).size();
+            messageListModel = messageService.getAllMessageList( count, requestCount, key, getPersonId());
+            totalCount = (messageService.messageAllTotalCount( getPersonId())).size();
         }else{
-         messageListModel = messageService.getMessageList(Integer.parseInt(type), count, requestCount, key, superviseController.getPersonId());
-            totalCount = (messageService.messageTotalCount(Integer.parseInt(type), superviseController.getPersonId())).size();
+         messageListModel = messageService.getMessageList(Integer.parseInt(type), count, requestCount, key, getPersonId());
+            totalCount = (messageService.messageTotalCount(Integer.parseInt(type), getPersonId())).size();
         }
 
 
@@ -85,9 +88,10 @@ public class  MessageController {
     @GetMapping("/readMessage")
     public ResultSet readMessage(@ApiParam(name = "type",value = "类型编号") @RequestParam(required = true) int type,@ApiParam(name = "messageTimestamp",value = "最新一条已获取的消息的时间戳") @RequestParam(required = true) String messageTimestamp) {
         long longMessageTimestamp = Long.parseLong(messageTimestamp);
+        String a=TokenUtil.getTokenUserId();
         if (System.currentTimeMillis() - longMessageTimestamp >= 0)//当前时间戳减掉传入的时间戳，如果大于零，则传入的时间戳小于当前时间戳
         {
-            int res = messageService.readMessage(type, messageTimestamp, superviseController.getPersonId());
+            int res = messageService.readMessage(type, messageTimestamp, getPersonId());
             if (res != 0) {
                 result.resultCode = 0;
                 result.resultMsg = "";
@@ -110,10 +114,11 @@ public class  MessageController {
     @ApiOperation(value = " 保外人员通知搜索")
     @GetMapping("/searchNotification")
     public ResultSet searchNotification(@ApiParam(name = "key",value = "搜索关键字") @RequestParam(required = false) String key) {
-        List<SearchNotificationModel> searchNotificationModels = messageService.searchNotification(key, superviseController.getPersonId());
+        String a=TokenUtil.getTokenUserId();
+        List<SearchNotificationModel> searchNotificationModels = messageService.searchNotification(key, getPersonId());
         int sum = 0;
         for (SearchNotificationModel item : searchNotificationModels) {
-            int messageCount = messageService.messageTotalCount(Integer.parseInt(item.getType()), superviseController.getPersonId()).size();
+            int messageCount = messageService.messageTotalCount(Integer.parseInt(item.getType()), getPersonId()).size();
             item.setMessageCount(messageCount);
             sum += messageCount;
         }
@@ -131,14 +136,15 @@ public class  MessageController {
     public ResultSet getNewestMessageList(@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true) int count,@ApiParam(name = "requestCount",value = "请求获取数据的条数") @RequestParam(required = true) int requestCount) {
         //获取今天的日期
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String a=TokenUtil.getTokenUserId();
         String todayDate = sdf.format(new Date());
         //获取明天的日期
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(new Date());
         calendar.add(calendar.DATE, 1);
         String tomorrowDate = sdf.format(calendar.getTime());
-        List<MessageListModel> NewestMessageListModels = messageService.getNewestMessageList(count,requestCount,todayDate, tomorrowDate, superviseController.getPersonId());
-        int newestMessageTotalCount =(messageService.newestMessageTotalCount(todayDate, tomorrowDate, superviseController.getPersonId())).size();
+        List<MessageListModel> NewestMessageListModels = messageService.getNewestMessageList(count,requestCount,todayDate, tomorrowDate, getPersonId());
+        int newestMessageTotalCount =(messageService.newestMessageTotalCount(todayDate, tomorrowDate, getPersonId())).size();
         resultMessageListModel.totalCount=newestMessageTotalCount;
         resultMessageListModel.list=NewestMessageListModels;
         result.resultCode = 0;
@@ -152,11 +158,12 @@ public class  MessageController {
     @ApiOperation(value = " 获取保外人员的某一类通知")
     @GetMapping("/getNotification")
     public ResultSet getNotification(@ApiParam(name = "type",value = "通知类型") @RequestParam(required = true) String type){
+        String a=TokenUtil.getTokenUserId();
         int iType = Integer.parseInt(type);
-        NotificationMessageModel notificationMessageModels =messageService.getNotification(superviseController.getPersonId(),iType);
+        NotificationMessageModel notificationMessageModels =messageService.getNotification(getPersonId(),iType);
         if(notificationMessageModels!=null){
-            int a =messageService.unreadCount(iType,superviseController.getPersonId()).size();
-            notificationMessageModels.setUnreadCount(a);
+            int count =messageService.unreadCount(iType,getPersonId()).size();
+            notificationMessageModels.setUnreadCount(count);
             result.resultCode = 0;
             result.resultMsg = "";
             result.data = notificationMessageModels;
@@ -172,5 +179,10 @@ public class  MessageController {
         return result;
     }
 
+    public  String getPersonId(){
 
+        TPersoninformation tPersoninformation = messageService.RelatedId(TokenUtil.getTokenUserId());//根据user中的手机号去取出personid
+        String personid = tPersoninformation.getPersonid();
+        return personid;
+    }
 }

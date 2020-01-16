@@ -61,4 +61,8 @@ select  modular as type ,modularname as typeName,detailtype as detailType,detail
     <select id="getNotification" resultType="com.prisonapp.business.entity.dw_message.NotificationMessageModel">
         select modular as type, modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,content,messagetime as timestamp from t_personmessage where personid=#{userId} and modular=#{type} ORDER BY timestamp  desc limit 1
     </select>
+
+    <select id="RelatedId" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation" parameterType="String">
+        select * from t_personinformation where contact=#{accountName}
+    </select>
 </mapper>

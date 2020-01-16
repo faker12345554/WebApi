@@ -31,4 +31,8 @@ public class UserService {
     public int upModifyPassword(String userId, String newPassword){
         return userDao.upModifyPassword(userId,newPassword);
     }
+
+    public TPersoninformation RelatedId(String accountName){
+        return  userDao.RelatedId( accountName);
+    }
 }

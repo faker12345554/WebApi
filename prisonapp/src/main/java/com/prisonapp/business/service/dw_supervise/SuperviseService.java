@@ -3,6 +3,7 @@ package com.prisonapp.business.service.dw_supervise;
 import com.prisonapp.business.dao.dw_supervise.SuperviseDao;
 import com.prisonapp.business.entity.dw_supervise.*;
 import com.prisonapp.business.entity.dw_user.UserModel;
+import com.prisonapp.token.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -98,5 +99,6 @@ public class SuperviseService {
     public TPersoninformation RelatedId(String accountName){
         return  superviseDao.RelatedId( accountName);
     }
+
 
 }

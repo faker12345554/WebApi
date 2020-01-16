@@ -5,6 +5,7 @@ import com.prisonapp.business.entity.dw_message.MessageListModel;
 import com.prisonapp.business.entity.dw_message.MessageModel;
 import com.prisonapp.business.entity.dw_message.NotificationMessageModel;
 import com.prisonapp.business.entity.dw_message.SearchNotificationModel;
+import com.prisonapp.business.entity.dw_supervise.TPersoninformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,5 +57,7 @@ public class MessageService {
         return messageDao.getNotification(userId,type);
     }
 
-
+    public TPersoninformation RelatedId(String accountName){
+        return  messageDao.RelatedId( accountName);
+    }
 }

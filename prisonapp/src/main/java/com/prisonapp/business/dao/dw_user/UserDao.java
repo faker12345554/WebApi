@@ -22,4 +22,6 @@ public interface UserDao {
     List<UserModel> modifyPassword(String userId, String password);
 
     int upModifyPassword(String userId, String newPassword);
+
+    TPersoninformation RelatedId(@Param("accountName")String accountName);
 }
