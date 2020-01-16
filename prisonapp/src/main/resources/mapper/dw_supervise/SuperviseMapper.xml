@@ -46,7 +46,7 @@
         #{reason},#{reasonAudioUrl},#{provinceCode},#{province},
         #{cityCode},#{city},#{districtCode},#{district},#{personName},
         '1','待审核',current_timestamp);
-        INSERT INTO t_auditor(leaveorder,leavingmessage,statuscode,states) VALUES (#{code},#{reason},1,'待审核');
+        INSERT INTO t_auditor(leaveorder,userid,leavingmessage,statuscode,states,accountname,auditordatetime) VALUES (#{code},#{sponsorAlarm},#{reason},1,'待审核',#{personName},current_timestamp);
         INSERT INTO t_message (modular,personid,modularname,messagetime,readmessage,detailtype,detailtypename,leaveorder) VALUES (3,#{userId},'审批提醒',current_timestamp,'f',1,'外出审批通知',#{code})
     </insert>
 

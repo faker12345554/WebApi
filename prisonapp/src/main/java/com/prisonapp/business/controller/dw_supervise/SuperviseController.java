@@ -90,7 +90,7 @@ public class SuperviseController {
         int res = superviseService.submitApplyLeave(submitApplyLeaveModel.getCity(),    submitApplyLeaveModel.getCityCode(),    submitApplyLeaveModel.getDistrict(),submitApplyLeaveModel.getDistrictCode(),
                                                     submitApplyLeaveModel.getProvince(),submitApplyLeaveModel.getProvinceCode(),submitApplyLeaveModel.getReason(),  submitApplyLeaveModel.getReasonAudioUrl(),
                                                     submitApplyLeaveModel.getEndDate(), submitApplyLeaveModel.getStartDate(),code,
-                                                    getPersonId(), person.get(0).getPersonname());
+                                                    getPersonId(), person.get(0).getPersonname(),person.get(0).getSponsoralarm());
         if (res != 0) {
             result.resultCode = 0;
             result.resultMsg = "";

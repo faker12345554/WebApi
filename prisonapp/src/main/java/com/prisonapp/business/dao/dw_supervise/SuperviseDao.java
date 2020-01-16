@@ -30,7 +30,7 @@ public interface SuperviseDao {
     int submitApplyLeave (@Param("city")String city,@Param("cityCode")String cityCode,@Param("district")String district,@Param("districtCode")String districtCode,
                          @Param("province")String province,@Param("provinceCode")String provinceCode,@Param("reason")String reason,@Param("reasonAudioUrl")String reasonAudioUrl ,
                          @Param("endDate")long endDate,@Param("startDate")long startDate,  @Param("code") String code,
-                         @Param("userId")String userId,@Param("personName")String personName);
+                         @Param("userId")String userId,@Param("personName")String personName,@Param("sponsorAlarm")String sponsorAlarm );
 
     List<TPersoninformation> getPersonname(@Param("userId")String userId);
 

@@ -35,9 +35,9 @@ public class SuperviseService {
     public int submitApplyLeave(String city,    String cityCode,    String district,String districtCode,
                                 String province,String provinceCode,String reason,  String reasonAudioUrl ,
                                 long   endDate, long startDate,     String code,    String userId,
-                                String personName){
+                                String personName,String sponsorAlarm){
         //return superviseDao.submitApplyLeave(city,cityCode,district,districtCode,province,provinceCode,reason,reasonAudioUrl,endDate,startDate,code,userId,personName);
-        return superviseDao.submitApplyLeave(city,cityCode,district,districtCode,province,provinceCode,reason,reasonAudioUrl,endDate,startDate,code,userId,personName);
+        return superviseDao.submitApplyLeave(city,cityCode,district,districtCode,province,provinceCode,reason,reasonAudioUrl,endDate,startDate,code,userId,personName,sponsorAlarm);
     }
 
     public List<TPersoninformation> getPersonname(String userId){
