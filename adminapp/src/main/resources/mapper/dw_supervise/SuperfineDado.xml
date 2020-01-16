@@ -19,7 +19,7 @@
         select * FROM t_singin WHERE personid=#{personid} AND type=#{type}
     </select>
     <select id="listCiteRecord" resultType="com.adminapp.business.entity.dw_supervise.SummonsInformation">
-        select * FROM t_summons ORDER BY t_summons.summontime DESC
+        select * FROM t_summons WHERE t_summons.reporttime is not null ORDER BY t_summons.summontime DESC
     </select>
     <select id="listKeyCiteRecord" resultType="com.adminapp.business.entity.dw_supervise.SummonsInformation">
         select * FROM t_summons WHERE personname LIKE'%${key}%' ORDER BY t_summons.summontime DESC
