@@ -29,7 +29,6 @@
     <update id="updateStatus">
       update t_violationfens set status=#{flag},enabled=#{enabled}  where id=#{id}
     </update>
-
     <update id="deleteViolation">
       update t_violationfens set status=#{flag} where id=#{Id}
     </update>

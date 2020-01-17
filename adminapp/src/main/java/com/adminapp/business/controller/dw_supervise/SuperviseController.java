@@ -239,13 +239,6 @@ public class SuperviseController {
 //        int voiceSinginSerious =superviseService.listViolationFensInformation("语音签到缺勤","2");  //上报设置中声纹签到严重违规次数
 
 //        int locationViolateCount=0;    //位置违规次数
-        for (Personinformation item:personinformation
-             ) {
-            String violateCode=item.getViolateCode();
-            String violateName=superviseService.getViolateName("WGCD-001",violateCode);
-            item.setViolate(violateName);
-
-        }
 //            List<ReportLocationModel> reportLocationModels = superviseService.listLocation(item.getCode());     //获取位置信息列表
 //            for (int j = 0; j < reportLocationModels.size(); j++) {         //计算位置定位违规次数
 //                ReportLocationModel reportLocationModel = reportLocationModels.get(j);
@@ -327,28 +320,27 @@ public class SuperviseController {
         long time1 = cal.getTimeInMillis();
         cal.add(Calendar.MONTH, -1);  //在当前时间基础上减一个月
         Date lastDate = cal.getTime();    //取得上一个月日期
-        List<Personinformation> recentPerson = new ArrayList<>();
+        List<Personinformation> recentPerson = new ArrayList<>();   //新增人员
+        List<Personinformation> bailoutPerson = new ArrayList<>();  //取保候审人员
+        List<Personinformation> bailoutWatchPerson = new ArrayList<>();  //监视居住人员
         for (Personinformation item : personinformation) {
-            //Date bailoutbegindate = item.getExecStartDate();
+            String violateCode=item.getViolateCode();
+            String violateName=superviseService.getViolateName("WGCD-001",violateCode);
+            item.setViolate(violateName);
+
             if (lastDate.getTime() < Long.parseLong(item.getExecStartDate())) {    //用监居开始时间与一月前时间比较，大于则为新增人员
                 recentPerson.add(item);
             }
-        }
-        List<Personinformation> bailoutPerson = new ArrayList<>();  //取保候审人员
-        for (Personinformation item : personinformation) {
-            String suspectStatus = item.getState();
-            if (suspectStatus.equals("取保候审")) {
+
+            if (item.getState().equals("取保候审")) {
                 bailoutPerson.add(item);
             }
-        }
 
-        List<Personinformation> bailoutWatchPerson = new ArrayList<>();  //监视居住人员
-        for (Personinformation item : personinformation) {
-            String suspectStatus = item.getState();
-            if (suspectStatus.equals("监视居住")) {
+            if (item.getState().equals("监视居住")) {
                 bailoutWatchPerson.add(item);
             }
         }
+
         if(key==null){
             if (type == 0){
                 List<Personinformation> newPersonInformations=new ArrayList<>();   //所有人员信息
@@ -556,77 +548,75 @@ public class SuperviseController {
             summonsInformations=superviseService.listKeyCiteRecord(key);
         }
 
-//        for (SummonsInformation item:summonsInformations   //筛选出属于该工作人员管理的传讯记录
-//        ) {
-//            if(item.getPersonid().equals(userId)==false){
-//                summonsInformations.remove(item);
-//            }
-//        }
-
-        for(int i=0;i<summonsInformations.size();i++){
-            SummonsInformation summonsInformation=summonsInformations.get(i);
-            PersonAllInformationModel personAllInformationModel1=superviseService.getPersonInformation(summonsInformation.getPersonid());
-            if(personAllInformationModel1.getSponsoralarm().equals(userId)==false){
-                summonsInformations.remove(summonsInformation);
-                i=i-1;
+        List<CiteRecordsModel> summonsInformations1 = new ArrayList<>();  //取count到count+requestCount之间的记录
+        List<SummonsInformation> newSummonsInformations = new ArrayList<>();    //经过时间筛选之后的传讯记录
+        if(summonsInformations.size()!=0) {
+            for (int i = 0; i < summonsInformations.size(); i++) {
+                SummonsInformation summonsInformation = summonsInformations.get(i);
+                PersonAllInformationModel personAllInformationModel1 = superviseService.getPersonInformation(summonsInformation.getPersonid());
+                if (personAllInformationModel1.getSponsoralarm().equals(userId) == false) {
+                    summonsInformations.remove(summonsInformation);
+                    i = i - 1;
+                }
             }
-        }
 
-        List<SummonsInformation> newSummonsInformations=new ArrayList<>();    //经过时间筛选之后的传讯记录
-        if(startDate!=null&&endDate==null){    //开始日期不为空
-            for (SummonsInformation item:summonsInformations) {
-                if(Long.parseLong(startDate)<=Long.parseLong(item.getSummontime())){
+
+            if (startDate != null && endDate == null) {    //开始日期不为空
+                for (SummonsInformation item : summonsInformations) {
+                    if (Long.parseLong(startDate) <= Long.parseLong(item.getSummontime())) {
+                        newSummonsInformations.add(item);
+                    }
+                }
+            }
+            if (startDate == null && endDate != null) {   //结束日期不为空
+                for (SummonsInformation item : summonsInformations) {
+                    if (Long.parseLong(endDate) > Long.parseLong(item.getSummontime())) {
+                        newSummonsInformations.add(item);
+                    }
+                }
+            }
+            if (startDate != null && endDate != null) {    //都不为空
+                for (SummonsInformation item : summonsInformations) {
+                    if (Long.parseLong(startDate) <= Long.parseLong(item.getSummontime()) && Long.parseLong(endDate) > Long.parseLong(item.getSummontime())) {
+                        newSummonsInformations.add(item);
+                    }
+                }
+            }
+            if (startDate == null && endDate == null) {  //都为空
+                for (SummonsInformation item : summonsInformations) {
                     newSummonsInformations.add(item);
                 }
             }
-        }
-        if(startDate==null&&endDate!=null){   //结束日期不为空
-            for (SummonsInformation item:summonsInformations) {
-                if(Long.parseLong(endDate)>Long.parseLong(item.getSummontime())){
-                    newSummonsInformations.add(item);
+            List<CiteRecordsModel> citeRecordsModel = new ArrayList<>();
+            for (SummonsInformation item : newSummonsInformations
+            ) {
+                CiteRecordsModel citeRecordsModel1 = new CiteRecordsModel();
+                citeRecordsModel1.setName(item.getPersonname());
+                //long arrivedTime=(item.getSummontime()).getTime();
+                long arrivedTime = Long.parseLong(item.getSummontime());
+                citeRecordsModel1.setArrivedTime(Long.toString(arrivedTime));
+                PersonAllInformationModel personinformation = superviseService.getPersonInformation(item.getPersonid());
+                citeRecordsModel1.setIdCardNo(personinformation.getCard());
+                citeRecordsModel1.setRecordPerson(personinformation.getSponsor());
+                citeRecordsModel1.setArrivedUnit(personinformation.getPolicestation());
+                citeRecordsModel.add(citeRecordsModel1);
+            }
+
+
+
+            if (citeRecordsModel.size() > count && citeRecordsModel.size() < count + requestCount) {
+                for (int i = count; i < citeRecordsModel.size(); i++) {
+                    CiteRecordsModel summonsInformation = citeRecordsModel.get(i);
+                    summonsInformations1.add(summonsInformation);
                 }
             }
-        }
-        if(startDate!=null&&endDate!=null){    //都不为空
-            for (SummonsInformation item:summonsInformations) {
-                if(Long.parseLong(startDate)<=Long.parseLong(item.getSummontime())&&Long.parseLong(endDate)>Long.parseLong(item.getSummontime())){
-                    newSummonsInformations.add(item);
+            if (citeRecordsModel.size() >= count + requestCount) {
+                for (int i = count; i < count + requestCount; i++) {
+                    CiteRecordsModel summonsInformation = citeRecordsModel.get(i);
+                    summonsInformations1.add(summonsInformation);
                 }
             }
-        }
-        if(startDate==null&&endDate==null){  //都为空
-            for (SummonsInformation item:summonsInformations) {
-                newSummonsInformations.add(item);
-            }
-        }
-        List<CiteRecordsModel> citeRecordsModel=new ArrayList<>();
-        for (SummonsInformation item:newSummonsInformations
-        ) {
-            CiteRecordsModel citeRecordsModel1=new CiteRecordsModel();
-            citeRecordsModel1.setName(item.getPersonname());
-            //long arrivedTime=(item.getSummontime()).getTime();
-            long arrivedTime=Long.parseLong(item.getSummontime());
-            citeRecordsModel1.setArrivedTime(Long.toString(arrivedTime));
-            PersonAllInformationModel personinformation=superviseService.getPersonInformation(item.getPersonid());
-            citeRecordsModel1.setIdCardNo(personinformation.getCard());
-            citeRecordsModel1.setRecordPerson(personinformation.getSponsor());
-            citeRecordsModel1.setArrivedUnit(personinformation.getPolicestation());
-            citeRecordsModel.add(citeRecordsModel1);
-        }
 
-        List<CiteRecordsModel> summonsInformations1=new ArrayList<>();  //取count到count+requestCount之间的记录
-
-        if(citeRecordsModel.size()>count&&citeRecordsModel.size()<count+requestCount){
-            for(int i=count;i<citeRecordsModel.size();i++){
-                CiteRecordsModel summonsInformation=citeRecordsModel.get(i);
-                summonsInformations1.add(summonsInformation);
-            }
-        }
-        if(citeRecordsModel.size()>=count+requestCount){
-            for(int i=count;i<count+requestCount;i++){
-                CiteRecordsModel summonsInformation=citeRecordsModel.get(i);
-                summonsInformations1.add(summonsInformation);
-            }
         }
         citeRecordReturnModel.setTotalCount(newSummonsInformations.size());
         citeRecordReturnModel.setList(summonsInformations1);
@@ -664,7 +654,6 @@ public class SuperviseController {
         else{
             rs.resultCode=1;
             rs.resultMsg="无此监居人员";
-
             rs.data=null;
         }
         return rs;
@@ -998,28 +987,6 @@ public class SuperviseController {
                 leaveListModels=superviseService.listKeyLeaveType(key,"3");
             }
         }
-//        for (LeaveListModel item:leaveListModels
-//             ) {
-//            if(item.getCode()!=userId){
-//                leaveListModels.remove(item);
-//            }
-//        }
-//        for (LeaveListModel item:leaveListModels) {
-//            PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformationFromName(item.getApplicant());
-//            if(personAllInformationModel.getSponsoralarm().equals(userId)){
-//                long startDate=Long.parseLong(item.getStartTimestamp());
-//                long endDate=Long.parseLong(item.getEndTimestamp());
-//                long days = (endDate/1000 - startDate/1000) / (60 * 60 * 24)+1;
-//                int Days=Integer.parseInt(String.valueOf(days));
-//                item.setDays(Days);
-//                String leaveOrder=item.getCode();
-//                List<AuditorRecordModel> getAuditorList=superviseService.getAuditorList(leaveOrder);
-//                item.setApplyRecord(getAuditorList);
-//            }
-//            else{
-//                leaveListModels.remove(item);
-//            }
-//        }
 
         for(int i=0;i<leaveListModels.size();i++){
             LeaveListModel item=leaveListModels.get(i);
@@ -1499,11 +1466,20 @@ public class SuperviseController {
                     newsinginInformations.add(listTemp);
                 }
             }
-            for (SinginInformation item : newsinginInformations   //去除不是该警员管理的监居人员
-            ) {
-                PersonAllInformationModel personAllInformationModel = superviseService.getPersonInformation(item.getPersonid());
+//            for (SinginInformation item : newsinginInformations   //去除不是该警员管理的监居人员
+//            ) {
+//                PersonAllInformationModel personAllInformationModel = superviseService.getPersonInformation(item.getPersonid());
+//                if (personAllInformationModel.getSponsoralarm().equals(userId)==false) {
+//                    newsinginInformations.remove(item);
+//                }
+//            }
+
+            for(int i=0;i<newsinginInformations.size();i++){
+                SinginInformation singinInformation=newsinginInformations.get(i);
+                PersonAllInformationModel personAllInformationModel = superviseService.getPersonInformation(singinInformation.getPersonid());
                 if (personAllInformationModel.getSponsoralarm().equals(userId)==false) {
-                    newsinginInformations.remove(item);
+                    newsinginInformations.remove(singinInformation);
+                    i=i-1;
                 }
             }
             List<SinginInformation> listAllFaceSinginInformations = new ArrayList<>();   //所有视频签到记录
