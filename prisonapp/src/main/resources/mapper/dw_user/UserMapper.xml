@@ -10,9 +10,11 @@
     </select>
 
     <select id="getUserInfo" resultType="com.prisonapp.business.entity.dw_user.GetUserInfoModel">
-         SELECT t_personinformation.personid as code,t_personinformation.gender, phone as account,personname as name,facepath as headUrl,bailoutbegindate as startDate,bailoutenddate as endDate,sponsor as inChargePerson,
-         contact as inChargeContract  from t_personinformation FULL JOIN t_user ON t_personinformation.personid = t_user.personid WHERE t_user.personid=#{userId}
+         SELECT t_personinformation.personid as code,t_personinformation.gendercode as gender, phone as account,personname as name,facepath as headUrl,bailoutbegindate as startDate,bailoutenddate as endDate,officephone as inChargePerson
+           from t_personinformation FULL JOIN t_user ON t_personinformation.personid = t_user.personid WHERE t_user.personid=#{userId}
     </select>
+
+
 
     <select id="modifyPassword" resultType="com.prisonapp.business.entity.dw_user.UserModel">
         select * from t_user where personid =#{userId} and password=#{password}

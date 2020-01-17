@@ -26,7 +26,6 @@ public class SystemController {
     private ResultSet result = new ResultSet();
     private ResultGetUpdateRecordsModel resultGetUpdateRecordsModel= new ResultGetUpdateRecordsModel();
 
-    @UserLoginToken
     @ApiOperation(value = "获取保外人员 App 的更新信息")
     @GetMapping("/getUpdateInfo")
     public ResultSet getUpdateInfo(){
@@ -37,7 +36,6 @@ public class SystemController {
         return result;
     }
 
-    @UserLoginToken
     @ApiOperation(value = "获取保外人员 App 的更新记录")
     @GetMapping("/getUpdateRecords")
     public ResultSet getUpdateRecords(int count,int requestCount){

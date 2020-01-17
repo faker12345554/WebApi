@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -51,11 +52,13 @@ public class UserController {
        else if(userModel.getPassword().equals(password)&&userModel.getStatus().equals("t")){
            CacheUtils.put("UserId",userModel.getId(),0);
            String token =tokenService.getToken(userModel);
-
+           Calendar calendar = Calendar.getInstance();
+           calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + 7);
+           String  ExpiresTime =String.valueOf(calendar.getTimeInMillis());
            tokenModel.setToken(token);
-           tokenModel.setrExpiresTime(token);
+           tokenModel.setrExpiresTime(ExpiresTime);
            tokenModel.setRefreshToken(token);
-           tokenModel.settExpiresTime(token);
+           tokenModel.settExpiresTime(ExpiresTime);
            result.resultCode=0;
            result.resultMsg="";
            result.data=tokenModel;
@@ -82,7 +85,7 @@ public class UserController {
 
     @UserLoginToken
     @ApiOperation(value = "保外人员修改密码")
-    @GetMapping("/modifyPassword")
+    @PostMapping("/modifyPassword")
     public ResultSet modifyPassword(@ApiParam(name = "password",value = "旧密码")@RequestParam(required = false)String password,@ApiParam(name = "newPassword",value = "新密码")@RequestParam(required = false)String newPassword){
         List<UserModel> userModel =userService.modifyPassword(getPersonId(),password);
         if(userModel.size()!=0){
