@@ -32,8 +32,6 @@ public class  MessageController {
     private MessageService messageService;
 
     private ResultSet result = new ResultSet();
-    //private SearchNotificationModel searchNotificationModel = new SearchNotificationModel();
-   // private NotificationMessageModel notificationMessageModel =new NotificationMessageModel();
     private ResultSearchNotificationModel resultSearchNotificationModel = new ResultSearchNotificationModel();
     private ResultMessageListModel resultMessageListModel = new ResultMessageListModel();
     private ResultNotificationMessageModel resultNotificationMessage = new ResultNotificationMessageModel();

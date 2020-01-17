@@ -113,7 +113,7 @@ public class SuperviseController {
         Date date = new Date(System.currentTimeMillis());
         //SSLEngine request = null;
         // String x=request.getSession(true).getServletContext().getRealPath(File.separator+"upload");
-        String url = System.getProperty("user.dir") + "\\prisonapp\\" + "\\src\\" + "\\main\\" + "\\resources\\" + "\\uploadFile\\" + formatter.format(date);
+        String url = System.getProperty("user.dir") + "/../webapps/mypicture/personApp/Audio/" + formatter.format(date);
 
         File path = new File(url);
         if (!path.exists() && !path.isDirectory()) {
@@ -124,7 +124,7 @@ public class SuperviseController {
         if (res.equals("上传成功")) {
             result.resultCode = 0;
             result.resultMsg = "";
-            result.data = "http:192.168.10.88:8009" + "/uploadFile/" + formatter.format(date) + "/" + fileName;
+            result.data = "https://pardon.cnnc626.com:8443/mypicture/personApp/Audio/" + formatter.format(date) + "/" + fileName;
         } else {
             result.resultCode = 1;
             result.resultMsg = "上传失败";
@@ -162,7 +162,7 @@ public class SuperviseController {
     }
 
     @UserLoginToken
-    @ApiOperation(value = " 保外人员人脸识别签到")
+    @ApiOperation(value = "保外人员人脸识别签到")
     @PostMapping("/faceRecognize")
     public ResultSet faceRecognize(MultipartFile file) throws Exception {
         List<TPersoninformation> tPersoninformations = superviseService.faceRecognize(TokenUtil.getTokenUserId());
@@ -170,8 +170,8 @@ public class SuperviseController {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = new Date(System.currentTimeMillis());
             //保存图片的路径
-            String url = System.getProperty("user.dir") + "\\prisonapp\\" + "\\src\\" + "\\main\\" + "\\resources\\" + "\\uploadFace\\" + formatter.format(date);
-            //  String url ="http:192.168.10.88:33389"+"\\uploadFace\\" + formatter.format(date);
+            String url = System.getProperty("user.dir") + "/../webapps/mypicture/personApp/Face/" + formatter.format(date);
+
             File path = new File(url);
             if (!path.exists() && !path.isDirectory()) {
                 path.mkdirs();
@@ -179,13 +179,11 @@ public class SuperviseController {
             String fileName = file.getOriginalFilename();
             String res = upload.upload(url, file);
             if (res.equals("上传成功")) {
-                 String upLoadFaceUrl = "http://sf.cnnc626.com/uploadFace/"+ formatter.format(date)+"/"+fileName;//这是真正有用的
-              //  String upLoadFaceUrl = "http://sf.cnnc626.com/Data/image/2019-08-05/1.jpg";
-                if (tPersoninformations != null) {
-                    // upLoadFaceUrl="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4058683704,1940854212&fm=26&gp=0.jpg";
+                 String upLoadFaceUrl = "https://pardon.cnnc626.com:8443/mypicture/personApp/Face/"+ formatter.format(date)+"/"+fileName;//这是真正有用的
+                //if(true){
+                  if (tPersoninformations != null) {
                     //将两张图片进行对比，upLoadFaceUrl为用户传进来的图片路劲，第二个为数据库中的图片路劲
                     String comparedRes = AESDecode.faceCompared(upLoadFaceUrl, tPersoninformations.get(0).getFacepath());
-                    // String comparedRes = AESDecode.faceCompared(upLoadFaceUrl, upLoadFaceUrl);
                     //获取json中的可信度并转换成float类型
                     JSONObject jsonObject = new JSONObject(comparedRes);
                     String similar = jsonObject.getString("confidence");
@@ -215,6 +213,7 @@ public class SuperviseController {
                     result.resultCode = 1;
                     result.resultMsg = "该人尚未注册";
                     result.data = null;
+
                 }
             } else {
                 result.resultCode = 1;
@@ -228,6 +227,7 @@ public class SuperviseController {
         }
         return result;
     }
+
 
 
     @UserLoginToken

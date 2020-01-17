@@ -5,12 +5,11 @@ import java.util.Date;
 public class GetUserInfoModel {
     private int code;
     private String account;
-    private String status;
+    private String gender;
     private String name;
     private String headUrl;
     private String startDate;
     private String endDate;
-    private String area;
     private String inChargePerson;
     private String inChargeContract;
 
@@ -30,12 +29,12 @@ public class GetUserInfoModel {
         this.account = account;
     }
 
-    public String getStatus() {
-        return status;
+    public String getGender() {
+        return gender;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getName() {
@@ -70,14 +69,6 @@ public class GetUserInfoModel {
     public void setEndDate(Date endDate) {
         String a = String.valueOf(endDate.getTime());
         this.endDate = a;
-    }
-
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
     }
 
     public String getInChargePerson() {
