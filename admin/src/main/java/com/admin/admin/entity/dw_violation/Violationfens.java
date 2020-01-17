@@ -21,6 +21,10 @@ public class Violationfens {
   private int slightfens;
   private int seriousfens;
   private String createperson;
+  private Date createtime;
+  private Date Modificationtime;
+  private String updatemonth;
+  private boolean enabled;
 
   public boolean isEnabled() {
     return enabled;
@@ -43,9 +47,7 @@ public class Violationfens {
     return this;
   }
 
-  private Date createtime;
-  private Date Modificationtime;
-  private String updatemonth;
+
 
   public String getUpdatemonth() {
     return updatemonth;
@@ -56,7 +58,7 @@ public class Violationfens {
     return this;
   }
 
-  private boolean enabled;
+
 
   public String getViolationcode() {
     return violationcode;
@@ -103,9 +105,6 @@ public class Violationfens {
     this.accountname = accountname;
     return this;
   }
-
-
-
   public String getViolationname() {
     return violationname;
   }
@@ -114,13 +113,6 @@ public class Violationfens {
     this.violationname = violationname;
     return this;
   }
-
-
-
-
-
-
-
   public boolean isStatus() {
     return status;
   }

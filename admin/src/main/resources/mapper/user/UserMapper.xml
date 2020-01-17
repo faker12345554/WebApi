@@ -3,11 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_user.UserDao">
     <select id="listUser" resultType="com.admin.admin.entity.dw_user.User">
-        SELECT * FROM "t_user" where status=#{flag}
+        SELECT * FROM "t_user"
     </select>
 
     <select id="getUser" parameterType="String" resultType="com.admin.admin.entity.dw_user.User">
-        SELECT t.*,f.bmmc FROM "t_user" as t left join fsga_yw_ryb as f on f.mjbh=t.accountname where accountname=#{UserName}
+        SELECT t.*,f.bmmc,f.zw as RoleName FROM "t_user" as t left join fsga_yw_ryb as f on f.mjbh=t.accountname where accountname=#{UserName}
     </select>
 
     <select id="GetUserByid" parameterType="int" resultType="com.admin.admin.entity.dw_user.User">
@@ -15,12 +15,14 @@
     </select>
 
     <insert id="saveUser" parameterType="com.admin.admin.entity.dw_user.User">
-     INSERT into t_user(accountname,password,aliasname,permissionid,
-       createid,createname,areacode,phone,status) values (#{user.accountname},#{user.password},#{user.aliasname},#{user.permissionid},#{user.createid},#{user.createname},#{user.areacode},#{user.phone},#{user.status})
+     INSERT into t_user(accountname,password,aliasname,permissionid,createid,createname,areacode,phone,status,usersystem,officephone,police,areaname,department,mailbox,sex,station,bz)
+     values (#{user.accountname},#{user.password},#{user.aliasname},#{user.permissionid},#{user.createid},#{user.createname},#{user.areacode},#{user.phone},#{user.status},#{user.usersystem},
+     #{user.officephone},#{user.police},#{user.areaname},#{user.department},#{user.mailbox},#{user.sex},#{user.station},#{user.bz})
     </insert>
     <update id="updateUser" parameterType="com.admin.admin.entity.dw_user.User">
         UPDATE t_user set accountname=#{user.accountname}, password=#{user.password},aliasname=#{user.aliasname},permissionid=#{user.permissionid},
-        createid=#{user.createid},createname=#{user.createname},areacode=#{user.areacode},phone=#{user.phone},status=#{user.status} where id=#{user.id}
+        createid=#{user.createid},createname=#{user.createname},areacode=#{user.areacode},phone=#{user.phone},usersystem=#{usersystem},officephone=#{officephone},police=#{police},areaname=#{areaname},
+        department=#{department},mailbox=#{mailbox},sex=#{sex},station=#{station},bz=#{bz} where id=#{user.id}
     </update>
 
     <update id="deleteUser">

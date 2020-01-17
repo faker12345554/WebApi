@@ -6,10 +6,19 @@ import com.admin.admin.entity.dw_person.Personinformation;
 import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
 import com.admin.admin.entity.dw_reminder.Remindersettings;
 import com.admin.admin.entity.dw_summons.TSummons;
+import com.admin.admin.entity.dw_violation.Violationfens;
 import com.common.common.authenticator.CalendarAdjust;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +36,7 @@ public class Tasking {
         List<Personinformation> list = GetPerson();
         for (Personinformation item : list) {
             long days = CalendarAdjust.getDays(CalendarAdjust.GetYear(new Date()), CalendarAdjust.GetYear(item.getBailoutenddate()));
-           // System.out.println(CalendarAdjust.getDays(CalendarAdjust.GetYear(new Date()), CalendarAdjust.GetYear(item.getBailoutenddate())));
+            // System.out.println(CalendarAdjust.getDays(CalendarAdjust.GetYear(new Date()), CalendarAdjust.GetYear(item.getBailoutenddate())));
             System.out.println(item.getBailoutenddate());
             if (days == 15) {
                 System.out.println(item.getPersonid());
@@ -64,20 +73,69 @@ public class Tasking {
         return taskDao.GetPerson();
     }
 
+
     /**
      * 生成传讯记录
      */
     public void GeneratedRecord() throws Exception {
+        TSummons summons = new TSummons();
+        List<Personinformation> list = GetPerson();
+        for (Personinformation item : list) {
+            //填写传讯信息
+            summons.setPersonid(item.getPersonid());
+            summons.setPersonname(item.getPersonname());
+            TSummons tSummons = taskDao.GetSummons(item.getPersonid());
+            //判断监居时间是否为null
+            int month = 0;
+            int year = 0;
 
+            if (item.getBailoutbegindate() != null) {
+                System.out.println(CalendarAdjust.getMonthDiff(item.getBailoutbegindate(), new Date()));
+                if (CalendarAdjust.getMonthDiff(item.getBailoutbegindate(), new Date()) >= 2) {
+                    month = CalendarAdjust.getMonth(CalendarAdjust.GetYear(new Date()));
+                    year = CalendarAdjust.getYears(CalendarAdjust.GetYear(new Date()));
+                    summons.setSummonsbegintime(CalendarAdjust.getFirstDayOfMonth1(year, month));
+                    summons.setSummonsendtime(CalendarAdjust.getLastDayOfMonth1(year, month ));
+                } else {
+                    if (tSummons != null) {
+                        month = CalendarAdjust.getMonth(tSummons.getSummonsendtime());
+                        year = CalendarAdjust.getYears(tSummons.getSummonsendtime());
+                        summons.setSummonsbegintime(CalendarAdjust.getFirstDayOfMonth1(year, month));
+                        summons.setSummonsendtime(CalendarAdjust.getLastDayOfMonth1(year, month));
+                    } else {
+                        month = CalendarAdjust.getMonth(item.getBailoutbegindate().toString());
+                        year = CalendarAdjust.getYears(item.getBailoutbegindate().toString());
+                        summons.setSummonsbegintime(CalendarAdjust.getFirstDayOfMonth1(year, month));
+                        summons.setSummonsendtime(CalendarAdjust.getLastDayOfMonth1(year, month ));
+                    }
+                }
+
+                TSummons tSummons1 = taskDao.GetNumber(item.getPersonid());
+                if (tSummons1 == null) {
+
+                    taskDao.SaveSummons(summons);
+                }else if (tSummons1!=null && (new Date().getTime()>CalendarAdjust.dateFormat.parse(tSummons1.getSummonsendtime()).getTime())){
+                    taskDao.SaveSummons(summons);
+                }
+            }
+        }
+
+    }
+
+    /**
+     * 生成消息
+     * @throws Exception
+     */
+
+    public void GetMessage() throws Exception {
         Remindersettings remindersettings = taskDao.GetConfigure("3");
 
         String[] strArr = null;
         if (remindersettings.getSettingday().indexOf(",") != -1) {
             strArr = remindersettings.getSettingday().split(",");
         }
-        TMessage message = new TMessage();
-        TSummons summons = new TSummons();
         List<Personinformation> list = GetPerson();
+        TMessage message = new TMessage();
         for (Personinformation item : list) {
             //填写消息内容
             message.setModular(5);
@@ -85,138 +143,47 @@ public class Tasking {
             message.setPersonid(item.getPersonid());
             message.setModularname("传讯提醒");
             message.setReadmessage(false);
-            //填写传讯信息
-            summons.setPersonid(item.getPersonid());
-            summons.setPersonname(item.getPersonname());
-
-            if (item.getCasetype().equals("经济案件") && item.getCasetype()!=null) {
-
-                int mondiff = GetMessageByTime(item.getPersonid(), 5);
-                if (mondiff != 0) {
-                    if (taskDao.GetSummons(item.getPersonid(),CalendarAdjust.GetSummons(1))==0) {
-
-
-                        if (strArr == null || strArr.length == 0) {
-                            message.setMessagetime(
-                                    CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(0, Integer.parseInt(remindersettings.getSettingday()))));
-                            taskDao.SaveMessage(message);
-
-                        } else {
-                            for (int i = 0; i < strArr.length; i++) {
-                                message.setMessagetime(
-                                        CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(0, Integer.parseInt(strArr[i]))));
-                                taskDao.SaveMessage(message);
-                            }
-                        }
-                        summons.setSummontime(CalendarAdjust.GetSummons(1));
-                        taskDao.SaveSummons(summons);
-                    }
+            if (taskDao.GetMessage(item.getPersonid(), CalendarAdjust.GetYear(new Date())) != 0) {
+                if (strArr == null || strArr.length == 0) {
+                    message.setMessagetime(
+                            CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(remindersettings.getSettingday()))));
+                    taskDao.SaveMessage(message);
                 } else {
-                    if (taskDao.GetSummons(item.getPersonid(), CalendarAdjust.GetSummons(2)) == 0) {
-
-                            if (strArr == null || strArr.length == 0) {
-                            message.setMessagetime(
-                                    CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(1, Integer.parseInt(remindersettings.getSettingday()))));
-                            taskDao.SaveMessage(message);
-                        } else {
-                            for (int i = 0; i < strArr.length; i++) {
-                                message.setMessagetime(
-                                        CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(1, Integer.parseInt(strArr[i]))));
-                                taskDao.SaveMessage(message);
-                            }
-
-                        }
-                        summons.setSummontime(CalendarAdjust.GetSummons(1));
-                        taskDao.SaveSummons(summons);
+                    for (int i = 0; i < strArr.length; i++) {
+                        message.setMessagetime(
+                                CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(strArr[i]))));
+                        taskDao.SaveMessage(message);
                     }
                 }
-
-            } else if (item.getCasetype().equals("一般案件") && item.getCasetype()!=null){
-
-                int month = GetMessageByTime(item.getPersonid(), 5);
-                if (month == 2) {
-                    if (taskDao.GetSummons(item.getPersonid(), CalendarAdjust.GetSummons(1)) == 0) {
-                        if (strArr == null || strArr.length == 0) {
-                            message.setMessagetime(
-                                    CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(0, Integer.parseInt(remindersettings.getSettingday()))));
-                            taskDao.SaveMessage(message);
-
-
-                        } else {
-                            for (int i = 0; i < strArr.length; i++) {
-                                message.setMessagetime(
-                                        CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(0, Integer.parseInt(strArr[i]))));
-                                taskDao.SaveMessage(message);
-                            }
-
-                        }
-                        summons.setSummontime(CalendarAdjust.GetSummons(1));
-                        taskDao.SaveSummons(summons);
-                    }
-                } else if (month == 0) {
-                    if (taskDao.GetSummons(item.getPersonid(), CalendarAdjust.GetSummons(3)) == 0) {
-
-                        if (strArr == null || strArr.length == 0) {
-                            message.setMessagetime(
-                                    CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(2, Integer.parseInt(remindersettings.getSettingday()))));
-                            taskDao.SaveMessage(message);
-
-
-                        } else {
-                            for (int i = 0; i < strArr.length; i++) {
-
-                                message.setMessagetime(
-                                        CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(2, Integer.parseInt(strArr[i]))));
-                                taskDao.SaveMessage(message);
-                            }
-
-                        }
-                        summons.setSummontime(CalendarAdjust.GetSummons(3));
-
-                        taskDao.SaveSummons(summons);
-                    }
-                }
-
             }
 
         }
     }
 
-
-    /*
-    获取每个人有几种监居类型
-     */
-    public List<TPrisonsetting> GetPersonType(String PersonId) {
-        return taskDao.GetPersonType(PersonId);
-    }
-
     /**
-     * 获取每个人当前月传讯了几次
-     *
-     * @param PersonId
-     * @return
+     * 修改严重程度
      */
-    public int GetSummons(String PersonId, String Date) {
+    public void Statisticalsummons(){
+        Violationfens violationfens=taskDao.GetViolationfens(2);
 
-        return taskDao.GetSummons(PersonId,Date);
-    }
+        List<Personinformation> list = GetPerson();
+        String severity="";
+        for (Personinformation item : list) {
 
-    /**
-     * 获取最近一次提醒
-     *
-     * @param PersonId
-     * @param type
-     * @return
-     */
-
-    public int GetMessageByTime(String PersonId, int type) {
-        TMessage tMessage = taskDao.GetMessageByTime(PersonId, type);
-        if (tMessage == null) {
-            return 0;
-
-        } else {
-            return CalendarAdjust.getMonthDiff(tMessage.getMessagetime(), new Date());
+            int num=taskDao.StatisticalSummons(item.getPersonid(),CalendarAdjust.GetYear(new Date()));
+            if (num< violationfens.getSlightfens()){
+                severity="正常";
+            }else if(num>=violationfens.getSlightfens() && num <violationfens.getSeriousfens()){
+                severity="轻微";
+            }else if(num>=violationfens.getSeriousfens()){
+                severity="严重";
+            }
+            taskDao.UpdateDegree(item.getPersonid(),severity);
         }
+
     }
+
+
+
 
 }

@@ -5,6 +5,7 @@ import com.admin.admin.entity.dw_guarant.GuaranteeInformation;
 import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
 import org.apache.tomcat.jni.Time;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -16,8 +17,8 @@ public class Personinformation {
     private Date birthdate;
     private String card;
     private String Workunit;
-    private Date Bailoutbegindate;
-    private Date Bailoutenddate;
+    private java.sql.Timestamp  Bailoutbegindate;
+    private java.sql.Timestamp Bailoutenddate;
     private String Sponsor;
     private String sponsoralarm;
     private String Contact;
@@ -58,6 +59,27 @@ public class Personinformation {
     private TCaseinfo tCaseinfo;
     private GuaranteeInformation guaranteeInformation;
     private List<String> managementStyle;
+    private String caseno;
+
+    public String getCaseno() {
+        return caseno;
+    }
+
+    public Personinformation setCaseno(String caseno) {
+        this.caseno = caseno;
+        return this;
+    }
+
+    public String getHandleunit() {
+        return handleunit;
+    }
+
+    public Personinformation setHandleunit(String handleunit) {
+        this.handleunit = handleunit;
+        return this;
+    }
+
+    private String handleunit;
 
     public String getBeforename() {
         return beforename;
@@ -431,25 +453,28 @@ public class Personinformation {
         return Workunit;
     }
 
+    public Timestamp getBailoutbegindate() {
+        return Bailoutbegindate;
+    }
+
+    public Personinformation setBailoutbegindate(Timestamp bailoutbegindate) {
+        Bailoutbegindate = bailoutbegindate;
+        return this;
+    }
+
+    public Timestamp getBailoutenddate() {
+        return Bailoutenddate;
+    }
+
+    public Personinformation setBailoutenddate(Timestamp bailoutenddate) {
+        Bailoutenddate = bailoutenddate;
+        return this;
+    }
+
     public void setWorkunit(String workunit) {
         Workunit = workunit;
     }
 
-    public Date getBailoutbegindate() {
-        return Bailoutbegindate;
-    }
-
-    public void setBailoutbegindate(Date bailoutbegindate) {
-        Bailoutbegindate = bailoutbegindate;
-    }
-
-    public Date getBailoutenddate() {
-        return Bailoutenddate;
-    }
-
-    public void setBailoutenddate(Date bailoutenddate) {
-        Bailoutenddate = bailoutenddate;
-    }
 
     public String getSponsor() {
         return Sponsor;

@@ -6,29 +6,48 @@
         select * from t_personinformation where status=true
     </select>
 
-    <select id="GetSummons" parameterType="String" resultType="int">
-        select count(*) from t_summons where personid=#{PersonId} and summontime=#{date}
+    <select id="GetSummons" parameterType="String" resultType="com.admin.admin.entity.dw_summons.TSummons">
+        select  * from t_summons where personid=#{PersonId} Order by summonsendtime desc LIMIT 1
+    </select>
+
+    <select id="GetNumber" parameterType="String" resultType="com.admin.admin.entity.dw_summons.TSummons">
+        select * from  t_summons where personid=#{PersonId} and reporttime is null Order by summonsendtime desc LIMIT 1
+    </select>
+
+    <select id="GetMessage" resultType="int">
+        SELECT count (*) FROM t_summons where personid=#{PersonId} and summonsbegintime &lt;=#{Date} and summonsendtime >=#{Date} and reporttime is null
     </select>
 
     <insert id="SaveMessage" parameterType="com.admin.admin.entity.dw_message.TMessage">
-        insert into t_message(modular,workcontent,personid,modularname,messagetime,readmessage,detailtype,detailtypename)
+        insert into t_message(modular,content,personid,modularname,messagetime,readmessage,detailtype,detailtypename)
         values(#{modular},#{workcontent},#{personid},#{modularname},#{messagetime},#{readmessage},#{detailtype},#{detailtypename})
     </insert>
 
     <insert id="SaveSummons" parameterType="com.admin.admin.entity.dw_summons.TSummons">
-     insert into t_summons(summontime,personid,personname)
-     values(#{summontime},#{personid},#{personname})
+     insert into t_summons(summontime,personid,personname,summonsbegintime,summonsendtime)
+     values(#{summontime},#{personid},#{personname},#{summonsbegintime},#{summonsendtime})
     </insert>
 
-    <select id="GetMessageByTime" resultType="com.admin.admin.entity.dw_message.TMessage">
-        select * from t_message where personid=#{PersonId} and modular=#{type} and messagetime  &lt; now() order by messagetime desc limit 1
-    </select>
 
-    <select id="GetSummonsByPersonId" parameterType="String" resultType="com.admin.admin.entity.dw_message.TMessage">
-        select count(*) from t_message where personid=#{PersonId}
-    </select>
+
+<!--    <select id="GetSummonsByPersonId" parameterType="String" resultType="com.admin.admin.entity.dw_message.TMessage">-->
+<!--        select count(*) from t_message where personid=#{PersonId}-->
+<!--    </select>-->
     
     <select id="GetConfigure" parameterType="String" resultType="com.admin.admin.entity.dw_reminder.Remindersettings">
         select * from t_remindersettings where code=#{Code} and status=true
     </select>
+
+    <select id="GetViolationfens" parameterType="int" resultType="com.admin.admin.entity.dw_violation.Violationfens">
+        select * from legal."public".t_violationfens where status=true and enabled=false and violationcode=#{type}
+    </select>
+
+    <select id="StatisticalSummons" parameterType="String" resultType="int">
+        select count(*) from legal."public".t_summons where personid=#{PersonId} and summonsendtime&lt; #{date} and reporttime is null
+    </select>
+    <update id="UpdateDegree" parameterType="String">
+        update legal."public".t_summons set severity=#{severity} where  personid=#{PersonId}
+        and summonsendtime =(SELECT summonsendtime from t_summons where personid=#{PersonId} Order by summonsendtime desc LIMIT 1 )
+    </update>
+
 </mapper>
