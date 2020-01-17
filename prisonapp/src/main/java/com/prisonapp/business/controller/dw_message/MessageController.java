@@ -41,12 +41,59 @@ public class  MessageController {
     @GetMapping("/getNotificationList")
     public ResultSet getNotificationList() {
         int sum = 0;
+        String type ="";
+
         String a=TokenUtil.getTokenUserId();
         List<NotificationMessageModel> notificationMessageModels = messageService.getNotificationList(getPersonId());
         for (NotificationMessageModel item : notificationMessageModels) {
             int unreadCount = messageService.unreadCount(Integer.parseInt(item.getType()),getPersonId()).size();
             item.setUnreadCount(unreadCount);
             sum += unreadCount;
+        }
+        for(int i=0;i<notificationMessageModels.size();i++){
+            type +=notificationMessageModels.get(i).getType();
+        }
+        if(!type.contains("1")){
+            NotificationMessageModel model =new NotificationMessageModel();
+            model.setType(1);
+            model.setTypeName("任务提醒");
+            model.setUnreadCount(0);
+            notificationMessageModels.add(model);
+        }
+        if(!type.contains("2")){
+            NotificationMessageModel model =new NotificationMessageModel();
+            model.setType(2);
+            model.setTypeName("报警提醒");
+            model.setUnreadCount(0);
+            notificationMessageModels.add(model);
+        }
+        if(!type.contains("3")){
+            NotificationMessageModel model =new NotificationMessageModel();
+            model.setType(3);
+            model.setTypeName("通话消息");
+            model.setUnreadCount(0);
+            notificationMessageModels.add(model);
+        }
+        if(!type.contains("4")){
+            NotificationMessageModel model =new NotificationMessageModel();
+            model.setType(4);
+            model.setTypeName("外出提醒");
+            model.setUnreadCount(0);
+            notificationMessageModels.add(model);
+        }
+        if(!type.contains("5")){
+            NotificationMessageModel model =new NotificationMessageModel();
+            model.setType(5);
+            model.setTypeName("传讯提醒");
+            model.setUnreadCount(0);
+            notificationMessageModels.add(model);
+        }
+        if(!type.contains("6")){
+            NotificationMessageModel model =new NotificationMessageModel();
+            model.setType(6);
+            model.setTypeName("电量提醒");
+            model.setUnreadCount(0);
+            notificationMessageModels.add(model);
         }
         resultNotificationMessage.totalCount = sum;
         resultNotificationMessage.list = notificationMessageModels;
