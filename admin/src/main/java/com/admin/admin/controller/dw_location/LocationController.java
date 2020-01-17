@@ -56,7 +56,8 @@ public class LocationController {
     @GetMapping("/TrackToday")
     public ResponseResult ListLocation(String PersonId, String date, HttpServletResponse response) {
 
-        if (locationService.ListLocation(PersonId, date).size() == 0) {
+        List<Locationmation> todayList=locationService.ListLocation(PersonId, date);
+        if (todayList.size() == 0) {
             result.setCode(ResultCode.NULLDATA.getCode());
             result.setMessage(ResultCode.NULLDATA.getMessage());
             return result.setData("");
@@ -64,7 +65,7 @@ public class LocationController {
 
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(locationService.ListLocation(PersonId, date));
+        return result.setData(todayList);
 
     }
 

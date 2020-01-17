@@ -1,10 +1,13 @@
 package com.admin.admin.dao.dw_userpermission;
 
 import com.admin.admin.entity.dw_userpermission.UserPermissionGroup;
+import com.admin.admin.entity.dw_userrole.UserRole;
+import com.admin.model.coordina.MenuModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface UserPermissionGroupDao {
@@ -23,4 +26,35 @@ public interface UserPermissionGroupDao {
     List<UserPermissionGroup> listGroup(@Param("flag") boolean flag);
 
     int selectByName(String Name);
+
+    /**
+     * 保存分配权限
+     * @param userRole
+     * @return
+     */
+    int saveUserRole(UserRole userRole);
+    /*
+    获取菜单
+     */
+    List<MenuModel> GetMenuList();
+
+    /**
+     * 物理删除
+     * @param permissionid
+     * @return
+     */
+    int deleteUserRole( int permissionid);
+
+    /**
+     * 状态删除
+     * @param permissionid
+     * @return
+     */
+    int DelStatus(@Param("flag") boolean flag,@Param("permissionid") int permissionid);
+    /**
+     * 修改
+     * @param userRole
+     * @return
+     */
+  //  int updateUserRole(UserRole userRole);
 }
