@@ -3,6 +3,7 @@ package com.prisonapp.business.service.dw_supervise;
 import com.prisonapp.business.dao.dw_supervise.SuperviseDao;
 import com.prisonapp.business.entity.dw_supervise.*;
 import com.prisonapp.business.entity.dw_user.UserModel;
+import com.prisonapp.token.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,8 @@ public class SuperviseService {
         return superviseDao.getAllApplyLeaveList(count,requestCount,userId);
     }
     //外出申请列表的总数
-    public List<SuperviseModel> getTotalApplyLeaveList(String statusCode, String userId){
-        return superviseDao.getTotalApplyLeaveList(statusCode,userId);
+    public List<SuperviseModel> getTotalApplyLeaveList(String userId){
+        return superviseDao.getTotalApplyLeaveList(userId);
     }
 
     //外出申请列表的第三级
@@ -34,9 +35,9 @@ public class SuperviseService {
     public int submitApplyLeave(String city,    String cityCode,    String district,String districtCode,
                                 String province,String provinceCode,String reason,  String reasonAudioUrl ,
                                 long   endDate, long startDate,     String code,    String userId,
-                                String personName){
+                                String personName,String sponsorAlarm,String address){
         //return superviseDao.submitApplyLeave(city,cityCode,district,districtCode,province,provinceCode,reason,reasonAudioUrl,endDate,startDate,code,userId,personName);
-        return superviseDao.submitApplyLeave(city,cityCode,district,districtCode,province,provinceCode,reason,reasonAudioUrl,endDate,startDate,code,userId,personName);
+        return superviseDao.submitApplyLeave(city,cityCode,district,districtCode,province,provinceCode,reason,reasonAudioUrl,endDate,startDate,code,userId,personName,sponsorAlarm,address);
     }
 
     public List<TPersoninformation> getPersonname(String userId){
@@ -94,5 +95,10 @@ public class SuperviseService {
     public int insertFscope(String userId,String content){
         return  superviseDao.insertFscope( userId,content);
     }
+
+    public TPersoninformation RelatedId(String accountName){
+        return  superviseDao.RelatedId( accountName);
+    }
+
 
 }

@@ -8,30 +8,32 @@ import java.util.Date;
  * */
 public class MessageListModel {
 
-    public int  code;
-    public int type;
+    public String  code;
+    public String type;
     public String typeName;
     public String content;
     public String  timestamp;
-    public int detailType;
+    public String detailType;
     public String detailTypeName;
     private String contactCode;
     public boolean isRead;
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
     public void setCode(int code) {
-        this.code = code;
+        String strCode =String.valueOf(code);
+        this.code = strCode;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
     public void setType(int type) {
-        this.type = type;
+        String strType =String.valueOf(type);
+        this.type = strType;
     }
 
     public String getTypeName() {
@@ -59,12 +61,13 @@ public class MessageListModel {
         this.timestamp = timeStamp;
     }
 
-    public int getDetailType() {
+    public String getDetailType() {
         return detailType;
     }
 
     public void setDetailType(int detailType) {
-        this.detailType = detailType;
+        String strDetailType =String.valueOf(detailType);
+        this.detailType = strDetailType;
     }
 
     public String getDetailTypeName() {

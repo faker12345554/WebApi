@@ -12,7 +12,7 @@ import java.util.List;
 public class SystemService {
     @Autowired
     private SystemDao systemDao;
-    public List<GetUpdateInfoModel> getUpdateInfo(){
+    public GetUpdateInfoModel getUpdateInfo(){
         return  systemDao.getUpdateInfo();
     }
 

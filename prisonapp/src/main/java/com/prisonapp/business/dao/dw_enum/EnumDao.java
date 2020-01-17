@@ -8,6 +8,6 @@ import java.util.List;
 @Mapper
 public interface EnumDao {
     List<AreaAddressInfo> getProvice();
-    List<AreaAddressInfo> getCity();
-    List<AreaAddressInfo> getDistrict();
+    List<AreaAddressInfo> getCity(String code);
+    List<AreaAddressInfo> getDistrict(String code);
 }

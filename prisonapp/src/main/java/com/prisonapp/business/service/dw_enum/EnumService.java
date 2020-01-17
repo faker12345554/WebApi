@@ -15,11 +15,11 @@ public class EnumService {
         return enumDao.getProvice();
     }
 
-    public List<AreaAddressInfo> getCity() {
-        return enumDao.getCity();
+    public List<AreaAddressInfo> getCity(String code) {
+        return enumDao.getCity(code);
     }
 
-    public List<AreaAddressInfo> getDistrict() {
-        return enumDao.getDistrict();
+    public List<AreaAddressInfo> getDistrict(String code) {
+        return enumDao.getDistrict(code);
     }
 }

@@ -30,7 +30,7 @@ select  modular as type ,modularname as typeName,detailtype as detailType,detail
         select  id as code,modular as type ,modularname as typeName,content,messagetime as timestamp,detailtype as detailType,detailtypename as detailTypeName,leaveorder as contactCode, readmessage as isRead from t_personmessage where personid=#{userId} and modular=#{type} and content  like concat('%',#{key},'%') ORDER BY timestamp  desc limit #{requestCount} OFFSET #{count}
     </select>
     <update id="readMessage" >
-        update t_personmessage set readmessage=true where modular=#{type} and personid=#{userId}
+        update t_personmessage set readmessage=true where modular=#{type} and personid=#{userId} and messagetime &lt;= #{messageTimestamp}
     </update>
     <select id="searchNotification" resultType="com.prisonapp.business.entity.dw_message.SearchNotificationModel">
                 select * from (SELECT content, modular as type,modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,messagetime as timestamp FROM "t_personmessage"  where modular='1'  and  personid=#{userId}  ORDER BY  messagetime desc  limit  1 ) as a where  content like concat('%',#{key},'%')
@@ -60,5 +60,9 @@ select  modular as type ,modularname as typeName,detailtype as detailType,detail
 
     <select id="getNotification" resultType="com.prisonapp.business.entity.dw_message.NotificationMessageModel">
         select modular as type, modularname as typeName,detailtype as detailType,detailtypename as detailTypeName,content,messagetime as timestamp from t_personmessage where personid=#{userId} and modular=#{type} ORDER BY timestamp  desc limit 1
+    </select>
+
+    <select id="RelatedId" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation" parameterType="String">
+        select * from t_personinformation where contact=#{accountName}
     </select>
 </mapper>

@@ -26,25 +26,23 @@ public class SystemController {
     private ResultSet result = new ResultSet();
     private ResultGetUpdateRecordsModel resultGetUpdateRecordsModel= new ResultGetUpdateRecordsModel();
 
-    @UserLoginToken
     @ApiOperation(value = "获取保外人员 App 的更新信息")
     @GetMapping("/getUpdateInfo")
     public ResultSet getUpdateInfo(){
-       List<GetUpdateInfoModel> getUpdateInfoModels = systemService.getUpdateInfo();
+       GetUpdateInfoModel getUpdateInfoModels = systemService.getUpdateInfo();
         result.resultCode=0;
         result.resultMsg="";
         result.data=getUpdateInfoModels;
         return result;
     }
 
-    @UserLoginToken
     @ApiOperation(value = "获取保外人员 App 的更新记录")
     @GetMapping("/getUpdateRecords")
     public ResultSet getUpdateRecords(int count,int requestCount){
         List<GetUpdateRecordsModel> getUpdateRecordsModels = systemService.getUpdateRecords(count, requestCount);
         int a = systemService.gettotalUpdateRecords().size();
         resultGetUpdateRecordsModel.setTotalCount(a);
-        resultGetUpdateRecordsModel.setGetUpdateRecordsModels(getUpdateRecordsModels);
+        resultGetUpdateRecordsModel.setList(getUpdateRecordsModels);
         result.resultCode=0;
         result.resultMsg="";
         result.data=resultGetUpdateRecordsModel;

@@ -1,9 +1,11 @@
 package com.prisonapp.business.entity.dw_system;
 
+import java.util.Date;
+
 public class GetUpdateRecordsModel {
     private String timestamp;
     private String version;
-    private String versionCode;
+    private int versionCode;
     private String msg;
     private String url;
 
@@ -11,8 +13,9 @@ public class GetUpdateRecordsModel {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setTimestamp(Date timestamp) {
+        String strTimestamp = String.valueOf(timestamp.getTime());
+        this.timestamp = strTimestamp;
     }
 
     public String getVersion() {
@@ -23,11 +26,11 @@ public class GetUpdateRecordsModel {
         this.version = version;
     }
 
-    public String getVersionCode() {
+    public int getVersionCode() {
         return versionCode;
     }
 
-    public void setVersionCode(String versionCode) {
+    public void setVersionCode(int versionCode) {
         this.versionCode = versionCode;
     }
 

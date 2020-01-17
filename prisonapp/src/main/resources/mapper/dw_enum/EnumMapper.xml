@@ -6,9 +6,9 @@
         SELECT * FROM area_addressinfo where level ='1'
     </select>
     <select id="getCity" resultType="com.prisonapp.business.entity.dw_enum.AreaAddressInfo">
-        SELECT * FROM area_addressinfo where level ='2'
+        SELECT * FROM area_addressinfo where level ='2' and parentcode=#{code}
     </select>
     <select id="getDistrict" resultType="com.prisonapp.business.entity.dw_enum.AreaAddressInfo">
-        SELECT * FROM area_addressinfo where level ='3'
+        SELECT * FROM area_addressinfo where level ='3' and parentcode=#{code}
     </select>
 </mapper>

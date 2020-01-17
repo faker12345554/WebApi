@@ -1,6 +1,8 @@
 package com.prisonapp.business.controller.dw_user;
 
 import com.common.common.result.ResultSet;
+import com.prisonapp.business.controller.dw_supervise.SuperviseController;
+import com.prisonapp.business.entity.dw_supervise.TPersoninformation;
 import com.prisonapp.business.entity.dw_user.TokenModel;
 import com.prisonapp.business.entity.dw_user.UserModel;
 import com.prisonapp.business.entity.dw_user.GetUserInfoModel;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -30,9 +33,9 @@ public class UserController {
 
     @Autowired
     private TokenService tokenService;
+    private SuperviseController superviseController =new SuperviseController();
     private ResultSet result = new ResultSet();
     private TokenModel tokenModel=new TokenModel();
-    //private TokenResult tokenResult =new TokenResult();
 
 
     @ApiOperation(value = "登录")
@@ -49,11 +52,13 @@ public class UserController {
        else if(userModel.getPassword().equals(password)&&userModel.getStatus().equals("t")){
            CacheUtils.put("UserId",userModel.getId(),0);
            String token =tokenService.getToken(userModel);
-
+           Calendar calendar = Calendar.getInstance();
+           calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + 7);
+           String  ExpiresTime =String.valueOf(calendar.getTimeInMillis());
            tokenModel.setToken(token);
-           tokenModel.setrExpiresTime(token);
+           tokenModel.setrExpiresTime(ExpiresTime);
            tokenModel.setRefreshToken(token);
-           tokenModel.settExpiresTime(token);
+           tokenModel.settExpiresTime(ExpiresTime);
            result.resultCode=0;
            result.resultMsg="";
            result.data=tokenModel;
@@ -71,24 +76,25 @@ public class UserController {
     @ApiOperation(value = "获取保外人员信息")
     @GetMapping("/getUserInfo")
     public ResultSet getUserInfo(){
-          GetUserInfoModel getUserInfoModels = userService.getUserInfo(TokenUtil.getTokenUserId());
+          GetUserInfoModel getUserInfoModels = userService.getUserInfo(getPersonId());
+          UserModel userModel =userService.officephone(getUserInfoModels.getSponsoralarm());
+          getUserInfoModels.setInChargeContract(userModel.getOfficephone());
         result.resultCode=0;
         result.resultMsg="";
         result.data=getUserInfoModels;
         return result;
     }
 
-    @UserLoginToken
     @ApiOperation(value = "保外人员修改密码")
-    @GetMapping("/modifyPassword")
+    @PostMapping("/modifyPassword")
     public ResultSet modifyPassword(@ApiParam(name = "password",value = "旧密码")@RequestParam(required = false)String password,@ApiParam(name = "newPassword",value = "新密码")@RequestParam(required = false)String newPassword){
-        List<UserModel> userModel =userService.modifyPassword(TokenUtil.getTokenUserId(),password);
+        List<UserModel> userModel =userService.modifyPassword(getPersonId(),password);
         if(userModel.size()!=0){
-          int a = userService.upModifyPassword(TokenUtil.getTokenUserId(),newPassword);
+          int a = userService.upModifyPassword(getPersonId(),newPassword);
           if(a!=0){
               result.resultCode=0;
               result.resultMsg="";
-              result.data="";
+              result.data=new Object();
           }else{
               result.resultCode=1;
               result.resultMsg="修改异常";
@@ -103,4 +109,10 @@ public class UserController {
         return result;
     }
 
+    public  String getPersonId(){
+
+        TPersoninformation tPersoninformation = userService.RelatedId(TokenUtil.getTokenUserId());//根据user中的手机号去取出personid
+        String personid = tPersoninformation.getPersonid();
+        return personid;
+    }
 }
