@@ -29,7 +29,7 @@ public class SystemController {
     @ApiOperation(value = "获取保外人员 App 的更新信息")
     @GetMapping("/getUpdateInfo")
     public ResultSet getUpdateInfo(){
-       List<GetUpdateInfoModel> getUpdateInfoModels = systemService.getUpdateInfo();
+       GetUpdateInfoModel getUpdateInfoModels = systemService.getUpdateInfo();
         result.resultCode=0;
         result.resultMsg="";
         result.data=getUpdateInfoModels;
@@ -42,7 +42,7 @@ public class SystemController {
         List<GetUpdateRecordsModel> getUpdateRecordsModels = systemService.getUpdateRecords(count, requestCount);
         int a = systemService.gettotalUpdateRecords().size();
         resultGetUpdateRecordsModel.setTotalCount(a);
-        resultGetUpdateRecordsModel.setGetUpdateRecordsModels(getUpdateRecordsModels);
+        resultGetUpdateRecordsModel.setList(getUpdateRecordsModels);
         result.resultCode=0;
         result.resultMsg="";
         result.data=resultGetUpdateRecordsModel;

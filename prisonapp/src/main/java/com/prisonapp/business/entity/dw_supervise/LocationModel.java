@@ -2,7 +2,7 @@ package com.prisonapp.business.entity.dw_supervise;
 
 public class LocationModel {
     private boolean enable;
-    private String timeSpan;
+    private int timeSpan;
 
     public boolean isEnable() {
         return enable;
@@ -12,11 +12,11 @@ public class LocationModel {
         this.enable = enable;
     }
 
-    public String getTimeSpan() {
+    public int getTimeSpan() {
         return timeSpan;
     }
 
-    public void setTimeSpan(String timeSpan) {
+    public void setTimeSpan(int timeSpan) {
         this.timeSpan = timeSpan;
     }
 

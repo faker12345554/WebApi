@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface SystemDao {
-    List<GetUpdateInfoModel> getUpdateInfo();
+    GetUpdateInfoModel getUpdateInfo();
 
     List<GetUpdateRecordsModel> getUpdateRecords(int count,int requestCount);
 

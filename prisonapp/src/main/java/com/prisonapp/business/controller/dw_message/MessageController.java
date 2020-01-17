@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -133,12 +134,15 @@ public class  MessageController {
     @UserLoginToken
     @ApiOperation(value = "保外人员确认消息读取")
     @PostMapping("/readMessage")
-    public ResultSet readMessage(@ApiParam(name = "type",value = "类型编号") @RequestParam(required = true) int type,@ApiParam(name = "messageTimestamp",value = "最新一条已获取的消息的时间戳") @RequestParam(required = true) String messageTimestamp) {
+    public ResultSet readMessage(@ApiParam(name = "type",value = "类型编号") @RequestParam(required = true) int type,@ApiParam(name = "messageTimestamp",value = "最新一条已获取的消息的时间戳") @RequestParam(required = true) String messageTimestamp) throws ParseException {
         long longMessageTimestamp = Long.parseLong(messageTimestamp);
+        String strMessageTimestamp =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(longMessageTimestamp);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date dateMessageTimestamp=sdf.parse(strMessageTimestamp);
         String a=TokenUtil.getTokenUserId();
         if (System.currentTimeMillis() - longMessageTimestamp >= 0)//当前时间戳减掉传入的时间戳，如果大于零，则传入的时间戳小于当前时间戳
         {
-            int res = messageService.readMessage(type, messageTimestamp, getPersonId());
+            int res = messageService.readMessage(type, dateMessageTimestamp, getPersonId());
             if (res != 0) {
                 result.resultCode = 0;
                 result.resultMsg = "";

@@ -14,7 +14,7 @@
     </select>
 
     <select id="getTotalApplyLeaveList" resultType="com.prisonapp.business.entity.dw_supervise.SuperviseModel">
-        select * FROM t_leave where personid=#{userId} and statuscode=#{statusCode}
+        select * FROM t_leave where personid=#{userId}
     </select>
 
     <select id="applyRecord" resultType="com.prisonapp.business.entity.dw_supervise.ApplyRecordModel">

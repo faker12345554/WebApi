@@ -15,7 +15,7 @@ public interface SuperviseDao {
 
     List<GetApplyLeaveListModel> getAllApplyLeaveList(@Param("count")int count,@Param("requestCount")int requestCount, @Param("userId")String userId);
 
-    List<SuperviseModel> getTotalApplyLeaveList(@Param("statusCode")String  statusCode, @Param("userId")String userId);
+    List<SuperviseModel> getTotalApplyLeaveList( @Param("userId")String userId);
 
     List<ApplyRecordModel> applyRecord(@Param("code")String  code);
 

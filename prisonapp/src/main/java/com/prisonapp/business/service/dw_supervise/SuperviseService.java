@@ -23,8 +23,8 @@ public class SuperviseService {
         return superviseDao.getAllApplyLeaveList(count,requestCount,userId);
     }
     //外出申请列表的总数
-    public List<SuperviseModel> getTotalApplyLeaveList(String statusCode, String userId){
-        return superviseDao.getTotalApplyLeaveList(statusCode,userId);
+    public List<SuperviseModel> getTotalApplyLeaveList(String userId){
+        return superviseDao.getTotalApplyLeaveList(userId);
     }
 
     //外出申请列表的第三级

@@ -61,7 +61,7 @@ public class SuperviseController {
         }
         if (ApplyLeaveListModels != null && !"".equals(ApplyLeaveListModels) && !"null".equals(ApplyLeaveListModels)) {
 
-            int totalCount = (superviseService.getTotalApplyLeaveList(statusCode, getPersonId())).size();
+            int totalCount = (superviseService.getTotalApplyLeaveList(getPersonId())).size();
             for (GetApplyLeaveListModel item : ApplyLeaveListModels) {
                 List<ApplyRecordModel> applyRecords = superviseService.applyRecord(item.getCode());//取出请假申请
                 Long End = Long.parseLong(item.getEndTimestamp());
@@ -317,7 +317,7 @@ public class SuperviseController {
         //取出定位的数据
         LocationModel locationModels =new LocationModel();
         locationModels.setEnable(tRemindersettings.isStatus());
-        locationModels.setTimeSpan(tRemindersettings.getSettingday());
+        locationModels.setTimeSpan(Integer.parseInt(tRemindersettings.getSettingday()));
         //设置电量的数据
         Battery battery = new Battery();
         battery.setEnable(true);

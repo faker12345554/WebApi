@@ -85,7 +85,6 @@ public class UserController {
         return result;
     }
 
-    @UserLoginToken
     @ApiOperation(value = "保外人员修改密码")
     @PostMapping("/modifyPassword")
     public ResultSet modifyPassword(@ApiParam(name = "password",value = "旧密码")@RequestParam(required = false)String password,@ApiParam(name = "newPassword",value = "新密码")@RequestParam(required = false)String newPassword){
@@ -95,7 +94,7 @@ public class UserController {
           if(a!=0){
               result.resultCode=0;
               result.resultMsg="";
-              result.data="";
+              result.data=new Object();
           }else{
               result.resultCode=1;
               result.resultMsg="修改异常";
