@@ -4,6 +4,129 @@ public class User {
     private int id;
     private String accountname;
     private String password;
+    private int permissionid;
+    private int createid;
+    private String createname;
+    private String areacode;
+    private String phone;
+
+    public long getUsersystem() {
+        return usersystem;
+    }
+
+    public User setUsersystem(long usersystem) {
+        this.usersystem = usersystem;
+        return this;
+    }
+
+    public String getOfficephone() {
+        return officephone;
+    }
+
+    public User setOfficephone(String officephone) {
+        this.officephone = officephone;
+        return this;
+    }
+
+    public String getPolice() {
+        return police;
+    }
+
+    public User setPolice(String police) {
+        this.police = police;
+        return this;
+    }
+
+    public String getAreaname() {
+        return areaname;
+    }
+
+    public User setAreaname(String areaname) {
+        this.areaname = areaname;
+        return this;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public User setDepartment(String department) {
+        this.department = department;
+        return this;
+    }
+
+    public String getPersonid() {
+        return personid;
+    }
+
+    public User setPersonid(String personid) {
+        this.personid = personid;
+        return this;
+    }
+
+    public String getMailbox() {
+        return mailbox;
+    }
+
+    public User setMailbox(String mailbox) {
+        this.mailbox = mailbox;
+        return this;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public User setSex(String sex) {
+        this.sex = sex;
+        return this;
+    }
+
+    public String getStation() {
+        return station;
+    }
+
+    public User setStation(String station) {
+        this.station = station;
+        return this;
+    }
+
+    public String getBz() {
+        return bz;
+    }
+
+    public User setBz(String bz) {
+        this.bz = bz;
+        return this;
+    }
+
+    private boolean status;
+    private String bmmc;
+    private long usersystem;
+    private String officephone;
+    private String police;
+    private String areaname;
+    private String department;
+    private String personid;
+    private String mailbox;
+    private String sex;
+    private String station;
+    private String bz;
+
+    public String getRoleName() {
+        return RoleName;
+    }
+
+    public User setRoleName(String roleName) {
+        RoleName = roleName;
+        return this;
+    }
+
+    private String RoleName;
+
+
+
+    private String aliasname;
 
     public String getBmmc() {
         return bmmc;
@@ -13,19 +136,6 @@ public class User {
         this.bmmc = bmmc;
         return this;
     }
-
-    private int permissionid;
-    private int createid;
-    private String createname;
-    private String areacode;
-    private String phone;
-    private boolean status;
-    private String bmmc;
-
-
-
-    private String aliasname;
-
 
 
     public int getId() {

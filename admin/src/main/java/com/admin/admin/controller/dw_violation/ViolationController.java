@@ -37,10 +37,12 @@ public class ViolationController {
             if (violationlist.size() == 0) {
                 item.setStatus(true);
                 item.setEnabled(false);
+                item.setCreatetime(new Date());
                 violationService.SaveViolation(item);
                 result.setMessage(ResultCode.SUCCESS.getMessage());
             } else if (CalendarAdjust.getMonthDiff(CalendarAdjust.GetDate(item.getUpdatemonth()), new Date()) == 0 && violation.size() == 0) {
                 item.setStatus(true);
+                item.setCreatetime(new Date());
                 item.setModificationtime(new Date());
                 item.setEnabled(true);
                 violationService.SaveViolation(item);

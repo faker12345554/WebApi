@@ -37,10 +37,10 @@ public class UserController {
     @UserLoginToken
     @ApiOperation("用户信息列表")
     @GetMapping("/GetList")
-    public ResponseResult<User> listUser(@RequestParam(required = false) boolean falg, int PageSize, int PageIndex, HttpServletResponse response) {
+    public ResponseResult<User> listUser( int PageSize, int PageIndex, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(userService.listUser(falg,PageIndex,PageSize));
+        return result.setData(userService.listUser(PageIndex,PageSize));
     }
 
 
@@ -112,6 +112,11 @@ public class UserController {
 //        }
 
         User user = userService.login(UserName, Password);
+        if (user==null){
+            result.setCode(ResultCode.SUCCESS.getCode());
+            result.setMessage("密码或账号错误");
+            return result;
+        }
         CacheUtils.put("UserId", user.getId(), 0);
         CacheUtils.put("UserName",user.getAliasname());
         String token = tokenService.getToken(user);

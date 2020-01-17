@@ -10,8 +10,11 @@
             resultType="com.admin.model.singin.SinginModel">
         select t.id,P.suspectstatus,P.personname,P.gender,P.age,t.reportstatus,t.reporttype,P.sponsor
         ,t.address,t.activityarea,t.createtime,t.type,(CASE (SELECT Count(*) from t_leave where personid=t.personid and starttimestamp &lt;= t.createtime AND t.createtime &lt;= endtimestamp)
-        WHEN 0 THEN '正常签到' ELSE '已请假' END) as Remark from t_singin AS t
-        inner join t_personinformation AS P on p.personid=t.personid where p.status=#{flag}
+        WHEN 0 THEN '正常签到' ELSE '已请假' END) as Remark,tc.caseno,
+        tc.handleunit,P.guid from t_singin AS t
+        inner join t_personinformation AS P on p.personid=t.personid
+         left join t_caseinfo tc on P.casetype = tc.casetype
+         where p.status=#{flag}
         <if test="PersonId !=null and PersonId!=''">
             and t.personid=#{PersonId}
         </if>
@@ -24,7 +27,9 @@
             t.reporttype like concat('%',#{FuzzyCondition},'%') or
             P.sponsor like concat('%',#{FuzzyCondition},'%') or
             t.address like concat('%',#{FuzzyCondition},'%') or
-            t.activityarea like concat('%',#{FuzzyCondition},'%')
+            t.activityarea like concat('%',#{FuzzyCondition},'%') or
+            tc.handleunit like concat('%',#{FuzzyCondition},'%') or
+            tc.caseno like concat('%',#{FuzzyCondition},'%')
         </if>
         <if test="Condition==null and PersonName!=null">
            and P.personname like concat('%',#{PersonName},'%')
@@ -54,8 +59,12 @@
 
     <select id="ListAudio" parameterType="com.admin.model.search.SearchModel"
             resultType="com.admin.model.singin.SinginModel" >
-            select  t.id,P.suspectstatus,P.personname,P.gender,P.sponsor,P.policestation,t.reporttype,P.yjsponsoralarm,t.durationtime,t.createtime,t.filepath,t.typename from t_singin AS t
-              inner join t_personinformation AS P on p.personid=t.personid where p.status=#{flag}
+            select  t.id,P.suspectstatus,P.personname,P.gender,P.sponsor,P.policestation,t.reporttype,P.yjsponsoralarm,t.durationtime,t.createtime,t.filepath,t.typename,tc.caseno,
+            tc.handleunit,P.guid
+             from t_singin AS t
+              inner join t_personinformation AS P on p.personid=t.personid
+              left join t_caseinfo tc on P.casetype = tc.casetype
+              where p.status=#{flag}
         <if test="Condition ==null and PersonName !=null">
             and P.personname like concat('%',#{PersonName},'%')
         </if>
@@ -70,6 +79,12 @@
         </if>
         <if test="Condition ==null and PersonName ==null and StartTime!=null and EndTime!=null">
             and t.createtime > TO_TIMESTAMP(#{StartTime}, 'YYYY-MM-DD HH24:MI:SS') and t.createtime &lt; TO_TIMESTAMP(#{EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="list.size()>0">
+            and t.id in
+            <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
         </if>
 
 

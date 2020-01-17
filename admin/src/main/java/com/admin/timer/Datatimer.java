@@ -31,20 +31,20 @@ public class Datatimer  {
 
     @Autowired
     private ViolationDao violationDao;
-    //定义一个按时间执行的定时任务，在每天02:00执行一次。
+    //每天凌晨1点执行
     @Scheduled(cron = "0 0 1 * * ?")
     public void depositJob() throws Exception {
 
         tasking.ReminderBail();
         //执行代码
     }
-    //定义一个按一定频率执行的定时任务，每隔1分钟执行一次
+    //每天凌晨2点执行
     @Scheduled(cron = "0 0 2 * * ?")
     public void job2() throws Exception {
 
         tasking.GeneratedRecord();
     }
-    //定义一个按一定频率执行的定时任务，每隔1分钟执行一次，延迟1秒执行
+    //每个月1号凌晨一点执行
     @Scheduled(cron = "0 0 1 1 * ?")
     public void updatePayRecords() throws Exception {
         List<Violationfens> violationlist = violationDao.ListViolation();
@@ -61,5 +61,15 @@ public class Datatimer  {
         }
        // System.out.println(CalendarAdjust.GetMonth());
 
+    }
+    //每个月1号凌晨2点执行
+    @Scheduled(cron = "0 0 2 1 * ?")
+    public void Savemessage() throws Exception{
+        tasking.GetMessage();
+    }
+    //每个月1号凌晨2点执行
+    @Scheduled(cron = "0 0 3 1 * ?")
+    public void Statisticalsummons() throws Exception{
+        tasking.Statisticalsummons();
     }
 }

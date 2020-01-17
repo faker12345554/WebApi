@@ -19,10 +19,11 @@ public interface UserDao {
     User login(@Param("UserName") String UserName,@Param("Password") String Password);
 
     //用户列表
-    List<User> listUser(@Param("flag") boolean flag);
+    List<User> listUser();
 
     //查看
     User getUser(@Param("UserName") String UserName);
+
     //根据用户名获取用户 查重
     int GetUserByAccountName(@Param("Account") String Account);
 

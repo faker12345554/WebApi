@@ -5,7 +5,9 @@ import com.admin.admin.entity.dw_person.Personinformation;
 import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
 import com.admin.admin.entity.dw_reminder.Remindersettings;
 import com.admin.admin.entity.dw_summons.TSummons;
+import com.admin.admin.entity.dw_violation.Violationfens;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,15 +19,28 @@ public interface TaskDao {
      */
     List<Personinformation> GetPerson();
 
-    /*
-    获取人员几种管理方式
-     */
-    List<TPrisonsetting> GetPersonType(String PersonId);
+
 
     /*
-    查询监居人员当月已做过几次
+    获取上一次的记录
      */
-    int GetSummons(String PersonId,String date);
+    TSummons GetSummons(String PersonId);
+
+    /**
+     * 获取当前时间段是否已有数据
+     * @param
+     * @param PersonId
+     * @return
+     */
+    TSummons GetNumber(String PersonId);
+
+    /**
+     * 获取每月的提醒记录数
+     * @param PersonId
+     * @param Date
+     * @return
+     */
+    int GetMessage(@Param("PersonId") String PersonId, @Param("Date") String Date);
 
     /**
      * 生成提醒记录
@@ -41,19 +56,7 @@ public interface TaskDao {
      */
     int SaveSummons(TSummons tSummons);
 
-    /**
-     * 获取最近一次传讯记录
-     * @param PersonId
-     * @return
-     */
-    TMessage GetMessageByTime(String PersonId,int type);
 
-    /**
-     *根据人员id查询
-     * @param PersonId
-     * @return
-     */
-     int GetSummonsByPersonId(String PersonId);
 
     /**
      * 获取配置
@@ -61,6 +64,29 @@ public interface TaskDao {
      * @return
      */
      Remindersettings GetConfigure(String Code);
+
+    /***
+     *
+     * @return
+     */
+    Violationfens GetViolationfens(int type);
+
+    /**
+     * 统计几次未报到
+     * @param PersonId
+     * @param date
+     * @return
+     */
+    int StatisticalSummons(String PersonId,String date);
+    /**
+     * 修改状态
+     * @param PersonId
+     * @param severity
+     * @return
+     */
+    int UpdateDegree(String PersonId,String severity);
+
+
 
 
 

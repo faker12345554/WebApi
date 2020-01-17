@@ -13,26 +13,8 @@ import java.util.TimeZone;
 
 public class CalendarAdjust {
 
-    /**
-     * 获取当前时间的日期
-     *
-     * @return
-     */
-    public static int GetDays() {
-        Calendar c = Calendar.getInstance();
-        return c.get(Calendar.DATE);
-    }
 
-    /**
-     * 获取当前的月份
-     * @return
-     */
-
-    public static int GetMonth() {
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.MONTH, 1);
-        return c.get(Calendar.MONTH );
-    }
+    public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     /**
      * 时间戳转换成日期格式字符串
      * @param seconds 精确到秒的字符串
@@ -83,114 +65,23 @@ public class CalendarAdjust {
         return  GetYear(timeStamp2Date(calendar.getTimeInMillis())).substring(0,7);
     }
 
-    /**
-     * 获取指定某一天的开始时间戳
-     *
-     * @param timeStamp 毫秒级时间戳
-     * @param timeZone  如 GMT+8:00
-     * @return
-     */
-    public static Long getDailyStartTime(Long timeStamp, String timeZone) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeZone(TimeZone.getTimeZone(timeZone));
-        calendar.setTimeInMillis(timeStamp);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTimeInMillis();
-    }
 
-    /**
-     * 获取指定某一天的结束时间戳
-     *
-     * @param timeStamp 毫秒级时间戳
-     * @param timeZone  如 GMT+8:00
-     * @return
-     */
-    public static Long getDailyEndTime(Long timeStamp, String timeZone) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeZone(TimeZone.getTimeZone(timeZone));
-        calendar.setTimeInMillis(timeStamp);
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 59);
-        calendar.set(Calendar.SECOND, 59);
-        calendar.set(Calendar.MILLISECOND, 999);
-        return calendar.getTimeInMillis();
-    }
 
-    /**
-     * 获取当月开始时间戳
-     *
-     * @param timeStamp 毫秒级时间戳
-     * @param timeZone  如 GMT+8:00
-     * @return
-     */
-    public static Long getMonthStartTime(Long timeStamp, String timeZone) {
-        Calendar calendar = Calendar.getInstance();// 获取当前日期
-        calendar.setTimeZone(TimeZone.getTimeZone(timeZone));
-        calendar.setTimeInMillis(timeStamp);
-        calendar.add(Calendar.YEAR, 0);
-        calendar.add(Calendar.MONTH, 0);
-        calendar.set(Calendar.DAY_OF_MONTH, 1);// 设置为1号,当前日期既为本月第一天
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTimeInMillis();
-    }
 
-    /**
-     * 获取当月的结束时间戳
-     *
-     * @param timeStamp 毫秒级时间戳
-     * @param timeZone  如 GMT+8:00
-     * @return
-     */
-    public static Long getMonthEndTime(Long timeStamp, String timeZone) {
-        Calendar calendar = Calendar.getInstance();// 获取当前日期
-        calendar.setTimeZone(TimeZone.getTimeZone(timeZone));
-        calendar.setTimeInMillis(timeStamp);
-        calendar.add(Calendar.YEAR, 0);
-        calendar.add(Calendar.MONTH, 0);
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));// 获取当前月最后一天
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 59);
-        calendar.set(Calendar.SECOND, 59);
-        calendar.set(Calendar.MILLISECOND, 999);
-        return calendar.getTimeInMillis();
-    }
 
-    /**
-     * 获取当年的开始时间戳
-     *
-     * @param timeStamp 毫秒级时间戳
-     * @param timeZone  如 GMT+8:00
-     * @return
-     */
-    public static Long getYearStartTime(Long timeStamp, String timeZone) {
-        Calendar calendar = Calendar.getInstance();// 获取当前日期
-        calendar.setTimeZone(TimeZone.getTimeZone(timeZone));
-        calendar.setTimeInMillis(timeStamp);
-        calendar.add(Calendar.YEAR, 0);
-        calendar.add(Calendar.DATE, 0);
-        calendar.add(Calendar.MONTH, 0);
-        calendar.set(Calendar.DAY_OF_YEAR, 1);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTimeInMillis();
-    }
+
+
+
+
 
     /**
      * 获取传讯通知时间 自定义
      * @return
      */
-    public static long perThridMouthTime(int mon, int days) {
+    public static long perThridMouthTime( int days) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DATE, days);// 设为当前月的1号
-        calendar.add(Calendar.MONTH, mon);// 0表示当前月，-2就是当前月-2
+        calendar.add(Calendar.MONTH, 0);// 0表示当前月，-2就是当前月-2
         calendar.set(Calendar.HOUR_OF_DAY, 9);
         calendar.set(Calendar.MINUTE, 30);
         calendar.set(Calendar.SECOND, 0);
@@ -220,27 +111,7 @@ public class CalendarAdjust {
         return calendar.getTimeInMillis();
     }
 
-    /**
-     * 获取当年的最后时间戳
-     *
-     * @param timeStamp 毫秒级时间戳
-     * @param timeZone  如 GMT+8:00
-     * @return
-     */
-    public static Long getYearEndTime(Long timeStamp, String timeZone) {
-        Calendar calendar = Calendar.getInstance();// 获取当前日期
-        calendar.setTimeZone(TimeZone.getTimeZone(timeZone));
-        calendar.setTimeInMillis(timeStamp);
-        int year = calendar.get(Calendar.YEAR);
-        calendar.clear();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 59);
-        calendar.set(Calendar.SECOND, 59);
-        calendar.set(Calendar.MILLISECOND, 999);
-        calendar.roll(Calendar.DAY_OF_YEAR, -1);
-        return calendar.getTimeInMillis();
-    }
+
 
     /**
      * 时间戳转字符串
@@ -309,6 +180,49 @@ public class CalendarAdjust {
     }
 
     /**
+     * 获取指定月的最后一天
+     *
+     * @param month
+     * @return
+     */
+    public static String getLastDayOfMonth1(int year, int month) {
+        Calendar cal = Calendar.getInstance();
+        //设置年份 这个是三个月后的最后一天
+        cal.set(Calendar.YEAR, year);
+        //设置月份
+        cal.set(Calendar.MONTH, (month+2));
+        //获取某月最大天数
+        int lastDay = cal.getActualMaximum(Calendar.DATE); //这个是一定可以 我试试
+        //设置日历中月份的最大天数
+        cal.set(Calendar.DAY_OF_MONTH, lastDay);
+        //格式化日期
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(cal.getTime());
+    }
+
+    /**
+     * 获取指定月的第一天
+     *
+     * @param month
+     * @return
+     */
+    public static String getFirstDayOfMonth1(int year, int month) {
+        Calendar cal = Calendar.getInstance();
+        //设置年份 这个方式是下个月的第一天
+        cal.set(Calendar.YEAR, year);
+        //设置月份
+        cal.set(Calendar.MONTH, month);
+        //获取某月最小天数
+        int firstDay = cal.getMinimum(Calendar.DATE);
+        //设置日历中月份的最小天数
+        cal.set(Calendar.DAY_OF_MONTH,firstDay);
+        //格式化日期
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(cal.getTime());
+    }
+
+
+    /**
      * 获取年月日
      *
      * @param Time
@@ -321,6 +235,25 @@ public class CalendarAdjust {
         return time;
 
     }
+
+    public static int getYears(String date) throws ParseException{
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateFormat.parse(date));
+        return calendar.get(Calendar.YEAR);
+    }
+    /**
+     * 获取日期月份
+     * @param date
+     * @return
+     * @throws ParseException
+     */
+    public static int getMonth(String date) throws ParseException{
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateFormat.parse(date));
+        return (calendar.get(Calendar.MONTH) + 1);
+    }
+
+    //返回时间
 
     public static Date GetDate(String Time) throws ParseException{
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
