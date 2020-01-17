@@ -50,7 +50,7 @@ public class Personinformation {
     private String yjsponsoralarm;
     private String exectype;
     private String keepaddress;
-    private String appointaddress;
+    private boolean appointaddress;
     private String province;
     private String city;
     private String area;
@@ -201,19 +201,21 @@ public class Personinformation {
         return keepaddress;
     }
 
+    public boolean isAppointaddress() {
+        return appointaddress;
+    }
+
+    public Personinformation setAppointaddress(boolean appointaddress) {
+        this.appointaddress = appointaddress;
+        return this;
+    }
+
     public Personinformation setKeepaddress(String keepaddress) {
         this.keepaddress = keepaddress;
         return this;
     }
 
-    public String getAppointaddress() {
-        return appointaddress;
-    }
 
-    public Personinformation setAppointaddress(String appointaddress) {
-        this.appointaddress = appointaddress;
-        return this;
-    }
 
     public String getProvince() {
         return province;
