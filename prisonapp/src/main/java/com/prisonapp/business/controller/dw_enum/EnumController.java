@@ -26,8 +26,8 @@ public class EnumController {
     private ResultSet result = new ResultSet();
 
     @ApiOperation(value = " 获取省份数据")
-    @GetMapping("/getProvice")
-    public ResultSet getProvice(){
+    @GetMapping("/getProvince")
+    public ResultSet getProvince(){
          List<EnumModel> enumModel = new ArrayList<>();
        List<AreaAddressInfo> areaAddressInfos =enumService.getProvice();
        for(AreaAddressInfo item :areaAddressInfos ){
@@ -44,9 +44,9 @@ public class EnumController {
 
     @ApiOperation(value = " 获取城市数据")
     @GetMapping("/getCity")
-    public ResultSet getCity(){
+    public ResultSet getCity(String code){
          List<EnumModel> enumModel = new ArrayList<>();
-        List<AreaAddressInfo> areaAddressInfos =enumService.getCity();
+        List<AreaAddressInfo> areaAddressInfos =enumService.getCity(code);
         System.out.println(areaAddressInfos.size());
         for(AreaAddressInfo item :areaAddressInfos ){
             EnumModel enumModel1 =new EnumModel();
@@ -62,9 +62,9 @@ public class EnumController {
 
     @ApiOperation(value = " 获取区县数据")
     @GetMapping("/getDistrict")
-    public ResultSet getDistrict(){
+    public ResultSet getDistrict(String code){
          List<EnumModel> enumModel = new ArrayList<>();
-        List<AreaAddressInfo> areaAddressInfos =enumService.getDistrict();
+        List<AreaAddressInfo> areaAddressInfos =enumService.getDistrict(code);
         for(AreaAddressInfo item :areaAddressInfos ){
             EnumModel enumModel1 =new EnumModel();
             enumModel1.setCode(item.getCode());

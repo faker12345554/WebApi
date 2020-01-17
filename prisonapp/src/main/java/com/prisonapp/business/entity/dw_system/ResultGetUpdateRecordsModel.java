@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ResultGetUpdateRecordsModel {
     private int totalCount;
-    private List<GetUpdateRecordsModel> getUpdateRecordsModels;
+    private List<GetUpdateRecordsModel> list;
 
     public int getTotalCount() {
         return totalCount;
@@ -14,11 +14,11 @@ public class ResultGetUpdateRecordsModel {
         this.totalCount = totalCount;
     }
 
-    public List<GetUpdateRecordsModel> getGetUpdateRecordsModels() {
-        return getUpdateRecordsModels;
+    public List<GetUpdateRecordsModel> getList() {
+        return list;
     }
 
-    public void setGetUpdateRecordsModels(List<GetUpdateRecordsModel> getUpdateRecordsModels) {
-        this.getUpdateRecordsModels = getUpdateRecordsModels;
+    public void setList(List<GetUpdateRecordsModel> list) {
+        this.list = list;
     }
 }

@@ -15,6 +15,7 @@ public class GetApplyLeaveListModel {
     public int days;
     public String address;
     public String reason;
+    public String reasonAudioUrl;
     public List<ApplyRecordModel> applyRecord;
 
     public String getCode() {
@@ -98,6 +99,14 @@ public class GetApplyLeaveListModel {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public String getReasonAudioUrl() {
+        return reasonAudioUrl;
+    }
+
+    public void setReasonAudioUrl(String reasonAudioUrl) {
+        this.reasonAudioUrl = reasonAudioUrl;
     }
 
     public List<ApplyRecordModel> getApplyRecord() {

@@ -5,9 +5,11 @@ import com.prisonapp.business.entity.dw_message.MessageListModel;
 import com.prisonapp.business.entity.dw_message.MessageModel;
 import com.prisonapp.business.entity.dw_message.NotificationMessageModel;
 import com.prisonapp.business.entity.dw_message.SearchNotificationModel;
+import com.prisonapp.business.entity.dw_supervise.TPersoninformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,7 +27,7 @@ public class MessageService {
         return messageDao.getMessageList(type,count,requestCount,key,userId);
     }
     //保外人员确认消息读取
-    public int readMessage(int  type,String messageTimestamp,String userId){
+    public int readMessage(int  type, Date messageTimestamp, String userId){
         return messageDao.readMessage(type,messageTimestamp,userId);
     }
     //保外人员通知搜索
@@ -56,5 +58,7 @@ public class MessageService {
         return messageDao.getNotification(userId,type);
     }
 
-
+    public TPersoninformation RelatedId(String accountName){
+        return  messageDao.RelatedId( accountName);
+    }
 }

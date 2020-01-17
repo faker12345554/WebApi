@@ -2,7 +2,7 @@ package com.prisonapp.business.entity.dw_supervise;
 
 public class Battery {
     private boolean enable;
-    private String timeSpan;
+    private int timeSpan;
     private float alarmThreshold;
 
     public boolean isEnable() {
@@ -13,12 +13,13 @@ public class Battery {
         this.enable = enable;
     }
 
-    public String getTimeSpan() {
+    public int getTimeSpan() {
         return timeSpan;
     }
 
     public void setTimeSpan(String timeSpan) {
-        this.timeSpan = timeSpan;
+        int iTimeSpan =Integer.parseInt(timeSpan);
+        this.timeSpan = iTimeSpan;
     }
 
     public float getAlarmThreshold() {

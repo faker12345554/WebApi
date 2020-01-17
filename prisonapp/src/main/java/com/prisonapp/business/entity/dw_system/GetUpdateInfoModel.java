@@ -5,7 +5,7 @@ public class GetUpdateInfoModel {
 
   private String name;
   private String version;
-  private String versionCode;
+  private int versionCode;
   private String url;
   private String msg;
 
@@ -30,11 +30,11 @@ public class GetUpdateInfoModel {
   }
 
 
-  public String getVersionCode() {
+  public int getVersionCode() {
     return versionCode;
   }
 
-  public void setVersionCode(String versionCode) {
+  public void setVersionCode(int versionCode) {
     this.versionCode = versionCode;
   }
 

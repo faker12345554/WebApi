@@ -1,19 +1,21 @@
 package com.prisonapp.business.entity.dw_supervise;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class ApplyRecordModel {
-    public int statusCode;
+    public String  statusCode;
     public String  status;
-    public java.sql.Timestamp timestamp;
+    public String timestamp;
     public String person;
 
-    public int getStatusCode() {
+    public String getStatusCode() {
         return statusCode;
     }
 
     public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+        String strStatusCode =String.valueOf(statusCode);
+        this.statusCode = strStatusCode;
     }
 
     public String getStatus() {
@@ -24,12 +26,13 @@ public class ApplyRecordModel {
         this.status = status;
     }
 
-    public Timestamp getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+    public void setTimestamp(Date timestamp) {
+        String strTimestamp = String.valueOf(timestamp.getTime());
+        this.timestamp = strTimestamp;
     }
 
     public String getPerson() {
