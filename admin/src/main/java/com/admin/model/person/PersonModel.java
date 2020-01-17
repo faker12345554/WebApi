@@ -2,6 +2,54 @@ package com.admin.model.person;
 
 public class PersonModel {
     private String personid;
+    private String suspectstatus;
+    private String personname;
+    private String gender;
+    private int age;
+    private String sponsor;
+    private String policestation;
+    private String guid;
+    private String caseno;
+    private String handleunit;
+    private String handlepeson;
+
+    public String getCaseno() {
+        return caseno;
+    }
+
+    public PersonModel setCaseno(String caseno) {
+        this.caseno = caseno;
+        return this;
+    }
+
+    public String getHandleunit() {
+        return handleunit;
+    }
+
+    public PersonModel setHandleunit(String handleunit) {
+        this.handleunit = handleunit;
+        return this;
+    }
+
+    public String getHandlepeson() {
+        return handlepeson;
+    }
+
+    public PersonModel setHandlepeson(String handlepeson) {
+        this.handlepeson = handlepeson;
+        return this;
+    }
+
+    public String getGuid() {
+        return guid;
+    }
+
+    public PersonModel setGuid(String guid) {
+        this.guid = guid;
+        return this;
+    }
+
+
 
     public String getPersonid() {
         return personid;
@@ -12,11 +60,7 @@ public class PersonModel {
         return this;
     }
 
-    private String suspectstatus;
-    private String personname;
-    private String gender;
-    private int age;
-    private String sponsor;
+
 
     public String getSponsor() {
         return sponsor;
@@ -36,7 +80,7 @@ public class PersonModel {
         return this;
     }
 
-    private String policestation;
+
 
     public String getSuspectstatus() {
         return suspectstatus;
