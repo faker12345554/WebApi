@@ -17,13 +17,13 @@ public  class TokenService {
      * @date 2019年5月27日 下午5:40:25
      * @version V1.0
      */
-    public String getToken(UserModel user) {
+    public static String getToken(UserModel user) {
         Date start = new Date();
         long currentTime = System.currentTimeMillis() +7* 24*60* 60 * 1000;//7天有效时间
         Date end = new Date(currentTime);
         String token = "";
 
-        token = JWT.create().withAudience(String.valueOf(user.getPersonid())).withIssuedAt(start).withExpiresAt(end)
+        token = JWT.create().withAudience(String.valueOf(user.getAccountname())).withIssuedAt(start).withExpiresAt(end)
                 .sign(Algorithm.HMAC256(user.getPassword()));
         return token;
     }

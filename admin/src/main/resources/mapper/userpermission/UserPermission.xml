@@ -5,11 +5,10 @@
     <select id="listGroup" resultType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup">
         SELECT * from t_userpermissiongroup WHERE status=#{flag}
     </select>
-
     <select id="getGroup" parameterType="int" resultType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup">
         SELECT * from t_userpermissiongroup WHERE status=TRUE and permissionid=#{id}
     </select>
-    <insert id="saveUserGroup" parameterType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup">
+    <insert id="saveUserGroup" parameterType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup" useGeneratedKeys="true" keyProperty="permissionid">
         insert into t_userpermissiongroup(createid,createtime,permissionname,createname,status) values (#{createid},#{createtime},#{permissionname},#{createname},#{status})
     </insert>
     <update id="updateGroup" parameterType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup">
@@ -21,4 +20,22 @@
     <select id="selectByName" parameterType="String" resultType="int">
         select count(*) from t_userpermissiongroup where permissionname=#{Name}
     </select>
+
+
+    <insert id="saveUserRole" parameterType="com.admin.admin.entity.dw_userrole.UserRole" >
+        insert into t_userrole(rolename,menuid,createtime,status,permissionid) values (#{rolename},#{menuid},#{createtime},#{status},#{permissionid})
+    </insert>
+
+    <delete id="deleteUserRole"  parameterType="int">
+        delete from t_userrole  where legal."public".t_userrole.permissionid=#{permissionid}
+    </delete>
+
+    <update id="DelStatus">
+        update t_userrole set legal."public".t_userrole.status=#{flag} where permissionid=#{permissionid}
+    </update>
+
+    <select id="GetMenuList" resultType="com.admin.model.coordina.MenuModel">
+        select menuid as id,menuname as Name,topid from legal."public".t_menu where status=true
+    </select>
+
 </mapper>

@@ -1,6 +1,9 @@
 package com.admin.admin.entity.dw_userpermission;
 
+import com.admin.model.coordina.MenuModel;
+
 import java.util.Date;
+import java.util.List;
 
 public class UserPermissionGroup {
     private int permissionid;
@@ -8,7 +11,18 @@ public class UserPermissionGroup {
     private Date createtime;
     private int createid;
     private String createname;
+
+    public List<MenuModel> getMenuList() {
+        return MenuList;
+    }
+
+    public UserPermissionGroup setMenuList(List<MenuModel> menuList) {
+        MenuList = menuList;
+        return this;
+    }
+
     private boolean status;
+    private List<MenuModel> MenuList;
 
     public int getPermissionid() {
         return permissionid;

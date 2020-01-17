@@ -1,5 +1,6 @@
 package com.prisonapp.business.dao.dw_user;
 
+import com.prisonapp.business.entity.dw_supervise.TPersoninformation;
 import com.prisonapp.business.entity.dw_user.GetUserInfoModel;
 import com.prisonapp.business.entity.dw_user.UserModel;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,11 +13,15 @@ public interface UserDao {
 
     UserModel login(@Param("userName") String userName);
 
-    UserModel getUser(@Param("personid") String personid);
+    UserModel getUser(@Param("phone") String phone);
 
     GetUserInfoModel getUserInfo(String userId);
+
+    UserModel officephone(@Param("sponsoralarm") String sponsoralarm);
 
     List<UserModel> modifyPassword(String userId, String password);
 
     int upModifyPassword(String userId, String newPassword);
+
+    TPersoninformation RelatedId(@Param("accountName")String accountName);
 }

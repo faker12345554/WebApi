@@ -15,7 +15,7 @@ public interface SuperviseDao {
 
     List<GetApplyLeaveListModel> getAllApplyLeaveList(@Param("count")int count,@Param("requestCount")int requestCount, @Param("userId")String userId);
 
-    List<SuperviseModel> getTotalApplyLeaveList(@Param("statusCode")String  statusCode, @Param("userId")String userId);
+    List<SuperviseModel> getTotalApplyLeaveList( @Param("userId")String userId);
 
     List<ApplyRecordModel> applyRecord(@Param("code")String  code);
 
@@ -30,7 +30,7 @@ public interface SuperviseDao {
     int submitApplyLeave (@Param("city")String city,@Param("cityCode")String cityCode,@Param("district")String district,@Param("districtCode")String districtCode,
                          @Param("province")String province,@Param("provinceCode")String provinceCode,@Param("reason")String reason,@Param("reasonAudioUrl")String reasonAudioUrl ,
                          @Param("endDate")long endDate,@Param("startDate")long startDate,  @Param("code") String code,
-                         @Param("userId")String userId,@Param("personName")String personName);
+                         @Param("userId")String userId,@Param("personName")String personName,@Param("sponsorAlarm")String sponsorAlarm ,@Param("address")String address);
 
     List<TPersoninformation> getPersonname(@Param("userId")String userId);
 
@@ -59,4 +59,6 @@ public interface SuperviseDao {
   //  int updateFscope(String userId,boolean fscope) ;
 
     int insertFscope(String userId,String content);
+
+    TPersoninformation RelatedId(@Param("accountName")String accountName);
 }

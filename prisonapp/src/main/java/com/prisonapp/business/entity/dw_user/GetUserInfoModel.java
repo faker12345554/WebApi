@@ -1,23 +1,27 @@
 package com.prisonapp.business.entity.dw_user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 public class GetUserInfoModel {
-    private int code;
+    private String code;
     private String account;
-    private String gender;
+    private int gender;
     private String name;
     private String headUrl;
     private String startDate;
     private String endDate;
     private String inChargePerson;
     private String inChargeContract;
+    @JsonIgnore
+    private String sponsoralarm;
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -29,11 +33,11 @@ public class GetUserInfoModel {
         this.account = account;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
@@ -85,5 +89,13 @@ public class GetUserInfoModel {
 
     public void setInChargeContract(String inChargeContract) {
         this.inChargeContract = inChargeContract;
+    }
+
+    public String getSponsoralarm() {
+        return sponsoralarm;
+    }
+
+    public void setSponsoralarm(String sponsoralarm) {
+        this.sponsoralarm = sponsoralarm;
     }
 }

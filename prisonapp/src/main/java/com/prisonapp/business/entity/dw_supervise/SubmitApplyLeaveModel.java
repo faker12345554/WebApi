@@ -92,7 +92,7 @@ public class SubmitApplyLeaveModel {
 
     public void setStartDate(String startDate) {
         Long longStartDate = Long.valueOf(startDate);
-        this.startDate = longStartDate;
+        this.startDate = longStartDate/1000;
     }
 
     public long getEndDate() {
@@ -101,6 +101,6 @@ public class SubmitApplyLeaveModel {
 
     public void setEndDate(String endDate) {
         Long longEndDate = Long.valueOf(endDate);
-        this.endDate = longEndDate;
+        this.endDate = longEndDate/1000;
     }
 }

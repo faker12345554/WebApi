@@ -1,5 +1,7 @@
 package com.prisonapp.business.entity.dw_user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class UserModel {
 
   private long id;
@@ -13,6 +15,8 @@ public class UserModel {
   private String status;
   private String phone;
   private String personid;
+  @JsonIgnore
+  private String officephone;
 
 
   public long getId() {
@@ -110,5 +114,13 @@ public class UserModel {
 
   public void setPersonid(String personid) {
     this.personid = personid;
+  }
+
+  public String getOfficephone() {
+    return officephone;
+  }
+
+  public void setOfficephone(String officephone) {
+    this.officephone = officephone;
   }
 }
