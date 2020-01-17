@@ -163,7 +163,7 @@ public class SuperviseController {
     @UserLoginToken
     @ApiOperation(value = "保外人员人脸识别签到")
     @PostMapping("/faceRecognize")
-    public ResultSet faceRecognize(MultipartFile file) throws Exception {
+    public ResultSet faceRecognize(MultipartFile face) throws Exception {
         List<TPersoninformation> tPersoninformations = superviseService.faceRecognize(getPersonId());
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -175,8 +175,8 @@ public class SuperviseController {
             if (!path.exists() && !path.isDirectory()) {
                 path.mkdirs();
             }
-            String fileName = file.getOriginalFilename();
-            String res = upload.upload(url, file);
+            String fileName = face.getOriginalFilename();
+            String res = upload.upload(url, face);
             if (res.equals("上传成功")) {
                  String upLoadFaceUrl = "https://pardon.cnnc626.com:8443/mypicture/personApp/Face/"+ formatter.format(date)+"/"+fileName;//这是真正有用的
                 //if(true){
