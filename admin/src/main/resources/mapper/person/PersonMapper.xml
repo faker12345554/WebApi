@@ -46,15 +46,18 @@
 
     <select id="ListPerson" parameterType="com.admin.model.search.SearchModel"
             resultType="com.admin.admin.entity.dw_person.Personinformation">
-        select * from t_personinformation where sponsoralarm=#{PersonName}
+        select P.*,C.caseno,C.handleunit from t_personinformation as P
+        left join t_caseinfo as C on C.personid=P.personid where sponsoralarm=#{PersonName}
         <if test=" FuzzyCondition !=null and FuzzyCondition !=''">
             and
-                personname like concat('%',#{FuzzyCondition},'%') or
-                suspectstatus like concat('%',#{FuzzyCondition},'%') or
-                gender like concat('%',#{FuzzyCondition},'%') or
-                sponsor like concat('%',#{FuzzyCondition},'%') or
-                casetype like concat('%',#{FuzzyCondition},'%') or
-                modifierid like concat('%',#{FuzzyCondition},'%')
+            P.personname like concat('%',#{FuzzyCondition},'%') or
+            P.suspectstatus like concat('%',#{FuzzyCondition},'%') or
+            P.gender like concat('%',#{FuzzyCondition},'%') or
+            P.sponsor like concat('%',#{FuzzyCondition},'%') or
+            P.casetype like concat('%',#{FuzzyCondition},'%') or
+            P.modifierid like concat('%',#{FuzzyCondition},'%') or
+            C.caseno like concat('%',#{FuzzyCondition},'%') or
+            C.handleunit like concat('%',#{FuzzyCondition},'%')
 
         </if>
         <if test="list.size()>0">

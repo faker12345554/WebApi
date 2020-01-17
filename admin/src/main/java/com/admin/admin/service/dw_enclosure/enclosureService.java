@@ -16,7 +16,7 @@ public class enclosureService {
 
     //新增
     public int saveEnclosure(enclosure enclosure) {
-
+        enclosureDao.deleteEnclosure(enclosure.getPersonId());
 //        for (Longitude iten:map.getPosition()){
 //            enclosure enclosure=new enclosure();
 //            enclosure.setPersonId(map.getPerson_id());
@@ -26,9 +26,9 @@ public class enclosureService {
 //            result.setData(enclosureService.saveEnclosure(enclosure));
 //            System.out.println(result.getData());
 //        }
-        if (enclosure.getId() != 0) {
-            return enclosureDao.updateEnclosure(enclosure);
-        }
+//        if (enclosure.getId() != 0) {
+//            return enclosureDao.updateEnclosure(enclosure);
+//        }
 
 
         return enclosureDao.saveEnclosure(enclosure);
