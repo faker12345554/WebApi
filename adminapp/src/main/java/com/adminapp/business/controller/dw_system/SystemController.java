@@ -45,7 +45,6 @@ public class SystemController {
     @UserLoginToken
     @ApiOperation(value = " 获取保外人员 App 更新信息")
     @GetMapping("/getSupervisedAppInfo")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public ResultSet getSupervisedAppInfo(){
         List<UpdateInformationModel> getUpdateInformation=systemService.getUpdateInformation(0);
         rs.resultCode=0;
@@ -57,7 +56,6 @@ public class SystemController {
     @UserLoginToken
     @ApiOperation(value = "获取更新记录")
     @GetMapping("/getUpdateRecords")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public ResultSet getUpdateRecords(@ApiParam(name = "count",value ="已获取数据条数" )@RequestParam(required = true)int count,
                                       @ApiParam(name = "requestCount",value = "请求获取数据条数")@RequestParam(required = true)int requestCount){
         List<UpdateRecordModel> getUpdateRecord=systemService.getUpdateRecord(1);

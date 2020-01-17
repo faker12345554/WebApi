@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class SuperviseBailMoneyInformation {
     private String amount;
-    private String receiptUnit;
     private String payDate;
     private String keepBank;
 
@@ -14,14 +13,6 @@ public class SuperviseBailMoneyInformation {
 
     public void setAmount(String amount) {
         this.amount = amount;
-    }
-
-    public String getReceiptUnit() {
-        return receiptUnit;
-    }
-
-    public void setReceiptUnit(String receiptUnit) {
-        this.receiptUnit = receiptUnit;
     }
 
     public String getPayDate() {

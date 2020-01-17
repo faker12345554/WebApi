@@ -694,8 +694,6 @@ public class MessageController {
     public ResultSet getNotification(@ApiParam(name = "type",value = "通知类型")@RequestParam(required = true)String type){
         if(type.equals("1")||type.equals("2")||type.equals("3")||type.equals("4")||type.equals("5")||type.equals("6")||type.equals("7")) {
             String userId = TokenUtil.getTokenUserId();
-//            UserService userService=new UserService();
-//            UserModel userModel=userService.login(userId);
             List<MessageListModel> messageInformationList = new ArrayList<>();  //该工作人员的所有通知消息
             List<PersonAllInformationModel> personAllInformationModels = messageService.getUserControlPerson(userId);
             for (PersonAllInformationModel item : personAllInformationModels

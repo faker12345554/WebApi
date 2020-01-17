@@ -107,15 +107,15 @@
         FROM t_leave WHERE leaveorder=#{code}
     </select>
     <select id="getPersonCaseInformation" resultType="com.adminapp.model.dw_supervise.SuperviseCaseInformation">
-        select casecategory AS caseCategory,casetype AS caseType,casename AS caseName,caseno AS caseNo,receivedtime AS receivedTime,handleunit AS handleUnit,
-        handlepeson AS handlePeson,casedescription AS caseDescription FROM t_caseinfo WHERE personid=#{personId}
+        select casecategory AS caseCategory,casetype AS caseType,casename AS caseName,caseno AS caseNo,receivedtime AS registerTime,handleunit AS handleUnit,
+        handlepeson AS handlePeson,mainperson AS mainHandlePeson,casedescription AS caseDescription FROM t_caseinfo WHERE personid=#{personId}
     </select>
     <select id="getBailPersonInformation" resultType="com.adminapp.model.dw_supervise.SuperviseBailPersonInformation">
         select guaranteename AS name,gender,card AS idCardNo,address,workunit AS unit,job,contact,relatetionship AS relationship FROM t_guaranteeinformation
         where personid=#{personId}
     </select>
     <select id="getBailMoneyInformation" resultType="com.adminapp.model.dw_supervise.SuperviseBailMoneyInformation">
-        select money AS amount,receiptunit AS receiptUnit,paydate AS payDate,keepbank AS keepBank FROM t_guaranteeinformation WHERE personid=#{personId}
+        select money AS amount,paydate AS payDate,keepbank AS keepBank FROM t_guaranteeinformation WHERE personid=#{personId}
     </select>
     <select id="getViolateName" resultType="String">
         select enumname FROM t_enum WHERE typecode=#{typeCode} AND enumcode=#{enumCode}

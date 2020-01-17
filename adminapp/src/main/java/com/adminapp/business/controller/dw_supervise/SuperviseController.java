@@ -1954,7 +1954,6 @@ public class SuperviseController {
         superviseBailInformation.setExecEndDate(String.valueOf(personAllInformationModel.getBailoutenddate().getTime()));
         superviseBailInformation.setExecUnit(personAllInformationModel.getPolicestation());
         superviseBailInformation.setInChargePerson(personAllInformationModel.getSponsor());
-        superviseBailInformation.setBailCaseType(personAllInformationModel.getCasetype());
         superviseBailInformation.setExecType(personAllInformationModel.getExectype());
         if(personAllInformationModel.getSuspectstatus().equals("监视居住")){
             superviseBailInformation.setKeepAddress(personAllInformationModel.getKeepaddress());
