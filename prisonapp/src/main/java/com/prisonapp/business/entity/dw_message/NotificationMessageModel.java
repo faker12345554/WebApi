@@ -5,20 +5,21 @@ import java.util.Date;
 
 //保外人员的通知列表、获取保外人员的某一类通知
 public class NotificationMessageModel {
-    public int type;
+    public String type;
     public String typeName;
     public String content;
     public String timestamp;
-    public int detailType;
+    public String detailType;
     public String detailTypeName;
     public int unreadCount;
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
     public void setType(int type) {
-        this.type = type;
+        String strType =String.valueOf(type);
+        this.type = strType;
     }
 
     public String getTypeName() {
@@ -46,12 +47,13 @@ public class NotificationMessageModel {
         this.timestamp = timeStamp;
     }
 
-    public int getDetailType() {
+    public String getDetailType() {
         return detailType;
     }
 
     public void setDetailType(int detailType) {
-        this.detailType = detailType;
+        String strDetailType =String.valueOf(detailType);
+        this.detailType = strDetailType;
     }
 
     public String getDetailTypeName() {

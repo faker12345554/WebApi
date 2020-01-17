@@ -40,6 +40,9 @@ public class SuperviseController {
     private SuperviseService superviseService;
     private ResultGetApplyLeaveListModel resultGetApplyLeaveListModel = new ResultGetApplyLeaveListModel();
     private ResultGetSuperviseTaskModel resultGetSuperviseTaskModel = new ResultGetSuperviseTaskModel();
+    private Timestamp timestamp =new Timestamp();
+    private Code code =new Code();
+    private UploadAudioUrl uploadAudioUrl = new UploadAudioUrl();
     private FaceRecognizeModel faceRecognizeModel = new FaceRecognizeModel();
     private ResultSet result = new ResultSet();
     private Upload upload = new Upload();
@@ -63,7 +66,7 @@ public class SuperviseController {
                 List<ApplyRecordModel> applyRecords = superviseService.applyRecord(item.getCode());//取出请假申请
                 Long End = Long.parseLong(item.getEndTimestamp());
                 Long Start = Long.parseLong(item.getStartTimestamp());
-                int days = (int) ((End - Start) / 86400000);
+                int days = (int) ((End - Start) / 86400000)+1;
                 //(int) ((oDate.getTime() - fDate.getTime()) / 24 * 3600 * 1000)
                 item.setApplyRecord(applyRecords);
                 item.setDays(days);
@@ -81,16 +84,17 @@ public class SuperviseController {
     @UserLoginToken
     @ApiOperation(value = "提交保外人员外出申请")
     @PostMapping("/submitApplyLeave")
-    public ResultSet submitApplyLeave(SubmitApplyLeaveModel submitApplyLeaveModel) throws ParseException {
-        String code = "qj" + System.currentTimeMillis();
-
+    public ResultSet submitApplyLeave(@RequestBody SubmitApplyLeaveModel submitApplyLeaveModel) throws ParseException {
+        String strCode = "qj" + System.currentTimeMillis();
+        code.setCode(strCode);
 //        Long longStartDate = Long.valueOf(submitApplyLeaveModel.getStartDate());//123456789
 //        Long longEndDate = Long.valueOf(submitApplyLeaveModel.getEndDate());
         List<TPersoninformation> person = superviseService.getPersonname(getPersonId());
+        String address =submitApplyLeaveModel.getProvince()+submitApplyLeaveModel.getCity()+submitApplyLeaveModel.getDistrict();
         int res = superviseService.submitApplyLeave(submitApplyLeaveModel.getCity(),    submitApplyLeaveModel.getCityCode(),    submitApplyLeaveModel.getDistrict(),submitApplyLeaveModel.getDistrictCode(),
                                                     submitApplyLeaveModel.getProvince(),submitApplyLeaveModel.getProvinceCode(),submitApplyLeaveModel.getReason(),  submitApplyLeaveModel.getReasonAudioUrl(),
-                                                    submitApplyLeaveModel.getEndDate(), submitApplyLeaveModel.getStartDate(),code,
-                                                    getPersonId(), person.get(0).getPersonname(),person.get(0).getSponsoralarm());
+                                                    submitApplyLeaveModel.getEndDate(), submitApplyLeaveModel.getStartDate(),strCode,
+                                                    getPersonId(), person.get(0).getPersonname(),person.get(0).getSponsoralarm(),address);
         if (res != 0) {
             result.resultCode = 0;
             result.resultMsg = "";
@@ -120,10 +124,11 @@ public class SuperviseController {
         }
         String fileName = file.getOriginalFilename();
         String res = upload.upload(url, file);
+        uploadAudioUrl.setUrl("https://pardon.cnnc626.com:8443/mypicture/personApp/Audio/" + formatter.format(date) + "/" + fileName);
         if (res.equals("上传成功")) {
             result.resultCode = 0;
             result.resultMsg = "";
-            result.data = "https://pardon.cnnc626.com:8443/mypicture/personApp/Audio/" + formatter.format(date) + "/" + fileName;
+            result.data = uploadAudioUrl;
         } else {
             result.resultCode = 1;
             result.resultMsg = "上传失败";
@@ -186,8 +191,9 @@ public class SuperviseController {
                     //获取json中的可信度并转换成float类型
                     JSONObject jsonObject = new JSONObject(comparedRes);
                     String similar = jsonObject.getString("confidence");
-                    float fSimilar = Float.parseFloat(similar);
-                    if (fSimilar >= 0.75) {
+                    float num = Float.parseFloat(similar);
+                    float fSimilar = (float)(Math.round(num*1000))/1000;
+                    if (fSimilar >= 75.00) {
                         superviseService.insertFaceRecognize(getPersonId(), 0, 0, upLoadFaceUrl);
                         List<FaceRecognizeModel> faceRecognizeModels = superviseService.getFaceRecognize(getPersonId(), 0);
                         faceRecognizeModel.setCode(faceRecognizeModels.get(0).getCode());
@@ -250,9 +256,10 @@ public class SuperviseController {
         }
         int a = superviseService.autoLocation(latitude, longitude, locationType, address, getPersonId(), new Date(),fScope);
         if (a != 0) {
+            timestamp.setTimestamp(System.currentTimeMillis());
             result.resultCode = 0;
             result.resultMsg = "";
-            result.data = System.currentTimeMillis();
+            result.data = timestamp;
         } else {
             result.resultCode = 1;
             result.resultMsg = "上报失败";

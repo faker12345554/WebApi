@@ -1,5 +1,7 @@
 package com.prisonapp.business.entity.dw_user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 public class GetUserInfoModel {
@@ -12,6 +14,8 @@ public class GetUserInfoModel {
     private String endDate;
     private String inChargePerson;
     private String inChargeContract;
+    @JsonIgnore
+    private String sponsoralarm;
 
     public String getCode() {
         return code;
@@ -85,5 +89,13 @@ public class GetUserInfoModel {
 
     public void setInChargeContract(String inChargeContract) {
         this.inChargeContract = inChargeContract;
+    }
+
+    public String getSponsoralarm() {
+        return sponsoralarm;
+    }
+
+    public void setSponsoralarm(String sponsoralarm) {
+        this.sponsoralarm = sponsoralarm;
     }
 }

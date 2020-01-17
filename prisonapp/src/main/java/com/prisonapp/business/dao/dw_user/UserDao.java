@@ -17,7 +17,7 @@ public interface UserDao {
 
     GetUserInfoModel getUserInfo(String userId);
 
-
+    UserModel officephone(@Param("sponsoralarm") String sponsoralarm);
 
     List<UserModel> modifyPassword(String userId, String password);
 

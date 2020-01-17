@@ -77,6 +77,8 @@ public class UserController {
     @GetMapping("/getUserInfo")
     public ResultSet getUserInfo(){
           GetUserInfoModel getUserInfoModels = userService.getUserInfo(getPersonId());
+          UserModel userModel =userService.officephone(getUserInfoModels.getSponsoralarm());
+          getUserInfoModels.setInChargeContract(userModel.getOfficephone());
         result.resultCode=0;
         result.resultMsg="";
         result.data=getUserInfoModels;

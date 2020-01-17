@@ -21,7 +21,9 @@ public class UserService {
     public GetUserInfoModel getUserInfo(String userId) {
         return userDao.getUserInfo(userId);
     }
-
+    public UserModel officephone(String sponsoralarm){
+        return userDao.officephone(sponsoralarm);
+    }
 
     public List<UserModel> modifyPassword(String userId, String password) {
         return userDao.modifyPassword(userId, password);

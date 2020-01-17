@@ -44,7 +44,7 @@ public class  MessageController {
         String a=TokenUtil.getTokenUserId();
         List<NotificationMessageModel> notificationMessageModels = messageService.getNotificationList(getPersonId());
         for (NotificationMessageModel item : notificationMessageModels) {
-            int unreadCount = messageService.unreadCount(item.getType(),getPersonId()).size();
+            int unreadCount = messageService.unreadCount(Integer.parseInt(item.getType()),getPersonId()).size();
             item.setUnreadCount(unreadCount);
             sum += unreadCount;
         }
@@ -85,7 +85,7 @@ public class  MessageController {
 
     @UserLoginToken
     @ApiOperation(value = "保外人员确认消息读取")
-    @GetMapping("/readMessage")
+    @PostMapping("/readMessage")
     public ResultSet readMessage(@ApiParam(name = "type",value = "类型编号") @RequestParam(required = true) int type,@ApiParam(name = "messageTimestamp",value = "最新一条已获取的消息的时间戳") @RequestParam(required = true) String messageTimestamp) {
         long longMessageTimestamp = Long.parseLong(messageTimestamp);
         String a=TokenUtil.getTokenUserId();
