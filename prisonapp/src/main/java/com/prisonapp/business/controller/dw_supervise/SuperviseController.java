@@ -272,8 +272,8 @@ public class SuperviseController {
     @ApiOperation(value = " 上报保外人员定位错误信息")
     @PostMapping("/uploadLocationError")
     public ResultSet uploadLocationError(String errorCode, String errorMsg) {
-
-        int a = superviseService.uploadLocationError(errorCode, errorMsg, Integer.parseInt(getPersonId()), new Date());
+     //   TLog tLog =superviseService.get
+        int a = superviseService.uploadLocationError(errorCode, errorMsg, getPersonId(), new Date());
         if (a != 0) {
             result.resultCode = 0;
             result.resultMsg = "";

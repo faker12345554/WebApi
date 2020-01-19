@@ -11,7 +11,7 @@
 
     <select id="getUserInfo" resultType="com.prisonapp.business.entity.dw_user.GetUserInfoModel">
          SELECT t_personinformation.personid as code,t_personinformation.gendercode as gender, phone as account,personname as name,facepath as headUrl,bailoutbegindate as startDate,bailoutenddate as endDate,t_personinformation.sponsoralarm,
-          sponsor as inChargePerson from t_personinformation FULL JOIN t_user ON t_personinformation.personid = t_user.personid WHERE t_user.personid=#{userId}
+          sponsor as inChargePerson from t_personinformation FULL JOIN t_user ON t_personinformation.contact = t_user.phone WHERE t_personinformation.personid=#{userId}
     </select>
 
     <select id="officephone" resultType="com.prisonapp.business.entity.dw_user.UserModel">
