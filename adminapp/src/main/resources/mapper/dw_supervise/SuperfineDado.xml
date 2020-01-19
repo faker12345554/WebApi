@@ -22,7 +22,7 @@
         select * FROM t_summons WHERE t_summons.reporttime is not null ORDER BY t_summons.summontime DESC
     </select>
     <select id="listKeyCiteRecord" resultType="com.adminapp.business.entity.dw_supervise.SummonsInformation">
-        select * FROM t_summons WHERE personname LIKE'%${key}%' ORDER BY t_summons.summontime DESC
+        select * FROM t_summons WHERE personname LIKE'%${key}%' AND t_summons.reporttime is not null ORDER BY t_summons.summontime DESC
     </select>
     <select id="getPersonInformation" resultType="com.adminapp.model.dw_supervise.PersonAllInformationModel">
         select * FROM t_personinformation WHERE personid=#{personid}
@@ -81,7 +81,7 @@
         SELECT citycode FROM t_enclosure WHERE personid=#{personId} AND status=TRUE
     </select>
     <select id="listLocationRecord" resultType="com.adminapp.model.dw_supervise.LocationRecordModel">
-        SELECT latitude,longitude,locationtype AS locationType,address,fscope AS isOutBound,timestamp FROM t_location WHERE personid=#{personId} ORDER BY t_location.timestamp DESC
+        SELECT latitude,longitude,locationtype AS locationType,address,fscope AS isOutBound,timestamp FROM t_location WHERE personid=#{personId} And latitude is not null ORDER BY t_location.timestamp DESC
     </select>
     <select id="listViolateLocationRecord" resultType="com.adminapp.business.entity.dw_supervise.LocationInformation">
         select * FROM t_location where personid=#{personId} AND fscope=true

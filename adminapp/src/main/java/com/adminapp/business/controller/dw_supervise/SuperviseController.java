@@ -541,7 +541,7 @@ public class SuperviseController {
         String userId=TokenUtil.getTokenUserId();
         CiteRecordReturnModel citeRecordReturnModel=new CiteRecordReturnModel();
         List<SummonsInformation> summonsInformations=new ArrayList<>();
-        if(key==null){
+        if(key==null||key==""){
             summonsInformations=superviseService.listCiteRecord();
         }
         else{
@@ -561,28 +561,28 @@ public class SuperviseController {
             }
 
 
-            if (startDate != null && endDate == null) {    //开始日期不为空
+            if (startDate != null&&startDate!="" && (endDate == null||endDate=="")) {    //开始日期不为空
                 for (SummonsInformation item : summonsInformations) {
                     if (Long.parseLong(startDate) <= Long.parseLong(item.getSummontime())) {
                         newSummonsInformations.add(item);
                     }
                 }
             }
-            if (startDate == null && endDate != null) {   //结束日期不为空
+            if ((startDate == null||startDate=="") && endDate != null&&endDate!="") {   //结束日期不为空
                 for (SummonsInformation item : summonsInformations) {
                     if (Long.parseLong(endDate) > Long.parseLong(item.getSummontime())) {
                         newSummonsInformations.add(item);
                     }
                 }
             }
-            if (startDate != null && endDate != null) {    //都不为空
+            if (startDate != null&&startDate!="" && endDate != null&&endDate!="") {    //都不为空
                 for (SummonsInformation item : summonsInformations) {
                     if (Long.parseLong(startDate) <= Long.parseLong(item.getSummontime()) && Long.parseLong(endDate) > Long.parseLong(item.getSummontime())) {
                         newSummonsInformations.add(item);
                     }
                 }
             }
-            if (startDate == null && endDate == null) {  //都为空
+            if ((startDate == null||startDate=="") && (endDate == null||endDate=="")) {  //都为空
                 for (SummonsInformation item : summonsInformations) {
                     newSummonsInformations.add(item);
                 }
@@ -1486,12 +1486,12 @@ public class SuperviseController {
             List<SinginInformation> listAllVoiceSinginInformations = new ArrayList<>();  //所有声纹签到记录
             for (SinginInformation item : newsinginInformations
             ) {
-                List<SinginInformation> faceSinginInformationList = superviseService.listSingin(item.getPersonid(), 1);  //获取视频签到记录
+                List<SinginInformation> faceSinginInformationList = superviseService.listSingin(item.getPersonid(), 0);  //获取视频签到记录
                 for (SinginInformation item1 : faceSinginInformationList
                 ) {
                     listAllFaceSinginInformations.add(item1);
                 }
-                List<SinginInformation> voiceSinginInformationList = superviseService.listSingin(item.getPersonid(), 2);  //获取声纹签到记录
+                List<SinginInformation> voiceSinginInformationList = superviseService.listSingin(item.getPersonid(), 1);  //获取声纹签到记录
                 for (SinginInformation item2 : voiceSinginInformationList
                 ) {
                     listAllVoiceSinginInformations.add(item2);
@@ -1691,13 +1691,13 @@ public class SuperviseController {
             Personinformation personinformation=new Personinformation();
             personinformation.setCode(personAllInformationModel.getPersonid());
             personinformation.setName(personAllInformationModel.getPersonname());
-            personinformation.setNumber(personAllInformationModel.getPersonid());
+            personinformation.setNumber(personAllInformationModel.getGuid());
             personinformation.setIdCardNo(personAllInformationModel.getCard());
             personinformation.setAge(personAllInformationModel.getAge());
             personinformation.setGender(personAllInformationModel.getGendercode());
             personinformation.setHeadUrl(personAllInformationModel.getFacepath());
             personinformation.setStateCode(personAllInformationModel.getSuspectstatuscode());
-            personinformation.setState(personAllInformationModel.getStatus());
+            personinformation.setState(personAllInformationModel.getSuspectstatus());
             personinformation.setExecStartDate(personAllInformationModel.getBailoutbegindate());
             personinformation.setExecEndDate(personAllInformationModel.getBailoutenddate());
             personinformation.setPhone(personAllInformationModel.getContact());
@@ -1927,7 +1927,7 @@ public class SuperviseController {
         superviseBaseInformation.setHeadUrl(personAllInformationModel.getFacepath());
         superviseBaseInformation.setStateCode(personAllInformationModel.getSuspectstatuscode());
         superviseBaseInformation.setState(personAllInformationModel.getSuspectstatus());
-        superviseBaseInformation.setNumber(personAllInformationModel.getPersonid());
+        superviseBaseInformation.setNumber(personAllInformationModel.getGuid());
         superviseBaseInformation.setIdCardNo(personAllInformationModel.getCard());
         superviseBaseInformation.setName(personAllInformationModel.getPersonname());
         superviseBaseInformation.setPreName(personAllInformationModel.getBeforname());
@@ -1980,7 +1980,13 @@ public class SuperviseController {
         superviseDetailModel.setBailInfo(superviseBailInformation);
         superviseDetailModel.setBailPerson(superviseBailPersonInformation);
         superviseDetailModel.setBailMoney(superviseBailMoneyInformation);
-        superviseDetailModel.setLastUpdateTime(String.valueOf(personAllInformationModel.getModifiertime().getTime()));
+        if(personAllInformationModel.getModifiertime()!=null){
+            superviseDetailModel.setLastUpdateTime(String.valueOf(personAllInformationModel.getModifiertime().getTime()));
+        }
+        else{
+            superviseDetailModel.setLastUpdateTime(String.valueOf(personAllInformationModel.getFoundertime().getTime()));
+        }
+
         rs.resultCode=0;
         rs.resultMsg="";
         rs.data=superviseDetailModel;
