@@ -31,6 +31,7 @@ public class EnumController {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(enumService.GetEnum(Code));
     }
+
     @UserLoginToken
     @GetMapping("/GetPolice")
     public ResponseResult GetPolice(@RequestParam String PoliceStation){
@@ -50,6 +51,7 @@ public class EnumController {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(enumService.ListMechanism());
     }
+
     //@ApiOperation("获取需要的枚举信息")
     @UserLoginToken
     @GetMapping("/getEnum")
