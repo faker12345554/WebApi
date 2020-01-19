@@ -28,10 +28,10 @@ public class GroupService {
     //新增
     public int saveGroup(UserPermissionGroup UserGroup) {
         UserGroup.setCreatetime(new Date());
-        int id=GroupDao.saveUserGroup(UserGroup);
+        UserPermissionGroup userGroup=GroupDao.saveUserGroup(UserGroup);
         for (MenuModel item:UserGroup.getMenuList()){
             UserRole userRole=new UserRole();
-            userRole.setPermissionid(id);
+            userRole.setPermissionid(userGroup.getPermissionid());
             userRole.setCreatetime(new Date());
             userRole.setMenuid(item.getId());
             userRole.setRolename(item.getName());
@@ -39,7 +39,7 @@ public class GroupService {
             GroupDao.saveUserRole(userRole);
         }
 
-        return id;
+        return userGroup.getPermissionid();
     }
 
     public int selectByName(String Name) {
