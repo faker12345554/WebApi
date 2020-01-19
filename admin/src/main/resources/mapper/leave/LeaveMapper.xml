@@ -11,7 +11,7 @@
         <if test="Condition ==null and PersonName!=null ">
             where a.personname like concat('%',#{PersonName},'%')
         </if>
-        <if test="Condition !=null and PersonName==null ">
+        <if test="Condition !=null and PersonName==null and PersonId==null ">
             where a.states like concat('%',#{condition},'%')
         </if>
 
