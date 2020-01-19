@@ -82,11 +82,11 @@ public class UserPermissController {
     @UserLoginToken
     @ApiOperation("权限组列表")
     @GetMapping("GetList")
-    public ResponseResult listGroup(@RequestParam boolean flag, int PageSize, int PageIndex, HttpServletResponse response) {
+    public ResponseResult listGroup(@RequestParam int PageSize, int PageIndex, HttpServletResponse response) {
 
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData( groupService.listGroup(flag, PageSize, PageIndex));
+        return result.setData( groupService.listGroup( PageSize, PageIndex));
     }
 
     @GetMapping("/Menutree")
