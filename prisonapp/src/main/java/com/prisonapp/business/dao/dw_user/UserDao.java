@@ -19,9 +19,9 @@ public interface UserDao {
 
     UserModel officephone(@Param("sponsoralarm") String sponsoralarm);
 
-    List<UserModel> modifyPassword(String userId, String password);
+    List<UserModel> modifyPassword(String accountName, String password);
 
-    int upModifyPassword(String userId, String newPassword);
+    int upModifyPassword(String accountName, String newPassword);
 
     TPersoninformation RelatedId(@Param("accountName")String accountName);
 }
