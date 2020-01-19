@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.dw_meun.MeunDao">
+    <select id="GetMenuList" resultType="com.admin.admin.entity.dw_menu.Menu">
+        select * from legal."public".t_menu where status=true
+    </select>
+    <update id="delMeun">
+        update t_menu set legal."public".t_menu.status=#{falg} where legal."public".t_menu.menuid=#{id}
+    </update>
+
+    <select id="GetMeunbyid" resultType="com.admin.admin.entity.dw_menu.Menu" parameterType="int">
+        select * from legal."public".t_menu where menuid=#{id}
+    </select>
+
+</mapper>
