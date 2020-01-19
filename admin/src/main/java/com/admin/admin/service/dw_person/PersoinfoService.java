@@ -51,6 +51,8 @@ public class PersoinfoService {
 
         personinformation.setFoundertime(new Date());
         personinformation.setPersonid(PersonId);
+        personinformation.setViolationcode("0");
+
 
         return personDao.insertPersion(personinformation);
     }

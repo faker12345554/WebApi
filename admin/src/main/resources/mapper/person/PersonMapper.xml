@@ -6,11 +6,11 @@
         INSERT into t_personinformation(personid,personname,gender,age,birthdate,card,workunit,bailoutbegindate,bailoutenddate,sponsor,sponsoralarm,contact,address,wechatnumber,
         qqnumber,status,founderid,foundertime,modifierid,modifiertime,suspectstatus,marriage,policestation,casetype,facepath,persontags,gendercode,beforename,nation,degreeeducation,
         nativeplace,occupation,nationality,registeredarea,permanentaddress,currentaddress,nowaddress,yjsponsoralarm,exectype,keepaddress,appointaddress,province,city,area,
-        monitoraddress,suspectstatuscode)
+        monitoraddress,suspectstatuscode,violationcode)
         values (#{personid},#{personname},#{gender},#{age},#{birthdate},#{card},#{workunit},#{bailoutbegindate},#{bailoutenddate},#{sponsor},#{sponsoralarm},#{contact},#{address},
         #{wechatnumber},#{qqnumber},#{status},#{founderid},#{foundertime},#{modifierid},#{modifiertime},#{suspectstatus},#{marriage},#{policestation},#{casetype},#{facepath},
         #{persontags},#{gendercode},#{beforename},#{nation},#{degreeeducation},#{nativeplace},#{occupation},#{nationality},#{registeredarea},#{permanentaddress},#{currentaddress},
-        #{nowaddress},#{yjsponsoralarm},#{exectype},#{keepaddress},#{appointaddress},#{province},#{city},#{area},#{monitoraddress},#{suspectstatuscode})
+        #{nowaddress},#{yjsponsoralarm},#{exectype},#{keepaddress},#{appointaddress},#{province},#{city},#{area},#{monitoraddress},#{suspectstatuscode},#{violationcode})
     </insert>
 
     <update id="updatePersion" parameterType="com.admin.admin.entity.dw_person.Personinformation">
