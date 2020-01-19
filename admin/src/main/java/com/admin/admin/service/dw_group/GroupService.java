@@ -27,6 +27,7 @@ public class GroupService {
 
     //新增
     public int saveGroup(UserPermissionGroup UserGroup) {
+        UserGroup.setCreatetime(new Date());
         int id=GroupDao.saveUserGroup(UserGroup);
         for (MenuModel item:UserGroup.getMenuList()){
             UserRole userRole=new UserRole();
@@ -47,6 +48,7 @@ public class GroupService {
 
     //修改
     public int updateGroup(UserPermissionGroup UserGroup) {
+        UserGroup.setCreatetime(new Date());
         GroupDao.deleteUserRole(UserGroup.getPermissionid());
         for (MenuModel item:UserGroup.getMenuList()){
             UserRole userRole=new UserRole();
