@@ -165,7 +165,7 @@ public class MessageController {
             remindNotifitionModel.setTypeName("到期提醒");
             remindNotifitionModel.setDetailType(String.valueOf(remindMessageList.get(0).getDetailtype()));
             remindNotifitionModel.setDetailTypeName(remindMessageList.get(0).getDetailtypename());
-            remindNotifitionModel.setContent(remindMessageList.get(0).getWorkcontent());
+            remindNotifitionModel.setContent(remindMessageList.get(0).getContent());
             remindNotifitionModel.setTimestamp(String.valueOf(remindMessageList.get(0).getMessagetime().getTime()));
             remindNotifitionModel.setUnreadCount(remindUnreadCount);
             notificationListModels.add(remindNotifitionModel);
@@ -181,7 +181,7 @@ public class MessageController {
             alarmNotificationModel.setTypeName("报警提醒");
             alarmNotificationModel.setDetailType(String.valueOf(alarmMessageList.get(0).getDetailtype()));
             alarmNotificationModel.setDetailTypeName(alarmMessageList.get(0).getDetailtypename());
-            alarmNotificationModel.setContent(alarmMessageList.get(0).getWorkcontent());
+            alarmNotificationModel.setContent(alarmMessageList.get(0).getContent());
             alarmNotificationModel.setTimestamp(String.valueOf(alarmMessageList.get(0).getMessagetime().getTime()));
             alarmNotificationModel.setUnreadCount(alarmUnreadCount);
             notificationListModels.add(alarmNotificationModel);
@@ -198,7 +198,7 @@ public class MessageController {
             auditorNotificationModel.setTypeName("审批提醒");
             auditorNotificationModel.setDetailType(String.valueOf(auditorMessageList.get(0).getDetailtype()));
             auditorNotificationModel.setDetailTypeName(auditorMessageList.get(0).getDetailtypename());
-            auditorNotificationModel.setContent(auditorMessageList.get(0).getWorkcontent());
+            auditorNotificationModel.setContent(auditorMessageList.get(0).getContent());
             auditorNotificationModel.setTimestamp(String.valueOf(auditorMessageList.get(0).getMessagetime().getTime()));
             auditorNotificationModel.setUnreadCount(auditorUnreadCount);
             notificationListModels.add(auditorNotificationModel);
@@ -215,7 +215,7 @@ public class MessageController {
             upcomingNotificationModel.setTypeName("待办事项");
             upcomingNotificationModel.setDetailType(String.valueOf(upcomignMessageList.get(0).getDetailtype()));
             upcomingNotificationModel.setDetailTypeName(upcomignMessageList.get(0).getDetailtypename());
-            upcomingNotificationModel.setContent(upcomignMessageList.get(0).getWorkcontent());
+            upcomingNotificationModel.setContent(upcomignMessageList.get(0).getContent());
             upcomingNotificationModel.setTimestamp(String.valueOf(upcomignMessageList.get(0).getMessagetime().getTime()));
             upcomingNotificationModel.setUnreadCount(upcomignUnreadCount);
             notificationListModels.add(upcomingNotificationModel);
@@ -232,7 +232,7 @@ public class MessageController {
             connectNotificationModel.setTypeName("通话消息");
             connectNotificationModel.setDetailType(String.valueOf(connectMessageList.get(0).getDetailtype()));
             connectNotificationModel.setDetailTypeName(connectMessageList.get(0).getDetailtypename());
-            connectNotificationModel.setContent(connectMessageList.get(0).getWorkcontent());
+            connectNotificationModel.setContent(connectMessageList.get(0).getContent());
             connectNotificationModel.setTimestamp(String.valueOf(connectMessageList.get(0).getMessagetime().getTime()));
             connectNotificationModel.setUnreadCount(connectUnreadCount);
             notificationListModels.add(connectNotificationModel);
@@ -248,7 +248,7 @@ public class MessageController {
             personNotificationModel.setTypeName("人员消息");
             personNotificationModel.setDetailType(String.valueOf(personMessageList.get(0).getDetailtype()));
             personNotificationModel.setDetailTypeName(personMessageList.get(0).getDetailtypename());
-            personNotificationModel.setContent(personMessageList.get(0).getWorkcontent());
+            personNotificationModel.setContent(personMessageList.get(0).getContent());
             personNotificationModel.setTimestamp(String.valueOf(personMessageList.get(0).getMessagetime().getTime()));
             personNotificationModel.setUnreadCount(personUnreadCount);
             notificationListModels.add(personNotificationModel);
@@ -265,7 +265,7 @@ public class MessageController {
             platformNotificationModel.setTypeName("平台通知");
             platformNotificationModel.setDetailType(String.valueOf(platformMessageList.get(0).getDetailtype()));
             platformNotificationModel.setDetailTypeName(platformMessageList.get(0).getDetailtypename());
-            platformNotificationModel.setContent(platformMessageList.get(0).getWorkcontent());
+            platformNotificationModel.setContent(platformMessageList.get(0).getContent());
             platformNotificationModel.setTimestamp(String.valueOf(platformMessageList.get(0).getMessagetime().getTime()));
             platformNotificationModel.setUnreadCount(platformUnreadCount);
             notificationListModels.add(platformNotificationModel);
@@ -395,7 +395,7 @@ public class MessageController {
             }
 
             List<MessageListModel> messageListModels = new ArrayList<>();
-            if (key == null) {
+            if (key == null||key=="") {
                 messageListModels = newMessageInformations;
             } else {
                 for (MessageListModel item : newMessageInformations
@@ -464,7 +464,7 @@ public class MessageController {
                 List<MessageListModel> messageListModels = new ArrayList<>();   //筛选出小于等于最新一条消息时间戳的通知消息
                 for (MessageListModel item : messageInformationList
                 ) {
-                    if (item.getType().equals(type) && Long.parseLong(item.getTimestamp()) < Long.parseLong(messageTimestamp) && item.getIsRead() == false) {
+                    if (item.getType().equals(type) && Long.parseLong(item.getTimestamp()) <= Long.parseLong(messageTimestamp) && item.getIsRead() == false) {
                         messageListModels.add(item);
                     }
                 }
@@ -521,7 +521,7 @@ public class MessageController {
         List<MessageListModel> personMessageList=new ArrayList<>();   //人员消息通知列表
         List<MessageListModel> platformMessageList=new ArrayList<>(); //平台通知列表
 
-        for (MessageListModel item3:messageInformationList
+        for (MessageListModel item3:keyMessageList
         ) {
             if(item3.getType().equals("1")){
                 remindMessageList.add(item3);
@@ -789,9 +789,45 @@ public class MessageController {
                 rs.resultMsg = "";
                 rs.data = getNotificationModel;
             } else {
+                GetNotificationModel getNotificationModel = new GetNotificationModel();
+                String typeCode="";
+                String typeName="";
+                switch (type) {
+                    case "1":
+                        typeCode="1";
+                        typeName="到期提醒";
+                        break;
+                    case "2":
+                        typeCode="2";
+                        typeName="报警提醒";
+                        break;
+                    case "3":
+                        typeCode="3";
+                        typeName="审批提醒";
+                        break;
+                    case "4":
+                        typeCode="4";
+                        typeName="待办事项";
+                        break;
+                    case "5":
+                        typeCode="5";
+                        typeName="通话消息";
+                        break;
+                    case "6":
+                        typeCode="6";
+                        typeName="人员消息";
+                        break;
+                    case "7":
+                        typeCode="7";
+                        typeName="平台通知";
+                        break;
+                }
+                getNotificationModel.setType(typeCode);
+                getNotificationModel.setTypeName(typeName);
+                getNotificationModel.setUnreadCount(unreadCount);
                 rs.resultCode = 0;
                 rs.resultMsg = "";
-                rs.data = new Object();
+                rs.data = getNotificationModel;
             }
         }
         else{

@@ -3,8 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.adminapp.business.dao.dw_supervise.SuperfineDado">
     <select id="listPersonInformation" resultType="com.adminapp.business.entity.dw_supervise.Personinformation">
-        select personid AS code,personname AS name,card AS idCardNo,age,gendercode AS gender,facepath AS headUrl,suspectstatuscode AS stateCode,violationcode AS violateCode,suspectstatus AS state,bailoutbegindate AS execStartDate,
-        bailoutenddate AS execEndDate,contact AS phone FROM t_personinformation WHERE sponsoralarm=#{UserId} ORDER BY t_personinformation.personname
+        select personid AS code,personname AS name,guid AS number,card AS idCardNo,age,gendercode AS gender,facepath AS headUrl,suspectstatuscode AS stateCode,violationcode AS violateCode,suspectstatus AS state,bailoutbegindate AS execStartDate,
+        bailoutenddate AS execEndDate,contact AS phone FROM t_personinformation WHERE sponsoralarm=#{UserId} AND status=true ORDER BY t_personinformation.personname
     </select>
     <select id="getPrisonSetting" resultType="com.adminapp.model.dw_supervise.PrisonSettingModel">
         select id AS code,settingname AS name,settingcheck AS enable FROM t_prisonsetting WHERE personid=#{personid}

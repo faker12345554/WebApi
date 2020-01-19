@@ -7,7 +7,7 @@ public class MessageInformation {
 
   private int id;
   private String modular;
-  private String workcontent;
+  private String content;
   private String personid;
   private String modularname;
   private Date messagetime;
@@ -35,15 +35,13 @@ public class MessageInformation {
     this.modular = Modual;
   }
 
-
-  public String getWorkcontent() {
-    return workcontent;
+  public String getContent() {
+    return content;
   }
 
-  public void setWorkcontent(String workcontent) {
-    this.workcontent = workcontent;
+  public void setContent(String content) {
+    this.content = content;
   }
-
 
   public String getPersonid() {
     return personid;

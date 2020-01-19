@@ -341,7 +341,7 @@ public class SuperviseController {
             }
         }
 
-        if(key==null){
+        if(key==null||key==""){
             if (type == 0){
                 List<Personinformation> newPersonInformations=new ArrayList<>();   //所有人员信息
                 if(personinformation.size()>count&&personinformation.size()<count+requestCount) {
@@ -536,8 +536,11 @@ public class SuperviseController {
     @UserLoginToken
     @ApiOperation(value = "获取保外人员传讯记录")
     @GetMapping("/getCiteRecords")
-    public ResultSet getCiteRecords(@RequestParam(required = false)String key,@RequestParam(required = false)String startDate,@RequestParam(required = false)String endDate,
-                                    @RequestParam(required = true)int count,@RequestParam(required = true)int requestCount){
+    public ResultSet getCiteRecords(@RequestParam(required = false)String key,
+                                    @RequestParam(required = false)String startDate,
+                                    @RequestParam(required = false)String endDate,
+                                    @RequestParam(required = true)int count,
+                                    @RequestParam(required = true)int requestCount){
         String userId=TokenUtil.getTokenUserId();
         CiteRecordReturnModel citeRecordReturnModel=new CiteRecordReturnModel();
         List<SummonsInformation> summonsInformations=new ArrayList<>();
@@ -559,8 +562,6 @@ public class SuperviseController {
                     i = i - 1;
                 }
             }
-
-
             if (startDate != null&&startDate!="" && (endDate == null||endDate=="")) {    //开始日期不为空
                 for (SummonsInformation item : summonsInformations) {
                     if (Long.parseLong(startDate) <= Long.parseLong(item.getSummontime())) {
@@ -602,8 +603,6 @@ public class SuperviseController {
                 citeRecordsModel.add(citeRecordsModel1);
             }
 
-
-
             if (citeRecordsModel.size() > count && citeRecordsModel.size() < count + requestCount) {
                 for (int i = count; i < citeRecordsModel.size(); i++) {
                     CiteRecordsModel summonsInformation = citeRecordsModel.get(i);
@@ -616,7 +615,6 @@ public class SuperviseController {
                     summonsInformations1.add(summonsInformation);
                 }
             }
-
         }
         citeRecordReturnModel.setTotalCount(newSummonsInformations.size());
         citeRecordReturnModel.setList(summonsInformations1);
@@ -924,7 +922,7 @@ public class SuperviseController {
 //                item.setViolate("严重");
 //            }
 //        }
-        if(key==null) {   //关键字为空
+        if(key==null||key=="") {   //关键字为空
 
             superviseReturnModel.setTotalCount(personinformations.size());
             superviseReturnModel.setList(personinformations);
@@ -959,7 +957,7 @@ public class SuperviseController {
                                        @RequestParam(required = true)int count,@RequestParam(required = true)int requestCount){
         String userId= TokenUtil.getTokenUserId();
         List<LeaveListModel> leaveListModels=new ArrayList<>();
-        if(key==null){   //没有key关键字
+        if(key==null||key==""){   //没有key关键字
             if(status.equals("0")){       //全部外出申请列表数据
                 leaveListModels=superviseService.getLeaveList();
             }
@@ -1082,7 +1080,7 @@ public class SuperviseController {
             List<LocationRecordModel> locationRecordModels = superviseService.listLocationRecord(code);  //获取监居人员所有定位信息
 
             List<LocationRecordModel> newLocationRecords = new ArrayList<>();
-            if (startDate != null && endDate == null) {   //开始时间戳不为空
+            if (startDate != null&&startDate!="" && (endDate == null||endDate=="")) {   //开始时间戳不为空
                 for (LocationRecordModel item : locationRecordModels
                 ) {
                     if (Long.parseLong(item.getTimestamp()) >= Long.parseLong(startDate)) {
@@ -1090,7 +1088,7 @@ public class SuperviseController {
                     }
                 }
             }
-            if (startDate == null && endDate != null) {   //结束时间戳不为空
+            if ((startDate == null||startDate=="") && endDate != null&&endDate!="") {   //结束时间戳不为空
                 for (LocationRecordModel item : locationRecordModels
                 ) {
                     if (Long.parseLong(item.getTimestamp()) < Long.parseLong(endDate)) {
@@ -1098,13 +1096,13 @@ public class SuperviseController {
                     }
                 }
             }
-            if (startDate == null && endDate == null) {     //都为空
+            if (startDate != null&&startDate!="" && endDate != null&&endDate!="") {     //都为空
                 for (LocationRecordModel item : locationRecordModels
                 ) {
                     newLocationRecords.add(item);
                 }
             }
-            if (startDate != null && endDate != null) {     //都不为空
+            if ((startDate == null||startDate=="") && (endDate == null||endDate=="")) {     //都不为空
                 for (LocationRecordModel item : locationRecordModels
                 ) {
                     if (Long.parseLong(item.getTimestamp()) >= Long.parseLong(startDate) && Long.parseLong(item.getTimestamp()) < Long.parseLong(endDate)) {
@@ -1545,7 +1543,7 @@ public class SuperviseController {
                     signRecordModels.add(voiceSignRecordModel);
                 }
             }
-            if (startDate != null && endDate == null) {   //开始时间不为空
+            if (startDate != null&&startDate!="" && (endDate == null||endDate=="")) {   //开始时间不为空
                 for (SignRecordModel item : signRecordModels
                 ) {
                     if (Long.parseLong(item.getTimestamp()) < Long.parseLong(startDate)) {
@@ -1553,7 +1551,7 @@ public class SuperviseController {
                     }
                 }
             }
-            if (startDate == null && endDate != null) {    //结束时间不为空
+            if ((startDate == null||startDate=="") && endDate != null&&endDate!="") {    //结束时间不为空
                 for (SignRecordModel item : signRecordModels
                 ) {
                     if (Long.parseLong(item.getTimestamp()) >= Long.parseLong(endDate)) {
@@ -1561,7 +1559,7 @@ public class SuperviseController {
                     }
                 }
             }
-            if (startDate != null && endDate != null) {     //开始时间和结束时间都不为空
+            if (startDate != null&&startDate!="" && endDate != null&&endDate!="") {     //开始时间和结束时间都不为空
 //                for (SignRecordModel item : signRecordModels
 //                ) {
 //                    if (Long.parseLong(item.getTimestamp()) < Long.parseLong(startDate) || Long.parseLong(item.getTimestamp()) >= Long.parseLong(endDate)) {
@@ -1577,10 +1575,10 @@ public class SuperviseController {
                 }
             }
             List<SignRecordModel> newSignRecordModels = new ArrayList<>();
-            if (key == null) {
+            if (key == null||key=="") {
                 newSignRecordModels = signRecordModels;
             }
-            if (key != null) {
+            if (key != null&&key!="") {
                 for (SignRecordModel item : signRecordModels
                 ) {
                     if (item.getPerson().contains(key)) {
@@ -1667,8 +1665,21 @@ public class SuperviseController {
         if(personAllInformationModel!=null&&personAllInformationModel.getSponsoralarm().equals(userId)){
             List<PrisonSettingModel> prisonSettingModels=superviseService.getPrisonValidWay(code);
             ValidWayReturnModel validWayReturnModel=new ValidWayReturnModel();
-            validWayReturnModel.setTotalCount(prisonSettingModels.size());
-            validWayReturnModel.setList(prisonSettingModels);
+            if(prisonSettingModels.size()!=0){
+                validWayReturnModel.setTotalCount(prisonSettingModels.size());
+                validWayReturnModel.setList(prisonSettingModels);
+            }
+            else{
+                for(int i=1;i<=4;i++){
+                    String validWayName=superviseService.getViolateName("GLPZ-001",String.valueOf(i));
+                    Date date=new Date();
+                    int status=superviseService.insertPrisonSetting(code,validWayName,false,date,i);
+                }
+                List<PrisonSettingModel> prisonSettingModel=superviseService.getPrisonValidWay(code);
+                validWayReturnModel.setTotalCount(prisonSettingModel.size());
+                validWayReturnModel.setList(prisonSettingModel);
+            }
+
             rs.resultCode=0;
             rs.resultMsg="";
             rs.data=validWayReturnModel;
@@ -1956,7 +1967,7 @@ public class SuperviseController {
         superviseBailInformation.setInChargePerson(personAllInformationModel.getSponsor());
         superviseBailInformation.setExecType(personAllInformationModel.getExectype());
         if(personAllInformationModel.getSuspectstatus().equals("监视居住")){
-            superviseBailInformation.setKeepAddress(personAllInformationModel.getKeepaddress());
+            superviseBailInformation.setKeepAddress(personAllInformationModel.getMonitoraddress());
             superviseBailInformation.setAppointAddress(personAllInformationModel.getAppointaddress());
         }
         SuperviseBailPersonInformation superviseBailPersonInformation=new SuperviseBailPersonInformation();

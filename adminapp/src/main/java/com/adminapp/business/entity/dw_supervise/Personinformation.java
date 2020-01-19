@@ -37,11 +37,11 @@ public class Personinformation {
   }
 
   public String getNumber() {
-    return code;
+    return number;
   }
 
-  public void setNumber(String code) {
-    this.number = code;
+  public void setNumber(String number) {
+    this.number = number;
   }
 
   public String getIdCardNo() {
