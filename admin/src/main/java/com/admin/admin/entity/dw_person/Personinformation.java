@@ -58,10 +58,19 @@ public class Personinformation {
     private String suspectstatuscode;
     private String guid;
     private String violationcode;
+    private String handlepeson;
     private TCaseinfo tCaseinfo;
     private GuaranteeInformation guaranteeInformation;
     private List<String> managementStyle;
     private String caseno;
+    public String getHandlepeson() {
+        return handlepeson;
+    }
+
+    public Personinformation setHandlepeson(String handlepeson) {
+        this.handlepeson = handlepeson;
+        return this;
+    }
     public String getGuid() {
         return guid;
     }

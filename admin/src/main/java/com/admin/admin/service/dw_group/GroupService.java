@@ -74,10 +74,10 @@ public class GroupService {
     }
 
     //组列表
-    public PageBean listGroup(boolean flag, int PageSize, int PageIndex) {
+    public PageBean listGroup( int PageSize, int PageIndex) {
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
         PageHelper.startPage(PageIndex, PageSize);
-        List<UserPermissionGroup> allItems = GroupDao.listGroup(flag);
+        List<UserPermissionGroup> allItems = GroupDao.listGroup();
         PageInfo<UserPermissionGroup> info = new PageInfo<>(allItems);//全部商品
         int countNums = (int) info.getTotal();            //总记录数
         PageBean<UserPermissionGroup> pageData = new PageBean<>(PageIndex, PageSize, countNums);

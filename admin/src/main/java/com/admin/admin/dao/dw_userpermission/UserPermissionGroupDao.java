@@ -23,7 +23,7 @@ public interface UserPermissionGroupDao {
     UserPermissionGroup getGroup(@Param("id") int id);
 
     //权限组列表
-    List<UserPermissionGroup> listGroup(@Param("flag") boolean flag);
+    List<UserPermissionGroup> listGroup();
 
     int selectByName(String Name);
 
