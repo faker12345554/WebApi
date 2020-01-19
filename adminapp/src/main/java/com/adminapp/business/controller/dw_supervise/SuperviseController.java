@@ -1934,6 +1934,7 @@ public class SuperviseController {
 //        }
         String violateName=superviseService.getViolateName("WGCD-001",personAllInformationModel.getViolationcode());
         superviseBaseInformation.setViolate(violateName);
+        superviseBaseInformation.setViolateCode(personAllInformationModel.getViolationcode());
         superviseBaseInformation.setCode(personAllInformationModel.getPersonid());
         superviseBaseInformation.setHeadUrl(personAllInformationModel.getFacepath());
         superviseBaseInformation.setStateCode(personAllInformationModel.getSuspectstatuscode());
@@ -1965,7 +1966,9 @@ public class SuperviseController {
         superviseBailInformation.setExecEndDate(String.valueOf(personAllInformationModel.getBailoutenddate().getTime()));
         superviseBailInformation.setExecUnit(personAllInformationModel.getPolicestation());
         superviseBailInformation.setInChargePerson(personAllInformationModel.getSponsor());
-        superviseBailInformation.setExecType(personAllInformationModel.getExectype());
+        if(personAllInformationModel.getSuspectstatus().equals("监视居住")==false){
+            superviseBailInformation.setExecType(personAllInformationModel.getExectype());
+        }
         if(personAllInformationModel.getSuspectstatus().equals("监视居住")){
             superviseBailInformation.setKeepAddress(personAllInformationModel.getMonitoraddress());
             superviseBailInformation.setAppointAddress(personAllInformationModel.getAppointaddress());
