@@ -113,7 +113,7 @@ public class UserController {
 
         User user = userService.login(UserName, Password);
         if (user==null){
-            result.setCode(ResultCode.SUCCESS.getCode());
+            result.setCode(2);
             result.setMessage("密码或账号错误");
             return result;
         }
