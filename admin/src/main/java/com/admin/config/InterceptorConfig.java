@@ -1,7 +1,6 @@
 package com.admin.config;
 
 import com.admin.interceptor.AuthenticationInterceptor;
-import com.admin.interceptor.BlankSpaceInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
