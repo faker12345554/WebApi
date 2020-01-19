@@ -27,10 +27,11 @@ public class GroupService {
 
     //新增
     public int saveGroup(UserPermissionGroup UserGroup) {
-        int id=GroupDao.saveUserGroup(UserGroup);
+        UserGroup.setCreatetime(new Date());
+        UserPermissionGroup userGroup=GroupDao.saveUserGroup(UserGroup);
         for (MenuModel item:UserGroup.getMenuList()){
             UserRole userRole=new UserRole();
-            userRole.setPermissionid(id);
+            userRole.setPermissionid(userGroup.getPermissionid());
             userRole.setCreatetime(new Date());
             userRole.setMenuid(item.getId());
             userRole.setRolename(item.getName());
@@ -38,7 +39,7 @@ public class GroupService {
             GroupDao.saveUserRole(userRole);
         }
 
-        return id;
+        return userGroup.getPermissionid();
     }
 
     public int selectByName(String Name) {
@@ -47,6 +48,7 @@ public class GroupService {
 
     //修改
     public int updateGroup(UserPermissionGroup UserGroup) {
+        UserGroup.setCreatetime(new Date());
         GroupDao.deleteUserRole(UserGroup.getPermissionid());
         for (MenuModel item:UserGroup.getMenuList()){
             UserRole userRole=new UserRole();

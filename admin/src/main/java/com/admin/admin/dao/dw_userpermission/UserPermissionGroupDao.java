@@ -13,7 +13,7 @@ import java.util.Map;
 public interface UserPermissionGroupDao {
 
     //新增
-    int saveUserGroup( UserPermissionGroup userGroup);
+    UserPermissionGroup saveUserGroup( UserPermissionGroup userGroup);
     //修改
     int updateGroup(UserPermissionGroup  userGroup);
     //删除
