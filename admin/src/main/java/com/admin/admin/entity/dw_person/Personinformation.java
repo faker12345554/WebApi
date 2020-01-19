@@ -56,10 +56,38 @@ public class Personinformation {
     private String area;
     private String monitoraddress;
     private String suspectstatuscode;
+    private String guid;
+    private String violationcode;
+    private String handlepeson;
     private TCaseinfo tCaseinfo;
     private GuaranteeInformation guaranteeInformation;
     private List<String> managementStyle;
     private String caseno;
+    public String getHandlepeson() {
+        return handlepeson;
+    }
+
+    public Personinformation setHandlepeson(String handlepeson) {
+        this.handlepeson = handlepeson;
+        return this;
+    }
+    public String getGuid() {
+        return guid;
+    }
+
+    public Personinformation setGuid(String guid) {
+        this.guid = guid;
+        return this;
+    }
+
+    public String getViolationcode() {
+        return violationcode;
+    }
+
+    public Personinformation setViolationcode(String violationcode) {
+        this.violationcode = violationcode;
+        return this;
+    }
 
     public String getCaseno() {
         return caseno;

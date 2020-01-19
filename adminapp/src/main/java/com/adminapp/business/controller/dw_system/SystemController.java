@@ -2,6 +2,7 @@ package com.adminapp.business.controller.dw_system;
 
 import com.adminapp.business.service.dw_system.SystemService;
 import com.adminapp.config.token.TokenUtil;
+import com.adminapp.config.token.tation.PassToken;
 import com.adminapp.config.token.tation.UserLoginToken;
 import com.adminapp.model.dw_system.*;
 import com.common.common.Uploadfiles.Upload;
@@ -30,7 +31,7 @@ public class SystemController {
 
     private Upload upload=new Upload();
 
-    @UserLoginToken
+    @PassToken
     @ApiOperation(value = "获取工作人员 App 更新信息")
     @GetMapping("/getUpdateInfo")
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -42,10 +43,10 @@ public class SystemController {
         return rs;
     }
 
-    @UserLoginToken
+
     @ApiOperation(value = " 获取保外人员 App 更新信息")
     @GetMapping("/getSupervisedAppInfo")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @PassToken
     public ResultSet getSupervisedAppInfo(){
         List<UpdateInformationModel> getUpdateInformation=systemService.getUpdateInformation(0);
         rs.resultCode=0;
@@ -54,10 +55,10 @@ public class SystemController {
         return rs;
     }
 
-    @UserLoginToken
+
     @ApiOperation(value = "获取更新记录")
     @GetMapping("/getUpdateRecords")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @PassToken
     public ResultSet getUpdateRecords(@ApiParam(name = "count",value ="已获取数据条数" )@RequestParam(required = true)int count,
                                       @ApiParam(name = "requestCount",value = "请求获取数据条数")@RequestParam(required = true)int requestCount){
         List<UpdateRecordModel> getUpdateRecord=systemService.getUpdateRecord(1);

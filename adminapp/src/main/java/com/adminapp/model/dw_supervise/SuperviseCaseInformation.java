@@ -7,9 +7,10 @@ public class SuperviseCaseInformation {
     private String caseType;
     private String caseName;
     private String caseNo;
-    private String receivedTime;
+    private String registerTime;
     private String handleUnit;
     private String handlePeson;
+    private String mainHandlePeson;
     private String caseDescription;
 
     public String getCaseCategory() {
@@ -44,13 +45,13 @@ public class SuperviseCaseInformation {
         this.caseNo = caseNo;
     }
 
-    public String getReceivedTime() {
-        return receivedTime;
+    public String getRegisterTime() {
+        return registerTime;
     }
 
-    public void setReceivedTime(Date receivedTime) {
-        String recevedtime=String.valueOf(receivedTime.getTime());
-        this.receivedTime = recevedtime;
+    public void setRegisterTime(Date registerTime) {
+        String registertime=String.valueOf(registerTime.getTime());
+        this.registerTime = registertime;
     }
 
     public String getHandleUnit() {
@@ -67,6 +68,14 @@ public class SuperviseCaseInformation {
 
     public void setHandlePeson(String handlePeson) {
         this.handlePeson = handlePeson;
+    }
+
+    public String getMainHandlePeson() {
+        return mainHandlePeson;
+    }
+
+    public void setMainHandlePeson(String mainHandlePeson) {
+        this.mainHandlePeson = mainHandlePeson;
     }
 
     public String getCaseDescription() {

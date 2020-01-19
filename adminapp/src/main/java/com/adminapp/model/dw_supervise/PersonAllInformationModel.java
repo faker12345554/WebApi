@@ -46,6 +46,7 @@ public class PersonAllInformationModel {
   private String exectype;
   private String keepaddress;
   private String appointaddress;
+  private String monitoraddress;
   private String suspectstatuscode;
   private String guid;
   private String violationcode;
@@ -402,6 +403,14 @@ public class PersonAllInformationModel {
 
   public void setAppointaddress(String appointaddress) {
     this.appointaddress = appointaddress;
+  }
+
+  public String getMonitoraddress() {
+    return monitoraddress;
+  }
+
+  public void setMonitoraddress(String monitoraddress) {
+    this.monitoraddress = monitoraddress;
   }
 
   public String getSuspectstatuscode() {

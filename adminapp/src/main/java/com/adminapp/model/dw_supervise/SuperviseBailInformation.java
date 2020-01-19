@@ -5,7 +5,6 @@ public class SuperviseBailInformation {
     private String execEndDate;
     private String execUnit;
     private String inChargePerson;
-    private String bailCaseType;
     private String execType;
     private String keepAddress;
     private String appointAddress;
@@ -42,13 +41,6 @@ public class SuperviseBailInformation {
         this.inChargePerson = inChargePerson;
     }
 
-    public String getBailCaseType() {
-        return bailCaseType;
-    }
-
-    public void setBailCaseType(String bailCaseType) {
-        this.bailCaseType = bailCaseType;
-    }
 
     public String getExecType() {
         return execType;

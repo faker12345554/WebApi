@@ -6,11 +6,11 @@
         INSERT into t_personinformation(personid,personname,gender,age,birthdate,card,workunit,bailoutbegindate,bailoutenddate,sponsor,sponsoralarm,contact,address,wechatnumber,
         qqnumber,status,founderid,foundertime,modifierid,modifiertime,suspectstatus,marriage,policestation,casetype,facepath,persontags,gendercode,beforename,nation,degreeeducation,
         nativeplace,occupation,nationality,registeredarea,permanentaddress,currentaddress,nowaddress,yjsponsoralarm,exectype,keepaddress,appointaddress,province,city,area,
-        monitoraddress,suspectstatuscode)
+        monitoraddress,suspectstatuscode,violationcode)
         values (#{personid},#{personname},#{gender},#{age},#{birthdate},#{card},#{workunit},#{bailoutbegindate},#{bailoutenddate},#{sponsor},#{sponsoralarm},#{contact},#{address},
         #{wechatnumber},#{qqnumber},#{status},#{founderid},#{foundertime},#{modifierid},#{modifiertime},#{suspectstatus},#{marriage},#{policestation},#{casetype},#{facepath},
         #{persontags},#{gendercode},#{beforename},#{nation},#{degreeeducation},#{nativeplace},#{occupation},#{nationality},#{registeredarea},#{permanentaddress},#{currentaddress},
-        #{nowaddress},#{yjsponsoralarm},#{exectype},#{keepaddress},#{appointaddress},#{province},#{city},#{area},#{monitoraddress},#{suspectstatuscode})
+        #{nowaddress},#{yjsponsoralarm},#{exectype},#{keepaddress},#{appointaddress},#{province},#{city},#{area},#{monitoraddress},#{suspectstatuscode},#{violationcode})
     </insert>
 
     <update id="updatePersion" parameterType="com.admin.admin.entity.dw_person.Personinformation">
@@ -46,7 +46,7 @@
 
     <select id="ListPerson" parameterType="com.admin.model.search.SearchModel"
             resultType="com.admin.admin.entity.dw_person.Personinformation">
-        select P.*,C.caseno,C.handleunit from t_personinformation as P
+        select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
         left join t_caseinfo as C on C.personid=P.personid where sponsoralarm=#{PersonName}
         <if test=" FuzzyCondition !=null and FuzzyCondition !=''">
             and
@@ -57,7 +57,8 @@
             P.casetype like concat('%',#{FuzzyCondition},'%') or
             P.modifierid like concat('%',#{FuzzyCondition},'%') or
             C.caseno like concat('%',#{FuzzyCondition},'%') or
-            C.handleunit like concat('%',#{FuzzyCondition},'%')
+            C.handleunit like concat('%',#{FuzzyCondition},'%') or
+            C.handlepeson like concat('%',#{FuzzyCondition},'%')
 
         </if>
         <if test="list.size()>0">

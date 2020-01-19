@@ -22,8 +22,15 @@ public class SuperviseBailPersonInformation {
         return gender;
     }
 
-    public void setGender(int gender) {
-        this.gender = gender;
+    public void setGender(String gender) {
+        int genderCode=0;
+        if(gender.equals("男")){
+            genderCode=1;
+        }
+        if(gender.equals("女")){
+            genderCode=2;
+        }
+        this.gender = genderCode;
     }
 
     public String getIdCardNo() {
