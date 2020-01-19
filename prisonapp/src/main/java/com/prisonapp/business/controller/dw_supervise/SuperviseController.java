@@ -4,8 +4,8 @@ package com.prisonapp.business.controller.dw_supervise;
 import com.common.common.Uploadfiles.Upload;
 import com.common.common.result.ResultSet;
 import com.prisonapp.business.entity.dw_supervise.*;
-import com.prisonapp.business.entity.dw_user.UserModel;
 import com.prisonapp.business.service.dw_supervise.SuperviseService;
+import com.prisonapp.business.util.PersonInformationUtil;
 import com.prisonapp.token.TokenUtil;
 import com.prisonapp.token.tation.UserLoginToken;
 import com.prisonapp.tool.AESDecode;
@@ -25,8 +25,9 @@ import java.awt.geom.Point2D;
 import java.io.File;
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
@@ -35,6 +36,8 @@ import java.util.*;
 @RequestMapping("/app/supervise")
 public class SuperviseController {
 
+//    @Autowired
+//    private PersonInformationUtil personInformationUtil;
 
     @Autowired
     private SuperviseService superviseService;
@@ -46,7 +49,6 @@ public class SuperviseController {
     private FaceRecognizeModel faceRecognizeModel = new FaceRecognizeModel();
     private ResultSet result = new ResultSet();
     private Upload upload = new Upload();
-    private HttpServletRequest request;
 
 
     @UserLoginToken
@@ -87,14 +89,16 @@ public class SuperviseController {
     public ResultSet submitApplyLeave(@RequestBody SubmitApplyLeaveModel submitApplyLeaveModel) throws ParseException {
         String strCode = "qj" + System.currentTimeMillis();
         code.setCode(strCode);
-//        Long longStartDate = Long.valueOf(submitApplyLeaveModel.getStartDate());//123456789
-//        Long longEndDate = Long.valueOf(submitApplyLeaveModel.getEndDate());
+        TEnum tEnum =superviseService.getReview();//取出‘待审核’
         List<TPersoninformation> person = superviseService.getPersonname(getPersonId());
+        LocalDate date = LocalDate.now(); // get the current date
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String messageContent =person.get(0).getPersonname()+"于"+date.format(formatter)+"日提交的外出申请待审批，请及时处理。";
         String address =submitApplyLeaveModel.getProvince()+submitApplyLeaveModel.getCity()+submitApplyLeaveModel.getDistrict();
         int res = superviseService.submitApplyLeave(submitApplyLeaveModel.getCity(),    submitApplyLeaveModel.getCityCode(),    submitApplyLeaveModel.getDistrict(),submitApplyLeaveModel.getDistrictCode(),
                                                     submitApplyLeaveModel.getProvince(),submitApplyLeaveModel.getProvinceCode(),submitApplyLeaveModel.getReason(),  submitApplyLeaveModel.getReasonAudioUrl(),
                                                     submitApplyLeaveModel.getEndDate(), submitApplyLeaveModel.getStartDate(),strCode,
-                                                    getPersonId(), person.get(0).getPersonname(),person.get(0).getSponsoralarm(),address);
+                                                    getPersonId(), person.get(0).getPersonname(),person.get(0).getSponsoralarm(),address,tEnum.getEnumname(),messageContent);
         if (res != 0) {
             result.resultCode = 0;
             result.resultMsg = "";
@@ -273,7 +277,7 @@ public class SuperviseController {
     @PostMapping("/uploadLocationError")
     public ResultSet uploadLocationError(String errorCode, String errorMsg) {
 
-        int a = superviseService.uploadLocationError(errorCode, errorMsg, Integer.parseInt(getPersonId()), new Date());
+        int a = superviseService.uploadLocationError(errorCode, errorMsg, getPersonId(), new Date());
         if (a != 0) {
             result.resultCode = 0;
             result.resultMsg = "";
@@ -345,7 +349,7 @@ public class SuperviseController {
             double dLatitude = bLatitude.doubleValue();
             BigDecimal bLongitude = new BigDecimal(String.valueOf(longitude));
             double dLongitude = bLongitude.doubleValue();
-            Point2D.Double point = new Point2D.Double(dLatitude, dLongitude);
+            Point2D.Double point = new Point2D.Double(dLongitude,dLatitude );
             //画区域
             List<Point2D.Double> polygon = new ArrayList<Point2D.Double>();
             TEnclosure tEnclosure = superviseService.getPolygon(getPersonId());
@@ -361,8 +365,8 @@ public class SuperviseController {
                 String[] coordinatesArray = coordinates.split(";");
                 for (int j = 0; j < coordinatesArray.length; j++) {
                     String[] everyCoordinates = coordinatesArray[j].split(",");
-                    double polygonPoint_x = Double.parseDouble(everyCoordinates[0]);
-                    double polygonPoint_y = Double.parseDouble(everyCoordinates[1]);
+                    double polygonPoint_x = Double.parseDouble(everyCoordinates[0]);//113.512245经度
+                    double polygonPoint_y = Double.parseDouble(everyCoordinates[1]);//23.652155纬度
                     Point2D.Double polygonPoint = new Point2D.Double(polygonPoint_x, polygonPoint_y);
                     polygon.add(polygonPoint);
                 }
@@ -436,6 +440,7 @@ public class SuperviseController {
 //    }
 
     public  String getPersonId(){
+//       String personid = personInformationUtil.getPersonId();
 
         TPersoninformation tPersoninformation = superviseService.RelatedId(TokenUtil.getTokenUserId());//根据user中的手机号去取出personid
         String personid = tPersoninformation.getPersonid();

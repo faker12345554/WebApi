@@ -45,10 +45,14 @@
         values (#{userId},#{code},to_timestamp(#{startDate}),to_timestamp(#{endDate}),
         #{reason},#{reasonAudioUrl},#{provinceCode},#{province},
         #{cityCode},#{city},#{districtCode},#{district},#{personName},
-        '1','待审核',current_timestamp,#{address});
-        INSERT INTO t_auditor(leaveorder,userid,leavingmessage,statuscode,states,accountname,auditordatetime) VALUES (#{code},#{sponsorAlarm},#{reason},1,'待审核',#{personName},current_timestamp);
-        INSERT INTO t_message (modular,personid,modularname,messagetime,readmessage,detailtype,detailtypename,leaveorder) VALUES (3,#{userId},'审批提醒',current_timestamp,'f',1,'外出审批通知',#{code})
+        '1',#{pendingReview},current_timestamp,#{address});
+        INSERT INTO t_auditor(leaveorder,userid,leavingmessage,statuscode,states,accountname,auditordatetime) VALUES (#{code},#{sponsorAlarm},#{reason},1,#{pendingReview},#{personName},current_timestamp);
+        INSERT INTO t_message (modular,content,personid,modularname,messagetime,readmessage,detailtype,detailtypename,leaveorder) VALUES (3,#{messageContent},#{userId},'审批提醒',current_timestamp,'f',1,'外出审批通知',#{code})
     </insert>
+
+    <select id="getReview" resultType="com.prisonapp.business.entity.dw_supervise.TEnum">
+        select * from t_enum where typecode='DJZT-001' and enumcode ='1'
+    </select>
 
     <select id="getPersonname" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation">
         select * from t_personinformation where personid =#{userId}

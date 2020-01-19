@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.common.common.result.ResponseResult;
 import com.prisonapp.business.dao.dw_user.UserDao;
 import com.prisonapp.token.tation.PassToken;
 import com.prisonapp.token.tation.UserLoginToken;
@@ -45,7 +46,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                          if (userLoginToken.required()) {
                                  // 执行认证
                                 if (token == null) {
-                                         throw new RuntimeException("无token，请重新登录");
+
+                                    throw new RuntimeException("无token，请重新登录");
                                      }
                                  // 获取 token 中的 user id
                                  String userId;
