@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.common.common.result.ResultSet;
 
+import java.util.Calendar;
+import java.util.Date;
+
 @RestController
 @RequestMapping("/app/admin/user")
 public class LoginController {
@@ -52,10 +55,13 @@ public class LoginController {
             CacheUtils.put("UserName",name);
             if (userInformation != null) {                //判断账号是否存在
                 String token =tokenService.getToken(user);
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + 7);
+                String  ExpiresTime =String.valueOf(calendar.getTimeInMillis());
                 tokenModel.setToken(token);
-                tokenModel.setrExpiresTime(token);
+                tokenModel.setrExpiresTime(ExpiresTime);
                 tokenModel.setRefreshToken(token);
-                tokenModel.settExpiresTime(token);
+                tokenModel.settExpiresTime(ExpiresTime);
                 if (userInformation.getPassword().equals(password)) {    //判断密码是否正确
                     rs.resultCode = 0;
                     rs.resultMsg = "";
