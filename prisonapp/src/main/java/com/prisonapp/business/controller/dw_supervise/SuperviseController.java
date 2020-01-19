@@ -4,7 +4,6 @@ package com.prisonapp.business.controller.dw_supervise;
 import com.common.common.Uploadfiles.Upload;
 import com.common.common.result.ResultSet;
 import com.prisonapp.business.entity.dw_supervise.*;
-import com.prisonapp.business.entity.dw_user.UserModel;
 import com.prisonapp.business.service.dw_supervise.SuperviseService;
 import com.prisonapp.token.TokenUtil;
 import com.prisonapp.token.tation.UserLoginToken;
@@ -25,8 +24,9 @@ import java.awt.geom.Point2D;
 import java.io.File;
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
@@ -87,14 +87,16 @@ public class SuperviseController {
     public ResultSet submitApplyLeave(@RequestBody SubmitApplyLeaveModel submitApplyLeaveModel) throws ParseException {
         String strCode = "qj" + System.currentTimeMillis();
         code.setCode(strCode);
-//        Long longStartDate = Long.valueOf(submitApplyLeaveModel.getStartDate());//123456789
-//        Long longEndDate = Long.valueOf(submitApplyLeaveModel.getEndDate());
+        TEnum tEnum =superviseService.getReview();//取出‘待审核’
         List<TPersoninformation> person = superviseService.getPersonname(getPersonId());
+        LocalDate date = LocalDate.now(); // get the current date
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String messageContent =person.get(0).getPersonname()+"于"+date.format(formatter)+"日提交的外出申请待审批，请及时处理。";
         String address =submitApplyLeaveModel.getProvince()+submitApplyLeaveModel.getCity()+submitApplyLeaveModel.getDistrict();
         int res = superviseService.submitApplyLeave(submitApplyLeaveModel.getCity(),    submitApplyLeaveModel.getCityCode(),    submitApplyLeaveModel.getDistrict(),submitApplyLeaveModel.getDistrictCode(),
                                                     submitApplyLeaveModel.getProvince(),submitApplyLeaveModel.getProvinceCode(),submitApplyLeaveModel.getReason(),  submitApplyLeaveModel.getReasonAudioUrl(),
                                                     submitApplyLeaveModel.getEndDate(), submitApplyLeaveModel.getStartDate(),strCode,
-                                                    getPersonId(), person.get(0).getPersonname(),person.get(0).getSponsoralarm(),address);
+                                                    getPersonId(), person.get(0).getPersonname(),person.get(0).getSponsoralarm(),address,tEnum.getEnumname(),messageContent);
         if (res != 0) {
             result.resultCode = 0;
             result.resultMsg = "";
@@ -272,7 +274,7 @@ public class SuperviseController {
     @ApiOperation(value = " 上报保外人员定位错误信息")
     @PostMapping("/uploadLocationError")
     public ResultSet uploadLocationError(String errorCode, String errorMsg) {
-     //   TLog tLog =superviseService.get
+
         int a = superviseService.uploadLocationError(errorCode, errorMsg, getPersonId(), new Date());
         if (a != 0) {
             result.resultCode = 0;

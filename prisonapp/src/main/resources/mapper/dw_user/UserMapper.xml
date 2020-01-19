@@ -19,11 +19,11 @@
     </select>
 
     <select id="modifyPassword" resultType="com.prisonapp.business.entity.dw_user.UserModel">
-        select * from t_user where personid =#{userId} and password=#{password}
+        select * from t_user where accountname =#{accountName} and password=#{password}
     </select>
 
     <update id="upModifyPassword">
-        update t_user set password=#{newPassword} where personid =#{userId}
+        update t_user set password=#{newPassword} where phone =#{accountName}
     </update>
 
     <select id="RelatedId" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation"

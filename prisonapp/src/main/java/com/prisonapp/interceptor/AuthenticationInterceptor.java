@@ -46,6 +46,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                                  // 执行认证
                                 if (token == null) {
                                          throw new RuntimeException("无token，请重新登录");
+                                    //     httpServletResponse.setStatus(400);
                                      }
                                  // 获取 token 中的 user id
                                  String userId;

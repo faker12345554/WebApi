@@ -25,12 +25,12 @@ public class UserService {
         return userDao.officephone(sponsoralarm);
     }
 
-    public List<UserModel> modifyPassword(String userId, String password) {
-        return userDao.modifyPassword(userId, password);
+    public List<UserModel> modifyPassword(String accountName, String password) {
+        return userDao.modifyPassword(accountName, password);
     }
 
-    public int upModifyPassword(String userId, String newPassword) {
-        return userDao.upModifyPassword(userId, newPassword);
+    public int upModifyPassword(String accountName, String newPassword) {
+        return userDao.upModifyPassword(accountName, newPassword);
     }
 
     public TPersoninformation RelatedId(String accountName) {
