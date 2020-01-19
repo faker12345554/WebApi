@@ -46,7 +46,7 @@ public class UserController {
        if(userModel==null){
            result.resultCode=10;
            result.resultMsg="账号错误";
-           result.data="";
+           result.data=null;
            return result;
        }
        else if(userModel.getPassword().equals(password)&&userModel.getStatus().equals("t")){
@@ -66,7 +66,7 @@ public class UserController {
        }else{
            result.resultCode=11;
            result.resultMsg="密码错误";
-           result.data="";
+           result.data=null;
            return result;
        }
 
@@ -110,7 +110,7 @@ public class UserController {
         return result;
     }
 
-    public  String getPersonId(){
+    public  String getPersonId(){//这段代码是重复代码
 
         TPersoninformation tPersoninformation = userService.RelatedId(TokenUtil.getTokenUserId());//根据user中的手机号去取出personid
         String personid = tPersoninformation.getPersonid();

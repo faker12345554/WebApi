@@ -140,8 +140,6 @@ public class  MessageController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date dateMessageTimestamp=sdf.parse(strMessageTimestamp);
         String a=TokenUtil.getTokenUserId();
-        if (System.currentTimeMillis() - longMessageTimestamp >= 0)//当前时间戳减掉传入的时间戳，如果大于零，则传入的时间戳小于当前时间戳
-        {
             int res = messageService.readMessage(type, dateMessageTimestamp, getPersonId());
             if (res != 0) {
                 result.resultCode = 0;
@@ -153,11 +151,7 @@ public class  MessageController {
                 result.data = null;
             }
 
-        } else {
-            result.resultCode = 1;
-            result.resultMsg = "无最新消息";
-            result.data = null;
-        }
+
         return result;
     }
 
@@ -230,7 +224,7 @@ public class  MessageController {
         return result;
     }
 
-    public  String getPersonId(){
+    public  String getPersonId(){//怎么写才能让它写一个或者说只是一个公共类
 
         TPersoninformation tPersoninformation = messageService.RelatedId(TokenUtil.getTokenUserId());//根据user中的手机号去取出personid
         String personid = tPersoninformation.getPersonid();

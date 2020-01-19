@@ -5,6 +5,7 @@ import com.common.common.Uploadfiles.Upload;
 import com.common.common.result.ResultSet;
 import com.prisonapp.business.entity.dw_supervise.*;
 import com.prisonapp.business.service.dw_supervise.SuperviseService;
+import com.prisonapp.business.util.PersonInformationUtil;
 import com.prisonapp.token.TokenUtil;
 import com.prisonapp.token.tation.UserLoginToken;
 import com.prisonapp.tool.AESDecode;
@@ -35,6 +36,8 @@ import java.util.*;
 @RequestMapping("/app/supervise")
 public class SuperviseController {
 
+//    @Autowired
+//    private PersonInformationUtil personInformationUtil;
 
     @Autowired
     private SuperviseService superviseService;
@@ -46,7 +49,6 @@ public class SuperviseController {
     private FaceRecognizeModel faceRecognizeModel = new FaceRecognizeModel();
     private ResultSet result = new ResultSet();
     private Upload upload = new Upload();
-    private HttpServletRequest request;
 
 
     @UserLoginToken
@@ -347,7 +349,7 @@ public class SuperviseController {
             double dLatitude = bLatitude.doubleValue();
             BigDecimal bLongitude = new BigDecimal(String.valueOf(longitude));
             double dLongitude = bLongitude.doubleValue();
-            Point2D.Double point = new Point2D.Double(dLatitude, dLongitude);
+            Point2D.Double point = new Point2D.Double(dLongitude,dLatitude );
             //画区域
             List<Point2D.Double> polygon = new ArrayList<Point2D.Double>();
             TEnclosure tEnclosure = superviseService.getPolygon(getPersonId());
@@ -363,8 +365,8 @@ public class SuperviseController {
                 String[] coordinatesArray = coordinates.split(";");
                 for (int j = 0; j < coordinatesArray.length; j++) {
                     String[] everyCoordinates = coordinatesArray[j].split(",");
-                    double polygonPoint_x = Double.parseDouble(everyCoordinates[0]);
-                    double polygonPoint_y = Double.parseDouble(everyCoordinates[1]);
+                    double polygonPoint_x = Double.parseDouble(everyCoordinates[0]);//113.512245经度
+                    double polygonPoint_y = Double.parseDouble(everyCoordinates[1]);//23.652155纬度
                     Point2D.Double polygonPoint = new Point2D.Double(polygonPoint_x, polygonPoint_y);
                     polygon.add(polygonPoint);
                 }
@@ -438,6 +440,7 @@ public class SuperviseController {
 //    }
 
     public  String getPersonId(){
+//       String personid = personInformationUtil.getPersonId();
 
         TPersoninformation tPersoninformation = superviseService.RelatedId(TokenUtil.getTokenUserId());//根据user中的手机号去取出personid
         String personid = tPersoninformation.getPersonid();
