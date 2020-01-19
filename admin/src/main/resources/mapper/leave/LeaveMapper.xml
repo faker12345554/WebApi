@@ -5,7 +5,7 @@
     <select id="getLeave" parameterType="com.admin.model.search.SearchModel" resultType="com.admin.model.leave.LeavefModel">
         SELECT a.*,b.auditordatetime FROM t_leave AS a
         LEFT JOIN t_auditor AS b ON a.leaveorder=b.leaveorder
-        <if test="PersonId !=null and PersonId!=''">
+        <if test="PersonId !=null and PersonId!='' and Condition==null"  >
             WHERE a.personid=#{PersonId}
         </if>
         <if test="Condition ==null and PersonName!=null ">
@@ -13,6 +13,10 @@
         </if>
         <if test="Condition !=null and PersonName==null ">
             where a.states like concat('%',#{condition},'%')
+        </if>
+
+        <if test="Condition !=null and PersonName==null and PersonId !=null ">
+            where a.personid=#{PersonId} and a.states like concat('%',#{condition},'%')
         </if>
 
 

@@ -1,14 +1,17 @@
 package com.admin.admin.dao.dw_meun;
 
 import com.admin.admin.entity.dw_menu.Menu;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface MeunDao {
 
     List<Menu> GetMenuList();
 
-    int delMeun(boolean falg,int id);
+    int delMeun(@Param("falg") boolean falg, @Param("id") int id);
 
-    Menu UpdateMeun(Menu menu);
+    Menu GetMeunbyid(int id);
 }

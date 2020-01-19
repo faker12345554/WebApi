@@ -4,19 +4,31 @@ import java.util.Date;
 
 public class LogInformation {
 
-  private int operator;
+  private int id;
+  private String operator;
   private String modular;
-  private String action;
-  private Date operatingtime;
 
-  public int getOperator() {
+  public int getId() {
+    return id;
+  }
+
+  public LogInformation setId(int id) {
+    this.id = id;
+    return this;
+  }
+
+  public String getOperator() {
     return operator;
   }
 
-  public LogInformation setOperator(int operator) {
+  public LogInformation setOperator(String operator) {
     this.operator = operator;
     return this;
   }
+
+  private String action;
+  private Date operatingtime;
+
 
   public String getModular() {
     return modular;
