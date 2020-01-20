@@ -196,7 +196,7 @@ public class SuperviseController {
                     JSONObject jsonObject = new JSONObject(comparedRes);
                     String similar = jsonObject.getString("confidence");
                     float num = Float.parseFloat(similar);
-                    float fSimilar = (float)(Math.round(num*1000))/1000;
+                    float fSimilar = (float)(Math.round(num*100))/100;
                     if (fSimilar >= 75.00) {
                         superviseService.insertFaceRecognize(getPersonId(), 0, 0, upLoadFaceUrl);
                         List<FaceRecognizeModel> faceRecognizeModels = superviseService.getFaceRecognize(getPersonId(), 0);
@@ -258,7 +258,7 @@ public class SuperviseController {
             superviseService.insertFscope(getPersonId(), content);
 
         }
-        int a = superviseService.autoLocation(latitude, longitude, locationType, address, getPersonId(), new Date(),fScope);
+        int a = superviseService.autoLocation(latitude, longitude, locationType, address, getPersonId(), new Date(),!fScope);
         if (a != 0) {
             timestamp.setTimestamp(System.currentTimeMillis());
             result.resultCode = 0;
