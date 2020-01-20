@@ -6,7 +6,7 @@ import java.util.List;
 
 public class GetApplyLeaveListModel {
     public String  code;
-    public String  statuscode;
+    public String  statusCode;
     public String status;
     public String applicant;
     public String applyTimestamp;
@@ -27,11 +27,11 @@ public class GetApplyLeaveListModel {
     }
 
     public String getStatuscode() {
-        return statuscode;
+        return statusCode;
     }
 
     public void setStatuscode(String statuscode) {
-        this.statuscode = statuscode;
+        this.statusCode = statuscode;
     }
 
     public String getStatus() {

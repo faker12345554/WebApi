@@ -46,7 +46,7 @@ public class UserController {
        if(userModel==null){
            result.resultCode=10;
            result.resultMsg="账号错误";
-           result.data="";
+           result.data=null;
            return result;
        }
        else if(userModel.getPassword().equals(password)&&userModel.getStatus().equals("t")){
@@ -66,7 +66,7 @@ public class UserController {
        }else{
            result.resultCode=11;
            result.resultMsg="密码错误";
-           result.data="";
+           result.data=null;
            return result;
        }
 
@@ -85,12 +85,13 @@ public class UserController {
         return result;
     }
 
+    @UserLoginToken
     @ApiOperation(value = "保外人员修改密码")
     @PostMapping("/modifyPassword")
     public ResultSet modifyPassword(@ApiParam(name = "password",value = "旧密码")@RequestParam(required = false)String password,@ApiParam(name = "newPassword",value = "新密码")@RequestParam(required = false)String newPassword){
-        List<UserModel> userModel =userService.modifyPassword(getPersonId(),password);
+        List<UserModel> userModel =userService.modifyPassword(TokenUtil.getTokenUserId(),password);//手机号，密码
         if(userModel.size()!=0){
-          int a = userService.upModifyPassword(getPersonId(),newPassword);
+          int a = userService.upModifyPassword(TokenUtil.getTokenUserId(),newPassword);
           if(a!=0){
               result.resultCode=0;
               result.resultMsg="";
@@ -109,7 +110,7 @@ public class UserController {
         return result;
     }
 
-    public  String getPersonId(){
+    public  String getPersonId(){//这段代码是重复代码
 
         TPersoninformation tPersoninformation = userService.RelatedId(TokenUtil.getTokenUserId());//根据user中的手机号去取出personid
         String personid = tPersoninformation.getPersonid();

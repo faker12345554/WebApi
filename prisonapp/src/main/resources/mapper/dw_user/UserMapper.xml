@@ -5,13 +5,14 @@
     <select id="login" resultType="com.prisonapp.business.entity.dw_user.UserModel" parameterType="String">
         select * from t_user where accountname=#{userName}
     </select>
+
     <select id="getUser" resultType="com.prisonapp.business.entity.dw_user.UserModel">
         select * from t_user where phone=#{phone}
     </select>
 
     <select id="getUserInfo" resultType="com.prisonapp.business.entity.dw_user.GetUserInfoModel">
          SELECT t_personinformation.personid as code,t_personinformation.gendercode as gender, phone as account,personname as name,facepath as headUrl,bailoutbegindate as startDate,bailoutenddate as endDate,t_personinformation.sponsoralarm,
-          sponsor as inChargePerson from t_personinformation FULL JOIN t_user ON t_personinformation.personid = t_user.personid WHERE t_user.personid=#{userId}
+          sponsor as inChargePerson from t_personinformation FULL JOIN t_user ON t_personinformation.contact = t_user.phone WHERE t_personinformation.personid=#{userId}
     </select>
 
     <select id="officephone" resultType="com.prisonapp.business.entity.dw_user.UserModel">
@@ -19,11 +20,11 @@
     </select>
 
     <select id="modifyPassword" resultType="com.prisonapp.business.entity.dw_user.UserModel">
-        select * from t_user where personid =#{userId} and password=#{password}
+        select * from t_user where accountname =#{accountName} and password=#{password}
     </select>
 
     <update id="upModifyPassword">
-        update t_user set password=#{newPassword} where personid =#{userId}
+        update t_user set password=#{newPassword} where phone =#{accountName}
     </update>
 
     <select id="RelatedId" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation"
