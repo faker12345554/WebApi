@@ -13,6 +13,9 @@ public class SummonsInformation {
   private String reporttime;
   private String personid;
   private String personname;
+  private String severity;
+  private String summonsbegintime;
+  private String summonsendtime;
 
   public String getPersonname() {
     return personname;
@@ -70,5 +73,30 @@ public class SummonsInformation {
   public void setPersonid(String personid) {
     this.personid = personid;
   }
+
+  public String getSeverity() {
+    return severity;
+  }
+
+  public void setSeverity(String severity) {
+    this.severity = severity;
+  }
+
+  public String getSummonsbegintime() {
+    return summonsbegintime;
+  }
+
+  public void setSummonsbegintime(String summonsbegintime) {
+    this.summonsbegintime = summonsbegintime;
+  }
+
+  public String getSummonsendtime() {
+    return summonsendtime;
+  }
+
+  public void setSummonsendtime(String summonsendtime) {
+    this.summonsendtime = summonsendtime;
+  }
+
 
 }

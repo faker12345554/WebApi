@@ -85,4 +85,6 @@ public interface SuperfineDado {
     SuperviseBailMoneyInformation getBailMoneyInformation(@Param("personId")String personId);
 
     String getViolateName(@Param("typeCode")String typeCode,@Param("enumCode")String enumCode);
+
+    List<SummonsInformation> listNotCiteRecord();
 }
