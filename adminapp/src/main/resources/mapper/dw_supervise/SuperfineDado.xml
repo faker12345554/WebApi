@@ -30,9 +30,13 @@
     <select id="getPersonInformationFromName" resultType="com.adminapp.model.dw_supervise.PersonAllInformationModel">
         select * FROM t_personinformation WHERE personname=#{personName}
     </select>
-    <insert id="insertCiteRecord" parameterType="com.adminapp.model.dw_supervise.CiteRecordSubmitModel" useGeneratedKeys="true" keyProperty="date.id">
-        insert into t_summons(personid,personname,reporttime) VALUES (#{date.personid},#{date.personname},#{date.summonsTime})
-    </insert>
+<!--    <insert id="insertCiteRecord" parameterType="com.adminapp.model.dw_supervise.CiteRecordSubmitModel" useGeneratedKeys="true" keyProperty="date.id">-->
+<!--        insert into t_summons(personid,personname,reporttime) VALUES (#{date.personid},#{date.personname},#{date.summonsTime})-->
+<!--    </insert>-->
+    <update id="insertCiteRecord" parameterType="com.adminapp.model.dw_supervise.CiteRecordSubmitModel" useGeneratedKeys="true" keyProperty="date.id">
+        update t_summons set reporttime= #{date.summonsTime} where id = (select id from t_summons where personid=#{date.personid}
+        AND "date"(summonsendtime) > #{date.summonsTime} AND "date"(summonsbegintime) &lt;= #{date.summonsTime} and reporttime is NULL LIMIT 1)
+    </update>
     <select id="getLeaveList" resultType="com.adminapp.model.dw_supervise.LeaveListModel">
         select leaveorder AS code,statuscode AS statusCode,states AS status,personname AS applicant,subittimestamp AS applyTimestamp,starttimestamp AS startTimestamp,endtimestamp AS endTimestamp,
         leavedestination AS address,reason,recording AS reasonAudioUrl FROM t_leave ORDER BY t_leave.subittimestamp DESC
@@ -119,5 +123,8 @@
     </select>
     <select id="getViolateName" resultType="String">
         select enumname FROM t_enum WHERE typecode=#{typeCode} AND enumcode=#{enumCode}
+    </select>
+    <select id="listNotCiteRecord" resultType="com.adminapp.business.entity.dw_supervise.SummonsInformation">
+        select * FROM t_summons WHERE t_summons.reporttime is null ORDER BY t_summons.summontime DESC
     </select>
 </mapper>
