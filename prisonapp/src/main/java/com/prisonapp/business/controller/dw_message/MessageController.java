@@ -2,11 +2,9 @@ package com.prisonapp.business.controller.dw_message;
 
 
 import com.common.common.result.ResultSet;
-import com.prisonapp.business.controller.dw_supervise.SuperviseController;
 import com.prisonapp.business.entity.dw_message.*;
 import com.prisonapp.business.entity.dw_supervise.TPersoninformation;
 import com.prisonapp.business.service.dw_message.MessageService;
-import com.prisonapp.business.service.dw_supervise.SuperviseService;
 import com.prisonapp.token.TokenUtil;
 import com.prisonapp.token.tation.UserLoginToken;
 import io.swagger.annotations.Api;
@@ -224,7 +222,7 @@ public class  MessageController {
         return result;
     }
 
-    public  String getPersonId(){//怎么写才能让它写一个或者说只是一个公共类
+    public  String getPersonId(){
 
         TPersoninformation tPersoninformation = messageService.RelatedId(TokenUtil.getTokenUserId());//根据user中的手机号去取出personid
         String personid = tPersoninformation.getPersonid();
