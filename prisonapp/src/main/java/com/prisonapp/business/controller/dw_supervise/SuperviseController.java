@@ -258,7 +258,7 @@ public class SuperviseController {
             superviseService.insertFscope(getPersonId(), content);
 
         }
-        int a = superviseService.autoLocation(latitude, longitude, locationType, address, getPersonId(), new Date(),fScope);
+        int a = superviseService.autoLocation(latitude, longitude, locationType, address, getPersonId(), new Date(),!fScope);
         if (a != 0) {
             timestamp.setTimestamp(System.currentTimeMillis());
             result.resultCode = 0;
