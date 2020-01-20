@@ -194,4 +194,8 @@ public class SuperviseService {
     public String getViolateName(String typeCode,String enumCode){
         return superfineDado.getViolateName(typeCode, enumCode);
     }
+
+    public List<SummonsInformation> listNotCiteRecord(){
+        return superfineDado.listNotCiteRecord();
+    }
 }
