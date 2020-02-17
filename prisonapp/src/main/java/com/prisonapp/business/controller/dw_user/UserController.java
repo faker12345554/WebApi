@@ -52,6 +52,10 @@ public class UserController {
        }
        else if(userModel.getPassword().equals(password)&&userModel.getStatus().equals("t")){
            CacheUtils.put("UserId",userModel.getId(),0);
+
+           TPersoninformation tPersoninformation =userService.RelatedId(account);//获取personid
+           //将登录操作写入日志
+           int insertLog = userService.insertLoginRecord(tPersoninformation.getPersonid());
            String token =tokenService.getToken(userModel);
            Calendar calendar = Calendar.getInstance();
            calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + 7);
