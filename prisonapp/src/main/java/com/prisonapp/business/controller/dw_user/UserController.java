@@ -34,7 +34,7 @@ public class UserController {
     @Autowired
     private TokenService tokenService;
     private SuperviseController superviseController =new SuperviseController();
-    private ResultSet result = new ResultSet();
+
     private TokenModel tokenModel=new TokenModel();
 
 
@@ -42,6 +42,7 @@ public class UserController {
     @PostMapping("/login")//
     public ResultSet login(@ApiParam(name = "account",value = "账号")@RequestParam(required = false) String account,@ApiParam(name = "password",value = "密码") @RequestParam(required = false) String password, HttpServletResponse response){
        UserModel userModel=userService.login(account);
+        ResultSet result = new ResultSet();
 
        if(userModel==null){
            result.resultCode=10;
@@ -76,6 +77,7 @@ public class UserController {
     @ApiOperation(value = "获取保外人员信息")
     @GetMapping("/getUserInfo")
     public ResultSet getUserInfo(){
+        ResultSet result = new ResultSet();
           GetUserInfoModel getUserInfoModels = userService.getUserInfo(getPersonId());
           UserModel userModel =userService.officephone(getUserInfoModels.getSponsoralarm());
           getUserInfoModels.setInChargeContract(userModel.getOfficephone());
@@ -89,6 +91,7 @@ public class UserController {
     @ApiOperation(value = "保外人员修改密码")
     @PostMapping("/modifyPassword")
     public ResultSet modifyPassword(@ApiParam(name = "password",value = "旧密码")@RequestParam(required = false)String password,@ApiParam(name = "newPassword",value = "新密码")@RequestParam(required = false)String newPassword){
+        ResultSet result = new ResultSet();
         List<UserModel> userModel =userService.modifyPassword(TokenUtil.getTokenUserId(),password);//手机号，密码
         if(userModel.size()!=0){
           int a = userService.upModifyPassword(TokenUtil.getTokenUserId(),newPassword);
@@ -110,7 +113,7 @@ public class UserController {
         return result;
     }
 
-    public  String getPersonId(){//这段代码是重复代码
+    public  String getPersonId(){
 
         TPersoninformation tPersoninformation = userService.RelatedId(TokenUtil.getTokenUserId());//根据user中的手机号去取出personid
         String personid = tPersoninformation.getPersonid();
