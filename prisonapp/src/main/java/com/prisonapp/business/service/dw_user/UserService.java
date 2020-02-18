@@ -18,6 +18,10 @@ public class UserService {
         return userDao.login(userName);
     }
 
+    public int insertLoginRecord(String personid){
+        return userDao.insertLoginRecord(personid);
+    }
+
     public GetUserInfoModel getUserInfo(String userId) {
         return userDao.getUserInfo(userId);
     }
