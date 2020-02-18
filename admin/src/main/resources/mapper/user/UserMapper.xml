@@ -20,7 +20,7 @@
      #{user.officephone},#{user.police},#{user.areaname},#{user.department},#{user.mailbox},#{user.sex},#{user.station},#{user.bz})
     </insert>
     <update id="updateUser" parameterType="com.admin.admin.entity.dw_user.User">
-        UPDATE t_user set accountname=#{user.accountname}, password=#{user.password},aliasname=#{user.aliasname},permissionid=#{user.permissionid},
+        UPDATE t_user set accountname=#{user.accountname}, password=#{user.password},aliasname=#{user.aliasname},permissionid=#{user.permissionid},status=#{user.status},
         createid=#{user.createid},createname=#{user.createname},areacode=#{user.areacode},phone=#{user.phone},usersystem=#{user.usersystem},officephone=#{user.officephone},police=#{user.police},areaname=#{user.areaname},
         department=#{user.department},mailbox=#{user.mailbox},sex=#{user.sex},station=#{user.station},bz=#{user.bz} where id=#{user.id}
     </update>
