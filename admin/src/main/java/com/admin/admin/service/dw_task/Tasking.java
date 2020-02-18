@@ -108,6 +108,7 @@ public class Tasking {
                         summons.setSummonsbegintime(CalendarAdjust.getFirstDayOfMonth1(year, month));
                         summons.setSummonsendtime(CalendarAdjust.getLastDayOfMonth1(year, month ));
                     }
+
                 }
 
                 TSummons tSummons1 = taskDao.GetNumber(item.getPersonid());
