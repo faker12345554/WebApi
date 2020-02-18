@@ -23,12 +23,13 @@ import java.util.List;
 public class SystemController {
     @Autowired
     private SystemService systemService;
-    private ResultSet result = new ResultSet();
+
     private ResultGetUpdateRecordsModel resultGetUpdateRecordsModel= new ResultGetUpdateRecordsModel();
 
     @ApiOperation(value = "获取保外人员 App 的更新信息")
     @GetMapping("/getUpdateInfo")
     public ResultSet getUpdateInfo(){
+        ResultSet result = new ResultSet();
        GetUpdateInfoModel getUpdateInfoModels = systemService.getUpdateInfo();
         result.resultCode=0;
         result.resultMsg="";
@@ -39,6 +40,7 @@ public class SystemController {
     @ApiOperation(value = "获取保外人员 App 的更新记录")
     @GetMapping("/getUpdateRecords")
     public ResultSet getUpdateRecords(int count,int requestCount){
+        ResultSet result = new ResultSet();
         List<GetUpdateRecordsModel> getUpdateRecordsModels = systemService.getUpdateRecords(count, requestCount);
         int a = systemService.gettotalUpdateRecords().size();
         resultGetUpdateRecordsModel.setTotalCount(a);

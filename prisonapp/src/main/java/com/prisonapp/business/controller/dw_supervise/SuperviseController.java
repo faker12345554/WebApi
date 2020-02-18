@@ -47,7 +47,7 @@ public class SuperviseController {
     private Code code =new Code();
     private UploadAudioUrl uploadAudioUrl = new UploadAudioUrl();
     private FaceRecognizeModel faceRecognizeModel = new FaceRecognizeModel();
-    private ResultSet result = new ResultSet();
+
     private Upload upload = new Upload();
 
 
@@ -55,6 +55,7 @@ public class SuperviseController {
     @ApiOperation(value = "获取保外人员的外出申请列表")
     @GetMapping("/getApplyLeaveList")
     public ResultSet getApplyLeaveList(@ApiParam(name = "statusCode", value = "审批状态编号") @RequestParam(required = true) String statusCode, @ApiParam(name = "count", value = "当前已经获取的数据条数") @RequestParam(required = true) int count, @ApiParam(name = "requestCount", value = "请求获取数据的条数") @RequestParam(required = true) int requestCount) {
+        ResultSet result = new ResultSet();
         List<GetApplyLeaveListModel> ApplyLeaveListModels;
         if (statusCode.equals("0")) {
             ApplyLeaveListModels = superviseService.getAllApplyLeaveList(count, requestCount, getPersonId());
@@ -87,6 +88,7 @@ public class SuperviseController {
     @ApiOperation(value = "提交保外人员外出申请")
     @PostMapping("/submitApplyLeave")
     public ResultSet submitApplyLeave(@RequestBody SubmitApplyLeaveModel submitApplyLeaveModel) throws ParseException {
+        ResultSet result = new ResultSet();
         String strCode = "qj" + System.currentTimeMillis();
         code.setCode(strCode);
         TEnum tEnum =superviseService.getReview();//取出‘待审核’
@@ -116,6 +118,7 @@ public class SuperviseController {
     @ApiOperation(value = "上传录音文件")
     @PostMapping("/uploadAudio")
     public ResultSet uploadAudio(MultipartFile file) {
+        ResultSet result = new ResultSet();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(System.currentTimeMillis());
         //SSLEngine request = null;
@@ -145,6 +148,7 @@ public class SuperviseController {
     @ApiOperation(value = "获取保外人员的执行任务")
     @GetMapping("/getSuperviseTask")
     public ResultSet getSuperviseTask() {
+        ResultSet result = new ResultSet();
         // List<GetSuperviseTaskModel> getSuperviseTaskModel = new ArrayList<>();
         // Calendar calendar = Calendar.getInstance();
         List<GetSuperviseTaskModel> getSuperviseTaskModels = superviseService.getSuperviseTask(getPersonId());
@@ -173,6 +177,7 @@ public class SuperviseController {
     @ApiOperation(value = "保外人员人脸识别签到")
     @PostMapping("/faceRecognize")
     public ResultSet faceRecognize(MultipartFile face) throws Exception {
+        ResultSet result = new ResultSet();
         List<TPersoninformation> tPersoninformations = superviseService.faceRecognize(getPersonId());
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -196,7 +201,7 @@ public class SuperviseController {
                     JSONObject jsonObject = new JSONObject(comparedRes);
                     String similar = jsonObject.getString("confidence");
                     float num = Float.parseFloat(similar);
-                    float fSimilar = (float)(Math.round(num*1000))/1000;
+                    float fSimilar = (float)(Math.round(num*100))/100;
                     if (fSimilar >= 75.00) {
                         superviseService.insertFaceRecognize(getPersonId(), 0, 0, upLoadFaceUrl);
                         List<FaceRecognizeModel> faceRecognizeModels = superviseService.getFaceRecognize(getPersonId(), 0);
@@ -243,7 +248,8 @@ public class SuperviseController {
     @ApiOperation(value = " 自动上报取保监居人员位置")
     @PostMapping("/autoLocation")
     public ResultSet autoLocation(@ApiParam(name = "latitude", value = "纬度") @RequestParam(required = true) float latitude, @ApiParam(name = "longitude", value = "经度") @RequestParam(required = true) float longitude, @ApiParam(name = "locationType", value = "定位类型") @RequestParam(required = true) int locationType, @ApiParam(name = "address", value = "地址") @RequestParam(required = true) String address) throws MalformedURLException {
-       boolean fScope = getPolygon(latitude,longitude);
+        ResultSet result = new ResultSet();
+        boolean fScope = getPolygon(latitude,longitude);
         if (fScope) {
           //  superviseService.updateFscope(getPersonId(), false);
 
@@ -258,7 +264,7 @@ public class SuperviseController {
             superviseService.insertFscope(getPersonId(), content);
 
         }
-        int a = superviseService.autoLocation(latitude, longitude, locationType, address, getPersonId(), new Date(),fScope);
+        int a = superviseService.autoLocation(latitude, longitude, locationType, address, getPersonId(), new Date(),!fScope);
         if (a != 0) {
             timestamp.setTimestamp(System.currentTimeMillis());
             result.resultCode = 0;
@@ -276,7 +282,7 @@ public class SuperviseController {
     @ApiOperation(value = " 上报保外人员定位错误信息")
     @PostMapping("/uploadLocationError")
     public ResultSet uploadLocationError(String errorCode, String errorMsg) {
-
+        ResultSet result = new ResultSet();
         int a = superviseService.uploadLocationError(errorCode, errorMsg, getPersonId(), new Date());
         if (a != 0) {
             result.resultCode = 0;
@@ -294,6 +300,7 @@ public class SuperviseController {
     @ApiOperation(value = " 上报保外人员电量信息")
     @PostMapping("/uploadBattery")
     public ResultSet uploadBattery(float percent) {
+        ResultSet result = new ResultSet();
         if (percent <= 20.0) {
             batteryAlarm(getPersonId());
         }
@@ -317,6 +324,7 @@ public class SuperviseController {
     @ApiOperation(value = " 获取保外人员的监管配置")
     @GetMapping("/getSuperviseConfig")
     public ResultSet getSuperviseConfig() {
+        ResultSet result = new ResultSet();
         TRemindersettings tRemindersettings = superviseService.getLocationConfig();//获取待办提醒的所有数据
         //取出定位的数据
         LocationModel locationModels =new LocationModel();
