@@ -29,4 +29,10 @@ public class LoginService {
     public String getRoleName(int permissionId){
         return loginDao.getRoleName(permissionId);
     }
+
+
+    //插入登录日志
+    public int insertLoginLog(String userId){
+        return loginDao.insertLoginLog(userId);
+    }
 }

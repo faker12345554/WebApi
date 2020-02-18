@@ -27,7 +27,7 @@ public class SystemController {
     @Autowired
     private SystemService systemService;
 
-    private ResultSet rs=new ResultSet();
+    //private ResultSet rs=new ResultSet();
 
     private Upload upload=new Upload();
 
@@ -36,6 +36,7 @@ public class SystemController {
     @GetMapping("/getUpdateInfo")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public ResultSet getUpdateInfo(){
+        ResultSet rs=new ResultSet();
         List<UpdateInformationModel> getUpdateInformation=systemService.getUpdateInformation(1);
         rs.resultCode=0;
         rs.resultMsg="";
@@ -48,6 +49,7 @@ public class SystemController {
     @GetMapping("/getSupervisedAppInfo")
     @PassToken
     public ResultSet getSupervisedAppInfo(){
+        ResultSet rs=new ResultSet();
         List<UpdateInformationModel> getUpdateInformation=systemService.getUpdateInformation(0);
         rs.resultCode=0;
         rs.resultMsg="";
@@ -61,6 +63,7 @@ public class SystemController {
     @PassToken
     public ResultSet getUpdateRecords(@ApiParam(name = "count",value ="已获取数据条数" )@RequestParam(required = true)int count,
                                       @ApiParam(name = "requestCount",value = "请求获取数据条数")@RequestParam(required = true)int requestCount){
+        ResultSet rs=new ResultSet();
         List<UpdateRecordModel> getUpdateRecord=systemService.getUpdateRecord(1);
         List<UpdateRecordModel> newUpdateRecord=new ArrayList<>();
         if (getUpdateRecord.size() > count && getUpdateRecord.size() <= count + requestCount) {
@@ -91,6 +94,7 @@ public class SystemController {
                                   @ApiParam(name = "content",value = "反馈内容")@RequestParam(required = false)String content,
                                   @ApiParam(name="picture",value = "图片")@RequestParam(required = false) List<MultipartFile> picture,
                                   @ApiParam(name = "phone",value = "联系电话")@RequestParam(required = false)String phone){
+        ResultSet rs=new ResultSet();
         if(type.equals("1")||type.equals("2")) {
             String userId = TokenUtil.getTokenUserId();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

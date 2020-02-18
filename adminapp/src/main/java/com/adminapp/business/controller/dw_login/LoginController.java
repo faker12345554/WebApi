@@ -28,7 +28,6 @@ import java.util.Date;
 @RestController
 @RequestMapping("/app/admin/user")
 public class LoginController {
-    public ResultSet rs=new ResultSet();
 
     public TokenModel tokenModel=new TokenModel();
     @Autowired
@@ -43,6 +42,7 @@ public class LoginController {
     @PostMapping("/login")
     @PassToken
     public ResultSet Login(@ApiParam(name = "account", value = "登陆账号") @RequestParam(required = true) String account, @ApiParam(name = "password", value = "密码") @RequestParam(required = true) String password) {
+        ResultSet rs=new ResultSet();
         try {
             CacheUtils.put("UserId",account);
 
@@ -63,6 +63,7 @@ public class LoginController {
                 tokenModel.setRefreshToken(token);
                 tokenModel.settExpiresTime(ExpiresTime);
                 if (userInformation.getPassword().equals(password)) {    //判断密码是否正确
+                    int insertLoginLog=loginService.insertLoginLog(account);   //插入登录日志
                     rs.resultCode = 0;
                     rs.resultMsg = "";
                     rs.data = tokenModel;
@@ -89,6 +90,7 @@ public class LoginController {
     @PostMapping("/modifyPassword")
     public ResultSet modifyPassword(@ApiParam(name="password",value = "原密码MD5")@RequestParam(required = true)String password,
                                     @ApiParam(name="newPassword",value = "新密码MD5")@RequestParam(required = true)String newPassword){
+        ResultSet rs=new ResultSet();
         String userId= TokenUtil.getTokenUserId();
         if(password.equals(newPassword)==false) {
             UserInformationModel userInformationModel = loginService.getUserInformation(userId);
@@ -122,6 +124,7 @@ public class LoginController {
     @ApiOperation(value = "获取工作人员信息")
     @GetMapping("/getUserInfo")
     public ResultSet getUserInfo(){
+        ResultSet rs=new ResultSet();
         String userId=TokenUtil.getTokenUserId();
         UserInformationModel userInformationModel=loginService.getUserInformation(userId);
         String roleName=loginService.getRoleName(userInformationModel.getPermissionid());
