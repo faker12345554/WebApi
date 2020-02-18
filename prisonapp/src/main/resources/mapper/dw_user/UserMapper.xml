@@ -6,6 +6,10 @@
         select * from t_user where accountname=#{userName}
     </select>
 
+    <insert id="insertLoginRecord" >
+        insert into t_log (operator,modular,operatingtime,systemtype) VALUES (#{personid},'登录',CURRENT_TIMESTAMP,'1')
+    </insert>
+
     <select id="getUser" resultType="com.prisonapp.business.entity.dw_user.UserModel">
         select * from t_user where phone=#{phone}
     </select>
@@ -27,8 +31,7 @@
         update t_user set password=#{newPassword} where phone =#{accountName}
     </update>
 
-    <select id="RelatedId" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation"
-            parameterType="String">
+    <select id="RelatedId" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation" parameterType="String">
         select * from t_personinformation where contact=#{accountName}
     </select>
 </mapper>

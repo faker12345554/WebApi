@@ -13,6 +13,8 @@ public interface UserDao {
 
     UserModel login(@Param("userName") String userName);
 
+    int insertLoginRecord(@Param("personid") String personid);
+
     UserModel getUser(@Param("phone") String phone);
 
     GetUserInfoModel getUserInfo(String userId);

@@ -27,18 +27,14 @@ public class  MessageController {
 
     @Autowired
     private MessageService messageService;
-    private ResultSet result = new ResultSet();
-    private ResultSearchNotificationModel resultSearchNotificationModel = new ResultSearchNotificationModel();
-    private ResultMessageListModel resultMessageListModel = new ResultMessageListModel();
-    private ResultNotificationMessageModel resultNotificationMessage = new ResultNotificationMessageModel();
-
-
 
     //@PassToken
     @UserLoginToken
     @ApiOperation(value = "获取保外人员的通知列表")
     @GetMapping("/getNotificationList")
     public ResultSet getNotificationList() {
+         ResultSet result = new ResultSet();
+        ResultNotificationMessageModel resultNotificationMessage = new ResultNotificationMessageModel();
         int sum = 0;
         String type ="";
 
@@ -108,6 +104,8 @@ public class  MessageController {
     @ApiOperation(value = "获取保外人员的消息列表")
     @GetMapping("/getMessageList")
     public ResultSet getMessageList(@ApiParam(name = "type",value = "类型编号") @RequestParam(required = true) String type,@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true) int count,@ApiParam(name = "requestCount",value = "请求获取数据的条数") @RequestParam(required = true) int requestCount,@ApiParam(name = "key",value = "搜索关键字") @RequestParam(required = false) String key) {
+        ResultSet result = new ResultSet();
+        ResultMessageListModel resultMessageListModel = new ResultMessageListModel();
         List<MessageListModel> messageListModel;
         String a=TokenUtil.getTokenUserId();
         int totalCount =0;
@@ -133,6 +131,7 @@ public class  MessageController {
     @ApiOperation(value = "保外人员确认消息读取")
     @PostMapping("/readMessage")
     public ResultSet readMessage(@ApiParam(name = "type",value = "类型编号") @RequestParam(required = true) int type,@ApiParam(name = "messageTimestamp",value = "最新一条已获取的消息的时间戳") @RequestParam(required = true) String messageTimestamp) throws ParseException {
+        ResultSet result = new ResultSet();
         long longMessageTimestamp = Long.parseLong(messageTimestamp);
         String strMessageTimestamp =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(longMessageTimestamp);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -157,6 +156,9 @@ public class  MessageController {
     @ApiOperation(value = " 保外人员通知搜索")
     @GetMapping("/searchNotification")
     public ResultSet searchNotification(@ApiParam(name = "key",value = "搜索关键字") @RequestParam(required = false) String key) {
+
+        ResultSet result = new ResultSet();
+        ResultSearchNotificationModel resultSearchNotificationModel = new ResultSearchNotificationModel();
         String a=TokenUtil.getTokenUserId();
         List<SearchNotificationModel> searchNotificationModels = messageService.searchNotification(key, getPersonId());
         int sum = 0;
@@ -177,6 +179,8 @@ public class  MessageController {
     @ApiOperation(value = " 获取保外人员最新消息")
     @GetMapping("/getNewestMessageList")
     public ResultSet getNewestMessageList(@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true) int count,@ApiParam(name = "requestCount",value = "请求获取数据的条数") @RequestParam(required = true) int requestCount) {
+        ResultSet result = new ResultSet();
+        ResultMessageListModel resultMessageListModel = new ResultMessageListModel();
         //获取今天的日期
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String a=TokenUtil.getTokenUserId();
@@ -201,6 +205,8 @@ public class  MessageController {
     @ApiOperation(value = " 获取保外人员的某一类通知")
     @GetMapping("/getNotification")
     public ResultSet getNotification(@ApiParam(name = "type",value = "通知类型") @RequestParam(required = true) String type){
+
+        ResultSet result = new ResultSet();
         String a=TokenUtil.getTokenUserId();
         int iType = Integer.parseInt(type);
         NotificationMessageModel notificationMessageModels =messageService.getNotification(getPersonId(),iType);
