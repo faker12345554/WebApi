@@ -29,6 +29,17 @@ public class LogInformation {
   private String action;
   private Date operatingtime;
 
+  public String getSystemtype() {
+    return systemtype;
+  }
+
+  public LogInformation setSystemtype(String systemtype) {
+    this.systemtype = systemtype;
+    return this;
+  }
+
+  private String systemtype;
+
 
   public String getModular() {
     return modular;

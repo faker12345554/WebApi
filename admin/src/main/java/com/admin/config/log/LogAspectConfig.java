@@ -139,6 +139,7 @@ public class LogAspectConfig {
 
         logInformation.setModular(methodDescribe.get());
         logInformation.setOperatingtime(new Date());
+        logInformation.setSystemtype("3");
         logDao.insertLog(logInformation);
 
         logger.info(methodDescribe.get() + "返回参数 : {}", new Gson().toJson(ret));

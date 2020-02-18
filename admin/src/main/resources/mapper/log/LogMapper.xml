@@ -3,13 +3,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_log.LogDao">
     <insert id="insertLog" parameterType="com.admin.admin.entity.dw_log.LogInformation">
-        insert into t_log(operator, modular, action, operatingtime) values (#{operator},#{modular},#{action},#{operatingtime})
+        insert into t_log(operator, modular, action, operatingtime,systemtype) values (#{operator},#{modular},#{action},#{operatingtime},#{systemtype})
     </insert>
-
     <select id="listLog" parameterType="com.admin.model.log.LogParamModel"
             resultType="com.admin.model.log.LogReturnModel">
         select u.accountname as operator,l.modular,l.action,l.operatingtime  from t_log as l
         inner join t_user as u on u.id=l.operator
         where u.accountname=#{operator} and modular=#{modular}
+    </select>
+    <select id="getNumber" parameterType="String" resultType="com.admin.model.Appstatistics.AppStatistics">
+				select (SELECT Count(*) from t_user where areacode like concat('%',#{Areacode},'%')  and usersystem=3) AS Totalnumber,(SELECT count(*) from t_log where systemtype='1' and ascii(operator)  in
+				(SELECT id from t_user where areacode like concat('%',#{Areacode},'%')  and usersystem=3) )
+				 AS Usernumber
     </select>
 </mapper>

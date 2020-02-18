@@ -2,6 +2,7 @@ package com.admin.admin.service.dw_log;
 
 import com.admin.admin.dao.dw_log.LogDao;
 
+import com.admin.model.Appstatistics.AppStatistics;
 import com.admin.model.log.LogParamModel;
 import com.admin.model.log.LogReturnModel;
 import com.admin.page.PageBean;
@@ -36,4 +37,9 @@ public class LogService {
 
         return pageData;
     }
+
+    public AppStatistics getNumber(String Areacode, String Level){
+        return  logDao.getNumber(Areacode, Level);
+    }
+
 }
