@@ -7,8 +7,17 @@
         <result property="name" column="name" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getAddress" parameterType="String" resultMap="addressMap">
-        SELECT code,name from legal."public".area_addressinfo where code like concat('%',#{Code},'%') and level=#{level}
+    <select id="getAddress"  resultMap="addressMap">
+        <if test="level==1">
+            select code,detail from dictionary    where   code  like  '%000000%'   and  kind ='06'   and detail like '%佛山%'
+        </if>
+        <if test="level==2">
+            select code,detail from dictionary    where   code  like  concat('%',#{Code},'%')   and  kind ='06'  and   code  like  '%0000%'
+        </if>
+        <if test="level==3">
+            select code,detail from dictionary    where   code  like  concat('%',#{Code},'%')  and  kind ='06'  and   code  like  '%00%'
+        </if>
+
     </select>
 
 

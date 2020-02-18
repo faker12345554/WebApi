@@ -38,7 +38,7 @@ public class LogService {
         return pageData;
     }
 
-    public AppStatistics getNumber(String Areacode, String Level){
+    public AppStatistics getNumber(String Areacode, int Level){
         return  logDao.getNumber(Areacode, Level);
     }
 

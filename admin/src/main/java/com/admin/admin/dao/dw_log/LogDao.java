@@ -25,5 +25,5 @@ public interface LogDao {
     /*
     取保监居APP统计使用量
      */
-    AppStatistics getNumber(String Areacode,String Level);
+    AppStatistics getNumber(String Areacode,int Level);
 }

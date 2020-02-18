@@ -8,6 +8,7 @@ import com.admin.page.PageBean;
 import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
+import com.github.mustachejava.Code;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,8 +55,14 @@ public class LogController {
 
     @ApiOperation(value = "统计取保监居APP使用人数")
     @GetMapping("/Statistics")
-    public ResponseResult getNumber(@RequestParam String code,String level){
+    public ResponseResult getNumber(@RequestParam String code,@RequestParam int level,String Days){
         List<AppStatistics> numberList=new ArrayList<AppStatistics>();
+        if (level==2){
+            code=code.substring(0,6);
+        }else if (level==3){
+            code=code.substring(0,8);
+        }
+
 
         List<Map<String,String>> addlist=addressService.getAddress(code, level);
         for (Map<String,String> item:addlist ){

@@ -17,7 +17,7 @@ public class AddressService
     /*
     获取地址
      */
-    public List<Map<String, String>> getAddress(String code,String level){
+    public List<Map<String, String>> getAddress(String code,int level){
         return addressDao.getAddress(code, level);
     }
 }
