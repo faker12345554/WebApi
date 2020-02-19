@@ -1,5 +1,7 @@
-package com.sample;
+package com.admin.admin.entity.dw_enum;
 
+
+import java.util.Date;
 
 public class TEnum {
 
@@ -9,6 +11,7 @@ public class TEnum {
   private String enumcode;
   private String enumname;
   private String status;
+  private Date createtime;
 
 
   public long getEnumid() {
@@ -64,4 +67,11 @@ public class TEnum {
     this.status = status;
   }
 
+  public Date getCreatetime() {
+    return createtime;
+  }
+
+  public void setCreatetime(Date createtime) {
+    this.createtime = createtime;
+  }
 }

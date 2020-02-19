@@ -1,6 +1,7 @@
 package com.admin.admin.service.dw_enum;
 
 import com.admin.admin.dao.dw_enum.EnumDao;
+import com.admin.admin.entity.dw_enum.TEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +45,19 @@ public class EnumService {
 
     public List<Map<String,String>> ListSponsor(String Code){
         return enumDao.ListSponsor(Code);
+    }
+
+    public List<TEnum> listEnum(String typeCode){
+        return enumDao.listEnum(typeCode);
+    }
+
+    //新增枚举类型
+    public int addEnum(String typeName,String typeCode,boolean status,String enumCode,String enumName){
+        return enumDao.addEnum(typeName,typeCode,status,enumCode,enumName);
+    }
+
+    //修改数据字典
+    public int updateEnum(int enumId,String typeName,String typeCode,boolean status,String enumName){
+        return enumDao.updateEnum(enumId, typeName, typeCode, status, enumName);
     }
 }

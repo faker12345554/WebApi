@@ -22,7 +22,7 @@ public class SuperviseController {
     @Autowired
     private SuperviseService superviseService;
 
-    private ResultSet rs=new ResultSet();
+    //private ResultSet rs=new ResultSet();
 
 //    @ApiOperation(value = "获取保外人员列表")
 //    @GetMapping("/getAgainstRule")
@@ -220,6 +220,7 @@ public class SuperviseController {
     @GetMapping("/getSuperviseList")
     public ResultSet getSuperviseList(@ApiParam(name = "type",value = "类别") @RequestParam(required = true)int type,@ApiParam(name = "count",value = "当前已经获取的数据条数") @RequestParam(required = true)int count,
                                     @ApiParam(name = "requestCount",value = "请求获取数据的条数") @RequestParam(required = true)int requestCount,@ApiParam(name = "key",value = "搜索关键字") @RequestParam(required = false)String key) {
+        ResultSet rs=new ResultSet();
         String userId=TokenUtil.getTokenUserId();
         List<Personinformation> newPerson = new ArrayList<>();  //符合条件所有监居人员列表
         List<Personinformation> newRecentPerson = new ArrayList<>();  //符合条件的最近新增人员列表
@@ -542,6 +543,7 @@ public class SuperviseController {
                                     @RequestParam(required = false)String endDate,
                                     @RequestParam(required = true)int count,
                                     @RequestParam(required = true)int requestCount){
+        ResultSet rs=new ResultSet();
         String userId=TokenUtil.getTokenUserId();
         CiteRecordReturnModel citeRecordReturnModel=new CiteRecordReturnModel();
         List<SummonsInformation> summonsInformations=new ArrayList<>();
@@ -629,6 +631,7 @@ public class SuperviseController {
     @ApiOperation(value = "提交传讯记录")
     @PostMapping("/submitCiteRecord")
     public ResultSet postCiteRecord(@ApiParam(name = "code",value = "保外人员编码")@RequestParam(required = true)String code){
+        ResultSet rs=new ResultSet();
         PersonAllInformationModel personinformation=superviseService.getPersonInformation(code);
         if(personinformation!=null){
             String personName=personinformation.getPersonname();
@@ -756,6 +759,7 @@ public class SuperviseController {
                                        @ApiParam(name="count",value = "当前已获取的数据条数")@RequestParam(required = true)int count,
                                        @ApiParam(name="requestCount",value = "请求获取数据的条数")@RequestParam(required = true)int requestCount,
                                        @ApiParam(name="key",value = "搜索关键字")@RequestParam(required = false)String key) {
+        ResultSet rs=new ResultSet();
         String userId= TokenUtil.getTokenUserId();
 //        int locationViolateSlight=superviseService.listViolationFensInformation("脱离管控区域","1");  //上报设置中位置轻微违规次数
 //        int locationViolateSerious =superviseService.listViolationFensInformation("脱离管控区域","2"); //上报设置中位置严重违规次数
@@ -958,6 +962,7 @@ public class SuperviseController {
     @GetMapping("/getApplyLeaveList")
     public ResultSet getApplyLeaveList(@RequestParam(required = true)String status,@RequestParam(required = false)String key,
                                        @RequestParam(required = true)int count,@RequestParam(required = true)int requestCount){
+        ResultSet rs=new ResultSet();
         String userId= TokenUtil.getTokenUserId();
         List<LeaveListModel> leaveListModels=new ArrayList<>();
         if(key==null||key==""){   //没有key关键字
@@ -1034,6 +1039,7 @@ public class SuperviseController {
     @PostMapping("/approveApplyLeave")
     public ResultSet approveApplyLeave(@ApiParam(name = "code",value = "外出申请单号")@RequestParam(required = true)String code,
                                        @ApiParam(name = "isApprove",value = "是否通过")@RequestParam(required = true)boolean isApprove){
+        ResultSet rs=new ResultSet();
         String userId=TokenUtil.getTokenUserId();
         LeaveListModel leaveInformation=superviseService.getLeaveInformation(code);
         if(leaveInformation!=null){
@@ -1077,6 +1083,7 @@ public class SuperviseController {
                                          @ApiParam(name="type",value = "类型")@RequestParam(required = true)int type,
                                          @ApiParam(name="count",value = "当前已获取数据条数")@RequestParam(required = true)int count,
                                          @ApiParam(name="requestCount",value = "请求获取的条数")@RequestParam(required = true)int requestCount){
+        ResultSet rs=new ResultSet();
         String userId=TokenUtil.getTokenUserId();
         PersonAllInformationModel personinformation=superviseService.getPersonInformation(code);
         if(personinformation!=null) {
@@ -1185,6 +1192,7 @@ public class SuperviseController {
     @ApiOperation(value = "获取违规记录统计")
     @GetMapping("/getAgainstRule")
     public ResultSet getAgainstRule(@ApiParam(name="code",value = "监居人员编号")@RequestParam(required = true)String code) {
+        ResultSet rs=new ResultSet();
         AgainstRuleModel againstRuleModel1 = new AgainstRuleModel();
         againstRuleModel1.setTypeCode("1");
         againstRuleModel1.setType("脱离管控区域");
@@ -1217,6 +1225,7 @@ public class SuperviseController {
                                         @ApiParam(name="count",value = "已获取数据数")@RequestParam(required = true)int count,
                                         @ApiParam(name="requestCount",value = "请求获取条数")@RequestParam(required = true)int requestCount,
                                         @ApiParam(name="typeCode",value = "违规类型编号")@RequestParam(required = true)String typeCode) {
+        ResultSet rs=new ResultSet();
         SignRecordReturnModel signRecordReturnModel = new SignRecordReturnModel();
         List<SignRecordModel> newSignRecordModelList = new ArrayList<>();
         signRecordReturnModel.setTotalCount(0);
@@ -1495,6 +1504,7 @@ public class SuperviseController {
                                    @ApiParam(name="count",value = "当前已获取数据条数")@RequestParam(required = true)int count,
                                    @ApiParam(name="requestCount",value = "请求获取条数")@RequestParam(required = true)int requestCount,
                                    @ApiParam(name="key",value = "关键字")@RequestParam(required = false)String key){
+        ResultSet rs=new ResultSet();
         if(type.equals("0")||type.equals("1")||type.equals("2")) {
             String userId = TokenUtil.getTokenUserId();
             List<SinginInformation> singinInformations = superviseService.listAllSinginInformation();   //获取全部签到数据
@@ -1676,6 +1686,7 @@ public class SuperviseController {
     @ApiOperation(value = "提交保外人员的管理配置")
     @PostMapping("/submitValidWay")
     public ResultSet submitValidWay(@RequestBody(required = true)ValidWayModel validWay){
+        ResultSet rs=new ResultSet();
         String userName=TokenUtil.getTokenUserId();
         PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(validWay.getCode());
         Date date=new Date();
@@ -1709,6 +1720,7 @@ public class SuperviseController {
     @ApiOperation(value = "获取保外人员管理配置")
     @GetMapping("/getValidWay")
     public ResultSet getValidWay(@ApiParam(name="code",value = "监居人员编号")@RequestParam(required = true)String code){
+        ResultSet rs=new ResultSet();
         String userId=TokenUtil.getTokenUserId();
         PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(code);
         if(personAllInformationModel!=null&&personAllInformationModel.getSponsoralarm().equals(userId)){
@@ -1745,6 +1757,7 @@ public class SuperviseController {
     @ApiOperation(value = "获取保外人员简要信息")
     @GetMapping("/getSuperviseSimple")
     public ResultSet getSuperviseSimple(@ApiParam(name = "code",value = "监居人员编号")@RequestParam(required = true)String code){
+        ResultSet rs=new ResultSet();
         String userId=TokenUtil.getTokenUserId();
         PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(code);
         if(personAllInformationModel.getSponsoralarm().equals(userId)){
@@ -1863,6 +1876,7 @@ public class SuperviseController {
     @ApiOperation(value = "获取保外人员的外出申请单")
     @GetMapping("/getApplyLeave")
     public ResultSet getApplyLeave(@ApiParam(name="code",value = "外出申请单单号")@RequestParam(required = true)String code){
+        ResultSet rs=new ResultSet();
         String userId=TokenUtil.getTokenUserId();
         LeaveListModel leaveListModel=superviseService.getApplyLeave(code);    //根据申请单号获取申请单数据
         if(leaveListModel!=null){
@@ -1897,6 +1911,7 @@ public class SuperviseController {
     @ApiOperation(value = " 获取保外人员详细信息")
     @GetMapping("/getSuperviseDetail")
     public ResultSet getSuperviseDetail(@ApiParam(name = "code",value = "监居人员编号")@RequestParam(required = true)String code){
+        ResultSet rs=new ResultSet();
         PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(code);
         SuperviseBaseInformation superviseBaseInformation=new SuperviseBaseInformation();
 //        int locationViolateSlight = superviseService.listViolationFensInformation("脱离管控区域", "1");  //上报设置中位置轻微违规次数

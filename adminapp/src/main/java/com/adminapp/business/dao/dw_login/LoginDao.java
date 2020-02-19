@@ -16,4 +16,6 @@ public interface LoginDao {
     int updateUserPassword(@Param("userId")String userId,@Param("password")String password);
 
     String getRoleName(@Param("permissionId")int permissionId);
+
+    int insertLoginLog(@Param("userId")int userId);
 }

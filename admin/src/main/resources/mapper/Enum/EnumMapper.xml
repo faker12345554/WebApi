@@ -48,4 +48,17 @@
         SELECT kind,detail FROM "dictionary"  where  kind='T0'   or  kind ='05'  or kind='T304'  or kind ='xjtj_xl'  or  kind='04'  or kind='08'
     </select>
 
+
+    <select id="listEnum" resultType="com.admin.admin.entity.dw_enum.TEnum">
+        select * From t_enum where typecode=#{typeCode} ORDER BY enumcode
+    </select>
+
+    <insert id="addEnum">
+        insert into t_enum (typecode,typename,enumcode,enumname,status,createtime) values (#{typeCode},#{typeName},#{enumCode},#{enumName},#{status},CURRENT_TIMESTAMP)
+    </insert>
+
+    <update id="updateEnum">
+        update t_enum set typecode=#{typeCode},typename=#{typeName},enumName=#{enumName},status=#{status},createtime=CURRENT_TIMESTAMP where enumid=#{enumId}
+    </update>
+
 </mapper>

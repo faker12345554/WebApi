@@ -25,12 +25,13 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
-    private ResultSet rs=new ResultSet();
+    //private ResultSet rs=new ResultSet();
 
     @UserLoginToken
     @ApiOperation(value = "获取管理人员的通知列表")
     @GetMapping("/getNotificationList")
     public ResultSet getNotificationList(){
+        ResultSet rs=new ResultSet();
         String userId= TokenUtil.getTokenUserId();
         List<NotificationListModel> notificationListModels=new ArrayList<>();
         List<MessageInformation> messageInformationList=new ArrayList<>();  //该工作人员的所有通知消息
@@ -319,6 +320,7 @@ public class MessageController {
                                     @ApiParam(name="count",value = "已获取数据数")@RequestParam(required = true)int count,
                                     @ApiParam(name = "requestCount",value = "请求获取数据数")@RequestParam(required = true)int requestCount,
                                     @ApiParam(name = "key",value = "关键字")@RequestParam(required = false)String key){
+        ResultSet rs=new ResultSet();
         if(type.equals("0")||type.equals("1")||type.equals("2")||type.equals("3")||type.equals("4")||type.equals("5")||type.equals("6")||type.equals("7")) {
             String userId = TokenUtil.getTokenUserId();
             List<MessageListModel> messageInformationList = new ArrayList<>();  //该工作人员的所有通知消息
@@ -447,6 +449,7 @@ public class MessageController {
     @PostMapping("/readMessage")
     public ResultSet readMessage(@ApiParam(name = "type",value = "类型编号")@RequestParam(required = true)String type,
                                  @ApiParam(name = "messageTimestamp",value = "最新一条消息的时间戳")@RequestParam(required = true)String messageTimestamp){
+        ResultSet rs=new ResultSet();
         if(type.equals("1")||type.equals("2")||type.equals("3")||type.equals("4")||type.equals("5")||type.equals("6")||type.equals("7")) {
             if(messageTimestamp.length()==13) {
                 String userId = TokenUtil.getTokenUserId();
@@ -495,6 +498,7 @@ public class MessageController {
     @ApiOperation(value = "管理人员通知搜索")
     @GetMapping("/searchNotification")
     public ResultSet searchNotification(@ApiParam(name = "key",value = "关键字")@RequestParam(required = true)String key){
+        ResultSet rs=new ResultSet();
         String userId = TokenUtil.getTokenUserId();
         List<MessageListModel> messageInformationList = new ArrayList<>();  //该工作人员的所有通知消息
         List<PersonAllInformationModel> personAllInformationModels = messageService.getUserControlPerson(userId);
@@ -692,7 +696,9 @@ public class MessageController {
     @ApiOperation(value = "获取管理人员的某一类通知")
     @GetMapping("/getNotification")
     public ResultSet getNotification(@ApiParam(name = "type",value = "通知类型")@RequestParam(required = true)String type){
+        ResultSet rs=new ResultSet();
         if(type.equals("1")||type.equals("2")||type.equals("3")||type.equals("4")||type.equals("5")||type.equals("6")||type.equals("7")) {
+
             String userId = TokenUtil.getTokenUserId();
             List<MessageListModel> messageInformationList = new ArrayList<>();  //该工作人员的所有通知消息
             List<PersonAllInformationModel> personAllInformationModels = messageService.getUserControlPerson(userId);
