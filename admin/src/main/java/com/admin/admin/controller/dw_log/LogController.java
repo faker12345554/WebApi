@@ -53,6 +53,7 @@ public class LogController {
 
     }
 
+    @UserLoginToken
     @ApiOperation(value = "统计取保监居APP使用人数")
     @GetMapping("/Statistics")
     public ResponseResult getNumber(@RequestParam String code, @RequestParam int level, String Days) {
