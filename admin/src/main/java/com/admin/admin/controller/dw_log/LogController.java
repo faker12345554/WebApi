@@ -36,7 +36,7 @@ public class LogController {
 ////        result.setMessage(ResultCode.SUCCESS.getMessage());
 ////        return result.setData(logService.insertLog(logInformation));
 ////    }
-    @UserLoginToken
+   // @UserLoginToken
     @ApiOperation(value = "查询日志信息")
     @PostMapping("/getLog")
     public ResponseResult listLog(@RequestBody LogParamModel logParamModel, HttpServletResponse response) {
@@ -53,7 +53,7 @@ public class LogController {
 
     }
 
-    @UserLoginToken
+   // @UserLoginToken
     @ApiOperation(value = "统计取保监居APP使用人数")
     @GetMapping("/Statistics")
     public ResponseResult getNumber(@RequestParam String code, @RequestParam int level, String Days) {
@@ -62,7 +62,7 @@ public class LogController {
         List<Map<String, String>> policelist = new ArrayList<>();
         List<Map<String, String>> Stationlist = new ArrayList<>();
         if (level == 1) {
-            addlist = addressService.getAddress(code, level);
+            addlist = addressService.getAddress(code, 2);
             for (Map<String, String> item : addlist) {
                 AppStatistics model = new AppStatistics();
                 for (String Key : item.keySet()) {
@@ -75,10 +75,10 @@ public class LogController {
                 numberList.add(model);
             }
         } else if (level == 2) {
-            addlist = addressService.getAddress(code, 1);
+            addlist = addressService.getAddress(code, level);
             for (Map<String, String> item : addlist) {
                 for (String key : item.keySet()) {
-                    policelist = addressService.getAddress(item.get("code").substring(0, 6), 2);
+                    policelist = addressService.getAddress(item.get("code").substring(0, 6), 3);
                     for (Map<String, String> str : policelist) {
                         Stationlist.add(str);
                     }
@@ -100,5 +100,32 @@ public class LogController {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(numberList);
     }
+
+    @ApiOperation(value = "统计脱管人数")
+    @GetMapping("/Removalrate")
+    public ResponseResult Removalrate(@RequestParam String code,int level,String Starttime,String endetime) {
+        List<AppStatistics> numberList = new ArrayList<AppStatistics>();
+        if (level == 3) {
+            code = code.substring(0, 6);
+        } else if (level == 4) {
+            code = code.substring(0, 8);
+        }
+        List<Map<String, String>> addlist = addressService.getAddress(code, level);
+        for (Map<String, String> item : addlist) {
+            AppStatistics model = new AppStatistics();
+            for (String Key : item.keySet()) {
+                String Areacode = item.get("code");
+                Areacode = Areacode.substring(0, (2*level)+2);
+                model = logService.Removalrate(Areacode, Starttime, endetime);
+                model.setCode(item.get("code"));
+                model.setName(item.get("name"));
+            }
+            numberList.add(model);
+        }
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(numberList);
+    }
+
 
 }

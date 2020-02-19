@@ -9,6 +9,7 @@ import com.admin.page.PageBean;
 import com.common.common.result.ResponseResult;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.Param;
 import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,4 +44,9 @@ public class LogService {
         return  logDao.getNumber(Areacode,Days);
     }
 
+    public AppStatistics Removalrate(String Areacode, String Starttime, String Endtime){
+        return logDao.Removalrate(Areacode,Starttime,Endtime);
+    }
+
 }
+

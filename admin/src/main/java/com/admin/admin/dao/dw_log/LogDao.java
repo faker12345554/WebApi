@@ -27,4 +27,13 @@ public interface LogDao {
     取保监居APP统计使用量
      */
     AppStatistics getNumber(@Param("Areacode") String Areacode,@Param("Days") String Days);
+
+    /**
+     * 脱管率
+     * @param Areacode
+     * @param Starttime
+     * @param Endtime
+     * @return
+     */
+    AppStatistics Removalrate(@Param("Areacode") String Areacode,@Param("Starttime") String Starttime,String Endtime);
 }

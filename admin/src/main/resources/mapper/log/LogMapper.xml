@@ -22,8 +22,14 @@
     (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))))
     <if test="Days!=null and Days!=''">
          and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{Days},'yyyy-MM-dd')
-
     </if>
     ) as Usernumber
+    </select>
+
+    <select id="Removalrate" parameterType="String" resultType="com.admin.model.Appstatistics.AppStatistics">
+        select (SELECT count(*) from t_personinformation where sponsoralarm in
+               (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))) as Totalnumber,
+	           (SELECT count(*) from t_personinformation where status=FALSE and  sponsoralarm in
+               (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))) as Usernumber
     </select>
 </mapper>
