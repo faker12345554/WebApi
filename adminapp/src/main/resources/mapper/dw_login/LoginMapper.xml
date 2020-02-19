@@ -14,4 +14,7 @@
     <select id="getRoleName" resultType="String">
         select permissionname FROM t_userpermissiongroup WHERE permissionid=#{permissionId}
     </select>
+    <insert id="insertLoginLog">
+        insert into t_log(operator,modular,operatingtime,systemtype) VALUES (#{userId},'登录',CURRENT_TIMESTAMP,'2')
+    </insert>
 </mapper>
