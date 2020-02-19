@@ -85,7 +85,7 @@ public class UserController {
     @ApiOperation("删除用户")
     @GetMapping("/DelUser")
     public ResponseResult deleteUser(@RequestParam boolean flag, @RequestParam String  UserName, HttpServletResponse response) {
-        if (flag == true) {
+        if (flag != true) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
             result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
             return result.setData("参数'flag'输入错误");
