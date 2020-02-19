@@ -63,7 +63,7 @@ public class LoginController {
                 tokenModel.setRefreshToken(token);
                 tokenModel.settExpiresTime(ExpiresTime);
                 if (userInformation.getPassword().equals(password)) {    //判断密码是否正确
-                    int insertLoginLog=loginService.insertLoginLog(account);   //插入登录日志
+                    int insertLoginLog=loginService.insertLoginLog(Integer.valueOf(account));   //插入登录日志
                     rs.resultCode = 0;
                     rs.resultMsg = "";
                     rs.data = tokenModel;

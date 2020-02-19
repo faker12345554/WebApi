@@ -17,5 +17,5 @@ public interface LoginDao {
 
     String getRoleName(@Param("permissionId")int permissionId);
 
-    int insertLoginLog(@Param("userId")String userId);
+    int insertLoginLog(@Param("userId")int userId);
 }

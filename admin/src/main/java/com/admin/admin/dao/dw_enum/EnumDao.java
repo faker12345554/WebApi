@@ -1,6 +1,8 @@
 package com.admin.admin.dao.dw_enum;
 
+import com.admin.admin.entity.dw_enum.TEnum;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -29,5 +31,10 @@ public interface EnumDao {
      */
     List<Map<String,String>> ListSponsor(String Code);
 
+    List<TEnum> listEnum(@Param("typeCode")String typeCode);
+
+    int addEnum(@Param("typeName")String typeName, @Param("typeCode")String typeCode, @Param("status")boolean status,@Param("enumCode")String enumCode, @Param("enumName")String enumName);
+
+    int updateEnum(@Param("enumId")int enumId,@Param("typeName")String typeName, @Param("typeCode")String typeCode, @Param("status")boolean status, @Param("enumName")String enumName);
 
 }

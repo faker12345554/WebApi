@@ -32,7 +32,7 @@ public class LoginService {
 
 
     //插入登录日志
-    public int insertLoginLog(String userId){
+    public int insertLoginLog(int userId){
         return loginDao.insertLoginLog(userId);
     }
 }
