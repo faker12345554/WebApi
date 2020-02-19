@@ -133,12 +133,13 @@ public class LogAspectConfig {
         Object Userid= CacheUtils.get("UserId");
         LogInformation logInformation=new LogInformation();
         if (Userid!=null){
-            logInformation.setOperator(Userid.toString());
+            logInformation.setOperator(Integer.parseInt(Userid.toString()));
         }
 
 
         logInformation.setModular(methodDescribe.get());
         logInformation.setOperatingtime(new Date());
+        logInformation.setSystemtype("3");
         logDao.insertLog(logInformation);
 
         logger.info(methodDescribe.get() + "返回参数 : {}", new Gson().toJson(ret));

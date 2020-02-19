@@ -3,13 +3,27 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_log.LogDao">
     <insert id="insertLog" parameterType="com.admin.admin.entity.dw_log.LogInformation">
-        insert into t_log(operator, modular, action, operatingtime) values (#{operator},#{modular},#{action},#{operatingtime})
+        insert into t_log(operator, modular, action, operatingtime,systemtype) values (#{operator},#{modular},#{action},#{operatingtime},#{systemtype})
     </insert>
-
     <select id="listLog" parameterType="com.admin.model.log.LogParamModel"
             resultType="com.admin.model.log.LogReturnModel">
         select u.accountname as operator,l.modular,l.action,l.operatingtime  from t_log as l
         inner join t_user as u on u.id=l.operator
         where u.accountname=#{operator} and modular=#{modular}
+    </select>
+    <select id="getNumber" parameterType="String" resultType="com.admin.model.Appstatistics.AppStatistics">
+    SELECT
+	(SELECT count(*)  from t_user where phone in
+	( SELECT contact from t_personinformation where sponsoralarm in
+    (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))))as Totalnumber,
+    ( SELECT count(distinct operator) from t_log where operator in
+    ( SELECT "id"  from t_user where phone in
+    ( SELECT contact from t_personinformation where sponsoralarm in
+    (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))))
+    <if test="Days!=null and Days!=''">
+         and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{Days},'yyyy-MM-dd')
+
+    </if>
+    ) as Usernumber
     </select>
 </mapper>

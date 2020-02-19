@@ -2,9 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_address.AddressDao">
+    <resultMap id="addressMap" type="HashMap">
+        <result property="code" column="code" jdbcType="VARCHAR" />
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+    </resultMap>
 
-    <insert id="insertLocation" parameterType="com.admin.admin.entity.dw_address.AddressInformation">
-        insert into t_location(latitude,longitude,address,personid,timesta) VALUES (#{latitude},#{longitude},#{address},#{personid},#{timesta})
-    </insert>
+    <select id="getAddress"  resultMap="addressMap">
+        <if test="level==1">
+            select code,detail as name from dictionary    where   code  like  '%000000%'   and  kind ='06'   and detail like '%佛山%'
+        </if>
+        <if test="level==2">
+            select code,detail as name from dictionary    where   code  like  concat('%',#{Code},'%')   and  kind ='06'  and   code  like  '%0000%'
+        </if>
+        <if test="level==3">
+            select code,detail as name from dictionary    where   code  like  concat('%',#{Code},'%')  and  kind ='06'  and   code  like  '%00%'
+        </if>
+
+    </select>
+
 
 </mapper>
