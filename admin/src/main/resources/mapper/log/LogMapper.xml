@@ -21,7 +21,7 @@
     ( SELECT contact from t_personinformation where sponsoralarm in
     (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))))
     <if test="Days!=null and Days!=''">
-         and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')=to_date(#{Days},'yyyy-MM-dd')
+         and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{Days},'yyyy-MM-dd')
 
     </if>
     ) as Usernumber
