@@ -133,7 +133,7 @@ public class LogAspectConfig {
         Object Userid= CacheUtils.get("UserId");
         LogInformation logInformation=new LogInformation();
         if (Userid!=null){
-            logInformation.setOperator(Userid.toString());
+            logInformation.setOperator(Integer.parseInt(Userid.toString()));
         }
 
 

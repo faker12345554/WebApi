@@ -12,8 +12,18 @@
         where u.accountname=#{operator} and modular=#{modular}
     </select>
     <select id="getNumber" parameterType="String" resultType="com.admin.model.Appstatistics.AppStatistics">
-				select (SELECT Count(*) from t_user where areacode like concat('%',#{Areacode},'%')  and usersystem=3) AS Totalnumber,(SELECT count(*) from t_log where systemtype='1' and ascii(operator)  in
-				(SELECT id from t_user where areacode like concat('%',#{Areacode},'%')  and usersystem=3) )
-				 AS Usernumber
+    SELECT
+	(SELECT count(*)  from t_user where phone in
+	( SELECT contact from t_personinformation where sponsoralarm in
+    (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))))as Totalnumber,
+    ( SELECT count(distinct operator) from t_log where operator in
+    ( SELECT "id"  from t_user where phone in
+    ( SELECT contact from t_personinformation where sponsoralarm in
+    (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))))
+    <if test="Days!=null and Days!=''">
+         and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')=to_date(#{Days},'yyyy-MM-dd')
+
+    </if>
+    ) as Usernumber
     </select>
 </mapper>

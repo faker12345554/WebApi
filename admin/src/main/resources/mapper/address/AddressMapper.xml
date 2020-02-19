@@ -9,13 +9,13 @@
 
     <select id="getAddress"  resultMap="addressMap">
         <if test="level==1">
-            select code,detail from dictionary    where   code  like  '%000000%'   and  kind ='06'   and detail like '%佛山%'
+            select code,detail as name from dictionary    where   code  like  '%000000%'   and  kind ='06'   and detail like '%佛山%'
         </if>
         <if test="level==2">
-            select code,detail from dictionary    where   code  like  concat('%',#{Code},'%')   and  kind ='06'  and   code  like  '%0000%'
+            select code,detail as name from dictionary    where   code  like  concat('%',#{Code},'%')   and  kind ='06'  and   code  like  '%0000%'
         </if>
         <if test="level==3">
-            select code,detail from dictionary    where   code  like  concat('%',#{Code},'%')  and  kind ='06'  and   code  like  '%00%'
+            select code,detail as name from dictionary    where   code  like  concat('%',#{Code},'%')  and  kind ='06'  and   code  like  '%00%'
         </if>
 
     </select>

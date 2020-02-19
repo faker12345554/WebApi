@@ -9,6 +9,7 @@ import com.admin.page.PageBean;
 import com.common.common.result.ResponseResult;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +39,8 @@ public class LogService {
         return pageData;
     }
 
-    public AppStatistics getNumber(String Areacode, int Level){
-        return  logDao.getNumber(Areacode, Level);
+    public AppStatistics getNumber(String Areacode, String Days){
+        return  logDao.getNumber(Areacode,Days);
     }
 
 }

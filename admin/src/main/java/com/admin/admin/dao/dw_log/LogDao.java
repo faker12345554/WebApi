@@ -6,6 +6,7 @@ import com.admin.model.Appstatistics.AppStatistics;
 import com.admin.model.log.LogParamModel;
 import com.admin.model.log.LogReturnModel;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -25,5 +26,5 @@ public interface LogDao {
     /*
     取保监居APP统计使用量
      */
-    AppStatistics getNumber(String Areacode,int Level);
+    AppStatistics getNumber(@Param("Areacode") String Areacode,@Param("Days") String Days);
 }

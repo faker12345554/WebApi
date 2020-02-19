@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
-@Api(value="操作日志controller",tags={"查看操作日志"})
+@Api(value = "操作日志controller", tags = {"查看操作日志"})
 @RestController
 @RequestMapping("/Log")
 public class LogController {
@@ -29,7 +29,7 @@ public class LogController {
     private ResponseResult result = new ResponseResult();
 
 
-//    @ApiOperation(value = "增加日志")
+    //    @ApiOperation(value = "增加日志")
 ////    @PostMapping("/addLog")
 ////    public ResponseResult insertLog(@RequestBody LogInformation logInformation, HttpServletResponse response) {
 ////        result.setCode(ResultCode.SUCCESS.getCode());
@@ -39,12 +39,12 @@ public class LogController {
     @UserLoginToken
     @ApiOperation(value = "查询日志信息")
     @PostMapping("/getLog")
-    public ResponseResult listLog(@RequestBody LogParamModel logParamModel, HttpServletResponse response){
-        PageBean pageBean=logService.listLog(logParamModel);
-        if (pageBean.getItems().size()<=0){
+    public ResponseResult listLog(@RequestBody LogParamModel logParamModel, HttpServletResponse response) {
+        PageBean pageBean = logService.listLog(logParamModel);
+        if (pageBean.getItems().size() <= 0) {
             result.setCode(ResultCode.NULLDATA.getCode());
             result.setMessage(ResultCode.NULLDATA.getMessage());
-            return result.setData("" );
+            return result.setData("");
         }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
@@ -55,30 +55,45 @@ public class LogController {
 
     @ApiOperation(value = "统计取保监居APP使用人数")
     @GetMapping("/Statistics")
-    public ResponseResult getNumber(@RequestParam String code,@RequestParam int level,String Days){
-        List<AppStatistics> numberList=new ArrayList<AppStatistics>();
-        if (level==2){
-            code=code.substring(0,6);
-        }else if (level==3){
-            code=code.substring(0,8);
-        }
-
-
-        List<Map<String,String>> addlist=addressService.getAddress(code, level);
-        for (Map<String,String> item:addlist ){
-            AppStatistics model=new AppStatistics();
-            for (String Key:item.keySet()){
-                Object Areacode=item.get(Key);
-                model=logService.getNumber(item.get(Key),level);
-                model.setCode(item.get("code"));
-                model.setName(item.get("name"));
-
-
+    public ResponseResult getNumber(@RequestParam String code, @RequestParam int level, String Days) {
+        List<AppStatistics> numberList = new ArrayList<AppStatistics>();
+        List<Map<String, String>> addlist = new ArrayList<>();
+        List<Map<String, String>> policelist = new ArrayList<>();
+        List<Map<String, String>> Stationlist = new ArrayList<>();
+        if (level == 1) {
+            addlist = addressService.getAddress(code, level);
+            for (Map<String, String> item : addlist) {
+                AppStatistics model = new AppStatistics();
+                for (String Key : item.keySet()) {
+                    String Areacode = item.get("code");
+                    Areacode = Areacode.substring(0, 6);
+                    model = logService.getNumber(Areacode, Days);
+                    model.setCode(item.get("code"));
+                    model.setName(item.get("name"));
+                }
+                numberList.add(model);
             }
-
-            numberList.add(model);
-
-
+        } else if (level == 2) {
+            addlist = addressService.getAddress(code, 1);
+            for (Map<String, String> item : addlist) {
+                for (String key : item.keySet()) {
+                    policelist = addressService.getAddress(item.get("code").substring(0, 6), 2);
+                    for (Map<String, String> str : policelist) {
+                        Stationlist.add(str);
+                    }
+                }
+            }
+            for (Map<String, String> item : Stationlist) {
+                AppStatistics model = new AppStatistics();
+                for (String Key : item.keySet()) {
+                    String Areacode = item.get("code");
+                    Areacode = Areacode.substring(0, 8);
+                    model = logService.getNumber(Areacode, Days);
+                    model.setCode(item.get("code"));
+                    model.setName(item.get("name"));
+                }
+                numberList.add(model);
+            }
         }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
