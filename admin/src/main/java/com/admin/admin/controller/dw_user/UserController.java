@@ -37,10 +37,10 @@ public class UserController {
     @UserLoginToken
     @ApiOperation("用户信息列表")
     @GetMapping("/GetList")
-    public ResponseResult<User> listUser( int PageSize, int PageIndex, HttpServletResponse response) {
+    public ResponseResult<User> listUser(String userName,String phone,String status,String startTime,String endTime, int PageSize, int PageIndex, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(userService.listUser(PageIndex,PageSize));
+        return result.setData(userService.listUser(userName,phone,status,PageIndex,PageSize));
     }
 
 

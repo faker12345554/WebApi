@@ -19,7 +19,7 @@ public interface UserDao {
     User login(@Param("UserName") String UserName,@Param("Password") String Password);
 
     //用户列表
-    List<User> listUser();
+    List<User> listUser(@Param("userName")String userName,@Param("phone")String phone,@Param("status")String status);
 
     //查看
     User getUser(@Param("UserName") String UserName);
