@@ -2,6 +2,8 @@ package com.admin.admin.service.dw_enum;
 
 import com.admin.admin.dao.dw_enum.EnumDao;
 import com.admin.admin.entity.dw_enum.TEnum;
+import com.admin.model.enummodel.EnumModel;
+import com.admin.model.enummodel.EnumSearchModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,5 +61,20 @@ public class EnumService {
     //修改数据字典
     public int updateEnum(int enumId,String typeName,String typeCode,boolean status,String enumName){
         return enumDao.updateEnum(enumId, typeName, typeCode, status, enumName);
+    }
+
+    //删除停用数据字典
+    public int deleteEnum(int enumId){
+        return enumDao.deleteEnum(enumId);
+    }
+
+    //列出所有数据字典
+    public List<EnumModel> listAllEnum(){
+        return enumDao.listAllEnum();
+    }
+
+    //查询数据字典
+    public List<EnumModel> findEnum(EnumSearchModel enumSearchModel){
+        return enumDao.findEnum(enumSearchModel);
     }
 }

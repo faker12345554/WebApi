@@ -61,4 +61,53 @@
         update t_enum set typecode=#{typeCode},typename=#{typeName},enumName=#{enumName},status=#{status},createtime=CURRENT_TIMESTAMP where enumid=#{enumId}
     </update>
 
+    <update id="deleteEnum">
+        update t_enum set status=false where enumid=#{enumId}
+    </update>
+
+    <select id="listAllEnum" resultType="com.admin.model.enummodel.EnumModel">
+        select enumid,typecode,typename,enumname,status,createtime from t_enum order by enumid
+    </select>
+
+    <select id="findEnum" parameterType="com.admin.model.enummodel.EnumSearchModel" resultType="com.admin.model.enummodel.EnumModel">
+        select enumid,typecode,typename,enumname,status,createtime from t_enum
+        <if test="date.typeName!=null">
+        where typename=#{date.typeName}
+        </if>
+        <if test="date.typeName!=null and date.typeCode!=null">
+            and typecode=#{date.typeCode}
+        </if>
+        <if test="date.typeName==null and date.typeCode!=null">
+            where typecode=#{date.typeCode}
+        </if>
+        <if test="(date.typeName!=null or date.typeCode!=null) and date.status!=null">
+        <if test="date.status=='正常'">
+            and status=true
+        </if>
+            <if test="date.status=='停用'">
+                and status=false
+            </if>
+        </if>
+        <if test="date.typeName==null and date.typeCode==null and date.status!=null">
+            <if test="date.status=='正常'">
+                where status=true
+            </if>
+            <if test="date.status=='停用'">
+                where status=false
+            </if>
+        </if>
+        <if test="(date.typeName!=null or date.typeCode!=null or date.status!=null) and date.startTime!=null">
+            and createtime &lt; #{date.startTime}
+        </if>
+        <if test="(date.typeName==null and date.typeCode==null and date.status==null) and date.startTime!=null">
+            where createtime &lt; #{date.startTime}
+        </if>
+        <if test="(date.typeName!=null or date.typeCode!=null or date.status!=null or date.startTime!=null) and date.endTime !=null">
+            and createtime >#{date.endTime}
+        </if>
+        <if test="date.typeName==null and date.typeCode==null and date.status==null and date.startTime==null and date.endTime!=null">
+            where createtime >#{date.endTime}
+        </if>
+    </select>
+
 </mapper>
