@@ -36,7 +36,7 @@ public class UserController {
 
     @UserLoginToken
     @ApiOperation("用户信息列表")
-    @GetMapping("/GetList")
+    @PostMapping("/GetList")
     public ResponseResult<User> listUser(String userName,String phone,String status,String startTime,String endTime, int PageSize, int PageIndex, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
