@@ -70,16 +70,16 @@
             where modular like concat('%',#{date.modular},'%')
         </if>
         <if test="(date.operator!=null or date.modular!=null)and date.startTime!=null">
-            and operatingTime &lt;= #{date.startTime}
+            and operatingTime >= #{date.startTime}
         </if>
         <if test="date.operator==null and date.modular==null and date.startTime!=null">
-            where operatingTime &lt;= #{date.startTime}
+            where operatingTime >= #{date.startTime}
         </if>
         <if test="(date.operator!=null or date.modular!=null or date.startTime!=null)and date.endTime!=null">
-            and operatingTime >#{date.endTime}
+            and operatingTime &lt;=#{date.endTime}
         </if>
         <if test="date.operator==null and date.modular==null and date.startTime!=null and date.endTime!=null">
-            where operatingTime >#{date.endTime}
+            where operatingTime &lt;=#{date.endTime}
         </if>
     </select>
 
