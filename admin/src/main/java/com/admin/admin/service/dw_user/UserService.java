@@ -57,13 +57,13 @@ public class UserService {
     }
 
     //用户列表
-    public PageBean listUser(int PageIndex,int PageSize) {
+    public PageBean listUser(String userName,String phone,String status, int PageIndex,int PageSize) {
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
 
 
 
         PageHelper.startPage(PageIndex, PageSize);
-        List<User> allItems = userDao.listUser();
+        List<User> allItems = userDao.listUser(userName,phone,status);
         PageInfo<User> info = new PageInfo<>(allItems);//全部商品
         int countNums = (int) info.getTotal();            //总记录数
         PageBean<User> pageData = new PageBean<>(PageIndex, PageSize, countNums);

@@ -6,7 +6,10 @@
         SELECT * from t_userpermissiongroup
     </select>
     <select id="getGroup" parameterType="int" resultType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup">
-        SELECT * from t_userpermissiongroup WHERE status=TRUE and permissionid=#{id}
+        SELECT * from t_userpermissiongroup WHERE permissionid=#{id}
+    </select>
+    <select id="getSomeoneMenuList" parameterType="int" resultType="com.admin.model.coordina.MenuModel">
+        select menuid as id,rolename as Name from t_userrole where status=true and permissionid=#{id}
     </select>
     <insert id="saveUserGroup" parameterType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup" useGeneratedKeys="true" keyProperty="permissionid">
         insert into t_userpermissiongroup(createid,createtime,permissionname,createname,status) values (#{createid},#{createtime},#{permissionname},#{createname},#{status})
