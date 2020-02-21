@@ -1,6 +1,8 @@
 package com.admin.admin.dao.dw_enum;
 
 import com.admin.admin.entity.dw_enum.TEnum;
+import com.admin.model.enummodel.EnumModel;
+import com.admin.model.enummodel.EnumSearchModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -37,4 +39,11 @@ public interface EnumDao {
 
     int updateEnum(@Param("enumId")int enumId,@Param("typeName")String typeName, @Param("typeCode")String typeCode, @Param("status")boolean status, @Param("enumName")String enumName);
 
+    int deleteEnum(@Param("enumId")int enumId);
+
+    List<EnumModel> listAllEnum();
+
+    List<EnumModel> findEnum(@Param(("date")) EnumSearchModel enumSearchModel);
+
+    EnumModel getOneEnum(@Param("enumId")int enumId);
 }

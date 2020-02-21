@@ -2,6 +2,7 @@ package com.adminapp.business.service.dw_supervise;
 
 import com.adminapp.business.dao.dw_supervise.SuperfineDado;
 import com.adminapp.business.entity.dw_supervise.*;
+import com.adminapp.business.entity.dw_user.UserModel;
 import com.adminapp.model.dw_supervise.*;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -197,5 +198,10 @@ public class SuperviseService {
 
     public List<SummonsInformation> listNotCiteRecord(){
         return superfineDado.listNotCiteRecord();
+    }
+
+    //获取工作人员信息
+    public UserModel getUserInformation(String userId){
+        return superfineDado.getUserInformation(userId);
     }
 }
