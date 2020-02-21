@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Api(value="菜单管理",tags={"菜单管理"})
 @RestController
 @RequestMapping("/Meun")
@@ -22,10 +24,10 @@ public class MeunController {
 
     @UserLoginToken
     @GetMapping("/GetMeun")
-    public ResponseResult GetMenuList(){
+    public ResponseResult GetMenuList(@RequestParam int PageSize, int PageIndex, HttpServletResponse response){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(meunService.GetMenuList());
+        return result.setData(meunService.GetMenuList( PageSize, PageIndex));
     }
 
     @UserLoginToken

@@ -48,14 +48,14 @@ public class UserRoleController {
     @ApiOperation("删除用户权限")
     @GetMapping("/DelUserRole")
     public ResponseResult deleteUserRole(@RequestParam boolean flag, @RequestParam int UserRoleId, HttpServletResponse response) {
-        if (flag == true) {
+        if (flag != true) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
             result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
             return result.setData("参数'flag'输入错误");
         }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData( userRoleService.deleteUserRole(flag, UserRoleId));
+        return result.setData( userRoleService.deleteUserRole(!flag, UserRoleId));
     }
 
     @UserLoginToken
