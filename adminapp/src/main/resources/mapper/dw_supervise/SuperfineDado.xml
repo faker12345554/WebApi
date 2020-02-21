@@ -127,4 +127,7 @@
     <select id="listNotCiteRecord" resultType="com.adminapp.business.entity.dw_supervise.SummonsInformation">
         select * FROM t_summons WHERE t_summons.reporttime is null ORDER BY t_summons.summontime DESC
     </select>
+    <select id="getUserInformation" resultType="com.adminapp.business.entity.dw_user.UserModel">
+        select * from t_user where accountname=#{userId}
+    </select>
 </mapper>

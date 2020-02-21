@@ -84,6 +84,8 @@ public class LogController {
     @PassToken
     @PostMapping("/deleteLog")
     public ResponseResult deleteLog(@RequestBody int number){
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(logService.deleteLog(number));
     }
 }

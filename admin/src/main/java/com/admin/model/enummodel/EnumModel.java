@@ -1,16 +1,17 @@
 package com.admin.model.enummodel;
 
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class EnumModel {
 
-  private int enumid;
-  private String typecode;
-  private String typename;
-  private String enumname;
-  private String status;
-  private Date createtime;
+  private int enumid;       //字典编号
+  private String typecode;  //字典类型
+  private String typename;  //字典名称
+  private String enumname;  //备注
+  private String status;    //状态
+  private java.sql.Timestamp createtime;  //创建时间
 
 
   public int getEnumid() {
@@ -53,15 +54,22 @@ public class EnumModel {
     return status;
   }
 
-  public void setStatus(String status) {
-    this.status = status;
+  public void setStatus(boolean status) {
+    String Status="";
+    if(status){
+      Status="正常";
+    }
+    else{
+      Status="停用";
+    }
+    this.status = Status;
   }
 
-  public Date getCreatetime() {
+  public Timestamp getCreatetime() {
     return createtime;
   }
 
-  public void setCreatetime(Date createtime) {
+  public void setCreatetime(Timestamp createtime) {
     this.createtime = createtime;
   }
 }

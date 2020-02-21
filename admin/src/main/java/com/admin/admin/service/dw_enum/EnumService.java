@@ -77,4 +77,9 @@ public class EnumService {
     public List<EnumModel> findEnum(EnumSearchModel enumSearchModel){
         return enumDao.findEnum(enumSearchModel);
     }
+
+    //获取单条记录
+    public EnumModel getOneEnum(int enumId){
+        return enumDao.getOneEnum(enumId);
+    }
 }

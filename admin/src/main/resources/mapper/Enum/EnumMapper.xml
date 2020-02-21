@@ -110,4 +110,8 @@
         </if>
     </select>
 
+    <select id="getOneEnum" resultType="com.admin.model.enummodel.EnumModel">
+        select enumid,typecode,typename,enumname,status,createtime from t_enum where enumid=#{enumId}
+    </select>
+
 </mapper>

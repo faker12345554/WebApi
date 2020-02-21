@@ -44,4 +44,6 @@ public interface EnumDao {
     List<EnumModel> listAllEnum();
 
     List<EnumModel> findEnum(@Param(("date")) EnumSearchModel enumSearchModel);
+
+    EnumModel getOneEnum(@Param("enumId")int enumId);
 }

@@ -159,5 +159,28 @@ public class EnumController {
             result.setMessage(ResultCode.UNKNOW_ERROR.getMessage());
             return result.setData(ex.toString());
         }
+
+    }
+
+    @ApiOperation(value = "获取单条记录")
+    @PassToken
+    @GetMapping("/getOneEnum")
+    public ResponseResult getOneEnum(@ApiParam(name = "enumId", value = "字典id") @RequestParam(required = true) int enumId) {
+        EnumModel enumModel = enumService.getOneEnum(enumId);
+        try {
+            if (enumModel == null) {
+                result.setCode(ResultCode.NULLDATA.getCode());
+                result.setMessage(ResultCode.NULLDATA.getMessage());
+                return result.setData("");
+            } else {
+                result.setCode(ResultCode.SUCCESS.getCode());
+                result.setMessage(ResultCode.SUCCESS.getMessage());
+                return result.setData(enumModel);
+            }
+        } catch (Exception ex) {
+            result.setCode(ResultCode.UNKNOW_ERROR.getCode());
+            result.setMessage(ResultCode.UNKNOW_ERROR.getMessage());
+            return result.setData(ex.toString());
+        }
     }
 }

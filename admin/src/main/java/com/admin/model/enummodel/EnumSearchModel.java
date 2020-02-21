@@ -1,8 +1,7 @@
 package com.admin.model.enummodel;
 
-import com.admin.model.search.SearchModel;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class EnumSearchModel {
     private String typeName;
@@ -47,7 +46,7 @@ public class EnumSearchModel {
         this.typeCode = typeCode;
     }
 
-    public String isStatus() {
+    public String getStatus() {
         return status;
     }
 
