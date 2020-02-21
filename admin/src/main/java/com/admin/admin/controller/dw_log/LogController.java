@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Api(value="操作日志controller",tags={"查看操作日志"})
 @RestController
@@ -83,9 +84,13 @@ public class LogController {
     @ApiOperation(value = "删除日志")
     @PassToken
     @PostMapping("/deleteLog")
-    public ResponseResult deleteLog(@RequestBody int number){
+    public ResponseResult deleteLog(@RequestParam int[] number){
+        for (int code:number
+             ) {
+            int deleteLog=logService.deleteLog(code);
+        }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(logService.deleteLog(number));
+        return result.setData("");
     }
 }
