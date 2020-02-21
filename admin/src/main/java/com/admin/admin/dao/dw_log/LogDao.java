@@ -3,8 +3,10 @@ package com.admin.admin.dao.dw_log;
 
 import com.admin.admin.entity.dw_log.LogInformation;
 import com.admin.model.Appstatistics.AppStatistics;
+import com.admin.model.log.LogModel;
 import com.admin.model.log.LogParamModel;
 import com.admin.model.log.LogReturnModel;
+import com.admin.model.log.LogSearchModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,4 +47,8 @@ public interface LogDao {
      * @return
      */
     List<AppStatistics> Solarrate(@Param("Areacode") String Areacode,@Param("Starttime") String Starttime,@Param("EndTime")String EndTime,@Param("level") int level);
+
+    List<LogModel> listAllLog(@Param("date") LogSearchModel logSearchModel);
+
+    int deleteLog (@Param("id")int id);
 }

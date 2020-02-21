@@ -97,16 +97,16 @@
             </if>
         </if>
         <if test="(date.typeName!=null or date.typeCode!=null or date.status!=null) and date.startTime!=null">
-            and createtime &lt; #{date.startTime}
+            and createtime >= #{date.startTime}
         </if>
         <if test="(date.typeName==null and date.typeCode==null and date.status==null) and date.startTime!=null">
-            where createtime &lt; #{date.startTime}
+            where createtime >= #{date.startTime}
         </if>
         <if test="(date.typeName!=null or date.typeCode!=null or date.status!=null or date.startTime!=null) and date.endTime !=null">
-            and createtime >#{date.endTime}
+            and createtime &lt;=#{date.endTime}
         </if>
         <if test="date.typeName==null and date.typeCode==null and date.status==null and date.startTime==null and date.endTime!=null">
-            where createtime >#{date.endTime}
+            where createtime &lt;=#{date.endTime}
         </if>
     </select>
 
