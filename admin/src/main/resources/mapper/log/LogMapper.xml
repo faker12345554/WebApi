@@ -58,4 +58,32 @@
         </if>
 
     </select>
+    <select id="listAllLog" parameterType="com.admin.model.log.LogSearchModel" resultType="com.admin.model.log.LogModel">
+        select id,operator,modular,action,operatingtime from t_log
+        <if test="date.operator!=null">
+            where operator=#{date.operator}
+        </if>
+        <if test="date.operator!=null and date.modular!=null">
+            and modular like concat('%',#{date.modular},'%')
+        </if>
+        <if test="date.operator==null and date.modular!=null">
+            where modular like concat('%',#{date.modular},'%')
+        </if>
+        <if test="(date.operator!=null or date.modular!=null)and date.startTime!=null">
+            and operatingTime &lt;= #{date.startTime}
+        </if>
+        <if test="date.operator==null and date.modular==null and date.startTime!=null">
+            where operatingTime &lt;= #{date.startTime}
+        </if>
+        <if test="(date.operator!=null or date.modular!=null or date.startTime!=null)and date.endTime!=null">
+            and operatingTime >#{date.endTime}
+        </if>
+        <if test="date.operator==null and date.modular==null and date.startTime!=null and date.endTime!=null">
+            where operatingTime >#{date.endTime}
+        </if>
+    </select>
+
+    <delete id="deleteLog">
+        delete from t_log where id=#{id}
+    </delete>
 </mapper>
