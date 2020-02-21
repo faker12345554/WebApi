@@ -6,6 +6,7 @@ import com.admin.model.Appstatistics.AppStatistics;
 import com.admin.model.log.LogParamModel;
 import com.admin.page.PageBean;
 import com.admin.token.tation.UserLoginToken;
+import com.common.common.authenticator.CalendarAdjust;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.github.mustachejava.Code;
@@ -126,6 +127,27 @@ public class LogController {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(numberList);
     }
+
+    @ApiOperation(value = "统计日月活率")
+    @GetMapping("/Solarrate")
+    public ResponseResult Solarrate(@RequestParam String code,int codelevel, int level,String Starttime,String endetime) {
+        if (codelevel==1){
+            code=code.substring(0,4);
+        } else if (codelevel==2){
+            code=code.substring(0,6);
+        }
+        else if (codelevel == 3) {
+            code = code.substring(0, 8);
+        } else if (codelevel == 4) {
+            code = code.substring(0, 10);
+        }
+        List<AppStatistics> modelList = logService.Solarrate(code, Starttime,endetime,level);
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(modelList);
+    }
+
+
 
 
 }

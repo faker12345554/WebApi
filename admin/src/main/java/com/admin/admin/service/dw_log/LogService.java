@@ -48,5 +48,9 @@ public class LogService {
         return logDao.Removalrate(Areacode,Starttime,Endtime);
     }
 
+    public List<AppStatistics> Solarrate(String Code,String StartTime,String EndTime,int level){
+        return logDao.Solarrate(Code,StartTime,EndTime,level);
+    }
+
 }
 

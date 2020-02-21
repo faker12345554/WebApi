@@ -36,4 +36,13 @@ public interface LogDao {
      * @return
      */
     AppStatistics Removalrate(@Param("Areacode") String Areacode,@Param("Starttime") String Starttime,String Endtime);
+
+
+    /**
+     * 日活动率
+     * @param Areacode
+     * @param Precisetime
+     * @return
+     */
+    List<AppStatistics> Solarrate(@Param("Areacode") String Areacode,@Param("Starttime") String Starttime,@Param("EndTime")String EndTime,@Param("level") int level);
 }
