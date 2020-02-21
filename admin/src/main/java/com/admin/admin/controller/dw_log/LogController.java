@@ -136,6 +136,7 @@ public class LogController {
         } else if (codelevel==2){
             code=code.substring(0,6);
         }
+
         else if (codelevel == 3) {
             code = code.substring(0, 8);
         } else if (codelevel == 4) {
