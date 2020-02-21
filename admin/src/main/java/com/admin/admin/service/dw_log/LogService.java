@@ -3,8 +3,10 @@ package com.admin.admin.service.dw_log;
 import com.admin.admin.dao.dw_log.LogDao;
 
 import com.admin.model.Appstatistics.AppStatistics;
+import com.admin.model.log.LogModel;
 import com.admin.model.log.LogParamModel;
 import com.admin.model.log.LogReturnModel;
+import com.admin.model.log.LogSearchModel;
 import com.admin.page.PageBean;
 import com.common.common.result.ResponseResult;
 import com.github.pagehelper.PageHelper;
@@ -50,6 +52,15 @@ public class LogService {
 
     public List<AppStatistics> Solarrate(String Code,String StartTime,String EndTime,int level){
         return logDao.Solarrate(Code,StartTime,EndTime,level);
+    }
+
+    public List<LogModel> listAllLog(LogSearchModel logSearchModel){
+        return logDao.listAllLog(logSearchModel);
+    }
+
+    //删除日志
+    public int deleteLog(int id){
+        return logDao.deleteLog(id);
     }
 
 }
