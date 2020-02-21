@@ -1,6 +1,7 @@
 package com.adminapp.business.controller.dw_supervise;
 
 import com.adminapp.business.entity.dw_supervise.*;
+import com.adminapp.business.entity.dw_user.UserModel;
 import com.adminapp.business.service.dw_supervise.SuperviseService;
 import com.adminapp.config.CacheUtils;
 import com.adminapp.config.token.TokenUtil;
@@ -1041,6 +1042,8 @@ public class SuperviseController {
                                        @ApiParam(name = "isApprove",value = "是否通过")@RequestParam(required = true)boolean isApprove){
         ResultSet rs=new ResultSet();
         String userId=TokenUtil.getTokenUserId();
+        UserModel userModel=superviseService.getUserInformation(userId);
+        String policeName=userModel.getAliasname();
         LeaveListModel leaveInformation=superviseService.getLeaveInformation(code);
         if(leaveInformation!=null){
             if(leaveInformation.getStatusCode().equals("1")){    //判断该请假单是否为待审批状态
@@ -1050,11 +1053,11 @@ public class SuperviseController {
                 String message=leaveInformation.getReason();
                 if(isApprove){    //审批为通过
                     int updateLeaveInformation=superviseService.updateLeaveInformation(code,"2","审批通过");  //修改请假单信息
-                    int insertAuditorInformation=superviseService.insertAuditorInformation(code,userId,userName,date,message,"2","审批通过");
+                    int insertAuditorInformation=superviseService.insertAuditorInformation(code,userId,policeName,date,message,"2","审批通过");
                 }
                 else{      //审批不通过
                     int updateLeaveInformation=superviseService.updateLeaveInformation(code,"3","审批未通过"); //修改请假单信息
-                    int insertAuditorInformation=superviseService.insertAuditorInformation(code,userId,userName,date,message,"3","审批不通过");
+                    int insertAuditorInformation=superviseService.insertAuditorInformation(code,userId,policeName,date,message,"3","审批不通过");
                 }
                 rs.resultCode=0;
                 rs.resultMsg="";

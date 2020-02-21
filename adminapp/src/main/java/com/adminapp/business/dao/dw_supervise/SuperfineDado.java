@@ -1,6 +1,7 @@
 package com.adminapp.business.dao.dw_supervise;
 
 import com.adminapp.business.entity.dw_supervise.*;
+import com.adminapp.business.entity.dw_user.UserModel;
 import com.adminapp.model.dw_supervise.*;
 import org.apache.ibatis.annotations.Param;
 import org.mapstruct.Mapper;
@@ -87,4 +88,6 @@ public interface SuperfineDado {
     String getViolateName(@Param("typeCode")String typeCode,@Param("enumCode")String enumCode);
 
     List<SummonsInformation> listNotCiteRecord();
+
+    UserModel getUserInformation(@Param("userId")String userId);
 }

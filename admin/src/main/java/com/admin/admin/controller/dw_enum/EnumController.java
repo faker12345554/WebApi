@@ -2,10 +2,15 @@ package com.admin.admin.controller.dw_enum;
 
 import com.admin.admin.entity.dw_enum.TEnum;
 import com.admin.admin.service.dw_enum.EnumService;
+import com.admin.model.enummodel.EnumModel;
+import com.admin.model.enummodel.EnumSearchModel;
+import com.admin.page.PageBean;
 import com.admin.token.tation.PassToken;
 import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -23,13 +28,12 @@ public class EnumController {
     private ResponseResult result = new ResponseResult();
 
     /**
-     *
      * @param Code
      * @return
      */
     @UserLoginToken
     @GetMapping("/GetEnum")
-    public ResponseResult GetEnum(@RequestParam String Code){
+    public ResponseResult GetEnum(@RequestParam String Code) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(enumService.GetEnum(Code));
@@ -37,7 +41,7 @@ public class EnumController {
 
     @UserLoginToken
     @GetMapping("/GetPolice")
-    public ResponseResult GetPolice(@RequestParam String PoliceStation){
+    public ResponseResult GetPolice(@RequestParam String PoliceStation) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(enumService.GetPolice(PoliceStation));
@@ -45,11 +49,12 @@ public class EnumController {
 
     /**
      * 获取机构
+     *
      * @return
      */
     @UserLoginToken
     @GetMapping("/ListMechanism")
-    public ResponseResult ListMechanism(){
+    public ResponseResult ListMechanism() {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(enumService.ListMechanism());
@@ -66,12 +71,13 @@ public class EnumController {
 
     /**
      * 获取主办人
+     *
      * @param Code
      * @return
      */
     @UserLoginToken
     @GetMapping("/ListSponsor")
-    public ResponseResult ListSponsor(@RequestParam String Code){
+    public ResponseResult ListSponsor(@RequestParam String Code) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(enumService.ListSponsor(Code));
@@ -81,31 +87,100 @@ public class EnumController {
     @ApiOperation(value = "新增数据字典")
     @UserLoginToken
     @PostMapping("/addEnum")
-    public ResponseResult addEnum(@ApiParam(name = "typeName",value = "字典名称")@RequestParam(required = true)String typeName,
-                                  @ApiParam(name = "typeCode",value = "字典类型")@RequestParam(required = true)String typeCode,
-                                  @ApiParam(name = "status",value = "状态")@RequestParam(required = true)boolean status,
-                                  @ApiParam(name = "enumName",value = "备注")@RequestParam(required = true)String enumName){
-        List<TEnum> listEnum=enumService.listEnum(typeCode);
-        int enumCode=1;
-        if(listEnum.size()!=0){
-            int enumNumber=Integer.parseInt( listEnum.get(listEnum.size()-1).getEnumcode());
-            enumCode=enumNumber+1;
+    public ResponseResult addEnum(@ApiParam(name = "typeName", value = "字典名称") @RequestParam(required = true) String typeName,
+                                  @ApiParam(name = "typeCode", value = "字典类型") @RequestParam(required = true) String typeCode,
+                                  @ApiParam(name = "status", value = "状态") @RequestParam(required = true) boolean status,
+                                  @ApiParam(name = "enumName", value = "备注") @RequestParam(required = true) String enumName) {
+        List<TEnum> listEnum = enumService.listEnum(typeCode);
+        int enumCode = 1;
+        if (listEnum.size() != 0) {
+            int enumNumber = Integer.parseInt(listEnum.get(listEnum.size() - 1).getEnumcode());
+            enumCode = enumNumber + 1;
         }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(enumService.addEnum(typeName,typeCode,status,String.valueOf(enumCode),enumName));
+        return result.setData(enumService.addEnum(typeName, typeCode, status, String.valueOf(enumCode), enumName));
     }
 
     @ApiOperation(value = "修改数据字典")
-    @PassToken
+    @UserLoginToken
     @PostMapping("/updateEnum")
-    public ResponseResult updateEnum(@ApiParam(name = "enumId",value = "数据字典id")@RequestParam(required = true)int enumId,
-                                     @ApiParam(name = "typeName",value = "字典名称")@RequestParam(required = true)String typeName,
-                                     @ApiParam(name = "typeCode",value = "字典类型")@RequestParam(required = true)String typeCode,
-                                     @ApiParam(name = "status",value = "状态")@RequestParam(required = true)boolean status,
-                                     @ApiParam(name = "enumName",value = "备注")@RequestParam(required = true)String enumName){
+    public ResponseResult updateEnum(@ApiParam(name = "enumId", value = "数据字典id") @RequestParam(required = true) int enumId,
+                                     @ApiParam(name = "typeName", value = "字典名称") @RequestParam(required = true) String typeName,
+                                     @ApiParam(name = "typeCode", value = "字典类型") @RequestParam(required = true) String typeCode,
+                                     @ApiParam(name = "status", value = "状态") @RequestParam(required = true) boolean status,
+                                     @ApiParam(name = "enumName", value = "备注") @RequestParam(required = true) String enumName) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(enumService.updateEnum(enumId,typeName,typeCode,status,enumName));
+        return result.setData(enumService.updateEnum(enumId, typeName, typeCode, status, enumName));
+    }
+
+    @ApiOperation(value = "删除数据字典")
+    @PassToken
+    @PostMapping("/deleteEnum")
+    public ResponseResult deleteEnum(@ApiParam(name = "enumId", value = "字典编号") @RequestParam(required = true) int enumId) {
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(enumService.deleteEnum(enumId));
+    }
+
+//    @ApiOperation(value = "列出所有数据字典")
+//    @PassToken
+//    @GetMapping("/listEnum")
+//    public ResponseResult listEnum() {
+//
+//        result.setCode(ResultCode.SUCCESS.getCode());
+//        result.setMessage(ResultCode.SUCCESS.getMessage());
+//        return result.setData(enumService.listAllEnum());
+//    }
+
+    @ApiOperation(value = "查询数据字典")
+    @PassToken
+    @PostMapping("findEnum")
+    public ResponseResult findEnum(@RequestBody(required = true) EnumSearchModel enumSearchModel) {
+        PageHelper.startPage(enumSearchModel.getPageIndex(), enumSearchModel.getPageSize());
+        List<EnumModel> allItems = enumService.findEnum(enumSearchModel);
+        try {
+            if (allItems.size() == 0) {
+                result.setCode(ResultCode.NULLDATA.getCode());
+                result.setMessage(ResultCode.NULLDATA.getMessage());
+                return result.setData("");
+            }
+            PageInfo<EnumModel> info = new PageInfo<>(allItems);//全部商品
+            int countNums = (int) info.getTotal();            //总记录数
+            PageBean<EnumModel> pageData = new PageBean<>(enumSearchModel.getPageIndex(), enumSearchModel.getPageSize(), countNums);
+            pageData.setTotalPage(info.getPages());//总页数
+            pageData.setItems(allItems);
+            result.setCode(ResultCode.SUCCESS.getCode());
+            result.setMessage(ResultCode.SUCCESS.getMessage());
+            return result.setData(pageData);
+        } catch (Exception ex) {
+            result.setCode(ResultCode.UNKNOW_ERROR.getCode());
+            result.setMessage(ResultCode.UNKNOW_ERROR.getMessage());
+            return result.setData(ex.toString());
+        }
+
+    }
+
+    @ApiOperation(value = "获取单条记录")
+    @PassToken
+    @GetMapping("/getOneEnum")
+    public ResponseResult getOneEnum(@ApiParam(name = "enumId", value = "字典id") @RequestParam(required = true) int enumId) {
+        EnumModel enumModel = enumService.getOneEnum(enumId);
+        try {
+            if (enumModel == null) {
+                result.setCode(ResultCode.NULLDATA.getCode());
+                result.setMessage(ResultCode.NULLDATA.getMessage());
+                return result.setData("");
+            } else {
+                result.setCode(ResultCode.SUCCESS.getCode());
+                result.setMessage(ResultCode.SUCCESS.getMessage());
+                return result.setData(enumModel);
+            }
+        } catch (Exception ex) {
+            result.setCode(ResultCode.UNKNOW_ERROR.getCode());
+            result.setMessage(ResultCode.UNKNOW_ERROR.getMessage());
+            return result.setData(ex.toString());
+        }
     }
 }
