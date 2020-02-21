@@ -2,8 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_user.UserDao">
-    <select id="listUser" resultType="com.admin.admin.entity.dw_user.User">
+    <select id="listUser" parameterType="String" resultType="com.admin.admin.entity.dw_user.User">
         SELECT * FROM "t_user"
+            <if test="#{userName}!=null">
+                where aliasname=#{userName}
+            </if>
+            <if test="#{userName}!=null and #{phone}!=null">
+                and phone=#{phone}
+            </if>
+            <if test="#{userName}==null and #{phone}!=null">
+                where phone=#{phone}
+            </if>
+            <if test="(#{userName}!=null or #{phone}!=null) and #{status}!=null">
+                <if test="#{status}.equals('正常')">
+                    and status=true
+                </if>
+                <if test="#{status}.equals('停用')">
+                    and status=false
+                </if>
+            </if>
+            <if test="#{userName}==null and #{phone}==null and #{status}!=null">
+                <if test="#{status}.equals('正常')">
+                    where status=true
+                </if>
+                <if test="#{status}.equals('停用')">
+                    where status=false
+                </if>
+            </if>
+<!--            <if test="(#{userName}!=null or #{phone}!=null or #{status}!=null) and #{startTime}!=null">-->
+<!--                and createtime &lt; #{date.startTime}-->
+<!--            </if>-->
+<!--            <if test="(#{userName}==null and #{phone}==null and #{status}==null) and #{startTime}!=null">-->
+<!--                where createtime &lt; #{date.startTime}-->
+<!--            </if>-->
+<!--            <if test="(#{userName}!=null or #{phone}!=null or #{status}!=null or #{startTime}!=null) and #{endTime} !=null">-->
+<!--                and createtime >#{date.endTime}-->
+<!--            </if>-->
+<!--            <if test="#{userName}==null and #{phone}==null and #{status}==null and #{startTime}==null and #{endTime}!=null">-->
+<!--                where createtime >#{date.endTime}-->
+<!--            </if>-->
+
     </select>
 
     <select id="getUser" parameterType="String" resultType="com.admin.admin.entity.dw_user.User">

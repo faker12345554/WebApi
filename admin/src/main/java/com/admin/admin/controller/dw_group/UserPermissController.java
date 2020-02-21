@@ -56,7 +56,7 @@ public class UserPermissController {
     @GetMapping("/DelGroup")
     public ResponseResult deleteGroup(@RequestParam boolean flag,
                                       @RequestParam int GroupId, HttpServletResponse response) {
-        if (flag == true) {
+        if (flag != true) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
             result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
             return result.setData("参数'flag'输入错误");
@@ -67,7 +67,7 @@ public class UserPermissController {
         }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(groupService.deleteGroup(flag, GroupId));
+        return result.setData(groupService.deleteGroup(!flag, GroupId));
     }
 
     @UserLoginToken

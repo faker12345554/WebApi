@@ -13,7 +13,7 @@ import java.util.Map;
 public interface UserPermissionGroupDao {
 
     //新增
-    UserPermissionGroup saveUserGroup( UserPermissionGroup userGroup);
+    int saveUserGroup( UserPermissionGroup UserGroup);
     //修改
     int updateGroup(UserPermissionGroup  userGroup);
     //删除
@@ -21,6 +21,8 @@ public interface UserPermissionGroupDao {
 
     //获取
     UserPermissionGroup getGroup(@Param("id") int id);
+
+    List<MenuModel> getSomeoneMenuList(@Param("id") int id);
 
     //权限组列表
     List<UserPermissionGroup> listGroup();
