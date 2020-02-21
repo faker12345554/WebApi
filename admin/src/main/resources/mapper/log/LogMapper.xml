@@ -44,18 +44,18 @@
 
         (SELECT count(*)  from t_user where phone in
         ( SELECT contact from t_personinformation where sponsoralarm in
-        (SELECT mjbh from fsga_yw_ryb where bmbm like   concat('%',#{Areacode},'%')))) as Totalnumber   from t_log where operator in
+        (SELECT mjbh from fsga_yw_ryb where bmbm like   concat('%',#{Areacode},'%')))) as Totalnumber  from t_log where operator in
         ( SELECT "id"  from t_user where phone in
         ( SELECT contact from t_personinformation where sponsoralarm in
         (SELECT mjbh from fsga_yw_ryb where bmbm like  concat('%',#{Areacode},'%'))))
         <if test="level==1">
-            and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd') and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{Starttime},'yyyy-MM-dd')
+            and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd') and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd')
             GROUP BY substring(to_char(operatingtime,'yyyy-MM-dd HH:mm:ss'),0,11)
         </if>
         <if test="level==2">
-            and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd') and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{Starttime},'yyyy-MM-dd')
+            and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd') and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd')
             GROUP BY substring(to_char(operatingtime,'yyyy-MM-dd HH:mm:ss'),0,8)
         </if>
-        )
+
     </select>
 </mapper>
