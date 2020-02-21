@@ -3,6 +3,16 @@ package com.admin.model.Appstatistics;
 public class AppStatistics {
     private String Code;
     private int Totalnumber;//总人数
+    private String Precisetime;
+
+    public String getPrecisetime() {
+        return Precisetime;
+    }
+
+    public AppStatistics setPrecisetime(String precisetime) {
+        Precisetime = precisetime;
+        return this;
+    }
 
     public String getCode() {
         return Code;
