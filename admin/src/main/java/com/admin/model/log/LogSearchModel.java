@@ -1,6 +1,6 @@
 package com.admin.model.log;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class LogSearchModel {
     private int operator;

@@ -117,11 +117,16 @@ public class EnumController {
 
     @ApiOperation(value = "删除数据字典")
     @PassToken
-    @PostMapping("/deleteEnum")
-    public ResponseResult deleteEnum(@ApiParam(name = "enumId", value = "字典编号") @RequestParam(required = true) int enumId) {
+    @GetMapping("/deleteEnum")
+    public ResponseResult deleteEnum(@ApiParam(name = "enumId", value = "字典编号") @RequestParam(required = true) String enumId) {
+        String[] a=enumId.split(",");
+        for (String id:a
+             ) {
+            int deleteLog=enumService.deleteEnum(Integer.parseInt(id));
+        }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(enumService.deleteEnum(enumId));
+        return result.setData("");
     }
 
 //    @ApiOperation(value = "列出所有数据字典")
