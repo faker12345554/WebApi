@@ -1,5 +1,6 @@
 package com.admin.admin.controller.dw_user;
 
+import com.admin.admin.entity.dw_user.Usermodel;
 import com.admin.page.PageUtil;
 import com.admin.token.TokenService;
 import com.admin.token.tation.UserLoginToken;
@@ -37,10 +38,11 @@ public class UserController {
     @UserLoginToken
     @ApiOperation("用户信息列表")
     @PostMapping("/GetList")
-    public ResponseResult<User> listUser(String userName,String phone,String status,String startTime,String endTime, int PageSize, int PageIndex, HttpServletResponse response) {
+    public ResponseResult<User> listUser(@RequestBody Usermodel usermodel, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(userService.listUser(userName,phone,status,PageIndex,PageSize));
+        //return result.setData(userService.listUser(usermodel.getUserName(),usermodel.getPhone(),usermodel.getStatus(),usermodel.getPageIndex(),usermodel.getPageSize()));
+        return result.setData(userService.listUser(usermodel));
     }
 
 

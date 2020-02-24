@@ -35,7 +35,7 @@ public class MeunController {
     public ResponseResult delMeun(@RequestParam boolean flag,@RequestParam int id){
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(meunService.delMeun(flag,id));
+        return result.setData(meunService.delMeun(!flag,id));
     }
     @UserLoginToken
     @GetMapping("/GetMeunbyid")

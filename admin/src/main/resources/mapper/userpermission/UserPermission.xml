@@ -34,7 +34,7 @@
     </delete>
 
     <update id="DelStatus">
-        update t_userrole set legal."public".t_userrole.status=#{flag} where permissionid=#{permissionid}
+        update t_userrole set status=#{flag} where permissionid=#{permissionid}
     </update>
 
     <select id="GetMenuList" resultType="com.admin.model.coordina.MenuModel">

@@ -2,6 +2,7 @@ package com.admin.admin.dao.dw_user;
 
 
 import com.admin.admin.entity.dw_user.User;
+import com.admin.admin.entity.dw_user.Usermodel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,7 +20,7 @@ public interface UserDao {
     User login(@Param("UserName") String UserName,@Param("Password") String Password);
 
     //用户列表
-    List<User> listUser(@Param("userName")String userName,@Param("phone")String phone,@Param("status")String status);
+    List<User> listUser(@Param("usermodel") Usermodel usermodel);
 
     //查看
     User getUser(@Param("UserName") String UserName);
