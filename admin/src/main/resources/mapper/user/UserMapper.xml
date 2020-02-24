@@ -7,7 +7,7 @@
             <if test="usermodel.userName!=null">
                 where aliasname=#{usermodel.userName}
             </if>
-            <if test="usermodel.userName!=null and phone!=null">
+            <if test="usermodel.userName!=null and usermodel.phone!=null">
                 and phone=#{usermodel.phone}
             </if>
             <if test="usermodel.userName==null and usermodel.phone!=null">

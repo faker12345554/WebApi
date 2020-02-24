@@ -4,6 +4,38 @@
 <mapper namespace="com.admin.admin.dao.dw_userpermission.UserPermissionGroupDao">
     <select id="listGroup" resultType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup">
         SELECT * from t_userpermissiongroup
+            <if test="condition.groupName!=null">
+                where permissionname=#{condition.groupName}
+            </if>
+            <if test="condition.groupName!=null  and condition.status!=null">
+                <if test="condition.status=='正常'">
+                    and status=true
+                </if>
+                <if test="condition.status=='停用'">
+                    and status=false
+                </if>
+            </if>
+            <if test="condition.groupName==null  and condition.status!=null">
+                <if test="condition.status=='正常'">
+                    where status=true
+                </if>
+                <if test="condition.status=='停用'">
+                    where status=false
+                </if>
+            </if>
+            <if test="(condition.groupName!=null or condition.status!=null) and condition.startTime!=null">
+                and createtime &lt; #{condition.startTime}
+            </if>
+            <if test="(condition.groupName==null and  condition.status==null) and condition.startTime!=null">
+                where createtime &lt; #{condition.startTime}
+            </if>
+            <if test="(condition.groupName!=null  or condition.status!=null or condition.startTime!=null) and condition.endTime !=null">
+                and createtime >#{condition.endTime}
+            </if>
+            <if test="condition.groupName==null and condition.status==null and condition.startTime==null and condition.endTime!=null">
+                where createtime >#{condition.endTime}
+            </if>
+
     </select>
     <select id="getGroup" parameterType="int" resultType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup">
         SELECT * from t_userpermissiongroup WHERE permissionid=#{id}
