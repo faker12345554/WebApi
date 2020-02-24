@@ -54,9 +54,9 @@
     </select>
 
     <insert id="saveUser" parameterType="com.admin.admin.entity.dw_user.User">
-     INSERT into t_user(accountname,password,aliasname,permissionid,createid,createname,areacode,phone,status,usersystem,officephone,police,areaname,department,mailbox,sex,station,bz)
+     INSERT into t_user(accountname,password,aliasname,permissionid,createid,createname,areacode,phone,status,usersystem,officephone,police,areaname,department,mailbox,sex,station,bz,createtime)
      values (#{user.accountname},#{user.password},#{user.aliasname},#{user.permissionid},#{user.createid},#{user.createname},#{user.areacode},#{user.phone},#{user.status},#{user.usersystem},
-     #{user.officephone},#{user.police},#{user.areaname},#{user.department},#{user.mailbox},#{user.sex},#{user.station},#{user.bz})
+     #{user.officephone},#{user.police},#{user.areaname},#{user.department},#{user.mailbox},#{user.sex},#{user.station},#{user.bz},Current_timestamp)
     </insert>
     <update id="updateUser" parameterType="com.admin.admin.entity.dw_user.User">
         UPDATE t_user set accountname=#{user.accountname}, password=#{user.password},aliasname=#{user.aliasname},permissionid=#{user.permissionid},status=#{user.status},

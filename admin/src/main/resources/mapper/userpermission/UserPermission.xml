@@ -44,7 +44,7 @@
         select menuid as id,rolename as Name from t_userrole where status=true and permissionid=#{id}
     </select>
     <insert id="saveUserGroup" parameterType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup" useGeneratedKeys="true" keyProperty="permissionid">
-        insert into t_userpermissiongroup(createid,createtime,permissionname,createname,status) values (#{createid},#{createtime},#{permissionname},#{createname},#{status})
+        insert into t_userpermissiongroup(createid,createtime,permissionname,createname,status) values (#{createid},Current_timestamp,#{permissionname},#{createname},#{status})
     </insert>
     <update id="updateGroup" parameterType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup">
         update t_userpermissiongroup set permissionname=#{permissionname},createtime=#{createtime},createid=#{createid},createname=#{createname},status=#{status} where permissionid=#{permissionid}

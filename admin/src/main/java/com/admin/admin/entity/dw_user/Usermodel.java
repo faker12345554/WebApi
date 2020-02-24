@@ -43,9 +43,14 @@ public class Usermodel {
     }
 
     public void setStartTime(String startTime) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date startTimeDate=sdf.parse(startTime);
-        this.startTime = startTimeDate;
+        if(startTime!=null){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date startTimeDate=sdf.parse(startTime);
+            this.startTime = startTimeDate;
+        }else{
+            this.startTime = null;
+        }
+
     }
 
     public Date getEndTime() {
@@ -53,9 +58,14 @@ public class Usermodel {
     }
 
     public void setEndTime(String endTime) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date endTimeDate=sdf.parse(endTime);
-        this.endTime = endTimeDate;
+        if(endTime!=null){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date endTimeDate=sdf.parse(endTime);
+            this.endTime = endTimeDate;
+        }else{
+            this.endTime = null;
+        }
+
     }
 
     public int getPageSize() {

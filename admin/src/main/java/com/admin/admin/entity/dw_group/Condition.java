@@ -33,9 +33,14 @@ public class Condition {
     }
 
     public void setStartTime(String startTime) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date startTimeDate=sdf.parse(startTime);
-        this.startTime = startTimeDate;
+        if(startTime!=null){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date startTimeDate=sdf.parse(startTime);
+            this.startTime = startTimeDate;
+        }else{
+            this.startTime = null;
+        }
+
     }
 
     public Date getEndTime() {
@@ -43,10 +48,14 @@ public class Condition {
     }
 
     public void setEndTime(String endTime) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        if(endTime!=null){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date endTimeDate=sdf.parse(endTime);
+            this.endTime = endTimeDate;
+        }else{
+            this.endTime = null;
+        }
 
-        Date endTimeDate=sdf.parse(endTime);
-        this.endTime = endTimeDate;
     }
 
     public int getPageSize() {
