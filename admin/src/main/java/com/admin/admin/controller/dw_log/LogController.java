@@ -120,7 +120,8 @@ public class LogController {
                 int usernumber=0;
                 for (Map<String,String> itam: countlist){
 
-                    int Days= Integer.parseInt(itam.get("Days").toString());
+                    int Days=Double.valueOf(itam.get("Days")).intValue();
+
                     if (Days>7){
                         usernumber+=1;
                     }
