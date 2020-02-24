@@ -37,8 +37,9 @@ public class UserController {
 
     @UserLoginToken
     @ApiOperation("用户信息列表")
+   // @PostMapping("/GetList")
     @PostMapping("/GetList")
-    public ResponseResult<User> listUser(@RequestBody Usermodel usermodel, HttpServletResponse response) {
+    public ResponseResult<User> listUser(@RequestBody Usermodel usermodel) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         //return result.setData(userService.listUser(usermodel.getUserName(),usermodel.getPhone(),usermodel.getStatus(),usermodel.getPageIndex(),usermodel.getPageSize()));

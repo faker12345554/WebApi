@@ -158,7 +158,7 @@ public class LeaveController {
     }
 
     @ApiOperation(value = "平台外出申请统计")
-    @PostMapping("/CountLeave")
+    @GetMapping("/CountLeave")
     @UserLoginToken
     public ResponseResult countLeave(@RequestParam String city,String area){
         result.setCode(ResultCode.SUCCESS.getCode());
@@ -166,5 +166,12 @@ public class LeaveController {
         return result.setData(leaveService.countLeave(city,area));
     }
 
-
+//    @ApiOperation(value = "平台功能统计")
+//    @PostMapping("/CountFunction")
+//    @UserLoginToken
+//    public  ResponseResult countFunction(@RequestParam String city,String area){
+//        result.setCode(ResultCode.SUCCESS.getCode());
+//        result.setMessage(ResultCode.SUCCESS.getMessage());
+//        return result.setData(leaveService.countFunction(city,area));
+//    }
 }
