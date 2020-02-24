@@ -11,7 +11,7 @@ public class EnumModel {
   private String typename;  //字典名称
   private String enumname;  //备注
   private String status;    //状态
-  private java.sql.Timestamp createtime;  //创建时间
+  private String createtime;  //创建时间
 
 
   public int getEnumid() {
@@ -65,11 +65,11 @@ public class EnumModel {
     this.status = Status;
   }
 
-  public Timestamp getCreatetime() {
+  public String getCreatetime() {
     return createtime;
   }
 
-  public void setCreatetime(Timestamp createtime) {
+  public void setCreatetime(String createtime) {
     this.createtime = createtime;
   }
 }

@@ -155,7 +155,7 @@ public class LogController {
 
     @ApiOperation(value = "获取查询日志")
     @PassToken
-    @GetMapping("/listLog")
+    @PostMapping("/listLog")
     public ResponseResult listAllLog(@RequestBody(required = true) LogSearchModel logSearchModel){
         PageHelper.startPage(logSearchModel.getPageIndex(), logSearchModel.getPageSize());
         List<LogModel> allItems=logService.listAllLog(logSearchModel);
@@ -182,11 +182,12 @@ public class LogController {
 
     @ApiOperation(value = "删除日志")
     @PassToken
-    @PostMapping("/deleteLog")
-    public ResponseResult deleteLog(@RequestParam int[] number){
-        for (int code:number
+    @GetMapping("/deleteLog")
+    public ResponseResult deleteLog(@RequestParam String number){
+        String[] a=number.split(",");
+        for (String code:a
         ) {
-            int deleteLog=logService.deleteLog(code);
+            int deleteLog=logService.deleteLog(Integer.parseInt(code));
         }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
