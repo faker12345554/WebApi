@@ -18,7 +18,11 @@ public class UserService {
         return userDao.login(userName);
     }
 
-    public int insertLoginRecord(String personid){
+    public UserModel getUserid(String account){
+        return userDao.getUserid(account);
+    }
+
+    public int insertLoginRecord(int personid){
         return userDao.insertLoginRecord(personid);
     }
 

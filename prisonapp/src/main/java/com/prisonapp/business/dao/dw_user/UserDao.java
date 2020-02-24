@@ -13,7 +13,9 @@ public interface UserDao {
 
     UserModel login(@Param("userName") String userName);
 
-    int insertLoginRecord(@Param("personid") String personid);
+    UserModel getUserid(@Param("account") String account);
+
+    int insertLoginRecord(@Param("userid") int personid);
 
     UserModel getUser(@Param("phone") String phone);
 
