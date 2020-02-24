@@ -2,6 +2,7 @@ package com.admin.admin.service.dw_user;
 
 import com.admin.admin.dao.dw_user.UserDao;
 import com.admin.admin.entity.dw_user.User;
+import com.admin.admin.entity.dw_user.Usermodel;
 import com.admin.model.userrole.UserRoleModel;
 import com.admin.page.PageBean;
 import com.github.pagehelper.PageHelper;
@@ -57,16 +58,16 @@ public class UserService {
     }
 
     //用户列表
-    public PageBean listUser(String userName,String phone,String status, int PageIndex,int PageSize) {
+    public PageBean listUser(Usermodel usermodel) {
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
 
 
 
-        PageHelper.startPage(PageIndex, PageSize);
-        List<User> allItems = userDao.listUser(userName,phone,status);
+        PageHelper.startPage(usermodel.getPageIndex(),usermodel.getPageSize());
+        List<User> allItems = userDao.listUser(usermodel);
         PageInfo<User> info = new PageInfo<>(allItems);//全部商品
         int countNums = (int) info.getTotal();            //总记录数
-        PageBean<User> pageData = new PageBean<>(PageIndex, PageSize, countNums);
+        PageBean<User> pageData = new PageBean<>(usermodel.getPageIndex(),usermodel.getPageSize() , countNums);
         pageData.setTotalPage(info.getPages());//总页数
         pageData.setItems(allItems);
         return pageData;

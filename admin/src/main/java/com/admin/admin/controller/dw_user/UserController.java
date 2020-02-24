@@ -41,7 +41,8 @@ public class UserController {
     public ResponseResult<User> listUser(@RequestBody Usermodel usermodel, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(userService.listUser(usermodel.getUserName(),usermodel.getPhone(),usermodel.getStatus(),usermodel.getPageIndex(),usermodel.getPageSize()));
+        //return result.setData(userService.listUser(usermodel.getUserName(),usermodel.getPhone(),usermodel.getStatus(),usermodel.getPageIndex(),usermodel.getPageSize()));
+        return result.setData(userService.listUser(usermodel));
     }
 
 
