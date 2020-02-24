@@ -40,10 +40,16 @@ public class UserController {
    // @PostMapping("/GetList")
     @PostMapping("/GetList")
     public ResponseResult<User> listUser(@RequestBody Usermodel usermodel) {
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        //return result.setData(userService.listUser(usermodel.getUserName(),usermodel.getPhone(),usermodel.getStatus(),usermodel.getPageIndex(),usermodel.getPageSize()));
-        return result.setData(userService.listUser(usermodel));
+        try {
+            result.setCode(ResultCode.SUCCESS.getCode());
+            result.setMessage(ResultCode.SUCCESS.getMessage());
+            //return result.setData(userService.listUser(usermodel.getUserName(),usermodel.getPhone(),usermodel.getStatus(),usermodel.getPageIndex(),usermodel.getPageSize()));
+            return result.setData(userService.listUser(usermodel));
+        }catch (Exception ex){
+            result.setCode(500);
+            result.setMessage(ex.toString());
+            return result.setData(" ");
+        }
     }
 
 

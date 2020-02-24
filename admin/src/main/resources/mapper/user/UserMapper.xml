@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_user.UserDao">
-    <select id="listUser" parameterType="String" resultType="com.admin.admin.entity.dw_user.User">
+    <select id="listUser" parameterType="com.admin.admin.entity.dw_user.Usermodel" resultType="com.admin.admin.entity.dw_user.User">
         SELECT * FROM "t_user"
             <if test="usermodel.userName!=null">
                 where aliasname=#{usermodel.userName}
@@ -29,20 +29,20 @@
                     where status=false
                 </if>
             </if>
-    </select>
-<!--            <if test="(#{userName}!=null or #{phone}!=null or #{status}!=null) and #{startTime}!=null">-->
-<!--                and createtime &lt; #{date.startTime}-->
-<!--            </if>-->
-<!--            <if test="(#{userName}==null and #{phone}==null and #{status}==null) and #{startTime}!=null">-->
-<!--                where createtime &lt; #{date.startTime}-->
-<!--            </if>-->
-<!--            <if test="(#{userName}!=null or #{phone}!=null or #{status}!=null or #{startTime}!=null) and #{endTime} !=null">-->
-<!--                and createtime >#{date.endTime}-->
-<!--            </if>-->
-<!--            <if test="#{userName}==null and #{phone}==null and #{status}==null and #{startTime}==null and #{endTime}!=null">-->
-<!--                where createtime >#{date.endTime}-->
-<!--            </if>-->
 
+            <if test="(usermodel.userName!=null or usermodel.phone!=null or usermodel.status!=null) and usermodel.startTime!=null">
+                and createtime >= #{usermodel.startTime}
+            </if>
+            <if test="(usermodel.userName==null and usermodel.phone==null and usermodel.status==null) and usermodel.startTime!=null">
+                where createtime >= #{usermodel.startTime}
+            </if>
+            <if test="(usermodel.userName!=null or usermodel.phone!=null or usermodel.status!=null or usermodel.startTime!=null) and usermodel.endTime !=null">
+                and createtime &lt;= #{usermodel.endTime}
+            </if>
+            <if test="usermodel.userName==null and usermodel.phone==null and usermodel.status==null and usermodel.startTime==null and usermodel.endTime!=null">
+                where createtime &lt;= #{usermodel.endTime}
+            </if>
+    </select>
 
 
     <select id="getUser" parameterType="String" resultType="com.admin.admin.entity.dw_user.User">

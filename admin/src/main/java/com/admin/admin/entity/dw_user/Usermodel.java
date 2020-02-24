@@ -1,13 +1,18 @@
 package com.admin.admin.entity.dw_user;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Usermodel {
     private String userName;
     private String phone;
     private String status;
-    private String startTime;
-    private String endTime;
+    private Date startTime;
+    private Date endTime;
     private int pageSize;
     private int pageIndex;
+    private Date createtime;
 
     public String getUserName() {
         return userName;
@@ -33,20 +38,24 @@ public class Usermodel {
         this.status = status;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setStartTime(String startTime) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date startTimeDate=sdf.parse(startTime);
+        this.startTime = startTimeDate;
     }
 
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setEndTime(String endTime) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date endTimeDate=sdf.parse(endTime);
+        this.endTime = endTimeDate;
     }
 
     public int getPageSize() {
@@ -63,5 +72,13 @@ public class Usermodel {
 
     public void setPageIndex(int pageIndex) {
         this.pageIndex = pageIndex;
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 }

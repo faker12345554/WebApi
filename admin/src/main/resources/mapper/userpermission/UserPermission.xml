@@ -24,16 +24,16 @@
                 </if>
             </if>
             <if test="(condition.groupName!=null or condition.status!=null) and condition.startTime!=null">
-                and createtime &lt; #{condition.startTime}
+                and createtime >= #{condition.startTime}
             </if>
             <if test="(condition.groupName==null and  condition.status==null) and condition.startTime!=null">
-                where createtime &lt; #{condition.startTime}
+                where createtime >= #{condition.startTime}
             </if>
             <if test="(condition.groupName!=null  or condition.status!=null or condition.startTime!=null) and condition.endTime !=null">
-                and createtime >#{condition.endTime}
+                and createtime &lt;= #{condition.endTime}
             </if>
             <if test="condition.groupName==null and condition.status==null and condition.startTime==null and condition.endTime!=null">
-                where createtime >#{condition.endTime}
+                where createtime &lt;= #{condition.endTime}
             </if>
 
     </select>
