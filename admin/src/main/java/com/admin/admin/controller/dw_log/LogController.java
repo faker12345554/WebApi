@@ -65,8 +65,8 @@ public class LogController {
     public ResponseResult getNumber(@RequestParam String code, @RequestParam int level, String Days) {
         List<AppStatistics> numberList = new ArrayList<AppStatistics>();
         List<Map<String, String>> addlist = new ArrayList<>();
-        List<Map<String, String>> policelist = new ArrayList<>();
-        List<Map<String, String>> Stationlist = new ArrayList<>();
+//        List<Map<String, String>> policelist = new ArrayList<>();
+//        List<Map<String, String>> Stationlist = new ArrayList<>();
         if (level == 1) {
             addlist = addressService.getAddress(code, 2);
             for (Map<String, String> item : addlist) {
@@ -81,16 +81,9 @@ public class LogController {
                 numberList.add(model);
             }
         } else if (level == 2) {
-            addlist = addressService.getAddress(code, level);
+            addlist = addressService.getAddress(code.substring(0,6), 3);
+
             for (Map<String, String> item : addlist) {
-                for (String key : item.keySet()) {
-                    policelist = addressService.getAddress(item.get("code").substring(0, 6), 3);
-                    for (Map<String, String> str : policelist) {
-                        Stationlist.add(str);
-                    }
-                }
-            }
-            for (Map<String, String> item : Stationlist) {
                 AppStatistics model = new AppStatistics();
                 for (String Key : item.keySet()) {
                     String Areacode = item.get("code");
@@ -122,9 +115,21 @@ public class LogController {
             for (String Key : item.keySet()) {
                 String Areacode = item.get("code");
                 Areacode = Areacode.substring(0, (2*level)+2);
-                model = logService.Removalrate(Areacode, Starttime, endetime);
-                model.setCode(item.get("code"));
+                List<Map<String,String>> countlist = logService.Removalrate(Areacode, Starttime, endetime);
+                model.setTotalnumber(logService.gettotelnumber(Areacode));
+                int usernumber=0;
+                for (Map<String,String> itam: countlist){
+
+                    int Days= Integer.parseInt(itam.get("Days").toString());
+                    if (Days>7){
+                        usernumber+=1;
+                    }
+
+                }
+                model.setUsernumber(usernumber);
                 model.setName(item.get("name"));
+                model.setCode(item.get("code"));
+
             }
             numberList.add(model);
         }

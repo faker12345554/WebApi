@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LogService {
@@ -46,8 +47,12 @@ public class LogService {
         return  logDao.getNumber(Areacode,Days);
     }
 
-    public AppStatistics Removalrate(String Areacode, String Starttime, String Endtime){
+    public List<Map<String,String>>  Removalrate(String Areacode, String Starttime, String Endtime){
         return logDao.Removalrate(Areacode,Starttime,Endtime);
+    }
+
+    public int gettotelnumber(String Areacode){
+        return logDao.gettotelnumber(Areacode);
     }
 
     public List<AppStatistics> Solarrate(String Code,String StartTime,String EndTime,int level){
