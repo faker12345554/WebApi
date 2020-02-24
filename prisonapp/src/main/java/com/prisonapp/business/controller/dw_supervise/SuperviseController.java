@@ -4,6 +4,7 @@ package com.prisonapp.business.controller.dw_supervise;
 import com.common.common.Uploadfiles.Upload;
 import com.common.common.result.ResultSet;
 import com.prisonapp.business.entity.dw_supervise.*;
+import com.prisonapp.business.entity.dw_user.UserModel;
 import com.prisonapp.business.service.dw_supervise.SuperviseService;
 import com.prisonapp.business.util.PersonInformationUtil;
 import com.prisonapp.token.TokenUtil;
@@ -283,7 +284,8 @@ public class SuperviseController {
     @PostMapping("/uploadLocationError")
     public ResultSet uploadLocationError(String errorCode, String errorMsg) {
         ResultSet result = new ResultSet();
-        int a = superviseService.uploadLocationError(errorCode, errorMsg, getPersonId(), new Date());
+        UserModel userModel = superviseService.getUserId(getPersonId());//根据personid查出对应user表中的id（整形）以便放入操作日志
+        int a = superviseService.uploadLocationError(errorCode, errorMsg, (int)userModel.getId(), new Date());
         if (a != 0) {
             result.resultCode = 0;
             result.resultMsg = "";

@@ -47,7 +47,9 @@ public interface SuperviseDao {
 
     int autoLocation(float latitude,float longitude,int locationType,String address,String userId,Date date,boolean fScope);
 
-    int uploadLocationError(String errorCode, String errorMsg,String userId,Date date);
+    UserModel getUserId(@Param("personid")String userId);
+
+    int uploadLocationError(String errorCode, String errorMsg,int userId,Date date);
 
     int uploadBattery(float percent,String userId,Date date);
 

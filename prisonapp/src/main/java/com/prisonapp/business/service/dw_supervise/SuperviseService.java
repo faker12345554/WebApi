@@ -71,7 +71,11 @@ public class SuperviseService {
         return  superviseDao.autoLocation(latitude, longitude,locationType,address,userId,date,fScope);
     }
 
-    public int uploadLocationError(String errorCode, String errorMsg,String userId,Date date){
+    public UserModel getUserId(String userId){
+        return  superviseDao.getUserId(userId);
+    }
+
+    public int uploadLocationError(String errorCode, String errorMsg,int userId,Date date){
         return  superviseDao.uploadLocationError(errorCode, errorMsg,userId,date);
     }
 

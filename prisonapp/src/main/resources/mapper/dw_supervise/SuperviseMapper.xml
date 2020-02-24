@@ -80,6 +80,10 @@
         insert into t_location (latitude,longitude,locationtype,address,personid,timestamp,fscope) values (#{latitude},#{longitude},#{locationType},#{address},#{userId},#{date},#{fScope})
     </insert>
 
+    <select id="getUserId" parameterType="String" resultType="com.prisonapp.business.entity.dw_user.UserModel">
+        select id from t_user where personid =#{personid};
+    </select>
+
     <insert id="uploadLocationError">
         insert into t_log(operator,action,operatingtime,logtype,errorcode) values(#{userId},#{errorMsg},#{date},'2',#{errorCode})
     </insert>
