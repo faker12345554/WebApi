@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface LogDao {
@@ -37,13 +38,20 @@ public interface LogDao {
      * @param Endtime
      * @return
      */
-    AppStatistics Removalrate(@Param("Areacode") String Areacode,@Param("Starttime") String Starttime,String Endtime);
+    List<Map<String,String>> Removalrate(@Param("Areacode") String Areacode, @Param("Starttime") String Starttime, @Param("EndTime") String Endtime);
+
+    /**
+     *
+     * @param Areacode
+     * @return
+     */
+    int gettotelnumber(@Param("Areacode") String Areacode);
 
 
     /**
      * 日活动率
      * @param Areacode
-     * @param Precisetime
+     * @param
      * @return
      */
     List<AppStatistics> Solarrate(@Param("Areacode") String Areacode,@Param("Starttime") String Starttime,@Param("EndTime")String EndTime,@Param("level") int level);
