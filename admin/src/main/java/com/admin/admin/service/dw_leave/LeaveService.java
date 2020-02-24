@@ -10,7 +10,10 @@ import com.admin.model.search.SearchModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -58,10 +61,12 @@ public class LeaveService {
         return leaveDao.cancelAuditor(leaveorder);
     }
 
-    public List<CountResult> countLeave(String city,String area){
-        ArrayList a =new ArrayList();
-        List<CountResult> countResults = new ArrayList<>();
+    public List<CountResult> countLeave(String city,String area,String startTime, String endTime) throws ParseException {
 
+        List<CountResult> countResults = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date startTimeDate=sdf.parse(startTime);
+        Date endTimeDate=sdf.parse(endTime);
         int sum=0;
         if(area==null){
             List<PersonInformation> personInformationarea =leaveDao.countLeavearea(city,area);//选择市的时候获得各个区名
@@ -72,7 +77,7 @@ public class LeaveService {
                 personInformationarea.get(i).setDetail(personInformationarea.get(i).getDetail().replace("区",""));
                 List<PersonInformation> personInformations =leaveDao.countLeavepersonid(city,personInformationarea.get(i).getDetail());//根据区名查询出该区的人员id
                 for(int j=0;j<personInformations.size();j++){//循环完之后便得出该区的外出申请单数
-                    List<LeaveInformation> leaveInformations =leaveDao.countLeave(personInformations.get(j).getPersonid());//根据每个区的peisonid获取该区的外出申请单数
+                    List<LeaveInformation> leaveInformations =leaveDao.countLeave(personInformations.get(j).getPersonid(),startTimeDate,endTimeDate);//根据每个区的peisonid获取该区的外出申请单数
                     sum+=leaveInformations.size();
                 }
                 CountResult countResult = new CountResult();
@@ -87,7 +92,7 @@ public class LeaveService {
             for(int i =0;i<policeStation.size();i++){
                 List<PersonInformation> personInformations =leaveDao.countLeavepersonid(city,policeStation.get(i).getDetail());//根据区名查询出该区的人员id
                 for(int j=0;j<personInformations.size();j++){//循环完之后便得出该区的外出申请单数
-                    List<LeaveInformation> leaveInformations =leaveDao.countLeave(personInformations.get(j).getPersonid());//根据每个区的peisonid获取该区的外出申请单数
+                    List<LeaveInformation> leaveInformations =leaveDao.countLeave(personInformations.get(j).getPersonid(),startTimeDate,endTimeDate);//根据每个区的peisonid获取该区的外出申请单数
                     sum+=leaveInformations.size();
                 }
                 CountResult countResult = new CountResult();

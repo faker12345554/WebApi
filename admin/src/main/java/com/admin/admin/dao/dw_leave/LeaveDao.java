@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -35,7 +36,7 @@ public interface LeaveDao {
 
     List<PersonInformation> countLeavepersonid(@Param("city") String city, @Param("area") String area);
 
-    List<LeaveInformation> countLeave(@Param("personid") String personid);
+    List<LeaveInformation> countLeave(@Param("personid") String personid, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
 
     List<PersonInformation> getPoliceStation(@Param("area") String area);
 }

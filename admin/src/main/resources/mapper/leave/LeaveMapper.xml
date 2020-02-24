@@ -81,7 +81,7 @@
     </select>
 
     <select id="countLeave" resultType="com.admin.admin.entity.dw_leave.LeaveInformation">
-        select * from t_leave where personid =#{personid};
+        select * from t_leave where personid =#{personid} and subittimestamp &lt;#{endTime} and subittimestamp>#{startTime};
     </select>
 
     <select id="getPoliceStation" resultType="com.admin.admin.entity.dw_leave.PersonInformation">

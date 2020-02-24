@@ -2,6 +2,7 @@ package com.admin.admin.controller.dw_leave;
 
 
 import com.admin.admin.entity.dw_auditor.AuditorInformation;
+import com.admin.admin.entity.dw_leave.CountResult;
 import com.admin.admin.entity.dw_leave.LeaveInformation;
 import com.admin.admin.entity.dw_location.Locationmation;
 import com.admin.admin.service.dw_leave.LeaveService;
@@ -160,10 +161,18 @@ public class LeaveController {
     @ApiOperation(value = "平台外出申请统计")
     @GetMapping("/CountLeave")
     @UserLoginToken
-    public ResponseResult countLeave(@RequestParam String city,String area){
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(leaveService.countLeave(city,area));
+    public ResponseResult countLeave(@RequestParam String city,String area,String startTime, String endTime){
+        try{
+            List<CountResult> countResults =leaveService.countLeave(city,area, startTime,endTime);
+            result.setCode(ResultCode.SUCCESS.getCode());
+            result.setMessage(ResultCode.SUCCESS.getMessage());
+            return result.setData(countResults);
+        }catch (Exception ex){
+            result.setCode(500);
+            result.setMessage(ex.toString());
+            return result.setData(" ");
+        }
+
     }
 
 //    @ApiOperation(value = "平台功能统计")
