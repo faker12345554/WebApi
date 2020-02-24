@@ -36,4 +36,6 @@ public interface LeaveDao {
     List<PersonInformation> countLeavepersonid(@Param("city") String city, @Param("area") String area);
 
     List<LeaveInformation> countLeave(@Param("personid") String personid);
+
+    List<PersonInformation> getPoliceStation(@Param("area") String area);
 }

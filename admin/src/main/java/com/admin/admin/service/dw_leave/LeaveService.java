@@ -60,20 +60,36 @@ public class LeaveService {
     public ArrayList countLeave(String city,String area){
         ArrayList a =new ArrayList();
         int sum=0;
-        List<PersonInformation> personInformationarea =leaveDao.countLeavearea(city,area);//选择市的时候获得各个区名
-        for(int i =0;i<personInformationarea.size();i++){
-            personInformationarea.get(i).setDetail(personInformationarea.get(i).getDetail().replace("佛山市",""));
-            personInformationarea.get(i).setDetail(personInformationarea.get(i).getDetail().replace("公安局",""));
-            personInformationarea.get(i).setDetail(personInformationarea.get(i).getDetail().replace("分局",""));
-            List<PersonInformation> personInformations =leaveDao.countLeavepersonid(city,personInformationarea.get(i).getDetail());//根据区名查询出该区的人员id
-            for(int j=0;j<personInformations.size();j++){//循环完之后便得出该区的外出申请单数
-                List<LeaveInformation> leaveInformations =leaveDao.countLeave(personInformations.get(j).getPersonid());//根据每个区的peisonid获取该区的外出申请单数
-                sum+=leaveInformations.size();
+        if(area==null){
+            List<PersonInformation> personInformationarea =leaveDao.countLeavearea(city,area);//选择市的时候获得各个区名
+            for(int i =0;i<personInformationarea.size();i++){
+                personInformationarea.get(i).setDetail(personInformationarea.get(i).getDetail().replace("佛山市",""));
+                personInformationarea.get(i).setDetail(personInformationarea.get(i).getDetail().replace("公安局",""));
+                personInformationarea.get(i).setDetail(personInformationarea.get(i).getDetail().replace("分局",""));
+                List<PersonInformation> personInformations =leaveDao.countLeavepersonid(city,personInformationarea.get(i).getDetail());//根据区名查询出该区的人员id
+                for(int j=0;j<personInformations.size();j++){//循环完之后便得出该区的外出申请单数
+                    List<LeaveInformation> leaveInformations =leaveDao.countLeave(personInformations.get(j).getPersonid());//根据每个区的peisonid获取该区的外出申请单数
+                    sum+=leaveInformations.size();
+                }
+                a.add(personInformationarea.get(i).getDetail());
+                a.add(sum);
+                sum =0;
             }
-            a.add(personInformationarea.get(i).getDetail());
-            a.add(sum);
-            sum =0;
         }
+        else{
+            List<PersonInformation> policeStation  = leaveDao.getPoliceStation(area);
+            for(int i =0;i<policeStation.size();i++){
+                List<PersonInformation> personInformations =leaveDao.countLeavepersonid(city,policeStation.get(i).getDetail());//根据区名查询出该区的人员id
+                for(int j=0;j<personInformations.size();j++){//循环完之后便得出该区的外出申请单数
+                    List<LeaveInformation> leaveInformations =leaveDao.countLeave(personInformations.get(j).getPersonid());//根据每个区的peisonid获取该区的外出申请单数
+                    sum+=leaveInformations.size();
+                }
+                a.add(policeStation.get(i).getDetail());
+                a.add(sum);
+                sum =0;
+            }
+        }
+
 
 
         return a;
