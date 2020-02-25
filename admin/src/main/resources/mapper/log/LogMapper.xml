@@ -26,11 +26,25 @@
     ) as Usernumber
     </select>
 
-    <select id="Removalrate" parameterType="String" resultType="com.admin.model.Appstatistics.AppStatistics">
-        select (SELECT count(*) from t_personinformation where sponsoralarm in
-               (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))) as Totalnumber,
-	           (SELECT count(*) from t_personinformation where status=FALSE and  sponsoralarm in
-               (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))) as Usernumber
+    <resultMap id="usermap" type="HashMap">
+        <result property="operator" column="operator" jdbcType="VARCHAR" />
+        <result property="Days" column="Days" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="Removalrate" parameterType="String" resultMap="usermap">
+        SELECT date_part('day',to_timestamp(#{EndTime},'yyyy-MM-dd hh24:mi:ss')::timestamp - max(operatingtime)::timestamp) as Days, operator
+         from t_log where operator in (SELECT id from t_user where phone in
+        (SELECT contact from t_personinformation where bailoutbegindate &lt;= now() and now() &lt;= bailoutenddate and sponsoralarm in
+        (SELECT mjbh from fsga_yw_ryb where bmbm like  concat('%',#{Areacode},'%')))) and
+         to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd') and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd')
+         group by  operator
+    </select>
+
+    <select id="gettotelnumber" parameterType="String"  resultType="int">
+        SELECT "count"(distinct contact)  from t_personinformation where bailoutbegindate&lt;= now() and now() &lt;=bailoutenddate
+        and sponsoralarm in
+        (SELECT mjbh from fsga_yw_ryb where bmbm like  concat('%',#{Areacode},'%'))
     </select>
 
     <select id="Solarrate"  resultType="com.admin.model.Appstatistics.AppStatistics">
