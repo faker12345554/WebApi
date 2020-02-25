@@ -11,6 +11,8 @@ public class UserPermissionGroup {
     private String createtime;
     private int createid;
     private String createname;
+    private boolean status;
+    private List<MenuModel> MenuList;
 
     public List<MenuModel> getMenuList() {
         return MenuList;
@@ -21,8 +23,7 @@ public class UserPermissionGroup {
         return this;
     }
 
-    private boolean status;
-    private List<MenuModel> MenuList;
+
 
     public int getPermissionid() {
         return permissionid;

@@ -85,6 +85,22 @@
     </select>
 
     <select id="getPoliceStation" resultType="com.admin.admin.entity.dw_leave.PersonInformation">
-        select detail from dictionary    where   code  like  '%440604%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%派出所%'
+        <if test="area.equals('禅城区')">
+            select detail from dictionary    where   code  like  '%440604%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%派出所%' and dictionary.detail not in(select detail from dictionary    where   code  like  '%440604%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%已撤销%')
+        </if>
+        <if test="area.equals('南海区')">
+            select detail from dictionary    where   code  like  '%440605%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%派出所%' and dictionary.detail not in(select detail from dictionary    where   code  like  '%440605%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%已撤销%')
+        </if>
+        <if test="area.equals('三水区')">
+            select detail from dictionary    where   code  like  '%440607%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%派出所%' and dictionary.detail not in(select detail from dictionary    where   code  like  '%440607%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%已撤销%')
+        </if>
+        <if test="area.equals('高明区')">
+            select detail from dictionary    where   code  like  '%440608%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%派出所%' and dictionary.detail not in(select detail from dictionary    where   code  like  '%440608%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%已撤销%')
+        </if>
+        <if test="area.equals('顺德区')">
+            select detail from dictionary    where   code  like  '%440606%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%派出所%' and dictionary.detail not in(select detail from dictionary    where   code  like  '%440606%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%已撤销%')
+        </if>
+
+
     </select>
 </mapper>

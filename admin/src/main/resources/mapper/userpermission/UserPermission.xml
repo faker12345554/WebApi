@@ -47,7 +47,7 @@
         insert into t_userpermissiongroup(createid,createtime,permissionname,createname,status) values (#{createid},Current_timestamp,#{permissionname},#{createname},#{status})
     </insert>
     <update id="updateGroup" parameterType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup">
-        update t_userpermissiongroup set permissionname=#{permissionname},createtime=#{createtime},createid=#{createid},createname=#{createname},status=#{status} where permissionid=#{permissionid}
+        update t_userpermissiongroup set permissionname=#{permissionname},createtime=Current_timestamp,createid=#{createid},createname=#{createname},status=#{status} where permissionid=#{permissionid}
     </update>
     <update id="deleteGroup" >
         update t_userpermissiongroup set status=#{flag} where permissionid=#{PermissId}

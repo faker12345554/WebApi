@@ -7,7 +7,7 @@ public class UserRole {
     private int roleid;
     private String rolename;
     private int menuid;
-    private Date createtime;
+    private String createtime;
     private boolean status;
     private int permissionid;
 
@@ -44,11 +44,11 @@ public class UserRole {
         this.menuid = menuid;
     }
 
-    public Date getCreatetime() {
+    public String getCreatetime() {
         return createtime;
     }
 
-    public void setCreatetime(Date createtime) {
+    public void setCreatetime(String createtime) {
         this.createtime = createtime;
     }
 

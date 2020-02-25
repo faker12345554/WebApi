@@ -30,11 +30,14 @@ public class GroupService {
     //新增
     public int saveGroup(UserPermissionGroup UserGroup) {
        // UserGroup.setCreatetime(new Date());
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateNowStr = sdf.format(d);
         int userGroup=GroupDao.saveUserGroup(UserGroup);
         for (MenuModel item:UserGroup.getMenuList()){
             UserRole userRole=new UserRole();
             userRole.setPermissionid(UserGroup.getPermissionid());
-            userRole.setCreatetime(new Date());
+            userRole.setCreatetime(dateNowStr);
             userRole.setMenuid(item.getId());
             userRole.setRolename(item.getName());
             userRole.setStatus(true);
@@ -58,7 +61,7 @@ public class GroupService {
         for (MenuModel item:UserGroup.getMenuList()){
             UserRole userRole=new UserRole();
             userRole.setPermissionid(UserGroup.getPermissionid());
-            userRole.setCreatetime(new Date());
+            userRole.setCreatetime(dateNowStr);
             userRole.setMenuid(item.getId());
             userRole.setRolename(item.getName());
             userRole.setStatus(true);
