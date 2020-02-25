@@ -44,6 +44,8 @@ public interface SuperfineDado {
 
     LeaveListModel getLeaveInformation(@Param("leaveOrder")String leaveOrder);
 
+    LeaveInformation getAllLeaveInformation(@Param("leaveOrder")String leaveOrder);
+
     int updateLeaveInformation(@Param("leaveOrder")String leaveOrder,@Param("statusCode")String statusCode,@Param("status")String status);
 
     int insertAuditorInformation(@Param("leaveOrder")String leaveOrder, @Param("userId")String userId, @Param("accountName")String accountName, @Param("auditorDateTime")Date auditorDateTime,

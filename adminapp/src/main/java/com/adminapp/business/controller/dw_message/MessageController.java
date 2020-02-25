@@ -396,6 +396,13 @@ public class MessageController {
                     newMessageInformations = messageInformationList;
             }
 
+            Collections.sort(newMessageInformations, new Comparator<MessageListModel>() {
+                @Override
+                public int compare(MessageListModel o1, MessageListModel o2) {
+                    return o2.getTimestamp().compareTo(o1.getTimestamp());
+                }
+            });
+
             List<MessageListModel> messageListModels = new ArrayList<>();
             if (key == null||key=="") {
                 messageListModels = newMessageInformations;
@@ -422,12 +429,7 @@ public class MessageController {
                 }
             }
 
-            Collections.sort(newMessageList, new Comparator<MessageListModel>() {
-                @Override
-                public int compare(MessageListModel o1, MessageListModel o2) {
-                    return o2.getTimestamp().compareTo(o1.getTimestamp());
-                }
-            });
+
 
             MessageListReturnModel messageListReturnModel = new MessageListReturnModel();
             messageListReturnModel.setTotalCount(messageListModels.size());

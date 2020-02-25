@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.prisonapp.apppush.android.AndroidBroadcast;
+import com.prisonapp.apppush.android.AndroidCustomizedcast;
 import com.prisonapp.apppush.android.AndroidGroupcast;
 import com.prisonapp.apppush.android.AndroidUnicast;
 import com.prisonapp.apppush.ios.IOSBroadcast;
@@ -112,22 +113,18 @@ public class Demo {
 		return client.send(groupcast);
 	}
 
-	/*
-	 * public void sendAndroidCustomizedcast() throws Exception {
-	 * AndroidCustomizedcast customizedcast = new AndroidCustomizedcast(appkey,
-	 * appMasterSecret); // TODO Set your alias here, and use comma to split
-	 * them if there are // multiple alias. // And if you have many alias, you
-	 * can also upload a file containing // these alias, then // use file_id to
-	 * send customized notification. customizedcast.setAlias("alias",
-	 * "alias_type"); customizedcast.setTicker("Android customizedcast ticker");
-	 * customizedcast.setTitle("中文的title");
-	 * customizedcast.setText("Android customizedcast text");
-	 * customizedcast.goAppAfterOpen();
-	 * customizedcast.setDisplayType(AndroidNotification.DisplayType.
-	 * NOTIFICATION); // TODO Set 'production_mode' to 'false' if it's a test
-	 * device. // For how to register a test device, please see the developer
-	 * doc. customizedcast.setProductionMode(); client.send(customizedcast); }
-	 */
+
+	 public void sendAndroidCustomizedcast() throws Exception {
+	 AndroidCustomizedcast customizedcast = new AndroidCustomizedcast(appkey, appMasterSecret); // TODO Set your alias here, and use comma to split them if there are //multiple alias. // And if you have many alias, you can also upload a file containing // these alias, then // use file_id tosend customized notification.
+	 customizedcast.setAlias("alias", "alias_type");
+	 customizedcast.setTicker("Android customizedcast ticker");
+	 customizedcast.setTitle("中文的title");
+	 customizedcast.setText("Android customizedcast text");
+	 customizedcast.goAppAfterOpen();
+	 customizedcast.setDisplayType(AndroidNotification.DisplayType.NOTIFICATION); // TODO Set 'production_mode' to 'false' if it's a testdevice. // For how to register a test device, please see the developerdoc.
+	 customizedcast.setProductionMode();
+	 client.send(customizedcast); }
+
 
 	/*
 	 * public void sendAndroidCustomizedcastFile() throws Exception {
