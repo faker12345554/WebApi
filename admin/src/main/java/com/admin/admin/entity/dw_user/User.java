@@ -1,5 +1,8 @@
 package com.admin.admin.entity.dw_user;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 public class User {
     private int id;
     private String accountname;
@@ -9,6 +12,19 @@ public class User {
     private String createname;
     private String areacode;
     private String phone;
+    private String createtime;
+    private boolean status;
+    private String bmmc;
+    private long usersystem;
+    private String officephone;
+    private String police;
+    private String areaname;
+    private String department;
+    private String personid;
+    private String mailbox;
+    private String sex;
+    private String station;
+    private String bz;
 
     public long getUsersystem() {
         return usersystem;
@@ -100,18 +116,7 @@ public class User {
         return this;
     }
 
-    private boolean status;
-    private String bmmc;
-    private long usersystem;
-    private String officephone;
-    private String police;
-    private String areaname;
-    private String department;
-    private String personid;
-    private String mailbox;
-    private String sex;
-    private String station;
-    private String bz;
+
 
     public String getRoleName() {
         return RoleName;
@@ -222,5 +227,11 @@ public class User {
         this.status = status;
     }
 
+    public String getCteatetime() {
+        return createtime;
+    }
 
+    public void setCteatetime(String createtime) {
+        this.createtime = createtime;
+    }
 }

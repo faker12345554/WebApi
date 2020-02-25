@@ -29,7 +29,7 @@ public class GroupService {
 
     //新增
     public int saveGroup(UserPermissionGroup UserGroup) {
-        UserGroup.setCreatetime(new Date());
+       // UserGroup.setCreatetime(new Date());
         int userGroup=GroupDao.saveUserGroup(UserGroup);
         for (MenuModel item:UserGroup.getMenuList()){
             UserRole userRole=new UserRole();
@@ -50,7 +50,10 @@ public class GroupService {
 
     //修改
     public int updateGroup(UserPermissionGroup UserGroup) {
-        UserGroup.setCreatetime(new Date());
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateNowStr = sdf.format(d);
+        UserGroup.setCreatetime(dateNowStr);
         GroupDao.deleteUserRole(UserGroup.getPermissionid());
         for (MenuModel item:UserGroup.getMenuList()){
             UserRole userRole=new UserRole();

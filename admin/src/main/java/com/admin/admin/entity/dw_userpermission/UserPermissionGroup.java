@@ -8,7 +8,7 @@ import java.util.List;
 public class UserPermissionGroup {
     private int permissionid;
     private String permissionname;
-    private Date createtime;
+    private String createtime;
     private int createid;
     private String createname;
 
@@ -40,11 +40,11 @@ public class UserPermissionGroup {
         this.permissionname = permissionname;
     }
 
-    public Date getCreatetime() {
+    public String getCreatetime() {
         return createtime;
     }
 
-    public void setCreatetime(Date createtime) {
+    public void setCreatetime(String createtime) {
         this.createtime = createtime;
     }
 
