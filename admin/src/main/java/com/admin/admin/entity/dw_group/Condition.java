@@ -2,7 +2,9 @@ package com.admin.admin.entity.dw_group;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Condition {
     private String  groupName;
@@ -51,7 +53,12 @@ public class Condition {
         if(endTime!=null){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date endTimeDate=sdf.parse(endTime);
-            this.endTime = endTimeDate;
+            Calendar calendar =new GregorianCalendar();
+            calendar.setTime(endTimeDate);
+            calendar.add(calendar.DATE,1);
+            Date date = calendar.getTime();
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            this.endTime = sqlDate;
         }else{
             this.endTime = null;
         }
