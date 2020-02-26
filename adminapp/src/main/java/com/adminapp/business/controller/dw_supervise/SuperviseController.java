@@ -1675,8 +1675,8 @@ public class SuperviseController {
             Collections.sort(newSignRecordModelList, new Comparator<SignRecordModel>() {
                 @Override
                 public int compare(SignRecordModel signRecordModel, SignRecordModel t1) {
-                    long a=Long.parseLong(t1.getTimestamp());
-                    long b=Long.parseLong(signRecordModel.getTimestamp());
+                    long a=Long.parseLong(t1.getTimestamp())/1000;
+                    long b=Long.parseLong(signRecordModel.getTimestamp())/1000;
                     long c=a-b;
                     return Integer.parseInt(String.valueOf(c));
                 }

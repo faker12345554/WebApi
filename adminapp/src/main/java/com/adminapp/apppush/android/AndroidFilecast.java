@@ -1,6 +1,7 @@
 package com.adminapp.apppush.android;
 
-import com.prisonapp.apppush.AndroidNotification;
+
+import com.adminapp.apppush.AndroidNotification;
 
 public class AndroidFilecast extends AndroidNotification {
 	public AndroidFilecast(String appkey, String appMasterSecret) throws Exception {

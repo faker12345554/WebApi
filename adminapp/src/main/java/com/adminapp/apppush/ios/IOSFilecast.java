@@ -1,6 +1,6 @@
 package com.adminapp.apppush.ios;
 
-import com.prisonapp.apppush.IOSNotification;
+import com.adminapp.apppush.IOSNotification;
 
 public class IOSFilecast extends IOSNotification {
 	public IOSFilecast(String appkey, String appMasterSecret) throws Exception {

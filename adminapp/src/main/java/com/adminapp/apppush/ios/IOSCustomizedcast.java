@@ -1,7 +1,7 @@
 package com.adminapp.apppush.ios;
 
-import com.prisonapp.apppush.IOSNotification;
 
+import com.adminapp.apppush.IOSNotification;
 
 public class IOSCustomizedcast extends IOSNotification {
 	public IOSCustomizedcast(String appkey, String appMasterSecret) throws Exception {
