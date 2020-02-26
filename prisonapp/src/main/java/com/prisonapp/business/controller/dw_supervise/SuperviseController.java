@@ -325,7 +325,7 @@ public class SuperviseController {
     @UserLoginToken
     @ApiOperation(value = " 获取保外人员的监管配置")
     @GetMapping("/getSuperviseConfig")
-    public ResultSet getSuperviseConfig() {
+    public ResultSet getSuperviseConfig() throws ParseException {
         ResultSet result = new ResultSet();
         TRemindersettings tRemindersettings = superviseService.getLocationConfigTime();//获取待办提醒的所有数据
 
@@ -336,7 +336,7 @@ public class SuperviseController {
         locationModels.setTimeSpan(Integer.parseInt(tRemindersettings.getSettingday()));
 
         //设置电量的数据
-        TPrisonsetting tPrisonsettingBattery = superviseService.getLocationConfig(getPersonId(),2);
+        TPrisonsetting tPrisonsettingBattery = superviseService.getLocationConfig(getPersonId(),4);
         Battery battery = new Battery();
         battery.setEnable(tPrisonsettingBattery.isSettingcheck());
         battery.setTimeSpan("20");
@@ -345,7 +345,15 @@ public class SuperviseController {
         getSuperviseConfigModel.setLocation(locationModels);
         getSuperviseConfigModel.setBattery(battery);
         //最后时间
-        getSuperviseConfigModel.setLastEditTime(tRemindersettings.getCreatetime());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date locationDate=sdf.parse(tPrisonsettingLocation.getSettingtime());
+        Date batteryDate=sdf.parse(tPrisonsettingBattery.getSettingtime());
+        if(locationDate.getTime()>batteryDate.getTime()){
+            getSuperviseConfigModel.setLastEditTime(locationDate);
+        }else{
+            getSuperviseConfigModel.setLastEditTime(batteryDate);
+        }
+
         result.resultCode = 0;
         result.resultMsg = "";
         result.data = getSuperviseConfigModel;
