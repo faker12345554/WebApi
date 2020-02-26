@@ -87,8 +87,12 @@ public class SuperviseService {
         return  superviseDao.batteryAlarm( userId,content);
     }
 
-    public TRemindersettings getLocationConfig( ){
-        return  superviseDao.getLocationConfig();
+    public TRemindersettings getLocationConfigTime(){
+        return  superviseDao.getLocationConfigTime();
+    }
+
+    public TPrisonsetting getLocationConfig(String personid,int settingcode ){
+        return  superviseDao.getLocationConfig(personid,settingcode);
     }
 
 //    public  GetSuperviseConfigModel getBatteryConfigTimestamp(String userId){

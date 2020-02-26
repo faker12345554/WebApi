@@ -327,14 +327,18 @@ public class SuperviseController {
     @GetMapping("/getSuperviseConfig")
     public ResultSet getSuperviseConfig() {
         ResultSet result = new ResultSet();
-        TRemindersettings tRemindersettings = superviseService.getLocationConfig();//获取待办提醒的所有数据
+        TRemindersettings tRemindersettings = superviseService.getLocationConfigTime();//获取待办提醒的所有数据
+
         //取出定位的数据
+        TPrisonsetting tPrisonsettingLocation = superviseService.getLocationConfig(getPersonId(),1);
         LocationModel locationModels =new LocationModel();
-        locationModels.setEnable(tRemindersettings.isStatus());
+        locationModels.setEnable(tPrisonsettingLocation.isSettingcheck());
         locationModels.setTimeSpan(Integer.parseInt(tRemindersettings.getSettingday()));
+
         //设置电量的数据
+        TPrisonsetting tPrisonsettingBattery = superviseService.getLocationConfig(getPersonId(),2);
         Battery battery = new Battery();
-        battery.setEnable(true);
+        battery.setEnable(tPrisonsettingBattery.isSettingcheck());
         battery.setTimeSpan("20");
         battery.setAlarmThreshold(20.0f);
         GetSuperviseConfigModel getSuperviseConfigModel = new GetSuperviseConfigModel(); // = superviseService.getBatteryConfigTimestamp(getPersonId());

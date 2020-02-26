@@ -55,7 +55,9 @@ public interface SuperviseDao {
 
     int batteryAlarm(String userId,String content);
 
-    TRemindersettings getLocationConfig();
+    TPrisonsetting getLocationConfig( String personid,int settingcode);
+
+    TRemindersettings getLocationConfigTime();
 
   //  GetSuperviseConfigModel getBatteryConfigTimestamp(String userId);
 
