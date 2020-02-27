@@ -1,6 +1,7 @@
 package com.admin.admin.dao.dw_userpermission;
 
 import com.admin.admin.entity.dw_group.Condition;
+import com.admin.admin.entity.dw_group.PermissionName;
 import com.admin.admin.entity.dw_userpermission.UserPermissionGroup;
 import com.admin.admin.entity.dw_userrole.UserRole;
 import com.admin.model.coordina.MenuModel;
@@ -60,4 +61,5 @@ public interface UserPermissionGroupDao {
      * @return
      */
   //  int updateUserRole(UserRole userRole);
+    List<PermissionName> GetpermissionName();
 }

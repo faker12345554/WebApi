@@ -97,4 +97,11 @@ public class UserPermissController {
         return result.setData( groupService.GetMenuList());
     }
 
+    @ApiOperation("获取组信息")
+    @GetMapping("/GetpermissionName")
+    public ResponseResult GetpermissionName() {
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData( groupService.GetpermissionName());
+    }
 }
