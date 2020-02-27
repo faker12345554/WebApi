@@ -37,12 +37,19 @@ public class UserController {
 
     @UserLoginToken
     @ApiOperation("用户信息列表")
+   // @PostMapping("/GetList")
     @PostMapping("/GetList")
-    public ResponseResult<User> listUser(@RequestBody Usermodel usermodel, HttpServletResponse response) {
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        //return result.setData(userService.listUser(usermodel.getUserName(),usermodel.getPhone(),usermodel.getStatus(),usermodel.getPageIndex(),usermodel.getPageSize()));
-        return result.setData(userService.listUser(usermodel));
+    public ResponseResult<User> listUser(@RequestBody Usermodel usermodel) {
+        try {
+            result.setCode(ResultCode.SUCCESS.getCode());
+            result.setMessage(ResultCode.SUCCESS.getMessage());
+            //return result.setData(userService.listUser(usermodel.getUserName(),usermodel.getPhone(),usermodel.getStatus(),usermodel.getPageIndex(),usermodel.getPageSize()));
+            return result.setData(userService.listUser(usermodel));
+        }catch (Exception ex){
+            result.setCode(500);
+            result.setMessage(ex.toString());
+            return result.setData(" ");
+        }
     }
 
 

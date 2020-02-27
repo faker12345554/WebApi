@@ -1,5 +1,6 @@
 package com.admin.admin.controller.dw_group;
 
+import com.admin.admin.entity.dw_group.Condition;
 import com.admin.admin.entity.dw_userpermission.UserPermissionGroup;
 import com.admin.admin.service.dw_group.GroupService;
 import com.admin.token.tation.UserLoginToken;
@@ -81,12 +82,12 @@ public class UserPermissController {
 
     @UserLoginToken
     @ApiOperation("权限组列表")
-    @GetMapping("GetList")
-    public ResponseResult listGroup(@RequestParam int PageSize, int PageIndex, HttpServletResponse response) {
+    @PostMapping("GetList")
+    public ResponseResult listGroup(@RequestBody Condition condition, HttpServletResponse response) {
 
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData( groupService.listGroup( PageSize, PageIndex));
+        return result.setData( groupService.listGroup(condition));
     }
 
     @GetMapping("/Menutree")

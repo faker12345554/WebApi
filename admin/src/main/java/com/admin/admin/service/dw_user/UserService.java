@@ -11,6 +11,9 @@ import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -58,7 +61,7 @@ public class UserService {
     }
 
     //用户列表
-    public PageBean listUser(Usermodel usermodel) {
+    public PageBean listUser(Usermodel usermodel) throws ParseException {
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
 
 

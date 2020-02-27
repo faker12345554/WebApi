@@ -8,9 +8,11 @@ import java.util.List;
 public class UserPermissionGroup {
     private int permissionid;
     private String permissionname;
-    private Date createtime;
+    private String createtime;
     private int createid;
     private String createname;
+    private boolean status;
+    private List<MenuModel> MenuList;
 
     public List<MenuModel> getMenuList() {
         return MenuList;
@@ -21,8 +23,7 @@ public class UserPermissionGroup {
         return this;
     }
 
-    private boolean status;
-    private List<MenuModel> MenuList;
+
 
     public int getPermissionid() {
         return permissionid;
@@ -40,11 +41,11 @@ public class UserPermissionGroup {
         this.permissionname = permissionname;
     }
 
-    public Date getCreatetime() {
+    public String getCreatetime() {
         return createtime;
     }
 
-    public void setCreatetime(Date createtime) {
+    public void setCreatetime(String createtime) {
         this.createtime = createtime;
     }
 
