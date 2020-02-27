@@ -4,6 +4,7 @@ package com.prisonapp.business.controller.dw_supervise;
 import com.common.common.Uploadfiles.Upload;
 import com.common.common.result.ResultSet;
 import com.prisonapp.business.entity.dw_supervise.*;
+import com.prisonapp.business.entity.dw_user.UserModel;
 import com.prisonapp.business.service.dw_supervise.SuperviseService;
 import com.prisonapp.business.util.PersonInformationUtil;
 import com.prisonapp.token.TokenUtil;
@@ -283,7 +284,8 @@ public class SuperviseController {
     @PostMapping("/uploadLocationError")
     public ResultSet uploadLocationError(String errorCode, String errorMsg) {
         ResultSet result = new ResultSet();
-        int a = superviseService.uploadLocationError(errorCode, errorMsg, getPersonId(), new Date());
+        UserModel userModel = superviseService.getUserId(getPersonId());//根据personid查出对应user表中的id（整形）以便放入操作日志
+        int a = superviseService.uploadLocationError(errorCode, errorMsg, (int)userModel.getId(), new Date());
         if (a != 0) {
             result.resultCode = 0;
             result.resultMsg = "";
@@ -323,23 +325,35 @@ public class SuperviseController {
     @UserLoginToken
     @ApiOperation(value = " 获取保外人员的监管配置")
     @GetMapping("/getSuperviseConfig")
-    public ResultSet getSuperviseConfig() {
+    public ResultSet getSuperviseConfig() throws ParseException {
         ResultSet result = new ResultSet();
-        TRemindersettings tRemindersettings = superviseService.getLocationConfig();//获取待办提醒的所有数据
+        TRemindersettings tRemindersettings = superviseService.getLocationConfigTime();//获取待办提醒的所有数据
+
         //取出定位的数据
+        TPrisonsetting tPrisonsettingLocation = superviseService.getLocationConfig(getPersonId(),1);
         LocationModel locationModels =new LocationModel();
-        locationModels.setEnable(tRemindersettings.isStatus());
+        locationModels.setEnable(tPrisonsettingLocation.isSettingcheck());
         locationModels.setTimeSpan(Integer.parseInt(tRemindersettings.getSettingday()));
+
         //设置电量的数据
+        TPrisonsetting tPrisonsettingBattery = superviseService.getLocationConfig(getPersonId(),4);
         Battery battery = new Battery();
-        battery.setEnable(true);
+        battery.setEnable(tPrisonsettingBattery.isSettingcheck());
         battery.setTimeSpan("20");
         battery.setAlarmThreshold(20.0f);
         GetSuperviseConfigModel getSuperviseConfigModel = new GetSuperviseConfigModel(); // = superviseService.getBatteryConfigTimestamp(getPersonId());
         getSuperviseConfigModel.setLocation(locationModels);
         getSuperviseConfigModel.setBattery(battery);
         //最后时间
-        getSuperviseConfigModel.setLastEditTime(tRemindersettings.getCreatetime());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date locationDate=sdf.parse(tPrisonsettingLocation.getSettingtime());
+        Date batteryDate=sdf.parse(tPrisonsettingBattery.getSettingtime());
+        if(locationDate.getTime()>batteryDate.getTime()){
+            getSuperviseConfigModel.setLastEditTime(locationDate);
+        }else{
+            getSuperviseConfigModel.setLastEditTime(batteryDate);
+        }
+
         result.resultCode = 0;
         result.resultMsg = "";
         result.data = getSuperviseConfigModel;

@@ -1,6 +1,7 @@
 package com.admin.admin.service.dw_group;
 
 import com.admin.admin.dao.dw_userpermission.UserPermissionGroupDao;
+import com.admin.admin.entity.dw_group.Condition;
 import com.admin.admin.entity.dw_menu.Menu;
 import com.admin.admin.entity.dw_userpermission.UserPermissionGroup;
 
@@ -15,6 +16,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,12 +29,15 @@ public class GroupService {
 
     //新增
     public int saveGroup(UserPermissionGroup UserGroup) {
-        UserGroup.setCreatetime(new Date());
+       // UserGroup.setCreatetime(new Date());
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateNowStr = sdf.format(d);
         int userGroup=GroupDao.saveUserGroup(UserGroup);
         for (MenuModel item:UserGroup.getMenuList()){
             UserRole userRole=new UserRole();
             userRole.setPermissionid(UserGroup.getPermissionid());
-            userRole.setCreatetime(new Date());
+            userRole.setCreatetime(dateNowStr);
             userRole.setMenuid(item.getId());
             userRole.setRolename(item.getName());
             userRole.setStatus(true);
@@ -48,12 +53,15 @@ public class GroupService {
 
     //修改
     public int updateGroup(UserPermissionGroup UserGroup) {
-        UserGroup.setCreatetime(new Date());
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateNowStr = sdf.format(d);
+        UserGroup.setCreatetime(dateNowStr);
         GroupDao.deleteUserRole(UserGroup.getPermissionid());
         for (MenuModel item:UserGroup.getMenuList()){
             UserRole userRole=new UserRole();
             userRole.setPermissionid(UserGroup.getPermissionid());
-            userRole.setCreatetime(new Date());
+            userRole.setCreatetime(dateNowStr);
             userRole.setMenuid(item.getId());
             userRole.setRolename(item.getName());
             userRole.setStatus(true);
@@ -79,13 +87,13 @@ public class GroupService {
     }
 
     //组列表
-    public PageBean listGroup( int PageSize, int PageIndex) {
+    public PageBean listGroup(Condition condition) {
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
-        PageHelper.startPage(PageIndex, PageSize);
-        List<UserPermissionGroup> allItems = GroupDao.listGroup();
+        PageHelper.startPage(condition.getPageIndex(), condition.getPageSize());
+        List<UserPermissionGroup> allItems = GroupDao.listGroup(condition);
         PageInfo<UserPermissionGroup> info = new PageInfo<>(allItems);//全部商品
         int countNums = (int) info.getTotal();            //总记录数
-        PageBean<UserPermissionGroup> pageData = new PageBean<>(PageIndex, PageSize, countNums);
+        PageBean<UserPermissionGroup> pageData = new PageBean<>(condition.getPageIndex(), condition.getPageSize(), countNums);
         pageData.setTotalPage(info.getPages());//总页数
         pageData.setItems(allItems);
         return pageData;

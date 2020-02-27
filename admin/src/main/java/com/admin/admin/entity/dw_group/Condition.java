@@ -1,33 +1,25 @@
-package com.admin.admin.entity.dw_user;
+package com.admin.admin.entity.dw_group;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
-public class Usermodel {
-    private String userName;
-    private String phone;
+public class Condition {
+    private String  groupName;
     private String status;
     private Date startTime;
     private Date endTime;
     private int pageSize;
     private int pageIndex;
-    private Date createtime;
 
-    public String getUserName() {
-        return userName;
+    public String getGroupName() {
+        return groupName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     public String getStatus() {
@@ -61,7 +53,12 @@ public class Usermodel {
         if(endTime!=null){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date endTimeDate=sdf.parse(endTime);
-            this.endTime = endTimeDate;
+            Calendar calendar =new GregorianCalendar();
+            calendar.setTime(endTimeDate);
+            calendar.add(calendar.DATE,1);
+            Date date = calendar.getTime();
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            this.endTime = sqlDate;
         }else{
             this.endTime = null;
         }
@@ -82,13 +79,5 @@ public class Usermodel {
 
     public void setPageIndex(int pageIndex) {
         this.pageIndex = pageIndex;
-    }
-
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
     }
 }

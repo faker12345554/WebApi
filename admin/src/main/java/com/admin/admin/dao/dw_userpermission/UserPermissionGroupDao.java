@@ -1,5 +1,6 @@
 package com.admin.admin.dao.dw_userpermission;
 
+import com.admin.admin.entity.dw_group.Condition;
 import com.admin.admin.entity.dw_userpermission.UserPermissionGroup;
 import com.admin.admin.entity.dw_userrole.UserRole;
 import com.admin.model.coordina.MenuModel;
@@ -25,7 +26,7 @@ public interface UserPermissionGroupDao {
     List<MenuModel> getSomeoneMenuList(@Param("id") int id);
 
     //权限组列表
-    List<UserPermissionGroup> listGroup();
+    List<UserPermissionGroup> listGroup(@Param("condition") Condition condition);
 
     int selectByName(String Name);
 

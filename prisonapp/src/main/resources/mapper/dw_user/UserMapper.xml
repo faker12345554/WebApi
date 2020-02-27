@@ -6,8 +6,12 @@
         select * from t_user where accountname=#{userName}
     </select>
 
+    <select id="getUserid" parameterType="String" resultType="com.prisonapp.business.entity.dw_user.UserModel">
+        select id from t_user where phone =#{account};
+    </select>
+
     <insert id="insertLoginRecord" >
-        insert into t_log (operator,modular,operatingtime,systemtype) VALUES (#{personid},'登录',CURRENT_TIMESTAMP,'1')
+        insert into t_log (operator,modular,operatingtime,systemtype) VALUES (#{userid},'登录',CURRENT_TIMESTAMP,'1')
     </insert>
 
     <select id="getUser" resultType="com.prisonapp.business.entity.dw_user.UserModel">
