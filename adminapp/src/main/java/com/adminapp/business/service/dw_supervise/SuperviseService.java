@@ -99,6 +99,11 @@ public class SuperviseService {
         return superfineDado.getLeaveInformation(leaveOrder);
     }
 
+    //根据单号查找单条请假信息
+    public LeaveInformation getAllLeaveInformation(String leaveOrder){
+        return superfineDado.getAllLeaveInformation(leaveOrder);
+    }
+
     //更新请假表状态信息
     public int updateLeaveInformation(String leaveOrder,String statusCode,String status){
         return superfineDado.updateLeaveInformation(leaveOrder, statusCode, status);

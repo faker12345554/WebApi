@@ -3,7 +3,7 @@ package com.admin.model.log;
 import java.sql.Date;
 
 public class LogSearchModel {
-    private int operator;
+    private String operator;
     private String modular;
     private Date startTime;
     private Date endTime;
@@ -29,11 +29,11 @@ public class LogSearchModel {
         return this;
     }
 
-    public int getOperator() {
+    public String getOperator() {
         return operator;
     }
 
-    public void setOperator(int operator) {
+    public void setOperator(String operator) {
         this.operator = operator;
     }
 

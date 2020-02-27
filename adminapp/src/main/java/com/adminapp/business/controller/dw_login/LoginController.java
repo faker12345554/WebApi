@@ -47,13 +47,12 @@ public class LoginController {
             CacheUtils.put("UserId",account);
 
             UserModel userInformation = userService.login(account);
-            UserModel user=new UserModel();
-            user.setId(userInformation.getId());
-            user.setAccountname(userInformation.getAccountname());
-            user.setPassword(userInformation.getPassword());
-            String name=userInformation.getAliasname();
-            CacheUtils.put("UserName",name);
             if (userInformation != null) {                //判断账号是否存在
+                UserModel user=new UserModel();
+                user.setId(userInformation.getId());
+                user.setAccountname(userInformation.getAccountname());
+                user.setPassword(userInformation.getPassword());
+                String name=userInformation.getAliasname();
                 String token =tokenService.getToken(user);
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + 7);

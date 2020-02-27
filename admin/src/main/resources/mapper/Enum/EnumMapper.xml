@@ -58,7 +58,7 @@
     </insert>
 
     <update id="updateEnum">
-        update t_enum set typecode=#{typeCode},typename=#{typeName},enumName=#{enumName},status=#{status},createtime=CURRENT_TIMESTAMP where enumid=#{enumId}
+        update t_enum set typecode=#{typeCode},typename=#{typeName},enumName=#{enumName},status=#{status} where enumid=#{enumId}
     </update>
 
     <update id="deleteEnum">

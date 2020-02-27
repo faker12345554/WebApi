@@ -60,6 +60,10 @@
         select leaveorder AS code,statuscode AS statusCode,states AS status,personname AS applicant,subittimestamp AS applyTimestamp,starttimestamp AS startTimestamp,endtimestamp AS endTimestamp,
         leavedestination AS address,reason,recording AS reasonAudioUrl FROM t_leave WHERE leaveorder=#{leaveOrder}
     </select>
+
+    <select id="getAllLeaveInformation" resultType="com.adminapp.business.entity.dw_supervise.LeaveInformation">
+        select * from t_leave where leaveorder=#{leaveOrder}
+    </select>
     <update id="updateLeaveInformation">
         update t_leave set statuscode=#{statusCode},states=#{status} WHERE leaveorder=#{leaveOrder}
     </update>

@@ -997,7 +997,8 @@ public class SuperviseController {
 
         for(int i=0;i<leaveListModels.size();i++){
             LeaveListModel item=leaveListModels.get(i);
-            PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformationFromName(item.getApplicant());
+            LeaveInformation leaveInformation=superviseService.getAllLeaveInformation(item.getCode());
+            PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(leaveInformation.getPersonid());
             if(personAllInformationModel.getSponsoralarm().equals(userId)){
                 long startDate=Long.parseLong(item.getStartTimestamp());
                 long endDate=Long.parseLong(item.getEndTimestamp());
@@ -1093,7 +1094,7 @@ public class SuperviseController {
             List<LocationRecordModel> locationRecordModels = superviseService.listLocationRecord(code);  //获取监居人员所有定位信息
 
             List<LocationRecordModel> newLocationRecords = new ArrayList<>();
-            if (startDate != null&&startDate!="" && (endDate == null||endDate=="")) {   //开始时间戳不为空
+            if (startDate != null && startDate != "" && (endDate == null || endDate == "")) {   //开始时间戳不为空
                 for (LocationRecordModel item : locationRecordModels
                 ) {
                     if (Long.parseLong(item.getTimestamp()) >= Long.parseLong(startDate)) {
@@ -1101,7 +1102,7 @@ public class SuperviseController {
                     }
                 }
             }
-            if ((startDate == null||startDate=="") && endDate != null&&endDate!="") {   //结束时间戳不为空
+            if ((startDate == null || startDate == "") && endDate != null && endDate != "") {   //结束时间戳不为空
                 for (LocationRecordModel item : locationRecordModels
                 ) {
                     if (Long.parseLong(item.getTimestamp()) < Long.parseLong(endDate)) {
@@ -1109,13 +1110,13 @@ public class SuperviseController {
                     }
                 }
             }
-            if ((startDate == null||startDate=="") && (endDate == null||endDate=="")) {     //都为空
+            if ((startDate == null || startDate == "") && (endDate == null || endDate == "")) {     //都为空
                 for (LocationRecordModel item : locationRecordModels
                 ) {
                     newLocationRecords.add(item);
                 }
             }
-            if (startDate != null&&startDate!="" && endDate != null&&endDate!="") {     //都不为空
+            if (startDate != null && startDate != "" && endDate != null && endDate != "") {     //都不为空
                 for (LocationRecordModel item : locationRecordModels
                 ) {
                     if (Long.parseLong(item.getTimestamp()) >= Long.parseLong(startDate) && Long.parseLong(item.getTimestamp()) < Long.parseLong(endDate)) {
@@ -1124,64 +1125,74 @@ public class SuperviseController {
                 }
             }
 
-            List<LocationRecordModel> locationRecordModels1 = new ArrayList<>();  //经过类型筛选之后的数据
-            if (type == 0) {    //全部数据
-                locationRecordModels1 = newLocationRecords;
-            }
-            if (type == 1) {    //越界数据
-                for (LocationRecordModel item : newLocationRecords
-                ) {
-                    if (item.getIsOutBound()) {
-                        locationRecordModels1.add(item);
+            if (newLocationRecords.size() != 0) {
+
+                List<LocationRecordModel> locationRecordModels1 = new ArrayList<>();  //经过类型筛选之后的数据
+                if (type == 0) {    //全部数据
+                    locationRecordModels1 = newLocationRecords;
+                }
+                if (type == 1) {    //越界数据
+                    for (LocationRecordModel item : newLocationRecords
+                    ) {
+                        if (item.getIsOutBound()) {
+                            locationRecordModels1.add(item);
+                        }
                     }
                 }
-            }
-            if (type == 2) {   //最近一条数据
-                locationRecordModels1.add(newLocationRecords.get(0));
-            }
+                if (type == 2) {   //最近一条数据
+                    locationRecordModels1.add(newLocationRecords.get(0));
+                }
 
-            List<LocationRecordModel> locationRecordModels2 = new ArrayList<>();   //经过count和requestCount筛选后的数据
-            if (locationRecordModels1.size() > count && locationRecordModels1.size() <= count + requestCount) {
-                for (int i = count; i < locationRecordModels1.size(); i++) {
-                    LocationRecordModel summonsInformation = locationRecordModels1.get(i);
-                    locationRecordModels2.add(summonsInformation);
+                List<LocationRecordModel> locationRecordModels2 = new ArrayList<>();   //经过count和requestCount筛选后的数据
+                if (locationRecordModels1.size() > count && locationRecordModels1.size() <= count + requestCount) {
+                    for (int i = count; i < locationRecordModels1.size(); i++) {
+                        LocationRecordModel summonsInformation = locationRecordModels1.get(i);
+                        locationRecordModels2.add(summonsInformation);
+                    }
                 }
-            }
-            if (locationRecordModels1.size() > count + requestCount) {
-                for (int i = count; i < count + requestCount; i++) {
-                    LocationRecordModel summonsInformation = locationRecordModels1.get(i);
-                    locationRecordModels2.add(summonsInformation);
+                if (locationRecordModels1.size() > count + requestCount) {
+                    for (int i = count; i < count + requestCount; i++) {
+                        LocationRecordModel summonsInformation = locationRecordModels1.get(i);
+                        locationRecordModels2.add(summonsInformation);
+                    }
                 }
-            }
-            String areaFence = superviseService.getAreaFence(code);   //获取监居人员区域围栏
-            String areaCode=superviseService.getAreaCode(code);     //获取监居人员区域编码
-            List<AreaFenceModel> areaFenceModelList = new ArrayList<>();
-            if (areaFence!=null) {   //区域围栏不为空为空
-                String[] area = areaFence.split(",");
-                for (int i = 0; i < area.length; i = i + 2) {
-                    AreaFenceModel areaFenceModel = new AreaFenceModel();
-                    areaFenceModel.setLatitude(Float.valueOf(area[i]));
-                    areaFenceModel.setLongitude(Float.valueOf(area[i + 1]));
-                    areaFenceModelList.add(areaFenceModel);
+                String areaFence = superviseService.getAreaFence(code);   //获取监居人员区域围栏
+                String areaCode = superviseService.getAreaCode(code);     //获取监居人员区域编码
+                List<AreaFenceModel> areaFenceModelList = new ArrayList<>();
+                if (areaFence != null) {   //区域围栏不为空为空
+                    String[] area = areaFence.split(",");
+                    for (int i = 0; i < area.length; i = i + 2) {
+                        AreaFenceModel areaFenceModel = new AreaFenceModel();
+                        areaFenceModel.setLatitude(Float.valueOf(area[i]));
+                        areaFenceModel.setLongitude(Float.valueOf(area[i + 1]));
+                        areaFenceModelList.add(areaFenceModel);
+                    }
+                    for (LocationRecordModel item : locationRecordModels2
+                    ) {
+                        item.setArea(areaFenceModelList);
+                    }
+                } else {     //区域围栏为空，传区域编码
+                    for (LocationRecordModel item : locationRecordModels2
+                    ) {
+                        item.setAreaCode(areaCode);
+                    }
                 }
-                for (LocationRecordModel item:locationRecordModels2
-                ) {
-                    item.setArea(areaFenceModelList);
-                }
-            }
-            else{     //区域围栏为空，传区域编码
-                for (LocationRecordModel item:locationRecordModels2
-                ) {
-                    item.setAreaCode(areaCode);
-                }
-            }
 
-            LocationRecordReturnModel locationRecordReturnModel = new LocationRecordReturnModel();
-            locationRecordReturnModel.setTotalCount(locationRecordModels1.size());
-            locationRecordReturnModel.setList(locationRecordModels2);
-            rs.resultCode = 0;
-            rs.resultMsg = "";
-            rs.data = locationRecordReturnModel;
+                LocationRecordReturnModel locationRecordReturnModel = new LocationRecordReturnModel();
+                locationRecordReturnModel.setTotalCount(locationRecordModels1.size());
+                locationRecordReturnModel.setList(locationRecordModels2);
+                rs.resultCode = 0;
+                rs.resultMsg = "";
+                rs.data = locationRecordReturnModel;
+            }else{
+                LocationRecordReturnModel locationRecordReturnModel = new LocationRecordReturnModel();
+                locationRecordReturnModel.setTotalCount(0);
+                List<LocationRecordModel> locationRecordModels2 = new ArrayList<>();
+                locationRecordReturnModel.setList(locationRecordModels2);
+                rs.resultCode = 0;
+                rs.resultMsg = "";
+                rs.data =locationRecordReturnModel;
+            }
         }
         else{
             rs.resultCode=1;
@@ -1664,8 +1675,8 @@ public class SuperviseController {
             Collections.sort(newSignRecordModelList, new Comparator<SignRecordModel>() {
                 @Override
                 public int compare(SignRecordModel signRecordModel, SignRecordModel t1) {
-                    long a=Long.parseLong(t1.getTimestamp());
-                    long b=Long.parseLong(signRecordModel.getTimestamp());
+                    long a=Long.parseLong(t1.getTimestamp())/1000;
+                    long b=Long.parseLong(signRecordModel.getTimestamp())/1000;
                     long c=a-b;
                     return Integer.parseInt(String.valueOf(c));
                 }

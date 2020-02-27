@@ -1,17 +1,17 @@
-package com.prisonapp.apppush;
+package com.adminapp.apppush;
+
+import com.adminapp.apppush.android.AndroidBroadcast;
+import com.adminapp.apppush.android.AndroidCustomizedcast;
+import com.adminapp.apppush.android.AndroidGroupcast;
+import com.adminapp.apppush.android.AndroidUnicast;
+import com.adminapp.apppush.ios.IOSBroadcast;
+import com.adminapp.apppush.ios.IOSGroupcast;
+import com.adminapp.apppush.ios.IOSUnicast;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import com.prisonapp.apppush.android.AndroidBroadcast;
-import com.prisonapp.apppush.android.AndroidCustomizedcast;
-import com.prisonapp.apppush.android.AndroidGroupcast;
-import com.prisonapp.apppush.android.AndroidUnicast;
-import com.prisonapp.apppush.ios.IOSBroadcast;
-import com.prisonapp.apppush.ios.IOSGroupcast;
-import com.prisonapp.apppush.ios.IOSUnicast;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 
 public class Demo {
