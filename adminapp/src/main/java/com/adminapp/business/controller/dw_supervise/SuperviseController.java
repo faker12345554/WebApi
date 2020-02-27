@@ -776,9 +776,9 @@ public class SuperviseController {
         List<SummonsInformation> newSummonsInformations = new ArrayList<>();     //筛选规定时间内的传讯数据
         for (SummonsInformation item : summonsInformations
         ) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date d=sdf.parse(item.getSummonsbegintime());
-            if (Long.parseLong(String.valueOf(d.getTime())) >= Long.parseLong(startDate) && Long.parseLong(String.valueOf(d.getTime())) < Long.parseLong(endDate)) {
+            //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            //Date d=sdf.parse(item.getSummontime());
+            if (Long.parseLong(item.getSummontime()) >= Long.parseLong(startDate) && Long.parseLong(item.getSummontime()) < Long.parseLong(endDate)) {
                 newSummonsInformations.add(item);
             }
         }

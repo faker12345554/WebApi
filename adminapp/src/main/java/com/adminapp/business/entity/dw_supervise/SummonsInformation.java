@@ -40,7 +40,7 @@ public class SummonsInformation {
 
   public void setSummontime(String summontime) throws ParseException {
     //String summonTime=String.valueOf(summontime.getTime());
-    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM");
+    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
     Date date=sdf.parse(summontime);
     String summonTime=String.valueOf(date.getTime());
     this.summontime = summonTime;

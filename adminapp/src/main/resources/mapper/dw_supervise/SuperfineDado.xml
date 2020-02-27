@@ -129,7 +129,7 @@
         select enumname FROM t_enum WHERE typecode=#{typeCode} AND enumcode=#{enumCode}
     </select>
     <select id="listNotCiteRecord" resultType="com.adminapp.business.entity.dw_supervise.SummonsInformation">
-        select * FROM t_summons WHERE t_summons.reporttime is null ORDER BY t_summons.summontime DESC
+        select * FROM t_summons WHERE t_summons.reporttime is null and t_summons.summontime is not null ORDER BY t_summons.summontime DESC
     </select>
     <select id="getUserInformation" resultType="com.adminapp.business.entity.dw_user.UserModel">
         select * from t_user where accountname=#{userId}
