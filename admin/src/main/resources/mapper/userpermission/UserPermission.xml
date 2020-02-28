@@ -73,4 +73,7 @@
         select menuid as id,menuname as Name,topid from legal."public".t_menu where status=true
     </select>
 
+    <select id="GetpermissionName"  resultType="com.admin.admin.entity.dw_group.PermissionName">
+        SELECT permissionname from t_userpermissiongroup where status=true
+    </select>
 </mapper>
