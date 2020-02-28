@@ -1,8 +1,10 @@
 package com.admin.timer;
 
 import com.admin.admin.dao.dw_violation.ViolationDao;
+import com.admin.admin.entity.dw_message.TMessage;
 import com.admin.admin.entity.dw_violation.Violationfens;
 import com.admin.admin.service.dw_task.Tasking;
+import com.common.common.apppush.Demo;
 import com.common.common.authenticator.CalendarAdjust;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -71,5 +73,20 @@ public class Datatimer  {
     @Scheduled(cron = "0 0 3 1 * ?")
     public void Statisticalsummons() throws Exception{
         tasking.Statisticalsummons();
+    }
+    //每天凌晨三点
+    @Scheduled(cron = "0 0 3 * * ?")
+    public void SendSummons() throws Exception{
+    tasking.GetMessageList(5);
+    }
+    //每天凌晨三点
+    @Scheduled(cron = "0 0 3 * * ?")
+    public void SendBailout() throws Exception{
+        tasking.GetMessageList(6);
+    }
+    //每天凌晨三点
+    @Scheduled(cron = "0 0 3 * * ?")
+    public void SendPrison() throws Exception{
+        tasking.GetMessageList(7);
     }
 }

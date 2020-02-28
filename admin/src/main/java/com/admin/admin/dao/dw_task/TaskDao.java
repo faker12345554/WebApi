@@ -86,6 +86,16 @@ public interface TaskDao {
      */
     int UpdateDegree(String PersonId,String severity);
 
+    /**
+     *
+     * @param type
+     * @param SendTime
+     * @return
+     */
+    List<TMessage> GetMessageList(@Param("type") int type,@Param("SendTime") String SendTime);
+
+
+
 
 
 

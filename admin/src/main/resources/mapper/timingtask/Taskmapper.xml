@@ -50,4 +50,11 @@
         and summonsendtime =(SELECT summonsendtime from t_summons where personid=#{PersonId} Order by summonsendtime desc LIMIT 1 )
     </update>
 
+
+    <select id="GetMessageList" resultType="com.admin.admin.entity.dw_message.TMessage">
+        select * from t_message
+        where modular=#{type} and to_date(to_char(messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')=to_date(#{SendTime},'yyyy-MM-dd')
+    </select>
+
+
 </mapper>
