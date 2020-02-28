@@ -43,6 +43,7 @@ public class GroupService {
             userRole.setMenuid(item.getId());
             userRole.setRolename(item.getName());
             userRole.setStatus(true);
+
             GroupDao.saveUserRole(userRole);
         }
 

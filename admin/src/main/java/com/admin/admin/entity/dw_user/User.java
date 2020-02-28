@@ -25,6 +25,7 @@ public class User {
     private String sex;
     private String station;
     private String bz;
+    private String departmentnum;
 
     public long getUsersystem() {
         return usersystem;
@@ -233,5 +234,13 @@ public class User {
 
     public void setCteatetime(String createtime) {
         this.createtime = createtime;
+    }
+
+    public String getDepartmentnum() {
+        return departmentnum;
+    }
+
+    public void setDepartmentnum(String departmentnum) {
+        this.departmentnum = departmentnum;
     }
 }
