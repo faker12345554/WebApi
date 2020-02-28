@@ -42,6 +42,10 @@ public interface PersonDao {
     int insertprison(@Param("data")TPrisonsetting tPrisonsetting);
 
     /*
+    查询是否重复
+     */
+    int Getprison(String personId,String settingname);
+    /*
     查询设置
      */
     List<TPrisonsetting> ListPrison(String PersonId);

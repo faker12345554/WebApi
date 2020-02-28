@@ -36,78 +36,249 @@ public class Personinformation {
     private String casetype;
     private String facepath;
     private String persontags;
-    private int gendercode;
-    private String beforename;
-    private String nation;
-    private String degreeeducation;
-    private String nativeplace;
-    private String occupation;
-    private String nationality;
-    private String registeredarea;
-    private String permanentaddress;
-    private String currentaddress;
-    private String nowaddress;
-    private String yjsponsoralarm;
-    private String exectype;
-    private String keepaddress;
-    private boolean appointaddress;
-    private String province;
-    private String city;
-    private String area;
-    private String monitoraddress;
-    private String suspectstatuscode;
-    private String guid;
-    private String violationcode;
-    private String handlepeson;
-    private TCaseinfo tCaseinfo;
-    private GuaranteeInformation guaranteeInformation;
-    private List<String> managementStyle;
-    private String caseno;
-    public String getHandlepeson() {
-        return handlepeson;
+
+    public String getPersonid() {
+        return personid;
     }
 
-    public Personinformation setHandlepeson(String handlepeson) {
-        this.handlepeson = handlepeson;
-        return this;
-    }
-    public String getGuid() {
-        return guid;
-    }
-
-    public Personinformation setGuid(String guid) {
-        this.guid = guid;
+    public Personinformation setPersonid(String personid) {
+        this.personid = personid;
         return this;
     }
 
-    public String getViolationcode() {
-        return violationcode;
+    public String getPersonname() {
+        return personname;
     }
 
-    public Personinformation setViolationcode(String violationcode) {
-        this.violationcode = violationcode;
+    public Personinformation setPersonname(String personname) {
+        this.personname = personname;
         return this;
     }
 
-    public String getCaseno() {
-        return caseno;
+    public String getGender() {
+        return gender;
     }
 
-    public Personinformation setCaseno(String caseno) {
-        this.caseno = caseno;
+    public Personinformation setGender(String gender) {
+        this.gender = gender;
         return this;
     }
 
-    public String getHandleunit() {
-        return handleunit;
+    public int getAge() {
+        return age;
     }
 
-    public Personinformation setHandleunit(String handleunit) {
-        this.handleunit = handleunit;
+    public Personinformation setAge(int age) {
+        this.age = age;
         return this;
     }
 
-    private String handleunit;
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public Personinformation setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+        return this;
+    }
+
+    public String getCard() {
+        return card;
+    }
+
+    public Personinformation setCard(String card) {
+        this.card = card;
+        return this;
+    }
+
+    public String getWorkunit() {
+        return Workunit;
+    }
+
+    public Personinformation setWorkunit(String workunit) {
+        Workunit = workunit;
+        return this;
+    }
+
+    public Timestamp getBailoutbegindate() {
+        return Bailoutbegindate;
+    }
+
+    public Personinformation setBailoutbegindate(Timestamp bailoutbegindate) {
+        Bailoutbegindate = bailoutbegindate;
+        return this;
+    }
+
+    public Timestamp getBailoutenddate() {
+        return Bailoutenddate;
+    }
+
+    public Personinformation setBailoutenddate(Timestamp bailoutenddate) {
+        Bailoutenddate = bailoutenddate;
+        return this;
+    }
+
+    public String getSponsor() {
+        return Sponsor;
+    }
+
+    public Personinformation setSponsor(String sponsor) {
+        Sponsor = sponsor;
+        return this;
+    }
+
+    public String getSponsoralarm() {
+        return sponsoralarm;
+    }
+
+    public Personinformation setSponsoralarm(String sponsoralarm) {
+        this.sponsoralarm = sponsoralarm;
+        return this;
+    }
+
+    public String getContact() {
+        return Contact;
+    }
+
+    public Personinformation setContact(String contact) {
+        Contact = contact;
+        return this;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public Personinformation setAddress(String address) {
+        Address = address;
+        return this;
+    }
+
+    public String getWechatnumber() {
+        return wechatnumber;
+    }
+
+    public Personinformation setWechatnumber(String wechatnumber) {
+        this.wechatnumber = wechatnumber;
+        return this;
+    }
+
+    public String getQqnumber() {
+        return qqnumber;
+    }
+
+    public Personinformation setQqnumber(String qqnumber) {
+        this.qqnumber = qqnumber;
+        return this;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public Personinformation setStatus(boolean status) {
+        this.status = status;
+        return this;
+    }
+
+    public String getFounderid() {
+        return founderid;
+    }
+
+    public Personinformation setFounderid(String founderid) {
+        this.founderid = founderid;
+        return this;
+    }
+
+    public Date getFoundertime() {
+        return foundertime;
+    }
+
+    public Personinformation setFoundertime(Date foundertime) {
+        this.foundertime = foundertime;
+        return this;
+    }
+
+    public String getModifierid() {
+        return modifierid;
+    }
+
+    public Personinformation setModifierid(String modifierid) {
+        this.modifierid = modifierid;
+        return this;
+    }
+
+    public Date getModifiertime() {
+        return modifiertime;
+    }
+
+    public Personinformation setModifiertime(Date modifiertime) {
+        this.modifiertime = modifiertime;
+        return this;
+    }
+
+    public String getSuspectstatus() {
+        return suspectstatus;
+    }
+
+    public Personinformation setSuspectstatus(String suspectstatus) {
+        this.suspectstatus = suspectstatus;
+        return this;
+    }
+
+    public String getMarriage() {
+        return marriage;
+    }
+
+    public Personinformation setMarriage(String marriage) {
+        this.marriage = marriage;
+        return this;
+    }
+
+    public String getPolicestation() {
+        return policestation;
+    }
+
+    public Personinformation setPolicestation(String policestation) {
+        this.policestation = policestation;
+        return this;
+    }
+
+    public String getCasetype() {
+        return casetype;
+    }
+
+    public Personinformation setCasetype(String casetype) {
+        this.casetype = casetype;
+        return this;
+    }
+
+    public String getFacepath() {
+        return facepath;
+    }
+
+    public Personinformation setFacepath(String facepath) {
+        this.facepath = facepath;
+        return this;
+    }
+
+    public String getPersontags() {
+        return persontags;
+    }
+
+    public Personinformation setPersontags(String persontags) {
+        this.persontags = persontags;
+        return this;
+    }
+
+    public int getGendercode() {
+        return gendercode;
+    }
+
+    public Personinformation setGendercode(int gendercode) {
+        this.gendercode = gendercode;
+        return this;
+    }
 
     public String getBeforename() {
         return beforename;
@@ -151,14 +322,6 @@ public class Personinformation {
 
     public Personinformation setOccupation(String occupation) {
         this.occupation = occupation;
-        return this;
-    }
-    public GuaranteeInformation getGuaranteeInformation() {
-        return guaranteeInformation;
-    }
-
-    public Personinformation setGuaranteeInformation(GuaranteeInformation guaranteeInformation) {
-        this.guaranteeInformation = guaranteeInformation;
         return this;
     }
 
@@ -229,6 +392,11 @@ public class Personinformation {
         return keepaddress;
     }
 
+    public Personinformation setKeepaddress(String keepaddress) {
+        this.keepaddress = keepaddress;
+        return this;
+    }
+
     public boolean isAppointaddress() {
         return appointaddress;
     }
@@ -237,13 +405,6 @@ public class Personinformation {
         this.appointaddress = appointaddress;
         return this;
     }
-
-    public Personinformation setKeepaddress(String keepaddress) {
-        this.keepaddress = keepaddress;
-        return this;
-    }
-
-
 
     public String getProvince() {
         return province;
@@ -290,6 +451,51 @@ public class Personinformation {
         return this;
     }
 
+    public String getGuid() {
+        return guid;
+    }
+
+    public Personinformation setGuid(String guid) {
+        this.guid = guid;
+        return this;
+    }
+
+    public String getViolationcode() {
+        return violationcode;
+    }
+
+    public Personinformation setViolationcode(String violationcode) {
+        this.violationcode = violationcode;
+        return this;
+    }
+
+    public String getHandlepeson() {
+        return handlepeson;
+    }
+
+    public Personinformation setHandlepeson(String handlepeson) {
+        this.handlepeson = handlepeson;
+        return this;
+    }
+
+    public TCaseinfo gettCaseinfo() {
+        return tCaseinfo;
+    }
+
+    public Personinformation settCaseinfo(TCaseinfo tCaseinfo) {
+        this.tCaseinfo = tCaseinfo;
+        return this;
+    }
+
+    public GuaranteeInformation getGuaranteeInformation() {
+        return guaranteeInformation;
+    }
+
+    public Personinformation setGuaranteeInformation(GuaranteeInformation guaranteeInformation) {
+        this.guaranteeInformation = guaranteeInformation;
+        return this;
+    }
+
     public List<String> getManagementStyle() {
         return managementStyle;
     }
@@ -299,254 +505,42 @@ public class Personinformation {
         return this;
     }
 
-
-    public String getPersonid() {
-        return personid;
+    public String getCaseno() {
+        return caseno;
     }
 
-    public Personinformation setPersonid(String personid) {
-        this.personid = personid;
+    public Personinformation setCaseno(String caseno) {
+        this.caseno = caseno;
         return this;
     }
 
-    public String getPersonname() {
-        return personname;
-    }
-
-    public void setPersonname(String personname) {
-        this.personname = personname;
-    }
-
-    public String getSponsoralarm() {
-        return sponsoralarm;
-    }
-
-    public void setSponsoralarm(String sponsoralarm) {
-        this.sponsoralarm = sponsoralarm;
-    }
-
-    public String getWechatnumber() {
-        return wechatnumber;
-    }
-
-    public void setWechatnumber(String wechatnumber) {
-        this.wechatnumber = wechatnumber;
-    }
-
-    public String getQqnumber() {
-        return qqnumber;
-    }
-
-    public void setQqnumber(String qqnumber) {
-        this.qqnumber = qqnumber;
-    }
-
-    public String getFounderid() {
-        return founderid;
-    }
-
-    public Personinformation setFounderid(String founderid) {
-        this.founderid = founderid;
-        return this;
-    }
-
-    public Date getFoundertime() {
-        return foundertime;
-    }
-
-    public Personinformation setFoundertime(Date foundertime) {
-        this.foundertime = foundertime;
-        return this;
-    }
-
-    public Date getModifiertime() {
-        return modifiertime;
-    }
-
-    public Personinformation setModifiertime(Date modifiertime) {
-        this.modifiertime = modifiertime;
-        return this;
-    }
-
-    public String getModifierid() {
-        return modifierid;
-    }
-
-    public Personinformation setModifierid(String modifierid) {
-        this.modifierid = modifierid;
-        return this;
-    }
-
-
-
-    public String getSuspectstatus() {
-        return suspectstatus;
-    }
-
-    public Personinformation setSuspectstatus(String suspectstatus) {
-        this.suspectstatus = suspectstatus;
-        return this;
-    }
-
-    public String getMarriage() {
-        return marriage;
-    }
-
-    public Personinformation setMarriage(String marriage) {
-        this.marriage = marriage;
-        return this;
-    }
-
-
-
-    public String getPolicestation() {
-        return policestation;
-    }
-
-    public Personinformation setPolicestation(String policestation) {
-        this.policestation = policestation;
-        return this;
-    }
-
-    public String getCasetype() {
-        return casetype;
-    }
-
-    public Personinformation setCasetype(String casetype) {
-        this.casetype = casetype;
-        return this;
-    }
-
-    public String getFacepath() {
-        return facepath;
-    }
-
-    public Personinformation setFacepath(String facepath) {
-        this.facepath = facepath;
-        return this;
-    }
-
-    public String getPersontags() {
-        return persontags;
-    }
-
-    public Personinformation setPersontags(String persontags) {
-        this.persontags = persontags;
-        return this;
-    }
-
-    public int getGendercode() {
-        return gendercode;
-    }
-
-    public Personinformation setGendercode(int gendercode) {
-        this.gendercode = gendercode;
-        return this;
-    }
-
-
-
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public Date getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
-    }
-
-    public String getCard() {
-        return card;
-    }
-
-    public void setCard(String card) {
-        this.card = card;
-    }
-
-    public String getWorkunit() {
-        return Workunit;
-    }
-
-    public Timestamp getBailoutbegindate() {
-        return Bailoutbegindate;
-    }
-
-    public Personinformation setBailoutbegindate(Timestamp bailoutbegindate) {
-        Bailoutbegindate = bailoutbegindate;
-        return this;
-    }
-
-    public Timestamp getBailoutenddate() {
-        return Bailoutenddate;
-    }
-
-    public Personinformation setBailoutenddate(Timestamp bailoutenddate) {
-        Bailoutenddate = bailoutenddate;
-        return this;
-    }
-
-    public void setWorkunit(String workunit) {
-        Workunit = workunit;
-    }
-
-
-    public String getSponsor() {
-        return Sponsor;
-    }
-
-    public void setSponsor(String sponsor) {
-        Sponsor = sponsor;
-    }
-
-
-    public String getContact() {
-        return Contact;
-    }
-
-    public void setContact(String contact) {
-        Contact = contact;
-    }
-
-    public String getAddress() {
-        return Address;
-    }
-
-    public void setAddress(String address) {
-        Address = address;
-    }
-
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-    public TCaseinfo gettCaseinfo() {
-        return tCaseinfo;
-    }
-
-    public Personinformation settCaseinfo(TCaseinfo tCaseinfo) {
-        this.tCaseinfo = tCaseinfo;
-        return this;
-    }
+    private int gendercode;
+    private String beforename;
+    private String nation;
+    private String degreeeducation;
+    private String nativeplace;
+    private String occupation;
+    private String nationality;
+    private String registeredarea;
+    private String permanentaddress;
+    private String currentaddress;
+    private String nowaddress;
+    private String yjsponsoralarm;
+    private String exectype;
+    private String keepaddress;
+    private boolean appointaddress;
+    private String province;
+    private String city;
+    private String area;
+    private String monitoraddress;
+    private String suspectstatuscode;
+    private String guid;
+    private String violationcode;
+    private String handlepeson;
+    private TCaseinfo tCaseinfo;
+    private GuaranteeInformation guaranteeInformation;
+    private List<String> managementStyle;
+    private String caseno;
 
 
 }

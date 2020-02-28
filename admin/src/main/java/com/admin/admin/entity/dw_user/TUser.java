@@ -23,6 +23,7 @@ public class TUser {
   private String sex;
   private String station;
   private String bz;
+  private String departmentnum;
 
 
   public long getId() {
@@ -204,4 +205,11 @@ public class TUser {
     this.bz = bz;
   }
 
+  public String getDepartmentnum() {
+    return departmentnum;
+  }
+
+  public void setDepartmentnum(String departmentnum) {
+    this.departmentnum = departmentnum;
+  }
 }

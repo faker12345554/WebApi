@@ -7,6 +7,7 @@ import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
 import com.admin.admin.entity.dw_reminder.Remindersettings;
 import com.admin.admin.entity.dw_summons.TSummons;
 import com.admin.admin.entity.dw_violation.Violationfens;
+import com.common.common.apppush.Demo;
 import com.common.common.authenticator.CalendarAdjust;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,14 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class Tasking {
+
     @Autowired
     private TaskDao taskDao;
 
@@ -43,7 +46,7 @@ public class Tasking {
                 if (item.getSuspectstatus().equals("取保候审")) {
                     System.out.println(item.getPersonid());
                     message.setModular(6);
-                    message.setWorkcontent("监居人员" + item.getPersonname() + "15天后取保候审到期,请提前告知!");
+                    message.setContent("监居人员" + item.getPersonname() + "15天后取保候审到期,请提前告知!");
                     message.setPersonid(item.getPersonid());
                     message.setModularname("取保候审到期提醒");
                     message.setReadmessage(false);
@@ -51,7 +54,7 @@ public class Tasking {
                     taskDao.SaveMessage(message);
                 } else if (item.getSuspectstatus().equals("监视居住")) {
                     message.setModular(7);
-                    message.setWorkcontent("监居人员" + item.getPersonname() + "15天后监视居住到期,请提前告知!");
+                    message.setContent("监居人员" + item.getPersonname() + "15天后监视居住到期,请提前告知!");
                     message.setPersonid(item.getPersonid());
                     message.setModularname("监视居住到期提醒");
                     message.setReadmessage(false);
@@ -140,7 +143,7 @@ public class Tasking {
         for (Personinformation item : list) {
             //填写消息内容
             message.setModular(5);
-            message.setWorkcontent("监居人员" + item.getPersonname() + "下个月应进行传讯取证,请提前告知!");
+            message.setContent("监居人员" + item.getPersonname() + "下个月应进行传讯取证,请提前告知!");
             message.setPersonid(item.getPersonid());
             message.setModularname("传讯提醒");
             message.setReadmessage(false);
@@ -182,6 +185,36 @@ public class Tasking {
             taskDao.UpdateDegree(item.getPersonid(),severity);
         }
 
+    }
+
+    public List<TMessage> GetMessageList(int type) throws Exception{
+        List<TMessage> messageList=new ArrayList<TMessage>();
+        if (type==5){
+            messageList=taskDao.GetMessageList(5,CalendarAdjust.GetYear(new Date()));
+
+        }else if(type==6){
+            messageList=taskDao.GetMessageList(6,CalendarAdjust.GetYear(new Date()));
+        }else if(type==7){
+            messageList=taskDao.GetMessageList(7,CalendarAdjust.GetYear(new Date()));
+        }
+        for (TMessage item: messageList){
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(item.getMessagetime());   //设置当前时间
+
+            cal.add(Calendar.DATE, 1);  //在当前时间基础上加一天
+
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+
+            Demo demo = new Demo("5dd349b4570df37b6700045e", "4hpqbdi0wpikb7bkwamq4uwnpvkjhebz");
+            demo.sendAndroidCustomizedcast(item.getPersonid(),"ReleaseBailCode","AtMqss89NJcaerkruc7N0Bgif58Zyy00PkqfWUt5j1xz",
+                    item.getModularname(),item.getContent(),cal.getTime());
+            System.out.println(item.getMessagetime());
+        }
+
+        return messageList;
     }
 
 

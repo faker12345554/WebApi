@@ -2,6 +2,7 @@ package com.admin.admin.service.dw_group;
 
 import com.admin.admin.dao.dw_userpermission.UserPermissionGroupDao;
 import com.admin.admin.entity.dw_group.Condition;
+import com.admin.admin.entity.dw_group.PermissionName;
 import com.admin.admin.entity.dw_menu.Menu;
 import com.admin.admin.entity.dw_userpermission.UserPermissionGroup;
 
@@ -16,6 +17,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.PublicKey;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,6 +43,7 @@ public class GroupService {
             userRole.setMenuid(item.getId());
             userRole.setRolename(item.getName());
             userRole.setStatus(true);
+
             GroupDao.saveUserRole(userRole);
         }
 
@@ -132,6 +135,13 @@ public class GroupService {
             Menu.add(menuModel);
         }
         return Menu;
+
+
     }
 
+    public List<PermissionName> GetpermissionName(){
+        List<PermissionName> permissionGroup = GroupDao.GetpermissionName();
+
+        return permissionGroup;
+    }
 }

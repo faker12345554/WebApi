@@ -67,6 +67,8 @@ public class LogController {
         List<Map<String, String>> addlist = new ArrayList<>();
 //        List<Map<String, String>> policelist = new ArrayList<>();
 //        List<Map<String, String>> Stationlist = new ArrayList<>();
+
+
         if (level == 1) {
             addlist = addressService.getAddress(code, 2);
             for (Map<String, String> item : addlist) {
@@ -119,6 +121,7 @@ public class LogController {
                 model.setTotalnumber(logService.gettotelnumber(Areacode));
                 int usernumber=0;
                 for (Map<String,String> itam: countlist){
+
 
                     int Days=Double.valueOf(itam.get("Days")).intValue();
 

@@ -230,7 +230,7 @@ public class CalendarAdjust {
     public static String GetYear(Date Time) {
         SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd");
         String time = sim.format(Time);
-        System.out.println(time);
+
         return time;
 
     }
