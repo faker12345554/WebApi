@@ -58,7 +58,7 @@
 
 
     <insert id="saveUserRole" parameterType="com.admin.admin.entity.dw_userrole.UserRole" >
-        insert into t_userrole(rolename,menuid,createtime,status,permissionid) values (#{rolename},#{menuid},#{createtime},#{status},#{permissionid})
+        insert into t_userrole(rolename,menuid,createtime,status,permissionid) values (#{rolename},#{menuid},Current_timestamp,#{status},#{permissionid})
     </insert>
 
     <delete id="deleteUserRole"  parameterType="int">
