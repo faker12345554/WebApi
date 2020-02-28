@@ -44,6 +44,10 @@
         insert into t_prisonsetting(personid, settingname, settingcheck, settingtime) values(#{data.personid},#{data.settingname},#{data.settingcheck},#{data.settingtime})
     </insert>
 
+    <select id="Getprison" parameterType="String" resultType="int">
+        select count(*) from t_prisonsetting where personid=#{personId} and settingname=#{settingname}
+    </select>
+
     <select id="ListPerson" parameterType="com.admin.model.search.SearchModel"
             resultType="com.admin.admin.entity.dw_person.Personinformation">
         select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
