@@ -92,4 +92,7 @@ public interface SuperfineDado {
     List<SummonsInformation> listNotCiteRecord();
 
     UserModel getUserInformation(@Param("userId")String userId);
+
+    int insertPersonMessage(@Param("modular")int modular,@Param("content")String content,@Param("modularName")String modularName,@Param("personId")String personId,
+                            @Param("detailType")int detailType,@Param("detailName")String detailName,@Param("leaveOrder")String leaveOrder);
 }

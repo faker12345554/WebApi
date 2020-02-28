@@ -7,12 +7,14 @@ import com.adminapp.config.CacheUtils;
 import com.adminapp.config.token.TokenUtil;
 import com.adminapp.config.token.tation.UserLoginToken;
 import com.adminapp.model.dw_supervise.*;
+import com.common.common.apppush.Demo;
 import com.common.common.result.ResultSet;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -1040,26 +1042,38 @@ public class SuperviseController {
     @ApiOperation(value = "审批保外人员外出申请")
     @PostMapping("/approveApplyLeave")
     public ResultSet approveApplyLeave(@ApiParam(name = "code",value = "外出申请单号")@RequestParam(required = true)String code,
-                                       @ApiParam(name = "isApprove",value = "是否通过")@RequestParam(required = true)boolean isApprove){
+                                       @ApiParam(name = "isApprove",value = "是否通过")@RequestParam(required = true)boolean isApprove) throws Exception {
         ResultSet rs=new ResultSet();
         String userId=TokenUtil.getTokenUserId();
         UserModel userModel=superviseService.getUserInformation(userId);
         String policeName=userModel.getAliasname();
         LeaveListModel leaveInformation=superviseService.getLeaveInformation(code);
+        LeaveInformation leaveInformation1=superviseService.getAllLeaveInformation(code);
         if(leaveInformation!=null){
             if(leaveInformation.getStatusCode().equals("1")){    //判断该请假单是否为待审批状态
                 //String userId=CacheUtils.get("UserId").toString();
                 String userName =leaveInformation.getApplicant();
                 Date date=new Date();
                 String message=leaveInformation.getReason();
+                //String dateTime=new SimpleDateFormat("yyyy-MM-dd").format(leaveInformation.getApplyTimestamp());
+                DateFormat dt=new SimpleDateFormat("yyyy-MM-dd");
+                String time=dt.format(leaveInformation1.getSubittimestamp());
+                String content="";
                 if(isApprove){    //审批为通过
                     int updateLeaveInformation=superviseService.updateLeaveInformation(code,"2","审批通过");  //修改请假单信息
                     int insertAuditorInformation=superviseService.insertAuditorInformation(code,userId,policeName,date,message,"2","审批通过");
+                    content="您于"+time+"提交的外出申请已审批通过。";
+
                 }
                 else{      //审批不通过
                     int updateLeaveInformation=superviseService.updateLeaveInformation(code,"3","审批未通过"); //修改请假单信息
                     int insertAuditorInformation=superviseService.insertAuditorInformation(code,userId,policeName,date,message,"3","审批不通过");
+                    content="您于"+time+"提交的外出申请审批未通过，请重新申请或致电民警。";
                 }
+                int insertPersonMessage=superviseService.insertPersonMessage(4,content,"外出提醒",leaveInformation1.getPersonid(),1,"外出审批通知",leaveInformation1.getLeaveorder());
+                Demo demo = new Demo("5dd349b4570df37b6700045e", "4hpqbdi0wpikb7bkwamq4uwnpvkjhebz");
+                demo.sendAndroidCustomizedcast(leaveInformation.getCode(),"ReleaseAdminCode","AtMqss89NJcaerkruc7N0Bgif58Zyy00PkqfWUt5j1xz",
+                        "外出审批通知",content,date);
                 rs.resultCode=0;
                 rs.resultMsg="";
                 rs.data=new Object();

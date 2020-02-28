@@ -134,4 +134,8 @@
     <select id="getUserInformation" resultType="com.adminapp.business.entity.dw_user.UserModel">
         select * from t_user where accountname=#{userId}
     </select>
+    <insert id="insertPersonMessage">
+        insert into t_personmessage(modular, content, personid, modularname, messagetime, readmessage, detailtype, detailtypename, leaveorder) VALUES (#{modular},
+        #{content},#{personId},#{modularName},current_timestamp,true,#{detailType},#{detailName},#{leaveOrder})
+    </insert>
 </mapper>
