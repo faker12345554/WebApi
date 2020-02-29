@@ -209,4 +209,9 @@ public class SuperviseService {
     public UserModel getUserInformation(String userId){
         return superfineDado.getUserInformation(userId);
     }
+
+    //插入保外人员消息
+    public int insertPersonMessage(int modular,String content,String modularName,String personId,int detailType,String detailName,String leaveOrder){
+        return superfineDado.insertPersonMessage(modular, content, modularName, personId, detailType, detailName, leaveOrder);
+    }
 }
