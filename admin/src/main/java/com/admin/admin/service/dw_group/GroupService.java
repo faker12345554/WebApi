@@ -39,7 +39,7 @@ public class GroupService {
         for (MenuModel item:UserGroup.getMenuList()){
             UserRole userRole=new UserRole();
             userRole.setPermissionid(UserGroup.getPermissionid());
-            userRole.setCreatetime(dateNowStr);
+           // userRole.setCreatetime(dateNowStr);
             userRole.setMenuid(item.getId());
             userRole.setRolename(item.getName());
             userRole.setStatus(true);
@@ -64,7 +64,7 @@ public class GroupService {
         for (MenuModel item:UserGroup.getMenuList()){
             UserRole userRole=new UserRole();
             userRole.setPermissionid(UserGroup.getPermissionid());
-            userRole.setCreatetime(dateNowStr);
+           // userRole.setCreatetime(dateNowStr);
             userRole.setMenuid(item.getId());
             userRole.setRolename(item.getName());
             userRole.setStatus(true);
