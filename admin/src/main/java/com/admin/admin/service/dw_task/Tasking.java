@@ -38,7 +38,7 @@ public class Tasking {
         TMessage message = new TMessage();
         List<Personinformation> list = GetPerson();
         for (Personinformation item : list) {
-            long days = CalendarAdjust.getDays(CalendarAdjust.GetYear(new Date()), CalendarAdjust.GetYear(item.getBailoutenddate()));
+            long days = CalendarAdjust.getDays(CalendarAdjust.GetYear(new Date()), CalendarAdjust.GetYear(new Date(item.getBailoutenddate())));
             // System.out.println(CalendarAdjust.getDays(CalendarAdjust.GetYear(new Date()), CalendarAdjust.GetYear(item.getBailoutenddate())));
             System.out.println(item.getBailoutenddate());
             if (days == 15) {
@@ -93,8 +93,8 @@ public class Tasking {
             int year = 0;
 
             if (item.getBailoutbegindate() != null) {
-                System.out.println(CalendarAdjust.getMonthDiff(item.getBailoutbegindate(), new Date()));
-                if (CalendarAdjust.getMonthDiff(item.getBailoutbegindate(), new Date()) >= 2) {
+
+                if (CalendarAdjust.getMonthDiff(new Date(item.getBailoutbegindate()), new Date()) >= 2) {
                     month = CalendarAdjust.getMonth(CalendarAdjust.GetYear(new Date()));
                     year = CalendarAdjust.getYears(CalendarAdjust.GetYear(new Date()));
                     summons.setSummonsbegintime(CalendarAdjust.getFirstDayOfMonth1(year, month));

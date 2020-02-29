@@ -51,7 +51,7 @@ public class PersoinfoService {
             personinformation.setFounderid(CacheUtils.get("UserName").toString());
         }
 
-        personinformation.setFoundertime(new Date());
+        personinformation.setFoundertime(new Date().toString());
         personinformation.setPersonid(PersonId);
         personinformation.setViolationcode("0");
 
@@ -130,8 +130,10 @@ public class PersoinfoService {
         for (Personinformation item : personList) {
             List<TPrisonsetting> prisonList = personDao.ListPrison(item.getPersonid());//这里就是这个人有哪几种管理方式 根据身份证号查询
             List<String> list = new ArrayList<>();
-            item.setFoundertime( sdf.parse(item.getFoundertime().toString()));
-            item.setBailoutbegindate(new Timestamp(sdf.parse(item.getBailoutbegindate().toString()).getTime()));
+
+            item.setFoundertime(sdf.format( sdf.parse(item.getFoundertime())));
+            item.setBailoutbegindate(sdf.format(sdf.parse(item.getBailoutbegindate())));
+            item.setBailoutenddate(sdf.format(sdf.parse(item.getBailoutenddate())));
 
             for (TPrisonsetting itam : prisonList) {
 

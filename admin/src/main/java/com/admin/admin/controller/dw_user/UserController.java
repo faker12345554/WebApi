@@ -125,6 +125,10 @@ public class UserController {
             result.setCode(2);
             result.setMessage("密码或账号错误");
             return result;
+        }else if(user.getUsersystem()!=1){
+            result.setCode(3);
+            result.setMessage("账号不存在");
+            return result;
         }
         CacheUtils.put("UserId", user.getId(), 0);
         CacheUtils.put("UserName",user.getAliasname());
