@@ -75,7 +75,7 @@
     <select id="listAllLog" parameterType="com.admin.model.log.LogSearchModel" resultType="com.admin.model.log.LogModel">
         select id,operator,modular,action,operatingtime from t_log
         <if test="date.operator!=null">
-            where operator=#{date.operator}
+            where operator=cast(#{date.operator} as NUMERIC)
         </if>
         <if test="date.operator!=null and date.modular!=null">
             and modular like concat('%',#{date.modular},'%')
@@ -92,7 +92,7 @@
         <if test="(date.operator!=null or date.modular!=null or date.startTime!=null)and date.endTime!=null">
             and operatingTime &lt;=#{date.endTime}
         </if>
-        <if test="date.operator==null and date.modular==null and date.startTime!=null and date.endTime!=null">
+        <if test="date.operator==null and date.modular==null and date.startTime==null and date.endTime!=null">
             where operatingTime &lt;=#{date.endTime}
         </if>
     </select>

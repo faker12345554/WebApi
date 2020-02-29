@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adminapp.business.dao.dw_call.CallDao">
+    <select id="checkOnline" resultType="com.adminapp.business.entity.dw_call.SendphoneInformation">
+        select * from t_sendphone where personid=#{code} and canceltype is null
+    </select>
+
+    <insert id="insertRecord">
+        insert into t_sendphone(sendName,calltoken,calltimestamp,callname,createtime,calltype,personid,accountname) values (#{sendName},#{callToken},#{callTimestamp},#{callName},
+        current_timestamp,#{callType},#{personId},#{accountName})
+    </insert>
+
+    <select id="getUserInformation" resultType="com.adminapp.business.entity.dw_user.UserModel">
+        select * from t_user where accountname=#{userId}
+    </select>
+</mapper>

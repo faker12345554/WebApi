@@ -1,6 +1,8 @@
 package com.admin.model.log;
 
 import java.sql.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class LogSearchModel {
     private String operator;
@@ -58,6 +60,16 @@ public class LogSearchModel {
     }
 
     public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+        if(endTime==null) {
+            this.endTime = null;
+        }
+        else {
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(endTime);
+            calendar.add(calendar.DATE, 1);
+            java.util.Date date = calendar.getTime();
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            this.endTime = sqlDate;
+        }
     }
 }
