@@ -14,11 +14,11 @@ public class Personinformation {
     private String personname;
     private String gender;
     private int age;
-    private Date birthdate;
+    private String birthdate;
     private String card;
     private String Workunit;
-    private java.sql.Timestamp  Bailoutbegindate;
-    private java.sql.Timestamp Bailoutenddate;
+    private String Bailoutbegindate;
+    private String Bailoutenddate;
     private String Sponsor;
     private String sponsoralarm;
     private String Contact;
@@ -27,7 +27,7 @@ public class Personinformation {
     private String qqnumber;
     private boolean status;
     private String founderid;
-    private Date foundertime;
+    private String foundertime;
     private String modifierid;
     private Date modifiertime;
     private String suspectstatus;
@@ -73,11 +73,11 @@ public class Personinformation {
         return this;
     }
 
-    public Date getBirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
-    public Personinformation setBirthdate(Date birthdate) {
+    public Personinformation setBirthdate(String birthdate) {
         this.birthdate = birthdate;
         return this;
     }
@@ -100,20 +100,20 @@ public class Personinformation {
         return this;
     }
 
-    public Timestamp getBailoutbegindate() {
+    public String getBailoutbegindate() {
         return Bailoutbegindate;
     }
 
-    public Personinformation setBailoutbegindate(Timestamp bailoutbegindate) {
+    public Personinformation setBailoutbegindate(String bailoutbegindate) {
         Bailoutbegindate = bailoutbegindate;
         return this;
     }
 
-    public Timestamp getBailoutenddate() {
+    public String getBailoutenddate() {
         return Bailoutenddate;
     }
 
-    public Personinformation setBailoutenddate(Timestamp bailoutenddate) {
+    public Personinformation setBailoutenddate(String bailoutenddate) {
         Bailoutenddate = bailoutenddate;
         return this;
     }
@@ -190,11 +190,11 @@ public class Personinformation {
         return this;
     }
 
-    public Date getFoundertime() {
+    public String getFoundertime() {
         return foundertime;
     }
 
-    public Personinformation setFoundertime(Date foundertime) {
+    public Personinformation setFoundertime(String foundertime) {
         this.foundertime = foundertime;
         return this;
     }
