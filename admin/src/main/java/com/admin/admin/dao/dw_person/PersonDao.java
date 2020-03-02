@@ -41,6 +41,9 @@ public interface PersonDao {
      */
     int insertprison(@Param("data")TPrisonsetting tPrisonsetting);
 
+
+    int delconfig(TPrisonsetting tPrisonsetting);
+
     /*
     查询是否重复
      */

@@ -116,8 +116,19 @@ public class PersoinfoService {
 
         return personDao.insertprison(tPrisonsetting);
     }
+
     public int Getprison(String personId,String settingname){
+
         return personDao.Getprison(personId,settingname);
+    }
+
+    /**
+     * 取消配置
+     * @param tPrisonsetting
+     * @return
+     */
+    public int delconfig(TPrisonsetting tPrisonsetting){
+        return personDao.delconfig(tPrisonsetting);
     }
 
     /*
