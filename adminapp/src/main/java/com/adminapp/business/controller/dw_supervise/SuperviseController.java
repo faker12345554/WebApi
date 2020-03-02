@@ -1054,6 +1054,10 @@ public class SuperviseController {
                 //String userId=CacheUtils.get("UserId").toString();
                 String userName =leaveInformation.getApplicant();
                 Date date=new Date();
+                //Date afterDate=new Date(date.getTime()+14400000);
+                Calendar cal=new GregorianCalendar();
+                cal.setTime(date);
+                cal.add(Calendar.DATE,1);
                 String message=leaveInformation.getReason();
                 //String dateTime=new SimpleDateFormat("yyyy-MM-dd").format(leaveInformation.getApplyTimestamp());
                 DateFormat dt=new SimpleDateFormat("yyyy-MM-dd");
@@ -1072,8 +1076,8 @@ public class SuperviseController {
                 }
                 int insertPersonMessage=superviseService.insertPersonMessage(4,content,"外出提醒",leaveInformation1.getPersonid(),1,"外出审批通知",leaveInformation1.getLeaveorder());
                 Demo demo = new Demo("5dd349b4570df37b6700045e", "4hpqbdi0wpikb7bkwamq4uwnpvkjhebz");
-                demo.sendAndroidCustomizedcast(leaveInformation.getCode(),"ReleaseAdminCode","AtMqss89NJcaerkruc7N0Bgif58Zyy00PkqfWUt5j1xz",
-                        "外出审批通知",content,date);
+                demo.sendAndroidCustomizedcast(leaveInformation1.getPersonid(),"ReleaseBailCode","外出审批通知",
+                        "外出审批通知",content,cal.getTime());
                 rs.resultCode=0;
                 rs.resultMsg="";
                 rs.data=new Object();
