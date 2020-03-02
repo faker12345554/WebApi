@@ -112,6 +112,7 @@ public class PersonController {
         result.setMessage("配置成功");
         return result.setData("配置成功");
     }
+    @UserLoginToken
     @ApiOperation("删除配置管理方式")
     @PostMapping("/delconfig")
     public  ResponseResult delconfig(@RequestBody List<TPrisonsetting> List){
