@@ -7,6 +7,7 @@ import com.admin.token.tation.UserLoginToken;
 import com.admin.admin.entity.dw_user.User;
 import com.admin.admin.service.dw_user.UserService;
 import com.admin.tool.CacheUtils;
+import com.common.common.md5.MD5Util;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
@@ -73,6 +74,7 @@ public class UserController {
             result.setMessage(ResultCode.DATA_DUPLICATION.getMessage());
             return result.setData("用户名已存在!");
         }
+        user.setPassword(MD5Util.string2MD5(user.getPassword()));
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( userService.saveUser(user));
@@ -119,8 +121,8 @@ public class UserController {
 //            result.setMessage(ResultCode.ILLEAGAL_STRING.getMessage());
 //            return result.setData("验证码不正确!");
 //        }
-
-        User user = userService.login(UserName, Password);
+        String MD5Password =MD5Util.string2MD5(Password);
+        User user = userService.login(UserName, MD5Password);
         if (user==null){
             result.setCode(2);
             result.setMessage("密码或账号错误");
