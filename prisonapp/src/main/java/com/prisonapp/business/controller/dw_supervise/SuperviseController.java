@@ -2,6 +2,7 @@ package com.prisonapp.business.controller.dw_supervise;
 
 
 import com.common.common.Uploadfiles.Upload;
+import com.common.common.apppush.Demo;
 import com.common.common.result.ResultSet;
 import com.prisonapp.business.entity.dw_supervise.*;
 import com.prisonapp.business.entity.dw_user.UserModel;
@@ -88,7 +89,7 @@ public class SuperviseController {
     @UserLoginToken
     @ApiOperation(value = "提交保外人员外出申请")
     @PostMapping("/submitApplyLeave")
-    public ResultSet submitApplyLeave(@RequestBody SubmitApplyLeaveModel submitApplyLeaveModel) throws ParseException {
+    public ResultSet submitApplyLeave(@RequestBody SubmitApplyLeaveModel submitApplyLeaveModel) throws Exception {
         ResultSet result = new ResultSet();
         String strCode = "qj" + System.currentTimeMillis();
         code.setCode(strCode);
@@ -103,6 +104,7 @@ public class SuperviseController {
                                                     submitApplyLeaveModel.getEndDate(), submitApplyLeaveModel.getStartDate(),strCode,
                                                     getPersonId(), person.get(0).getPersonname(),person.get(0).getSponsoralarm(),address,tEnum.getEnumname(),messageContent);
         if (res != 0) {
+            appPush(person.get(0).getSponsoralarm(),"【外出审批通知】",messageContent);
             result.resultCode = 0;
             result.resultMsg = "";
             result.data = code;
@@ -248,7 +250,7 @@ public class SuperviseController {
     @UserLoginToken
     @ApiOperation(value = " 自动上报取保监居人员位置")
     @PostMapping("/autoLocation")
-    public ResultSet autoLocation(@ApiParam(name = "latitude", value = "纬度") @RequestParam(required = true) float latitude, @ApiParam(name = "longitude", value = "经度") @RequestParam(required = true) float longitude, @ApiParam(name = "locationType", value = "定位类型") @RequestParam(required = true) int locationType, @ApiParam(name = "address", value = "地址") @RequestParam(required = true) String address) throws MalformedURLException {
+    public ResultSet autoLocation(@ApiParam(name = "latitude", value = "纬度") @RequestParam(required = true) float latitude, @ApiParam(name = "longitude", value = "经度") @RequestParam(required = true) float longitude, @ApiParam(name = "locationType", value = "定位类型") @RequestParam(required = true) int locationType, @ApiParam(name = "address", value = "地址") @RequestParam(required = true) String address) throws Exception {
         ResultSet result = new ResultSet();
         boolean fScope = getPolygon(latitude,longitude);
         if (fScope) {
@@ -256,11 +258,14 @@ public class SuperviseController {
 
         } else {
             //生成报警内容
-            String persionName = superviseService.faceRecognize(getPersonId()).get(0).getPersonname();
+            List<TPersoninformation> tPersoninformations = superviseService.faceRecognize(getPersonId());
+            String persionName = tPersoninformations.get(0).getPersonname();
             Date now = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
             String nowTime = dateFormat.format(now);
-            String content = persionName + "于" + nowTime + "未经批准离开限定区域，请及时与其取得联系。最后一次位置：";
+            String content = persionName + "于" + nowTime + "未经批准离开限定区域，请及时与其取得联系。最后一次位置："+address;
+            String pushContent =persionName + "未经批准脱离管控区域，可前往查看详细违规记录，并根据规定对其采取措施。最后一次位置："+address+"更新时间:"+nowTime;
+            appPush(tPersoninformations.get(0).getSponsoralarm(),"【脱离管控区域报警通知】",pushContent);
          //   superviseService.updateFscope(getPersonId(), true);
             superviseService.insertFscope(getPersonId(), content);
 
@@ -301,10 +306,17 @@ public class SuperviseController {
     @UserLoginToken
     @ApiOperation(value = " 上报保外人员电量信息")
     @PostMapping("/uploadBattery")
-    public ResultSet uploadBattery(float percent) {
+    public ResultSet uploadBattery(float percent) throws Exception {
         ResultSet result = new ResultSet();
         if (percent <= 20.0) {
             batteryAlarm(getPersonId());
+            List<TPersoninformation> tPersoninformations = superviseService.faceRecognize(getPersonId());
+            String persionName = tPersoninformations.get(0).getPersonname();
+            Date now = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
+            String nowTime = dateFormat.format(now);
+            String content = persionName +  nowTime + "手机电量低于20%，请及时与其取得联系。";
+            appPush(tPersoninformations.get(0).getSponsoralarm(),"【低电量报警通知】",content);
         }
         int a = superviseService.uploadBattery(percent, getPersonId(), new Date());
         result.resultCode = 0;
@@ -447,19 +459,11 @@ public class SuperviseController {
         return p.contains(point);
     }
 
-//    public static void getPolygon() {
-//        String keyName = "****************";//这里是key名称
-//        String keyCode = "***************************";//这个是秘钥
-//        String admAddress = "https://restapi.amap.com/v3/config/district?key=f0bc84013740494ba5c697ce6b707606&keywords=广东省&subdistrict=0&extensions=all";
-////        Map<String, Object> params = new HashMap<>();
-////        params.put("f0bc84013740494ba5c697ce6b707606", keyCode);
-////        params.put("keywords", "安徽");
-////        params.put("subdistrict", 1);
-////        params.put("extensions", "base");
-//        String result = HttpClientUtil.doGet(admAddress);
-//        System.out.println("result");
-//
-//    }
+    public void appPush(String recipientid,String tital,String content) throws Exception {
+        ResultSet result = new ResultSet();
+        superviseService.appPush( recipientid, tital, content);
+        return;
+    }
 
     public  String getPersonId(){
 //       String personid = personInformationUtil.getPersonId();
