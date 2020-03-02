@@ -102,7 +102,7 @@ public class PersonController {
             if (persoinfoService.Getprison(item.getPersonid(),item.getSettingname())>=1){
                 result.setCode(ResultCode.DATA_DUPLICATION.getCode());
                 result.setMessage(ResultCode.DATA_DUPLICATION.getMessage());
-                return result.setData("不可重复配置,请重新选择");
+                return result.setData(item.getSettingname()+"已存在,不可重复配置,请重新选择");
             }
             item.setSettingcheck(true);
             item.setSettingtime(new Date());
@@ -112,6 +112,18 @@ public class PersonController {
         result.setMessage("配置成功");
         return result.setData("配置成功");
     }
+    @ApiOperation("删除配置管理方式")
+    @PostMapping("/delconfig")
+    public  ResponseResult delconfig(@RequestBody List<TPrisonsetting> List){
+        for (TPrisonsetting item : List) {
+            persoinfoService.delconfig(item);
+        }
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage("取消成功");
+        return result.setData("取消成功");
+
+    }
+
     @UserLoginToken
     @ApiOperation("人员信息列表")
     @PostMapping("/ListPerson")

@@ -108,7 +108,7 @@ public class UserController {
         }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData( userService.deleteUser(!flag, UserName));
+        return result.setData( userService.deleteUser(flag, UserName));
     }
 
     //登录

@@ -33,7 +33,7 @@
 
 
     <select id="Removalrate" parameterType="String" resultMap="usermap">
-        SELECT date_part('day',to_timestamp(#{EndTime},'yyyy-MM-dd hh24:mi:ss')::timestamp - max(operatingtime)::timestamp) as Days, operator
+        SELECT CAST (date_part('day',to_timestamp(#{EndTime},'yyyy-MM-dd hh24:mi:ss')::timestamp - max(operatingtime)::timestamp) as text) as Days, operator
          from t_log where operator in (SELECT id from t_user where phone in
         (SELECT contact from t_personinformation where bailoutbegindate &lt;= now() and now() &lt;= bailoutenddate and sponsoralarm in
         (SELECT mjbh from fsga_yw_ryb where bmbm like  concat('%',#{Areacode},'%')))) and
