@@ -88,6 +88,7 @@ public class UserController {
     public ResponseResult updateUser(@RequestBody User user, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
+        user.setPassword(MD5Util.string2MD5(user.getPassword()));
         return result.setData(userService.updateUser(user));
     }
 
