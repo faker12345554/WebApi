@@ -30,7 +30,7 @@ public class MD5Util {
             }
             hexValue.append(Integer.toHexString(val));
         }
-        return hexValue.toString();
+        return hexValue.toString().toUpperCase();
 
     }
 
@@ -38,6 +38,7 @@ public class MD5Util {
      * 加密解密算法 执行一次加密，两次解密
      */
     public static String convertMD5(String inStr) {
+
 
         char[] a = inStr.toCharArray();
         for (int i = 0; i < a.length; i++) {

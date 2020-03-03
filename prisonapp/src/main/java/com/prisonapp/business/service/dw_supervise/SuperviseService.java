@@ -1,5 +1,6 @@
 package com.prisonapp.business.service.dw_supervise;
 
+import com.common.common.apppush.Demo;
 import com.prisonapp.business.dao.dw_supervise.SuperviseDao;
 import com.prisonapp.business.entity.dw_supervise.*;
 import com.prisonapp.business.entity.dw_user.UserModel;
@@ -7,6 +8,9 @@ import com.prisonapp.token.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -113,5 +117,18 @@ public class SuperviseService {
         return  superviseDao.RelatedId( accountName);
     }
 
+    public void appPush(String recipientid,String tital,String content) throws Exception {
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateNowStr = sdf.format(d);
+        Date nowDate =sdf.parse(dateNowStr);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(nowDate);   //设置当前时间
 
+        cal.add(Calendar.DATE, 1);  //在当前时间基础上加一天
+
+        Demo demo = new Demo("5dd349000cafb2abac000176", "4onubtt8elkw5cypyffzvdrcmjzowkmo");
+        demo.sendAndroidCustomizedcast(recipientid,"ReleaseAdminCode","取保监局工作人员App",
+                tital,content,cal.getTime());
+    }
 }
