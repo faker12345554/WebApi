@@ -25,4 +25,19 @@ public class CallService {
     public UserModel getUserInformation(String userId){
         return callDao.getUserInformation(userId);
     }
+
+    //查找通话信息
+    public SendphoneInformation getPhoneInformation(String callToken){
+        return callDao.getPhoneInformation(callToken);
+    }
+
+    //更新通话挂断时间
+    public int updateCancelRecord(String callToken,String type,String timestamp){
+        return callDao.updateCancelRecord(callToken, type, timestamp);
+    }
+
+    //更新通话地址和房间号
+    public int updateUrlRecord(String callToken,String serverUrl,String roomCode){
+        return callDao.updateUrlRecord(callToken, serverUrl, roomCode);
+    }
 }

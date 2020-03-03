@@ -7,6 +7,8 @@ import com.adminapp.business.service.dw_supervise.SuperviseService;
 import com.adminapp.config.token.TokenUtil;
 import com.adminapp.config.token.tation.PassToken;
 import com.adminapp.config.token.tation.UserLoginToken;
+import com.adminapp.model.dw_call.AcceptCallModel;
+import com.adminapp.model.dw_call.CancelReturnModel;
 import com.adminapp.model.dw_call.RequestCallReturnModel;
 import com.adminapp.model.dw_supervise.PersonAllInformationModel;
 import com.common.common.result.ResultSet;
@@ -41,7 +43,7 @@ public class CallController {
         if(personAllInformationModel.getSponsoralarm().equals(userId)) {
             SendphoneInformation sendphoneInformation=callService.checkOnline(code);    //判断是否正在通话
             UserModel userModel=callService.getUserInformation(userId);   //获取该工作人员信息
-            if(sendphoneInformation!=null) {
+            if(sendphoneInformation==null) {
                 String callToken = "TH";
                 Random random = new Random();
                 for (int i = 0; i < 20; i++) {
@@ -66,6 +68,88 @@ public class CallController {
         }else{
             rs.resultCode=1;
             rs.resultMsg="无此人员";
+            rs.data=null;
+        }
+        return rs;
+    }
+
+    @ApiOperation(value = "挂断通话")
+    @UserLoginToken
+    @PostMapping("/cancelCall")
+    public ResultSet cancelCall(@ApiParam(name = "callToken",value = "通话标识")@RequestParam(required = true) String callToken,
+                                @ApiParam(name = "type",value = "挂断类型")@RequestParam(required = true)String type){
+        ResultSet rs=new ResultSet();
+        if(type.equals("1")||type.equals("2")){
+            SendphoneInformation sendphoneInformation=callService.getPhoneInformation(callToken);
+            if(sendphoneInformation.getCanceltype()==null){
+                Date date=new Date();
+                String timestamp=String.valueOf(date.getTime());
+                int updateCancelRecord=callService.updateCancelRecord(callToken,type,timestamp);
+                CancelReturnModel cancelReturnModel=new CancelReturnModel();
+                cancelReturnModel.setCancelTimestamp(timestamp);
+                rs.resultCode=0;
+                rs.resultMsg="";
+                rs.data=cancelReturnModel;
+            }else{
+                rs.resultCode=1;
+                rs.resultMsg="该通话已挂断";
+                rs.data=null;
+            }
+        }
+        else{
+            rs.resultCode=1;
+            rs.resultMsg="无此类型";
+            rs.data=null;
+        }
+        return rs;
+    }
+
+    @ApiOperation(value = "同意接收通话")
+    @UserLoginToken
+    @PostMapping("/acceptCall")
+    public ResultSet acceptCall(@ApiParam(name = "callToken",value = "通话唯一标识")@RequestParam(required = true)String callToken){
+        ResultSet rs=new ResultSet();
+        SendphoneInformation sendphoneInformation=callService.getPhoneInformation(callToken);
+        if(sendphoneInformation.getCanceltype()==null||sendphoneInformation.getCanceltype().equals("")) {
+            String roomCode = "room";
+            String serverUrl = "https://112.74.41.177";
+            Random random = new Random();
+            for (int i = 0; i < 10; i++) {
+                roomCode += String.valueOf(random.nextInt(10));
+            }
+            int updateUrl = callService.updateUrlRecord(callToken, serverUrl, roomCode);
+            AcceptCallModel acceptCallModel = new AcceptCallModel();
+            acceptCallModel.setServerUrl(serverUrl);
+            acceptCallModel.setRoomCode(roomCode);
+            acceptCallModel.setType(sendphoneInformation.getCalltype());
+            rs.resultCode = 0;
+            rs.resultMsg = "";
+            rs.data = acceptCallModel;
+        }else{
+            rs.resultCode=1;
+            rs.resultMsg="该通话已挂断";
+            rs.data=null;
+        }
+        return rs;
+    }
+
+    @ApiOperation(value = "拒绝接收通话")
+    @UserLoginToken
+    @PostMapping("/refuseCall")
+    public ResultSet refuseCall(@ApiParam(name = "callToken",value = "通话唯一标识")@RequestParam(required = true)String callToken){
+        ResultSet rs=new ResultSet();
+        SendphoneInformation sendphoneInformation=callService.getPhoneInformation(callToken);
+        if(sendphoneInformation.getCanceltype()==null||sendphoneInformation.getCanceltype().equals("")) {
+            Date date=new Date();
+            String timestamp=String.valueOf(date.getTime());
+            int updateCancelRecord=callService.updateCancelRecord(callToken,"3",timestamp);
+            rs.resultCode=0;
+            rs.resultMsg="";
+            rs.data=new Object();
+        }
+        else{
+            rs.resultCode=1;
+            rs.resultMsg="该通话已挂断";
             rs.data=null;
         }
         return rs;
