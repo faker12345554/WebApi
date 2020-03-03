@@ -98,7 +98,7 @@ public class GroupService {
     }
 
     //获取组信息
-    public List<MenuModel> getGroup(int id) {
+    public UserPermissionGroup getGroup(int id) {
         List<MenuModel> Menu = new ArrayList<MenuModel>();
         UserPermissionGroup userPermissionGroup = GroupDao.getGroup(id);
        // GroupDao.getSomeoneMenuList(id);
@@ -129,8 +129,9 @@ public class GroupService {
             menuModel.setChildren(SubList);
             Menu.add(menuModel);
         }
-        return Menu;
-       // return userPermissionGroup;
+       // return Menu;
+        userPermissionGroup.setMenuList(Menu);
+        return userPermissionGroup;
     }
 
     //组列表
