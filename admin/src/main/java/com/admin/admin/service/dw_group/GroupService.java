@@ -98,12 +98,39 @@ public class GroupService {
     }
 
     //获取组信息
-    public UserPermissionGroup getGroup(int id) {
+    public List<MenuModel> getGroup(int id) {
+        List<MenuModel> Menu = new ArrayList<MenuModel>();
         UserPermissionGroup userPermissionGroup = GroupDao.getGroup(id);
        // GroupDao.getSomeoneMenuList(id);
         userPermissionGroup.setMenuList(GroupDao.getSomeoneMenuList(id));
-        //return GroupDao.getGroup(id);
-        return userPermissionGroup;
+        List<MenuModel> mainList = new ArrayList<MenuModel>();
+
+        List<MenuModel> menuList=userPermissionGroup.getMenuList();
+        for (MenuModel item: menuList){
+
+            if (item.getTopid() == 0) {
+                mainList.add(item);
+            }
+        }
+        for (MenuModel item:mainList){
+            MenuModel menuModel=new MenuModel();
+            menuModel.setId(item.getId());
+            menuModel.setName(item.getName());
+            List<MenuModel> SubList = new ArrayList<MenuModel>();
+            for (MenuModel itam:menuList){
+                if (itam.getTopid()==item.getId()){
+                    MenuModel model=new MenuModel();
+                    model.setId(itam.getId());
+                    model.setName(itam.getName());
+                    model.setTopid(itam.getTopid());
+                    SubList.add(model);
+                }
+            }
+            menuModel.setChildren(SubList);
+            Menu.add(menuModel);
+        }
+        return Menu;
+       // return userPermissionGroup;
     }
 
     //组列表
