@@ -34,23 +34,28 @@ public class GroupService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateNowStr = sdf.format(d);
         int userGroup=GroupDao.saveUserGroup(UserGroup);
-        for (MenuModel item:UserGroup.getMenuList()){
-            UserRole userRole=new UserRole();
-            userRole.setPermissionid(UserGroup.getPermissionid());
-           // userRole.setCreatetime(dateNowStr);
-            userRole.setMenuid(item.getId());
-            userRole.setRolename(item.getName());
-            userRole.setStatus(true);
-            for(MenuModel item2:item.getChildren()){
-                UserRole userRole2=new UserRole();
-                userRole2.setPermissionid(UserGroup.getPermissionid());
+        if(UserGroup.getMenuList().size()==0){
+
+        }else{
+            for (MenuModel item:UserGroup.getMenuList()){
+                UserRole userRole=new UserRole();
+                userRole.setPermissionid(UserGroup.getPermissionid());
                 // userRole.setCreatetime(dateNowStr);
-                userRole2.setMenuid(item2.getId());
-                userRole2.setRolename(item2.getName());
-                userRole2.setStatus(true);
-                GroupDao.saveUserRole(userRole2);
-            }
-            GroupDao.saveUserRole(userRole);
+                userRole.setMenuid(item.getId());
+                userRole.setRolename(item.getName());
+                userRole.setStatus(true);
+                for(MenuModel item2:item.getChildren()){
+                    UserRole userRole2=new UserRole();
+                    userRole2.setPermissionid(UserGroup.getPermissionid());
+                    // userRole.setCreatetime(dateNowStr);
+                    userRole2.setMenuid(item2.getId());
+                    userRole2.setRolename(item2.getName());
+                    userRole2.setStatus(true);
+                    GroupDao.saveUserRole(userRole2);
+                }
+                GroupDao.saveUserRole(userRole);
+        }
+
 
         }
 
