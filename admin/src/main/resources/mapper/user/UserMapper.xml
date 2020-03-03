@@ -5,7 +5,7 @@
     <select id="listUser" parameterType="com.admin.admin.entity.dw_user.Usermodel" resultType="com.admin.admin.entity.dw_user.User">
         SELECT * FROM "t_user"
             <if test="usermodel.userName!=null">
-                where aliasname=#{usermodel.userName}
+                where accountname=#{usermodel.userName}
             </if>
             <if test="usermodel.userName!=null and usermodel.phone!=null">
                 and phone=#{usermodel.phone}

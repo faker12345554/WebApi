@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -68,6 +70,15 @@ public class UserService {
 
         PageHelper.startPage(usermodel.getPageIndex(),usermodel.getPageSize());
         List<User> allItems = userDao.listUser(usermodel);
+        Collections.sort(allItems, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                int a =o1.getId();
+                int b= o2.getId();
+                int c = a-b;
+                return c;
+            }
+        });
         PageInfo<User> info = new PageInfo<>(allItems);//全部商品
         int countNums = (int) info.getTotal();            //总记录数
         PageBean<User> pageData = new PageBean<>(usermodel.getPageIndex(),usermodel.getPageSize() , countNums);
