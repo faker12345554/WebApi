@@ -33,11 +33,12 @@ public class UserPermissController {
             result.setCode(ResultCode.DATA_DUPLICATION.getCode());
             result.setMessage("该角色已经存在！");
             return result.setData("");
-        }else if(group.getMenuList().size()==0){
-            result.setCode(ResultCode.DATA_DUPLICATION.getCode());
-            result.setMessage("必需为该角色分配可操作菜单！");
-            return result.setData("");
         }
+//        else if(group.getMenuList().size()==0){
+//            result.setCode(ResultCode.DATA_DUPLICATION.getCode());
+//            result.setMessage("必需为该角色分配可操作菜单！");
+//            return result.setData("");
+//        }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(groupService.saveGroup(group));

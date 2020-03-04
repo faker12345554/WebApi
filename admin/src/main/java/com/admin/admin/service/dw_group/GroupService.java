@@ -19,9 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.PublicKey;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class GroupService {
@@ -36,16 +34,31 @@ public class GroupService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateNowStr = sdf.format(d);
         int userGroup=GroupDao.saveUserGroup(UserGroup);
-        for (MenuModel item:UserGroup.getMenuList()){
-            UserRole userRole=new UserRole();
-            userRole.setPermissionid(UserGroup.getPermissionid());
-           // userRole.setCreatetime(dateNowStr);
-            userRole.setMenuid(item.getId());
-            userRole.setRolename(item.getName());
-            userRole.setStatus(true);
+        if(UserGroup.getMenuList().size()==0){
 
-            GroupDao.saveUserRole(userRole);
+        }else{
+            for (MenuModel item:UserGroup.getMenuList()){
+                UserRole userRole=new UserRole();
+                userRole.setPermissionid(UserGroup.getPermissionid());
+                // userRole.setCreatetime(dateNowStr);
+                userRole.setMenuid(item.getId());
+                userRole.setRolename(item.getName());
+                userRole.setStatus(true);
+                for(MenuModel item2:item.getChildren()){
+                    UserRole userRole2=new UserRole();
+                    userRole2.setPermissionid(UserGroup.getPermissionid());
+                    // userRole.setCreatetime(dateNowStr);
+                    userRole2.setMenuid(item2.getId());
+                    userRole2.setRolename(item2.getName());
+                    userRole2.setStatus(true);
+                    GroupDao.saveUserRole(userRole2);
+                }
+                GroupDao.saveUserRole(userRole);
         }
+
+
+        }
+
 
         return UserGroup.getPermissionid();
     }
@@ -68,6 +81,15 @@ public class GroupService {
             userRole.setMenuid(item.getId());
             userRole.setRolename(item.getName());
             userRole.setStatus(true);
+            for(MenuModel item2:item.getChildren()){
+                UserRole userRole2=new UserRole();
+                userRole2.setPermissionid(UserGroup.getPermissionid());
+                // userRole.setCreatetime(dateNowStr);
+                userRole2.setMenuid(item2.getId());
+                userRole2.setRolename(item2.getName());
+                userRole2.setStatus(true);
+                GroupDao.saveUserRole(userRole2);
+            }
             GroupDao.saveUserRole(userRole);
         }
         return GroupDao.updateGroup(UserGroup);
@@ -82,10 +104,38 @@ public class GroupService {
 
     //获取组信息
     public UserPermissionGroup getGroup(int id) {
+        List<MenuModel> Menu = new ArrayList<MenuModel>();
         UserPermissionGroup userPermissionGroup = GroupDao.getGroup(id);
        // GroupDao.getSomeoneMenuList(id);
         userPermissionGroup.setMenuList(GroupDao.getSomeoneMenuList(id));
-        //return GroupDao.getGroup(id);
+        List<MenuModel> mainList = new ArrayList<MenuModel>();
+
+        List<MenuModel> menuList=userPermissionGroup.getMenuList();
+        for (MenuModel item: menuList){
+
+            if (item.getTopid() == 0) {
+                mainList.add(item);
+            }
+        }
+        for (MenuModel item:mainList){
+            MenuModel menuModel=new MenuModel();
+            menuModel.setId(item.getId());
+            menuModel.setName(item.getName());
+            List<MenuModel> SubList = new ArrayList<MenuModel>();
+            for (MenuModel itam:menuList){
+                if (itam.getTopid()==item.getId()){
+                    MenuModel model=new MenuModel();
+                    model.setId(itam.getId());
+                    model.setName(itam.getName());
+                    model.setTopid(itam.getTopid());
+                    SubList.add(model);
+                }
+            }
+            menuModel.setChildren(SubList);
+            Menu.add(menuModel);
+        }
+       // return Menu;
+        userPermissionGroup.setMenuList(Menu);
         return userPermissionGroup;
     }
 
@@ -94,6 +144,15 @@ public class GroupService {
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
         PageHelper.startPage(condition.getPageIndex(), condition.getPageSize());
         List<UserPermissionGroup> allItems = GroupDao.listGroup(condition);
+        Collections.sort(allItems, new Comparator<UserPermissionGroup>() {
+            @Override
+            public int compare(UserPermissionGroup o1, UserPermissionGroup o2) {
+                int a =o1.getPermissionid();
+                int b= o2.getPermissionid();
+                int c = a-b;
+                return c;
+            }
+        });
         PageInfo<UserPermissionGroup> info = new PageInfo<>(allItems);//全部商品
         int countNums = (int) info.getTotal();            //总记录数
         PageBean<UserPermissionGroup> pageData = new PageBean<>(condition.getPageIndex(), condition.getPageSize(), countNums);
@@ -128,6 +187,7 @@ public class GroupService {
                     MenuModel model=new MenuModel();
                     model.setId(itam.getId());
                     model.setName(itam.getName());
+                    model.setTopid(itam.getTopid());
                     SubList.add(model);
                 }
             }

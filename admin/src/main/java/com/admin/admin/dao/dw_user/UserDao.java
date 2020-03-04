@@ -3,6 +3,7 @@ package com.admin.admin.dao.dw_user;
 
 import com.admin.admin.entity.dw_user.User;
 import com.admin.admin.entity.dw_user.Usermodel;
+import com.admin.admin.entity.dw_userrole.UserRole;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,6 +26,9 @@ public interface UserDao {
 
     //查看
     User getUser(@Param("UserName") String UserName);
+
+    //获取权限
+    List<UserRole> getmenuid(@Param("permissionid") int permissionid);
 
     //根据用户名获取用户 查重
     int GetUserByAccountName(@Param("Account") String Account);

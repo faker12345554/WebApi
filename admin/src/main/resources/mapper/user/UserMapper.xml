@@ -5,7 +5,7 @@
     <select id="listUser" parameterType="com.admin.admin.entity.dw_user.Usermodel" resultType="com.admin.admin.entity.dw_user.User">
         SELECT * FROM "t_user"
             <if test="usermodel.userName!=null">
-                where aliasname=#{usermodel.userName}
+                where accountname=#{usermodel.userName}
             </if>
             <if test="usermodel.userName!=null and usermodel.phone!=null">
                 and phone=#{usermodel.phone}
@@ -17,7 +17,7 @@
                 <if test="usermodel.status.equals('正常')">
                     and status=true
                 </if>
-                <if test="usermodel.status.equals('停用')">
+                <if test="usermodel.status.equals('停用')==false">
                     and status=false
                 </if>
             </if>
@@ -42,11 +42,17 @@
             <if test="usermodel.userName==null and usermodel.phone==null and usermodel.status==null and usermodel.startTime==null and usermodel.endTime!=null">
                 where createtime &lt;= #{usermodel.endTime}
             </if>
+        <if test="usermodel.userName==null and usermodel.phone==null and usermodel.status==null and usermodel.startTime==null and usermodel.endTime==null and usermodel.userid.equals('admin')==false">
+            where createid = #{usermodel.id} or id = #{usermodel.id}
+        </if>
+        <if test="usermodel.userName!=null or usermodel.phone!=null or usermodel.status!=null or usermodel.startTime!=null or usermodel.endTime!=null and usermodel.userid.equals('admin')==false">
+            and createid = #{usermodel.id} or id = #{usermodel.id}
+        </if>
     </select>
 
 
     <select id="getUser" parameterType="String" resultType="com.admin.admin.entity.dw_user.User">
-        SELECT t.*,f.bmmc,f.zw as RoleName FROM "t_user" as t left join fsga_yw_ryb as f on f.mjbh=t.accountname where accountname=#{UserName}
+        SELECT t.*,permissionname  FROM "t_user" as t inner join t_userpermissiongroup on t_userpermissiongroup.permissionid=t.permissionid where accountname=#{UserName}
     </select>
 
     <select id="GetUserByid" parameterType="int" resultType="com.admin.admin.entity.dw_user.User">
@@ -69,7 +75,11 @@
     </update>
 
     <select id="login" resultType="com.admin.admin.entity.dw_user.User" parameterType="String">
-        select * from t_user where accountname=#{UserName} and password=#{Password}  and status=true
+        select * from t_user where accountname=#{UserName} and password=#{Password}
+    </select>
+
+    <select id="getmenuid" parameterType="int" resultType="com.admin.admin.entity.dw_userrole.UserRole">
+        select * from t_userrole where permissionid=#{permissionid};
     </select>
 
     <select id="GetUserByAccountName" resultType="int" parameterType="String">

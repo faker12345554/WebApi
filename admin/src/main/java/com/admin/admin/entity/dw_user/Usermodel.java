@@ -13,6 +13,8 @@ public class Usermodel {
     private int pageSize;
     private int pageIndex;
     private Date createtime;
+    private int id;
+    private String userid;
 
     public String getUserName() {
         return userName;
@@ -90,5 +92,21 @@ public class Usermodel {
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 }
