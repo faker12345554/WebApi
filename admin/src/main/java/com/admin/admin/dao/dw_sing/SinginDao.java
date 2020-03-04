@@ -13,7 +13,7 @@ public interface SinginDao {
     /*
     列表
      */
-    List<SinginModel> ListSingin(SearchModel searchModel);
+    List<SinginModel> ListSingin(@Param("searchModel") SearchModel searchModel,@Param("type") int type,@Param("limit") String limit);
 
     /*
     查看
@@ -23,7 +23,7 @@ public interface SinginDao {
     /*
     音视频管理
      */
-    List<SinginModel> ListAudio(SearchModel searchModel);
+    List<SinginModel> ListAudio(@Param("searchModel") SearchModel searchModel,@Param("type") int type,@Param("limit") String limit);
 
 
 

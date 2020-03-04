@@ -37,6 +37,17 @@ public class Personinformation {
     private String facepath;
     private String persontags;
 
+    public String getPolicecode() {
+        return policecode;
+    }
+
+    public Personinformation setPolicecode(String policecode) {
+        this.policecode = policecode;
+        return this;
+    }
+
+    private String policecode;
+
     public String getPersonid() {
         return personid;
     }

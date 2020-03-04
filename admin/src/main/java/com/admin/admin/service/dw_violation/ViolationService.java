@@ -56,4 +56,8 @@ public class ViolationService {
         return violationDao.ListViolation();
     }
 
+    public Violationfens GetByCriteria(String Code){
+        return violationDao.GetByCriteria(Code);
+    }
+
 }

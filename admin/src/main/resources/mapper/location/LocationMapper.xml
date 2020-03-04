@@ -10,7 +10,12 @@
         FROM "t_personinformation" As t
         INNER JOIN t_enclosure AS E on T.personid=E.personid
         left join t_caseinfo tc on E.personid = tc.personid
-
+        <if test="type==1">
+            where t.sponsoralarm=#{limit}
+        </if>
+        <if test="type!=1">
+            where t.policecode=#{limit}
+        </if>
         <if test="condition!=null and condition!=''">
             <where>
                 t.suspectstatus like concat('%',#{condition},'%') or
