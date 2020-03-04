@@ -3,8 +3,10 @@ package com.admin.admin.service.dw_user;
 import com.admin.admin.dao.dw_user.UserDao;
 import com.admin.admin.entity.dw_user.User;
 import com.admin.admin.entity.dw_user.Usermodel;
+import com.admin.admin.entity.dw_userrole.UserRole;
 import com.admin.model.userrole.UserRoleModel;
 import com.admin.page.PageBean;
+import com.admin.tool.CacheUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.poi.ss.formula.functions.T;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -59,15 +63,28 @@ public class UserService {
 
         return userDao.getUser(UserName);
     }
+    //查看权限
+    public List<UserRole> getmenuid(int  permissionid){
+        return userDao.getmenuid(permissionid);
+    }
 
     //用户列表
     public PageBean listUser(Usermodel usermodel) throws ParseException {
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
-
-
-
+        User user = userDao.GetUserByid(Integer.parseInt(CacheUtils.get("UserId").toString()));
+        usermodel.setUserid(user.getAccountname());
+        usermodel.setId(Integer.parseInt(CacheUtils.get("UserId").toString()));
         PageHelper.startPage(usermodel.getPageIndex(),usermodel.getPageSize());
         List<User> allItems = userDao.listUser(usermodel);
+        Collections.sort(allItems, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                int a =o1.getId();
+                int b= o2.getId();
+                int c = a-b;
+                return c;
+            }
+        });
         PageInfo<User> info = new PageInfo<>(allItems);//全部商品
         int countNums = (int) info.getTotal();            //总记录数
         PageBean<User> pageData = new PageBean<>(usermodel.getPageIndex(),usermodel.getPageSize() , countNums);
