@@ -14,4 +14,10 @@ public interface CallDao {
                      @Param("callType")String callType,@Param("personId")String personId,@Param("accountName")String accountName);
 
     UserModel getUserInformation(@Param("userId")String userId);
+
+    SendphoneInformation getPhoneInformation(@Param("callToken")String callToken);
+
+    int updateCancelRecord(@Param("callToken")String callToken,@Param("type")String type,@Param("timestamp")String timestamp);
+
+    int updateUrlRecord(@Param("callToke")String callToken,@Param("serverUrl")String serverUrl,@Param("roomCode")String roomCode);
 }
