@@ -3,6 +3,7 @@ package com.admin.admin.service.dw_user;
 import com.admin.admin.dao.dw_user.UserDao;
 import com.admin.admin.entity.dw_user.User;
 import com.admin.admin.entity.dw_user.Usermodel;
+import com.admin.admin.entity.dw_userrole.UserRole;
 import com.admin.model.userrole.UserRoleModel;
 import com.admin.page.PageBean;
 import com.github.pagehelper.PageHelper;
@@ -60,6 +61,10 @@ public class UserService {
 
 
         return userDao.getUser(UserName);
+    }
+    //查看权限
+    public List<UserRole> getmenuid(int  permissionid){
+        return userDao.getmenuid(permissionid);
     }
 
     //用户列表
