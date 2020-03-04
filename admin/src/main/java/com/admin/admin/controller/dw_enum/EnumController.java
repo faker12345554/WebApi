@@ -17,6 +17,8 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -152,6 +154,15 @@ public class EnumController {
                 return result.setData("");
             }
             PageInfo<EnumModel> info = new PageInfo<>(allItems);//全部商品
+            Collections.sort(allItems, new Comparator<EnumModel>() {
+                @Override
+                public int compare(EnumModel o1, EnumModel o2) {
+                    int a =o1.getEnumid();
+                    int b= o2.getEnumid();
+                    int c = a-b;
+                    return c;
+                }
+            });
             int countNums = (int) info.getTotal();            //总记录数
             PageBean<EnumModel> pageData = new PageBean<>(enumSearchModel.getPageIndex(), enumSearchModel.getPageSize(), countNums);
             pageData.setTotalPage(info.getPages());//总页数

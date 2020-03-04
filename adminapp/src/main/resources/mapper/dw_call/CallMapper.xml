@@ -14,4 +14,16 @@
     <select id="getUserInformation" resultType="com.adminapp.business.entity.dw_user.UserModel">
         select * from t_user where accountname=#{userId}
     </select>
+
+    <select id="getPhoneInformation" resultType="com.adminapp.business.entity.dw_call.SendphoneInformation">
+        select * from t_sendphone where calltoken=#{callToken}
+    </select>
+
+    <update id="updateCancelRecord">
+        update t_sendphone set canceltype=#{type},canceltimestamp=#{timestamp} where calltoken=#{callToken}
+    </update>
+
+    <update id="updateUrlRecord">
+        update t_sendphone set serverurl=#{serverUrl},roomCode=#{roomCode} where calltoken=#{callToke}
+    </update>
 </mapper>

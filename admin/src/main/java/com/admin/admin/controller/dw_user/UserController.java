@@ -1,6 +1,7 @@
 package com.admin.admin.controller.dw_user;
 
 import com.admin.admin.entity.dw_user.Usermodel;
+import com.admin.admin.entity.dw_userrole.UserRole;
 import com.admin.page.PageUtil;
 import com.admin.token.TokenService;
 import com.admin.token.tation.UserLoginToken;
@@ -86,10 +87,34 @@ public class UserController {
     @ApiOperation("修改用户信息")
     @PostMapping("/UpdateUser")
     public ResponseResult updateUser(@RequestBody User user, HttpServletResponse response) {
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage(ResultCode.SUCCESS.getMessage());
-        user.setPassword(MD5Util.string2MD5(user.getPassword()));
-        return result.setData(userService.updateUser(user));
+       // int i = 0;
+        User user1 = userService.getUser(user.getAccountname());
+        //List<UserRole> userRole =userService.getmenuid(user1.getPermissionid());
+//        if(userRole.size()==0)
+//        {
+//            result.setCode(ResultCode.PARAMS_ERROR.getCode());
+//            result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
+//            return result.setData("无此权限");
+//        }else
+//        {
+//            for(UserRole item:userRole){
+//                if(item.getMenuid()==4){
+//                    i++;
+//                }
+//            }
+//            if(i>=1){
+                result.setCode(ResultCode.SUCCESS.getCode());
+                result.setMessage(ResultCode.SUCCESS.getMessage());
+                user.setPassword(MD5Util.string2MD5(user.getPassword()));
+                return result.setData(userService.updateUser(user));
+//            }else{
+//                result.setCode(ResultCode.PARAMS_ERROR.getCode());
+//                result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
+//                return result.setData("无此权限");
+//            }
+//        }
+
+
     }
 
     //删除
@@ -108,7 +133,7 @@ public class UserController {
         }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData( userService.deleteUser(flag, UserName));
+        return result.setData( userService.deleteUser(!flag, UserName));
     }
 
     //登录
@@ -131,6 +156,10 @@ public class UserController {
         }else if(user.getUsersystem()!=1){
             result.setCode(3);
             result.setMessage("账号不存在");
+            return result;
+        }else if(user.isStatus()==false){
+            result.setCode(4);
+            result.setMessage("账号已停用");
             return result;
         }
         CacheUtils.put("Role",user.getRoleName(),0);

@@ -14,7 +14,7 @@ public class User {
     private String phone;
     private String createtime;
     private boolean status;
-    private String bmmc;
+    private String permissionname;
     private long usersystem;
     private String officephone;
     private String police;
@@ -154,15 +154,13 @@ public class User {
 
     private String aliasname;
 
-    public String getBmmc() {
-        return bmmc;
+    public String getPermissionname() {
+        return permissionname;
     }
 
-    public User setBmmc(String bmmc) {
-        this.bmmc = bmmc;
-        return this;
+    public void setPermissionname(String permissionname) {
+        this.permissionname = permissionname;
     }
-
 
     public int getId() {
         return id;
