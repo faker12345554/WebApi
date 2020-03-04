@@ -74,6 +74,6 @@
     </select>
 
     <select id="GetpermissionName"  resultType="com.admin.admin.entity.dw_group.PermissionName">
-        SELECT permissionname from t_userpermissiongroup where status=true
+        SELECT * from t_userpermissiongroup where status=true
     </select>
 </mapper>

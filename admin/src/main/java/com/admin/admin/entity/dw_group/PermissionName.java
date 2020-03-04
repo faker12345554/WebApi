@@ -2,7 +2,7 @@ package com.admin.admin.entity.dw_group;
 
 public class PermissionName {
     private String permissionName;
-    private int id;
+    private int permissionid;
 
     public String getPermissionName() {
         return permissionName;
@@ -13,10 +13,10 @@ public class PermissionName {
     }
 
     public int getId() {
-        return id;
+        return permissionid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int permissionid) {
+        this.permissionid = permissionid;
     }
 }

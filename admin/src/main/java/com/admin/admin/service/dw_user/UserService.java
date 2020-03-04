@@ -6,6 +6,7 @@ import com.admin.admin.entity.dw_user.Usermodel;
 import com.admin.admin.entity.dw_userrole.UserRole;
 import com.admin.model.userrole.UserRoleModel;
 import com.admin.page.PageBean;
+import com.admin.tool.CacheUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.poi.ss.formula.functions.T;
@@ -70,9 +71,9 @@ public class UserService {
     //用户列表
     public PageBean listUser(Usermodel usermodel) throws ParseException {
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
-
-
-
+        User user = userDao.GetUserByid(Integer.parseInt(CacheUtils.get("UserId").toString()));
+        usermodel.setUserid(user.getAccountname());
+        usermodel.setId(Integer.parseInt(CacheUtils.get("UserId").toString()));
         PageHelper.startPage(usermodel.getPageIndex(),usermodel.getPageSize());
         List<User> allItems = userDao.listUser(usermodel);
         Collections.sort(allItems, new Comparator<User>() {

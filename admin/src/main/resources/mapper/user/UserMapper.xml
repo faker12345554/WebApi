@@ -17,7 +17,7 @@
                 <if test="usermodel.status.equals('正常')">
                     and status=true
                 </if>
-                <if test="usermodel.status.equals('停用')">
+                <if test="usermodel.status.equals('停用')==false">
                     and status=false
                 </if>
             </if>
@@ -42,6 +42,12 @@
             <if test="usermodel.userName==null and usermodel.phone==null and usermodel.status==null and usermodel.startTime==null and usermodel.endTime!=null">
                 where createtime &lt;= #{usermodel.endTime}
             </if>
+        <if test="usermodel.userName==null and usermodel.phone==null and usermodel.status==null and usermodel.startTime==null and usermodel.endTime==null and usermodel.userid.equals('admin')==false">
+            where createid = #{usermodel.id} or id = #{usermodel.id}
+        </if>
+        <if test="usermodel.userName!=null or usermodel.phone!=null or usermodel.status!=null or usermodel.startTime!=null or usermodel.endTime!=null and usermodel.userid.equals('admin')==false">
+            and createid = #{usermodel.id} or id = #{usermodel.id}
+        </if>
     </select>
 
 

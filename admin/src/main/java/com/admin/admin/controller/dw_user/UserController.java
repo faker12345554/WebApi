@@ -87,32 +87,32 @@ public class UserController {
     @ApiOperation("修改用户信息")
     @PostMapping("/UpdateUser")
     public ResponseResult updateUser(@RequestBody User user, HttpServletResponse response) {
-        int i = 0;
+       // int i = 0;
         User user1 = userService.getUser(user.getAccountname());
-        List<UserRole> userRole =userService.getmenuid(user1.getPermissionid());
-        if(userRole.size()==0)
-        {
-            result.setCode(ResultCode.PARAMS_ERROR.getCode());
-            result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
-            return result.setData("无此权限");
-        }else
-        {
-            for(UserRole item:userRole){
-                if(item.getMenuid()==4){
-                    i++;
-                }
-            }
-            if(i>=1){
+        //List<UserRole> userRole =userService.getmenuid(user1.getPermissionid());
+//        if(userRole.size()==0)
+//        {
+//            result.setCode(ResultCode.PARAMS_ERROR.getCode());
+//            result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
+//            return result.setData("无此权限");
+//        }else
+//        {
+//            for(UserRole item:userRole){
+//                if(item.getMenuid()==4){
+//                    i++;
+//                }
+//            }
+//            if(i>=1){
                 result.setCode(ResultCode.SUCCESS.getCode());
                 result.setMessage(ResultCode.SUCCESS.getMessage());
                 user.setPassword(MD5Util.string2MD5(user.getPassword()));
                 return result.setData(userService.updateUser(user));
-            }else{
-                result.setCode(ResultCode.PARAMS_ERROR.getCode());
-                result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
-                return result.setData("无此权限");
-            }
-        }
+//            }else{
+//                result.setCode(ResultCode.PARAMS_ERROR.getCode());
+//                result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
+//                return result.setData("无此权限");
+//            }
+//        }
 
 
     }
