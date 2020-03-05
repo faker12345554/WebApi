@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prisonapp.business.dao.dw_call.CallDao">
+
+    <select id="getPersoninformation" parameterType="string" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation">
+        select * from t_personinformation where personid=#{personid}
+    </select>
+   <insert id="makeCall" parameterType="String">
+
+   </insert>
+
+    <select id="checkOnline" resultType="com.prisonapp.business.entity.dw_call.TSendphone">
+        select * from t_sendphone where accountname=#{Sponsoralarm} and canceltype is null
+    </select>
+
+    <insert id="insertRecord">
+        insert into t_sendphone(calltoken,calltimestamp,createtime,calltype,callname,sendname,personid,accountname)
+        VALUES (#{callToken},#{timeStamp},Current_timestamp,#{type},#{callname},#{sendname},#{personid},#{accountname})
+    </insert>
+
+    <select id="getPhoneInformation" resultType="com.prisonapp.business.entity.dw_call.TSendphone">
+        select * from t_sendphone where calltoken=#{callToken}
+    </select>
+
+    <update id="updateCancelRecord">
+        update t_sendphone set canceltype=#{type},canceltimestamp=#{timestamp} where calltoken=#{callToken}
+    </update>
+
+
+    <select id="RelatedId" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation" parameterType="String">
+        select * from t_personinformation where contact=#{accountName}
+    </select>
+</mapper>

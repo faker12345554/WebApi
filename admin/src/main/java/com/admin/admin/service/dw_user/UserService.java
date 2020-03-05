@@ -44,6 +44,11 @@ public class UserService {
         return userDao.updateUser(t_user);
     }
 
+    public int updateUserPassword(User t_user) {
+
+        return userDao.updateUserPassword(t_user);
+    }
+
     //删除
     public int deleteUser(Boolean flag, String UserName) {
 

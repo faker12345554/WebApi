@@ -102,11 +102,17 @@ public class UserController {
 //                    i++;
 //                }
 //            }
-//            if(i>=1){
+//            if(i>=1){user.setPassword(MD5Util.string2MD5(user.getPassword()));
+        int insertPassword=0;
+        if(user.getPassword()!=null){
+            user.setPassword(MD5Util.string2MD5(user.getPassword()));
+             insertPassword =userService.updateUser(user);
+        }else{
+            insertPassword =userService.updateUserPassword(user);
+        }
                 result.setCode(ResultCode.SUCCESS.getCode());
                 result.setMessage(ResultCode.SUCCESS.getMessage());
-                user.setPassword(MD5Util.string2MD5(user.getPassword()));
-                return result.setData(userService.updateUser(user));
+                return result.setData(insertPassword);
 //            }else{
 //                result.setCode(ResultCode.PARAMS_ERROR.getCode());
 //                result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
@@ -147,6 +153,7 @@ public class UserController {
 //            result.setMessage(ResultCode.ILLEAGAL_STRING.getMessage());
 //            return result.setData("验证码不正确!");
 //        }
+
         String MD5Password =MD5Util.string2MD5(Password);
         User user = userService.login(UserName, MD5Password);
         if (user==null){

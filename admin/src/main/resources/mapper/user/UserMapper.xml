@@ -54,7 +54,7 @@
     <select id="getUser" parameterType="String" resultType="com.admin.admin.entity.dw_user.User">
 
         SELECT * FROM "t_user"
-        <if test="usersystem==1">
+        <if test="usersystem==1 or usersystem==null">
         as t inner join t_userpermissiongroup on t_userpermissiongroup.permissionid=t.permissionid where accountname=#{UserName}
     </if>
     <if test="usersystem==2">
@@ -78,11 +78,20 @@
      #{user.officephone},#{user.police},#{user.areaname},#{user.department},#{user.mailbox},#{user.sex},#{user.station},#{user.bz},Current_timestamp,#{user.departmentnum})
     </insert>
     <update id="updateUser" parameterType="com.admin.admin.entity.dw_user.User">
-        UPDATE t_user set accountname=#{user.accountname}, password=#{user.password},aliasname=#{user.aliasname},permissionid=#{user.permissionid},status=#{user.status},
+
+            UPDATE t_user set accountname=#{user.accountname}, aliasname=#{user.aliasname},permissionid=#{user.permissionid},status=#{user.status},
         createid=#{user.createid},createname=#{user.createname},areacode=#{user.areacode},phone=#{user.phone},usersystem=#{user.usersystem},officephone=#{user.officephone},police=#{user.police},areaname=#{user.areaname},
-        department=#{user.department},mailbox=#{user.mailbox},sex=#{user.sex},station=#{user.station},bz=#{user.bz},departmentnum=#{user.departmentnum} where id=#{user.id}
+        department=#{user.department},mailbox=#{user.mailbox},sex=#{user.sex},station=#{user.station},bz=#{user.bz},departmentnum=#{user.departmentnum}, password=#{user.password} where id=#{user.id}
+
     </update>
 
+    <update id="updateUserPassword" parameterType="com.admin.admin.entity.dw_user.User">
+
+    UPDATE t_user set accountname=#{user.accountname}, aliasname=#{user.aliasname},permissionid=#{user.permissionid},status=#{user.status},
+    createid=#{user.createid},createname=#{user.createname},areacode=#{user.areacode},phone=#{user.phone},usersystem=#{user.usersystem},officephone=#{user.officephone},police=#{user.police},areaname=#{user.areaname},
+    department=#{user.department},mailbox=#{user.mailbox},sex=#{user.sex},station=#{user.station},bz=#{user.bz},departmentnum=#{user.departmentnum}where id=#{user.id}
+
+</update>
     <update id="deleteUser">
         update t_user set status=#{flag} where accountname=#{UserName}
     </update>
