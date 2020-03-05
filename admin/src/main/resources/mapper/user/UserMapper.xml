@@ -52,10 +52,10 @@
 
 
     <select id="getUser" parameterType="String" resultType="com.admin.admin.entity.dw_user.User">
-
-        SELECT * FROM "t_user"
         <if test="usersystem==1 or usersystem==null">
             SELECT * FROM "t_user" inner join fsga_yw_ryb on t_user.accountname=fsga_yw_ryb.mjbh where accountname=#{UserName}
+        inner join t_userpermissiongroup on t_userpermissiongroup.permissionid=t.permissionid where accountname=#{UserName}
+
     </if>
     <if test="usersystem==2">
           where accountname=#{UserName} and usersystem=2

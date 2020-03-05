@@ -6,11 +6,11 @@
         INSERT into t_personinformation(personid,personname,gender,age,birthdate,card,workunit,bailoutbegindate,bailoutenddate,sponsor,sponsoralarm,contact,address,wechatnumber,
         qqnumber,status,founderid,foundertime,modifierid,modifiertime,suspectstatus,marriage,policestation,casetype,facepath,persontags,gendercode,beforename,nation,degreeeducation,
         nativeplace,occupation,nationality,registeredarea,permanentaddress,currentaddress,nowaddress,yjsponsoralarm,exectype,keepaddress,appointaddress,province,city,area,
-        monitoraddress,suspectstatuscode,violationcode)
+        monitoraddress,suspectstatuscode,violationcode,policecode)
         values (#{personid},#{personname},#{gender},#{age},#{birthdate},#{card},#{workunit},#{bailoutbegindate},#{bailoutenddate},#{sponsor},#{sponsoralarm},#{contact},#{address},
         #{wechatnumber},#{qqnumber},#{status},#{founderid},#{foundertime},#{modifierid},#{modifiertime},#{suspectstatus},#{marriage},#{policestation},#{casetype},#{facepath},
         #{persontags},#{gendercode},#{beforename},#{nation},#{degreeeducation},#{nativeplace},#{occupation},#{nationality},#{registeredarea},#{permanentaddress},#{currentaddress},
-        #{nowaddress},#{yjsponsoralarm},#{exectype},#{keepaddress},#{appointaddress},#{province},#{city},#{area},#{monitoraddress},#{suspectstatuscode},#{violationcode})
+        #{nowaddress},#{yjsponsoralarm},#{exectype},#{keepaddress},#{appointaddress},#{province},#{city},#{area},#{monitoraddress},#{suspectstatuscode},#{violationcode},#{policecode})
     </insert>
 
     <update id="updatePersion" parameterType="com.admin.admin.entity.dw_person.Personinformation">
@@ -20,7 +20,7 @@
         casetype=#{casetype},facepath=#{facepath},persontags=#{persontags},gendercode=#{gendercode},beforename=#{beforename},nation=#{nation},degreeeducation=#{degreeeducation},
         nativeplace=#{nativeplace},occupation=#{occupation},nationality=#{nationality},registeredarea=#{registeredarea},permanentaddress=#{permanentaddress},currentaddress=#{currentaddress},
         nowaddress=#{nowaddress},yjsponsoralarm=#{yjsponsoralarm},exectype=#{exectype},keepaddress=#{keepaddress},appointaddress=#{appointaddress},province=#{province},city=#{city},
-        area=#{area},monitoraddress=#{monitoraddress},suspectstatuscode=#{suspectstatuscode}
+        area=#{area},monitoraddress=#{monitoraddress},suspectstatuscode=#{suspectstatuscode},policecode=#{policecode}
         where personid=#{personid}
     </update>
 
@@ -41,15 +41,15 @@
 
     <insert id="insertprison" parameterType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting"
             useGeneratedKeys="true" keyProperty="id">
-        insert into t_prisonsetting(personid, settingname, settingcheck, settingtime) values(#{data.personid},#{data.settingname},#{data.settingcheck},#{data.settingtime})
+        insert into t_prisonsetting(personid, settingname, settingcheck, settingtime,settingcode) values(#{data.personid},#{data.settingname},#{data.settingcheck},#{data.settingtime},#{data.settingcode})
     </insert>
 
     <update id="delconfig" parameterType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting" >
-        update t_prisonsetting set settingcheck=false where personid=#{personid} and settingname=#{settingname}
+        update t_prisonsetting set settingcheck=#{settingcheck} where personid=#{personid} and settingname=#{settingname}
     </update>
 
     <select id="Getprison" parameterType="String" resultType="int">
-        select count(*) from t_prisonsetting where personid=#{personId} and settingname=#{settingname} and settingcheck=true
+        select count(*) from t_prisonsetting where personid=#{personId} and settingname=#{settingname}
     </select>
 
     <select id="ListPerson"
@@ -87,7 +87,7 @@
     </select>
 
     <select id="ListPrison" parameterType="String" resultType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting">
-        select * from t_prisonsetting where personid=#{PersonId}
+        select * from t_prisonsetting where personid=#{PersonId} and settingcheck=true
     </select>
 
 
