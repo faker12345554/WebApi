@@ -25,7 +25,9 @@ public interface UserDao {
     List<User> listUser(@Param("usermodel") Usermodel usermodel);
 
     //查看
-    User getUser(@Param("UserName") String UserName);
+    User getUser(@Param("UserName") String UserName,@Param("usersystem") int usersystem);
+
+    User delGetUser(@Param("UserName") String UserName);
 
     //获取权限
     List<UserRole> getmenuid(@Param("permissionid") int permissionid);

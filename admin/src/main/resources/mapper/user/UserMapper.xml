@@ -52,7 +52,20 @@
 
 
     <select id="getUser" parameterType="String" resultType="com.admin.admin.entity.dw_user.User">
-        SELECT t.*,permissionname  FROM "t_user" as t inner join t_userpermissiongroup on t_userpermissiongroup.permissionid=t.permissionid where accountname=#{UserName}
+
+        SELECT * FROM "t_user"
+        <if test="usersystem==1">
+        as t inner join t_userpermissiongroup on t_userpermissiongroup.permissionid=t.permissionid where accountname=#{UserName}
+    </if>
+    <if test="usersystem==2">
+          where accountname=#{UserName} and usersystem=2
+    </if>
+        <if test="usersystem==3">
+            where accountname=#{UserName} and usersystem=3
+        </if>
+    </select>
+    <select id="delGetUser" parameterType="String" resultType="com.admin.admin.entity.dw_user.User">
+         SELECT t.*,permissionname  FROM "t_user" as t inner join t_userpermissiongroup on t_userpermissiongroup.permissionid=t.permissionid where accountname=#{UserName}
     </select>
 
     <select id="GetUserByid" parameterType="int" resultType="com.admin.admin.entity.dw_user.User">
