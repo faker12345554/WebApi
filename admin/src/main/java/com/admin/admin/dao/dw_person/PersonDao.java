@@ -34,7 +34,7 @@ public interface PersonDao {
     /*
     列表
      */
-    List<Personinformation> ListPerson(SearchModel searchModel );
+    List<Personinformation> ListPerson(@Param("searchmodel") SearchModel searchModel,@Param("type") int type,@Param("limit") String limit );
 
     /*
     批量设置

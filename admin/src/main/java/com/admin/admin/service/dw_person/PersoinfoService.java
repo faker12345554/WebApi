@@ -11,6 +11,7 @@ import com.admin.admin.entity.dw_sysenum.Dictionary;
 import com.admin.model.search.SearchModel;
 import com.admin.page.PageBean;
 import com.admin.tool.CacheUtils;
+import com.admin.tool.JudgementRole;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,7 +136,14 @@ public class PersoinfoService {
     人员信息列表
      */
     public List<Personinformation> ListPerson(SearchModel searchModel)  throws Exception{
-        List<Personinformation> personList = personDao.ListPerson(searchModel);//这里面是每个人的信息
+        String limit="";
+        int type= JudgementRole.Distinguishroles();
+        if (type==1){
+            limit= CacheUtils.get("UserName").toString();
+        }else{
+            limit=CacheUtils.get("PoliceCode").toString();
+        }
+        List<Personinformation> personList = personDao.ListPerson(searchModel,type,limit);//这里面是每个人的信息
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         for (Personinformation item : personList) {

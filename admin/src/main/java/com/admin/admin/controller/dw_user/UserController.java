@@ -162,6 +162,8 @@ public class UserController {
             result.setMessage("账号已停用");
             return result;
         }
+        CacheUtils.put("Role",user.getRoleName(),0);
+        CacheUtils.put("PoliceCode",user.getPoliceCode(),0);
         CacheUtils.put("UserId", user.getId(), 0);
         CacheUtils.put("UserName",user.getAliasname());
         String token = tokenService.getToken(user);

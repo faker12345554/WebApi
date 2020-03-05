@@ -7,6 +7,8 @@ import com.admin.admin.entity.dw_leave.LeaveInformation;
 import com.admin.admin.entity.dw_leave.PersonInformation;
 import com.admin.model.leave.LeavefModel;
 import com.admin.model.search.SearchModel;
+import com.admin.tool.CacheUtils;
+import com.admin.tool.JudgementRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +26,15 @@ public class LeaveService {
 
     //获取
     public List<LeavefModel> getLeave(SearchModel searchModel) {
+        String limit="";
+        int type= JudgementRole.Distinguishroles();
+        if (type==1){
+            limit= CacheUtils.get("UserName").toString();
+        }else{
+            limit=CacheUtils.get("PoliceCode").toString();
+        }
 
-        return leaveDao.getLeave(searchModel);
+        return leaveDao.getLeave(searchModel,type,limit);
 
     }
 

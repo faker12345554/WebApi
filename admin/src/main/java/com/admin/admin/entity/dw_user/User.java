@@ -22,10 +22,30 @@ public class User {
     private String department;
     private String personid;
     private String mailbox;
+
+    public String getCreatetime() {
+        return createtime;
+    }
+
+    public User setCreatetime(String createtime) {
+        this.createtime = createtime;
+        return this;
+    }
+
+    public String getPoliceCode() {
+        return PoliceCode;
+    }
+
+    public User setPoliceCode(String policeCode) {
+        PoliceCode = policeCode;
+        return this;
+    }
+
     private String sex;
     private String station;
     private String bz;
     private String departmentnum;
+    private String PoliceCode;
 
     public long getUsersystem() {
         return usersystem;

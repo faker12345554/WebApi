@@ -77,7 +77,7 @@ public class Datatimer  {
     //每天凌晨三点
     @Scheduled(cron = "0 0 3 * * ?")
     public void SendSummons() throws Exception{
-    tasking.GetMessageList(5);
+    tasking.GetMessageList(4);
     }
     //每天凌晨三点
     @Scheduled(cron = "0 0 3 * * ?")

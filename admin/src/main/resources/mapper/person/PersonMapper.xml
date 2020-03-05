@@ -52,24 +52,32 @@
         select count(*) from t_prisonsetting where personid=#{personId} and settingname=#{settingname}
     </select>
 
-    <select id="ListPerson" parameterType="com.admin.model.search.SearchModel"
+    <select id="ListPerson"
             resultType="com.admin.admin.entity.dw_person.Personinformation">
+    <if test="type==1">
+            select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
+            left join t_caseinfo as C on C.personid=P.personid where sponsoralarm=#{limit}
+    </if>
+    <if test="type!=1">
         select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
-        left join t_caseinfo as C on C.personid=P.personid where sponsoralarm=#{PersonName}
-        <if test=" FuzzyCondition !=null and FuzzyCondition !=''">
+        left join t_caseinfo as C on C.personid=P.personid where policecode=#{limit}
+    </if>
+
+
+        <if test=" searchmodel.FuzzyCondition !=null and searchmodel.FuzzyCondition !=''">
             and
-            P.personname like concat('%',#{FuzzyCondition},'%') or
-            P.suspectstatus like concat('%',#{FuzzyCondition},'%') or
-            P.gender like concat('%',#{FuzzyCondition},'%') or
-            P.sponsor like concat('%',#{FuzzyCondition},'%') or
-            P.casetype like concat('%',#{FuzzyCondition},'%') or
-            P.modifierid like concat('%',#{FuzzyCondition},'%') or
+            P.personname like concat('%',#{searchmodel.FuzzyCondition},'%') or
+            P.suspectstatus like concat('%',#{searchmodel.FuzzyCondition},'%') or
+            P.gender like concat('%',#{searchmodel.FuzzyCondition},'%') or
+            P.sponsor like concat('%',#{searchmodel.FuzzyCondition},'%') or
+            P.casetype like concat('%',#{searchmodel.FuzzyCondition},'%') or
+            P.modifierid like concat('%',#{searchmodel.FuzzyCondition},'%') or
             C.caseno like concat('%',#{FuzzyCondition},'%') or
-            C.handleunit like concat('%',#{FuzzyCondition},'%') or
-            C.handlepeson like concat('%',#{FuzzyCondition},'%')
+            C.handleunit like concat('%',#{searchmodel.searchmodel.FuzzyCondition},'%') or
+            C.handlepeson like concat('%',#{searchmodel.FuzzyCondition},'%')
 
         </if>
-        <if test="list.size()>0">
+        <if test="searchmodel.list.size()>0">
             and personid in
             <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
                 CAST (#{id} as text)

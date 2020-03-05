@@ -142,10 +142,12 @@ public class Tasking {
         TMessage message = new TMessage();
         for (Personinformation item : list) {
             //填写消息内容
-            message.setModular(5);
+            message.setModular(4);
             message.setContent("监居人员" + item.getPersonname() + "下个月应进行传讯取证,请提前告知!");
             message.setPersonid(item.getPersonid());
-            message.setModularname("传讯提醒");
+            message.setModularname("待办提醒");
+            message.setDetailtypename("传讯取证通知");
+            message.setDetailtype(1);
             message.setReadmessage(false);
             if (taskDao.GetMessage(item.getPersonid(), CalendarAdjust.GetYear(new Date())) != 0) {
                 if (strArr == null || strArr.length == 0) {
@@ -189,7 +191,7 @@ public class Tasking {
 
     public List<TMessage> GetMessageList(int type) throws Exception{
         List<TMessage> messageList=new ArrayList<TMessage>();
-        if (type==5){
+        if (type==4){
             messageList=taskDao.GetMessageList(5,CalendarAdjust.GetYear(new Date()));
 
         }else if(type==6){
