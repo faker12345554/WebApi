@@ -14,10 +14,14 @@ import com.prisonapp.token.TokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Random;
 
 @Api(value="通话controller",tags={"音视频通话"})
@@ -30,7 +34,7 @@ public class CallController {
 
     @ApiOperation(value = " 发出通话请求")
     @PostMapping("/requestCall")
-    public ResultSet requestCall(String type){//1 为语音通话，2 为视频通话
+    public ResultSet requestCall(String type) throws Exception {//1 为语音通话，2 为视频通话
         ResultSet result = new ResultSet();
         CallModel callModel = new CallModel();
 
@@ -55,15 +59,24 @@ public class CallController {
             result.resultCode = 0;
             result.resultMsg = "";
             result.data = callModel;
+
+            //请求通话推送
+            Calendar cal=new GregorianCalendar();
+            cal.setTime(date);
+            cal.add(Calendar.DATE,1);
+            JSONObject object=new JSONObject();
+            object.put("callName",tPersoninformation.getPersonname());//发起方姓名
+            object.put("callToken",callToken);
+            object.put("type",type);
+            object.put("callTimestamp",timeStamp);
+            String descriptions="管理端请求通话推送";
+            String pushType="PushRequestCall";
+            callService.sendRequestCallCast(cal.getTime(),object,tPersoninformation.getSponsoralarm(),"ReleaseAdminCode",timeStamp,descriptions,pushType);
         }else {
             result.resultCode=21;
             result.resultMsg="对方正在通话";
             result.data=null;
         }
-        callModel.setCallName(tPersoninformation.getSponsor());
-        result.resultCode = 0;
-        result.resultMsg = "";
-        result.data = callModel;
         return result;
     }
 
@@ -71,7 +84,7 @@ public class CallController {
     @ApiOperation(value = " 挂断通话")
     @PostMapping("/cancelCall")
     public ResultSet cancelCall(@ApiParam(name = "callToken",value = "通话标识")@RequestParam(required = true) String callToken,
-                                @ApiParam(name = "type",value = "挂断类型")@RequestParam(required = true)String type){
+                                @ApiParam(name = "type",value = "挂断类型")@RequestParam(required = true)String type) throws Exception {
         ResultSet resultSet = new ResultSet();
         if(type.equals("1")||type.equals("2")){
             TSendphone tSendphone=callService.getPhoneInformation(callToken);
@@ -84,6 +97,17 @@ public class CallController {
                 resultSet.resultCode=0;
                 resultSet.resultMsg="";
                 resultSet.data=cancelModel;
+
+                //结束通话推送
+                Calendar cal=new GregorianCalendar();
+                cal.setTime(date);
+                cal.add(Calendar.DATE,1);
+                JSONObject object=new JSONObject();
+                object.put("callToken",callToken);
+                object.put("cancelTimestamp",timestamp);
+                String descriptions="管理端结束通话推送";
+                String pushType="PushCancelCall";
+                callService.sendRequestCallCast(cal.getTime(),object,tSendphone.getAccountname(),"ReleaseAdminCode",timestamp,descriptions,pushType);
             }else{
                 resultSet.resultCode=1;
                 resultSet.resultMsg="该通话已挂断";
@@ -101,7 +125,7 @@ public class CallController {
 
     @ApiOperation(value = " 同意接收通话")
     @PostMapping("/acceptCall")
-    public ResultSet acceptCall(@ApiParam(name = "callToken",value = "通话标识")@RequestParam(required = true) String callToken) {
+    public ResultSet acceptCall(@ApiParam(name = "callToken",value = "通话标识")@RequestParam(required = true) String callToken) throws Exception {
         ResultSet resultSet = new ResultSet();
         TSendphone tSendphone = callService.getPhoneInformation(callToken);
         if (tSendphone.getCanceltype() == null || tSendphone.getCanceltype().equals("")) {
@@ -120,9 +144,60 @@ public class CallController {
             resultSet.resultCode = 0;
             resultSet.resultMsg = "";
             resultSet.data = acceptModel;
+
+            //开始通话推送
+            Calendar cal=new GregorianCalendar();
+            cal.setTime(date);
+            cal.add(Calendar.DATE,1);
+            JSONObject object=new JSONObject();
+            object.put("serverUrl",serverUrl);//发起方姓名
+            object.put("roomCode",roomCode);
+            object.put("type",tSendphone.getCalltype());
+            object.put("callToken",callToken);
+            String descriptions="管理端同意通话推送";
+            String timestamp=String.valueOf(date.getTime());
+            String pushType="PushRequestCall";
+            callService.sendRequestCallCast(cal.getTime(),object,tSendphone.getAccountname(),"ReleaseAdminCode",timestamp,descriptions,pushType);
+        }else{
+            resultSet.resultCode=1;
+            resultSet.resultMsg="该通话已挂断";
+            resultSet.data=null;
         }
 
         return resultSet;
+    }
+
+
+    @ApiOperation(value = " 拒绝接收通话")
+    @PostMapping("/refuseCall")
+    public ResultSet refuseCall(@ApiParam(name = "callToken",value = "通话标识")@RequestParam(required = true) String callToken) throws Exception {
+        ResultSet resultSet = new ResultSet();
+        TSendphone tSendphone = callService.getPhoneInformation(callToken);
+        if (tSendphone.getCanceltype() == null || tSendphone.getCanceltype().equals("")) {
+            Date date = new Date();
+            String timestamp = String.valueOf(date.getTime());
+            int updateCancelRecord = callService.updateCancelRecord(callToken, "3", timestamp);
+            resultSet.resultCode = 0;
+            resultSet.resultMsg = "";
+            resultSet.data = new Object();
+
+            //结束通话推送
+            Calendar cal=new GregorianCalendar();
+            cal.setTime(date);
+            cal.add(Calendar.DATE,1);
+            JSONObject object=new JSONObject();
+            object.put("callToken",callToken);
+            object.put("cancelTimestamp",timestamp);
+            String descriptions="管理端结束通话推送";
+            String pushType="PushCancelCall";
+            callService.sendRequestCallCast(cal.getTime(),object,tSendphone.getAccountname(),"ReleaseAdminCode",timestamp,descriptions,pushType);
+        } else {
+            resultSet.resultCode = 1;
+            resultSet.resultMsg = "该通话已挂断";
+            resultSet.data = null;
+        }
+        return resultSet;
+
     }
 
 
@@ -131,4 +206,6 @@ public class CallController {
         String personid = tPersoninformation.getPersonid();
         return personid;
     }
+
+
 }
