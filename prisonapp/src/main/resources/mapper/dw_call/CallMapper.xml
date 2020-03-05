@@ -27,6 +27,9 @@
         update t_sendphone set canceltype=#{type},canceltimestamp=#{timestamp} where calltoken=#{callToken}
     </update>
 
+    <update id="updateUrlRecord">
+        update t_sendphone set serverurl=#{serverUrl},roomCode=#{roomCode} where calltoken=#{callToke}
+    </update>
 
     <select id="RelatedId" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation" parameterType="String">
         select * from t_personinformation where contact=#{accountName}
