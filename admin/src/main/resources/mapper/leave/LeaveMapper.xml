@@ -6,47 +6,48 @@
         SELECT a.*,b.auditordatetime FROM t_leave AS a
         LEFT JOIN t_auditor AS b ON a.leaveorder=b.leaveorder
         left join t_personinformation as t on t.personid=a.personid
+        where t.status=true
         <if test="type==1">
-            where t.sponsoralarm=#{limit}
+             and t.sponsoralarm=#{limit}
         </if>
         <if test="type!=1">
-            where t.policecode=#{limit}
+            and t.policecode=#{limit}
         </if>
         <if test="searchModel.PersonId !=null and searchModel.PersonId!='' and searchModel.Condition==null"  >
-            WHERE a.personid=#{searchModel.PersonId}
+            and a.personid=#{searchModel.PersonId}
         </if>
         <if test="searchModel.Condition ==null and searchModel.PersonName!=null ">
-            where a.personname like concat('%',#{searchModel.PersonName},'%')
+            and a.personname like concat('%',#{searchModel.PersonName},'%')
         </if>
         <if test="searchModel.Condition !=null and searchModel.PersonName==null and searchModel.PersonId==null ">
-            where a.states like concat('%',#{searchModel.condition},'%')
+            and a.states like concat('%',#{searchModel.condition},'%')
         </if>
 
         <if test="searchModel.Condition !=null and searchModel.PersonName==null and searchModel.PersonId !=null ">
-            where a.personid=#{searchModel.PersonId} and a.states like concat('%',#{searchModel.condition},'%')
+            and a.personid=#{searchModel.PersonId} and a.states like concat('%',#{searchModel.condition},'%')
     </if>
 
         <if test="searchModel.Condition !=null and searchModel.PersonName!=null and searchModel.PersonName!='' and searchModel.StartTime!=null and searchModel.EndTime!=null ">
-            WHERE a.states=#{searchModel.Condition}
+            and a.states=#{searchModel.Condition}
             a.personname like concat('%',#{searchModel.PersonName},'%') and
             a.subittimestamp > #{searchModel.StartTime} and a.subittimestamp &lt; #{searchModel.EndTime}
         </if>
         <if test="searchModel.Condition ==null and (searchModel.PersonName!=null or searchModel.PersonName=='') and searchModel.StartTime!=null and searchModel.EndTime!=null ">
-            WHERE a.personname like concat('%',#{searchModel.PersonName},'%') and
+            and a.personname like concat('%',#{searchModel.PersonName},'%') and
             a.subittimestamp &gt; #{searchModel.StartTime} and a.subittimestamp &lt; #{searchModel.EndTime}
         </if>
 
         <if test="searchModel.Condition ==null and (searchModel.PersonName==null or searchModel.PersonName=='') and searchModel.StartTime!=null and  searchModel.EndTime!=null ">
-            WHERE a.subittimestamp > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and a.subittimestamp &lt; TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+            and a.subittimestamp > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and a.subittimestamp &lt; TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="searchModel.Condition ==null and (searchModel.PersonName==null or searchModel.PersonName=='') and searchModel.StartTime!=null and searchModel.EndTime==null ">
-            WHERE a.subittimestamp > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS')
+            and a.subittimestamp > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="searchModel.Condition ==null and (searchModel.PersonName==null or searchModel.PersonName=='') and searchModel.StartTime==null and searchModel.EndTime!=null ">
-            WHERE a.subittimestamp &lt; TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+            and a.subittimestamp &lt; TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="searchModel.list.size()>0">
-            where a.id in
+            and a.id in
             <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
                 #{id}
             </foreach>

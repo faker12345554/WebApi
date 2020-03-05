@@ -57,7 +57,7 @@ public class RuleStaticController {
                          num+=1;
                      }
                  }
-                 model.setNormalNumber(ruleStatSericve.getNotout(item.get("code").substring(0,6),StartTime,EndTime));
+                 model.setNormalNumber(ruleStatSericve.getNotout(item.get("code").substring(0,(codelevel*2)+2),StartTime,EndTime));
                  model.setMinorNumber(sum);
                  model.setCriticalNumber(num);
                  model.setAreaCode(item.get("code"));

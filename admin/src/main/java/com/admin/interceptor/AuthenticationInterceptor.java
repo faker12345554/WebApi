@@ -4,6 +4,7 @@ import com.admin.admin.dao.dw_user.UserDao;
 import com.admin.token.tation.PassToken;
 import com.admin.token.tation.UserLoginToken;
 import com.admin.admin.entity.dw_user.User;
+import com.admin.tool.CacheUtils;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -67,9 +68,14 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                     throw new RuntimeException("401");
                 }
                 User user = userDao.GetUserByid(Integer.valueOf(userId));
+
                 if (user == null) {
                     throw new RuntimeException("用户不存在，请重新登录");
                 }
+                CacheUtils.put("Role",user.getRoleName(),0);
+                CacheUtils.put("PoliceCode",user.getPoliceCode(),0);
+                CacheUtils.put("UserId", user.getId(), 0);
+                CacheUtils.put("UserName",user.getAliasname());
                 // 验证 token
                 JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
                 try {

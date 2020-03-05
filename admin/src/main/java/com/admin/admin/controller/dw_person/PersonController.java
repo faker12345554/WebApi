@@ -56,6 +56,7 @@ public class PersonController {
     }
 
     //修改
+    @UserLoginToken
     @ApiOperation("修改人员信息")
     @PostMapping("/updatePersion")
     public ResponseResult updatePersion(@RequestBody Personinformation personinformation, HttpServletResponse response) {
@@ -111,9 +112,7 @@ public class PersonController {
 
 
                 if (persoinfoService.Getprison(item.getPersonid(), item.getSettingname()) >= 1) {
-                    result.setCode(ResultCode.DATA_DUPLICATION.getCode());
-                    result.setMessage(ResultCode.DATA_DUPLICATION.getMessage());
-                    return result.setData(item.getSettingname() + "已存在,不可重复配置,请重新选择");
+                  continue;
                 }
                 item.setSettingcheck(true);
                 item.setSettingtime(new Date());
@@ -137,7 +136,7 @@ public class PersonController {
 //
 //    }
 
-    //@UserLoginToken
+    @UserLoginToken
     @ApiOperation("人员信息列表")
     @PostMapping("/ListPerson")
     public ResponseResult ListPerson(@RequestBody(required = false) SearchModel searchModel) throws Exception {
