@@ -58,10 +58,15 @@ public class UserService {
     }
 
     //获取
-    public User getUser(String UserName) {
+    public User getUser(String UserName,int usersystem) {
 
 
-        return userDao.getUser(UserName);
+        return userDao.getUser(UserName, usersystem);
+    }
+    public User delGetUser(String UserName ) {
+
+
+        return userDao.delGetUser(UserName);
     }
     //查看权限
     public List<UserRole> getmenuid(int  permissionid){

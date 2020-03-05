@@ -59,10 +59,10 @@ public class UserController {
     @ApiOperation("查看用户信息")
     @UserLoginToken
     @GetMapping("/GetUser")
-    public ResponseResult getUser(@RequestParam(required = false) String UserName, HttpServletResponse response) {
+    public ResponseResult getUser(@RequestParam(required = false) String UserName,@RequestParam(required = false) int usersystem, HttpServletResponse response) {
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData( userService.getUser(UserName));
+        return result.setData( userService.getUser(UserName,usersystem));
     }
 
     //新增用户
@@ -88,7 +88,7 @@ public class UserController {
     @PostMapping("/UpdateUser")
     public ResponseResult updateUser(@RequestBody User user, HttpServletResponse response) {
        // int i = 0;
-        User user1 = userService.getUser(user.getAccountname());
+       // User user1 = userService.getUser(user.getAccountname());
         //List<UserRole> userRole =userService.getmenuid(user1.getPermissionid());
 //        if(userRole.size()==0)
 //        {
@@ -126,7 +126,7 @@ public class UserController {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
             result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
             return result.setData("参数'flag'输入错误");
-        } else if (userService.getUser(UserName) == null) {
+        } else if (userService.delGetUser(UserName) == null) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
             result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
             return result.setData("参数'UserId'输入错误,该用户不存在");
