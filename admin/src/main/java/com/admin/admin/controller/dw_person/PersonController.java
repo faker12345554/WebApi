@@ -106,11 +106,9 @@ public class PersonController {
             if (item.isSettingcheck()==false){
                 item.setSettingcheck(false);
                 result.setCode(ResultCode.SUCCESS.getCode());
-                result.setMessage("取消成功");
+                result.setMessage("配置成功");
                 return result.setData(persoinfoService.delconfig(item));
             }else {
-
-
                 if (persoinfoService.Getprison(item.getPersonid(), item.getSettingname()) >= 1) {
                   continue;
                 }

@@ -45,7 +45,7 @@
     </insert>
 
     <update id="delconfig" parameterType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting" >
-        update t_prisonsetting set legal."public".t_prisonsetting.settingcheck=false where personid=#{personid} and settingname=#{settingname}
+        update t_prisonsetting set settingcheck=false where personid=#{personid} and settingname=#{settingname}
     </update>
 
     <select id="Getprison" parameterType="String" resultType="int">
