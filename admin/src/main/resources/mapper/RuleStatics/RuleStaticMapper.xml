@@ -17,7 +17,11 @@
           GROUP BY personid
         </if>
         <if test="level==2">
-
+            SELECT count(DISTINCT personid),personid from t_summons where personid in	(SELECT personid from t_personinformation
+             where bailoutbegindate&lt;= now() and now()&lt;= bailoutenddate and sponsoralarm in
+             (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Code},'%')))  AND reporttime  is null
+             and to_date(to_char(summonsendtime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd')
+             and to_date(to_char(summonsendtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd') GROUP BY personid
         </if>
 
     </select>

@@ -97,7 +97,7 @@ public class PersonController {
         result.setMessage("变更成功");
         return result.setData(persoinfoService.updateSponsor(Name, id, PersonId));
     }
-    @UserLoginToken
+   // @UserLoginToken
     @ApiOperation("配置管理方式")
     @PostMapping("/insertprison")
     public ResponseResult insertprison(@RequestBody List<TPrisonsetting> List) {
@@ -106,11 +106,9 @@ public class PersonController {
             if (item.isSettingcheck()==false){
                 item.setSettingcheck(false);
                 result.setCode(ResultCode.SUCCESS.getCode());
-                result.setMessage("取消成功");
+                result.setMessage("配置成功");
                 return result.setData(persoinfoService.delconfig(item));
             }else {
-
-
                 if (persoinfoService.Getprison(item.getPersonid(), item.getSettingname()) >= 1) {
                   continue;
                 }
