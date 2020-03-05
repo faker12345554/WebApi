@@ -32,6 +32,9 @@
             (SELECT DISTINCT  personid FROM t_personmessage where to_date(to_char(messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd')
             and to_date(to_char(messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd'))
         </if>
+        <if test="level==2">
+
+        </if>
 
 
     </select>
