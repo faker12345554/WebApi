@@ -21,7 +21,7 @@ public interface CallDao {
 
     int updateCancelRecord(@Param("callToken")String callToken,@Param("type")String type,@Param("timestamp")String timestamp);
 
-
+    int updateUrlRecord(@Param("callToke")String callToken,@Param("serverUrl")String serverUrl,@Param("roomCode")String roomCode);
 
 
 

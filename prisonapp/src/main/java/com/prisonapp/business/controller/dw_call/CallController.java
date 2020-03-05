@@ -2,6 +2,7 @@ package com.prisonapp.business.controller.dw_call;
 
 
 import com.common.common.result.ResultSet;
+import com.prisonapp.business.entity.dw_call.AcceptModel;
 import com.prisonapp.business.entity.dw_call.CallModel;
 import com.prisonapp.business.entity.dw_call.CancelModel;
 import com.prisonapp.business.entity.dw_call.TSendphone;
@@ -98,6 +99,31 @@ public class CallController {
     }
 
 
+    @ApiOperation(value = " 同意接收通话")
+    @PostMapping("/acceptCall")
+    public ResultSet acceptCall(@ApiParam(name = "callToken",value = "通话标识")@RequestParam(required = true) String callToken) {
+        ResultSet resultSet = new ResultSet();
+        TSendphone tSendphone = callService.getPhoneInformation(callToken);
+        if (tSendphone.getCanceltype() == null || tSendphone.getCanceltype().equals("")) {
+            String roomCode = "room";
+            String serverUrl = "https://112.74.41.177";
+            Date date = new Date();
+            Random random = new Random();
+            for (int i = 0; i < 10; i++) {
+                roomCode += String.valueOf(random.nextInt(10));
+            }
+            int updateUrl = callService.updateUrlRecord(callToken, serverUrl, roomCode);
+            AcceptModel acceptModel = new AcceptModel();
+            acceptModel.setServerUrl(serverUrl);
+            acceptModel.setRoomCode(roomCode);
+            acceptModel.setType(tSendphone.getCalltype());
+            resultSet.resultCode = 0;
+            resultSet.resultMsg = "";
+            resultSet.data = acceptModel;
+        }
+
+        return resultSet;
+    }
 
 
     public  String getPersonId(){
