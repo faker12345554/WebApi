@@ -206,8 +206,8 @@ import sun.misc.BASE64Encoder;
 
         public static String faceCompared (String faceUrlOne,String faceUrlTow )throws Exception {
             //  发送POST请求示例
-            String ak_id = "LTAI4FcMHmZFa8cT5rUhThan"; //用户ak
-            String ak_secret = "rYp7q8nx1vTGVdzRK4fARmWgK22r1S"; // 用户ak_secret
+            String ak_id = ""; //用户ak
+            String ak_secret = ""; // 用户ak_secret
             String url = "https://dtplus-cn-shanghai.data.aliyuncs.com/face/verify";
 //            String body1 = "{\"type\":0,\n" +
 //                    "\"image_url_1\":\"http://file02.16sucai.com/d/file/2014/0829/372edfeb74c3119b666237bd4af92be5.jpg\",\n" +
