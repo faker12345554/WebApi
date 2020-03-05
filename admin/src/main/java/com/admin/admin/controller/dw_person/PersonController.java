@@ -97,7 +97,7 @@ public class PersonController {
         result.setMessage("变更成功");
         return result.setData(persoinfoService.updateSponsor(Name, id, PersonId));
     }
-   // @UserLoginToken
+    @UserLoginToken
     @ApiOperation("配置管理方式")
     @PostMapping("/insertprison")
     public ResponseResult insertprison(@RequestBody List<TPrisonsetting> List) {
