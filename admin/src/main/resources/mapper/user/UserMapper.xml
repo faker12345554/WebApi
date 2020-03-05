@@ -97,7 +97,7 @@
     </update>
 
     <select id="login" resultType="com.admin.admin.entity.dw_user.User" parameterType="String">
-        select * from t_user where accountname=#{UserName} and password=#{Password}
+        select t.*,f.zw as RoleName ,f.bmbm as PoliceCode from t_user as t left join fsga_yw_ryb as f on f.mjbh=t.accountname where accountname=#{UserName} and password=#{Password} and usersystem=1
     </select>
 
     <select id="getmenuid" parameterType="int" resultType="com.admin.admin.entity.dw_userrole.UserRole">
