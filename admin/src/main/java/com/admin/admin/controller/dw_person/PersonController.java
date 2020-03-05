@@ -97,24 +97,19 @@ public class PersonController {
         result.setMessage("变更成功");
         return result.setData(persoinfoService.updateSponsor(Name, id, PersonId));
     }
-    @UserLoginToken
+    //@UserLoginToken
     @ApiOperation("配置管理方式")
     @PostMapping("/insertprison")
     public ResponseResult insertprison(@RequestBody List<TPrisonsetting> List) {
 
         for (TPrisonsetting item : List) {
-            if (item.isSettingcheck()==false){
-                item.setSettingcheck(false);
-                result.setCode(ResultCode.SUCCESS.getCode());
-                result.setMessage("配置成功");
-                return result.setData(persoinfoService.delconfig(item));
-            }else {
-                if (persoinfoService.Getprison(item.getPersonid(), item.getSettingname()) >= 1) {
-                  continue;
-                }
+            if (persoinfoService.Getprison(item.getPersonid(), item.getSettingname()) ==0){
                 item.setSettingcheck(true);
                 item.setSettingtime(new Date());
                 persoinfoService.insertprison(item);
+            } else  {
+              persoinfoService.delconfig(item);
+
             }
         }
         result.setCode(ResultCode.SUCCESS.getCode());
