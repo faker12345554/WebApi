@@ -22,6 +22,8 @@ public class User {
     private String department;
     private String personid;
     private String mailbox;
+    private String bmmc;
+
 
     public String getCreatetime() {
         return createtime;
@@ -260,5 +262,13 @@ public class User {
 
     public void setDepartmentnum(String departmentnum) {
         this.departmentnum = departmentnum;
+    }
+
+    public String getBmmc() {
+        return bmmc;
+    }
+
+    public void setBmmc(String bmmc) {
+        this.bmmc = bmmc;
     }
 }
