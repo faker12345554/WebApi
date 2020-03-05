@@ -103,18 +103,13 @@ public class PersonController {
     public ResponseResult insertprison(@RequestBody List<TPrisonsetting> List) {
 
         for (TPrisonsetting item : List) {
-            if (item.isSettingcheck()==false){
-                item.setSettingcheck(false);
-                result.setCode(ResultCode.SUCCESS.getCode());
-                result.setMessage("配置成功");
-                return result.setData(persoinfoService.delconfig(item));
-            }else {
-                if (persoinfoService.Getprison(item.getPersonid(), item.getSettingname()) >= 1) {
-                  continue;
-                }
+            if (persoinfoService.Getprison(item.getPersonid(), item.getSettingname()) ==0){
                 item.setSettingcheck(true);
                 item.setSettingtime(new Date());
                 persoinfoService.insertprison(item);
+            } else  {
+              persoinfoService.delconfig(item);
+
             }
         }
         result.setCode(ResultCode.SUCCESS.getCode());
