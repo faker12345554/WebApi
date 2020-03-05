@@ -41,7 +41,7 @@
 
     <insert id="insertprison" parameterType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting"
             useGeneratedKeys="true" keyProperty="id">
-        insert into t_prisonsetting(personid, settingname, settingcheck, settingtime) values(#{data.personid},#{data.settingname},#{data.settingcheck},#{data.settingtime})
+        insert into t_prisonsetting(personid, settingname, settingcheck, settingtime,settingcode) values(#{data.personid},#{data.settingname},#{data.settingcheck},#{data.settingtime},#{data.settingcode})
     </insert>
 
     <update id="delconfig" parameterType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting" >
