@@ -24,7 +24,7 @@
     </select>
 
     <select id="officephone" resultType="com.prisonapp.business.entity.dw_user.UserModel">
-    select * from t_user where accountname =#{sponsoralarm} and t_user.usersystem=1
+    select * from t_user where accountname =#{sponsoralarm} and t_user.usersystem=2
     </select>
 
     <select id="modifyPassword" resultType="com.prisonapp.business.entity.dw_user.UserModel">
