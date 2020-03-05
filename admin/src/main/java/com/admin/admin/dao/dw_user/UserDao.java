@@ -16,6 +16,8 @@ public interface UserDao {
     int saveUser(@Param("user") User user);
     //修改用户
     int updateUser(@Param("user") User user);
+    //修改用户不包括密码
+    int updateUserPassword(@Param("user") User user);
     //删除
     int deleteUser(@Param("flag") boolean flag, @Param("UserName") String UserName);
     //登录

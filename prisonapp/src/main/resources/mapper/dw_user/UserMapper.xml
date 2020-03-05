@@ -3,11 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.prisonapp.business.dao.dw_user.UserDao">
     <select id="login" resultType="com.prisonapp.business.entity.dw_user.UserModel" parameterType="String">
-        select * from t_user where accountname=#{userName}
+        select * from t_user where accountname=#{userName} and usersystem =3
     </select>
 
     <select id="getUserid" parameterType="String" resultType="com.prisonapp.business.entity.dw_user.UserModel">
-        select id from t_user where phone =#{account};
+        select id from t_user where phone =#{account} and usersystem =3
     </select>
 
     <insert id="insertLoginRecord" >
