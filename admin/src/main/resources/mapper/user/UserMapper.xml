@@ -69,7 +69,7 @@
     </select>
 
     <select id="GetUserByid" parameterType="int" resultType="com.admin.admin.entity.dw_user.User">
-        SELECT * FROM "t_user" where id=#{Id}
+        select t.*,f.zw as RoleName ,f.bmbm as PoliceCode from t_user as t left join fsga_yw_ryb as f on f.mjbh=t.accountname where id=#{Id}
     </select>
 
     <insert id="saveUser" parameterType="com.admin.admin.entity.dw_user.User">

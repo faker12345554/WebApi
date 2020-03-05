@@ -42,7 +42,7 @@ public class LeaveController {
 
     private ResponseResult result = new ResponseResult();
 
-   // @UserLoginToken
+    @UserLoginToken
     @ApiOperation(value = "获取全部请假信息")
     @PostMapping("/listLeave")
     public ResponseResult listLeave(@RequestBody SearchModel searchModel) {

@@ -49,7 +49,7 @@
     </update>
 
     <select id="Getprison" parameterType="String" resultType="int">
-        select count(*) from t_prisonsetting where personid=#{personId} and settingname=#{settingname}
+        select count(*) from t_prisonsetting where personid=#{personId} and settingname=#{settingname} and settingcheck=true
     </select>
 
     <select id="ListPerson"

@@ -16,9 +16,17 @@
           to_date(to_char(messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd') and to_date(to_char(messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd')
           GROUP BY personid
         </if>
-        <if test="">
+        <if test="level==2">
 
         </if>
 
     </select>
+    <select id="getNotout" resultType="int" >
+        SELECT count (DISTINCT personid) from t_personinformation where bailoutbegindate&lt;= now() and now()&lt;= bailoutenddate
+        and sponsoralarm in (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Code},'%')) and personid not in
+        (SELECT DISTINCT  personid FROM t_personmessage where to_date(to_char(messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd')
+        and to_date(to_char(messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd') )
+    </select>
+
+
 </mapper>
