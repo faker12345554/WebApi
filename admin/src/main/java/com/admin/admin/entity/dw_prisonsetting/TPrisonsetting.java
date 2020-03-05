@@ -10,8 +10,16 @@ public class TPrisonsetting {
   private String settingname;
   private boolean settingcheck;
   private Date settingtime;
+  private int settingcode;
 
+  public int getSettingcode() {
+    return settingcode;
+  }
 
+  public TPrisonsetting setSettingcode(int settingcode) {
+    this.settingcode = settingcode;
+    return this;
+  }
 
   public boolean isSettingcheck() {
     return settingcheck;
