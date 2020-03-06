@@ -15,4 +15,6 @@ public interface RuleStatistics {
 
     //获得正常的人数
     int getNotout(@Param("Code") String Code,@Param("StartTime") String StartTime, @Param("EndTime") String EndTime);
+
+
 }

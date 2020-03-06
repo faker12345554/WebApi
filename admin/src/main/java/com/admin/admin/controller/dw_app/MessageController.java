@@ -25,12 +25,13 @@ public class MessageController {
     @Autowired
     private Tasking tasking;
 
-    private ResponseResult result = new ResponseResult();
+
     //  private TokenUtil tokenUtil =new TokenUtil();
 
 
     @GetMapping("/Get")
     public ResponseResult getNotificationList(String UserId) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return  result.setData(messageService.getNotificationList(UserId));

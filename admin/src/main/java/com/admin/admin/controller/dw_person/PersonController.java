@@ -37,7 +37,7 @@ public class PersonController {
     @Autowired
     private PersoinfoService persoinfoService;//
 
-    private ResponseResult result = new ResponseResult();
+
 
 
     //新增
@@ -45,6 +45,7 @@ public class PersonController {
     @ApiOperation("新增人员信息")
     @PostMapping("/insertPersion")
     public ResponseResult insertPersion(@RequestBody Personinformation personinformation) {
+        ResponseResult result = new ResponseResult();
         if (persoinfoService.getPersonByCard(personinformation.getCard()) > 1) {
             result.setCode(ResultCode.DATA_DUPLICATION.getCode());
             result.setMessage(ResultCode.DATA_DUPLICATION.getMessage());
@@ -60,6 +61,7 @@ public class PersonController {
     @ApiOperation("修改人员信息")
     @PostMapping("/updatePersion")
     public ResponseResult updatePersion(@RequestBody Personinformation personinformation, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(persoinfoService.updatePersion(personinformation));
@@ -70,6 +72,7 @@ public class PersonController {
     @ApiOperation("删除人员信息")
     @GetMapping("/deletePersion")
     public ResponseResult deletePersion(@RequestParam boolean flag, @RequestParam String PersonId, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         if (flag == true) {
             result.setCode(ResultCode.DATA_DUPLICATION.getCode());
             result.setMessage(ResultCode.DATA_DUPLICATION.getMessage());
@@ -85,6 +88,7 @@ public class PersonController {
     @ApiOperation("获取人员信息")
     @GetMapping("/getPersoin")
     public ResponseResult getPersoin(@RequestParam String id, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(persoinfoService.getPersoin(id));
@@ -93,6 +97,7 @@ public class PersonController {
     @ApiOperation("变更主办人")
     @GetMapping("/updateSponsor")
     public ResponseResult updateSponsor(@RequestParam String Name, String id, String PersonId) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage("变更成功");
         return result.setData(persoinfoService.updateSponsor(Name, id, PersonId));
@@ -101,7 +106,7 @@ public class PersonController {
     @ApiOperation("配置管理方式")
     @PostMapping("/insertprison")
     public ResponseResult insertprison(@RequestBody List<TPrisonsetting> List) {
-
+        ResponseResult result = new ResponseResult();
         for (TPrisonsetting item : List) {
             if (persoinfoService.Getprison(item.getPersonid(), item.getSettingname()) ==0){
                 item.setSettingcheck(true);
@@ -133,7 +138,7 @@ public class PersonController {
     @ApiOperation("人员信息列表")
     @PostMapping("/ListPerson")
     public ResponseResult ListPerson(@RequestBody(required = false) SearchModel searchModel) throws Exception {
-
+        ResponseResult result = new ResponseResult();
 
         PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
         List<Personinformation> allitems = persoinfoService.ListPerson(searchModel);

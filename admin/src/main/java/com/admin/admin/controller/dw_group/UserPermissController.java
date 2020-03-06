@@ -22,12 +22,13 @@ public class UserPermissController {
     @Autowired
     private GroupService groupService;
 
-    private ResponseResult result = new ResponseResult();
+
 
     @UserLoginToken
     @ApiOperation("新增组信息")
     @PostMapping("/AddGroup")
     public ResponseResult saveGroup(@RequestBody UserPermissionGroup group, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
 
         if (groupService.selectByName(group.getPermissionname()) > 0) {
             result.setCode(ResultCode.DATA_DUPLICATION.getCode());
@@ -48,6 +49,7 @@ public class UserPermissController {
     @ApiOperation("修改组信息")
     @PostMapping("/UpdateGroup")
     public ResponseResult updateGroup(@RequestBody UserPermissionGroup group, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( groupService.updateGroup(group));
@@ -58,6 +60,7 @@ public class UserPermissController {
     @GetMapping("/DelGroup")
     public ResponseResult deleteGroup(@RequestParam boolean flag,
                                       @RequestParam int GroupId, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         if (flag != true) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
             result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
@@ -76,6 +79,7 @@ public class UserPermissController {
     @ApiOperation("获取组信息")
     @GetMapping("/GetGroup")
     public ResponseResult getGroup(@RequestParam int id, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( groupService.getGroup(id));
@@ -85,6 +89,7 @@ public class UserPermissController {
     @ApiOperation("权限组列表")
     @PostMapping("GetList")
     public ResponseResult listGroup(@RequestBody Condition condition, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
 
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
@@ -93,6 +98,7 @@ public class UserPermissController {
 
     @GetMapping("/Menutree")
     public ResponseResult GetMenuList(){
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( groupService.GetMenuList());
@@ -101,6 +107,7 @@ public class UserPermissController {
     @ApiOperation("获取角色名称")
     @GetMapping("/GetpermissionName")
     public ResponseResult GetpermissionName() {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( groupService.GetpermissionName());

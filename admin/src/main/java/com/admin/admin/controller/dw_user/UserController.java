@@ -34,7 +34,6 @@ public class UserController {
     @Autowired
     private TokenService tokenService;
 
-    private ResponseResult result = new ResponseResult();
 
 
     @UserLoginToken
@@ -42,6 +41,7 @@ public class UserController {
    // @PostMapping("/GetList")
     @PostMapping("/GetList")
     public ResponseResult<User> listUser(@RequestBody Usermodel usermodel) {
+        ResponseResult result = new ResponseResult();
         try {
             result.setCode(ResultCode.SUCCESS.getCode());
             result.setMessage(ResultCode.SUCCESS.getMessage());
@@ -60,6 +60,7 @@ public class UserController {
     @UserLoginToken
     @GetMapping("/GetUser")
     public ResponseResult getUser(@RequestParam(required = false) String UserName,@RequestParam(required = false) int usersystem, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( userService.getUser(UserName,usersystem));
@@ -70,6 +71,7 @@ public class UserController {
     @ApiOperation("新增用户")
     @PostMapping("/AddUser")
     public ResponseResult saveUser(@RequestBody User user, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         if (userService.GetUserByAccountName(user.getAccountname()) > 1) {
             result.setCode(ResultCode.DATA_DUPLICATION.getCode());
             result.setMessage(ResultCode.DATA_DUPLICATION.getMessage());
@@ -87,6 +89,7 @@ public class UserController {
     @ApiOperation("修改用户信息")
     @PostMapping("/UpdateUser")
     public ResponseResult updateUser(@RequestBody User user, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
        // int i = 0;
        // User user1 = userService.getUser(user.getAccountname());
         //List<UserRole> userRole =userService.getmenuid(user1.getPermissionid());
@@ -128,6 +131,7 @@ public class UserController {
     @ApiOperation("删除用户")
     @GetMapping("/DelUser")
     public ResponseResult deleteUser(@RequestParam boolean flag, @RequestParam String  UserName, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         if (flag != true) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
             result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
@@ -147,6 +151,7 @@ public class UserController {
     @GetMapping("/Login")
     public ResponseResult login(@RequestParam String UserName, @RequestParam String Password,
                                 HttpServletResponse response, HttpServletRequest request) {
+        ResponseResult result = new ResponseResult();
 //        String VerCode = String.valueOf(CacheUtils.get("验证码"));
 //        if (!VerCode.equals(Code)) {
 //            result.setCode(ResultCode.ILLEAGAL_STRING.getCode());

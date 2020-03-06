@@ -25,12 +25,13 @@ public class PictureReportController {
     @Autowired
     private PictureReportService pictureReportService;
 
-    private ResponseResult result=new ResponseResult();
+
 
     @UserLoginToken
     @ApiOperation(value = "人脸识别数据导入")
     @PostMapping("/postPictureReport")
     public ResponseResult postPictureReport(@RequestParam(required = true)String personid,@RequestParam(required = true)String facepath) throws IOException {
+        ResponseResult result = new ResponseResult();
         Personinformation personinformation=pictureReportService.checkPersonId(personid);
         if(personinformation!=null){
             File tempFile=new File(facepath.trim());
