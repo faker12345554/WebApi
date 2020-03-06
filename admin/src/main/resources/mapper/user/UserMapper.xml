@@ -3,50 +3,50 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_user.UserDao">
     <select id="listUser" parameterType="com.admin.admin.entity.dw_user.Usermodel" resultType="com.admin.admin.entity.dw_user.User">
-        SELECT * FROM "t_user"
+        SELECT * FROM "t_user" inner join fsga_yw_ryb on t_user.accountname=fsga_yw_ryb.mjbh
             <if test="usermodel.userName!=null">
-                where accountname=#{usermodel.userName}
+                where t_user.accountname=#{usermodel.userName}
             </if>
             <if test="usermodel.userName!=null and usermodel.phone!=null">
-                and phone=#{usermodel.phone}
+                and t_user.phone=#{usermodel.phone}
             </if>
             <if test="usermodel.userName==null and usermodel.phone!=null">
-                where phone=#{usermodel.phone}
+                where t_user.phone=#{usermodel.phone}
             </if>
             <if test="(usermodel.userName!=null or usermodel.phone!=null) and usermodel.status!=null">
                 <if test="usermodel.status.equals('正常')">
-                    and status=true
+                    and t_user.status=true
                 </if>
                 <if test="usermodel.status.equals('停用')==false">
-                    and status=false
+                    and t_user.status=false
                 </if>
             </if>
             <if test="usermodel.userName==null and usermodel.phone==null and usermodel.status!=null">
                 <if test="usermodel.status.equals('正常')">
-                    where status=true
+                    where t_user.status=true
                 </if>
                 <if test="usermodel.status.equals('停用')">
-                    where status=false
+                    where t_user.status=false
                 </if>
             </if>
 
             <if test="(usermodel.userName!=null or usermodel.phone!=null or usermodel.status!=null) and usermodel.startTime!=null">
-                and createtime >= #{usermodel.startTime}
+                and t_user.createtime >= #{usermodel.startTime}
             </if>
             <if test="(usermodel.userName==null and usermodel.phone==null and usermodel.status==null) and usermodel.startTime!=null">
-                where createtime >= #{usermodel.startTime}
+                where t_user.createtime >= #{usermodel.startTime}
             </if>
             <if test="(usermodel.userName!=null or usermodel.phone!=null or usermodel.status!=null or usermodel.startTime!=null) and usermodel.endTime !=null">
-                and createtime &lt;= #{usermodel.endTime}
+                and t_user.createtime &lt;= #{usermodel.endTime}
             </if>
             <if test="usermodel.userName==null and usermodel.phone==null and usermodel.status==null and usermodel.startTime==null and usermodel.endTime!=null">
-                where createtime &lt;= #{usermodel.endTime}
+                where t_user.createtime &lt;= #{usermodel.endTime}
             </if>
         <if test="usermodel.userName==null and usermodel.phone==null and usermodel.status==null and usermodel.startTime==null and usermodel.endTime==null and usermodel.userid.equals('admin')==false">
-            where createid = #{usermodel.id} or id = #{usermodel.id}
+            where t_user.createid = #{usermodel.id} or t_user.id = #{usermodel.id}
         </if>
         <if test="usermodel.userName!=null or usermodel.phone!=null or usermodel.status!=null or usermodel.startTime!=null or usermodel.endTime!=null and usermodel.userid.equals('admin')==false">
-            and createid = #{usermodel.id} or id = #{usermodel.id}
+            and t_user.createid = #{usermodel.id} or t_user.id = #{usermodel.id}
         </if>
     </select>
 
