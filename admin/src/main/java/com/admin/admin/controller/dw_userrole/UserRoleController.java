@@ -26,12 +26,12 @@ public class UserRoleController {
     private UserRoleService userRoleService;
 
 
-    private ResponseResult result = new ResponseResult();
 
     @UserLoginToken
     @ApiOperation("新增用户权限")
     @PostMapping("/AddUserRole")
     public ResponseResult saveUserRole(@RequestBody UserRole userRole, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(userRoleService.saveUserRole(userRole));
@@ -40,6 +40,7 @@ public class UserRoleController {
     @ApiOperation("修改用户权限")
     @PostMapping("/UpdateUserRole")
     public ResponseResult updateUserRole(@RequestBody UserRole userRole, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( userRoleService.updateUserRole(userRole));
@@ -48,6 +49,7 @@ public class UserRoleController {
     @ApiOperation("删除用户权限")
     @GetMapping("/DelUserRole")
     public ResponseResult deleteUserRole(@RequestParam boolean flag, @RequestParam int UserRoleId, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         if (flag != true) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
             result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
@@ -62,6 +64,7 @@ public class UserRoleController {
     @ApiOperation("菜单")
     @GetMapping("/GetList")
     public ResponseResult<Menu> listMenu(@RequestParam int UserId, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         if (userRoleService.listMenu(UserId).isEmpty()) {
             result.setCode(ResultCode.NULLDATA.getCode());
             result.setMessage(ResultCode.NULLDATA.getMessage());
@@ -75,6 +78,7 @@ public class UserRoleController {
     @ApiOperation("用户权限列表")
     @GetMapping("/GetRoleList")
     public ResponseResult<UserRoleModel> listUserRole(@RequestParam int id, int PageSize, int PageIndex, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(userRoleService.listUserRole(id, PageSize, PageIndex));

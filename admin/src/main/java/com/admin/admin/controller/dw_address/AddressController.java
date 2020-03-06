@@ -17,11 +17,11 @@ public class AddressController {
     @Autowired
     private AddressService addressService;
 
-    private ResponseResult result = new ResponseResult();
 
     @GetMapping("/getaddress")
     @ApiOperation("获取公安局的数据")
     public ResponseResult getAddress(String code,int level){
+        ResponseResult result = new ResponseResult();
         if (level==1) {
 
         }else if(level==2) {

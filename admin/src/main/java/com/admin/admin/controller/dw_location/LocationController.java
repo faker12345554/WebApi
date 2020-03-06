@@ -29,7 +29,7 @@ public class LocationController {
     @Autowired
     private LocationService locationService;
 
-    private ResponseResult result = new ResponseResult();
+
 
     /*
     定位信息列表
@@ -39,6 +39,7 @@ public class LocationController {
     @GetMapping("/LocationList")
     public ResponseResult listLocationModel(@RequestParam(required = false) String Condition, @RequestParam int PageSize, @RequestParam int PageIndex,
                                             HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
 
         PageBean pageBean = locationService.listLocationModel(Condition, PageSize, PageIndex);
         if (pageBean.getItems().size() == 0) {
@@ -55,7 +56,7 @@ public class LocationController {
     @ApiOperation("查看今日轨迹")
     @GetMapping("/TrackToday")
     public ResponseResult ListLocation(String PersonId, String date, HttpServletResponse response) {
-
+        ResponseResult result = new ResponseResult();
         List<Locationmation> todayList=locationService.ListLocation(PersonId, date);
         if (todayList.size() == 0) {
             result.setCode(ResultCode.NULLDATA.getCode());
@@ -74,6 +75,7 @@ public class LocationController {
     @ApiOperation("历史轨迹列表")
     @PostMapping("/HistoricalTrack")
     public ResponseResult HistoricalTrack(@RequestBody SearchModel searchModel, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
         PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
         List<Locationmation> allItems = locationService.HistoricalTrack(searchModel);
@@ -105,6 +107,7 @@ public class LocationController {
     @ApiOperation("查看定位信息")
     @GetMapping("/GetLocation")
     public ResponseResult GetLocation(@RequestParam int PersonId, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(locationService.GetLocation(PersonId));
@@ -114,6 +117,7 @@ public class LocationController {
     @ApiOperation("查看当前位置")
     @GetMapping("GetLocationByPerson")
     public ResponseResult GetLocationByPerson(@RequestParam String PersonId) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(locationService.GetLocationByPerson(PersonId));
@@ -124,6 +128,7 @@ public class LocationController {
     @ApiOperation("导出定位信息列表")
     @PostMapping("ExportLocation")
     public ResponseResult export(@RequestBody SearchModel searchModel) {
+        //ResponseResult result = new ResponseResult();
         ResponseResult rtn = new ResponseResult();
         List<Locationmation> allItems = locationService.HistoricalTrack(searchModel);
         try (HSSFWorkbook workbook = new HSSFWorkbook()) {
@@ -159,7 +164,7 @@ public class LocationController {
             });
             String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) + ".xls";
             File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);
-            result.setData(dateTime);
+            rtn.setData(dateTime);
             workbook.write(file);
         } catch (Exception ex) {
             ex.printStackTrace();

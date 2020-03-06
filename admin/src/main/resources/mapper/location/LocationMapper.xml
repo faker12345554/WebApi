@@ -37,7 +37,7 @@
     <select id="ListLocation" parameterType="String" resultType="com.admin.admin.entity.dw_location.Locationmation">
         SELECT * from t_location
         where personid=#{PersonId}
-        <if test="date !=null and date !=''">
+        <if test="date!=null and date !=''">
             and to_char(timestamp,'yyyy-mm-dd') like concat('%',#{date},'%')
         </if>
     </select>

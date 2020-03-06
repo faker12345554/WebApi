@@ -27,7 +27,7 @@ import java.util.List;
 public class EnumController {
     @Autowired
     private EnumService enumService;
-    private ResponseResult result = new ResponseResult();
+
 
     /**
      * @param Code
@@ -36,6 +36,7 @@ public class EnumController {
     @UserLoginToken
     @GetMapping("/GetEnum")
     public ResponseResult GetEnum(@RequestParam String Code) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(enumService.GetEnum(Code));
@@ -44,6 +45,7 @@ public class EnumController {
     @UserLoginToken
     @GetMapping("/GetPolice")
     public ResponseResult GetPolice(@RequestParam String PoliceStation) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(enumService.GetPolice(PoliceStation));
@@ -57,6 +59,7 @@ public class EnumController {
     @UserLoginToken
     @GetMapping("/ListMechanism")
     public ResponseResult ListMechanism() {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(enumService.ListMechanism());
@@ -66,6 +69,7 @@ public class EnumController {
     @UserLoginToken
     @GetMapping("/getEnum")
     public ResponseResult getEnum() {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(enumService.getEnum());
@@ -80,6 +84,7 @@ public class EnumController {
     @UserLoginToken
     @GetMapping("/ListSponsor")
     public ResponseResult ListSponsor(@RequestParam String Code) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(enumService.ListSponsor(Code));
@@ -93,6 +98,7 @@ public class EnumController {
                                   @ApiParam(name = "typeCode", value = "字典类型") @RequestParam(required = true) String typeCode,
                                   @ApiParam(name = "status", value = "状态") @RequestParam(required = true) boolean status,
                                   @ApiParam(name = "enumName", value = "备注") @RequestParam(required = true) String enumName) {
+        ResponseResult result = new ResponseResult();
         List<TEnum> listEnum = enumService.listEnum(typeCode);
         int enumCode = 1;
         if (listEnum.size() != 0) {
@@ -112,6 +118,7 @@ public class EnumController {
                                      @ApiParam(name = "typeCode", value = "字典类型") @RequestParam(required = true) String typeCode,
                                      @ApiParam(name = "status", value = "状态") @RequestParam(required = true) boolean status,
                                      @ApiParam(name = "enumName", value = "备注") @RequestParam(required = true) String enumName) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(enumService.updateEnum(enumId, typeName, typeCode, status, enumName));
@@ -121,6 +128,7 @@ public class EnumController {
     @PassToken
     @GetMapping("/deleteEnum")
     public ResponseResult deleteEnum(@ApiParam(name = "enumId", value = "字典编号") @RequestParam(required = true) String enumId) {
+        ResponseResult result = new ResponseResult();
         String[] a=enumId.split(",");
         for (String id:a
              ) {
@@ -145,6 +153,7 @@ public class EnumController {
     @PassToken
     @PostMapping("findEnum")
     public ResponseResult findEnum(@RequestBody(required = true) EnumSearchModel enumSearchModel) {
+        ResponseResult result = new ResponseResult();
         PageHelper.startPage(enumSearchModel.getPageIndex(), enumSearchModel.getPageSize());
         List<EnumModel> allItems = enumService.findEnum(enumSearchModel);
         try {
@@ -182,6 +191,7 @@ public class EnumController {
     @PassToken
     @GetMapping("/getOneEnum")
     public ResponseResult getOneEnum(@ApiParam(name = "enumId", value = "字典id") @RequestParam(required = true) int enumId) {
+        ResponseResult result = new ResponseResult();
         EnumModel enumModel = enumService.getOneEnum(enumId);
         try {
             if (enumModel == null) {

@@ -33,12 +33,13 @@ import java.util.List;
 public class SinginController {
     @Autowired
     private SinginService singinService;
-    private ResponseResult result = new ResponseResult();
+
 
     @UserLoginToken
     @ApiOperation("查看签到信息")
     @GetMapping("/getSingin")
     public ResponseResult getSingin(@RequestParam int Id, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(singinService.getSingin(Id));
@@ -47,6 +48,7 @@ public class SinginController {
     @ApiOperation("签到信息列表")
     @PostMapping("/ListSingin")
     public ResponseResult ListSingin(@RequestBody SearchModel searchModel){
+        ResponseResult result = new ResponseResult();
         try {
             PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
             List<SinginModel> allItems = singinService.ListSingin(searchModel);
@@ -79,6 +81,7 @@ public class SinginController {
     @ApiOperation("音视频列表")
     @PostMapping("/ListAudio")
     public ResponseResult ListAudio(@RequestBody SearchModel searchModel){
+        ResponseResult result = new ResponseResult();
         try {
             PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
             List<SinginModel> allItems = singinService.ListAudio(searchModel);
@@ -111,6 +114,7 @@ public class SinginController {
     @ApiOperation("导出音视频信息")
     @PostMapping("ExportAudio")
     public ResponseResult ExportAudio(@RequestBody SearchModel searchModel){
+        ResponseResult result = new ResponseResult();
         List<SinginModel> allItems = singinService.ListAudio(searchModel);
         String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) +"音视频信息"+ ".xls";
         File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);
@@ -163,6 +167,7 @@ public class SinginController {
     @ApiOperation("导出签到信息")
     @PostMapping("ExportSingIn")
     public ResponseResult ExportSingIn(@RequestBody SearchModel searchModel){
+        ResponseResult result = new ResponseResult();
         List<SinginModel> allItems = singinService.ListSingin(searchModel);
         String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) +"签到信息"+ ".xls";
         File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);

@@ -20,11 +20,11 @@ public class MeunController {
     @Autowired
     private meunService meunService;
 
-    private ResponseResult result = new ResponseResult();
 
     @UserLoginToken
     @GetMapping("/GetMeun")
     public ResponseResult GetMenuList(@RequestParam int PageSize, int PageIndex, HttpServletResponse response){
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(meunService.GetMenuList( PageSize, PageIndex));
@@ -33,6 +33,7 @@ public class MeunController {
     @UserLoginToken
     @GetMapping("/delMeun")
     public ResponseResult delMeun(@RequestParam boolean flag,@RequestParam int id){
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(meunService.delMeun(!flag,id));
@@ -40,6 +41,7 @@ public class MeunController {
     @UserLoginToken
     @GetMapping("/GetMeunbyid")
     public ResponseResult GetMeunbyid(@RequestParam int id){
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(meunService.GetMeunbyid(id));
