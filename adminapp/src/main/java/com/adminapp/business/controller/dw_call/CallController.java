@@ -18,11 +18,9 @@ import io.swagger.annotations.ApiParam;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -48,14 +46,18 @@ public class CallController {
         if(personAllInformationModel.getSponsoralarm().equals(userId)) {
             SendphoneInformation sendphoneInformation=callService.checkOnline(code);    //判断是否正在通话
             UserModel userModel=callService.getUserInformation(userId);   //获取该工作人员信息
+            Date date = new Date();
+            String timeStamp = String.valueOf(date.getTime());
+            Date time=new Date(sendphoneInformation.getCreatetime().getTime());
+            Calendar cal1=new GregorianCalendar();
+            cal1.setTime(time);
+            cal1.add(Calendar.MINUTE,2);
             if(sendphoneInformation==null) {
                 String callToken = "TH";
                 Random random = new Random();
                 for (int i = 0; i < 20; i++) {
                     callToken += String.valueOf(random.nextInt(10));
                 }
-                Date date = new Date();
-                String timeStamp = String.valueOf(date.getTime());
                 //插入通话记录
                 int insertRecord=callService.insertRecord(userModel.getAliasname(),callToken,timeStamp,personAllInformationModel.getPersonname(),type,personAllInformationModel.getPersonid(),userId);
                 requestCallReturnModel.setCallToken(callToken);
@@ -69,7 +71,7 @@ public class CallController {
                 //请求通话推送
                 Calendar cal=new GregorianCalendar();
                 cal.setTime(date);
-                cal.add(Calendar.DATE,1);
+                cal.add(Calendar.MINUTE,5);
                 JSONObject object=new JSONObject();
                 object.put("callName",userModel.getAliasname());
                 object.put("callToken",callToken);
@@ -79,9 +81,82 @@ public class CallController {
                 String pushType="PushRequestCall";
                 callService.sendRequestCallCast(cal.getTime(),object,code,"ReleaseBailCode",timeStamp,descriptions,pushType);
             }else {
-                rs.resultCode=21;
-                rs.resultMsg="对方正在通话";
-                rs.data=null;
+                if(sendphoneInformation.getRoomcode()==null){   //没有同意通话
+                    if(cal1.getTime().compareTo(date)<0){    //判断创建时间有没有超过两分钟，超过置为挂起，发起新通话
+                        int updateCancelRecord=callService.updateCancelRecord(sendphoneInformation.getCalltoken(),"4",timeStamp);
+                        String callToken = "TH";
+                        Random random = new Random();
+                        for (int i = 0; i < 20; i++) {
+                            callToken += String.valueOf(random.nextInt(10));
+                        }
+                        //插入通话记录
+                        int insertRecord=callService.insertRecord(userModel.getAliasname(),callToken,timeStamp,personAllInformationModel.getPersonname(),type,personAllInformationModel.getPersonid(),userId);
+                        requestCallReturnModel.setCallToken(callToken);
+                        requestCallReturnModel.setCallTimestamp(timeStamp);
+                        requestCallReturnModel.setCallName(personAllInformationModel.getPersonname());
+                        requestCallReturnModel.setCallHeadUrl(personAllInformationModel.getFacepath());
+                        rs.resultCode = 0;
+                        rs.resultMsg = "";
+                        rs.data = requestCallReturnModel;
+
+                        //请求通话推送
+                        Calendar cal=new GregorianCalendar();
+                        cal.setTime(date);
+                        cal.add(Calendar.MINUTE,5);
+                        JSONObject object=new JSONObject();
+                        object.put("callName",userModel.getAliasname());
+                        object.put("callToken",callToken);
+                        object.put("type",type);
+                        object.put("callTimestamp",timeStamp);
+                        String descriptions="保外端请求通话推送";
+                        String pushType="PushRequestCall";
+                        callService.sendRequestCallCast(cal.getTime(),object,code,"ReleaseBailCode",timeStamp,descriptions,pushType);
+                    }else {
+                        rs.resultCode = 21;
+                        rs.resultMsg = "对方正在通话";
+                        rs.data = null;
+                    }
+                }
+                else{
+                    Calendar cal2=new GregorianCalendar();
+                    cal2.setTime(sendphoneInformation.getAgreecalltimestamp());
+                    cal2.add(Calendar.MINUTE,5);
+                    if(cal2.getTime().compareTo(date)<0){
+                        int updateCancelRecord=callService.updateCancelRecord(sendphoneInformation.getCalltoken(),"4",timeStamp);
+                        String callToken = "TH";
+                        Random random = new Random();
+                        for (int i = 0; i < 20; i++) {
+                            callToken += String.valueOf(random.nextInt(10));
+                        }
+                        //插入通话记录
+                        int insertRecord=callService.insertRecord(userModel.getAliasname(),callToken,timeStamp,personAllInformationModel.getPersonname(),type,personAllInformationModel.getPersonid(),userId);
+                        requestCallReturnModel.setCallToken(callToken);
+                        requestCallReturnModel.setCallTimestamp(timeStamp);
+                        requestCallReturnModel.setCallName(personAllInformationModel.getPersonname());
+                        requestCallReturnModel.setCallHeadUrl(personAllInformationModel.getFacepath());
+                        rs.resultCode = 0;
+                        rs.resultMsg = "";
+                        rs.data = requestCallReturnModel;
+
+                        //请求通话推送
+                        Calendar cal=new GregorianCalendar();
+                        cal.setTime(date);
+                        cal.add(Calendar.MINUTE,5);
+                        JSONObject object=new JSONObject();
+                        object.put("callName",userModel.getAliasname());
+                        object.put("callToken",callToken);
+                        object.put("type",type);
+                        object.put("callTimestamp",timeStamp);
+                        String descriptions="保外端请求通话推送";
+                        String pushType="PushRequestCall";
+                        callService.sendRequestCallCast(cal.getTime(),object,code,"ReleaseBailCode",timeStamp,descriptions,pushType);
+                    }
+                    else{
+                        rs.resultCode = 21;
+                        rs.resultMsg = "对方正在通话";
+                        rs.data = null;
+                    }
+                }
             }
         }else{
             rs.resultCode=1;
@@ -147,7 +222,7 @@ public class CallController {
             for (int i = 0; i < 10; i++) {
                 roomCode += String.valueOf(random.nextInt(10));
             }
-            int updateUrl = callService.updateUrlRecord(callToken, serverUrl, roomCode);
+            int updateUrl = callService.updateUrlRecord(callToken, serverUrl, roomCode,date);
             AcceptCallModel acceptCallModel = new AcceptCallModel();
             acceptCallModel.setServerUrl(serverUrl);
             acceptCallModel.setRoomCode(roomCode);
@@ -170,7 +245,7 @@ public class CallController {
             String pushType="PushStartCall";
             callService.sendRequestCallCast(cal.getTime(),object,sendphoneInformation.getPersonid(),"ReleaseBailCode",timestamp,descriptions,pushType);
         }else{
-            rs.resultCode=1;
+            rs.resultCode=22;
             rs.resultMsg="该通话已挂断";
             rs.data=null;
         }
