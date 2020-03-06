@@ -19,6 +19,10 @@
         VALUES (#{callToken},#{timeStamp},Current_timestamp,#{type},#{callname},#{sendname},#{personid},#{accountname})
     </insert>
 
+    <update id="updateHangUp">
+        update t_sendphone set calltype ="4" where calltoken=#{callToken}
+    </update>
+
     <select id="getPhoneInformation" resultType="com.prisonapp.business.entity.dw_call.TSendphone">
         select * from t_sendphone where calltoken=#{callToken}
     </select>
@@ -28,7 +32,7 @@
     </update>
 
     <update id="updateUrlRecord">
-        update t_sendphone set serverurl=#{serverUrl},roomCode=#{roomCode} where calltoken=#{callToke}
+        update t_sendphone set serverurl=#{serverUrl},roomCode=#{roomCode},agreecalltimestamp=current_timestamp where calltoken=#{callToke}
     </update>
 
     <select id="RelatedId" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation" parameterType="String">

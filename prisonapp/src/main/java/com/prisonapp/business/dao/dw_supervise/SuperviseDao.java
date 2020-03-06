@@ -53,7 +53,7 @@ public interface SuperviseDao {
 
     int uploadBattery(float percent,String userId,Date date);
 
-    int batteryAlarm(String userId,String content);
+    int batteryAlarm(@Param("userId")String userId,@Param("content")String content);
 
     TPrisonsetting getLocationConfig( String personid,int settingcode);
 

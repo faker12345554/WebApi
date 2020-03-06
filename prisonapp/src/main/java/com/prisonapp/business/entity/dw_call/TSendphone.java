@@ -1,6 +1,8 @@
 package com.prisonapp.business.entity.dw_call;
 
 
+import java.sql.Timestamp;
+
 public class TSendphone {
 
   private long id;
@@ -16,6 +18,7 @@ public class TSendphone {
   private String sendname;
   private String personid;
   private String accountname;
+  private java.sql.Timestamp agreecalltimestamp;
 
 
   public long getId() {
@@ -134,4 +137,11 @@ public class TSendphone {
     this.accountname = accountname;
   }
 
+  public java.sql.Timestamp getAgreecalltimestamp() {
+    return agreecalltimestamp;
+  }
+
+  public void setAgreecalltimestamp(java.sql.Timestamp agreecalltimestamp) {
+    this.agreecalltimestamp = agreecalltimestamp;
+  }
 }

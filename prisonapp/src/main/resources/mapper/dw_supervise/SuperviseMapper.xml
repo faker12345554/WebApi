@@ -94,9 +94,9 @@
 
     <insert id="batteryAlarm">
         insert into t_personmessage (modular,personid,modularname,messagetime,readmessage,detailtype,detailtypename,content)
-        values                (2,#{userId},'报警提醒',current_timestamp,'f',1,'低电量报警通知','电池电量不足，仅剩20%的电量！')
+        values                (2,#{userId},'报警提醒',current_timestamp,'f',1,'低电量报警通知','电池电量不足，仅剩20%的电量！');
         insert into t_message (modular, content,personid,modularname,messagetime,readmessage,detailtype,detailtypename)
-        values                (2,#{workContent},#{userId},'报警提醒',current_timestamp,'f',3,'低电量报警通知')
+        values                (2,#{content},#{userId},'报警提醒',current_timestamp,'f',3,'低电量报警通知')
     </insert>
 
     <select id="getLocationConfig" resultType="com.prisonapp.business.entity.dw_supervise.TPrisonsetting">
