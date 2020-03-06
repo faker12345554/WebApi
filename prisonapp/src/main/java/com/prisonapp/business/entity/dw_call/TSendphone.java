@@ -137,11 +137,11 @@ public class TSendphone {
     this.accountname = accountname;
   }
 
-  public Timestamp getAgreecalltimestamp() {
+  public java.sql.Timestamp getAgreecalltimestamp() {
     return agreecalltimestamp;
   }
 
-  public void setAgreecalltimestamp(Timestamp agreecalltimestamp) {
+  public void setAgreecalltimestamp(java.sql.Timestamp agreecalltimestamp) {
     this.agreecalltimestamp = agreecalltimestamp;
   }
 }
