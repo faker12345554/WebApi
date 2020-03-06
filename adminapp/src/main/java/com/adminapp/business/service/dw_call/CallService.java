@@ -45,8 +45,8 @@ public class CallService {
     }
 
     //更新通话地址和房间号
-    public int updateUrlRecord(String callToken,String serverUrl,String roomCode){
-        return callDao.updateUrlRecord(callToken, serverUrl, roomCode);
+    public int updateUrlRecord(String callToken,String serverUrl,String roomCode,Date date){
+        return callDao.updateUrlRecord(callToken, serverUrl, roomCode,date);
     }
 
     //请求通话推送
