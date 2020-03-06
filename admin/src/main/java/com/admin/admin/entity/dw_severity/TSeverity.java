@@ -8,6 +8,17 @@ public class TSeverity {
   private String datetimes;
   private String severity;
 
+  public int getSignbool() {
+    return signbool;
+  }
+
+  public TSeverity setSignbool(int signbool) {
+    this.signbool = signbool;
+    return this;
+  }
+
+  private int signbool;
+
 
   public String getPersonid() {
     return personid;

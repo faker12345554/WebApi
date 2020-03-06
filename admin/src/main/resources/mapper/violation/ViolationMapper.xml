@@ -37,5 +37,13 @@
         select * from t_violationfens where violationcode=#{code}  and enabled=false
     </select>
 
+    <select id="Execution">
+        <![CDATA[
+           select severity(
+              #{a1,mode=IN,jdbcType=VARCHAR}
+              )
+       ]]>
+    </select>
+
 
 </mapper>
