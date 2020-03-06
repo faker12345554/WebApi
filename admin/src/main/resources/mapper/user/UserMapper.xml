@@ -2,46 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_user.UserDao">
-    <select id="listUser" parameterType="com.admin.admin.entity.dw_user.Usermodel" resultType="com.admin.admin.entity.dw_user.User">
+    <select id="listUser" parameterType="com.admin.admin.entity.dw_user.Usermodel"
+            resultType="com.admin.admin.entity.dw_user.User">
         SELECT * FROM "t_user"
-            <if test="usermodel.userName!=null">
-                where accountname=#{usermodel.userName}
+        <if test="usermodel.userName!=null">
+            where accountname=#{usermodel.userName}
+        </if>
+        <if test="usermodel.userName!=null and usermodel.phone!=null">
+            and phone=#{usermodel.phone}
+        </if>
+        <if test="usermodel.userName==null and usermodel.phone!=null">
+            where phone=#{usermodel.phone}
+        </if>
+        <if test="(usermodel.userName!=null or usermodel.phone!=null) and usermodel.status!=null">
+            <if test="usermodel.status.equals('正常')">
+                and status=true
             </if>
-            <if test="usermodel.userName!=null and usermodel.phone!=null">
-                and phone=#{usermodel.phone}
+            <if test="usermodel.status.equals('停用')==false">
+                and status=false
             </if>
-            <if test="usermodel.userName==null and usermodel.phone!=null">
-                where phone=#{usermodel.phone}
+        </if>
+        <if test="usermodel.userName==null and usermodel.phone==null and usermodel.status!=null">
+            <if test="usermodel.status.equals('正常')">
+                where status=true
             </if>
-            <if test="(usermodel.userName!=null or usermodel.phone!=null) and usermodel.status!=null">
-                <if test="usermodel.status.equals('正常')">
-                    and status=true
-                </if>
-                <if test="usermodel.status.equals('停用')==false">
-                    and status=false
-                </if>
+            <if test="usermodel.status.equals('停用')">
+                where status=false
             </if>
-            <if test="usermodel.userName==null and usermodel.phone==null and usermodel.status!=null">
-                <if test="usermodel.status.equals('正常')">
-                    where status=true
-                </if>
-                <if test="usermodel.status.equals('停用')">
-                    where status=false
-                </if>
-            </if>
+        </if>
 
-            <if test="(usermodel.userName!=null or usermodel.phone!=null or usermodel.status!=null) and usermodel.startTime!=null">
-                and createtime >= #{usermodel.startTime}
-            </if>
-            <if test="(usermodel.userName==null and usermodel.phone==null and usermodel.status==null) and usermodel.startTime!=null">
-                where createtime >= #{usermodel.startTime}
-            </if>
-            <if test="(usermodel.userName!=null or usermodel.phone!=null or usermodel.status!=null or usermodel.startTime!=null) and usermodel.endTime !=null">
-                and createtime &lt;= #{usermodel.endTime}
-            </if>
-            <if test="usermodel.userName==null and usermodel.phone==null and usermodel.status==null and usermodel.startTime==null and usermodel.endTime!=null">
-                where createtime &lt;= #{usermodel.endTime}
-            </if>
+        <if test="(usermodel.userName!=null or usermodel.phone!=null or usermodel.status!=null) and usermodel.startTime!=null">
+            and createtime >= #{usermodel.startTime}
+        </if>
+        <if test="(usermodel.userName==null and usermodel.phone==null and usermodel.status==null) and usermodel.startTime!=null">
+            where createtime >= #{usermodel.startTime}
+        </if>
+        <if test="(usermodel.userName!=null or usermodel.phone!=null or usermodel.status!=null or usermodel.startTime!=null) and usermodel.endTime !=null">
+            and createtime &lt;= #{usermodel.endTime}
+        </if>
+        <if test="usermodel.userName==null and usermodel.phone==null and usermodel.status==null and usermodel.startTime==null and usermodel.endTime!=null">
+            where createtime &lt;= #{usermodel.endTime}
+        </if>
         <if test="usermodel.userName==null and usermodel.phone==null and usermodel.status==null and usermodel.startTime==null and usermodel.endTime==null and usermodel.userid.equals('admin')==false">
             where createid = #{usermodel.id} or id = #{usermodel.id}
         </if>
@@ -52,15 +53,18 @@
 
 
     <select id="getUser" parameterType="String" resultType="com.admin.admin.entity.dw_user.User">
-        SELECT * FROM "t_user"
-        <if test="usersystem==1 or usersystem==null">
-            inner join fsga_yw_ryb on t_user.accountname=fsga_yw_ryb.mjbh where accountname=#{UserName}
 
-    </if>
-    <if test="usersystem==2">
-          where accountname=#{UserName} and usersystem=2
-    </if>
+        <if test="usersystem==1 or usersystem==null">
+            SELECT t.* ,f.zw as RoleName ,f.bmbm as PoliceCode FROM "t_user" as t
+            inner join fsga_yw_ryb on t.accountname=fsga_yw_ryb.mjbh where accountname=#{UserName}
+
+        </if>
+        <if test="usersystem==2">
+            select * from "t_user"
+            where accountname=#{UserName} and usersystem=2
+        </if>
         <if test="usersystem==3">
+            select * from "t_user"
             where accountname=#{UserName} and usersystem=3
         </if>
     </select>
