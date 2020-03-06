@@ -37,20 +37,21 @@ public class CallController {
     public ResultSet requestCall(String type) throws Exception {//1 为语音通话，2 为视频通话
         ResultSet result = new ResultSet();
         CallModel callModel = new CallModel();
-
+        Date date = new Date();
+        String timeStamp = String.valueOf(date.getTime());
         //获取保外人员的信息，主要是取出相应的警员
         String personid =getPersonId();
         TPersoninformation tPersoninformation =callService.getPersoninformation(getPersonId());
         callService.makeCall(type);
-        TSendphone sendphone=callService.checkOnline(tPersoninformation.getSponsoralarm());    //根据警号判断是否正在通话
-        if(sendphone==null) {
+        TSendphone tsendphone=callService.checkOnline(tPersoninformation.getSponsoralarm());    //根据警号判断是否正在通话
+        //
+        if(tsendphone==null || tsendphone.getCanceltype().equals("")) {
             String callToken = "th";
             Random random = new Random();
             for (int i = 0; i < 20; i++) {
                 callToken += String.valueOf(random.nextInt(10));
             }
-            Date date = new Date();
-            String timeStamp = String.valueOf(date.getTime());
+
             //插入通话记录
             int insertRecord=callService.insertRecord(callToken,timeStamp,type,tPersoninformation.getSponsor(),tPersoninformation.getPersonname(),tPersoninformation.getPersonid(),tPersoninformation.getSponsoralarm());
             callModel.setCallToken(callToken);
@@ -72,7 +73,13 @@ public class CallController {
             String descriptions="管理端请求通话推送";
             String pushType="PushRequestCall";
             callService.sendRequestCallCast(cal.getTime(),object,tPersoninformation.getSponsoralarm(),"ReleaseAdminCode",timeStamp,descriptions,pushType);
-        }else {
+        }else if((tsendphone.getCalltype()==null && date.getTime()/1000-Integer.parseInt(tsendphone.getCalltimestamp())/1000>120)   | (tsendphone.getCalltype()==null  &&  date.getTime()/1000-tsendphone.getAgreecalltimestamp().getTime()/1000>300)){
+            callService.updateHangUp(tsendphone.getCalltoken());
+            result.resultCode=1;
+            result.resultMsg="由于上次通话异常，请重新发起";
+            result.data=null;
+        }
+        else {
             result.resultCode=21;
             result.resultMsg="对方正在通话";
             result.data=null;
@@ -88,7 +95,7 @@ public class CallController {
         ResultSet resultSet = new ResultSet();
         if(type.equals("1")||type.equals("2")){
             TSendphone tSendphone=callService.getPhoneInformation(callToken);
-            if(tSendphone.getCanceltype()==null){
+            if(tSendphone.getCanceltype()==null || tSendphone.getCanceltype().equals("")){
                 Date date=new Date();
                 String timestamp=String.valueOf(date.getTime());
                 int updateCancelRecord=callService.updateCancelRecord(callToken,type,timestamp);
@@ -132,6 +139,7 @@ public class CallController {
             String roomCode = "room";
             String serverUrl = "https://112.74.41.177";
             Date date = new Date();
+          //  String timestamp =String.valueOf(date.getTime());
             Random random = new Random();
             for (int i = 0; i < 10; i++) {
                 roomCode += String.valueOf(random.nextInt(10));
