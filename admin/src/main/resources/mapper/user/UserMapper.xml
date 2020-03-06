@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_user.UserDao">
     <select id="listUser" parameterType="com.admin.admin.entity.dw_user.Usermodel" resultType="com.admin.admin.entity.dw_user.User">
-        SELECT * FROM "t_user" inner join fsga_yw_ryb on t_user.accountname=fsga_yw_ryb.mjbh
+        SELECT * FROM "t_user" left join fsga_yw_ryb on t_user.accountname=fsga_yw_ryb.mjbh
             <if test="usermodel.userName!=null">
                 where t_user.accountname=#{usermodel.userName}
             </if>
