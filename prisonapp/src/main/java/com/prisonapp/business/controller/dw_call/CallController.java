@@ -37,20 +37,20 @@ public class CallController {
     public ResultSet requestCall(String type) throws Exception {//1 为语音通话，2 为视频通话
         ResultSet result = new ResultSet();
         CallModel callModel = new CallModel();
-
+        Date date = new Date();
+        String timeStamp = String.valueOf(date.getTime());
         //获取保外人员的信息，主要是取出相应的警员
         String personid =getPersonId();
         TPersoninformation tPersoninformation =callService.getPersoninformation(getPersonId());
         callService.makeCall(type);
         TSendphone sendphone=callService.checkOnline(tPersoninformation.getSponsoralarm());    //根据警号判断是否正在通话
-        if(sendphone==null) {
+        if(sendphone==null || (sendphone.getCalltype()==null && date.getTime()/1000-Integer.parseInt(sendphone.getCalltimestamp())/1000>120)) {
             String callToken = "th";
             Random random = new Random();
             for (int i = 0; i < 20; i++) {
                 callToken += String.valueOf(random.nextInt(10));
             }
-            Date date = new Date();
-            String timeStamp = String.valueOf(date.getTime());
+
             //插入通话记录
             int insertRecord=callService.insertRecord(callToken,timeStamp,type,tPersoninformation.getSponsor(),tPersoninformation.getPersonname(),tPersoninformation.getPersonid(),tPersoninformation.getSponsoralarm());
             callModel.setCallToken(callToken);
