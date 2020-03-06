@@ -29,7 +29,7 @@ public class Personinformation {
     private String founderid;
     private String foundertime;
     private String modifierid;
-    private Date modifiertime;
+    private String modifiertime;
     private String suspectstatus;
     private String marriage;
     private String policestation;
@@ -219,11 +219,11 @@ public class Personinformation {
         return this;
     }
 
-    public Date getModifiertime() {
+    public String getModifiertime() {
         return modifiertime;
     }
 
-    public Personinformation setModifiertime(Date modifiertime) {
+    public Personinformation setModifiertime(String modifiertime) {
         this.modifiertime = modifiertime;
         return this;
     }
