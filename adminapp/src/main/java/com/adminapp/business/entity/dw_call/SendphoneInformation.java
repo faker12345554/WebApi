@@ -1,6 +1,8 @@
 package com.adminapp.business.entity.dw_call;
 
 
+import java.sql.Timestamp;
+
 public class SendphoneInformation {
 
   private long id;
@@ -16,6 +18,7 @@ public class SendphoneInformation {
   private String sendname;
   private String personid;
   private String accountname;
+  private java.sql.Timestamp agreecalltimestamp;
 
 
   public long getId() {
@@ -134,4 +137,11 @@ public class SendphoneInformation {
     this.accountname = accountname;
   }
 
+  public Timestamp getAgreecalltimestamp() {
+    return agreecalltimestamp;
+  }
+
+  public void setAgreecalltimestamp(Timestamp agreecalltimestamp) {
+    this.agreecalltimestamp = agreecalltimestamp;
+  }
 }

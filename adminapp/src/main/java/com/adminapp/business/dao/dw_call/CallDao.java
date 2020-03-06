@@ -5,6 +5,8 @@ import com.adminapp.business.entity.dw_user.UserModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
+
 @Mapper
 public interface CallDao {
 
@@ -19,5 +21,5 @@ public interface CallDao {
 
     int updateCancelRecord(@Param("callToken")String callToken,@Param("type")String type,@Param("timestamp")String timestamp);
 
-    int updateUrlRecord(@Param("callToke")String callToken,@Param("serverUrl")String serverUrl,@Param("roomCode")String roomCode);
+    int updateUrlRecord(@Param("callToke")String callToken, @Param("serverUrl")String serverUrl, @Param("roomCode")String roomCode, @Param("date")Date date);
 }

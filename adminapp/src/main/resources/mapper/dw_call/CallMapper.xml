@@ -24,6 +24,6 @@
     </update>
 
     <update id="updateUrlRecord">
-        update t_sendphone set serverurl=#{serverUrl},roomCode=#{roomCode} where calltoken=#{callToke}
+        update t_sendphone set serverurl=#{serverUrl},roomCode=#{roomCode},agreecalltimestamp=#{date} where calltoken=#{callToke}
     </update>
 </mapper>
