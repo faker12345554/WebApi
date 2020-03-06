@@ -19,13 +19,13 @@ public class GuarantController {
     @Autowired
     private GuaranService guaranService;
 
-    private ResponseResult result = new ResponseResult();
+
 
     @UserLoginToken
     @ApiOperation(value = "新增担保信息")
     @PostMapping("/addGuarant")
     public ResponseResult insertGuarant(@RequestBody GuaranteeInformation guaranteeinformation, HttpServletResponse response) {
-
+        ResponseResult result = new ResponseResult();
         if(guaranService.getGuaByPersonId(guaranteeinformation.getPersonid())>=1){
             result.setCode(ResultCode.DATA_DUPLICATION.getCode());
             result.setMessage(ResultCode.DATA_DUPLICATION.getMessage());
@@ -40,6 +40,7 @@ public class GuarantController {
     @ApiOperation(value = "修改担保信息")
     @PostMapping("/updateGuara")
     public ResponseResult updateGuara(@RequestBody GuaranteeInformation guaranteeinformation, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(guaranService.updateGuara(guaranteeinformation));
@@ -50,6 +51,7 @@ public class GuarantController {
     @GetMapping("/deleteGuara")
     public ResponseResult deleteGuara(@RequestParam boolean flag,
                                       @RequestParam int GuaId, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
 
@@ -60,6 +62,7 @@ public class GuarantController {
     @ApiOperation(value = "获取担保信息")
     @GetMapping("/getGuara")
     public ResponseResult getGuara(@RequestParam String id, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( guaranService.getGuara(id));

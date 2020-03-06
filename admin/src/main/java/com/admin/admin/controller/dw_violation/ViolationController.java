@@ -24,12 +24,12 @@ public class ViolationController {
     @Autowired
     private ViolationService violationService;
 
-    private ResponseResult result = new ResponseResult();
 
     //@UserLoginToken
     @ApiOperation("新增违规分数")
     @PostMapping("/SaveViolation")
     public ResponseResult SaveViolation(@RequestBody List<Violationfens> violationfens) throws ParseException {
+        ResponseResult result = new ResponseResult();
 
         List<Violationfens> violationlist = violationService.ListViolation();
         List<Violationfens> violation = violationService.enabledViolationList();
@@ -62,6 +62,7 @@ public class ViolationController {
     @ApiOperation("作废违规分数")
     @GetMapping("/DeleteViolation")
     public ResponseResult DeleteViolation(@RequestParam  int id,boolean flag){
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return  result.setData(violationService.deleteViolation(id,flag));
@@ -80,6 +81,7 @@ public class ViolationController {
     @ApiOperation("违规分数信息列表")
     @GetMapping("/ListViolation")
     public ResponseResult ListViolation(){
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return  result.setData(violationService.ListViolation());

@@ -17,12 +17,13 @@ public class BiosignatureController {
     @Autowired
     private BiosignatureService biosignatureService;
 
-    private ResponseResult result = new ResponseResult();
+
 
     @UserLoginToken
     @ApiOperation(value = "新增生物特征信息")
     @PostMapping("/addBiosignature")
     public ResponseResult insertBiosignature(@RequestBody BiosignatureInformation biosignatureInformation) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( biosignatureService.insertBiosignature(biosignatureInformation));
@@ -32,6 +33,7 @@ public class BiosignatureController {
     @ApiOperation(value = "查询生物特征信息")
     @GetMapping("/getBiosignature")
     public ResponseResult getBiosignature(@RequestParam(required = true) String persion_id, @RequestParam(required = true) int type) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(biosignatureService.getBiosignature(persion_id, type));

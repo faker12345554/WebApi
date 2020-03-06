@@ -21,12 +21,13 @@ public class enclosureController {
     @Autowired
     private enclosureService enclosureService;
 
-    private ResponseResult result = new ResponseResult();
+
 
     @UserLoginToken
     @ApiParam("新增人员行动范围信息")
     @PostMapping("/saveEnclosure")
     public ResponseResult saveEnclosure(@RequestBody enclosure enclosure, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(enclosureService.saveEnclosure(enclosure));
@@ -45,6 +46,7 @@ public class enclosureController {
     @ApiOperation("删除人员行动范围信息")
     @GetMapping("/deleteEnclosure")
     public ResponseResult deleteEnclosure(@RequestParam String personId, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(enclosureService.deleteEnclosure(personId));
@@ -54,6 +56,7 @@ public class enclosureController {
     @ApiOperation("查看人员行动范围信息")
     @GetMapping("/selectEnclosure")
     public ResponseResult selectEnclosure(@RequestParam String personId, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         List<enclosure> list = enclosureService.selectEnclosure(personId);
         if (list.size() == 0) {
             result.setCode(ResultCode.NULLDATA.getCode());

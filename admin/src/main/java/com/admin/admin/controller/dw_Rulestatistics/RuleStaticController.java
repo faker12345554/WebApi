@@ -29,10 +29,10 @@ public class RuleStaticController {
     @Autowired
     private ViolationService violationService;
 
-    private ResponseResult result = new ResponseResult();
 
     @GetMapping("/getRuuleList")
     public ResponseResult getRuuleList(@RequestParam String Code,int level,int codelevel,String StartTime,String EndTime) {
+        ResponseResult result = new ResponseResult();
         List<ViotionStatics> numberList = new ArrayList<ViotionStatics>();
         if (codelevel==3){
             Code=Code.substring(0,6);

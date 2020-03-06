@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@Api(value="信息上报设置Controller",tags={"位置上报设置"})
+@Api(value = "信息上报设置Controller", tags = {"位置上报设置"})
 @RestController
 @RequestMapping("/Report")
 public class ReportController {
@@ -21,18 +21,18 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
-    private ResponseResult result = new ResponseResult();
 
     @UserLoginToken
     @ApiOperation("保存或者修改上报设置")
     @PostMapping("/SaveOrUpdateReport")
-    public ResponseResult SaveOrUpdateReport(@RequestBody List<Reportsettings> reportsettings){
+    public ResponseResult SaveOrUpdateReport(@RequestBody List<Reportsettings> reportsettings) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData( reportService.SaveOrUpdateReport(reportsettings));
+        return result.setData(reportService.SaveOrUpdateReport(reportsettings));
     }
 
-//    @ApiOperation("删除上报设置")
+    //    @ApiOperation("删除上报设置")
 //    @GetMapping("/DeleteReport")
 //    public ResponseResult DeleteReport(){
 //        result.setCode(ResultCode.SUCCESS.getCode());
@@ -42,10 +42,11 @@ public class ReportController {
     @UserLoginToken
     @ApiOperation("查看上报设置")
     @GetMapping("getReport")
-    public ResponseResult getReport(){
+    public ResponseResult getReport() {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData( reportService.getReport());
+        return result.setData(reportService.getReport());
     }
 
 }
