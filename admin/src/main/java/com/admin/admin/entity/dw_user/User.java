@@ -23,6 +23,7 @@ public class User {
     private String personid;
     private String mailbox;
     private String bmmc;
+    private String zw;
 
 
     public String getCreatetime() {
@@ -270,5 +271,13 @@ public class User {
 
     public void setBmmc(String bmmc) {
         this.bmmc = bmmc;
+    }
+
+    public String getZw() {
+        return zw;
+    }
+
+    public void setZw(String zw) {
+        this.zw = zw;
     }
 }
