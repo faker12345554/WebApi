@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.dw_Rulestatistics.RuleStatistics">
+
+    <resultMap id="StatisMap" type="HashMap">
+        <result property="sum" column="sum" jdbcType="VARCHAR" />
+        <result property="personid" column="personid" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="RuleStatisList"  resultMap="StatisMap">
+
+        <if test="level==1">
+        SELECT count (*) as sum,personid from t_personmessage where personid in( SELECT personid from t_personinformation
+         where bailoutbegindate &lt;= now() and now() &lt;= bailoutenddate and sponsoralarm in (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Code},'%')  )) and
+          to_date(to_char(messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd') and to_date(to_char(messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd')
+          GROUP BY personid
+        </if>
+        <if test="level==2">
+            SELECT count(DISTINCT personid) as sum,personid from t_summons where personid in	(SELECT personid from t_personinformation
+             where bailoutbegindate&lt;= now() and now()&lt;= bailoutenddate and sponsoralarm in
+             (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Code},'%')))  AND reporttime  is null
+             and to_date(to_char(summonsendtime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd')
+             and to_date(to_char(summonsendtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd') GROUP BY personid
+        </if>
+
+    </select>
+    <select id="getNotout" resultType="int" >
+        <if test="level==1">
+            SELECT count (DISTINCT personid) from t_personinformation where bailoutbegindate&lt;= now() and now()&lt;= bailoutenddate
+            and sponsoralarm in (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Code},'%')) and personid not in
+            (SELECT DISTINCT  personid FROM t_personmessage where to_date(to_char(messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd')
+            and to_date(to_char(messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd'))
+        </if>
+        <if test="level==2">
+
+        </if>
+
+
+    </select>
+
+
+</mapper>

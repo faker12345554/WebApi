@@ -19,12 +19,13 @@ public class AlarmController {
     @Autowired
     private AlarmService alarmService;
 
-    private ResponseResult result = new ResponseResult();
+
 
     @UserLoginToken
     @PostMapping("/SaveOrUpdateAlarm")
     @ApiOperation("保存或修改报警提醒设置")
     public ResponseResult SaveOrUpdateAlarm( @RequestBody List<Alarmsettings> alarmsettings){
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(alarmService.SaveOrUpdateAlarm(alarmsettings));
@@ -41,6 +42,7 @@ public class AlarmController {
     @ApiOperation("获取报警提醒设置")
     @GetMapping("/getAlarm")
     public ResponseResult getAlarm(){
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(alarmService.getAlarm());

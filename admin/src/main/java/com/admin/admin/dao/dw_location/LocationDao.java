@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface LocationDao {
     //定位记录列表
-    List<LocationModel> listLocationModel(@Param("condition") String condition );
+    List<LocationModel> listLocationModel(@Param("condition") String condition,@Param("type") int type,@Param("limit") String limit) ;
     // 今日轨迹
     List<Locationmation> ListLocation(@Param("PersonId") String PersonId,@Param("date") String date);
     //历史轨迹

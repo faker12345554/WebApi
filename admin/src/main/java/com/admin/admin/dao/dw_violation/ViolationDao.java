@@ -43,4 +43,11 @@ public interface ViolationDao {
     列表
      */
     List<Violationfens> ListViolation();
+
+    /**
+     *   查询单条记录
+     * @param code
+     * @return
+     */
+    Violationfens GetByCriteria(String code);
 }

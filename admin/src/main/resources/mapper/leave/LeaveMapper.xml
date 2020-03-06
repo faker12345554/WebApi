@@ -5,43 +5,49 @@
     <select id="getLeave" parameterType="com.admin.model.search.SearchModel" resultType="com.admin.model.leave.LeavefModel">
         SELECT a.*,b.auditordatetime FROM t_leave AS a
         LEFT JOIN t_auditor AS b ON a.leaveorder=b.leaveorder
-        <if test="PersonId !=null and PersonId!='' and Condition==null"  >
-            WHERE a.personid=#{PersonId}
+        left join t_personinformation as t on t.personid=a.personid
+        where t.status=true
+        <if test="type==1">
+             and t.sponsoralarm=#{limit}
         </if>
-        <if test="Condition ==null and PersonName!=null ">
-            where a.personname like concat('%',#{PersonName},'%')
+        <if test="type!=1">
+            and t.policecode=#{limit}
         </if>
-        <if test="Condition !=null and PersonName==null and PersonId==null ">
-            where a.states like concat('%',#{condition},'%')
+        <if test="searchModel.PersonId !=null and searchModel.PersonId!='' and searchModel.Condition==null"  >
+            and a.personid=#{searchModel.PersonId}
         </if>
-
-        <if test="Condition !=null and PersonName==null and PersonId !=null ">
-            where a.personid=#{PersonId} and a.states like concat('%',#{condition},'%')
+        <if test="searchModel.Condition ==null and searchModel.PersonName!=null ">
+            and a.personname like concat('%',#{searchModel.PersonName},'%')
         </if>
-
-
-
-        <if test="Condition !=null and PersonName!=null and PersonName!='' and StartTime!=null and EndTime!=null ">
-            WHERE a.states=#{Condition}
-            a.personname like concat('%',#{PersonName},'%') and
-            a.subittimestamp > #{StartTime} and a.subittimestamp &lt; #{EndTime}
-        </if>
-        <if test="Condition ==null and (PersonName!=null or PersonName=='') and StartTime!=null and EndTime!=null ">
-            WHERE a.personname like concat('%',#{PersonName},'%') and
-            a.subittimestamp &gt; #{StartTime} and a.subittimestamp &lt; #{EndTime}
+        <if test="searchModel.Condition !=null and searchModel.PersonName==null and searchModel.PersonId==null ">
+            and a.states like concat('%',#{searchModel.condition},'%')
         </if>
 
-        <if test="Condition ==null and (PersonName==null or PersonName=='') and StartTime!=null and  EndTime!=null ">
-            WHERE a.subittimestamp > TO_TIMESTAMP(#{StartTime}, 'YYYY-MM-DD HH24:MI:SS') and a.subittimestamp &lt; TO_TIMESTAMP(#{EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+        <if test="searchModel.Condition !=null and searchModel.PersonName==null and searchModel.PersonId !=null ">
+            and a.personid=#{searchModel.PersonId} and a.states like concat('%',#{searchModel.condition},'%')
+    </if>
+
+        <if test="searchModel.Condition !=null and searchModel.PersonName!=null and searchModel.PersonName!='' and searchModel.StartTime!=null and searchModel.EndTime!=null ">
+            and a.states=#{searchModel.Condition}
+            a.personname like concat('%',#{searchModel.PersonName},'%') and
+            a.subittimestamp > #{searchModel.StartTime} and a.subittimestamp &lt; #{searchModel.EndTime}
         </if>
-        <if test="Condition ==null and (PersonName==null or PersonName=='') and StartTime!=null and EndTime==null ">
-            WHERE a.subittimestamp > TO_TIMESTAMP(#{StartTime}, 'YYYY-MM-DD HH24:MI:SS')
+        <if test="searchModel.Condition ==null and (searchModel.PersonName!=null or searchModel.PersonName=='') and searchModel.StartTime!=null and searchModel.EndTime!=null ">
+            and a.personname like concat('%',#{searchModel.PersonName},'%') and
+            a.subittimestamp &gt; #{searchModel.StartTime} and a.subittimestamp &lt; #{searchModel.EndTime}
         </if>
-        <if test="Condition ==null and (PersonName==null or PersonName=='') and StartTime==null and EndTime!=null ">
-            WHERE a.subittimestamp &lt; TO_TIMESTAMP(#{EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+
+        <if test="searchModel.Condition ==null and (searchModel.PersonName==null or searchModel.PersonName=='') and searchModel.StartTime!=null and  searchModel.EndTime!=null ">
+            and a.subittimestamp > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and a.subittimestamp &lt; TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
-        <if test="list.size()>0">
-            where a.id in
+        <if test="searchModel.Condition ==null and (searchModel.PersonName==null or searchModel.PersonName=='') and searchModel.StartTime!=null and searchModel.EndTime==null ">
+            and a.subittimestamp > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="searchModel.Condition ==null and (searchModel.PersonName==null or searchModel.PersonName=='') and searchModel.StartTime==null and searchModel.EndTime!=null ">
+            and a.subittimestamp &lt; TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="searchModel.list.size()>0">
+            and a.id in
             <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
                 #{id}
             </foreach>

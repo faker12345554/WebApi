@@ -32,7 +32,6 @@ public class LogController {
 
     @Autowired
     private AddressService addressService;
-    private ResponseResult result = new ResponseResult();
 
 
     //    @ApiOperation(value = "增加日志")
@@ -46,6 +45,7 @@ public class LogController {
     @ApiOperation(value = "查询日志信息")
     @PostMapping("/getLog")
     public ResponseResult listLog(@RequestBody LogParamModel logParamModel, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         PageBean pageBean = logService.listLog(logParamModel);
         if (pageBean.getItems().size() <= 0) {
             result.setCode(ResultCode.NULLDATA.getCode());
@@ -63,6 +63,7 @@ public class LogController {
     @ApiOperation(value = "统计取保监居APP使用人数")
     @GetMapping("/Statistics")
     public ResponseResult getNumber(@RequestParam String code, @RequestParam int level, String Days) {
+        ResponseResult result = new ResponseResult();
         List<AppStatistics> numberList = new ArrayList<AppStatistics>();
         List<Map<String, String>> addlist = new ArrayList<>();
 //        List<Map<String, String>> policelist = new ArrayList<>();
@@ -105,6 +106,7 @@ public class LogController {
     @ApiOperation(value = "统计脱管人数")
     @GetMapping("/Removalrate")
     public ResponseResult Removalrate(@RequestParam String code,int level,String Starttime,String endetime) {
+        ResponseResult result = new ResponseResult();
         List<AppStatistics> numberList = new ArrayList<AppStatistics>();
         if (level == 3) {
             code = code.substring(0, 6);
@@ -145,6 +147,7 @@ public class LogController {
     @ApiOperation(value = "统计日月活率")
     @GetMapping("/Solarrate")
     public ResponseResult Solarrate(@RequestParam String code,int codelevel, int level,String Starttime,String endetime) {
+        ResponseResult result = new ResponseResult();
         if (codelevel==1){
             code=code.substring(0,4);
         } else if (codelevel==2){
@@ -166,6 +169,7 @@ public class LogController {
     @PassToken
     @PostMapping("/listLog")
     public ResponseResult listAllLog(@RequestBody(required = true) LogSearchModel logSearchModel){
+        ResponseResult result = new ResponseResult();
         PageHelper.startPage(logSearchModel.getPageIndex(), logSearchModel.getPageSize());
         List<LogModel> allItems=logService.listAllLog(logSearchModel);
         try {
@@ -193,6 +197,7 @@ public class LogController {
     @PassToken
     @GetMapping("/deleteLog")
     public ResponseResult deleteLog(@RequestParam String number){
+        ResponseResult result = new ResponseResult();
         String[] a=number.split(",");
         for (String code:a
         ) {

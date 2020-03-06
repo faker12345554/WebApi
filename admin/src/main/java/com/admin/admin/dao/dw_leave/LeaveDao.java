@@ -15,7 +15,7 @@ import java.util.List;
 @Mapper
 public interface LeaveDao {
     //列表
-    List<LeavefModel> getLeave(SearchModel searchModel);
+    List<LeavefModel> getLeave(@Param("searchModel") SearchModel searchModel,@Param("type") int type,@Param("limit") String limit);
 
 //    LeaveInformation listLeave();
 

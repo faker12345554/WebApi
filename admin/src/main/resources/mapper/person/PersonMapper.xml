@@ -6,21 +6,21 @@
         INSERT into t_personinformation(personid,personname,gender,age,birthdate,card,workunit,bailoutbegindate,bailoutenddate,sponsor,sponsoralarm,contact,address,wechatnumber,
         qqnumber,status,founderid,foundertime,modifierid,modifiertime,suspectstatus,marriage,policestation,casetype,facepath,persontags,gendercode,beforename,nation,degreeeducation,
         nativeplace,occupation,nationality,registeredarea,permanentaddress,currentaddress,nowaddress,yjsponsoralarm,exectype,keepaddress,appointaddress,province,city,area,
-        monitoraddress,suspectstatuscode,violationcode)
-        values (#{personid},#{personname},#{gender},#{age},#{birthdate},#{card},#{workunit},#{bailoutbegindate},#{bailoutenddate},#{sponsor},#{sponsoralarm},#{contact},#{address},
-        #{wechatnumber},#{qqnumber},#{status},#{founderid},#{foundertime},#{modifierid},#{modifiertime},#{suspectstatus},#{marriage},#{policestation},#{casetype},#{facepath},
+        monitoraddress,suspectstatuscode,violationcode,policecode)
+        values (#{personid},#{personname},#{gender},#{age},#{birthdate},#{card},#{workunit},to_timestamp(#{bailoutbegindate},'yyyy-MM-dd hh24:mi:ss'),to_timestamp(#{bailoutenddate},'yyyy-MM-dd hh24:mi:ss'),#{sponsor},#{sponsoralarm},#{contact},#{address},
+        #{wechatnumber},#{qqnumber},#{status},#{founderid},to_timestamp(#{foundertime},'yyyy-MM-dd hh24:mi:ss'),#{modifierid},to_timestamp(#{modifiertime},'yyyy-MM-dd hh24:mi:ss'),#{suspectstatus},#{marriage},#{policestation},#{casetype},#{facepath},
         #{persontags},#{gendercode},#{beforename},#{nation},#{degreeeducation},#{nativeplace},#{occupation},#{nationality},#{registeredarea},#{permanentaddress},#{currentaddress},
-        #{nowaddress},#{yjsponsoralarm},#{exectype},#{keepaddress},#{appointaddress},#{province},#{city},#{area},#{monitoraddress},#{suspectstatuscode},#{violationcode})
+        #{nowaddress},#{yjsponsoralarm},#{exectype},#{keepaddress},#{appointaddress},#{province},#{city},#{area},#{monitoraddress},#{suspectstatuscode},#{violationcode},#{policecode})
     </insert>
 
     <update id="updatePersion" parameterType="com.admin.admin.entity.dw_person.Personinformation">
-        UPDATE t_personinformation set personname=#{personname},gender=#{gender},age=#{age},birthdate=#{birthdate},card=#{card},workunit=#{workunit},bailoutbegindate=#{bailoutbegindate},
-        bailoutenddate=#{bailoutenddate},sponsor=#{sponsor},sponsoralarm=#{sponsoralarm},contact=#{contact},address=#{address},wechatnumber=#{wechatnumber},qqnumber=#{qqnumber},status=#{status},
-        founderid=#{founderid},foundertime=#{foundertime},modifierid=#{modifierid},modifiertime=#{modifiertime},suspectstatus=#{suspectstatus},marriage=#{marriage},policestation=#{policestation},
+        UPDATE t_personinformation set personname=#{personname},gender=#{gender},age=#{age},birthdate=#{birthdate},card=#{card},workunit=#{workunit},bailoutbegindate=to_timestamp(#{bailoutbegindate},'yyyy-MM-dd hh24:mi:ss'),
+        bailoutenddate=to_timestamp(#{bailoutenddate},'yyyy-MM-dd hh24:mi:ss'),sponsor=#{sponsor},sponsoralarm=#{sponsoralarm},contact=#{contact},address=#{address},wechatnumber=#{wechatnumber},qqnumber=#{qqnumber},status=#{status},
+        founderid=#{founderid},modifierid=#{modifierid},modifiertime=to_timestamp(#{modifiertime},'yyyy-MM-dd hh24:mi:ss'),,suspectstatus=#{suspectstatus},marriage=#{marriage},policestation=#{policestation},
         casetype=#{casetype},facepath=#{facepath},persontags=#{persontags},gendercode=#{gendercode},beforename=#{beforename},nation=#{nation},degreeeducation=#{degreeeducation},
         nativeplace=#{nativeplace},occupation=#{occupation},nationality=#{nationality},registeredarea=#{registeredarea},permanentaddress=#{permanentaddress},currentaddress=#{currentaddress},
         nowaddress=#{nowaddress},yjsponsoralarm=#{yjsponsoralarm},exectype=#{exectype},keepaddress=#{keepaddress},appointaddress=#{appointaddress},province=#{province},city=#{city},
-        area=#{area},monitoraddress=#{monitoraddress},suspectstatuscode=#{suspectstatuscode}
+        area=#{area},monitoraddress=#{monitoraddress},suspectstatuscode=#{suspectstatuscode},policecode=#{policecode}
         where personid=#{personid}
     </update>
 
@@ -41,35 +41,43 @@
 
     <insert id="insertprison" parameterType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting"
             useGeneratedKeys="true" keyProperty="id">
-        insert into t_prisonsetting(personid, settingname, settingcheck, settingtime) values(#{data.personid},#{data.settingname},#{data.settingcheck},#{data.settingtime})
+        insert into t_prisonsetting(personid, settingname, settingcheck, settingtime,settingcode) values(#{data.personid},#{data.settingname},#{data.settingcheck},#{data.settingtime},#{data.settingcode})
     </insert>
 
     <update id="delconfig" parameterType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting" >
-        update t_prisonsetting set legal."public".t_prisonsetting.settingcheck=false where personid=#{personid} and settingname=#{settingname}
+        update t_prisonsetting set settingcheck=#{settingcheck} where personid=#{personid} and settingname=#{settingname}
     </update>
 
     <select id="Getprison" parameterType="String" resultType="int">
         select count(*) from t_prisonsetting where personid=#{personId} and settingname=#{settingname}
     </select>
 
-    <select id="ListPerson" parameterType="com.admin.model.search.SearchModel"
+    <select id="ListPerson"
             resultType="com.admin.admin.entity.dw_person.Personinformation">
+    <if test="type==1">
+            select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
+            left join t_caseinfo as C on C.personid=P.personid where sponsoralarm=#{limit}
+    </if>
+    <if test="type!=1">
         select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
-        left join t_caseinfo as C on C.personid=P.personid where sponsoralarm=#{PersonName}
-        <if test=" FuzzyCondition !=null and FuzzyCondition !=''">
+        left join t_caseinfo as C on C.personid=P.personid where policecode=#{limit}
+    </if>
+
+
+        <if test=" searchmodel.FuzzyCondition !=null and searchmodel.FuzzyCondition !=''">
             and
-            P.personname like concat('%',#{FuzzyCondition},'%') or
-            P.suspectstatus like concat('%',#{FuzzyCondition},'%') or
-            P.gender like concat('%',#{FuzzyCondition},'%') or
-            P.sponsor like concat('%',#{FuzzyCondition},'%') or
-            P.casetype like concat('%',#{FuzzyCondition},'%') or
-            P.modifierid like concat('%',#{FuzzyCondition},'%') or
+            P.personname like concat('%',#{searchmodel.FuzzyCondition},'%') or
+            P.suspectstatus like concat('%',#{searchmodel.FuzzyCondition},'%') or
+            P.gender like concat('%',#{searchmodel.FuzzyCondition},'%') or
+            P.sponsor like concat('%',#{searchmodel.FuzzyCondition},'%') or
+            P.casetype like concat('%',#{searchmodel.FuzzyCondition},'%') or
+            P.modifierid like concat('%',#{searchmodel.FuzzyCondition},'%') or
             C.caseno like concat('%',#{FuzzyCondition},'%') or
-            C.handleunit like concat('%',#{FuzzyCondition},'%') or
-            C.handlepeson like concat('%',#{FuzzyCondition},'%')
+            C.handleunit like concat('%',#{searchmodel.searchmodel.FuzzyCondition},'%') or
+            C.handlepeson like concat('%',#{searchmodel.FuzzyCondition},'%')
 
         </if>
-        <if test="list.size()>0">
+        <if test="searchmodel.list.size()>0">
             and personid in
             <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
                 CAST (#{id} as text)
@@ -79,7 +87,7 @@
     </select>
 
     <select id="ListPrison" parameterType="String" resultType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting">
-        select * from t_prisonsetting where personid=#{PersonId}
+        select * from t_prisonsetting where personid=#{PersonId} and settingcheck=true
     </select>
 
 

@@ -10,5 +10,11 @@ import java.util.Map;
 public interface RuleStatistics {
 
 
+    //
     List<Map<String,String>> RuleStatisList(@Param("Code") String Code, @Param("level") int level, @Param("StartTime") String StartTime, @Param("EndTime") String EndTime);
+
+    //获得正常的人数
+    int getNotout(@Param("Code") String Code,@Param("StartTime") String StartTime, @Param("EndTime") String EndTime);
+
+
 }

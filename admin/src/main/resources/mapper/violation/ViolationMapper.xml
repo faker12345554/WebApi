@@ -33,5 +33,9 @@
       update t_violationfens set status=#{flag} where id=#{Id}
     </update>
 
+    <select id="GetByCriteria" parameterType="String" resultType="com.admin.admin.entity.dw_violation.Violationfens" >
+        select * from t_violationfens where violationcode=#{code}  and enabled=false
+    </select>
+
 
 </mapper>

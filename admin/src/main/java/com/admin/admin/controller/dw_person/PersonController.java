@@ -8,6 +8,8 @@ import com.admin.admin.service.dw_person.PersoinfoService;
 import com.admin.model.search.SearchModel;
 import com.admin.page.PageBean;
 import com.admin.token.tation.UserLoginToken;
+import com.admin.tool.CacheUtils;
+import com.admin.tool.JudgementRole;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.github.pagehelper.PageHelper;
@@ -35,7 +37,7 @@ public class PersonController {
     @Autowired
     private PersoinfoService persoinfoService;//
 
-    private ResponseResult result = new ResponseResult();
+
 
 
     //新增
@@ -43,6 +45,7 @@ public class PersonController {
     @ApiOperation("新增人员信息")
     @PostMapping("/insertPersion")
     public ResponseResult insertPersion(@RequestBody Personinformation personinformation) {
+        ResponseResult result = new ResponseResult();
         if (persoinfoService.getPersonByCard(personinformation.getCard()) > 1) {
             result.setCode(ResultCode.DATA_DUPLICATION.getCode());
             result.setMessage(ResultCode.DATA_DUPLICATION.getMessage());
@@ -54,9 +57,11 @@ public class PersonController {
     }
 
     //修改
+    @UserLoginToken
     @ApiOperation("修改人员信息")
     @PostMapping("/updatePersion")
     public ResponseResult updatePersion(@RequestBody Personinformation personinformation, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(persoinfoService.updatePersion(personinformation));
@@ -67,6 +72,7 @@ public class PersonController {
     @ApiOperation("删除人员信息")
     @GetMapping("/deletePersion")
     public ResponseResult deletePersion(@RequestParam boolean flag, @RequestParam String PersonId, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         if (flag == true) {
             result.setCode(ResultCode.DATA_DUPLICATION.getCode());
             result.setMessage(ResultCode.DATA_DUPLICATION.getMessage());
@@ -82,6 +88,7 @@ public class PersonController {
     @ApiOperation("获取人员信息")
     @GetMapping("/getPersoin")
     public ResponseResult getPersoin(@RequestParam String id, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(persoinfoService.getPersoin(id));
@@ -90,6 +97,7 @@ public class PersonController {
     @ApiOperation("变更主办人")
     @GetMapping("/updateSponsor")
     public ResponseResult updateSponsor(@RequestParam String Name, String id, String PersonId) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage("变更成功");
         return result.setData(persoinfoService.updateSponsor(Name, id, PersonId));
@@ -98,37 +106,40 @@ public class PersonController {
     @ApiOperation("配置管理方式")
     @PostMapping("/insertprison")
     public ResponseResult insertprison(@RequestBody List<TPrisonsetting> List) {
+        ResponseResult result = new ResponseResult();
         for (TPrisonsetting item : List) {
-            if (persoinfoService.Getprison(item.getPersonid(),item.getSettingname())>=1){
-                result.setCode(ResultCode.DATA_DUPLICATION.getCode());
-                result.setMessage(ResultCode.DATA_DUPLICATION.getMessage());
-                return result.setData(item.getSettingname()+"已存在,不可重复配置,请重新选择");
+            if (persoinfoService.Getprison(item.getPersonid(), item.getSettingname()) ==0){
+                item.setSettingcheck(true);
+                item.setSettingtime(new Date());
+                persoinfoService.insertprison(item);
+            } else  {
+              persoinfoService.delconfig(item);
+
             }
-            item.setSettingcheck(true);
-            item.setSettingtime(new Date());
-            persoinfoService.insertprison(item);
         }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage("配置成功");
         return result.setData("配置成功");
     }
-    @UserLoginToken
-    @ApiOperation("删除配置管理方式")
-    @PostMapping("/delconfig")
-    public  ResponseResult delconfig(@RequestBody List<TPrisonsetting> List){
-        for (TPrisonsetting item : List) {
-            persoinfoService.delconfig(item);
-        }
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMessage("取消成功");
-        return result.setData("取消成功");
-
-    }
+//    @UserLoginToken
+//    @ApiOperation("删除配置管理方式")
+//    @PostMapping("/delconfig")
+//    public  ResponseResult delconfig(@RequestBody List<TPrisonsetting> List){
+//        for (TPrisonsetting item : List) {
+//            persoinfoService.delconfig(item);
+//        }
+//        result.setCode(ResultCode.SUCCESS.getCode());
+//        result.setMessage("取消成功");
+//        return result.setData("取消成功");
+//
+//    }
 
     @UserLoginToken
     @ApiOperation("人员信息列表")
     @PostMapping("/ListPerson")
     public ResponseResult ListPerson(@RequestBody(required = false) SearchModel searchModel) throws Exception {
+        ResponseResult result = new ResponseResult();
+
         PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
         List<Personinformation> allitems = persoinfoService.ListPerson(searchModel);
         PageInfo<Personinformation> info = new PageInfo<>(allitems);//全部商品
@@ -146,6 +157,7 @@ public class PersonController {
     @ApiOperation("导出监居人员信息")
     @PostMapping("/ExportPerson")
     public ResponseResult ExportExcel(@RequestBody SearchModel searchModel) throws Exception{
+
         ResponseResult rtn = new ResponseResult();
         List<Personinformation> allItems = persoinfoService.ListPerson(searchModel);
 

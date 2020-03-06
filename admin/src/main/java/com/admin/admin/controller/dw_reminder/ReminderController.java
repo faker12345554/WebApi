@@ -20,12 +20,13 @@ public class ReminderController {
     @Autowired
     private ReminderService reminderService;
 
-    private ResponseResult result = new ResponseResult();
+
 
     @UserLoginToken
     @PostMapping("/SaveOrUpdateReminder")
     @ApiOperation("修改或者新增待办提醒设置")
     public ResponseResult SaveOrUpdateReminder(@RequestBody List<Remindersettings> remindersettings){
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( reminderService.SaveOrUpdateReminder(remindersettings));
@@ -43,6 +44,7 @@ public class ReminderController {
     @ApiOperation("查看待办提醒设置")
     @GetMapping("getReminder")
     public ResponseResult getReminder (){
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData( reminderService.getReminder());

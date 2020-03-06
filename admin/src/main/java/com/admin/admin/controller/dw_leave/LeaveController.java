@@ -40,12 +40,13 @@ public class LeaveController {
     @Autowired
     protected LeaveService leaveService;
 
-    private ResponseResult result = new ResponseResult();
 
-   // @UserLoginToken
+
+    @UserLoginToken
     @ApiOperation(value = "获取全部请假信息")
     @PostMapping("/listLeave")
     public ResponseResult listLeave(@RequestBody SearchModel searchModel) {
+        ResponseResult result = new ResponseResult();
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
         PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
         List<LeavefModel> allItems = leaveService.getLeave(searchModel);
@@ -76,6 +77,7 @@ public class LeaveController {
     @ApiOperation(value = "增加审批信息")
     @PostMapping("/addAuditor")
     public ResponseResult insertAuditor(@RequestBody AuditorInformation auditorInformation, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         LeaveInformation leaveInformations = leaveService.getLeaveInformation(auditorInformation.getLeaveorder());
         if (leaveInformations != null) {
             int updateLeaveStatus = leaveService.updateLeaveStatus(auditorInformation);
@@ -93,6 +95,7 @@ public class LeaveController {
     @ApiOperation(value = "删除审批信息")
     @PostMapping("/deleteAuditor")
     public ResponseResult deleteAuditor(@ApiParam(name = "leaveOrder", value = "请假单号") @RequestParam String leaveOrder, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(leaveService.deleteAuditor(leaveOrder));
@@ -111,6 +114,7 @@ public class LeaveController {
     @PostMapping("/ExportExecl")
     @UserLoginToken
     public ResponseResult ExportExecl(@RequestBody SearchModel searchModel){
+        ResponseResult result = new ResponseResult();
         List<LeavefModel> allItems = leaveService.getLeave(searchModel);
         String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) +"外出信息"+ ".xls";
         File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);
@@ -162,6 +166,7 @@ public class LeaveController {
     @GetMapping("/CountLeave")
     @UserLoginToken
     public ResponseResult countLeave(@RequestParam String city,String area,String startTime, String endTime){
+        ResponseResult result = new ResponseResult();
         try{
             List<CountResult> countResults =leaveService.countLeave(city,area, startTime,endTime);
             result.setCode(ResultCode.SUCCESS.getCode());
