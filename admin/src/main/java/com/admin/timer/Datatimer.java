@@ -36,7 +36,7 @@ public class Datatimer  {
     //每天凌晨1点执行
     @Scheduled(cron = "0 0 1 * * ?")
     public void depositJob() throws Exception {
-
+        violationDao.Execution();
         tasking.ReminderBail();
         //执行代码
     }
