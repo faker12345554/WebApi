@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -45,7 +46,7 @@ public class CallController {
         callService.makeCall(type);
         TSendphone tsendphone=callService.checkOnline(tPersoninformation.getSponsoralarm());    //根据警号判断是否正在通话
         //
-        if(tsendphone==null || tsendphone.getCanceltype().equals("")) {
+        if(tsendphone==null ) {//|| tsendphone.getCanceltype().equals("")
             String callToken = "th";
             Random random = new Random();
             for (int i = 0; i < 20; i++) {
@@ -73,8 +74,10 @@ public class CallController {
             String descriptions="管理端请求通话推送";
             String pushType="PushRequestCall";
             callService.sendRequestCallCast(cal.getTime(),object,tPersoninformation.getSponsoralarm(),"ReleaseAdminCode",timeStamp,descriptions,pushType);
-        }else if((tsendphone.getCalltype()==null && date.getTime()/1000-Integer.parseInt(tsendphone.getCalltimestamp())/1000>120)   | (tsendphone.getCalltype()==null  &&  date.getTime()/1000-tsendphone.getAgreecalltimestamp().getTime()/1000>300)){
-            callService.updateHangUp(tsendphone.getCalltoken());
+        }else if((tsendphone.getCanceltype()==null && date.getTime()/1000- Long.parseLong(tsendphone.getCalltimestamp())/1000>120)   || (tsendphone.getCanceltype()==null  && tsendphone.getAgreecalltimestamp()!=null && date.getTime()/1000-tsendphone.getAgreecalltimestamp().getTime()/1000>300)){
+//            Date date = new Date();
+//            String timeStamp = String.valueOf(date.getTime());
+            callService.updateHangUp(tsendphone.getCalltoken(),timeStamp);
             result.resultCode=1;
             result.resultMsg="由于上次通话异常，请重新发起";
             result.data=null;

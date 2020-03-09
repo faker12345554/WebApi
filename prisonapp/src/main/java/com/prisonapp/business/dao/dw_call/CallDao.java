@@ -17,7 +17,7 @@ public interface CallDao {
     int insertRecord(@Param("callToken") String callToken,@Param("timeStamp")String timeStamp,@Param("type")String type,
                      @Param("callname")String callname,@Param("sendname")String sendname,@Param("personid")String personid,@Param("accountname") String accountname);
 
-    int updateHangUp(@Param("callToken") String callToken);
+    int updateHangUp(@Param("callToken") String callToken,@Param("timeStamp")String timestamp);
 
     TSendphone getPhoneInformation(@Param("callToken")String callToken);
 
