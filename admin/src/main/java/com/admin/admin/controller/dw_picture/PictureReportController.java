@@ -68,10 +68,10 @@ public class PictureReportController {
         }
     }
 
-    @PassToken
+    @UserLoginToken
     @ApiOperation(value = "上传照片")
     @PostMapping("/uploadPicture")
-    public ResponseResult uploadPicture(@ApiParam(name = "picture",value = "照片")@RequestParam(required =true) MultipartFile picture){
+    public ResponseResult uploadPicture(@ApiParam(name = "file",value = "照片")@RequestParam(required =true) MultipartFile file){
         ResponseResult result = new ResponseResult();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(System.currentTimeMillis());
@@ -81,11 +81,12 @@ public class PictureReportController {
             path.setWritable(true,false);
             path.mkdirs();
         }
-        String res = upload.upload(url, picture);
-        String fileName = picture.getOriginalFilename();
+        String res = upload.upload(url, file);
+        String fileName = file.getOriginalFilename();
         String filePath="https://pardon.cnnc626.com:8443/mypicture/admin/"+ formatter.format(date)+"/"+fileName;
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(filePath);
     }
+
 }
