@@ -36,8 +36,8 @@ public class CallService {
     }
 
     //将通话类型改为改起
-    public int updateHangUp(String callToken){
-        return callDao.updateHangUp(callToken);
+    public int updateHangUp(String callToken,String timestamp){
+        return callDao.updateHangUp(callToken,timestamp);
     }
 
     //获取通话信息
