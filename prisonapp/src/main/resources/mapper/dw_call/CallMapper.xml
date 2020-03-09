@@ -20,7 +20,7 @@
     </insert>
 
     <update id="updateHangUp">
-        update t_sendphone set calltype ="4" where calltoken=#{callToken}
+        update t_sendphone set canceltype ='4',canceltimestamp=#{timeStamp} where calltoken=#{callToken}
     </update>
 
     <select id="getPhoneInformation" resultType="com.prisonapp.business.entity.dw_call.TSendphone">
