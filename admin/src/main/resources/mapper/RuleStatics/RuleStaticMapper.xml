@@ -3,26 +3,34 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_Rulestatistics.RuleStatistics">
 
-    <resultMap id="StatisMap" type="HashMap">
-        <result property="sum" column="sum" jdbcType="VARCHAR" />
-        <result property="personid" column="personid" jdbcType="VARCHAR"/>
-    </resultMap>
+
 
     <select id="RuleStatisList"  resultType="int">
 
         <if test="level==1">
             SELECT count(distinct personid) from t_severity where stype='1' and severity=#{Severity} and personid in
-            (SELECT personid from t_personinformation wherebailoutbegindate&lt;= now() and now()&lt;= bailoutenddate and sponsoralarm in
+            (SELECT personid from t_personinformation where bailoutbegindate &lt;= now() and now() &lt;= bailoutenddate and sponsoralarm in
             (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Code},'%')))
             and datetimes &gt;= substring(#{StartTime},0,8) and datetimes &lt;=substring(#{EndTime},0,8)
         </if>
         <if test="level==2">
             SELECT count(distinct personid) from t_severity where stype='2' and severity=#{Severity} and personid in
-            (SELECT personid from t_personinformation wherebailoutbegindate&lt;= now() and now()&lt;= bailoutenddate and sponsoralarm in
-            (SELECT mjbh from fsga_yw_ryb where bmbm like like concat('%',#{Code},'%')))
+            (SELECT personid from t_personinformation where bailoutbegindate&lt;= now() and now()&lt;= bailoutenddate and sponsoralarm in
+            (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Code},'%')))
             and datetimes &gt;= substring(#{StartTime},0,8) and datetimes &lt;=substring(#{EndTime},0,8)
         </if>
 
+
+    </select>
+    <resultMap id="StatisMap" type="HashMap">
+        <result property="num" column="num" jdbcType="VARCHAR" />
+        <result property="personid" column="personid" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getNotout" resultMap="StatisMap">
+
+        SELECT CAST( max(signbool) as text) as num,personid from	t_severity where  personid in	(SELECT personid from t_personinformation where bailoutbegindate&lt;= now() and now()&lt;= bailoutenddate and sponsoralarm in
+        (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Code},'%'))) and datetimes &gt;= substring(#{StartTime},0,8) and datetimes &lt;=substring(#{EndTime},0,8)
+         group by personid
     </select>
 
 

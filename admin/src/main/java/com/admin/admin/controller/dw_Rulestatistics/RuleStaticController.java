@@ -7,6 +7,8 @@ import com.admin.admin.service.dw_violation.ViolationService;
 import com.admin.model.Appstatistics.AppStatistics;
 import com.admin.model.Appstatistics.ViotionStatics;
 import com.common.common.result.ResponseResult;
+import com.common.common.result.ResultCode;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +32,7 @@ public class RuleStaticController {
     private ViolationService violationService;
 
 
+    @ApiOperation("违规程度统计")
     @GetMapping("/getRuuleList")
     public ResponseResult getRuuleList(@RequestParam String Code,int level,int codelevel,String StartTime,String EndTime) {
         ResponseResult result = new ResponseResult();
@@ -41,6 +44,9 @@ public class RuleStaticController {
         }
 
         List<Map<String, String>> addlist = addressService.getAddress(Code, codelevel);
+        if (addlist.size()==0){
+            return result.setData("没有派出所");
+        }
         if (level==1){
           //  Violationfens Volation=violationService.GetByCriteria("1");
 
@@ -69,9 +75,32 @@ public class RuleStaticController {
         }else if(level==3){
             for (Map<String, String> item:addlist) {
                 ViotionStatics model = new ViotionStatics();
+                List<Map<String,String>> FrequencyList=ruleStatSericve.getNotout(item.get("code").substring(0,(codelevel*2)+2),StartTime,EndTime);
+                int Normal=0;
+                int Slight=0;
+                int Severity=0;
+                for (Map<String,String> itam:FrequencyList){
+                    if (Integer.parseInt(itam.get("num").toString())==0){
+                        Normal+=1;
+                    }else if(Integer.parseInt(itam.get("num").toString())==1){
+                        Slight+=1;
+                    }else if(Integer.parseInt(itam.get("num").toString())==2){
+                        Severity+=1;
+                    }
+                }
+                model.setNormalNumber(Normal);
+                model.setMinorNumber(Slight);
+                model.setCriticalNumber(Severity);
+                model.setAreaCode(item.get("code"));
+                model.setAreaName(item.get("name"));
+                numberList.add(model);
+
+
             }
         }
-        return result;
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(numberList);
 
     }
 }

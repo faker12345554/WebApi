@@ -17,7 +17,7 @@ public class RuleStatSericve {
     }
 
     //获取未脱离管控区域的人数
-    public int getNotout(String Code,String StartTime,String EndTime){
+    public List<Map<String,String>> getNotout(String Code,String StartTime,String EndTime){
         return ruleStatistics.getNotout(Code,StartTime,EndTime);
     }
 
