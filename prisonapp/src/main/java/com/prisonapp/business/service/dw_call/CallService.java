@@ -25,6 +25,7 @@ public class CallService {
     public int makeCall(String type){
         return callDao.makeCall(type);
     }
+
     public TSendphone checkOnline(String Sponsoralarm){
         return callDao.checkOnline(Sponsoralarm);
     }
@@ -32,6 +33,11 @@ public class CallService {
     //发出通话出插入记录
     public int insertRecord(String callToken,String timeStamp,String type,String callname,String sendname,String personid,String accountname){
         return callDao.insertRecord(callToken,timeStamp,type,callname,sendname,personid,accountname);
+    }
+
+    //将通话类型改为改起
+    public int updateHangUp(String callToken,String timestamp){
+        return callDao.updateHangUp(callToken,timestamp);
     }
 
     //获取通话信息

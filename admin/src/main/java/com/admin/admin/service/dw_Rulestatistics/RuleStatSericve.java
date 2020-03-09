@@ -12,12 +12,12 @@ public class RuleStatSericve {
     @Autowired
     private RuleStatistics ruleStatistics;
 
-    public List<Map<String,String>> getRuuleList(String Code,int level,String StartTime,String EndTime){
-        return ruleStatistics.RuleStatisList(Code,level,StartTime,EndTime);
+    public int getRuuleList(String Code,int level,String StartTime,String EndTime,String Severity){
+        return ruleStatistics.RuleStatisList(Code,level,StartTime,EndTime,Severity);
     }
 
     //获取未脱离管控区域的人数
-    public int getNotout(String Code,String StartTime,String EndTime){
+    public List<Map<String,String>> getNotout(String Code,String StartTime,String EndTime){
         return ruleStatistics.getNotout(Code,StartTime,EndTime);
     }
 

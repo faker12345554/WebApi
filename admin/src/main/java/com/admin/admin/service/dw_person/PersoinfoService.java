@@ -52,7 +52,7 @@ public class PersoinfoService {
             personinformation.setFounderid(CacheUtils.get("UserName").toString());
         }
 
-        personinformation.setFoundertime(new Date().toString());
+        //personinformation.setFoundertime(new Date().toString());
         personinformation.setPersonid(PersonId);
         personinformation.setViolationcode("0");
 
@@ -69,7 +69,7 @@ public class PersoinfoService {
         if (CacheUtils.get("UserName").toString()!=null) {
             personinformation.setModifierid(CacheUtils.get("UserName").toString());
         }
-        personinformation.setModifiertime(new Date());
+        //personinformation.setModifiertime(new Date());
         return personDao.updatePersion(personinformation);
     }
 
@@ -139,7 +139,7 @@ public class PersoinfoService {
         String limit="";
         int type= JudgementRole.Distinguishroles();
         if (type==1){
-            limit= CacheUtils.get("UserName").toString();
+            limit= CacheUtils.get("accountname").toString();
         }else{
             limit=CacheUtils.get("PoliceCode").toString();
         }

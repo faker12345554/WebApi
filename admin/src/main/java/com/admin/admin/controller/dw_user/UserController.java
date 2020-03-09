@@ -177,7 +177,7 @@ public class UserController {
         CacheUtils.put("Role",user.getRoleName(),0);
         CacheUtils.put("PoliceCode",user.getPoliceCode(),0);
         CacheUtils.put("UserId", user.getId(), 0);
-        CacheUtils.put("UserName",user.getAliasname());
+        CacheUtils.put("accountname",user.getAccountname());
         String token = tokenService.getToken(user);
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());

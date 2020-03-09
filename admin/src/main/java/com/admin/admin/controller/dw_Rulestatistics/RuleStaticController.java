@@ -7,6 +7,8 @@ import com.admin.admin.service.dw_violation.ViolationService;
 import com.admin.model.Appstatistics.AppStatistics;
 import com.admin.model.Appstatistics.ViotionStatics;
 import com.common.common.result.ResponseResult;
+import com.common.common.result.ResultCode;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +32,7 @@ public class RuleStaticController {
     private ViolationService violationService;
 
 
+    @ApiOperation("违规程度统计")
     @GetMapping("/getRuuleList")
     public ResponseResult getRuuleList(@RequestParam String Code,int level,int codelevel,String StartTime,String EndTime) {
         ResponseResult result = new ResponseResult();
@@ -40,57 +43,64 @@ public class RuleStaticController {
             Code=Code.substring(0,8);
         }
 
+        List<Map<String, String>> addlist = addressService.getAddress(Code, codelevel);
+        if (addlist.size()==0){
+            return result.setData("没有派出所");
+        }
         if (level==1){
-            Violationfens Volation=violationService.GetByCriteria("1");
+          //  Violationfens Volation=violationService.GetByCriteria("1");
 
-            List<Map<String, String>> addlist = addressService.getAddress(Code, codelevel);
+
             for (Map<String, String> item:addlist){
                 ViotionStatics model=new ViotionStatics();
-
-                 List<Map<String,String>> Listmessge= ruleStatSericve.getRuuleList(item.get("code").substring(0,(codelevel*2)+2),level,StartTime,EndTime);
-                 int sum=0;
-                 int num=0;
-                 for (Map<String, String> itam:Listmessge){
-                     if (Integer.parseInt(itam.get("sum"))>=Volation.getSlightfens() && Integer.parseInt(itam.get("sum"))<Volation.getSeriousfens()){
-                         sum+=1;
-                     }else if(Integer.parseInt(itam.get("sum"))>=Volation.getSeriousfens()){
-                         num+=1;
-                     }
-                 }
-                 model.setNormalNumber(ruleStatSericve.getNotout(item.get("code").substring(0,(codelevel*2)+2),StartTime,EndTime));
-                 model.setMinorNumber(sum);
-                 model.setCriticalNumber(num);
+                 model.setNormalNumber(ruleStatSericve.getRuuleList(item.get("code").substring(0,(codelevel*2)+2),level,StartTime,EndTime,"正常"));
+                 model.setMinorNumber(ruleStatSericve.getRuuleList(item.get("code").substring(0,(codelevel*2)+2),level,StartTime,EndTime,"轻微"));
+                 model.setCriticalNumber(ruleStatSericve.getRuuleList(item.get("code").substring(0,(codelevel*2)+2),level,StartTime,EndTime,"严重"));
                  model.setAreaCode(item.get("code"));
                  model.setAreaName(item.get("name"));
                 numberList.add(model);
             }
         }else if(level==2){
-            Violationfens Volation=violationService.GetByCriteria("2");
-            List<Map<String, String>> addlist = addressService.getAddress(Code, codelevel);
             for (Map<String, String> item:addlist){
                 ViotionStatics model=new ViotionStatics();
-                List<Map<String,String>> Listmessge= ruleStatSericve.getRuuleList(item.get("code").substring(0,(codelevel*2)+2),level,StartTime,EndTime);
-                int sum=0;
-                int num=0;
-                for (Map<String,String> itam:Listmessge){
 
-                    if (Integer.parseInt(itam.get("sum"))>=Volation.getSlightfens() && Integer.parseInt(itam.get("sum"))<Volation.getSeriousfens()){
-                        sum+=1;
-                    }else if(Integer.parseInt(itam.get("sum"))>=Volation.getSeriousfens()){
-                        num+=1;
-                    }
-                }
-                model.setMinorNumber(sum);
-                model.setCriticalNumber(num);
+                model.setNormalNumber(ruleStatSericve.getRuuleList(item.get("code").substring(0,(codelevel*2)+2),level,StartTime,EndTime,"正常"));
+                model.setMinorNumber(ruleStatSericve.getRuuleList(item.get("code").substring(0,(codelevel*2)+2),level,StartTime,EndTime,"轻微"));
+                model.setCriticalNumber(ruleStatSericve.getRuuleList(item.get("code").substring(0,(codelevel*2)+2),level,StartTime,EndTime,"严重"));
                 model.setAreaCode(item.get("code"));
                 model.setAreaName(item.get("name"));
                 numberList.add(model);
             }
 
         }else if(level==3){
-            List<Map<String, String>> addlist = addressService.getAddress(Code.substring(0,8), 4);
+            for (Map<String, String> item:addlist) {
+                ViotionStatics model = new ViotionStatics();
+                List<Map<String,String>> FrequencyList=ruleStatSericve.getNotout(item.get("code").substring(0,(codelevel*2)+2),StartTime,EndTime);
+                int Normal=0;
+                int Slight=0;
+                int Severity=0;
+                for (Map<String,String> itam:FrequencyList){
+                    if (Integer.parseInt(itam.get("num").toString())==0){
+                        Normal+=1;
+                    }else if(Integer.parseInt(itam.get("num").toString())==1){
+                        Slight+=1;
+                    }else if(Integer.parseInt(itam.get("num").toString())==2){
+                        Severity+=1;
+                    }
+                }
+                model.setNormalNumber(Normal);
+                model.setMinorNumber(Slight);
+                model.setCriticalNumber(Severity);
+                model.setAreaCode(item.get("code"));
+                model.setAreaName(item.get("name"));
+                numberList.add(model);
+
+
+            }
         }
-        return result;
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(numberList);
 
     }
 }

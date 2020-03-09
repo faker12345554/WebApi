@@ -15,10 +15,10 @@
             select code,detail as name from dictionary    where   code  like  '%000000%'   and  kind ='06'   and detail like '%佛山%' and code  !='440600000000'
         </if>
         <if test="level==3">
-            select code,detail as name from dictionary    where   code  like  concat('%',#{Code},'%')   and  kind ='06'  and   code  like  '%0000%' and detail like concat('%','派出所','%')
+            select code,detail as name from dictionary    where   code  like  concat('%',#{Code},'%')   and  kind ='06'  and   code  like  '%0000%' and detail like concat('%','派出所')
         </if>
         <if test="level==4">
-            select code,detail as name from dictionary    where   code  like  concat('%',#{Code},'%')  and  kind ='06'  and   code  like  '%00%' and detail like  concat('%','派出所','%')
+            select code,detail as name from dictionary    where   code  like  concat('%',#{Code},'%')  and  kind ='06'  and   code  like  '%00%' and detail like  concat('%','派出所')
         </if>
 
     </select>

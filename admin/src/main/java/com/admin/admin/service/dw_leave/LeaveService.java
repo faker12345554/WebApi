@@ -29,7 +29,7 @@ public class LeaveService {
         String limit="";
         int type= JudgementRole.Distinguishroles();
         if (type==1){
-            limit= CacheUtils.get("UserName").toString();
+            limit= CacheUtils.get("accountname").toString();
         }else{
             limit=CacheUtils.get("PoliceCode").toString();
         }

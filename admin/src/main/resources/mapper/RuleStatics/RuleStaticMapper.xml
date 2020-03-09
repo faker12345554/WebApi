@@ -3,41 +3,51 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_Rulestatistics.RuleStatistics">
 
+
+
+    <select id="RuleStatisList"  resultType="int">
+
+        <if test="level==1">
+            SELECT count(distinct personid) from t_severity where stype='1' and severity=#{Severity} and personid in
+            (SELECT personid from t_personinformation where bailoutbegindate &lt;= now() and now() &lt;= bailoutenddate and sponsoralarm in
+            (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Code},'%')))
+            and datetimes &gt;= substring(#{StartTime},0,8) and datetimes &lt;=substring(#{EndTime},0,8)
+        </if>
+        <if test="level==2">
+            SELECT count(distinct personid) from t_severity where stype='2' and severity=#{Severity} and personid in
+            (SELECT personid from t_personinformation where bailoutbegindate&lt;= now() and now()&lt;= bailoutenddate and sponsoralarm in
+            (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Code},'%')))
+            and datetimes &gt;= substring(#{StartTime},0,8) and datetimes &lt;=substring(#{EndTime},0,8)
+        </if>
+
+
+    </select>
     <resultMap id="StatisMap" type="HashMap">
-        <result property="sum" column="sum" jdbcType="VARCHAR" />
+        <result property="num" column="num" jdbcType="VARCHAR" />
         <result property="personid" column="personid" jdbcType="VARCHAR"/>
     </resultMap>
+    <select id="getNotout" resultMap="StatisMap">
 
-    <select id="RuleStatisList"  resultMap="StatisMap">
-
-        <if test="level==1">
-        SELECT count (*) as sum,personid from t_personmessage where personid in( SELECT personid from t_personinformation
-         where bailoutbegindate &lt;= now() and now() &lt;= bailoutenddate and sponsoralarm in (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Code},'%')  )) and
-          to_date(to_char(messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd') and to_date(to_char(messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd')
-          GROUP BY personid
-        </if>
-        <if test="level==2">
-            SELECT count(DISTINCT personid) as sum,personid from t_summons where personid in	(SELECT personid from t_personinformation
-             where bailoutbegindate&lt;= now() and now()&lt;= bailoutenddate and sponsoralarm in
-             (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Code},'%')))  AND reporttime  is null
-             and to_date(to_char(summonsendtime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd')
-             and to_date(to_char(summonsendtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd') GROUP BY personid
-        </if>
-
+        SELECT CAST( max(signbool) as text) as num,personid from	t_severity where  personid in	(SELECT personid from t_personinformation where bailoutbegindate&lt;= now() and now()&lt;= bailoutenddate and sponsoralarm in
+        (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Code},'%'))) and datetimes &gt;= substring(#{StartTime},0,8) and datetimes &lt;=substring(#{EndTime},0,8)
+         group by personid
     </select>
-    <select id="getNotout" resultType="int" >
-        <if test="level==1">
-            SELECT count (DISTINCT personid) from t_personinformation where bailoutbegindate&lt;= now() and now()&lt;= bailoutenddate
-            and sponsoralarm in (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Code},'%')) and personid not in
-            (SELECT DISTINCT  personid FROM t_personmessage where to_date(to_char(messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd')
-            and to_date(to_char(messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd'))
-        </if>
-        <if test="level==2">
-
-        </if>
 
 
-    </select>
+<!--    <select id="" >-->
+<!--        SELECT (SELECT count(*) from t_personinformation-->
+<!--        where bailoutbegindate>= date_trunc('month',current_date) and-->
+<!--        bailoutbegindate<=date_trunc('month',current_date) + interval'1 month -1 day' and suspectstatuscode='1') as Bailmonth,-->
+<!--        (SELECT count(*) from t_personinformation-->
+<!--        where bailoutbegindate>= date_trunc('month',current_date) and-->
+<!--        bailoutbegindate<=date_trunc('month',current_date) + interval'1 month - 1 day' and suspectstatuscode='2') as Prisonmonth,-->
+<!--        ( SELECT count(*) from t_personinformation-->
+<!--        where bailoutbegindate>= date_trunc('year',current_date) and-->
+<!--        bailoutbegindate<=date_trunc('year',current_date) + interval'1 year - 1 day' and (suspectstatuscode='2' or suspectstatuscode='1')) as bailyear,-->
+<!--        (SELECT count(*) from t_personinformation-->
+<!--        where bailoutenddate>= date_trunc('month',current_date) and-->
+<!--        bailoutenddate<=date_trunc('month',current_date) + interval'1 month - 1 day' and (suspectstatuscode='2' or suspectstatuscode='1')) as Maturitybail-->
+<!--    </select>-->
 
 
 </mapper>
