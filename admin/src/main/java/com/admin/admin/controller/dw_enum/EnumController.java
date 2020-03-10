@@ -125,7 +125,7 @@ public class EnumController {
     }
 
     @ApiOperation(value = "删除数据字典")
-    @PassToken
+    @UserLoginToken
     @GetMapping("/deleteEnum")
     public ResponseResult deleteEnum(@ApiParam(name = "enumId", value = "字典编号") @RequestParam(required = true) String enumId) {
         ResponseResult result = new ResponseResult();
@@ -150,7 +150,7 @@ public class EnumController {
 //    }
 
     @ApiOperation(value = "查询数据字典")
-    @PassToken
+    @UserLoginToken
     @PostMapping("findEnum")
     public ResponseResult findEnum(@RequestBody(required = true) EnumSearchModel enumSearchModel) {
         ResponseResult result = new ResponseResult();
@@ -188,7 +188,7 @@ public class EnumController {
     }
 
     @ApiOperation(value = "获取单条记录")
-    @PassToken
+    @UserLoginToken
     @GetMapping("/getOneEnum")
     public ResponseResult getOneEnum(@ApiParam(name = "enumId", value = "字典id") @RequestParam(required = true) int enumId) {
         ResponseResult result = new ResponseResult();

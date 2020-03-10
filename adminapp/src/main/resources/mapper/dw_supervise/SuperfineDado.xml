@@ -132,7 +132,7 @@
         select * FROM t_summons WHERE t_summons.reporttime is null and t_summons.summontime is not null ORDER BY t_summons.summontime DESC
     </select>
     <select id="getUserInformation" resultType="com.adminapp.business.entity.dw_user.UserModel">
-        select * from t_user where accountname=#{userId}
+        select * from t_user where accountname=#{userId} AND usersystem=2
     </select>
     <insert id="insertPersonMessage">
         insert into t_personmessage(modular, content, personid, modularname, messagetime, readmessage, detailtype, detailtypename, leaveorder) VALUES (#{modular},
