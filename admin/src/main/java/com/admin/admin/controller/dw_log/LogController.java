@@ -166,7 +166,7 @@ public class LogController {
     }
 
     @ApiOperation(value = "获取查询日志")
-    @PassToken
+    @UserLoginToken
     @PostMapping("/listLog")
     public ResponseResult listAllLog(@RequestBody(required = true) LogSearchModel logSearchModel){
         ResponseResult result = new ResponseResult();
@@ -194,7 +194,7 @@ public class LogController {
     }
 
     @ApiOperation(value = "删除日志")
-    @PassToken
+    @UserLoginToken
     @GetMapping("/deleteLog")
     public ResponseResult deleteLog(@RequestParam String number){
         ResponseResult result = new ResponseResult();
