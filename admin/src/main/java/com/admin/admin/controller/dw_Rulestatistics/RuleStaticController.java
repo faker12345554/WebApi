@@ -6,6 +6,7 @@ import com.admin.admin.service.dw_address.AddressService;
 import com.admin.admin.service.dw_violation.ViolationService;
 import com.admin.model.Appstatistics.AppStatistics;
 import com.admin.model.Appstatistics.ViotionStatics;
+import com.admin.token.tation.UserLoginToken;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.ApiOperation;
@@ -32,6 +33,7 @@ public class RuleStaticController {
     private ViolationService violationService;
 
 
+    @UserLoginToken
     @ApiOperation("违规程度统计")
     @GetMapping("/getRuuleList")
     public ResponseResult getRuuleList(@RequestParam String Code,int level,int codelevel,String StartTime,String EndTime) {
