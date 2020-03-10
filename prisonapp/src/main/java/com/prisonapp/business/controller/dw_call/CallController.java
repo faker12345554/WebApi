@@ -55,6 +55,7 @@ public class CallController {
 
             //插入通话记录
             int insertRecord=callService.insertRecord(callToken,timeStamp,type,tPersoninformation.getSponsor(),tPersoninformation.getPersonname(),tPersoninformation.getPersonid(),tPersoninformation.getSponsoralarm());
+           // callModel.setCallGender(tPersoninformation.getGendercode());
             callModel.setCallToken(callToken);
             callModel.setCallTimestamp(timeStamp);
             callModel.setCallName(tPersoninformation.getSponsor());
@@ -62,12 +63,15 @@ public class CallController {
             result.resultMsg = "";
             result.data = callModel;
 
+            int gender = 0;
             //请求通话推送
             Calendar cal=new GregorianCalendar();
             cal.setTime(date);
             cal.add(Calendar.DATE,1);
             JSONObject object=new JSONObject();
             object.put("callName",tPersoninformation.getPersonname());//发起方姓名
+            object.put("callHeadUrl",tPersoninformation.getFacepath());
+            object.put("callGender",tPersoninformation.getGendercode());
             object.put("callToken",callToken);
             object.put("type",type);
             object.put("callTimestamp",timeStamp);
@@ -75,12 +79,39 @@ public class CallController {
             String pushType="PushRequestCall";
             callService.sendRequestCallCast(cal.getTime(),object,tPersoninformation.getSponsoralarm(),"ReleaseAdminCode",timeStamp,descriptions,pushType);
         }else if((tsendphone.getCanceltype()==null && date.getTime()/1000- Long.parseLong(tsendphone.getCalltimestamp())/1000>120)   || (tsendphone.getCanceltype()==null  && tsendphone.getAgreecalltimestamp()!=null && date.getTime()/1000-tsendphone.getAgreecalltimestamp().getTime()/1000>300)){
-//            Date date = new Date();
-//            String timeStamp = String.valueOf(date.getTime());
+
             callService.updateHangUp(tsendphone.getCalltoken(),timeStamp);
-            result.resultCode=1;
-            result.resultMsg="由于上次通话异常，请重新发起";
-            result.data=null;
+            String callToken = "th";
+            Random random = new Random();
+            for (int i = 0; i < 20; i++) {
+                callToken += String.valueOf(random.nextInt(10));
+            }
+
+            //插入通话记录
+            int insertRecord=callService.insertRecord(callToken,timeStamp,type,tPersoninformation.getSponsor(),tPersoninformation.getPersonname(),tPersoninformation.getPersonid(),tPersoninformation.getSponsoralarm());
+            // callModel.setCallGender(tPersoninformation.getGendercode());
+            callModel.setCallToken(callToken);
+            callModel.setCallTimestamp(timeStamp);
+            callModel.setCallName(tPersoninformation.getSponsor());
+            result.resultCode = 0;
+            result.resultMsg = "";
+            result.data = callModel;
+
+            int gender = 0;
+            //请求通话推送
+            Calendar cal=new GregorianCalendar();
+            cal.setTime(date);
+            cal.add(Calendar.DATE,1);
+            JSONObject object=new JSONObject();
+            object.put("callName",tPersoninformation.getPersonname());//发起方姓名
+            object.put("callHeadUrl",tPersoninformation.getFacepath());
+            object.put("callGender",tPersoninformation.getGendercode());
+            object.put("callToken",callToken);
+            object.put("type",type);
+            object.put("callTimestamp",timeStamp);
+            String descriptions="管理端请求通话推送";
+            String pushType="PushRequestCall";
+            callService.sendRequestCallCast(cal.getTime(),object,tPersoninformation.getSponsoralarm(),"ReleaseAdminCode",timeStamp,descriptions,pushType);
         }
         else {
             result.resultCode=21;
@@ -161,13 +192,13 @@ public class CallController {
             cal.setTime(date);
             cal.add(Calendar.DATE,1);
             JSONObject object=new JSONObject();
-            object.put("serverUrl",serverUrl);//发起方姓名
+            object.put("serverUrl",serverUrl);
             object.put("roomCode",roomCode);
             object.put("type",tSendphone.getCalltype());
             object.put("callToken",callToken);
             String descriptions="管理端同意通话推送";
             String timestamp=String.valueOf(date.getTime());
-            String pushType="PushRequestCall";
+            String pushType="PushStartCall";
             callService.sendRequestCallCast(cal.getTime(),object,tSendphone.getAccountname(),"ReleaseAdminCode",timestamp,descriptions,pushType);
         }else{
             resultSet.resultCode=1;

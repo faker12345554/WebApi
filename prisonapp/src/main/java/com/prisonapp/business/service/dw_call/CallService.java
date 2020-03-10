@@ -59,7 +59,7 @@ public class CallService {
     public void sendRequestCallCast(Date date, JSONObject custom, String alias, String aliasType, String timestamp, String descriptions, String pushType) throws Exception{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         PushClient client = new PushClient();
-        AndroidCustomizedcast customizedcast=new AndroidCustomizedcast("5dd349b4570df37b6700045e", "4hpqbdi0wpikb7bkwamq4uwnpvkjhebz");
+        AndroidCustomizedcast customizedcast=new AndroidCustomizedcast("5dd349000cafb2abac000176", "4onubtt8elkw5cypyffzvdrcmjzowkmo");
         customizedcast.setAlias(alias,aliasType);
         customizedcast.setCustomField(custom);
         customizedcast.setProductionMode();

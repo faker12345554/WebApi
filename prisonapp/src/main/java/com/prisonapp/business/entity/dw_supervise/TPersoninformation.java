@@ -334,4 +334,11 @@ public class TPersoninformation {
     this.yjsponsoralarm = yjsponsoralarm;
   }
 
+  public int getGendercode() {
+    return gendercode;
+  }
+
+  public void setGendercode(int gendercode) {
+    this.gendercode = gendercode;
+  }
 }
