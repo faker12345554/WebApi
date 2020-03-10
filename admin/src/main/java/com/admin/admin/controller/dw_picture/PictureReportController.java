@@ -68,7 +68,7 @@ public class PictureReportController {
         }
     }
 
-    @UserLoginToken
+    @PassToken
     @ApiOperation(value = "上传照片")
     @PostMapping("/uploadPicture")
     public ResponseResult uploadPicture(@ApiParam(name = "file",value = "照片")@RequestParam(required =true) MultipartFile file){
