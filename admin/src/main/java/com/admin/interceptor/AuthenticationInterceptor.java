@@ -76,6 +76,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 CacheUtils.put("PoliceCode",user.getPoliceCode(),0);
                 CacheUtils.put("UserId", user.getId(), 0);
                 CacheUtils.put("accountname",user.getAccountname());
+                CacheUtils.put("UserName",user.getAliasname());
                 // 验证 token
                 JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
                 try {
