@@ -3,8 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_leave.LeaveDao">
     <select id="getLeave" parameterType="com.admin.model.search.SearchModel" resultType="com.admin.model.leave.LeavefModel">
-
-
         SELECT * FROM t_leave l
         LEFT JOIN t_auditor a ON l.leaveorder = a.leaveorder AND a.statuscode IN ('2','3')
         where l.personid in (SELECT t.personid from t_personinformation as t
@@ -18,40 +16,40 @@
         )
 
         <if test="searchModel.PersonId !=null and searchModel.PersonId!='' and searchModel.Condition==null"  >
-            and a.personid=#{searchModel.PersonId}
+            and l.personid=#{searchModel.PersonId}
         </if>
         <if test="searchModel.Condition ==null and searchModel.PersonName!=null ">
-            and a.personname like concat('%',#{searchModel.PersonName},'%')
+            and l.personname like concat('%',#{searchModel.PersonName},'%')
         </if>
         <if test="searchModel.Condition !=null and searchModel.PersonName==null and searchModel.PersonId==null ">
-            and a.states like concat('%',#{searchModel.condition},'%')
+            and l.states like concat('%',#{searchModel.condition},'%')
         </if>
 
         <if test="searchModel.Condition !=null and searchModel.PersonName==null and searchModel.PersonId !=null ">
-            and a.personid=#{searchModel.PersonId} and a.states like concat('%',#{searchModel.condition},'%')
+            and l.personid=#{searchModel.PersonId} and l.states like concat('%',#{searchModel.condition},'%')
     </if>
 
         <if test="searchModel.Condition !=null and searchModel.PersonName!=null and searchModel.PersonName!='' and searchModel.StartTime!=null and searchModel.EndTime!=null ">
-            and a.states=#{searchModel.Condition}
-            a.personname like concat('%',#{searchModel.PersonName},'%') and
-            a.subittimestamp > #{searchModel.StartTime} and a.subittimestamp &lt; #{searchModel.EndTime}
+            and l.states=#{searchModel.Condition}
+            l.personname like concat('%',#{searchModel.PersonName},'%') and
+            l.subittimestamp > #{searchModel.StartTime} and l.subittimestamp &lt; #{searchModel.EndTime}
         </if>
         <if test="searchModel.Condition ==null and (searchModel.PersonName!=null or searchModel.PersonName=='') and searchModel.StartTime!=null and searchModel.EndTime!=null ">
-            and a.personname like concat('%',#{searchModel.PersonName},'%') and
-            a.subittimestamp &gt; #{searchModel.StartTime} and a.subittimestamp &lt; #{searchModel.EndTime}
+            and l.personname like concat('%',#{searchModel.PersonName},'%') and
+            l.subittimestamp &gt; #{searchModel.StartTime} and l.subittimestamp &lt; #{searchModel.EndTime}
         </if>
 
         <if test="searchModel.Condition ==null and (searchModel.PersonName==null or searchModel.PersonName=='') and searchModel.StartTime!=null and  searchModel.EndTime!=null ">
-            and a.subittimestamp > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and a.subittimestamp &lt; TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+            and l.subittimestamp > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and l.subittimestamp &lt; TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="searchModel.Condition ==null and (searchModel.PersonName==null or searchModel.PersonName=='') and searchModel.StartTime!=null and searchModel.EndTime==null ">
-            and a.subittimestamp > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS')
+            and l.subittimestamp > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="searchModel.Condition ==null and (searchModel.PersonName==null or searchModel.PersonName=='') and searchModel.StartTime==null and searchModel.EndTime!=null ">
-            and a.subittimestamp &lt; TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+            and l.subittimestamp &lt; TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="searchModel.list.size()>0">
-            and a.id in
+            and l.id in
             <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
                 #{id}
             </foreach>
