@@ -7,7 +7,7 @@
 
         SELECT * FROM t_leave l
         LEFT JOIN t_auditor a ON l.leaveorder = a.leaveorder AND a.statuscode IN ('2','3')
-        where a.personid in (SELECT t.personid from t_personinformation as t
+        where l.personid in (SELECT t.personid from t_personinformation as t
         left JOIN t_user as u on u.accountname=t.sponsoralarm
         <if test="type==1">
             where  t.sponsoralarm=#{limit}  and u.usersystem='1'
