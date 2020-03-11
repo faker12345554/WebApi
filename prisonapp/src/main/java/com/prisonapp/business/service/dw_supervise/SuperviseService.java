@@ -62,8 +62,12 @@ public class SuperviseService {
         return superviseDao.faceRecognize(userId);
     }
 
-    public int  insertFaceRecognize(String userId,int type,int result ,String upLoadFaceUrl){
-        return superviseDao.insertFaceRecognize(userId,type,result,upLoadFaceUrl);
+    public TEnum getQDLX(String typecode,String enumcode){
+        return superviseDao.getQDLX(typecode,enumcode);
+    }
+
+    public int  insertFaceRecognize(String userId,int type,int result ,String upLoadFaceUrl,String typename){
+        return superviseDao.insertFaceRecognize(userId,type,result,upLoadFaceUrl,typename);
     }
 
     public List<FaceRecognizeModel> getFaceRecognize(String userId,int  type){
