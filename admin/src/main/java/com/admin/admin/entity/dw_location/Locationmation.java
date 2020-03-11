@@ -16,8 +16,19 @@ public class Locationmation {
   private String alarmstate;
   private long surpluselectricity;
   private String signalintensity;
+
+  public String getReceivingtime() {
+    return Receivingtime;
+  }
+
+  public Locationmation setReceivingtime(String receivingtime) {
+    Receivingtime = receivingtime;
+    return this;
+  }
+
   private String fscope;
   private String goout;
+  private String Receivingtime;
 
   public Locationmation setTimestamp(Date timestamp) {
     this.timestamp = timestamp;
