@@ -5,8 +5,11 @@ import com.admin.admin.service.dw_Rulestatistics.RuleStatSericve;
 import com.admin.admin.service.dw_address.AddressService;
 import com.admin.admin.service.dw_violation.ViolationService;
 import com.admin.model.Appstatistics.AppStatistics;
+import com.admin.model.Appstatistics.HomePage;
 import com.admin.model.Appstatistics.ViotionStatics;
+import com.admin.model.Appstatistics.monthnumber;
 import com.admin.token.tation.UserLoginToken;
+import com.admin.tool.CacheUtils;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.ApiOperation;
@@ -16,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -104,5 +109,32 @@ public class RuleStaticController {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(numberList);
 
+    }
+
+   // @UserLoginToken
+    @ApiOperation("首页")
+    @GetMapping("/HomePage")
+    public ResponseResult gethomePage(){
+        ResponseResult result = new ResponseResult();
+        HomePage model=ruleStatSericve.Homeindex();
+        List<monthnumber> monthlist=new ArrayList<monthnumber>();
+        for (int i=0;i<=12;i++){
+            monthnumber monthmodel=new monthnumber();
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.MONTH, i);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            System.out.println(sdf.format(cal.getTime()));
+            monthmodel.setBailnumber(ruleStatSericve.getNumber("1", sdf.format(cal.getTime())));
+            monthmodel.setSupervisionnumber(ruleStatSericve.getNumber("2",sdf.format(cal.getTime())));
+            monthmodel.setMonth(sdf.format(cal.getTime()).substring(0,7));
+            monthlist.add(monthmodel);
+        }
+        model.setPersonnumber(monthlist);
+        model.setSummons(ruleStatSericve.getSummonsList());
+        model.setLogList(ruleStatSericve.getLoglist(Integer.parseInt(CacheUtils.get("UserId").toString())));
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        return result.setData(model);
     }
 }

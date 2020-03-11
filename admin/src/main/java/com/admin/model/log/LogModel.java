@@ -1,11 +1,23 @@
 package com.admin.model.log;
 
+import com.admin.model.person.PersonModel;
+
 public class LogModel {
     private int id;
     private int operator;
     private String modular;
     private String action;
     private String operatingTime;
+    private String UserName;
+
+    public String getUserName() {
+        return UserName;
+    }
+
+    public LogModel setUserName(String userName) {
+        UserName = userName;
+        return this;
+    }
 
     public int getId() {
         return id;

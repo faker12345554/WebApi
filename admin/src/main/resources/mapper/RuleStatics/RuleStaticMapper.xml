@@ -33,20 +33,40 @@
          group by personid
     </select>
 
-<!--    <select id="" >-->
-<!--        SELECT (SELECT count(*) from t_personinformation-->
-<!--        where bailoutbegindate>= date_trunc('month',current_date) and-->
-<!--        bailoutbegindate<=date_trunc('month',current_date) + interval'1 month -1 day' and suspectstatuscode='1') as Bailmonth,-->
-<!--        (SELECT count(*) from t_personinformation-->
-<!--        where bailoutbegindate>= date_trunc('month',current_date) and-->
-<!--        bailoutbegindate<=date_trunc('month',current_date) + interval'1 month - 1 day' and suspectstatuscode='2') as Prisonmonth,-->
-<!--        ( SELECT count(*) from t_personinformation-->
-<!--        where bailoutbegindate>= date_trunc('year',current_date) and-->
-<!--        bailoutbegindate<=date_trunc('year',current_date) + interval'1 year - 1 day' and (suspectstatuscode='2' or suspectstatuscode='1')) as bailyear,-->
-<!--        (SELECT count(*) from t_personinformation-->
-<!--        where bailoutenddate>= date_trunc('month',current_date) and-->
-<!--        bailoutenddate<=date_trunc('month',current_date) + interval'1 month - 1 day' and (suspectstatuscode='2' or suspectstatuscode='1')) as Maturitybail-->
-<!--    </select>-->
+    <select id="Homeindex"  resultType="com.admin.model.Appstatistics.HomePage">
+        SELECT (SELECT count(*) from t_personinformation
+        where bailoutbegindate>= date_trunc('month',current_date) and
+        bailoutbegindate &lt;=date_trunc('month',current_date) + interval'1 month -1 day' and suspectstatuscode='1') as Bailmonth,
+        (SELECT count(*) from t_personinformation
+        where bailoutbegindate >= date_trunc('month',current_date) and
+        bailoutbegindate &lt;=date_trunc('month',current_date) + interval'1 month - 1 day' and suspectstatuscode='2') as Prisonmonth,
+        ( SELECT count(*) from t_personinformation
+        where bailoutbegindate>= date_trunc('year',current_date) and
+        bailoutbegindate &lt;=date_trunc('year',current_date) + interval'1 year - 1 day' and (suspectstatuscode='2' or suspectstatuscode='1')) as bailyear,
+        (SELECT count(*) from t_personinformation
+        where bailoutenddate>= date_trunc('month',current_date) and
+        bailoutenddate &lt;=date_trunc('month',current_date) + interval'1 month - 1 day' and (suspectstatuscode='2' or suspectstatuscode='1')) as Maturitybail,
+        (SELECT count(DISTINCT personid) from t_summons where reporttime is NULL and TO_TIMESTAMP(summonsendtime, 'YYYY-MM-DD HH24:MI:SS') >=date_trunc('month',current_date) and TO_TIMESTAMP(summonsendtime, 'YYYY-MM-DD HH24:MI:SS') &lt;=date_trunc('month',current_date) + interval'1 month - 1 day') as Arraignmentnumber,
+        (SELECT count(DISTINCT personid) from t_prisonsetting where settingname='位置监控' and settingtime &lt;=date_trunc('month',current_date) + interval'1 month - 1 day')	as positionnumber,
+        (SELECT count(DISTINCT personid) from t_summons where reporttime is NULL and TO_TIMESTAMP(summonsendtime, 'YYYY-MM-DD HH24:MI:SS') >=date_trunc('year',current_date) and TO_TIMESTAMP(summonsendtime, 'YYYY-MM-DD HH24:MI:SS') &lt;=date_trunc('year',current_date) + interval'1 year - 1 day') as AnnualsummonsNum,
+        (SELECT count(DISTINCT personid) from t_personmessage where messagetime>=date_trunc('year',current_date) and messagetime &lt;=date_trunc('year',current_date) + interval'1 year - 1 day') as Annuallocation,
+        (SELECT count(DISTINCT personid ) from t_personmessage where messagetime>=date_trunc('month',current_date) and messagetime &lt;=date_trunc('month',current_date) + interval'1 month - 1 day') as monthnumber
+    </select>
+
+
+    <select id="getLoglist" parameterType="int" resultType="com.admin.model.log.LogModel">
+        SELECT t.*,u.aliasname from t_log as t
+		  left join t_user as u on u.id=t.operator	where operator=#{Userid}
+    </select>
+    <select id="getSummonsList" parameterType="String" resultType="com.admin.admin.entity.dw_summons.TSummons">
+        select * from t_summons where t_summons.personid in(
+        SELECT t_personinformation.personid from t_personinformation where sponsoralarm=#{UserName})
+    </select>
+
+    <select id="getNumber" parameterType="String" resultType="int">
+       select count(personid) from t_personinformation where suspectstatuscode=#{type}
+       and substring(to_char(bailoutbegindate,'yyyy-MM-dd HH:mm:ss'),0,8)=substring(#{Limitedmonth},0,8)
+    </select>
 
 
 
