@@ -70,10 +70,10 @@
        select count(personid) from t_personinformation where suspectstatuscode=#{type}
        and substring(to_char(bailoutbegindate,'yyyy-MM-dd HH:mm:ss'),0,8)=substring(#{Limitedmonth},0,8)
     </select>
-    <select id="">
-        <if test="id==1">
-        </if>
-    </select>
+<!--    <select id="">-->
+<!--        <if test="id==1">-->
+<!--        </if>-->
+<!--    </select>-->
 
 
 </mapper>
