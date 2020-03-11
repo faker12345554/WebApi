@@ -206,7 +206,8 @@ public class SuperviseController {
                     float num = Float.parseFloat(similar);
                     float fSimilar = (float)(Math.round(num*100))/100;
                     if (fSimilar >= 75.00) {
-                        superviseService.insertFaceRecognize(getPersonId(), 0, 0, upLoadFaceUrl);
+                        TEnum tEnum = superviseService.getQDLX("QDLX-001","1");
+                        superviseService.insertFaceRecognize(getPersonId(), 0, 0, upLoadFaceUrl,tEnum.getEnumname());
                         List<FaceRecognizeModel> faceRecognizeModels = superviseService.getFaceRecognize(getPersonId(), 0);
                         faceRecognizeModel.setCode(faceRecognizeModels.get(0).getCode());
                         faceRecognizeModel.setPassed(true);
@@ -216,7 +217,8 @@ public class SuperviseController {
                         result.resultMsg = "";
                         result.data = faceRecognizeModel;
                     } else {
-                        superviseService.insertFaceRecognize(getPersonId(), 0, 1, upLoadFaceUrl);
+                        TEnum tEnum = superviseService.getQDLX("QDLX-001","1");
+                        superviseService.insertFaceRecognize(getPersonId(), 0, 1, upLoadFaceUrl,tEnum.getEnumname());
                         List<FaceRecognizeModel> faceRecognizeModels = superviseService.getFaceRecognize(getPersonId(), 0);
                         faceRecognizeModel.setCode(faceRecognizeModels.get(0).getCode());
                         faceRecognizeModel.setPassed(false);
