@@ -4,18 +4,19 @@
 <mapper namespace="com.admin.admin.dao.dw_Rulestatistics.RuleStatistics">
 
 
-
-    <select id="RuleStatisList"  resultType="int">
+    <select id="RuleStatisList" resultType="int">
 
         <if test="level==1">
             SELECT count(distinct personid) from t_severity where stype='1' and severity=#{Severity} and personid in
-            (SELECT personid from t_personinformation where bailoutbegindate &lt;= now() and now() &lt;= bailoutenddate and sponsoralarm in
+            (SELECT personid from t_personinformation where bailoutbegindate &lt;= now() and now() &lt;= bailoutenddate
+            and sponsoralarm in
             (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Code},'%')))
             and datetimes &gt;= substring(#{StartTime},0,8) and datetimes &lt;=substring(#{EndTime},0,8)
         </if>
         <if test="level==2">
             SELECT count(distinct personid) from t_severity where stype='2' and severity=#{Severity} and personid in
-            (SELECT personid from t_personinformation where bailoutbegindate&lt;= now() and now()&lt;= bailoutenddate and sponsoralarm in
+            (SELECT personid from t_personinformation where bailoutbegindate&lt;= now() and now()&lt;= bailoutenddate
+            and sponsoralarm in
             (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Code},'%')))
             and datetimes &gt;= substring(#{StartTime},0,8) and datetimes &lt;=substring(#{EndTime},0,8)
         </if>
@@ -23,7 +24,7 @@
 
     </select>
     <resultMap id="StatisMap" type="HashMap">
-        <result property="num" column="num" jdbcType="VARCHAR" />
+        <result property="num" column="num" jdbcType="VARCHAR"/>
         <result property="personid" column="personid" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="getNotout" resultMap="StatisMap">
@@ -33,7 +34,7 @@
          group by personid
     </select>
 
-    <select id="Homeindex"  resultType="com.admin.model.Appstatistics.HomePage">
+    <select id="Homeindex" resultType="com.admin.model.Appstatistics.HomePage">
         SELECT (SELECT count(*) from t_personinformation
         where bailoutbegindate>= date_trunc('month',current_date) and
         bailoutbegindate &lt;=date_trunc('month',current_date) + interval'1 month -1 day' and suspectstatuscode='1') as Bailmonth,
@@ -69,7 +70,10 @@
        select count(personid) from t_personinformation where suspectstatuscode=#{type}
        and substring(to_char(bailoutbegindate,'yyyy-MM-dd HH:mm:ss'),0,8)=substring(#{Limitedmonth},0,8)
     </select>
-
+    <select id="">
+        <if test="id==1">
+        </if>
+    </select>
 
 
 </mapper>
