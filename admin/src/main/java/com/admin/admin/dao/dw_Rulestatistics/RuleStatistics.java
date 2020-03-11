@@ -1,5 +1,9 @@
 package com.admin.admin.dao.dw_Rulestatistics;
 
+import com.admin.admin.entity.dw_log.LogInformation;
+import com.admin.admin.entity.dw_summons.TSummons;
+import com.admin.model.Appstatistics.HomePage;
+import com.admin.model.log.LogModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,6 +20,18 @@ public interface RuleStatistics {
 
     //获得正常的人数
     List<Map<String,String>> getNotout(@Param("Code") String Code,@Param("StartTime") String StartTime, @Param("EndTime") String EndTime);
+
+    //首页
+    HomePage Homeindex();
+
+    //工作日志
+    List<LogModel> getLoglist(int Userid);
+
+    List<TSummons> getSummonsList(String UserName);
+
+    int getNumber(String type,String Limitedmonth);
+
+
 
 
 }
