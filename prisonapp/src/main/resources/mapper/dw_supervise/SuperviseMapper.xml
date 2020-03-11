@@ -67,9 +67,13 @@
     select * from t_personinformation where personid =#{userId}
     </select>
 
+    <select id="getQDLX" resultType="com.prisonapp.business.entity.dw_supervise.TEnum">
+        select * from t_enum where typecode=#{typecode} and enumcode=#{enumcode};
+    </select>
+
     <insert id="insertFaceRecognize">
         insert into t_singin (personid,type,result,filepath,createtime,typename)
-         values              (#{userId},#{type},#{result},#{upLoadFaceUrl},CURRENT_TIMESTAMP,'人脸签到')
+         values              (#{userId},#{type},#{result},#{upLoadFaceUrl},CURRENT_TIMESTAMP,#{typename})
     </insert>
 
     <select id="getFaceRecognize" resultType="com.prisonapp.business.entity.dw_supervise.FaceRecognizeModel">
