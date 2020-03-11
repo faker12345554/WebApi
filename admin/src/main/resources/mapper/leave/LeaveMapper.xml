@@ -3,16 +3,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_leave.LeaveDao">
     <select id="getLeave" parameterType="com.admin.model.search.SearchModel" resultType="com.admin.model.leave.LeavefModel">
-        SELECT a.*,b.auditordatetime FROM t_leave AS a
-        LEFT JOIN t_auditor AS b ON a.leaveorder=b.leaveorder
-        left join t_personinformation as t on t.personid=a.personid
-        where t.status=true
+
+
+        SELECT * FROM t_leave l
+        LEFT JOIN t_auditor a ON l.leaveorder = a.leaveorder AND a.statuscode IN ('2','3')
+        where a.personid in (SELECT t.personid from t_personinformation as t
+        left JOIN t_user as u on u.accountname=t.sponsoralarm
         <if test="type==1">
-             and t.sponsoralarm=#{limit}
+            where  t.sponsoralarm=#{limit}  and u.usersystem='1'
         </if>
         <if test="type!=1">
-            and t.policecode=#{limit}
+            where t.policecode=#{limit}
         </if>
+        )
+
         <if test="searchModel.PersonId !=null and searchModel.PersonId!='' and searchModel.Condition==null"  >
             and a.personid=#{searchModel.PersonId}
         </if>

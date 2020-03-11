@@ -34,13 +34,6 @@ public class enclosureController {
 
     }
 
-//    @ApiOperation("修改人员行动范围信息")
-//    @PostMapping("/updateEnclosure")
-//    public ResponseResult updateEnclosure(@RequestBody enclosure enclosure, HttpServletResponse response) {
-//        result.setCode(ResultCode.SUCCESS.getCode());
-//        result.setMessage(ResultCode.SUCCESS.getMessage());
-//        return result.setData( enclosureService.updateEnclosure(enclosure));
-//    }
 
     @UserLoginToken
     @ApiOperation("删除人员行动范围信息")
