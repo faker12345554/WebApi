@@ -10,9 +10,20 @@ public class SinginModel extends PersonModel {
     private String reporttype;
     private String address;
     private String activityarea;
-    private Date createtime;
+    private String createtime;
     private float durationtime;
+
+    public String getTypename() {
+        return typename;
+    }
+
+    public SinginModel setTypename(String typename) {
+        this.typename = typename;
+        return this;
+    }
+
     private String filepath;
+    private String typename;
 
     public String getRemark() {
         return Remark;
@@ -102,11 +113,11 @@ public class SinginModel extends PersonModel {
         return this;
     }
 
-    public Date getCreatetime() {
+    public String getCreatetime() {
         return createtime;
     }
 
-    public SinginModel setCreatetime(Date createtime) {
+    public SinginModel setCreatetime(String createtime) {
         this.createtime = createtime;
         return this;
     }

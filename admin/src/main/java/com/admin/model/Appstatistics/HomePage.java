@@ -1,22 +1,23 @@
 package com.admin.model.Appstatistics;
 
 import com.admin.admin.entity.dw_log.LogInformation;
+import com.admin.admin.entity.dw_message.TMessage;
 import com.admin.admin.entity.dw_summons.TSummons;
 import com.admin.model.log.LogModel;
 
 import java.util.List;
 
 public class HomePage {
-    private int Bailmonth;
-    private int Prisonmonth;
-    private int bailyear;
-    private int Maturitybail;
-    private int Arraignmentnumber;
-    private int positionnumber;
-    private int AnnualsummonsNum;
+    private int Bailmonth; //当月取保人数
+    private int Prisonmonth;//本月监居人数
+    private int bailyear;//本年度取保监居人数
+    private int Maturitybail;//本月到期人数
+    private int Arraignmentnumber;//本月传讯未到人数
+    private int positionnumber;//本月定位监管人数
+    private int AnnualsummonsNum;//本年度违规人数
     private int Annuallocation;
-    private int monthnumber;
-    private List<TSummons> summons;
+    private int monthnumber;//本月违规定位监控人数
+    private List<TMessage> summons;
     private List<monthnumber> personnumber;
     private List<LogModel> logList;
 
@@ -30,11 +31,11 @@ public class HomePage {
     }
 
 
-    public List<TSummons> getSummons() {
+    public List<TMessage> getSummons() {
         return summons;
     }
 
-    public HomePage setSummons(List<TSummons> summons) {
+    public HomePage setSummons(List<TMessage> summons) {
         this.summons = summons;
         return this;
     }

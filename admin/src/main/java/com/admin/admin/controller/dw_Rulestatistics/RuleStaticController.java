@@ -130,6 +130,7 @@ public class RuleStaticController {
             monthmodel.setMonth(sdf.format(cal.getTime()).substring(0,7));
             monthlist.add(monthmodel);
         }
+        model.setAnnualsummonsNum(model.getAnnualsummonsNum()+model.getAnnuallocation());
         model.setPersonnumber(monthlist);
         model.setSummons(ruleStatSericve.getSummonsList());
         model.setLogList(ruleStatSericve.getLoglist(Integer.parseInt(CacheUtils.get("UserId").toString())));

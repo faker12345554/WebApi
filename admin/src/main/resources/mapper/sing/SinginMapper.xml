@@ -9,7 +9,7 @@
     <select id="ListSingin"
             resultType="com.admin.model.singin.SinginModel">
         select t.id,P.suspectstatus,P.personname,P.gender,P.age,t.reportstatus,t.reporttype,P.sponsor
-        ,t.address,t.activityarea,t.createtime,t.type,(CASE (SELECT Count(*) from t_leave where personid=t.personid and starttimestamp &lt;= t.createtime AND t.createtime &lt;= endtimestamp)
+        ,t.address,t.activityarea,t.createtime,t.typename,(CASE (SELECT Count(*) from t_leave where personid=t.personid and starttimestamp &lt;= t.createtime AND t.createtime &lt;= endtimestamp)
         WHEN 0 THEN '正常签到' ELSE '已请假' END) as Remark,tc.caseno,
         tc.handleunit,P.guid from t_singin AS t
         inner join t_personinformation AS P on p.personid=t.personid
