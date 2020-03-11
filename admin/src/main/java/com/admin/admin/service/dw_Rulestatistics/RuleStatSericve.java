@@ -2,6 +2,7 @@ package com.admin.admin.service.dw_Rulestatistics;
 
 import com.admin.admin.dao.dw_Rulestatistics.RuleStatistics;
 import com.admin.admin.entity.dw_log.LogInformation;
+import com.admin.admin.entity.dw_message.TMessage;
 import com.admin.admin.entity.dw_summons.TSummons;
 import com.admin.model.Appstatistics.HomePage;
 import com.admin.model.log.LogModel;
@@ -36,7 +37,7 @@ public class RuleStatSericve {
         return ruleStatistics.getLoglist(UserId);
     }
 
-    public List<TSummons> getSummonsList() {
+    public List<TMessage> getSummonsList() {
         return ruleStatistics.getSummonsList(CacheUtils.get("accountname").toString());
 
     }

@@ -57,10 +57,12 @@
     <select id="getLoglist" parameterType="int" resultType="com.admin.model.log.LogModel">
         SELECT t.*,u.aliasname from t_log as t
 		  left join t_user as u on u.id=t.operator	where operator=#{Userid}
+		  and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')=to_date(to_char(now(),'yyyy-MM-dd'),'yyyy-MM-dd')
     </select>
-    <select id="getSummonsList" parameterType="String" resultType="com.admin.admin.entity.dw_summons.TSummons">
-        select * from t_summons where t_summons.personid in(
+    <select id="getSummonsList" parameterType="String" resultType="com.admin.admin.entity.dw_message.TMessage">
+        select * from t_message where t_message.personid in(
         SELECT t_personinformation.personid from t_personinformation where sponsoralarm=#{UserName})
+        and to_date(to_char(t_message.messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')>to_date(to_char(now(),'yyyy-MM-dd'),'yyyy-MM-dd')
     </select>
 
     <select id="getNumber" parameterType="String" resultType="int">

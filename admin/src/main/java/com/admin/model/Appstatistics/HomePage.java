@@ -1,6 +1,7 @@
 package com.admin.model.Appstatistics;
 
 import com.admin.admin.entity.dw_log.LogInformation;
+import com.admin.admin.entity.dw_message.TMessage;
 import com.admin.admin.entity.dw_summons.TSummons;
 import com.admin.model.log.LogModel;
 
@@ -16,7 +17,7 @@ public class HomePage {
     private int AnnualsummonsNum;
     private int Annuallocation;
     private int monthnumber;
-    private List<TSummons> summons;
+    private List<TMessage> summons;
     private List<monthnumber> personnumber;
     private List<LogModel> logList;
 
@@ -30,11 +31,11 @@ public class HomePage {
     }
 
 
-    public List<TSummons> getSummons() {
+    public List<TMessage> getSummons() {
         return summons;
     }
 
-    public HomePage setSummons(List<TSummons> summons) {
+    public HomePage setSummons(List<TMessage> summons) {
         this.summons = summons;
         return this;
     }
