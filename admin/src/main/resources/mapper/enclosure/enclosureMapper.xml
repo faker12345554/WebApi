@@ -4,17 +4,17 @@
 <mapper namespace="com.admin.admin.dao.dw_enclosure.enclosureDao">
     <insert id="saveEnclosure" parameterType="com.admin.admin.entity.dw_enclosure.enclosure">
         insert into t_enclosure(personid,type,areaname,status,citycode,citylevel,areaarr) values
-        (#{personId},#{type},#{areaname},#{status},#{citycode},#{citylevel},#{areaArr})
+        (#{personId},#{type},#{areaname},true,#{citycode},#{citylevel},#{areaArr})
     </insert>
 
-    <update id="updateEnclosure" parameterType="com.admin.admin.entity.dw_enclosure.enclosure">
-        update t_enclosure set personid=#{personId},type=#{type},
-        areaname=#{areaname},citycode=#{citycode},citylevel=#{citylevel},areaarr=#{areaArr} where id=#{id}
-    </update>
+<!--    <update id="updateEnclosure" parameterType="com.admin.admin.entity.dw_enclosure.enclosure">-->
+<!--        update t_enclosure set personid=#{personId},type=#{type},-->
+<!--        areaname=#{areaname},citycode=#{citycode},citylevel=#{citylevel},areaarr=#{areaArr} where id=#{id}-->
+<!--    </update>-->
 
-    <update id="deleteEnclosure" parameterType="String">
-        update t_enclosure set status=false where personid=#{personId}
-    </update>
+    <delete id="deleteEnclosure" parameterType="String">
+        delete from t_enclosure where personid=#{personId}
+    </delete>
 
     <select id="selectEnclosureByPersonId" parameterType="String" resultType="int">
         select count(*) from t_enclosure where personid=#{personId}
