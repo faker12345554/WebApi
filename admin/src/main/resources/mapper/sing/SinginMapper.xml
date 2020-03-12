@@ -59,9 +59,9 @@
             AND t.createtime &lt; TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="searchModel.list.size()>0">
-            and id in
-            <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
-                #{id}
+            and t.id in
+            <foreach collection="searchModel.list" item="id" index="index" open="(" close=")" separator=",">
+                cast (#{id} as int)
             </foreach>
         </if>
     </select>
@@ -104,8 +104,8 @@
         </if>
         <if test="searchModel.list.size()>0">
             and t.id in
-            <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
-                #{id}
+            <foreach collection="searchModel.list" item="id" index="index" open="(" close=")" separator=",">
+               cast (#{id} as int)
             </foreach>
         </if>
 

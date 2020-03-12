@@ -6,13 +6,13 @@ import java.util.List;
 
 public class ExeclModel  {
     private String PersonId;
-    private List<Integer> list;
+    private List<String> list;
 
-    public List<Integer> getList() {
+    public List<String> getList() {
         return list;
     }
 
-    public ExeclModel setList(List<Integer> list) {
+    public ExeclModel setList(List<String> list) {
         this.list = list;
         return this;
     }

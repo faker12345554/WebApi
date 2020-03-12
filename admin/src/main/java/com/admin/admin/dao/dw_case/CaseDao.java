@@ -15,5 +15,5 @@ public interface CaseDao {
      //int DeleteCase(int )
 
     //查询案件信息
-    TCaseinfo GetCase(String PersonId);
+    TCaseinfo GetCase(String PersonId,String Caseno);
 }

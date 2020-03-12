@@ -5,7 +5,6 @@
 
     <insert id="SaveCase" parameterType="com.admin.admin.entity.dw_case.TCaseinfo">
         insert into legal."public".t_caseinfo values(#{casecategory},#{casename},#{caseno},#{receivedtime},#{handleunit},#{handlepeson},#{personid},#{casetype},#{casedescription})
-
     </insert>
 
     <update id="UpdateCase" parameterType="com.admin.admin.entity.dw_case.TCaseinfo">
@@ -14,6 +13,6 @@
     </update>
 
     <select id="GetCase" parameterType="String" resultType="com.admin.admin.entity.dw_case.TCaseinfo">
-        select * from t_caseinfo where personid=#{PersonId}
+        select * from t_caseinfo where personid=#{PersonId} and caseno=#{Caseno}
     </select>
 </mapper>

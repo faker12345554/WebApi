@@ -118,7 +118,7 @@ public class RuleStaticController {
         ResponseResult result = new ResponseResult();
         HomePage model=ruleStatSericve.Homeindex();
         List<monthnumber> monthlist=new ArrayList<monthnumber>();
-        for (int i=0;i<=12;i++){
+        for (int i=0;i<12;i++){
             monthnumber monthmodel=new monthnumber();
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.MONTH, i);
