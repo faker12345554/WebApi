@@ -9,16 +9,19 @@ import com.adminapp.config.token.tation.UserLoginToken;
 import com.adminapp.model.dw_supervise.*;
 import com.common.common.apppush.Demo;
 import com.common.common.result.ResultSet;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
+@Api(value="工作人员监督Controller",tags={"工作人员监督功能管理"})
 @RequestMapping("/app/admin/supervise")
 public class SuperviseController {
 
@@ -1527,7 +1530,8 @@ public class SuperviseController {
                                    @ApiParam(name="endDate",value = "结束时间戳")@RequestParam(required = false)String endDate,
                                    @ApiParam(name="count",value = "当前已获取数据条数")@RequestParam(required = true)int count,
                                    @ApiParam(name="requestCount",value = "请求获取条数")@RequestParam(required = true)int requestCount,
-                                   @ApiParam(name="key",value = "关键字")@RequestParam(required = false)String key){
+                                   @ApiParam(name="key",value = "关键字")@RequestParam(required = false)String key,
+                                   HttpServletResponse response){
         ResultSet rs=new ResultSet();
         if(type.equals("0")||type.equals("1")||type.equals("2")) {
             String userId = TokenUtil.getTokenUserId();
