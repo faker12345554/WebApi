@@ -39,7 +39,7 @@ public class AlarmController {
 //        return result.setData(alarmService.DeleteAlarm());
 //    }
 
-    @ApiOperation("获取报警提醒设置")
+    @ApiOperation("查询报警提醒设置")
     @GetMapping("/getAlarm")
     public ResponseResult getAlarm(){
         ResponseResult result = new ResponseResult();

@@ -165,7 +165,7 @@ public class LogController {
         return result.setData(modelList);
     }
 
-    @ApiOperation(value = "获取查询日志")
+    @ApiOperation(value = "查询操作日志")
     @UserLoginToken
     @PostMapping("/listLog")
     public ResponseResult listAllLog(@RequestBody(required = true) LogSearchModel logSearchModel){

@@ -43,7 +43,7 @@ public class LeaveController {
 
 
     @UserLoginToken
-    @ApiOperation(value = "获取全部请假信息")
+    @ApiOperation(value = "查询全部请假信息")
     @PostMapping("/listLeave")
     public ResponseResult listLeave(@RequestBody SearchModel searchModel) {
         ResponseResult result = new ResponseResult();
@@ -117,7 +117,7 @@ public class LeaveController {
         ResponseResult result = new ResponseResult();
         List<LeavefModel> allItems = leaveService.getLeave(searchModel);
         String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) +"外出信息"+ ".xls";
-        File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);
+        File file = new File(System.getProperty("user.dir") + "/../webapps/Execl/外出信息" + dateTime);
         result.setData(dateTime);
         try (HSSFWorkbook workbook = new HSSFWorkbook()) {
             HSSFSheet sheet = workbook.createSheet("外出记录信息");
