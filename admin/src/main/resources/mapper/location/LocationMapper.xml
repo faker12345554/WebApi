@@ -4,12 +4,12 @@
 <mapper namespace="com.admin.admin.dao.dw_location.LocationDao">
 
     <select id="listLocationModel" parameterType="String" resultType="com.admin.model.location.LocationModel">
-        SELECT E.id,t.suspectstatus,t.personid,t.personname,t.age,t.gender,t.address,t.policestation,t.sponsor,t.casetype,E.areaname,t.bailoutbegindate,tc.caseno,
-        tc.handleunit,tc.handlepeson,t.guid
+        SELECT E.id,t.suspectstatus,t.personid,t.personname,t.age,t.gender,t.address,t.policestation,t.sponsor,tc.casetype,E.areaname,t.bailoutbegindate,tc.caseno,
+        tc.handleunit,tc.handlepeson,E.setuptime
         AS Starttime
         FROM "t_personinformation" As t
         INNER JOIN t_enclosure AS E on T.personid=E.personid
-        left join t_caseinfo tc on E.personid = tc.personid
+        left join t_caseinfo tc on t.personid = tc.personid and tc.caseno=t.caseno
         where E.status=true
         <if test="type==1">
             and t.sponsoralarm=#{limit}
@@ -36,7 +36,7 @@
 
     <select id="ListLocation" parameterType="String" resultType="com.admin.admin.entity.dw_location.Locationmation">
         SELECT * from t_location
-        where personid=#{PersonId}
+        where personid=#{PersonId} and locationtype='1'
         <if test="date!=null and date !=''">
             and to_char(timestamp,'yyyy-mm-dd') like concat('%',#{date},'%')
         </if>
@@ -45,10 +45,10 @@
     <select id="HistoricalTrack" parameterType="com.admin.model.search.SearchModel"
             resultType="com.admin.admin.entity.dw_location.Locationmation">
         SELECT
-        l.id,l.latitude,l.longitude,l.address,l.timestamp,l.locationtype,l.devicecoding,l.alarmstate,l.surpluselectricity,l.signalintensity,
+        l.id,l.latitude,l.longitude,l.address,l.timestamp as Receivingtime,l.locationtype,l.devicecoding,l.alarmstate,l.surpluselectricity,l.signalintensity,
         l.fscope,l.goout,P.personname as personid from t_location AS l
         inner join t_personinformation AS P on l.personid=P.personid
-        where l.personid = #{PersonId}
+        where l.personid = #{PersonId} and l.locationtype='1'
         <if test="FuzzyCondition !=null and FuzzyCondition !=''">
             and l.latitude like concat('%',#{FuzzyCondition},'%') or
             l.longitude like concat('%',#{FuzzyCondition},'%') or
@@ -72,9 +72,9 @@
             and l.timestamp &lt; TO_TIMESTAMP(#{EndTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="list.size()>0">
-            and id in
+            and l.id in
             <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
-                #{id}
+               cast( #{id} as int)
             </foreach>
         </if>
     </select>

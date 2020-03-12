@@ -55,8 +55,7 @@ public class PersoinfoService {
         //personinformation.setFoundertime(new Date().toString());
         personinformation.setPersonid(PersonId);
         personinformation.setViolationcode("0");
-
-
+        personinformation.setCaseno(tCaseinfo.getCaseno());
         return personDao.insertPersion(personinformation);
     }
 
@@ -69,6 +68,7 @@ public class PersoinfoService {
         if (CacheUtils.get("UserName").toString()!=null) {
             personinformation.setModifierid(CacheUtils.get("UserName").toString());
         }
+        personinformation.setCaseno(tCaseinfo.getCaseno());
         //personinformation.setModifiertime(new Date());
         return personDao.updatePersion(personinformation);
     }
@@ -80,11 +80,11 @@ public class PersoinfoService {
     }
 
     //获取人员信息
-    public Personinformation getPersoin(String id) {
+    public Personinformation getPersoin(String id,String Caseno) {
         Personinformation personinformation=personDao.getPersoin(id);
         GuaranteeInformation guaranteeInformation=guarantDao.getGuara(id);
         personinformation.setGuaranteeInformation(guaranteeInformation);
-        TCaseinfo tCaseinfo=caseDao.GetCase(id);
+        TCaseinfo tCaseinfo=caseDao.GetCase(id,Caseno);
         personinformation.settCaseinfo(tCaseinfo);
         if (CacheUtils.get("UserName").toString()!=null) {
             personinformation.setFounderid(CacheUtils.get("UserName").toString());

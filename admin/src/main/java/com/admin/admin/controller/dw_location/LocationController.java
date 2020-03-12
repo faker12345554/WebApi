@@ -35,7 +35,7 @@ public class LocationController {
     定位信息列表
      */
     @UserLoginToken
-    @ApiOperation("定位信息列表")
+    @ApiOperation("查询定位信息")
     @GetMapping("/LocationList")
     public ResponseResult listLocationModel(@RequestParam(required = false) String Condition, @RequestParam int PageSize, @RequestParam int PageIndex,
                                             HttpServletResponse response) {
@@ -163,8 +163,8 @@ public class LocationController {
 
             });
             String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) + ".xls";
-            File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);
-            rtn.setData(dateTime);
+            File file = new File(System.getProperty("user.dir") + "/../webapps/Execl/定位信息"+ dateTime);
+            rtn.setData("定位信息"+dateTime);
             workbook.write(file);
         } catch (Exception ex) {
             ex.printStackTrace();

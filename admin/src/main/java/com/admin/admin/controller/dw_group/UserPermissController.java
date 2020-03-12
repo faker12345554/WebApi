@@ -25,7 +25,7 @@ public class UserPermissController {
 
 
     @UserLoginToken
-    @ApiOperation("新增组信息")
+    @ApiOperation("新增权限组信息")
     @PostMapping("/AddGroup")
     public ResponseResult saveGroup(@RequestBody UserPermissionGroup group, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
@@ -46,7 +46,7 @@ public class UserPermissController {
     }
 
     @UserLoginToken
-    @ApiOperation("修改组信息")
+    @ApiOperation("修改权限组信息")
     @PostMapping("/UpdateGroup")
     public ResponseResult updateGroup(@RequestBody UserPermissionGroup group, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
@@ -56,7 +56,7 @@ public class UserPermissController {
     }
 
     @UserLoginToken
-    @ApiOperation("删除组信息")
+    @ApiOperation("删除权限组信息")
     @GetMapping("/DelGroup")
     public ResponseResult deleteGroup(@RequestParam boolean flag,
                                       @RequestParam int GroupId, HttpServletResponse response) {

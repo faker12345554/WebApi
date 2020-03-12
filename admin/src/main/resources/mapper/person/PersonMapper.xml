@@ -6,11 +6,11 @@
         INSERT into t_personinformation(personid,personname,gender,age,birthdate,card,workunit,bailoutbegindate,bailoutenddate,sponsor,sponsoralarm,contact,address,wechatnumber,
         qqnumber,status,founderid,foundertime,modifierid,modifiertime,suspectstatus,marriage,policestation,casetype,facepath,persontags,gendercode,beforename,nation,degreeeducation,
         nativeplace,occupation,nationality,registeredarea,permanentaddress,currentaddress,nowaddress,yjsponsoralarm,exectype,keepaddress,appointaddress,province,city,area,
-        monitoraddress,suspectstatuscode,violationcode,policecode)
+        monitoraddress,suspectstatuscode,violationcode,policecode,caseno)
         values (#{personid},#{personname},#{gender},#{age},#{birthdate},#{card},#{workunit},to_timestamp(#{bailoutbegindate},'yyyy-MM-dd HH:mi:ss'),to_timestamp(#{bailoutenddate},'yyyy-MM-dd HH:mi:ss'),#{sponsor},#{sponsoralarm},#{contact},#{address},
         #{wechatnumber},#{qqnumber},#{status},#{founderid},to_timestamp(#{foundertime},'yyyy-MM-dd HH:mi:ss'),#{modifierid},to_timestamp(#{modifiertime},'yyyy-MM-dd HH:mi:ss'),#{suspectstatus},#{marriage},#{policestation},#{casetype},#{facepath},
         #{persontags},#{gendercode},#{beforename},#{nation},#{degreeeducation},#{nativeplace},#{occupation},#{nationality},#{registeredarea},#{permanentaddress},#{currentaddress},
-        #{nowaddress},#{yjsponsoralarm},#{exectype},#{keepaddress},#{appointaddress},#{province},#{city},#{area},#{monitoraddress},#{suspectstatuscode},#{violationcode},#{policecode})
+        #{nowaddress},#{yjsponsoralarm},#{exectype},#{keepaddress},#{appointaddress},#{province},#{city},#{area},#{monitoraddress},#{suspectstatuscode},#{violationcode},#{policecode},#{caseno})
     </insert>
 
     <update id="updatePersion" parameterType="com.admin.admin.entity.dw_person.Personinformation">
@@ -20,7 +20,7 @@
         casetype=#{casetype},facepath=#{facepath},persontags=#{persontags},gendercode=#{gendercode},beforename=#{beforename},nation=#{nation},degreeeducation=#{degreeeducation},
         nativeplace=#{nativeplace},occupation=#{occupation},nationality=#{nationality},registeredarea=#{registeredarea},permanentaddress=#{permanentaddress},currentaddress=#{currentaddress},
         nowaddress=#{nowaddress},yjsponsoralarm=#{yjsponsoralarm},exectype=#{exectype},keepaddress=#{keepaddress},appointaddress=#{appointaddress},province=#{province},city=#{city},
-        area=#{area},monitoraddress=#{monitoraddress},suspectstatuscode=#{suspectstatuscode},policecode=#{policecode}
+        area=#{area},monitoraddress=#{monitoraddress},suspectstatuscode=#{suspectstatuscode},policecode=#{policecode},caseno=#{caseno}
         where personid=#{personid}
     </update>
 
@@ -56,11 +56,11 @@
             resultType="com.admin.admin.entity.dw_person.Personinformation">
     <if test="type==1">
             select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
-            left join t_caseinfo as C on C.personid=P.personid where sponsoralarm=#{limit}
+            left join t_caseinfo as C on C.personid=P.personid and c.caseno=p.caseno  where sponsoralarm=#{limit}
     </if>
     <if test="type!=1">
         select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
-        left join t_caseinfo as C on C.personid=P.personid where policecode=#{limit}
+        left join t_caseinfo as C on C.personid=P.personid and c.caseno=p.caseno  where policecode=#{limit}
     </if>
 
 
@@ -78,9 +78,9 @@
 
         </if>
         <if test="searchmodel.list.size()>0">
-            and personid in
-            <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
-                CAST (#{id} as text)
+            and P.personid in
+            <foreach collection="searchmodel.list" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
             </foreach>
         </if>
 

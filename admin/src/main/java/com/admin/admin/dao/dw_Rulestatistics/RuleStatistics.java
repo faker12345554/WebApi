@@ -1,6 +1,7 @@
 package com.admin.admin.dao.dw_Rulestatistics;
 
 import com.admin.admin.entity.dw_log.LogInformation;
+import com.admin.admin.entity.dw_message.TMessage;
 import com.admin.admin.entity.dw_summons.TSummons;
 import com.admin.model.Appstatistics.HomePage;
 import com.admin.model.log.LogModel;
@@ -27,7 +28,7 @@ public interface RuleStatistics {
     //工作日志
     List<LogModel> getLoglist(int Userid);
 
-    List<TSummons> getSummonsList(String UserName);
+    List<TMessage> getSummonsList(String UserName);
 
     int getNumber(String type,String Limitedmonth);
 

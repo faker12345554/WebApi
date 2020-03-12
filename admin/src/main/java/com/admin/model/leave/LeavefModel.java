@@ -6,7 +6,7 @@ public class LeavefModel {
     private int Id;
     private String reason;
     private String leavedestination;
-    private Date starttimestamp;
+    private String starttimestamp;
 
     public String getLeaveorder() {
         return leaveorder;
@@ -16,8 +16,8 @@ public class LeavefModel {
         this.leaveorder = leaveorder;
     }
 
-    private Date endtimestamp;
-    private Date subittimestamp;
+    private String endtimestamp;
+    private String subittimestamp;
     private String personname;
     private String states;
     private String auditordatetime;
@@ -47,27 +47,27 @@ public class LeavefModel {
         this.leavedestination = leavedestination;
     }
 
-    public Date getStarttimestamp() {
+    public String getStarttimestamp() {
         return starttimestamp;
     }
 
-    public void setStarttimestamp(Date starttimestamp) {
+    public void setStarttimestamp(String starttimestamp) {
         this.starttimestamp = starttimestamp;
     }
 
-    public Date getEndtimestamp() {
+    public String getEndtimestamp() {
         return endtimestamp;
     }
 
-    public void setEndtimestamp(Date endtimestamp) {
+    public void setEndtimestamp(String endtimestamp) {
         this.endtimestamp = endtimestamp;
     }
 
-    public Date getSubittimestamp() {
+    public String getSubittimestamp() {
         return subittimestamp;
     }
 
-    public void setSubittimestamp(Date subittimestamp) {
+    public void setSubittimestamp(String subittimestamp) {
         this.subittimestamp = subittimestamp;
     }
 

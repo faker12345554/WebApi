@@ -17,19 +17,6 @@ public class enclosureService {
     //新增
     public int saveEnclosure(enclosure enclosure) {
         enclosureDao.deleteEnclosure(enclosure.getPersonId());
-//        for (Longitude iten:map.getPosition()){
-//            enclosure enclosure=new enclosure();
-//            enclosure.setPersonId(map.getPerson_id());
-//            enclosure.setAreaName(map.getAreaname());
-//            enclosure.setType(map.getType());
-//            enclosure.setStatus(map.isStatus());
-//            result.setData(enclosureService.saveEnclosure(enclosure));
-//            System.out.println(result.getData());
-//        }
-//        if (enclosure.getId() != 0) {
-//            return enclosureDao.updateEnclosure(enclosure);
-//        }
-
 
         return enclosureDao.saveEnclosure(enclosure);
     }
@@ -40,17 +27,7 @@ public class enclosureService {
 
     //修改
     public int updateEnclosure(enclosure enclosure) {
-        //        for (Longitude iten:map.getPosition()){
-//            enclosure enclosure=new enclosure();
-//            enclosure.setPersonId(map.getPerson_id());
-//            enclosure.setAreaName(map.getAreaname());
-//            enclosure.setType(map.getType());
-//            enclosure.setStatus(map.isStatus());
-//            enclosure.setLongitude(iten.getLongitude());
-//            enclosure.setLatitude(iten.getLatitude());
-//            result.setData(enclosureService.saveEnclosure(enclosure));
-//            System.out.println(result.getData());
-//        }
+
         return enclosureDao.updateEnclosure(enclosure);
     }
 
@@ -63,22 +40,6 @@ public class enclosureService {
 
     //查看
     public List<enclosure> selectEnclosure(String personId) {
-        //  List<enclosure> listEncLouSure=enclosureService.selectEnclosure(personId);
-//        RangeMap rangeMap=new RangeMap();
-//        List<Longitude> listLongitudes=new ArrayList<Longitude>();
-
-//        for (enclosure item:listEncLouSure){
-//            rangeMap.setPerson_id(item.getPersonId());
-//            rangeMap.setType(item.getType());
-//            rangeMap.setAreaname(item.getAreaName());
-//            rangeMap.setStatus(item.isStatus());
-//            Longitude longitude=new Longitude();
-//            longitude.setLatitude(item.getLatitude());
-//            longitude.setLongitude(item.getLongitude());
-//            listLongitudes.add(longitude);
-//        }
-//        rangeMap.setPosition(listLongitudes);
-
 
         return enclosureDao.selectEnclosure(personId);
     }

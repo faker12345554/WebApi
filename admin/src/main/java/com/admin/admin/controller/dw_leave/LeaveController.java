@@ -43,7 +43,7 @@ public class LeaveController {
 
 
     @UserLoginToken
-    @ApiOperation(value = "获取全部请假信息")
+    @ApiOperation(value = "查询全部请假信息")
     @PostMapping("/listLeave")
     public ResponseResult listLeave(@RequestBody SearchModel searchModel) {
         ResponseResult result = new ResponseResult();
@@ -117,8 +117,8 @@ public class LeaveController {
         ResponseResult result = new ResponseResult();
         List<LeavefModel> allItems = leaveService.getLeave(searchModel);
         String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) +"外出信息"+ ".xls";
-        File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);
-        result.setData(dateTime);
+        File file = new File(System.getProperty("user.dir") + "/../webapps/Execl/外出信息" + dateTime);
+        result.setData("外出信息"+dateTime);
         try (HSSFWorkbook workbook = new HSSFWorkbook()) {
             HSSFSheet sheet = workbook.createSheet("外出记录信息");
             HSSFRow row = sheet.createRow(0);
@@ -143,7 +143,7 @@ public class LeaveController {
                 dataRow.createCell(3).setCellValue(printOrder.getLeavedestination());
                 dataRow.createCell(4).setCellValue(printOrder.getStarttimestamp());
                 dataRow.createCell(5).setCellValue(printOrder.getEndtimestamp());
-                dataRow.createCell(6).setCellValue(CalendarAdjust.getDays(CalendarAdjust.GetYear(printOrder.getStarttimestamp()),CalendarAdjust.GetYear(printOrder.getEndtimestamp())));
+                dataRow.createCell(6).setCellValue(CalendarAdjust.getDays( printOrder.getStarttimestamp(),printOrder.getEndtimestamp()));
                 dataRow.createCell(7).setCellValue(printOrder.getReason());
                 dataRow.createCell(8).setCellValue(printOrder.getSubittimestamp());
                 dataRow.createCell(9).setCellValue(printOrder.getAuditordatetime());

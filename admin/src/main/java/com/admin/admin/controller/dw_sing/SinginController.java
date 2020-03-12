@@ -117,8 +117,8 @@ public class SinginController {
         ResponseResult result = new ResponseResult();
         List<SinginModel> allItems = singinService.ListAudio(searchModel);
         String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) +"音视频信息"+ ".xls";
-        File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);
-        result.setData(dateTime);
+        File file = new File(System.getProperty("user.dir") + "/../webapps/Execl/音视频信息" + dateTime);
+        result.setData("音视频信息"+dateTime);
         try (HSSFWorkbook workbook = new HSSFWorkbook()) {
             HSSFSheet sheet = workbook.createSheet("导出音视频信息");
             HSSFRow row = sheet.createRow(0);
@@ -127,7 +127,7 @@ public class SinginController {
             row.createCell(2).setCellValue("姓名");
             row.createCell(3).setCellValue("性别");
             row.createCell(4).setCellValue("主办人");
-            row.createCell(5).setCellValue("执行单位");
+            row.createCell(5).setCellValue("执行机关");
             row.createCell(6).setCellValue("通话方式");
             row.createCell(7).setCellValue("动作");
             row.createCell(8).setCellValue("联系民警");
@@ -170,38 +170,39 @@ public class SinginController {
         ResponseResult result = new ResponseResult();
         List<SinginModel> allItems = singinService.ListSingin(searchModel);
         String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) +"签到信息"+ ".xls";
-        File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);
-        result.setData(dateTime);
+        File file = new File(System.getProperty("user.dir") + "/../webapps/Execl/报到信息" + dateTime);
+        result.setData("报到信息"+dateTime);
         try (HSSFWorkbook workbook = new HSSFWorkbook()) {
             HSSFSheet sheet = workbook.createSheet("打印历史定位信息");
             HSSFRow row = sheet.createRow(0);
             row.createCell(0).setCellValue("序号");
-            row.createCell(1).setCellValue("嫌疑人状态");
-            row.createCell(2).setCellValue("姓名");
-            row.createCell(3).setCellValue("性别");
-            row.createCell(4).setCellValue("年龄");
-            row.createCell(5).setCellValue("报到类型");
-            row.createCell(6).setCellValue("报到状态");
-            row.createCell(7).setCellValue("管辖民警");
-            row.createCell(8).setCellValue("限定活动区域");
-            row.createCell(9).setCellValue("签到位置");
-            row.createCell(10).setCellValue("签到时间");
+            row.createCell(1).setCellValue("姓名");
+            row.createCell(2).setCellValue("性别");
+            row.createCell(3).setCellValue("年龄");
+            row.createCell(4).setCellValue("人员状态");
+            row.createCell(5).setCellValue("执行单位");
+            row.createCell(6).setCellValue("主办人");
+            row.createCell(7).setCellValue("执行民警");
+            row.createCell(8).setCellValue("签到类型");
+            row.createCell(9).setCellValue("签到时间");
+            row.createCell(10).setCellValue("备注");
+
 
 
             allItems.forEach(printOrder -> {
                 int lastRowNum = sheet.getLastRowNum();
                 HSSFRow dataRow = sheet.createRow(lastRowNum + 1);
                 dataRow.createCell(0).setCellValue(printOrder.getId());
-                dataRow.createCell(1).setCellValue(printOrder.getSponsor());
-                dataRow.createCell(2).setCellValue(printOrder.getPersonname());
-                dataRow.createCell(3).setCellValue(printOrder.getGender());
-                dataRow.createCell(4).setCellValue(printOrder.getAge());
-                dataRow.createCell(5).setCellValue(printOrder.getReporttype());
-                dataRow.createCell(6).setCellValue(printOrder.getReportstatus());
+                dataRow.createCell(1).setCellValue(printOrder.getPersonname());
+                dataRow.createCell(2).setCellValue(printOrder.getGender());
+                dataRow.createCell(3).setCellValue(printOrder.getAge());
+                dataRow.createCell(4).setCellValue(printOrder.getSuspectstatus());
+                dataRow.createCell(5).setCellValue(printOrder.getHandleunit());
+                dataRow.createCell(6).setCellValue(printOrder.getHandlepeson());
                 dataRow.createCell(7).setCellValue(printOrder.getSponsor());
-                dataRow.createCell(8).setCellValue(printOrder.getActivityarea());
-                dataRow.createCell(9).setCellValue(printOrder.getAddress());
-                dataRow.createCell(10).setCellValue(printOrder.getCreatetime());
+                dataRow.createCell(8).setCellValue(printOrder.getTypename());
+                dataRow.createCell(9).setCellValue(printOrder.getCreatetime());
+                dataRow.createCell(10).setCellValue(printOrder.getRemark());
 
             });
 
