@@ -764,14 +764,6 @@ public class SuperviseController {
                                        @ApiParam(name="key",value = "搜索关键字")@RequestParam(required = false)String key) {
         ResultSet rs=new ResultSet();
         String userId= TokenUtil.getTokenUserId();
-//        int locationViolateSlight=superviseService.listViolationFensInformation("脱离管控区域","1");  //上报设置中位置轻微违规次数
-//        int locationViolateSerious =superviseService.listViolationFensInformation("脱离管控区域","2"); //上报设置中位置严重违规次数
-//        int summonsViolateSlight=superviseService.listViolationFensInformation("传讯取证未报到","1");   //上报设置中传讯轻微违规次数
-//        int summonsViolateSerious=superviseService.listViolationFensInformation("传讯取证未报到","2");  //上报设置中传讯严重违规次数
-//        int faceSinginSlight =superviseService.listViolationFensInformation("视频签到缺勤","1");    //上报设置中人脸签到轻微违规次数
-//        int faceSinginSerious =superviseService.listViolationFensInformation("视频签到缺勤","2");   //上报设置中人脸签到严重违规次数
-//        int voiceSinginSlight =superviseService.listViolationFensInformation("语音签到缺勤","1");   //上报设置中声纹签到轻微违规次数
-//        int voiceSinginSerious =superviseService.listViolationFensInformation("语音签到缺勤","2");  //上报设置中声纹签到严重违规次数
         SuperviseReturnModel superviseReturnModel=new SuperviseReturnModel();
         try{
         List<SummonsInformation> summonsInformations = superviseService.listNotCiteRecord();
@@ -1539,48 +1531,42 @@ public class SuperviseController {
         ResultSet rs=new ResultSet();
         if(type.equals("0")||type.equals("1")||type.equals("2")) {
             String userId = TokenUtil.getTokenUserId();
-            List<SinginInformation> singinInformations = superviseService.listAllSinginInformation();   //获取全部签到数据
-            List<SinginInformation> newsinginInformations = new ArrayList<>();    //筛选重复数据
-            newsinginInformations.add(singinInformations.get(0));
-            for (int i = 0; i < singinInformations.size(); i++) {
-                SinginInformation listTemp = singinInformations.get(i);
-                int k=0;
-                for (SinginInformation item : newsinginInformations
-                ) {
-                    if (item.getPersonid().equals( listTemp.getPersonid())) {
-                        k=1;   //k=1，证明有重复数据
-                    }
-                }
-                if(k==0) {
-                    newsinginInformations.add(listTemp);
-                }
-            }
-//            for (SinginInformation item : newsinginInformations   //去除不是该警员管理的监居人员
-//            ) {
-//                PersonAllInformationModel personAllInformationModel = superviseService.getPersonInformation(item.getPersonid());
-//                if (personAllInformationModel.getSponsoralarm().equals(userId)==false) {
-//                    newsinginInformations.remove(item);
+            List<Personinformation> personinformations=superviseService.listPersonInformation(userId);
+//            List<SinginInformation> singinInformations = superviseService.listAllSinginInformation();   //获取全部签到数据
+//            List<SinginInformation> newsinginInformations = new ArrayList<>();    //筛选重复数据
+//            newsinginInformations.add(singinInformations.get(0));
+//            for (int i = 0; i < singinInformations.size(); i++) {
+//                SinginInformation listTemp = singinInformations.get(i);
+//                int k=0;
+//                for (SinginInformation item : newsinginInformations
+//                ) {
+//                    if (item.getPersonid().equals( listTemp.getPersonid())) {
+//                        k=1;   //k=1，证明有重复数据
+//                    }
+//                }
+//                if(k==0) {
+//                    newsinginInformations.add(listTemp);
 //                }
 //            }
-
-            for(int i=0;i<newsinginInformations.size();i++){
-                SinginInformation singinInformation=newsinginInformations.get(i);
-                PersonAllInformationModel personAllInformationModel = superviseService.getPersonInformation(singinInformation.getPersonid());
-                if (personAllInformationModel.getSponsoralarm().equals(userId)==false) {
-                    newsinginInformations.remove(singinInformation);
-                    i=i-1;
-                }
-            }
+//
+//            for(int i=0;i<newsinginInformations.size();i++){
+//                SinginInformation singinInformation=newsinginInformations.get(i);
+//                PersonAllInformationModel personAllInformationModel = superviseService.getPersonInformation(singinInformation.getPersonid());
+//                if (personAllInformationModel.getSponsoralarm().equals(userId)==false) {
+//                    newsinginInformations.remove(singinInformation);
+//                    i=i-1;
+//                }
+//            }
             List<SinginInformation> listAllFaceSinginInformations = new ArrayList<>();   //所有视频签到记录
             List<SinginInformation> listAllVoiceSinginInformations = new ArrayList<>();  //所有声纹签到记录
-            for (SinginInformation item : newsinginInformations
+            for (Personinformation item : personinformations
             ) {
-                List<SinginInformation> faceSinginInformationList = superviseService.listSingin(item.getPersonid(), 0);  //获取视频签到记录
+                List<SinginInformation> faceSinginInformationList = superviseService.listSingin(item.getCode(), 1);  //获取视频签到记录
                 for (SinginInformation item1 : faceSinginInformationList
                 ) {
                     listAllFaceSinginInformations.add(item1);
                 }
-                List<SinginInformation> voiceSinginInformationList = superviseService.listSingin(item.getPersonid(), 1);  //获取声纹签到记录
+                List<SinginInformation> voiceSinginInformationList = superviseService.listSingin(item.getCode(), 2);  //获取声纹签到记录
                 for (SinginInformation item2 : voiceSinginInformationList
                 ) {
                     listAllVoiceSinginInformations.add(item2);
