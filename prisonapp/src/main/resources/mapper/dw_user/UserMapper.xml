@@ -7,7 +7,7 @@
     </select>
 
     <select id="getUserid" parameterType="String" resultType="com.prisonapp.business.entity.dw_user.UserModel">
-        select id from t_user where phone =#{account} and usersystem =3
+        select id from t_user where accountname =#{account} and usersystem =3
     </select>
 
     <insert id="insertLoginRecord" >
