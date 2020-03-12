@@ -36,6 +36,34 @@ public class Personinformation {
     private String casetype;
     private String facepath;
     private String persontags;
+    private int gendercode;
+    private String beforename;
+    private String nation;
+    private String degreeeducation;
+    private String nativeplace;
+    private String occupation;
+    private String nationality;
+    private String registeredarea;
+    private String permanentaddress;
+    private String currentaddress;
+    private String nowaddress;
+    private String yjsponsoralarm;
+    private String exectype;
+    private String keepaddress;
+    private boolean appointaddress;
+    private String province;
+    private String city;
+    private String area;
+    private String monitoraddress;
+    private String suspectstatuscode;
+    private String guid;
+    private String violationcode;
+    private String handlepeson;
+    private TCaseinfo tCaseinfo;
+    private GuaranteeInformation guaranteeInformation;
+    private List<String> managementStyle;
+    private String caseno;
+    private String handleunit;
 
     public String getPolicecode() {
         return policecode;
@@ -525,33 +553,15 @@ public class Personinformation {
         return this;
     }
 
-    private int gendercode;
-    private String beforename;
-    private String nation;
-    private String degreeeducation;
-    private String nativeplace;
-    private String occupation;
-    private String nationality;
-    private String registeredarea;
-    private String permanentaddress;
-    private String currentaddress;
-    private String nowaddress;
-    private String yjsponsoralarm;
-    private String exectype;
-    private String keepaddress;
-    private boolean appointaddress;
-    private String province;
-    private String city;
-    private String area;
-    private String monitoraddress;
-    private String suspectstatuscode;
-    private String guid;
-    private String violationcode;
-    private String handlepeson;
-    private TCaseinfo tCaseinfo;
-    private GuaranteeInformation guaranteeInformation;
-    private List<String> managementStyle;
-    private String caseno;
+
+    public String getHandleunit() {
+        return handleunit;
+    }
+
+    public Personinformation setHandleunit(String handleunit) {
+        this.handleunit = handleunit;
+        return this;
+    }
 
 
 }

@@ -4,8 +4,8 @@
 <mapper namespace="com.admin.admin.dao.dw_location.LocationDao">
 
     <select id="listLocationModel" parameterType="String" resultType="com.admin.model.location.LocationModel">
-        SELECT E.id,t.suspectstatus,t.personid,t.personname,t.age,t.gender,t.address,t.policestation,t.sponsor,t.casetype,E.areaname,t.bailoutbegindate,tc.caseno,
-        tc.handleunit,tc.handlepeson,t.guid
+        SELECT E.id,t.suspectstatus,t.personid,t.personname,t.age,t.gender,t.address,t.policestation,t.sponsor,tc.casetype,E.areaname,t.bailoutbegindate,tc.caseno,
+        tc.handleunit,tc.handlepeson,E.setuptime
         AS Starttime
         FROM "t_personinformation" As t
         INNER JOIN t_enclosure AS E on T.personid=E.personid
@@ -72,9 +72,9 @@
             and l.timestamp &lt; TO_TIMESTAMP(#{EndTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="list.size()>0">
-            and id in
+            and l.id in
             <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
-                #{id}
+               cast( #{id} as int)
             </foreach>
         </if>
     </select>

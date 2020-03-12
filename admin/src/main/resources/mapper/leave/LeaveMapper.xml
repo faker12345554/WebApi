@@ -50,8 +50,8 @@
         </if>
         <if test="searchModel.list.size()>0">
             and l.id in
-            <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
-                #{id}
+            <foreach collection="searchModel.list" item="id" index="index" open="(" close=")" separator=",">
+                cast (#{id} as int)
             </foreach>
         </if>
 

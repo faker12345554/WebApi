@@ -192,7 +192,7 @@ public class Tasking {
     public List<TMessage> GetMessageList(int type) throws Exception{
         List<TMessage> messageList=new ArrayList<TMessage>();
         if (type==4){
-            messageList=taskDao.GetMessageList(5,CalendarAdjust.GetYear(new Date()));
+            messageList=taskDao.GetMessageList(4,CalendarAdjust.GetYear(new Date()));
 
         }else if(type==6){
             messageList=taskDao.GetMessageList(6,CalendarAdjust.GetYear(new Date()));

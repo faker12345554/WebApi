@@ -9,6 +9,16 @@ public class enclosure {
   private String areaname;
   private boolean status;
   private String citycode;
+  private String setuptime;
+
+  public String getSetuptime() {
+    return setuptime;
+  }
+
+  public enclosure setSetuptime(String setuptime) {
+    this.setuptime = setuptime;
+    return this;
+  }
 
   public String getPersonId() {
     return personId;

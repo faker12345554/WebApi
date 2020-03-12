@@ -3,6 +3,7 @@ package com.admin.admin.controller.dw_enclosure;
 import com.admin.admin.entity.dw_enclosure.enclosure;
 import com.admin.admin.service.dw_enclosure.enclosureService;
 import com.admin.token.tation.UserLoginToken;
+import com.common.common.authenticator.CalendarAdjust;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 
 @Api(value="行动范围信息controller",tags={"行动范围信息"})
@@ -28,6 +30,7 @@ public class enclosureController {
     @PostMapping("/saveEnclosure")
     public ResponseResult saveEnclosure(@RequestBody enclosure enclosure, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
+        enclosure.setSetuptime(CalendarAdjust.GetYear( new Date()));
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(enclosureService.saveEnclosure(enclosure));

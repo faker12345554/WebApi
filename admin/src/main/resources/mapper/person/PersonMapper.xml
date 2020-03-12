@@ -78,9 +78,9 @@
 
         </if>
         <if test="searchmodel.list.size()>0">
-            and personid in
-            <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
-                CAST (#{id} as text)
+            and P.personid in
+            <foreach collection="searchmodel.list" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
             </foreach>
         </if>
 
