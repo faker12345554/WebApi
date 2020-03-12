@@ -85,7 +85,7 @@ public class PersonController {
 
     //获取
     @UserLoginToken
-    @ApiOperation("获取人员信息")
+    @ApiOperation("查看人员信息")
     @GetMapping("/getPersoin")
     public ResponseResult getPersoin(@RequestParam String id,String Caseno, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
@@ -153,7 +153,7 @@ public class PersonController {
     }
 
 
-    //@UserLoginToken
+   // @UserLoginToken
     @ApiOperation("导出监居人员信息")
     @PostMapping("/ExportPerson")
     public ResponseResult ExportExcel(@RequestBody SearchModel searchModel) throws Exception{
@@ -200,8 +200,8 @@ public class PersonController {
 //                dataRow.createCell(10).setCellValue(printOrder.getAddress());
             });
             String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) + ".xls";
-            File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\监居人员"+ dateTime);
-            System.out.println(file);
+            File file = new File(System.getProperty("user.dir") + "/../webapps/Execl/" +
+                    "监居人员"+ dateTime);
             rtn.setData(dateTime);
             workbook.write(file);
         } catch (Exception ex) {
