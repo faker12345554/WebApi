@@ -118,7 +118,7 @@ public class LeaveController {
         List<LeavefModel> allItems = leaveService.getLeave(searchModel);
         String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) +"外出信息"+ ".xls";
         File file = new File(System.getProperty("user.dir") + "/../webapps/Execl/外出信息" + dateTime);
-        result.setData(dateTime);
+        result.setData("外出信息"+dateTime);
         try (HSSFWorkbook workbook = new HSSFWorkbook()) {
             HSSFSheet sheet = workbook.createSheet("外出记录信息");
             HSSFRow row = sheet.createRow(0);
