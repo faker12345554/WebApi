@@ -56,7 +56,7 @@
 
 
     <select id="getLoglist" parameterType="int" resultType="com.admin.model.log.LogModel">
-        SELECT t.*,u.aliasname from t_log as t
+        SELECT t.*,u.aliasname as userName from t_log as t
 		  left join t_user as u on u.id=t.operator	where operator=#{Userid}
 		  and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')=to_date(to_char(now(),'yyyy-MM-dd'),'yyyy-MM-dd')
 		  order by t.id desc limit 30

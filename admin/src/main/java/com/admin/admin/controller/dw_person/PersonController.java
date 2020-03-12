@@ -165,32 +165,41 @@ public class PersonController {
             HSSFSheet sheet = workbook.createSheet("导出取保监居人员信息");
             HSSFRow row = sheet.createRow(0);
             row.createCell(0).setCellValue("姓名");
-            row.createCell(1).setCellValue("嫌疑人状态");
-            row.createCell(2).setCellValue("性别");
-            row.createCell(3).setCellValue("主办人");
-            row.createCell(4).setCellValue("执行单位");
-            row.createCell(5).setCellValue("执行开始时间");
-            row.createCell(6).setCellValue("案件类型");
-            row.createCell(7).setCellValue("采取管理方式");
-            row.createCell(8).setCellValue("违规程度");
-            row.createCell(9).setCellValue("修改人");
-            row.createCell(10).setCellValue("修改时间");
+            row.createCell(1).setCellValue("人员编号");
+            row.createCell(2).setCellValue("案件编号");
+            row.createCell(3).setCellValue("办案单位");
+            row.createCell(4).setCellValue("嫌疑人状态");
+            row.createCell(5).setCellValue("性别");
+            row.createCell(6).setCellValue("主办人");
+            row.createCell(7).setCellValue("执行机关");
+            row.createCell(8).setCellValue("执行开始时间");
+            row.createCell(9).setCellValue("执行民警");
+            row.createCell(10).setCellValue("案件类型");
+            row.createCell(11).setCellValue("采取管理方式");
+            row.createCell(12).setCellValue("违规程度");
+            row.createCell(13).setCellValue("创建人");
+            row.createCell(14).setCellValue("创建时间");
 
             allItems.forEach(printOrder -> {
                 int lastRowNum = sheet.getLastRowNum();
                 HSSFRow dataRow = sheet.createRow(lastRowNum + 1);
                 dataRow.createCell(0).setCellValue(printOrder.getPersonname());
-                dataRow.createCell(1).setCellValue(printOrder.getSuspectstatus());
-                dataRow.createCell(2).setCellValue(printOrder.getGender());
-                dataRow.createCell(3).setCellValue(printOrder.getSponsor());
-                dataRow.createCell(4).setCellValue(printOrder.getPolicestation());
-                dataRow.createCell(5).setCellValue(printOrder.getBailoutbegindate());
-                dataRow.createCell(6).setCellValue(printOrder.getCasetype());
+                dataRow.createCell(1).setCellValue(printOrder.getPersonid());
+                dataRow.createCell(2).setCellValue(printOrder.getCaseno());
+                dataRow.createCell(3).setCellValue(printOrder.getHandleunit());
+
+                dataRow.createCell(4).setCellValue(printOrder.getSuspectstatus());
+                dataRow.createCell(5).setCellValue(printOrder.getGender());
+                dataRow.createCell(6).setCellValue(printOrder.getHandlepeson());
+                dataRow.createCell(7).setCellValue(printOrder.getPolicestation());
+                dataRow.createCell(8).setCellValue(printOrder.getBailoutbegindate());
+                dataRow.createCell(9).setCellValue(printOrder.getSponsor());
+                dataRow.createCell(10).setCellValue(printOrder.getCasetype());
                 String type = "";
-                dataRow.createCell(7).setCellValue(type);
-                dataRow.createCell(8).setCellValue(printOrder.getCasetype());
-                dataRow.createCell(9).setCellValue(printOrder.getModifierid());
-                dataRow.createCell(10).setCellValue(printOrder.getModifiertime());
+                dataRow.createCell(11).setCellValue(type);
+                dataRow.createCell(12).setCellValue(printOrder.getCasetype());
+                dataRow.createCell(13).setCellValue(printOrder.getFounderid());
+                dataRow.createCell(14).setCellValue(printOrder.getFoundertime());
                 for (String item : printOrder.getManagementStyle()) {
                     type += item + ',';
                 }
@@ -202,7 +211,7 @@ public class PersonController {
             String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) + ".xls";
             File file = new File(System.getProperty("user.dir") + "/../webapps/Execl/" +
                     "监居人员"+ dateTime);
-            rtn.setData(dateTime);
+            rtn.setData("监居人员"+dateTime);
             workbook.write(file);
         } catch (Exception ex) {
             ex.printStackTrace();

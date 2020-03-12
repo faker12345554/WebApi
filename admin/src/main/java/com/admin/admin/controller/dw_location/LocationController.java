@@ -164,7 +164,7 @@ public class LocationController {
             });
             String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) + ".xls";
             File file = new File(System.getProperty("user.dir") + "/../webapps/Execl/定位信息"+ dateTime);
-            rtn.setData(dateTime);
+            rtn.setData("定位信息"+dateTime);
             workbook.write(file);
         } catch (Exception ex) {
             ex.printStackTrace();
