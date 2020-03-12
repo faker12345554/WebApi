@@ -52,7 +52,8 @@
 
 
     <select id="getUser" parameterType="String" resultType="com.admin.admin.entity.dw_user.User">
-        SELECT t_user.*,fsga_yw_ryb.zw as RoleName ,fsga_yw_ryb.bmmc,fsga_yw_ryb.bmbm as PoliceCode FROM "t_user" left join fsga_yw_ryb on t_user.accountname=fsga_yw_ryb.mjbh where accountname=#{UserName}
+        SELECT t_user.*,fsga_yw_ryb.zw as RoleName ,fsga_yw_ryb.bmmc,fsga_yw_ryb.bmbm as PoliceCode FROM "t_user" left join fsga_yw_ryb on t_user.accountname=fsga_yw_ryb.mjbh
+         where accountname=#{UserName} and usersystem=1
 <!--        <if test="usersystem==1 or usersystem==null">-->
 <!--            inner join fsga_yw_ryb on t_user.accountname=fsga_yw_ryb.mjbh where accountname=#{UserName}-->
 

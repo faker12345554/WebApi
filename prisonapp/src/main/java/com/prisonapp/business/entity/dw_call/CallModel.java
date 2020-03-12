@@ -28,4 +28,5 @@ public class CallModel {
     public void setCallName(String callName) {
         this.callName = callName;
     }
+
 }

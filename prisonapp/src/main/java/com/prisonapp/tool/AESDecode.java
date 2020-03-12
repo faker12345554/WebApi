@@ -205,6 +205,8 @@ import sun.misc.BASE64Encoder;
         }
 
         public static String faceCompared (String faceUrlOne,String faceUrlTow )throws Exception {
+//            faceUrlOne ="http://h.hiphotos.baidu.com/baike/s=500/sign=fa11a64e08f41bd5de53e8f461da81a0/42a98226cffc1e170d8dcd544c90f603738de9a1.jpg";
+//            faceUrlTow = "https://pardon.cnnc626.com:8443/mypicture/personApp/Face/2020-03-11/ym.jpg";
             //  发送POST请求示例
             String ak_id = ""; //用户ak
             String ak_secret = ""; // 用户ak_secret

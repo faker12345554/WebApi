@@ -143,7 +143,7 @@ public class LeaveController {
                 dataRow.createCell(3).setCellValue(printOrder.getLeavedestination());
                 dataRow.createCell(4).setCellValue(printOrder.getStarttimestamp());
                 dataRow.createCell(5).setCellValue(printOrder.getEndtimestamp());
-                dataRow.createCell(6).setCellValue(CalendarAdjust.getDays(CalendarAdjust.GetYear(printOrder.getStarttimestamp()),CalendarAdjust.GetYear(printOrder.getEndtimestamp())));
+                dataRow.createCell(6).setCellValue(CalendarAdjust.getDays( printOrder.getStarttimestamp(),printOrder.getEndtimestamp()));
                 dataRow.createCell(7).setCellValue(printOrder.getReason());
                 dataRow.createCell(8).setCellValue(printOrder.getSubittimestamp());
                 dataRow.createCell(9).setCellValue(printOrder.getAuditordatetime());

@@ -87,11 +87,11 @@ public class PersonController {
     @UserLoginToken
     @ApiOperation("获取人员信息")
     @GetMapping("/getPersoin")
-    public ResponseResult getPersoin(@RequestParam String id, HttpServletResponse response) {
+    public ResponseResult getPersoin(@RequestParam String id,String Caseno, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(persoinfoService.getPersoin(id));
+        return result.setData(persoinfoService.getPersoin(id,Caseno));
     }
     @UserLoginToken
     @ApiOperation("变更主办人")
@@ -153,7 +153,7 @@ public class PersonController {
     }
 
 
-    @UserLoginToken
+    //@UserLoginToken
     @ApiOperation("导出监居人员信息")
     @PostMapping("/ExportPerson")
     public ResponseResult ExportExcel(@RequestBody SearchModel searchModel) throws Exception{
@@ -201,6 +201,7 @@ public class PersonController {
             });
             String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) + ".xls";
             File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\监居人员"+ dateTime);
+            System.out.println(file);
             rtn.setData(dateTime);
             workbook.write(file);
         } catch (Exception ex) {
