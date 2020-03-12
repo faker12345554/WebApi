@@ -135,8 +135,7 @@ public class LogAspectConfig {
         if (Userid!=null){
             logInformation.setOperator(Integer.parseInt(Userid.toString()));
         }
-
-
+        logInformation.setAction(CacheUtils.get("UserName").toString()+methodDescribe.get());
         logInformation.setModular(methodDescribe.get());
         logInformation.setOperatingtime(new Date());
         logInformation.setSystemtype("3");

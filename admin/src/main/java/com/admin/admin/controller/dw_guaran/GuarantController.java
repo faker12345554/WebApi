@@ -59,7 +59,7 @@ public class GuarantController {
     }
 
     @UserLoginToken
-    @ApiOperation(value = "获取担保信息")
+    @ApiOperation(value = "查询担保信息")
     @GetMapping("/getGuara")
     public ResponseResult getGuara(@RequestParam String id, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();

@@ -117,7 +117,7 @@ public class SinginController {
         ResponseResult result = new ResponseResult();
         List<SinginModel> allItems = singinService.ListAudio(searchModel);
         String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) +"音视频信息"+ ".xls";
-        File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);
+        File file = new File(System.getProperty("user.dir") + "/../webapps/Execl/音视频信息" + dateTime);
         result.setData(dateTime);
         try (HSSFWorkbook workbook = new HSSFWorkbook()) {
             HSSFSheet sheet = workbook.createSheet("导出音视频信息");
@@ -170,7 +170,7 @@ public class SinginController {
         ResponseResult result = new ResponseResult();
         List<SinginModel> allItems = singinService.ListSingin(searchModel);
         String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) +"签到信息"+ ".xls";
-        File file = new File(System.getProperty("user.dir") + "\\WebApi\\ExportExecl\\"+ dateTime);
+        File file = new File(System.getProperty("user.dir") + "/../webapps/Execl/报到信息" + dateTime);
         result.setData(dateTime);
         try (HSSFWorkbook workbook = new HSSFWorkbook()) {
             HSSFSheet sheet = workbook.createSheet("打印历史定位信息");

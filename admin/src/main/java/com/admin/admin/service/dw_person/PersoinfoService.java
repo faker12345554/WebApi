@@ -55,8 +55,7 @@ public class PersoinfoService {
         //personinformation.setFoundertime(new Date().toString());
         personinformation.setPersonid(PersonId);
         personinformation.setViolationcode("0");
-
-
+        personinformation.setCaseno(tCaseinfo.getCaseno());
         return personDao.insertPersion(personinformation);
     }
 
@@ -69,6 +68,7 @@ public class PersoinfoService {
         if (CacheUtils.get("UserName").toString()!=null) {
             personinformation.setModifierid(CacheUtils.get("UserName").toString());
         }
+        personinformation.setCaseno(tCaseinfo.getCaseno());
         //personinformation.setModifiertime(new Date());
         return personDao.updatePersion(personinformation);
     }
