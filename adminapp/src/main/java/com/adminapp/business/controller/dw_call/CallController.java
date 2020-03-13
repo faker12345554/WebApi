@@ -13,6 +13,7 @@ import com.adminapp.model.dw_call.RequestCallReturnModel;
 import com.adminapp.model.dw_supervise.PersonAllInformationModel;
 import com.common.common.apppush.Demo;
 import com.common.common.result.ResultSet;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.json.JSONException;
@@ -27,6 +28,7 @@ import java.util.GregorianCalendar;
 import java.util.Random;
 
 @RestController
+@Api(value="工作人员音视频Controller",tags={"工作人员音视频管理"})
 @RequestMapping("/app/admin/call")
 public class CallController {
     @Autowired
@@ -48,11 +50,9 @@ public class CallController {
             UserModel userModel=callService.getUserInformation(userId);   //获取该工作人员信息
             Date date = new Date();
             String timeStamp = String.valueOf(date.getTime());
-            Date time=new Date(sendphoneInformation.getCreatetime().getTime());
-            Calendar cal1=new GregorianCalendar();
-            cal1.setTime(time);
-            cal1.add(Calendar.MINUTE,2);
+
             if(sendphoneInformation==null) {
+
                 String callToken = "TH";
                 Random random = new Random();
                 for (int i = 0; i < 20; i++) {
@@ -63,6 +63,7 @@ public class CallController {
                 requestCallReturnModel.setCallToken(callToken);
                 requestCallReturnModel.setCallTimestamp(timeStamp);
                 requestCallReturnModel.setCallName(personAllInformationModel.getPersonname());
+                requestCallReturnModel.setCallGender(personAllInformationModel.getGendercode());
                 requestCallReturnModel.setCallHeadUrl(personAllInformationModel.getFacepath());
                 rs.resultCode = 0;
                 rs.resultMsg = "";
@@ -80,12 +81,16 @@ public class CallController {
                 String descriptions="保外端请求通话推送";
                 String pushType="PushRequestCall";
                 callService.sendRequestCallCast(cal.getTime(),object,code,"ReleaseBailCode",timeStamp,descriptions,pushType);
-            }else {
-                if(sendphoneInformation.getRoomcode()==null){   //没有同意通话
-                    if(cal1.getTime().compareTo(date)<0){    //判断创建时间有没有超过两分钟，超过置为挂起，发起新通话
-                        int updateCancelRecord=callService.updateCancelRecord(sendphoneInformation.getCalltoken(),"4",timeStamp);
-                        String callToken = "TH";
-                        Random random = new Random();
+                    }else {
+                        if(sendphoneInformation.getRoomcode()==null){   //没有同意通话
+                            Date time=new Date(sendphoneInformation.getCreatetime().getTime());
+                            Calendar cal1=new GregorianCalendar();
+                            cal1.setTime(time);
+                            cal1.add(Calendar.MINUTE,2);
+                            if(cal1.getTime().compareTo(date)<0){    //判断创建时间有没有超过两分钟，超过置为挂起，发起新通话
+                                int updateCancelRecord=callService.updateCancelRecord(sendphoneInformation.getCalltoken(),"4",timeStamp);
+                                String callToken = "TH";
+                                Random random = new Random();
                         for (int i = 0; i < 20; i++) {
                             callToken += String.valueOf(random.nextInt(10));
                         }

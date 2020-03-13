@@ -12,7 +12,7 @@
     </insert>
 
     <select id="getUserInformation" resultType="com.adminapp.business.entity.dw_user.UserModel">
-        select * from t_user where accountname=#{userId}
+        select * from t_user where accountname=#{userId} AND usersystem=2
     </select>
 
     <select id="getPhoneInformation" resultType="com.adminapp.business.entity.dw_call.SendphoneInformation">

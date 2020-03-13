@@ -4,6 +4,7 @@ public class RequestCallReturnModel {
     private String callToken;
     private String callTimestamp;
     private String callName;
+    private int callGender;
     private String callHeadUrl;
 
     public String getCallToken() {
@@ -28,6 +29,14 @@ public class RequestCallReturnModel {
 
     public void setCallName(String callName) {
         this.callName = callName;
+    }
+
+    public int getCallGender() {
+        return callGender;
+    }
+
+    public void setCallGender(int callGender) {
+        this.callGender = callGender;
     }
 
     public String getCallHeadUrl() {
