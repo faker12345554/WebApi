@@ -76,7 +76,7 @@ public class UserPermissController {
     }
 
     @UserLoginToken
-    @ApiOperation("获取组信息")
+    @ApiOperation("获取权限组信息")
     @GetMapping("/GetGroup")
     public ResponseResult getGroup(@RequestParam int id, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
@@ -86,7 +86,7 @@ public class UserPermissController {
     }
 
     @UserLoginToken
-    @ApiOperation("权限组列表")
+    @ApiOperation("查看权限组列表")
     @PostMapping("GetList")
     public ResponseResult listGroup(@RequestBody Condition condition, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
@@ -96,6 +96,8 @@ public class UserPermissController {
         return result.setData( groupService.listGroup(condition));
     }
 
+    @UserLoginToken
+    @ApiOperation("查看菜单信息")
     @GetMapping("/Menutree")
     public ResponseResult GetMenuList(){
         ResponseResult result = new ResponseResult();
@@ -104,6 +106,7 @@ public class UserPermissController {
         return result.setData( groupService.GetMenuList());
     }
 
+    @UserLoginToken
     @ApiOperation("获取角色名称")
     @GetMapping("/GetpermissionName")
     public ResponseResult GetpermissionName() {

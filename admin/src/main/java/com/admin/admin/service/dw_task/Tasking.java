@@ -3,6 +3,7 @@ package com.admin.admin.service.dw_task;
 import com.admin.admin.dao.dw_task.TaskDao;
 import com.admin.admin.entity.dw_message.TMessage;
 import com.admin.admin.entity.dw_person.Personinformation;
+import com.admin.admin.entity.dw_personmessage.TPersonmessage;
 import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
 import com.admin.admin.entity.dw_reminder.Remindersettings;
 import com.admin.admin.entity.dw_summons.TSummons;
@@ -30,6 +31,7 @@ public class Tasking {
     @Autowired
     private TaskDao taskDao;
 
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     /**
      * 取保监居到期提醒
      */
@@ -38,26 +40,28 @@ public class Tasking {
         TMessage message = new TMessage();
         List<Personinformation> list = GetPerson();
         for (Personinformation item : list) {
-            long days = CalendarAdjust.getDays(CalendarAdjust.GetYear(new Date()), CalendarAdjust.GetYear(new Date(item.getBailoutenddate())));
+            long days = CalendarAdjust.getDays(CalendarAdjust.GetYear(new Date()), CalendarAdjust.GetYear(simpleDateFormat.parse(item.getBailoutenddate())));
             // System.out.println(CalendarAdjust.getDays(CalendarAdjust.GetYear(new Date()), CalendarAdjust.GetYear(item.getBailoutenddate())));
             System.out.println(item.getBailoutenddate());
             if (days == 15) {
                 System.out.println(item.getPersonid());
                 if (item.getSuspectstatus().equals("取保候审")) {
                     System.out.println(item.getPersonid());
-                    message.setModular(6);
-                    message.setContent("监居人员" + item.getPersonname() + "15天后取保候审到期,请提前告知!");
+                    message.setModular(1);
+                    message.setContent("取保候审人员" + item.getPersonname() + "15天后取保候审到期,请提前告知!");
                     message.setPersonid(item.getPersonid());
                     message.setModularname("取保候审到期提醒");
+                    message.setDetailtype(1);
                     message.setReadmessage(false);
                     message.setMessagetime(CalendarAdjust.timeStamp2Date(CalendarAdjust.getNotificationTime()));
                     taskDao.SaveMessage(message);
                 } else if (item.getSuspectstatus().equals("监视居住")) {
-                    message.setModular(7);
-                    message.setContent("监居人员" + item.getPersonname() + "15天后监视居住到期,请提前告知!");
+                    message.setModular(1);
+                    message.setContent("监居居住人员" + item.getPersonname() + "15天后监视居住到期,请提前告知!");
                     message.setPersonid(item.getPersonid());
                     message.setModularname("监视居住到期提醒");
                     message.setReadmessage(false);
+                    message.setDetailtype(2);
                     message.setMessagetime(CalendarAdjust.timeStamp2Date(CalendarAdjust.getNotificationTime()));
                     taskDao.SaveMessage(message);
                 }
@@ -81,10 +85,12 @@ public class Tasking {
      * 生成传讯记录
      */
     public void GeneratedRecord() throws Exception {
+
         TSummons summons = new TSummons();
         List<Personinformation> list = GetPerson();
         for (Personinformation item : list) {
             //填写传讯信息
+            summons.setSummontime(simpleDateFormat.format(new Date()));
             summons.setPersonid(item.getPersonid());
             summons.setPersonname(item.getPersonname());
             TSummons tSummons = taskDao.GetSummons(item.getPersonid());
@@ -94,7 +100,7 @@ public class Tasking {
 
             if (item.getBailoutbegindate() != null) {
 
-                if (CalendarAdjust.getMonthDiff(new Date(item.getBailoutbegindate()), new Date()) >= 2) {
+                if (CalendarAdjust.getMonthDiff(simpleDateFormat.parse(item.getBailoutbegindate()), new Date()) >= 2) {
                     month = CalendarAdjust.getMonth(CalendarAdjust.GetYear(new Date()));
                     year = CalendarAdjust.getYears(CalendarAdjust.GetYear(new Date()));
                     summons.setSummonsbegintime(CalendarAdjust.getFirstDayOfMonth1(year, month));
@@ -138,18 +144,30 @@ public class Tasking {
         if (remindersettings.getSettingday().indexOf(",") != -1) {
             strArr = remindersettings.getSettingday().split(",");
         }
+        TPersonmessage model=new TPersonmessage();
         List<Personinformation> list = GetPerson();
         TMessage message = new TMessage();
         for (Personinformation item : list) {
-            //填写消息内容
+
+            //填写人员端app消息内容
+            model.setModular(5);
+
+
+            //填写管理端app消息内容
             message.setModular(4);
-            message.setContent("监居人员" + item.getPersonname() + "下个月应进行传讯取证,请提前告知!");
+            if (item.getSuspectstatus().equals("取保候审")){
+                message.setContent("取保候审人员" + item.getPersonname() + "下个月应进行传讯取证,请提前告知!");
+                model.setContent("");
+            }else if(item.getSuspectstatus().equals("监视居住")){
+                message.setContent("监视居住人员" + item.getPersonname() + "下个月应进行传讯取证,请提前告知!");
+            }
+
             message.setPersonid(item.getPersonid());
             message.setModularname("待办提醒");
             message.setDetailtypename("传讯取证通知");
             message.setDetailtype(1);
             message.setReadmessage(false);
-            if (taskDao.GetMessage(item.getPersonid(), CalendarAdjust.GetYear(new Date())) != 0) {
+            if (taskDao.GetMessage(item.getPersonid(), CalendarAdjust.GetYear(new Date())) == 0) {
                 if (strArr == null || strArr.length == 0) {
                     message.setMessagetime(
                             CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(remindersettings.getSettingday()))));
@@ -218,6 +236,8 @@ public class Tasking {
 
         return messageList;
     }
+
+
 
 
 

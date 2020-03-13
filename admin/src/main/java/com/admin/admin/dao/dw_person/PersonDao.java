@@ -4,6 +4,7 @@ package com.admin.admin.dao.dw_person;
 import com.admin.admin.entity.dw_person.Personinformation;
 import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
 import com.admin.admin.entity.dw_sysenum.Dictionary;
+import com.admin.model.Appstatistics.monthnumber;
 import com.admin.model.search.SearchModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -52,6 +53,10 @@ public interface PersonDao {
     查询设置
      */
     List<TPrisonsetting> ListPrison(String PersonId);
+
+    monthnumber getvolocation(String PersonId);
+
+    List<Map<String,String>> getdetails(@Param("id") int id, @Param("personid") String personid);
 
 
 

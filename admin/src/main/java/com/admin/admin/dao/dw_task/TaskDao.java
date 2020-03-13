@@ -2,6 +2,7 @@ package com.admin.admin.dao.dw_task;
 
 import com.admin.admin.entity.dw_message.TMessage;
 import com.admin.admin.entity.dw_person.Personinformation;
+import com.admin.admin.entity.dw_personmessage.TPersonmessage;
 import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
 import com.admin.admin.entity.dw_reminder.Remindersettings;
 import com.admin.admin.entity.dw_summons.TSummons;
@@ -93,6 +94,15 @@ public interface TaskDao {
      * @return
      */
     List<TMessage> GetMessageList(@Param("type") int type,@Param("SendTime") String SendTime);
+
+    /**
+     *
+     * @param tPersonmessage
+     * @return
+     */
+    int insertpermessage(TPersonmessage tPersonmessage);
+
+
 
 
 

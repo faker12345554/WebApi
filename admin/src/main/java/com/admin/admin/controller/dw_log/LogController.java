@@ -41,7 +41,7 @@ public class LogController {
 ////        result.setMessage(ResultCode.SUCCESS.getMessage());
 ////        return result.setData(logService.insertLog(logInformation));
 ////    }
-   // @UserLoginToken
+    @UserLoginToken
     @ApiOperation(value = "查询日志信息")
     @PostMapping("/getLog")
     public ResponseResult listLog(@RequestBody LogParamModel logParamModel, HttpServletResponse response) {
@@ -59,7 +59,7 @@ public class LogController {
 
     }
 
-   // @UserLoginToken
+    @UserLoginToken
     @ApiOperation(value = "统计取保监居APP使用人数")
     @GetMapping("/Statistics")
     public ResponseResult getNumber(@RequestParam String code, @RequestParam int level, String Days) {
@@ -103,6 +103,7 @@ public class LogController {
         return result.setData(numberList);
     }
 
+    @UserLoginToken
     @ApiOperation(value = "统计脱管人数")
     @GetMapping("/Removalrate")
     public ResponseResult Removalrate(@RequestParam String code,int level,String Starttime,String endetime) {
@@ -144,6 +145,7 @@ public class LogController {
         return result.setData(numberList);
     }
 
+    @UserLoginToken
     @ApiOperation(value = "统计日月活率")
     @GetMapping("/Solarrate")
     public ResponseResult Solarrate(@RequestParam String code,int codelevel, int level,String Starttime,String endetime) {

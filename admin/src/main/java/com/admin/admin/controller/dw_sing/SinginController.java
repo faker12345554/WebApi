@@ -27,7 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 
-@Api(value="签到信息管理Controller",tags={"报到信息管理"})
+@Api(value = "签到信息管理Controller", tags = {"报到信息管理"})
 @RestController
 @RequestMapping("/Singin")
 public class SinginController {
@@ -44,20 +44,20 @@ public class SinginController {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return result.setData(singinService.getSingin(Id));
     }
-   // @UserLoginToken
-    @ApiOperation("签到信息列表")
+
+    @UserLoginToken
+    @ApiOperation("查看签到信息列表")
     @PostMapping("/ListSingin")
-    public ResponseResult ListSingin(@RequestBody SearchModel searchModel){
+    public ResponseResult ListSingin(@RequestBody SearchModel searchModel) {
         ResponseResult result = new ResponseResult();
         try {
             PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
             List<SinginModel> allItems = singinService.ListSingin(searchModel);
-            if (allItems.size()==0){
+            if (allItems.size() == 0) {
                 result.setCode(ResultCode.NULLDATA.getCode());
                 result.setMessage(ResultCode.NULLDATA.getMessage());
                 return result.setData("");
             }
-
 
 
             PageInfo<SinginModel> info = new PageInfo<>(allItems);//全部商品
@@ -68,7 +68,7 @@ public class SinginController {
             result.setCode(ResultCode.SUCCESS.getCode());
             result.setMessage(ResultCode.SUCCESS.getMessage());
             return result.setData(pageData);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             result.setCode(ResultCode.UNKNOW_ERROR.getCode());
             result.setMessage(ResultCode.UNKNOW_ERROR.getMessage());
             return result.setData(ex.toString());
@@ -77,15 +77,15 @@ public class SinginController {
 
     }
 
-   //@UserLoginToken
-    @ApiOperation("音视频列表")
+    @UserLoginToken
+    @ApiOperation("查看音视频列表")
     @PostMapping("/ListAudio")
-    public ResponseResult ListAudio(@RequestBody SearchModel searchModel){
+    public ResponseResult ListAudio(@RequestBody SearchModel searchModel) {
         ResponseResult result = new ResponseResult();
         try {
             PageHelper.startPage(searchModel.getPageIndex(), searchModel.getPageSize());
             List<SinginModel> allItems = singinService.ListAudio(searchModel);
-            if (allItems.size()==0){
+            if (allItems.size() == 0) {
                 result.setCode(ResultCode.NULLDATA.getCode());
                 result.setMessage(ResultCode.NULLDATA.getMessage());
                 return result.setData("");
@@ -99,7 +99,7 @@ public class SinginController {
             result.setCode(ResultCode.SUCCESS.getCode());
             result.setMessage(ResultCode.SUCCESS.getMessage());
             return result.setData(pageData);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             result.setCode(ResultCode.UNKNOW_ERROR.getCode());
             result.setMessage(ResultCode.UNKNOW_ERROR.getMessage());
             return result.setData(ex.toString());
@@ -109,16 +109,15 @@ public class SinginController {
     }
 
 
-
-
+    @UserLoginToken
     @ApiOperation("导出音视频信息")
     @PostMapping("ExportAudio")
-    public ResponseResult ExportAudio(@RequestBody SearchModel searchModel){
+    public ResponseResult ExportAudio(@RequestBody SearchModel searchModel) {
         ResponseResult result = new ResponseResult();
         List<SinginModel> allItems = singinService.ListAudio(searchModel);
-        String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) +"音视频信息"+ ".xls";
+        String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) + "音视频信息" + ".xls";
         File file = new File(System.getProperty("user.dir") + "/../webapps/Execl/音视频信息" + dateTime);
-        result.setData("音视频信息"+dateTime);
+        result.setData("音视频信息" + dateTime);
         try (HSSFWorkbook workbook = new HSSFWorkbook()) {
             HSSFSheet sheet = workbook.createSheet("导出音视频信息");
             HSSFRow row = sheet.createRow(0);
@@ -164,14 +163,15 @@ public class SinginController {
         return result;
     }
 
+    @UserLoginToken
     @ApiOperation("导出签到信息")
     @PostMapping("ExportSingIn")
-    public ResponseResult ExportSingIn(@RequestBody SearchModel searchModel){
+    public ResponseResult ExportSingIn(@RequestBody SearchModel searchModel) {
         ResponseResult result = new ResponseResult();
         List<SinginModel> allItems = singinService.ListSingin(searchModel);
-        String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) +"签到信息"+ ".xls";
+        String dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date()) + "签到信息" + ".xls";
         File file = new File(System.getProperty("user.dir") + "/../webapps/Execl/报到信息" + dateTime);
-        result.setData("报到信息"+dateTime);
+        result.setData("报到信息" + dateTime);
         try (HSSFWorkbook workbook = new HSSFWorkbook()) {
             HSSFSheet sheet = workbook.createSheet("打印历史定位信息");
             HSSFRow row = sheet.createRow(0);
@@ -186,7 +186,6 @@ public class SinginController {
             row.createCell(8).setCellValue("签到类型");
             row.createCell(9).setCellValue("签到时间");
             row.createCell(10).setCellValue("备注");
-
 
 
             allItems.forEach(printOrder -> {

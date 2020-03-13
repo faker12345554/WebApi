@@ -37,7 +37,7 @@ public class UserController {
 
 
     @UserLoginToken
-    @ApiOperation("用户信息列表")
+    @ApiOperation("查看用户信息列表")
    // @PostMapping("/GetList")
     @PostMapping("/GetList")
     public ResponseResult<User> listUser(@RequestBody Usermodel usermodel) {

@@ -42,6 +42,10 @@ public class RuleStatSericve {
 
     }
 
+    public int updatestatus(String personid,String code){
+        return ruleStatistics.updatestatus(personid,code);
+    }
+
     public int getNumber(String type, String Limitedmonth) {
         return ruleStatistics.getNumber(type, Limitedmonth);
     }
