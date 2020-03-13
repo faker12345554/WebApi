@@ -3,11 +3,17 @@ package com.admin.admin.service.dw_person;
 import com.admin.admin.dao.dw_case.CaseDao;
 import com.admin.admin.dao.dw_guaran.GuarantDao;
 import com.admin.admin.dao.dw_person.PersonDao;
+import com.admin.admin.dao.dw_task.TaskDao;
+import com.admin.admin.dao.dw_violation.ViolationDao;
 import com.admin.admin.entity.dw_case.TCaseinfo;
 import com.admin.admin.entity.dw_guarant.GuaranteeInformation;
+import com.admin.admin.entity.dw_message.TMessage;
 import com.admin.admin.entity.dw_person.Personinformation;
 import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
 import com.admin.admin.entity.dw_sysenum.Dictionary;
+import com.admin.admin.entity.dw_violation.Violationfens;
+import com.admin.admin.service.dw_violation.ViolationService;
+import com.admin.model.Appstatistics.monthnumber;
 import com.admin.model.search.SearchModel;
 import com.admin.page.PageBean;
 import com.admin.tool.CacheUtils;
@@ -34,7 +40,13 @@ public class PersoinfoService {
     private CaseDao caseDao;
 
     @Autowired
+    private TaskDao taskDao;
+
+    @Autowired
     private GuarantDao guarantDao;
+
+    @Autowired
+    private ViolationDao violationDao;
 
 
 
@@ -48,6 +60,22 @@ public class PersoinfoService {
         TCaseinfo tCaseinfo=personinformation.gettCaseinfo();
         tCaseinfo.setPersonid(PersonId);
         caseDao.SaveCase(tCaseinfo);
+        TMessage message = new TMessage();
+        message.setModular(6);
+        message.setContent("新增"+personinformation.getSuspectstatus()+"人" + personinformation.getPersonname() + "," +
+                        personinformation.getGender()+","+personinformation.getAge()+"岁"+personinformation.getBailoutbegindate()+"开始执行");
+
+        message.setPersonid(personinformation.getPersonid());
+        message.setModularname("人员消息");
+        message.setDetailtypename("新增"+personinformation.getSuspectstatus()+"人员");
+        if (personinformation.getSuspectstatuscode().equals("1")){
+            message.setDetailtype(1);
+        }else{
+            message.setDetailtype(2);
+        }
+
+        message.setReadmessage(false);
+        taskDao.SaveMessage(message);
         if (CacheUtils.get("UserName").toString()!=null){
             personinformation.setFounderid(CacheUtils.get("UserName").toString());
         }
@@ -165,5 +193,48 @@ public class PersoinfoService {
         return personList;
     }
 
+   public List<monthnumber>  getvolocation(String Personid){
+       monthnumber model=personDao.getvolocation(Personid);
+       List<monthnumber> list=new ArrayList<monthnumber>();
+       monthnumber number=new monthnumber();
+       if (model.getBailnumber()!=0){
+           Violationfens violationfens=violationDao.GetByCriteria("2");
+           if ( violationfens.getSlightfens()<= model.getBailnumber() && model.getBailnumber()<violationfens.getSeriousfens()){
+               number.setMonth("轻微");
+               number.setBailnumber(model.getBailnumber());
+               list.add(number);
+           }else if (model.getBailnumber()>=violationfens.getSeriousfens()){
+               number.setMonth("严重");
+               number.setBailnumber(model.getBailnumber());
+               list.add(number);
+           }
+       }else{
+           number.setBailnumber(model.getBailnumber());
+           number.setMonth("正常");
+           list.add(number);
+       }
+
+       if (model.getSupervisionnumber()!=0){
+           Violationfens violationfens=violationDao.GetByCriteria("1");
+           if ( violationfens.getSlightfens()<= model.getBailnumber() && model.getBailnumber()<violationfens.getSeriousfens()){
+               number.setMonth("轻微");
+               number.setBailnumber(model.getSupervisionnumber());
+               list.add(number);
+           }else if (model.getBailnumber()>=violationfens.getSeriousfens()){
+               number.setMonth("严重");
+               number.setBailnumber(model.getSupervisionnumber());
+               list.add(number);
+           }
+       }else{
+           number.setMonth("正常");
+           number.setBailnumber(model.getSupervisionnumber());
+           list.add(number);
+       }
+       return list;
+   }
+
+   public List<Map<String,String>> getdetails(int id,String personid) {
+       return personDao.getdetails(id, personid);
+   }
 
 }

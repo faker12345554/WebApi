@@ -34,6 +34,7 @@ public class EnumController {
      * @return
      */
     @UserLoginToken
+    @ApiOperation("查询枚举信息")
     @GetMapping("/GetEnum")
     public ResponseResult GetEnum(@RequestParam String Code) {
         ResponseResult result = new ResponseResult();
@@ -43,6 +44,7 @@ public class EnumController {
     }
 
     @UserLoginToken
+    @ApiOperation("查询民警信息")
     @GetMapping("/GetPolice")
     public ResponseResult GetPolice(@RequestParam String PoliceStation) {
         ResponseResult result = new ResponseResult();
@@ -56,6 +58,7 @@ public class EnumController {
      *
      * @return
      */
+    @ApiOperation("查询派出所的信息")
     @UserLoginToken
     @GetMapping("/ListMechanism")
     public ResponseResult ListMechanism() {
@@ -65,7 +68,7 @@ public class EnumController {
         return result.setData(enumService.ListMechanism());
     }
 
-    //@ApiOperation("获取需要的枚举信息")
+    @ApiOperation("查询枚举信息")
     @UserLoginToken
     @GetMapping("/getEnum")
     public ResponseResult getEnum() {
@@ -81,6 +84,7 @@ public class EnumController {
      * @param Code
      * @return
      */
+    @ApiOperation("查询主办人信息")
     @UserLoginToken
     @GetMapping("/ListSponsor")
     public ResponseResult ListSponsor(@RequestParam String Code) {

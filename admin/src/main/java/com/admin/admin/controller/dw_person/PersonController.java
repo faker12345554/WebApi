@@ -153,7 +153,7 @@ public class PersonController {
     }
 
 
-   // @UserLoginToken
+    @UserLoginToken
     @ApiOperation("导出监居人员信息")
     @PostMapping("/ExportPerson")
     public ResponseResult ExportExcel(@RequestBody SearchModel searchModel) throws Exception{
@@ -220,6 +220,25 @@ public class PersonController {
         rtn.setCode(200);
 
         return rtn;
+    }
+    //@UserLoginToken
+    @ApiOperation("获取人员违规信息")
+    @PostMapping("/getvolocation")
+    public ResponseResult getvolocation(String personid){
+        ResponseResult rtn = new ResponseResult();
+        //rtn.setMessage("");
+        rtn.setCode(200);
+        return rtn.setData(persoinfoService.getvolocation(personid));
+    }
+
+    //@UserLoginToken
+    @ApiOperation("查看人员违规信息")
+    @PostMapping("/getdetails")
+    public ResponseResult getdetails(int id,String personid){
+        ResponseResult rtn = new ResponseResult();
+        //rtn.setMessage("");
+        rtn.setCode(200);
+        return rtn.setData(persoinfoService.getdetails(id,personid));
     }
 
 

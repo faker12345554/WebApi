@@ -15,12 +15,12 @@
     </select>
 
     <select id="GetMessage" resultType="int">
-        SELECT count (*) FROM t_summons where personid=#{PersonId} and summonsbegintime &lt;=#{Date} and summonsendtime >=#{Date} and reporttime is null
+        SELECT count (*) FROM t_summons where personid=#{PersonId}  and reporttime is null
     </select>
 
     <insert id="SaveMessage" parameterType="com.admin.admin.entity.dw_message.TMessage">
         insert into t_message(modular,content,personid,modularname,messagetime,readmessage,detailtype,detailtypename)
-        values(#{modular},#{workcontent},#{personid},#{modularname},#{messagetime},#{readmessage},#{detailtype},#{detailtypename})
+        values(#{modular},#{content},#{personid},#{modularname},#{messagetime},#{readmessage},#{detailtype},#{detailtypename})
     </insert>
 
     <insert id="SaveSummons" parameterType="com.admin.admin.entity.dw_summons.TSummons">
@@ -46,7 +46,7 @@
         select count(*) from legal."public".t_summons where personid=#{PersonId} and summonsendtime&lt; #{date} and reporttime is null
     </select>
     <update id="UpdateDegree" parameterType="String">
-        update legal."public".t_summons set severity=#{severity} where  personid=#{PersonId}
+        update t_summons set severity=#{severity} where  personid=#{PersonId}
         and summonsendtime =(SELECT summonsendtime from t_summons where personid=#{PersonId} Order by summonsendtime desc LIMIT 1 )
     </update>
 
@@ -55,6 +55,11 @@
         select * from t_message
         where modular=#{type} and to_date(to_char(messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')=to_date(#{SendTime},'yyyy-MM-dd')
     </select>
+
+    <insert id="insertpermessage" parameterType="com.admin.admin.entity.dw_personmessage.TPersonmessage">
+        			insert into t_personmessage(modular,content,personid,modularname,messagetime,readmessage,detailtype,detailtypename,leaveorder)
+        			VALUES (#{modular},#{content},#{personid},#{modularname},#{messagetime},#{readmessage},#{detailtype},#{detailtypename},#{leaveorder})
+    </insert>
 
 
 </mapper>

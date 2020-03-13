@@ -38,10 +38,11 @@ public class MessageController {
     }
     @ApiOperation("测试")
     @GetMapping("/Gettest")
-    public List<TMessage> test() throws Exception{
+    public void test() throws Exception{
 
-        tasking.GetMessageList(5);
+        tasking.GetMessage();
+        tasking.GeneratedRecord();
 
-        return  tasking.GetMessageList(5);
+
     }
 }

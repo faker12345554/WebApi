@@ -44,7 +44,7 @@
         insert into t_prisonsetting(personid, settingname, settingcheck, settingtime,settingcode) values(#{data.personid},#{data.settingname},#{data.settingcheck},#{data.settingtime},#{data.settingcode})
     </insert>
 
-    <update id="delconfig" parameterType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting" >
+    <update id="delconfig" parameterType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting">
         update t_prisonsetting set settingcheck=#{settingcheck} where personid=#{personid} and settingname=#{settingname}
     </update>
 
@@ -54,14 +54,14 @@
 
     <select id="ListPerson"
             resultType="com.admin.admin.entity.dw_person.Personinformation">
-    <if test="type==1">
+        <if test="type==1">
             select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
-            left join t_caseinfo as C on C.personid=P.personid and c.caseno=p.caseno  where sponsoralarm=#{limit}
-    </if>
-    <if test="type!=1">
-        select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
-        left join t_caseinfo as C on C.personid=P.personid and c.caseno=p.caseno  where policecode=#{limit}
-    </if>
+            left join t_caseinfo as C on C.personid=P.personid and c.caseno=p.caseno where sponsoralarm=#{limit}
+        </if>
+        <if test="type!=1">
+            select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
+            left join t_caseinfo as C on C.personid=P.personid and c.caseno=p.caseno where policecode=#{limit}
+        </if>
 
 
         <if test=" searchmodel.FuzzyCondition !=null and searchmodel.FuzzyCondition !=''">
@@ -90,6 +90,24 @@
         select * from t_prisonsetting where personid=#{PersonId} and settingcheck=true
     </select>
 
+    <select id="getvolocation" parameterType="String" resultType="com.admin.model.Appstatistics.monthnumber">
+		SELECT (SELECT "count"(*) from t_summons where personid=#{personid} and reporttime is null) as Bailnumber,
+				(SELECT count(*) from t_personmessage where personid=#{personid} and modular=2) as supervisionnumber
+    </select>
+
+
+    <resultMap id="ViolationMap" type="HashMap">
+        <result property="date" column="num" jdbcType="VARCHAR"/>
+        <result property="personid" column="personid" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getdetails" resultType="ViolationMap">
+        <if test="id==1">
+            SELECT summontime, personid from t_summons where personid='' and reporttime is null
+        </if>
+        <if test="id==2">
+
+        </if>
+    </select>
 
 
 </mapper>

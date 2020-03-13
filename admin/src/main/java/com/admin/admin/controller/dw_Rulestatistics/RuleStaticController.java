@@ -111,7 +111,7 @@ public class RuleStaticController {
 
     }
 
-   // @UserLoginToken
+    @UserLoginToken
     @ApiOperation("首页")
     @GetMapping("/HomePage")
     public ResponseResult gethomePage(){
