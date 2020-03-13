@@ -8,6 +8,7 @@ import com.adminapp.model.dw_system.*;
 import com.common.common.Uploadfiles.Upload;
 import com.common.common.result.ResultSet;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+@Api(value="工作人员系统Controller",tags={"工作人员系统功能管理"})
 @RequestMapping("/app/admin/system")
 public class SystemController {
     @Autowired

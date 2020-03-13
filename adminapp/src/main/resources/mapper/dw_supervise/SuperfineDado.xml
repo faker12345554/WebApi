@@ -16,7 +16,7 @@
         select * FROM t_reportsettings
     </select>
     <select id="listSingin" resultType="com.adminapp.business.entity.dw_supervise.SinginInformation">
-        select * FROM t_singin WHERE personid=#{personid} AND type=#{type}
+        select * FROM t_singin WHERE personid=#{personid} AND type=#{type} AND result=0
     </select>
     <select id="listCiteRecord" resultType="com.adminapp.business.entity.dw_supervise.SummonsInformation">
         select * FROM t_summons WHERE t_summons.reporttime is not null ORDER BY t_summons.summontime DESC
@@ -95,7 +95,7 @@
         select * FROM t_location where personid=#{personId} AND fscope=true
     </select>
     <select id="listAllSinginInformation" resultType="com.adminapp.business.entity.dw_supervise.SinginInformation">
-        select * FROM t_singin
+        select * FROM t_singin where result=0
     </select>
     <select id="getPrisonValidSetting" resultType="com.adminapp.business.entity.dw_supervise.PrisonSettingInformation">
         select * FROM t_prisonsetting WHERE personid=#{personId} AND settingname=#{validName}

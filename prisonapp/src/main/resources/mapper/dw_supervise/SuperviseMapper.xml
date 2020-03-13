@@ -85,11 +85,11 @@
     </insert>
 
     <select id="getUserId" parameterType="String" resultType="com.prisonapp.business.entity.dw_user.UserModel">
-        select id from t_user where personid =#{personid};
+        select id from t_user left join t_personinformation on t_user.phone = t_personinformation.contact where t_personinformation.personid =#{personid};
     </select>
 
     <insert id="uploadLocationError">
-        insert into t_log(operator,action,operatingtime,logtype,errorcode) values(#{userId},#{errorMsg},#{date},'2',#{errorCode})
+        insert into t_log(operator,action,operatingtime,logtype,errorcode,systemtype) values(#{userId},#{errorMsg},#{date},'2',#{errorCode},'1')
     </insert>
 
     <insert id="uploadBattery">

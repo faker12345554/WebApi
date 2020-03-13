@@ -9,6 +9,7 @@ import com.adminapp.config.token.tation.UserLoginToken;
 import com.adminapp.model.dw_message.*;
 import com.adminapp.model.dw_supervise.PersonAllInformationModel;
 import com.common.common.result.ResultSet;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @RestController
+@Api(value="工作人员消息Controller",tags={"工作人员消息管理"})
 @RequestMapping("/app/admin/message")
 public class MessageController {
     @Autowired
