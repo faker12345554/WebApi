@@ -97,16 +97,16 @@
 
 
     <resultMap id="ViolationMap" type="HashMap">
-        <result property="date" column="num" jdbcType="VARCHAR"/>
+        <result property="datetime" column="datetime" jdbcType="VARCHAR"/>
         <result property="personid" column="personid" jdbcType="VARCHAR"/>
     </resultMap>
-    <select id="getdetails" resultType="ViolationMap">
+    <select id="getdetails"  resultMap="ViolationMap">
         <if test="id==1">
-            SELECT summontime, personid from t_summons where personid='' and reporttime is null
+            SELECT summontime as datetime, personid from t_summons where personid=#{personid} and reporttime is null
         </if>
         <if test="id==2">
-            select substring(to_char(timestamp,'yyyy-MM-dd HH:mm:ss'),0,17) as date,address as personid from t_location
-            where fscope=true
+            select substring(to_char(timestamp,'yyyy-MM-dd HH:mm:ss'),0,17) as datetime,address as personid from t_location
+            where fscope=true and personid=#{personid}
         </if>
     </select>
 
