@@ -89,10 +89,13 @@ public class RuleStaticController {
                 for (Map<String,String> itam:FrequencyList){
                     if (Integer.parseInt(itam.get("num").toString())==0){
                         Normal+=1;
+                        ruleStatSericve.updatestatus(item.get("personid").toString(),"0");
                     }else if(Integer.parseInt(itam.get("num").toString())==1){
                         Slight+=1;
+                        ruleStatSericve.updatestatus(item.get("personid").toString(),"1");
                     }else if(Integer.parseInt(itam.get("num").toString())==2){
                         Severity+=1;
+                        ruleStatSericve.updatestatus(item.get("personid").toString(),"2");
                     }
                 }
                 model.setNormalNumber(Normal);

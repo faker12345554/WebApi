@@ -32,7 +32,8 @@ public interface RuleStatistics {
 
     int getNumber(String type,String Limitedmonth);
 
-
+    //更新人员的严重程度
+    int updatestatus(String personid,String code);
 
 
 }

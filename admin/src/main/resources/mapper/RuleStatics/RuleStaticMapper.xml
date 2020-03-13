@@ -67,6 +67,10 @@
         and to_date(to_char(t_message.messagetime,'yyyy-MM-dd'),'yyyy-MM-dd')>to_date(to_char(now(),'yyyy-MM-dd'),'yyyy-MM-dd')
     </select>
 
+    <update id="updatestatus" parameterType="String" >
+        update t_personinformation set violationcode=#{code} where personid=#{personid}
+    </update>
+
     <select id="getNumber" parameterType="String" resultType="int">
        select count(personid) from t_personinformation where suspectstatuscode=#{type}
        and substring(to_char(bailoutbegindate,'yyyy-MM-dd HH:mm:ss'),0,8)=substring(#{Limitedmonth},0,8)

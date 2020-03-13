@@ -27,6 +27,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 @Api(value = "保外人员Controller", tags = {"保外人员信息管理"})
@@ -223,7 +224,7 @@ public class PersonController {
     }
     //@UserLoginToken
     @ApiOperation("获取人员违规信息")
-    @PostMapping("/getvolocation")
+    @GetMapping("/getvolocation")
     public ResponseResult getvolocation(String personid){
         ResponseResult rtn = new ResponseResult();
         //rtn.setMessage("");
@@ -233,12 +234,19 @@ public class PersonController {
 
     //@UserLoginToken
     @ApiOperation("查看人员违规信息")
-    @PostMapping("/getdetails")
-    public ResponseResult getdetails(int id,String personid){
+    @GetMapping("/getdetails")
+    public ResponseResult getdetails(int id,String personid,int Pageindex,int pageSize){
         ResponseResult rtn = new ResponseResult();
+        PageHelper.startPage(Pageindex, pageSize);
+        List<Map<String,String>> allitems = persoinfoService.getdetails(id,personid);
+        PageInfo<Map<String,String>> info = new PageInfo<>(allitems);//全部商品
+        int countNums = (int) info.getTotal();            //总记录数
+        PageBean<Map<String,String>> pageData = new PageBean<>(Pageindex, pageSize, countNums);
+        pageData.setTotalPage(info.getPages());//总页数
+        pageData.setItems(allitems);
         //rtn.setMessage("");
         rtn.setCode(200);
-        return rtn.setData(persoinfoService.getdetails(id,personid));
+        return rtn.setData(pageData);
     }
 
 

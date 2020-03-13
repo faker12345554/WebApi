@@ -105,7 +105,8 @@
             SELECT summontime, personid from t_summons where personid='' and reporttime is null
         </if>
         <if test="id==2">
-
+            select substring(to_char(timestamp,'yyyy-MM-dd HH:mm:ss'),0,17) as date,address as personid from t_location
+            where fscope=true
         </if>
     </select>
 
