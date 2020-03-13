@@ -14,6 +14,8 @@ import com.adminapp.config.token.tation.UserLoginToken;
 import com.adminapp.model.dw_login.UserInformationModel;
 import com.adminapp.model.dw_login.WorkUserModel;
 import com.adminapp.model.dw_supervise.PersonAllInformationModel;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,13 @@ import org.springframework.web.bind.annotation.*;
 
 import com.common.common.result.ResultSet;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Calendar;
 import java.util.Date;
 
 @RestController
+@Api(value="工作人员登录Controller",tags={"工作人员账号管理"})
 @RequestMapping("/app/admin/user")
 public class LoginController {
 
@@ -41,13 +46,17 @@ public class LoginController {
     @ApiOperation(value = "登录")
     @PostMapping("/login")
     @PassToken
-    public ResultSet Login(@ApiParam(name = "account", value = "登陆账号") @RequestParam(required = true) String account, @ApiParam(name = "password", value = "密码") @RequestParam(required = true) String password) {
+    public ResultSet Login(@ApiParam(name = "account", value = "登陆账号") @RequestParam(required = true) String account,
+                           @ApiParam(name = "password", value = "密码") @RequestParam(required = true) String password,
+                           HttpServletResponse response, HttpServletRequest request) {
         ResultSet rs=new ResultSet();
         try {
-            CacheUtils.put("UserId",account);
+
 
             UserModel userInformation = userService.login(account);
             if (userInformation != null) {                //判断账号是否存在
+                CacheUtils.put("UserId",String.valueOf(userInformation.getId()));
+                CacheUtils.put("UserName",userInformation.getAliasname());
                 UserModel user=new UserModel();
                 user.setId(userInformation.getId());
                 user.setAccountname(userInformation.getAccountname());
@@ -62,7 +71,7 @@ public class LoginController {
                 tokenModel.setRefreshToken(token);
                 tokenModel.settExpiresTime(ExpiresTime);
                 if (userInformation.getPassword().equals(password)) {    //判断密码是否正确
-                    int insertLoginLog=loginService.insertLoginLog(userInformation.getId());   //插入登录日志
+                    //int insertLoginLog=loginService.insertLoginLog(userInformation.getId());   //插入登录日志
                     rs.resultCode = 0;
                     rs.resultMsg = "";
                     rs.data = tokenModel;

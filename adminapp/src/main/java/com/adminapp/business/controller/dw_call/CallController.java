@@ -13,6 +13,7 @@ import com.adminapp.model.dw_call.RequestCallReturnModel;
 import com.adminapp.model.dw_supervise.PersonAllInformationModel;
 import com.common.common.apppush.Demo;
 import com.common.common.result.ResultSet;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.json.JSONException;
@@ -27,6 +28,7 @@ import java.util.GregorianCalendar;
 import java.util.Random;
 
 @RestController
+@Api(value="工作人员音视频Controller",tags={"工作人员音视频管理"})
 @RequestMapping("/app/admin/call")
 public class CallController {
     @Autowired

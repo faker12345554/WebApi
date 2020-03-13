@@ -57,7 +57,7 @@ public class LogAspectConfig {
         第三个.* 表示路径下,所有包下的所有类的方法
         (..) 表示不限方法参数 这个路径不对吗？可能跟你controller层下面还有文件夹的原因，
     */
-    @Pointcut("execution(public * com.admin.admin.controller..*.*(..))")
+    @Pointcut("execution(public * com.adminapp.business.controller..*.*(..))")
     public void adminControllerLog() {
     }
 
