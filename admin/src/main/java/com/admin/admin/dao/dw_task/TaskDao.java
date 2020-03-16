@@ -102,6 +102,8 @@ public interface TaskDao {
      */
     int insertpermessage(TPersonmessage tPersonmessage);
 
+    int GetMessagenum(String personid,String monthdate);
+
 
 
 
