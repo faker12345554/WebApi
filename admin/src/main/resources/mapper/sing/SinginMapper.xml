@@ -74,7 +74,7 @@
         from t_singin AS t
         inner join t_personinformation AS P on p.personid=t.personid
         left join t_caseinfo tc on P.personid = tc.personid and tc.caseno=p.caseno
-        where p.status=#{searchModel.flag}
+        where p.status=#{searchModel.flag} and (t.type=2 or type=3)
         <if test="type==1">
             and p.sponsoralarm=#{limit}
         </if>
