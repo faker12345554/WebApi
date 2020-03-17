@@ -15,7 +15,7 @@
     </select>
 
     <select id="GetMessage" resultType="int">
-        SELECT count (*) FROM t_summons where personid=#{PersonId}  and reporttime is null
+        SELECT count (*) FROM t_summons where personid=#{PersonId}  and reporttime is null  Order by summonsendtime desc LIMIT 1
     </select>
 
     <insert id="SaveMessage" parameterType="com.admin.admin.entity.dw_message.TMessage">
@@ -39,11 +39,11 @@
     </select>
 
     <select id="GetViolationfens" parameterType="int" resultType="com.admin.admin.entity.dw_violation.Violationfens">
-        select * from legal."public".t_violationfens where status=true and enabled=false and violationcode=#{type}
+        select * from t_violationfens where status=true and enabled=false and violationcode=#{type}
     </select>
 
     <select id="StatisticalSummons" parameterType="String" resultType="int">
-        select count(*) from legal."public".t_summons where personid=#{PersonId} and summonsendtime&lt; #{date} and reporttime is null
+        select count(*) from t_summons where personid=#{PersonId} and summonsendtime&lt; #{date} and reporttime is null
     </select>
     <update id="UpdateDegree" parameterType="String">
         update t_summons set severity=#{severity} where  personid=#{PersonId}
@@ -60,6 +60,12 @@
         			insert into t_personmessage(modular,content,personid,modularname,messagetime,readmessage,detailtype,detailtypename,leaveorder)
         			VALUES (#{modular},#{content},#{personid},#{modularname},#{messagetime},#{readmessage},#{detailtype},#{detailtypename},#{leaveorder})
     </insert>
+    <select id="GetMessagenum" parameterType="String" resultType="int">
+        select count(*) from t_message where modular=#{type} and substring(to_char(messagetime,'yyyy-MM-dd'),0,8)
+        =substring(#{SendTime},0,8)
+    </select>
+
+
 
 
 </mapper>
