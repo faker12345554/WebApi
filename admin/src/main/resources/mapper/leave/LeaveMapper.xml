@@ -93,19 +93,19 @@
     </select>
 
     <select id="getPoliceStation" resultType="com.admin.admin.entity.dw_leave.PersonInformation">
-        <if test="area.equals('禅城区')">
+        <if test="area.equals('佛山市公安局禅城分局')">
             select detail from dictionary    where   code  like  '%440604%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%派出所%' and dictionary.detail not in(select detail from dictionary    where   code  like  '%440604%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%已撤销%')
         </if>
-        <if test="area.equals('南海区')">
+        <if test="area.equals('佛山市公安局南海分局')">
             select detail from dictionary    where   code  like  '%440605%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%派出所%' and dictionary.detail not in(select detail from dictionary    where   code  like  '%440605%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%已撤销%')
         </if>
-        <if test="area.equals('三水区')">
+        <if test="area.equals('佛山市公安局三水分局')">
             select detail from dictionary    where   code  like  '%440607%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%派出所%' and dictionary.detail not in(select detail from dictionary    where   code  like  '%440607%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%已撤销%')
         </if>
-        <if test="area.equals('高明区')">
+        <if test="area.equals('佛山市公安局高明分局')">
             select detail from dictionary    where   code  like  '%440608%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%派出所%' and dictionary.detail not in(select detail from dictionary    where   code  like  '%440608%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%已撤销%')
         </if>
-        <if test="area.equals('顺德区')">
+        <if test="area.equals('佛山市顺德区公安局')">
             select detail from dictionary    where   code  like  '%440606%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%派出所%' and dictionary.detail not in(select detail from dictionary    where   code  like  '%440606%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%已撤销%')
         </if>
 
