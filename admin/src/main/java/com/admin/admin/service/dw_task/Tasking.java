@@ -165,7 +165,7 @@ public class Tasking {
             message.setDetailtype(1);
             message.setReadmessage(false);
             if (tSummons != null && (new Date().getTime() <= CalendarAdjust.dateFormat.parse(tSummons.getSummonsendtime()).getTime())) {
-                if (taskDao.GetMessagenum(4,item.getPersonid(), CalendarAdjust.GetYear(new Date())) > 0) {
+                if (taskDao.GetMessagenum(4,item.getPersonid(), CalendarAdjust.GetYear(new Date())) <= 0) {
                     if (strArr == null || strArr.length == 0) {
                         message.setMessagetime(
                                 CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(remindersettings.getSettingday()))));
@@ -222,22 +222,16 @@ public class Tasking {
         if (type == 4) {
             messageList = taskDao.GetMessageList(4, CalendarAdjust.GetYear(new Date()));
 
-        } else if (type == 6) {
+        }  else if (type == 6) {
             messageList = taskDao.GetMessageList(6, CalendarAdjust.GetYear(new Date()));
         } else if (type == 7) {
             messageList = taskDao.GetMessageList(7, CalendarAdjust.GetYear(new Date()));
         }
         for (TMessage item : messageList) {
-
             Calendar cal = Calendar.getInstance();
             cal.setTime(item.getMessagetime());   //设置当前时间
-
             cal.add(Calendar.DATE, 1);  //在当前时间基础上加一天
-
-
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-
             Demo demo = new Demo("5dd349b4570df37b6700045e", "4hpqbdi0wpikb7bkwamq4uwnpvkjhebz");
             demo.sendAndroidCustomizedcast(item.getPersonid(), "ReleaseBailCode", "AtMqss89NJcaerkruc7N0Bgif58Zyy00PkqfWUt5j1xz",
                     item.getModularname(), item.getContent(), cal.getTime());
