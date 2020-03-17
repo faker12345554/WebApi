@@ -149,7 +149,7 @@ public class Tasking {
             model.setContent("您本月应进行传讯取证!");
             model.setPersonid(item.getPersonid());
             model.setModularname("传讯提醒");
-            model.setReadmessage("false");
+            model.setReadmessage(false);
             model.setDetailtype(1);
             model.setDetailtypename("传讯取证通知");
             //填写管理端app消息内容
@@ -165,18 +165,20 @@ public class Tasking {
             message.setDetailtype(1);
             message.setReadmessage(false);
             if (tSummons != null && (new Date().getTime() <= CalendarAdjust.dateFormat.parse(tSummons.getSummonsendtime()).getTime())) {
-                if (taskDao.GetMessagenum(item.getPersonid(), CalendarAdjust.GetYear(new Date())) > 0) {
+                if (taskDao.GetMessagenum(4,item.getPersonid(), CalendarAdjust.GetYear(new Date())) > 0) {
                     if (strArr == null || strArr.length == 0) {
                         message.setMessagetime(
                                 CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(remindersettings.getSettingday()))));
-                        model.setMessagetime(CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(remindersettings.getSettingday()))).toString());
+                        model.setMessagetime(CalendarAdjust.dateFormat.format(CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(remindersettings.getSettingday())))));
+                        System.out.println(model.getMessagetime());
                         taskDao.insertpermessage(model);
                         taskDao.SaveMessage(message);
                     } else {
                         for (int i = 0; i < strArr.length; i++) {
                             message.setMessagetime(
                                     CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(strArr[i]))));
-                            model.setMessagetime(CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(strArr[i]))).toString());
+                            model.setMessagetime(CalendarAdjust.dateFormat.format(CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(strArr[i])))));
+                            System.out.println(model.getMessagetime());
                             taskDao.insertpermessage(model);
                             taskDao.SaveMessage(message);
                         }

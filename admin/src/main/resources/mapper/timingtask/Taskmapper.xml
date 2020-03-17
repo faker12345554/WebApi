@@ -29,11 +29,10 @@
     </insert>
 
 
+    <!--    <select id="GetSummonsByPersonId" parameterType="String" resultType="com.admin.admin.entity.dw_message.TMessage">-->
+    <!--        select count(*) from t_message where personid=#{PersonId}-->
+    <!--    </select>-->
 
-<!--    <select id="GetSummonsByPersonId" parameterType="String" resultType="com.admin.admin.entity.dw_message.TMessage">-->
-<!--        select count(*) from t_message where personid=#{PersonId}-->
-<!--    </select>-->
-    
     <select id="GetConfigure" parameterType="String" resultType="com.admin.admin.entity.dw_reminder.Remindersettings">
         select * from t_remindersettings where code=#{Code} and status=true
     </select>
@@ -58,14 +57,12 @@
 
     <insert id="insertpermessage" parameterType="com.admin.admin.entity.dw_personmessage.TPersonmessage">
         			insert into t_personmessage(modular,content,personid,modularname,messagetime,readmessage,detailtype,detailtypename,leaveorder)
-        			VALUES (#{modular},#{content},#{personid},#{modularname},#{messagetime},#{readmessage},#{detailtype},#{detailtypename},#{leaveorder})
+        			VALUES (#{modular},#{content},#{personid},#{modularname},to_timestamp(#{messagetime},'yyyy-MM-dd HH:mi:ss'),#{readmessage},#{detailtype},#{detailtypename},#{leaveorder})
     </insert>
-    <select id="GetMessagenum" parameterType="String" resultType="int">
-        select count(*) from t_message where modular=#{type} and substring(to_char(messagetime,'yyyy-MM-dd'),0,8)
-        =substring(#{SendTime},0,8)
+    <select id="GetMessagenum" resultType="int">
+        select count(*) from t_message where modular=#{type} and substring(to_char(messagetime,'yyyy-MM-dd HH:MM:ss'),0,8)
+        =substring(#{SendTime},0,8) and personid=#{personid}
     </select>
-
-
 
 
 </mapper>
