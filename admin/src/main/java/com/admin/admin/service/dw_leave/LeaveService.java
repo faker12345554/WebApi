@@ -77,7 +77,8 @@ public class LeaveService {
         Date startTimeDate=sdf.parse(startTime);
         Date endTimeDate=sdf.parse(endTime);
         int sum=0;
-        if(area==null || area.equals("公安局")){
+        if(area==null ){
+            city =city.replace("公安局","");
             List<PersonInformation> personInformationarea =leaveDao.countLeavearea(city,area);//选择市的时候获得各个区名
             for(int i =0;i<personInformationarea.size();i++){
                 CountResult countResult = new CountResult();

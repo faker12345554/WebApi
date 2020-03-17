@@ -75,7 +75,7 @@
     </update>
 
 <select id="countLeavearea" resultType="com.admin.admin.entity.dw_leave.PersonInformation">
-    select detail from dictionary    where   code  like  '%000000%'   and  kind ='06'   and detail like concat(concat('%',#{city}),'%') and code  !='440600000000'
+    select detail from dictionary    where   code  like  '%000000%'   and  kind ='06'   and detail like concat(concat('%',#{city}),'%') and code  !='440600000000' order by detail
 </select>
 
     <select id="countLeavepersonid"  resultType="com.admin.admin.entity.dw_leave.PersonInformation">
