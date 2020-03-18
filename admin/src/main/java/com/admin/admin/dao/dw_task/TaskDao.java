@@ -102,6 +102,8 @@ public interface TaskDao {
      */
     int insertpermessage(TPersonmessage tPersonmessage);
 
+    int GetMessagenum(@Param("type") int type,@Param("personid") String personid, @Param("SendTime")String SendTime);
+
 
 
 

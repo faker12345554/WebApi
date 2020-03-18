@@ -75,18 +75,18 @@ public class Datatimer  {
         tasking.Statisticalsummons();
     }
     //每天凌晨三点
-    @Scheduled(cron = "0 0 3 * * ?")
-    public void SendSummons() throws Exception{
-    tasking.GetMessageList(4);
-    }
-    //每天凌晨三点
-    @Scheduled(cron = "0 0 3 * * ?")
-    public void SendBailout() throws Exception{
-        tasking.GetMessageList(6);
-    }
-    //每天凌晨三点
-    @Scheduled(cron = "0 0 3 * * ?")
-    public void SendPrison() throws Exception{
-        tasking.GetMessageList(7);
-    }
+//    @Scheduled(cron = "0 0 3 * * ?")
+//    public void SendSummons() throws Exception{
+//    tasking.GetMessageList(4);
+//    }
+//    //每天凌晨三点
+//    @Scheduled(cron = "0 0 3 * * ?")
+//    public void SendBailout() throws Exception{
+//        tasking.GetMessageList(6);
+//    }
+//    //每天凌晨三点
+//    @Scheduled(cron = "0 0 3 * * ?")
+//    public void SendPrison() throws Exception{
+//        tasking.GetMessageList(7);
+//    }
 }

@@ -9,7 +9,7 @@ public class TPersonmessage {
   private String personid;
   private String modularname;
   private String messagetime;
-  private String readmessage;
+  private boolean readmessage;
   private long detailtype;
   private String detailtypename;
   private String leaveorder;
@@ -69,11 +69,11 @@ public class TPersonmessage {
   }
 
 
-  public String getReadmessage() {
+  public boolean getReadmessage() {
     return readmessage;
   }
 
-  public void setReadmessage(String readmessage) {
+  public void setReadmessage(boolean readmessage) {
     this.readmessage = readmessage;
   }
 

@@ -77,9 +77,12 @@ public class LeaveService {
         Date startTimeDate=sdf.parse(startTime);
         Date endTimeDate=sdf.parse(endTime);
         int sum=0;
-        if(area==null){
+        if(area==null ){
+            city =city.replace("公安局","");
             List<PersonInformation> personInformationarea =leaveDao.countLeavearea(city,area);//选择市的时候获得各个区名
             for(int i =0;i<personInformationarea.size();i++){
+                CountResult countResult = new CountResult();
+                countResult.setName(personInformationarea.get(i).getDetail());
                 personInformationarea.get(i).setDetail(personInformationarea.get(i).getDetail().replace("佛山市",""));
                 personInformationarea.get(i).setDetail(personInformationarea.get(i).getDetail().replace("公安局",""));
                 personInformationarea.get(i).setDetail(personInformationarea.get(i).getDetail().replace("分局",""));
@@ -89,8 +92,6 @@ public class LeaveService {
                     List<LeaveInformation> leaveInformations =leaveDao.countLeave(personInformations.get(j).getPersonid(),startTimeDate,endTimeDate);//根据每个区的peisonid获取该区的外出申请单数
                     sum+=leaveInformations.size();
                 }
-                CountResult countResult = new CountResult();
-                countResult.setName(personInformationarea.get(i).getDetail());
                 countResult.setCount(sum);
                 countResults.add(countResult);
                 sum =0;

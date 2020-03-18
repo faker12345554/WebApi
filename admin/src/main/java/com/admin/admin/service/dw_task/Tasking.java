@@ -32,6 +32,7 @@ public class Tasking {
     private TaskDao taskDao;
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     /**
      * 取保监居到期提醒
      */
@@ -98,42 +99,35 @@ public class Tasking {
             int month = 0;
             int year = 0;
 
-            if (item.getBailoutbegindate() != null) {
-
-                if (CalendarAdjust.getMonthDiff(simpleDateFormat.parse(item.getBailoutbegindate()), new Date()) >= 2) {
+            if (tSummons != null) {
+                month = CalendarAdjust.getMonth(tSummons.getSummonsendtime());
+                year = CalendarAdjust.getYears(tSummons.getSummonsendtime());
+                summons.setSummonsbegintime(CalendarAdjust.getFirstDayOfMonth1(year, month));
+                summons.setSummonsendtime(CalendarAdjust.getLastDayOfMonth1(year, month));
+            } else {
+                if (CalendarAdjust.getMonthDiff(simpleDateFormat.parse(item.getBailoutbegindate()), new Date()) == 1) {
                     month = CalendarAdjust.getMonth(CalendarAdjust.GetYear(new Date()));
                     year = CalendarAdjust.getYears(CalendarAdjust.GetYear(new Date()));
                     summons.setSummonsbegintime(CalendarAdjust.getFirstDayOfMonth1(year, month));
-                    summons.setSummonsendtime(CalendarAdjust.getLastDayOfMonth1(year, month ));
-                } else {
-                    if (tSummons != null) {
-                        month = CalendarAdjust.getMonth(tSummons.getSummonsendtime());
-                        year = CalendarAdjust.getYears(tSummons.getSummonsendtime());
-                        summons.setSummonsbegintime(CalendarAdjust.getFirstDayOfMonth1(year, month));
-                        summons.setSummonsendtime(CalendarAdjust.getLastDayOfMonth1(year, month));
-                    } else {
-                        month = CalendarAdjust.getMonth(item.getBailoutbegindate().toString());
-                        year = CalendarAdjust.getYears(item.getBailoutbegindate().toString());
-                        summons.setSummonsbegintime(CalendarAdjust.getFirstDayOfMonth1(year, month));
-                        summons.setSummonsendtime(CalendarAdjust.getLastDayOfMonth1(year, month ));
-                    }
-
-                }
-
-                TSummons tSummons1 = taskDao.GetNumber(item.getPersonid());
-                if (tSummons1 == null) {
-
-                    taskDao.SaveSummons(summons);
-                }else if (tSummons1!=null && (new Date().getTime()>CalendarAdjust.dateFormat.parse(tSummons1.getSummonsendtime()).getTime())){
-                    taskDao.SaveSummons(summons);
+                    summons.setSummonsendtime(CalendarAdjust.getLastDayOfMonth1(year, month));
                 }
             }
-        }
 
+
+            TSummons tSummons1 = taskDao.GetNumber(item.getPersonid());
+            if (tSummons1 == null) {
+
+                taskDao.SaveSummons(summons);
+            } else if (tSummons1 != null && (new Date().getTime() > CalendarAdjust.dateFormat.parse(tSummons1.getSummonsendtime()).getTime())) {
+                taskDao.SaveSummons(summons);
+            }
+        }
     }
+
 
     /**
      * 生成消息
+     *
      * @throws Exception
      */
 
@@ -141,44 +135,60 @@ public class Tasking {
         Remindersettings remindersettings = taskDao.GetConfigure("3");
 
         String[] strArr = null;
+
         if (remindersettings.getSettingday().indexOf(",") != -1) {
             strArr = remindersettings.getSettingday().split(",");
         }
-        TPersonmessage model=new TPersonmessage();
+        TPersonmessage model = new TPersonmessage();
         List<Personinformation> list = GetPerson();
         TMessage message = new TMessage();
         for (Personinformation item : list) {
-
+            TSummons tSummons = taskDao.GetNumber(item.getPersonid());
             //填写人员端app消息内容
             model.setModular(5);
-
-
+            model.setContent("您本月应进行传讯取证!");
+            model.setPersonid(item.getPersonid());
+            model.setModularname("传讯提醒");
+            model.setReadmessage(false);
+            model.setDetailtype(1);
+            model.setDetailtypename("传讯取证通知");
             //填写管理端app消息内容
             message.setModular(4);
-            if (item.getSuspectstatus().equals("取保候审")){
+            if (item.getSuspectstatus().equals("取保候审")) {
                 message.setContent("取保候审人员" + item.getPersonname() + "下个月应进行传讯取证,请提前告知!");
-                model.setContent("");
-            }else if(item.getSuspectstatus().equals("监视居住")){
+            } else if (item.getSuspectstatus().equals("监视居住")) {
                 message.setContent("监视居住人员" + item.getPersonname() + "下个月应进行传讯取证,请提前告知!");
             }
-
             message.setPersonid(item.getPersonid());
             message.setModularname("待办提醒");
             message.setDetailtypename("传讯取证通知");
             message.setDetailtype(1);
             message.setReadmessage(false);
-            if (taskDao.GetMessage(item.getPersonid(), CalendarAdjust.GetYear(new Date())) == 0) {
-                if (strArr == null || strArr.length == 0) {
-                    message.setMessagetime(
-                            CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(remindersettings.getSettingday()))));
-                    taskDao.SaveMessage(message);
-                } else {
-                    for (int i = 0; i < strArr.length; i++) {
+            if (tSummons != null && (new Date().getTime() <= CalendarAdjust.dateFormat.parse(tSummons.getSummonsendtime()).getTime())) {
+                if (taskDao.GetMessagenum(4,item.getPersonid(), CalendarAdjust.GetYear(new Date())) <= 0) {
+                    if (strArr == null || strArr.length == 0) {
                         message.setMessagetime(
-                                CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(strArr[i]))));
+                                CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(remindersettings.getSettingday()))));
+                        model.setMessagetime(CalendarAdjust.dateFormat.format(CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(remindersettings.getSettingday())))));
+                        System.out.println(model.getMessagetime());
+                        taskDao.insertpermessage(model);
                         taskDao.SaveMessage(message);
+                    } else {
+                        for (int i = 0; i < strArr.length; i++) {
+                            message.setMessagetime(
+                                    CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(strArr[i]))));
+                            model.setMessagetime(CalendarAdjust.dateFormat.format(CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(strArr[i])))));
+                            System.out.println(model.getMessagetime());
+                            taskDao.insertpermessage(model);
+                            taskDao.SaveMessage(message);
+                        }
                     }
+
+                } else {
+                    System.out.println("已有消息存在");
                 }
+
+
             }
 
         }
@@ -187,59 +197,49 @@ public class Tasking {
     /**
      * 修改严重程度
      */
-    public void Statisticalsummons(){
-        Violationfens violationfens=taskDao.GetViolationfens(2);
+    public void Statisticalsummons() {
+        Violationfens violationfens = taskDao.GetViolationfens(2);
 
         List<Personinformation> list = GetPerson();
-        String severity="";
+        String severity = "";
         for (Personinformation item : list) {
 
-            int num=taskDao.StatisticalSummons(item.getPersonid(),CalendarAdjust.GetYear(new Date()));
-            if (num< violationfens.getSlightfens()){
-                severity="正常";
-            }else if(num>=violationfens.getSlightfens() && num <violationfens.getSeriousfens()){
-                severity="轻微";
-            }else if(num>=violationfens.getSeriousfens()){
-                severity="严重";
+            int num = taskDao.StatisticalSummons(item.getPersonid(), CalendarAdjust.GetYear(new Date()));
+            if (num < violationfens.getSlightfens()) {
+                severity = "正常";
+            } else if (num >= violationfens.getSlightfens() && num < violationfens.getSeriousfens()) {
+                severity = "轻微";
+            } else if (num >= violationfens.getSeriousfens()) {
+                severity = "严重";
             }
-            taskDao.UpdateDegree(item.getPersonid(),severity);
+            taskDao.UpdateDegree(item.getPersonid(), severity);
         }
 
     }
 
-    public List<TMessage> GetMessageList(int type) throws Exception{
-        List<TMessage> messageList=new ArrayList<TMessage>();
-        if (type==4){
-            messageList=taskDao.GetMessageList(4,CalendarAdjust.GetYear(new Date()));
+    public List<TMessage> GetMessageList(int type) throws Exception {
+        List<TMessage> messageList = new ArrayList<TMessage>();
+        if (type == 4) {
+            messageList = taskDao.GetMessageList(4, CalendarAdjust.GetYear(new Date()));
 
-        }else if(type==6){
-            messageList=taskDao.GetMessageList(6,CalendarAdjust.GetYear(new Date()));
-        }else if(type==7){
-            messageList=taskDao.GetMessageList(7,CalendarAdjust.GetYear(new Date()));
+        }  else if (type == 6) {
+            messageList = taskDao.GetMessageList(6, CalendarAdjust.GetYear(new Date()));
+        } else if (type == 7) {
+            messageList = taskDao.GetMessageList(7, CalendarAdjust.GetYear(new Date()));
         }
-        for (TMessage item: messageList){
-
+        for (TMessage item : messageList) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(item.getMessagetime());   //设置当前时间
-
             cal.add(Calendar.DATE, 1);  //在当前时间基础上加一天
-
-
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-
             Demo demo = new Demo("5dd349b4570df37b6700045e", "4hpqbdi0wpikb7bkwamq4uwnpvkjhebz");
-            demo.sendAndroidCustomizedcast(item.getPersonid(),"ReleaseBailCode","AtMqss89NJcaerkruc7N0Bgif58Zyy00PkqfWUt5j1xz",
-                    item.getModularname(),item.getContent(),cal.getTime());
+            demo.sendAndroidCustomizedcast(item.getPersonid(), "ReleaseBailCode", "AtMqss89NJcaerkruc7N0Bgif58Zyy00PkqfWUt5j1xz",
+                    item.getModularname(), item.getContent(), cal.getTime());
             System.out.println(item.getMessagetime());
         }
 
         return messageList;
     }
-
-
-
-
 
 
 }

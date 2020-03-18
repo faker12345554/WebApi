@@ -38,7 +38,7 @@ public class RuleStaticController {
     private ViolationService violationService;
 
 
-    @UserLoginToken
+    //@UserLoginToken
     @ApiOperation("违规程度统计")
     @GetMapping("/getRuuleList")
     public ResponseResult getRuuleList(@RequestParam String Code,int level,int codelevel,String StartTime,String EndTime) {
@@ -89,13 +89,15 @@ public class RuleStaticController {
                 for (Map<String,String> itam:FrequencyList){
                     if (Integer.parseInt(itam.get("num").toString())==0){
                         Normal+=1;
-                        ruleStatSericve.updatestatus(item.get("personid").toString(),"0");
+
+                      int ui=  ruleStatSericve.updatestatus(itam.get("personid").toString(),"0");
                     }else if(Integer.parseInt(itam.get("num").toString())==1){
                         Slight+=1;
-                        ruleStatSericve.updatestatus(item.get("personid").toString(),"1");
+                      int o=  ruleStatSericve.updatestatus(itam.get("personid").toString(),"1");
                     }else if(Integer.parseInt(itam.get("num").toString())==2){
                         Severity+=1;
-                        ruleStatSericve.updatestatus(item.get("personid").toString(),"2");
+
+                      int i=  ruleStatSericve.updatestatus(itam.get("personid").toString(),"2");
                     }
                 }
                 model.setNormalNumber(Normal);

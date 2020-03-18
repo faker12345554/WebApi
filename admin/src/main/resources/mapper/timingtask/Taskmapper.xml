@@ -15,7 +15,7 @@
     </select>
 
     <select id="GetMessage" resultType="int">
-        SELECT count (*) FROM t_summons where personid=#{PersonId}  and reporttime is null
+        SELECT count (*) FROM t_summons where personid=#{PersonId}  and reporttime is null  Order by summonsendtime desc LIMIT 1
     </select>
 
     <insert id="SaveMessage" parameterType="com.admin.admin.entity.dw_message.TMessage">
@@ -29,21 +29,20 @@
     </insert>
 
 
+    <!--    <select id="GetSummonsByPersonId" parameterType="String" resultType="com.admin.admin.entity.dw_message.TMessage">-->
+    <!--        select count(*) from t_message where personid=#{PersonId}-->
+    <!--    </select>-->
 
-<!--    <select id="GetSummonsByPersonId" parameterType="String" resultType="com.admin.admin.entity.dw_message.TMessage">-->
-<!--        select count(*) from t_message where personid=#{PersonId}-->
-<!--    </select>-->
-    
     <select id="GetConfigure" parameterType="String" resultType="com.admin.admin.entity.dw_reminder.Remindersettings">
         select * from t_remindersettings where code=#{Code} and status=true
     </select>
 
     <select id="GetViolationfens" parameterType="int" resultType="com.admin.admin.entity.dw_violation.Violationfens">
-        select * from legal."public".t_violationfens where status=true and enabled=false and violationcode=#{type}
+        select * from t_violationfens where status=true and enabled=false and violationcode=#{type}
     </select>
 
     <select id="StatisticalSummons" parameterType="String" resultType="int">
-        select count(*) from legal."public".t_summons where personid=#{PersonId} and summonsendtime&lt; #{date} and reporttime is null
+        select count(*) from t_summons where personid=#{PersonId} and summonsendtime&lt; #{date} and reporttime is null
     </select>
     <update id="UpdateDegree" parameterType="String">
         update t_summons set severity=#{severity} where  personid=#{PersonId}
@@ -58,8 +57,12 @@
 
     <insert id="insertpermessage" parameterType="com.admin.admin.entity.dw_personmessage.TPersonmessage">
         			insert into t_personmessage(modular,content,personid,modularname,messagetime,readmessage,detailtype,detailtypename,leaveorder)
-        			VALUES (#{modular},#{content},#{personid},#{modularname},#{messagetime},#{readmessage},#{detailtype},#{detailtypename},#{leaveorder})
+        			VALUES (#{modular},#{content},#{personid},#{modularname},to_timestamp(#{messagetime},'yyyy-MM-dd HH:mi:ss'),#{readmessage},#{detailtype},#{detailtypename},#{leaveorder})
     </insert>
+    <select id="GetMessagenum" resultType="int">
+        select count(*) from t_message where modular=#{type} and substring(to_char(messagetime,'yyyy-MM-dd HH:MM:ss'),0,8)
+        =substring(#{SendTime},0,8) and personid=#{personid}
+    </select>
 
 
 </mapper>
