@@ -64,6 +64,7 @@
                 cast (#{id} as int)
             </foreach>
         </if>
+        order by t.createtime desc
     </select>
 
     <select id="ListAudio" parameterType="com.admin.model.search.SearchModel"

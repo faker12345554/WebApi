@@ -45,7 +45,7 @@ public class SinginController {
         return result.setData(singinService.getSingin(Id));
     }
 
-    @UserLoginToken
+   // @UserLoginToken
     @ApiOperation("查看签到信息列表")
     @PostMapping("/ListSingin")
     public ResponseResult ListSingin(@RequestBody SearchModel searchModel) {
