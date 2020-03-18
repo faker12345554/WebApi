@@ -4,8 +4,10 @@ import com.adminapp.business.service.dw_system.SystemService;
 import com.adminapp.config.token.TokenUtil;
 import com.adminapp.config.token.tation.PassToken;
 import com.adminapp.config.token.tation.UserLoginToken;
+import com.adminapp.model.demo.DemoModel;
 import com.adminapp.model.dw_system.*;
 import com.common.common.Uploadfiles.Upload;
+import com.common.common.apppush.Demo;
 import com.common.common.result.ResultSet;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.Api;
@@ -32,6 +34,8 @@ public class SystemController {
     //private ResultSet rs=new ResultSet();
 
     private Upload upload=new Upload();
+
+    public DemoModel demo=new DemoModel();
 
     @PassToken
     @ApiOperation(value = "获取工作人员 App 更新信息")
@@ -114,7 +118,8 @@ public class SystemController {
                 for (int i = 0; i < picture.size(); i++) {
                     MultipartFile file = picture.get(i);
                     String fileName = file.getOriginalFilename();
-                    String filePath="https://pardon.cnnc626.com:8443/mypicture/adminapp/"+ formatter.format(date)+"/"+fileName;
+                    String serverUrl=demo.getServerUrl();
+                    String filePath=serverUrl+"/mypicture/adminapp/"+ formatter.format(date)+"/"+fileName;
                     //String filePath = url + fileName;
                     if (i != 0) {
                         completeFilePath = completeFilePath + "," + filePath;
