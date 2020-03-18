@@ -7,6 +7,7 @@ import com.adminapp.business.service.dw_supervise.SuperviseService;
 import com.adminapp.config.token.TokenUtil;
 import com.adminapp.config.token.tation.PassToken;
 import com.adminapp.config.token.tation.UserLoginToken;
+import com.adminapp.model.demo.DemoModel;
 import com.adminapp.model.dw_call.AcceptCallModel;
 import com.adminapp.model.dw_call.CancelReturnModel;
 import com.adminapp.model.dw_call.RequestCallReturnModel;
@@ -19,6 +20,9 @@ import io.swagger.annotations.ApiParam;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -35,6 +39,8 @@ public class CallController {
     public CallService callService;
     @Autowired
     public SuperviseService superviseService;
+
+    public DemoModel demo=new DemoModel();
 
     @ApiOperation(value = "发出通话请求")
     @UserLoginToken
@@ -99,6 +105,7 @@ public class CallController {
                         requestCallReturnModel.setCallToken(callToken);
                         requestCallReturnModel.setCallTimestamp(timeStamp);
                         requestCallReturnModel.setCallName(personAllInformationModel.getPersonname());
+                        requestCallReturnModel.setCallGender(personAllInformationModel.getGendercode());
                         requestCallReturnModel.setCallHeadUrl(personAllInformationModel.getFacepath());
                         rs.resultCode = 0;
                         rs.resultMsg = "";
@@ -138,6 +145,7 @@ public class CallController {
                         requestCallReturnModel.setCallToken(callToken);
                         requestCallReturnModel.setCallTimestamp(timeStamp);
                         requestCallReturnModel.setCallName(personAllInformationModel.getPersonname());
+                        requestCallReturnModel.setCallGender(personAllInformationModel.getGendercode());
                         requestCallReturnModel.setCallHeadUrl(personAllInformationModel.getFacepath());
                         rs.resultCode = 0;
                         rs.resultMsg = "";
@@ -221,7 +229,7 @@ public class CallController {
         SendphoneInformation sendphoneInformation=callService.getPhoneInformation(callToken);
         if(sendphoneInformation.getCanceltype()==null||sendphoneInformation.getCanceltype().equals("")) {
             String roomCode = "room";
-            String serverUrl = "https://112.74.41.177";
+            String serverUrl = demo.getYspUrl();
             Date date=new Date();
             Random random = new Random();
             for (int i = 0; i < 10; i++) {
