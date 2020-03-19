@@ -7,7 +7,7 @@
         select * from t_alarmsettings where status=true
     </select>
 
-    <update id="deleteAlarm" >
+    <update id="deleteAlarm">
         update t_alarmsettings set status=false
     </update>
 
@@ -15,7 +15,8 @@
         update from t_alarmsettings set code=#{code},alarmname=#{alarmname},alarmcount=#{alarmcount},continuous=#{continuous} where id=#{id}
     </update>
 
-    <insert id="SaveAlarm" parameterType="com.admin.admin.entity.dw_alarm.Alarmsettings" useGeneratedKeys="true" keyProperty="id">
+    <insert id="SaveAlarm" parameterType="com.admin.admin.entity.dw_alarm.Alarmsettings" useGeneratedKeys="true"
+            keyProperty="id">
         INSERT INTO t_alarmsettings(code,alarmname,alarmcount,continuous,createtime,status)
         VALUES(#{code},#{alarmname},#{alarmcount},#{continuous},#{createtime},#{status})
     </insert>

@@ -8,6 +8,7 @@ import com.admin.model.search.SearchModel;
 import com.admin.model.singin.SinginModel;
 import com.admin.page.PageBean;
 import com.admin.token.tation.UserLoginToken;
+import com.common.common.authenticator.CalendarAdjust;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.github.pagehelper.PageHelper;
@@ -45,7 +46,7 @@ public class SinginController {
         return result.setData(singinService.getSingin(Id));
     }
 
-   // @UserLoginToken
+    @UserLoginToken
     @ApiOperation("查看签到信息列表")
     @PostMapping("/ListSingin")
     public ResponseResult ListSingin(@RequestBody SearchModel searchModel) {
@@ -77,7 +78,7 @@ public class SinginController {
 
     }
 
-    @UserLoginToken
+    // @UserLoginToken
     @ApiOperation("查看音视频列表")
     @PostMapping("/ListAudio")
     public ResponseResult ListAudio(@RequestBody SearchModel searchModel) {
@@ -92,6 +93,12 @@ public class SinginController {
             }
 
             PageInfo<SinginModel> info = new PageInfo<>(allItems);//全部商品
+            for (SinginModel item : allItems) {
+                item.setDurationtime(CalendarAdjust.getDatePoor(CalendarAdjust.timeStamp2Date(Long.parseLong(item.getCanceltimestamp())),
+                        CalendarAdjust.timeStamp2Date(Long.parseLong(item.getCalltimestamp()))));
+            }
+
+
             int countNums = (int) info.getTotal();            //总记录数
             PageBean<SinginModel> pageData = new PageBean<>(searchModel.getPageIndex(), searchModel.getPageSize(), countNums);
             pageData.setTotalPage(info.getPages());//总页数

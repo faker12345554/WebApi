@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_enum.EnumDao">
     <resultMap id="EnumMap" type="HashMap">
-        <result property="enumcode" column="enumcode" jdbcType="VARCHAR" />
+        <result property="enumcode" column="enumcode" jdbcType="VARCHAR"/>
         <result property="enumname" column="enumname" jdbcType="VARCHAR"/>
     </resultMap>
 
@@ -12,7 +12,7 @@
     </select>
 
     <resultMap id="PoliceMap" type="HashMap">
-        <result property="mjbh" column="mjbh" jdbcType="VARCHAR" />
+        <result property="mjbh" column="mjbh" jdbcType="VARCHAR"/>
         <result property="mjmc" column="mjmc" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="GetPolice" resultMap="PoliceMap" parameterType="String">
@@ -22,7 +22,7 @@
 
     <!-- 我这个想返回一个 HashMap 但是结果是空,sql语句能查出来,但是这里可能没赋上值 我还真没用过HashMap 我看看 -->
     <resultMap id="MechanismMap" type="HashMap">
-        <result property="bmbm" column="bmbm" jdbcType="VARCHAR" />
+        <result property="bmbm" column="bmbm" jdbcType="VARCHAR"/>
         <result property="bmmc" column="bmmc" jdbcType="VARCHAR"/>
     </resultMap>
 
@@ -32,7 +32,7 @@
 
 
     <resultMap id="SponsorMap" type="HashMap">
-        <result property="mjbh" column="mjbh" jdbcType="VARCHAR" />
+        <result property="mjbh" column="mjbh" jdbcType="VARCHAR"/>
         <result property="mjmc" column="mjmc" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="ListSponsor" resultMap="SponsorMap" parameterType="String">
@@ -41,16 +41,16 @@
 
 
     <resultMap id="KindMap" type="HashMap">
-        <result property="kind" column="kind" jdbcType="VARCHAR" />
+        <result property="kind" column="kind" jdbcType="VARCHAR"/>
         <result property="detail" column="detail" jdbcType="VARCHAR"/>
     </resultMap>
-    <select id="getEnum"  resultMap="KindMap">
+    <select id="getEnum" resultMap="KindMap">
         SELECT kind,detail FROM "dictionary"  where  kind='T0'   or  kind ='05'  or kind='T304'  or kind ='xjtj_xl'  or  kind='04'  or kind='08'
     </select>
 
 
     <select id="listEnum" resultType="com.admin.admin.entity.dw_enum.TEnum">
-        select * From t_enum where typecode=#{typeCode} ORDER BY enumcode
+        select * From t_enum where typecode=#{typeCode} ORDER BY enumcode desc
     </select>
 
     <insert id="addEnum">
@@ -69,10 +69,11 @@
         select enumid,typecode,typename,enumname,status,createtime from t_enum order by enumid
     </select>
 
-    <select id="findEnum" parameterType="com.admin.model.enummodel.EnumSearchModel" resultType="com.admin.model.enummodel.EnumModel">
+    <select id="findEnum" parameterType="com.admin.model.enummodel.EnumSearchModel"
+            resultType="com.admin.model.enummodel.EnumModel">
         select enumid,typecode,typename,enumname,status,createtime from t_enum
         <if test="date.typeName!=null">
-        where typename=#{date.typeName}
+            where typename=#{date.typeName}
         </if>
         <if test="date.typeName!=null and date.typeCode!=null">
             and typecode=#{date.typeCode}
@@ -81,9 +82,9 @@
             where typecode=#{date.typeCode}
         </if>
         <if test="(date.typeName!=null or date.typeCode!=null) and date.status!=null">
-        <if test="date.status=='正常'">
-            and status=true
-        </if>
+            <if test="date.status=='正常'">
+                and status=true
+            </if>
             <if test="date.status=='停用'">
                 and status=false
             </if>

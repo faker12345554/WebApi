@@ -15,7 +15,7 @@
         tc.handleunit,P.guid,tc.handlepeson from t_singin AS t
         inner join t_personinformation AS P on p.personid=t.personid
         left join t_caseinfo tc on P.personid = tc.personid and tc.caseno=p.caseno
-        where p.status=#{searchModel.flag}
+        where p.status=#{searchModel.flag} and (t.type=2 or t.type=3 or t.type=1)
         <if test="type==1">
             and p.sponsoralarm=#{limit}
         </if>
@@ -64,18 +64,19 @@
                 cast (#{id} as int)
             </foreach>
         </if>
-        order by t.createtime desc
+
     </select>
 
     <select id="ListAudio" parameterType="com.admin.model.search.SearchModel"
             resultType="com.admin.model.singin.SinginModel">
         select
-        t.id,P.suspectstatus,P.personname,P.gender,P.sponsor,P.policestation,t.reporttype,P.yjsponsoralarm,t.durationtime,t.createtime,t.filepath,t.typename,tc.caseno,
+        t.id,P.suspectstatus,P.personname,P.gender,P.sponsor,P.policestation,t.calltype,P.yjsponsoralarm,
+        t.canceltype as typename, t.createtime,t.serverurl as filepath,tc.caseno,t.canceltimestamp,t.calltimestamp,
         tc.handleunit,P.guid
-        from t_singin AS t
+        from t_sendphone AS t
         inner join t_personinformation AS P on p.personid=t.personid
         left join t_caseinfo tc on P.personid = tc.personid and tc.caseno=p.caseno
-        where p.status=#{searchModel.flag} and (t.type=2 or type=3)
+        where p.status=#{searchModel.flag}
         <if test="type==1">
             and p.sponsoralarm=#{limit}
         </if>
@@ -106,7 +107,7 @@
         <if test="searchModel.list.size()>0">
             and t.id in
             <foreach collection="searchModel.list" item="id" index="index" open="(" close=")" separator=",">
-               cast (#{id} as int)
+                cast (#{id} as int)
             </foreach>
         </if>
 
