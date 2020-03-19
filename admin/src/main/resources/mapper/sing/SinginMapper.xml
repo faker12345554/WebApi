@@ -70,7 +70,7 @@
     <select id="ListAudio" parameterType="com.admin.model.search.SearchModel"
             resultType="com.admin.model.singin.SinginModel">
         select
-        t.id,P.suspectstatus,P.personname,P.gender,P.sponsor,P.policestation,t.calltype,P.yjsponsoralarm,
+        t.id,P.suspectstatus,P.personname,P.gender,P.sponsor,P.policestation,t.calltype as reporttype,P.yjsponsoralarm,
         t.canceltype as typename, t.createtime,t.serverurl as filepath,tc.caseno,t.canceltimestamp,t.calltimestamp,
         tc.handleunit,P.guid
         from t_sendphone AS t
