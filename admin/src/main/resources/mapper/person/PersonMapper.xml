@@ -100,12 +100,13 @@
         <result property="datetime" column="datetime" jdbcType="VARCHAR"/>
         <result property="personid" column="personid" jdbcType="VARCHAR"/>
     </resultMap>
-    <select id="getdetails"  resultMap="ViolationMap">
+    <select id="getdetails" resultMap="ViolationMap">
         <if test="id==1">
             SELECT summontime as datetime, personid from t_summons where personid=#{personid} and reporttime is null
         </if>
         <if test="id==2">
-            select substring(to_char(timestamp,'yyyy-MM-dd HH:mm:ss'),0,17) as datetime,address as personid from t_location
+            select substring(to_char(timestamp,'yyyy-MM-dd HH:mm:ss'),0,17) as datetime,address as personid from
+            t_location
             where fscope=true and personid=#{personid}
         </if>
     </select>

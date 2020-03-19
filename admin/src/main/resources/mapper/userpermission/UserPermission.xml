@@ -4,37 +4,37 @@
 <mapper namespace="com.admin.admin.dao.dw_userpermission.UserPermissionGroupDao">
     <select id="listGroup" resultType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup">
         SELECT * from t_userpermissiongroup
-            <if test="condition.groupName!=null">
-                where permissionname=#{condition.groupName}
+        <if test="condition.groupName!=null">
+            where permissionname=#{condition.groupName}
+        </if>
+        <if test="condition.groupName!=null  and condition.status!=null">
+            <if test="condition.status=='正常'">
+                and status=true
             </if>
-            <if test="condition.groupName!=null  and condition.status!=null">
-                <if test="condition.status=='正常'">
-                    and status=true
-                </if>
-                <if test="condition.status=='停用'">
-                    and status=false
-                </if>
+            <if test="condition.status=='停用'">
+                and status=false
             </if>
-            <if test="condition.groupName==null  and condition.status!=null">
-                <if test="condition.status=='正常'">
-                    where status=true
-                </if>
-                <if test="condition.status=='停用'">
-                    where status=false
-                </if>
+        </if>
+        <if test="condition.groupName==null  and condition.status!=null">
+            <if test="condition.status=='正常'">
+                where status=true
             </if>
-            <if test="(condition.groupName!=null or condition.status!=null) and condition.startTime!=null">
-                and createtime >= #{condition.startTime}
+            <if test="condition.status=='停用'">
+                where status=false
             </if>
-            <if test="(condition.groupName==null and  condition.status==null) and condition.startTime!=null">
-                where createtime >= #{condition.startTime}
-            </if>
-            <if test="(condition.groupName!=null  or condition.status!=null or condition.startTime!=null) and condition.endTime !=null">
-                and createtime &lt;= #{condition.endTime}
-            </if>
-            <if test="condition.groupName==null and condition.status==null and condition.startTime==null and condition.endTime!=null">
-                where createtime &lt;= #{condition.endTime}
-            </if>
+        </if>
+        <if test="(condition.groupName!=null or condition.status!=null) and condition.startTime!=null">
+            and createtime >= #{condition.startTime}
+        </if>
+        <if test="(condition.groupName==null and  condition.status==null) and condition.startTime!=null">
+            where createtime >= #{condition.startTime}
+        </if>
+        <if test="(condition.groupName!=null  or condition.status!=null or condition.startTime!=null) and condition.endTime !=null">
+            and createtime &lt;= #{condition.endTime}
+        </if>
+        <if test="condition.groupName==null and condition.status==null and condition.startTime==null and condition.endTime!=null">
+            where createtime &lt;= #{condition.endTime}
+        </if>
 
     </select>
     <select id="getGroup" parameterType="int" resultType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup">
@@ -43,13 +43,14 @@
     <select id="getSomeoneMenuList" parameterType="int" resultType="com.admin.model.coordina.MenuModel">
         SELECT t_userrole.menuid as id,rolename as Name,topid from t_userrole INNER JOIN t_menu ON t_menu.menuid = t_userrole.menuid where t_userrole.status=true and permissionid=#{id}
     </select>
-    <insert id="saveUserGroup" parameterType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup" useGeneratedKeys="true" keyProperty="permissionid">
+    <insert id="saveUserGroup" parameterType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup"
+            useGeneratedKeys="true" keyProperty="permissionid">
         insert into t_userpermissiongroup(createid,createtime,permissionname,createname,status) values (#{createid},Current_timestamp,#{permissionname},#{createname},#{status})
     </insert>
     <update id="updateGroup" parameterType="com.admin.admin.entity.dw_userpermission.UserPermissionGroup">
         update t_userpermissiongroup set permissionname=#{permissionname},createtime=Current_timestamp,createid=#{createid},createname=#{createname},status=#{status} where permissionid=#{permissionid}
     </update>
-    <update id="deleteGroup" >
+    <update id="deleteGroup">
         update t_userpermissiongroup set status=#{flag} where permissionid=#{PermissId}
     </update>
     <select id="selectByName" parameterType="String" resultType="int">
@@ -57,11 +58,11 @@
     </select>
 
 
-    <insert id="saveUserRole" parameterType="com.admin.admin.entity.dw_userrole.UserRole" >
+    <insert id="saveUserRole" parameterType="com.admin.admin.entity.dw_userrole.UserRole">
         insert into t_userrole(rolename,menuid,createtime,status,permissionid) values (#{rolename},#{menuid},Current_timestamp,#{status},#{permissionid})
     </insert>
 
-    <delete id="deleteUserRole"  parameterType="int">
+    <delete id="deleteUserRole" parameterType="int">
         delete from t_userrole  where legal."public".t_userrole.permissionid=#{permissionid}
     </delete>
 
@@ -73,7 +74,7 @@
         select menuid as id,menuname as Name,topid from legal."public".t_menu where status=true
     </select>
 
-    <select id="GetpermissionName"  resultType="com.admin.admin.entity.dw_group.PermissionName">
+    <select id="GetpermissionName" resultType="com.admin.admin.entity.dw_group.PermissionName">
         SELECT * from t_userpermissiongroup where status=true
     </select>
 </mapper>

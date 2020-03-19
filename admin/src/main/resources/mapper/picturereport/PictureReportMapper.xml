@@ -5,7 +5,7 @@
     <select id="checkPersonId" resultType="com.admin.admin.entity.dw_person.Personinformation">
         select * FROM t_personinformation where personid=#{personid}
     </select>
-    <update id="postPictureReport" >
+    <update id="postPictureReport">
             update t_personinformation set facepath=#{facepath} where personid =#{personid}
     </update>
 </mapper>

@@ -2,20 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.dw_leave.LeaveDao">
-    <select id="getLeave" parameterType="com.admin.model.search.SearchModel" resultType="com.admin.model.leave.LeavefModel">
+    <select id="getLeave" parameterType="com.admin.model.search.SearchModel"
+            resultType="com.admin.model.leave.LeavefModel">
         SELECT * FROM t_leave l
         LEFT JOIN t_auditor a ON l.leaveorder = a.leaveorder AND a.statuscode IN ('2','3')
         where l.personid in (SELECT t.personid from t_personinformation as t
         left JOIN t_user as u on u.accountname=t.sponsoralarm
         <if test="type==1">
-            where  t.sponsoralarm=#{limit}  and u.usersystem='1'
+            where t.sponsoralarm=#{limit} and u.usersystem='1'
         </if>
         <if test="type!=1">
             where t.policecode=#{limit}
         </if>
         )
 
-        <if test="searchModel.PersonId !=null and searchModel.PersonId!='' and searchModel.Condition==null"  >
+        <if test="searchModel.PersonId !=null and searchModel.PersonId!='' and searchModel.Condition==null">
             and l.personid=#{searchModel.PersonId}
         </if>
         <if test="searchModel.Condition ==null and searchModel.PersonName!=null ">
@@ -27,7 +28,7 @@
 
         <if test="searchModel.Condition !=null and searchModel.PersonName==null and searchModel.PersonId !=null ">
             and l.personid=#{searchModel.PersonId} and l.states like concat('%',#{searchModel.condition},'%')
-    </if>
+        </if>
 
         <if test="searchModel.Condition !=null and searchModel.PersonName!=null and searchModel.PersonName!='' and searchModel.StartTime!=null and searchModel.EndTime!=null ">
             and l.states=#{searchModel.Condition}
@@ -40,7 +41,8 @@
         </if>
 
         <if test="searchModel.Condition ==null and (searchModel.PersonName==null or searchModel.PersonName=='') and searchModel.StartTime!=null and  searchModel.EndTime!=null ">
-            and l.subittimestamp > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and l.subittimestamp &lt; TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+            and l.subittimestamp > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and l.subittimestamp
+            &lt; TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="searchModel.Condition ==null and (searchModel.PersonName==null or searchModel.PersonName=='') and searchModel.StartTime!=null and searchModel.EndTime==null ">
             and l.subittimestamp > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS')
@@ -74,18 +76,19 @@
         update t_auditor set statuscode=4,states='已销假' WHERE leaveorder=#{leaveorder}
     </update>
 
-<select id="countLeavearea" resultType="com.admin.admin.entity.dw_leave.PersonInformation">
+    <select id="countLeavearea" resultType="com.admin.admin.entity.dw_leave.PersonInformation">
     select detail from dictionary    where   code  like  '%000000%'   and  kind ='06'   and detail like concat(concat('%',#{city}),'%') and code  !='440600000000' order by detail
 </select>
 
-    <select id="countLeavepersonid"  resultType="com.admin.admin.entity.dw_leave.PersonInformation">
-        select personid from t_personinformation where policestation like concat(concat('%',#{city}),'%') and policestation like concat(concat('%',#{area}),'%')
-<!--        <if test="city!=null">-->
-<!--        where policestation like concat(concat('%',#{city}),'%')-->
-<!--        </if>-->
-<!--        <if test="area!=null">-->
-<!--            and policestation like concat(concat('%',#{area}),'%')-->
-<!--        </if>-->
+    <select id="countLeavepersonid" resultType="com.admin.admin.entity.dw_leave.PersonInformation">
+        select personid from t_personinformation where policestation like concat(concat('%',#{city}),'%') and
+        policestation like concat(concat('%',#{area}),'%')
+        <!--        <if test="city!=null">-->
+        <!--        where policestation like concat(concat('%',#{city}),'%')-->
+        <!--        </if>-->
+        <!--        <if test="area!=null">-->
+        <!--            and policestation like concat(concat('%',#{area}),'%')-->
+        <!--        </if>-->
     </select>
 
     <select id="countLeave" resultType="com.admin.admin.entity.dw_leave.LeaveInformation">
@@ -94,19 +97,29 @@
 
     <select id="getPoliceStation" resultType="com.admin.admin.entity.dw_leave.PersonInformation">
         <if test="area.equals('佛山市公安局禅城分局')">
-            select detail from dictionary    where   code  like  '%440604%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%派出所%' and dictionary.detail not in(select detail from dictionary    where   code  like  '%440604%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%已撤销%')
+            select detail from dictionary where code like '%440604%' and kind ='06' and code like '%0000%' and detail
+            like '%派出所%' and dictionary.detail not in(select detail from dictionary where code like '%440604%' and kind
+            ='06' and code like '%0000%' and detail like '%已撤销%')
         </if>
         <if test="area.equals('佛山市公安局南海分局')">
-            select detail from dictionary    where   code  like  '%440605%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%派出所%' and dictionary.detail not in(select detail from dictionary    where   code  like  '%440605%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%已撤销%')
+            select detail from dictionary where code like '%440605%' and kind ='06' and code like '%0000%' and detail
+            like '%派出所%' and dictionary.detail not in(select detail from dictionary where code like '%440605%' and kind
+            ='06' and code like '%0000%' and detail like '%已撤销%')
         </if>
         <if test="area.equals('佛山市公安局三水分局')">
-            select detail from dictionary    where   code  like  '%440607%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%派出所%' and dictionary.detail not in(select detail from dictionary    where   code  like  '%440607%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%已撤销%')
+            select detail from dictionary where code like '%440607%' and kind ='06' and code like '%0000%' and detail
+            like '%派出所%' and dictionary.detail not in(select detail from dictionary where code like '%440607%' and kind
+            ='06' and code like '%0000%' and detail like '%已撤销%')
         </if>
         <if test="area.equals('佛山市公安局高明分局')">
-            select detail from dictionary    where   code  like  '%440608%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%派出所%' and dictionary.detail not in(select detail from dictionary    where   code  like  '%440608%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%已撤销%')
+            select detail from dictionary where code like '%440608%' and kind ='06' and code like '%0000%' and detail
+            like '%派出所%' and dictionary.detail not in(select detail from dictionary where code like '%440608%' and kind
+            ='06' and code like '%0000%' and detail like '%已撤销%')
         </if>
         <if test="area.equals('佛山市顺德区公安局')">
-            select detail from dictionary    where   code  like  '%440606%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%派出所%' and dictionary.detail not in(select detail from dictionary    where   code  like  '%440606%'   and  kind ='06'  and   code  like  '%0000%' and detail like '%已撤销%')
+            select detail from dictionary where code like '%440606%' and kind ='06' and code like '%0000%' and detail
+            like '%派出所%' and dictionary.detail not in(select detail from dictionary where code like '%440606%' and kind
+            ='06' and code like '%0000%' and detail like '%已撤销%')
         </if>
 
 

@@ -1,6 +1,7 @@
 package com.admin.model.singin;
 
 import com.admin.model.person.PersonModel;
+import com.common.common.authenticator.CalendarAdjust;
 
 import java.util.Date;
 
@@ -11,7 +12,32 @@ public class SinginModel extends PersonModel {
     private String address;
     private String activityarea;
     private String createtime;
-    private float durationtime;
+    private String durationtime;
+    private String canceltimestamp;
+    private String calltimestamp;
+    private int type;
+    private String Remark;
+    private String filepath;
+    private String typename;
+
+    public String getCanceltimestamp() {
+        return canceltimestamp;
+    }
+
+    public SinginModel setCanceltimestamp(String canceltimestamp) {
+        this.canceltimestamp = canceltimestamp;
+        return this;
+    }
+
+    public String getCalltimestamp() {
+        return calltimestamp;
+    }
+
+    public SinginModel setCalltimestamp(String calltimestamp) {
+        this.calltimestamp = calltimestamp;
+        return this;
+    }
+
 
     public String getTypename() {
         return typename;
@@ -22,8 +48,6 @@ public class SinginModel extends PersonModel {
         return this;
     }
 
-    private String filepath;
-    private String typename;
 
     public String getRemark() {
         return Remark;
@@ -33,9 +57,6 @@ public class SinginModel extends PersonModel {
         Remark = remark;
         return this;
     }
-
-    private int type;
-    private String Remark;
 
 
     public int getType() {
@@ -58,11 +79,12 @@ public class SinginModel extends PersonModel {
     }
 
 
-    public float getDurationtime() {
+    public String getDurationtime() {
         return durationtime;
     }
 
-    public SinginModel setDurationtime(float durationtime) {
+    public SinginModel setDurationtime(String durationtime) throws Exception {
+        //
         this.durationtime = durationtime;
         return this;
     }
@@ -121,6 +143,8 @@ public class SinginModel extends PersonModel {
         this.createtime = createtime;
         return this;
     }
+
+
 
 
 }
