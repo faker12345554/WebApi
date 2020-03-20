@@ -32,18 +32,20 @@ public class Voice {
      */
     public static void testUploadImage(){
         String url = "http://114.116.227.8:8015/kst/rd/upload";//?node=BW&spkid=56789&wavtype=wav&channel=0&replaydetect=false&snrdetect=false&asrdetect=true&step=1&text=12345678";
-        String fileName = "C:/Users/tjh/Desktop/VOICE/12345678.wav";
+        String fileName = "C:/Users/tjh/Desktop/VOICE/tjh1234.wav";
         Map<String, String> textMap = new HashMap<String, String>();
         //可以设置多个input的name，value
+
+        textMap.put("type", "rd");
         textMap.put("node", "BW");
         textMap.put("spkid", "56789");
         textMap.put("wavtype", "wav");
         textMap.put("channel", "0");
-        textMap.put("replaydetect", "false");
+        textMap.put("replaydetect", "true");
         textMap.put("snrdetect", "false");
         textMap.put("asrdetect", "true");
         textMap.put("step", "1");
-        textMap.put("text", "12345678");
+        textMap.put("text", "1234");
         //设置file的name，路径
         Map<String, String> fileMap = new HashMap<String, String>();
         fileMap.put("file", fileName);
