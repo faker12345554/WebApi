@@ -12,22 +12,22 @@
         where u.accountname=#{operator} and modular=#{modular}
     </select>
     <select id="getNumber" parameterType="String" resultType="com.admin.model.Appstatistics.AppStatistics">
-    SELECT
-	(SELECT count(*)  from t_user where phone in
-	( SELECT contact from t_personinformation where sponsoralarm in
-    (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))))as Totalnumber,
-    ( SELECT count(distinct operator) from t_log where operator in
-    ( SELECT "id"  from t_user where phone in
-    ( SELECT contact from t_personinformation where sponsoralarm in
-    (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))))
-    <if test="Days!=null and Days!=''">
-         and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{Days},'yyyy-MM-dd')
-    </if>
-    ) as Usernumber
+        SELECT
+        (SELECT count(*) from t_user where phone in
+        ( SELECT contact from t_personinformation where sponsoralarm in
+        (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))))as Totalnumber,
+        ( SELECT count(distinct operator) from t_log where operator in
+        ( SELECT "id" from t_user where phone in
+        ( SELECT contact from t_personinformation where sponsoralarm in
+        (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))))
+        <if test="Days!=null and Days!=''">
+            and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{Days},'yyyy-MM-dd')
+        </if>
+        ) as Usernumber
     </select>
 
     <resultMap id="usermap" type="HashMap">
-        <result property="operator" column="operator" jdbcType="VARCHAR" />
+        <result property="operator" column="operator" jdbcType="VARCHAR"/>
         <result property="Days" column="Days" jdbcType="VARCHAR"/>
     </resultMap>
 
@@ -41,13 +41,13 @@
          group by  operator
     </select>
 
-    <select id="gettotelnumber" parameterType="String"  resultType="int">
+    <select id="gettotelnumber" parameterType="String" resultType="int">
         SELECT "count"(distinct contact)  from t_personinformation where bailoutbegindate&lt;= now() and now() &lt;=bailoutenddate
         and sponsoralarm in
         (SELECT mjbh from fsga_yw_ryb where bmbm like  concat('%',#{Areacode},'%'))
     </select>
 
-    <select id="Solarrate"  resultType="com.admin.model.Appstatistics.AppStatistics">
+    <select id="Solarrate" resultType="com.admin.model.Appstatistics.AppStatistics">
         SELECT count(distinct operator) as Usernumber,
         <if test="level==1">
             substring(to_char(operatingtime,'yyyy-MM-dd HH:mm:ss'),0,11) as Precisetime,
@@ -56,23 +56,27 @@
             substring(to_char(operatingtime,'yyyy-MM-dd HH:mm:ss'),0,8) as Precisetime,
         </if>
 
-        (SELECT count(*)  from t_user where phone in
+        (SELECT count(*) from t_user where phone in
         ( SELECT contact from t_personinformation where sponsoralarm in
-        (SELECT mjbh from fsga_yw_ryb where bmbm like   concat('%',#{Areacode},'%')))) as Totalnumber  from t_log where operator in
-        ( SELECT "id"  from t_user where phone in
+        (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%')))) as Totalnumber from t_log where
+        operator in
+        ( SELECT "id" from t_user where phone in
         ( SELECT contact from t_personinformation where sponsoralarm in
-        (SELECT mjbh from fsga_yw_ryb where bmbm like  concat('%',#{Areacode},'%'))))
+        (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))))
         <if test="level==1">
-            and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd') and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd')
+            and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd') and
+            to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd')
             GROUP BY substring(to_char(operatingtime,'yyyy-MM-dd HH:mm:ss'),0,11)
         </if>
         <if test="level==2">
-            and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd') and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd')
+            and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd') and
+            to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd')
             GROUP BY substring(to_char(operatingtime,'yyyy-MM-dd HH:mm:ss'),0,8)
         </if>
 
     </select>
-    <select id="listAllLog" parameterType="com.admin.model.log.LogSearchModel" resultType="com.admin.model.log.LogModel">
+    <select id="listAllLog" parameterType="com.admin.model.log.LogSearchModel"
+            resultType="com.admin.model.log.LogModel">
         select id,operator,modular,action,operatingtime from t_log
         <if test="date.operator!=null">
             where operator=cast(#{date.operator} as NUMERIC)

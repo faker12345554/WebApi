@@ -7,10 +7,10 @@
         (#{personId},#{type},#{areaname},true,#{citycode},#{citylevel},#{areaArr},#{setuptime})
     </insert>
 
-<!--    <update id="updateEnclosure" parameterType="com.admin.admin.entity.dw_enclosure.enclosure">-->
-<!--        update t_enclosure set personid=#{personId},type=#{type},-->
-<!--        areaname=#{areaname},citycode=#{citycode},citylevel=#{citylevel},areaarr=#{areaArr} where id=#{id}-->
-<!--    </update>-->
+    <!--    <update id="updateEnclosure" parameterType="com.admin.admin.entity.dw_enclosure.enclosure">-->
+    <!--        update t_enclosure set personid=#{personId},type=#{type},-->
+    <!--        areaname=#{areaname},citycode=#{citycode},citylevel=#{citylevel},areaarr=#{areaArr} where id=#{id}-->
+    <!--    </update>-->
 
     <delete id="deleteEnclosure" parameterType="String">
         delete from t_enclosure where personid=#{personId}

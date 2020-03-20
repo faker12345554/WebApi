@@ -51,8 +51,6 @@ public class LoginController {
                            HttpServletResponse response, HttpServletRequest request) {
         ResultSet rs=new ResultSet();
         try {
-
-
             UserModel userInformation = userService.login(account);
             if (userInformation != null) {                //判断账号是否存在
                 CacheUtils.put("UserId",String.valueOf(userInformation.getId()));

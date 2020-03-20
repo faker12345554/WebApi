@@ -6,7 +6,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://112.74.41.177/legal
     username: postgres
-    password: 123456
+    password: "!QAZ2wsx#EDC"
 
 swagger:
   enabled: true

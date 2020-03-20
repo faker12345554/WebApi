@@ -36,13 +36,13 @@ public class MessageController {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return  result.setData(messageService.getNotificationList(UserId));
     }
-    @ApiOperation("测试")
-    @GetMapping("/Gettest")
-    public void test() throws Exception{
-
-        tasking.GetMessage();
-        tasking.GeneratedRecord();
-
-
-    }
+//    @ApiOperation("测试")
+//    @GetMapping("/Gettest")
+//    public void test() throws Exception{
+//
+//        tasking.GetMessage();
+//        tasking.GeneratedRecord();
+//
+//
+//    }
 }

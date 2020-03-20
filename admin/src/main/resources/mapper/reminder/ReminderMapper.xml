@@ -10,7 +10,8 @@
         update t_remindersettings set status=false
     </update>
 
-    <insert id="SaveReminder" parameterType="com.admin.admin.entity.dw_reminder.Remindersettings" useGeneratedKeys="true" keyProperty="id">
+    <insert id="SaveReminder" parameterType="com.admin.admin.entity.dw_reminder.Remindersettings"
+            useGeneratedKeys="true" keyProperty="id">
         INSERT into t_remindersettings(code,settingname,settingday,settingtime,createtime,status)
         VALUES (#{code},#{settingname},#{settingday},#{settingtime},#{createtime},#{status})
     </insert>
