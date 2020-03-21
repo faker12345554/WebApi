@@ -8,6 +8,7 @@ import com.prisonapp.business.entity.dw_supervise.*;
 import com.prisonapp.business.entity.dw_user.UserModel;
 import com.prisonapp.business.service.dw_supervise.SuperviseService;
 import com.prisonapp.business.util.PersonInformationUtil;
+import com.prisonapp.business.util.getServerPath;
 import com.prisonapp.token.TokenUtil;
 import com.prisonapp.token.tation.UserLoginToken;
 import com.prisonapp.tool.AESDecode;
@@ -134,7 +135,7 @@ public class SuperviseController {
         }
         String fileName = file.getOriginalFilename();
         String res = upload.upload(url, file);
-        uploadAudioUrl.setUrl("https://pardon.cnnc626.com:8443/mypicture/personApp/Audio/" + formatter.format(date) + "/" + fileName);
+        uploadAudioUrl.setUrl(getServerPath.ServerPath()+"Audio/" + formatter.format(date) + "/" + fileName);
         if (res.equals("上传成功")) {
             result.resultCode = 0;
             result.resultMsg = "";
@@ -195,7 +196,7 @@ public class SuperviseController {
             String fileName = face.getOriginalFilename();
             String res = upload.upload(url, face);
             if (res.equals("上传成功")) {
-                 String upLoadFaceUrl = "https://pardon.cnnc626.com:8443/mypicture/personApp/Face/"+ formatter.format(date)+"/"+fileName;//这是真正有用的
+                 String upLoadFaceUrl = getServerPath.ServerPath()+"Face/"+ formatter.format(date)+"/"+fileName;//这是真正有用的
                 //if(true){
                   if (tPersoninformations != null) {
                     //将两张图片进行对比，upLoadFaceUrl为用户传进来的图片路劲，第二个为数据库中的图片路劲
