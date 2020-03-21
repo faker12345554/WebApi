@@ -1,6 +1,6 @@
 package com.admin.admin.service.dw_enclosure;
 
-import com.admin.admin.dao.dw_enclosure.enclosureDao;
+import com.admin.admin.dao.master.dw_enclosure.enclosureDao;
 import com.admin.admin.entity.dw_enclosure.enclosure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.admin.admin.service.dw_guaran;
 
-import com.admin.admin.dao.dw_guaran.GuarantDao;
+import com.admin.admin.dao.master.dw_guaran.GuarantDao;
 import com.admin.admin.entity.dw_guarant.GuaranteeInformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

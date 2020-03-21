@@ -1,10 +1,8 @@
 package com.admin.admin.controller.dw_Rulestatistics;
 
-import com.admin.admin.entity.dw_violation.Violationfens;
 import com.admin.admin.service.dw_Rulestatistics.RuleStatSericve;
 import com.admin.admin.service.dw_address.AddressService;
 import com.admin.admin.service.dw_violation.ViolationService;
-import com.admin.model.Appstatistics.AppStatistics;
 import com.admin.model.Appstatistics.HomePage;
 import com.admin.model.Appstatistics.ViotionStatics;
 import com.admin.model.Appstatistics.monthnumber;

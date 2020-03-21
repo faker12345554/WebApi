@@ -1,6 +1,6 @@
 package com.admin.admin.controller.dw_person;
 
-import com.admin.admin.entity.dw_location.Locationmation;
+
 import com.admin.admin.entity.dw_person.Personinformation;
 import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
 import com.admin.admin.entity.dw_user.User;
@@ -8,8 +8,6 @@ import com.admin.admin.service.dw_person.PersoinfoService;
 import com.admin.model.search.SearchModel;
 import com.admin.page.PageBean;
 import com.admin.token.tation.UserLoginToken;
-import com.admin.tool.CacheUtils;
-import com.admin.tool.JudgementRole;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import com.github.pagehelper.PageHelper;
@@ -85,10 +83,10 @@ public class PersonController {
     }
 
     //获取
-    @UserLoginToken
+    //@UserLoginToken
     @ApiOperation("查看人员信息")
     @GetMapping("/getPersoin")
-    public ResponseResult getPersoin(@RequestParam String id,String Caseno, HttpServletResponse response) {
+    public ResponseResult getPersoin(@RequestParam String id,String Caseno) throws  Exception {
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());

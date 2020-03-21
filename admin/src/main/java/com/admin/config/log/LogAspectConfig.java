@@ -1,6 +1,6 @@
 package com.admin.config.log;
 
-import com.admin.admin.dao.dw_log.LogDao;
+import com.admin.admin.dao.master.dw_log.LogDao;
 import com.admin.admin.entity.dw_log.LogInformation;
 import com.admin.tool.CacheUtils;
 import com.google.gson.Gson;

@@ -127,11 +127,11 @@ public class GuaranteeInformation {
         return this;
     }
 
-    public Date getPaydate() {
+    public String getPaydate() {
         return paydate;
     }
 
-    public GuaranteeInformation setPaydate(Date paydate) {
+    public GuaranteeInformation setPaydate(String paydate) {
         this.paydate = paydate;
         return this;
     }
@@ -152,7 +152,7 @@ public class GuaranteeInformation {
     private String relatetionship;
     private String job;
     private String receiptunit;
-    private Date paydate;
+    private String paydate;
     private String keepbank;
 
 

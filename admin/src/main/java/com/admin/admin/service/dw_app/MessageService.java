@@ -1,6 +1,6 @@
 package com.admin.admin.service.dw_app;
 
-import com.admin.admin.dao.dw_app.MessageDao;
+import com.admin.admin.dao.master.dw_app.MessageDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.master.dw_leave.LeaveDao">
+    <select id="getLeave" parameterType="com.admin.model.search.SearchModel"
+            resultType="com.admin.model.leave.LeavefModel">
+        SELECT * FROM t_leave l
+        LEFT JOIN t_auditor a ON l.leaveorder = a.leaveorder AND a.statuscode IN ('2','3')
+        where l.personid in (SELECT t.personid from t_personinformation as t
+        left JOIN t_user as u on u.accountname=t.sponsoralarm
+        <if test="type==1">
+            where t.sponsoralarm=#{limit} and u.usersystem='1'
+        </if>
+        <if test="type!=1">
+            where t.policecode=#{limit}
+        </if>
+        )
+
+        <if test="searchModel.PersonId !=null and searchModel.PersonId!='' and searchModel.Condition==null">
+            and l.personid=#{searchModel.PersonId}
+        </if>
+        <if test="searchModel.Condition ==null and searchModel.PersonName!=null ">
+            and l.personname like concat('%',#{searchModel.PersonName},'%')
+        </if>
+        <if test="searchModel.Condition !=null and searchModel.PersonName==null and searchModel.PersonId==null ">
+            and l.states =#{searchModel.condition}
+        </if>
+
+        <if test="searchModel.Condition !=null and searchModel.PersonName==null and searchModel.PersonId !=null ">
+            and l.personid=#{searchModel.PersonId} and l.states=#{searchModel.condition}
+        </if>
+
+        <if test="searchModel.Condition !=null and searchModel.PersonName!=null and searchModel.PersonName!='' and searchModel.StartTime!=null and searchModel.EndTime!=null ">
+            and l.states=#{searchModel.Condition}
+            l.personname like concat('%',#{searchModel.PersonName},'%') and
+            l.subittimestamp > #{searchModel.StartTime} and l.subittimestamp &lt; #{searchModel.EndTime}
+        </if>
+        <if test="searchModel.Condition ==null and (searchModel.PersonName!=null or searchModel.PersonName=='') and searchModel.StartTime!=null and searchModel.EndTime!=null ">
+            and l.personname like concat('%',#{searchModel.PersonName},'%') and
+            l.subittimestamp &gt; #{searchModel.StartTime} and l.subittimestamp &lt; #{searchModel.EndTime}
+        </if>
+
+        <if test="searchModel.Condition ==null and (searchModel.PersonName==null or searchModel.PersonName=='') and searchModel.StartTime!=null and  searchModel.EndTime!=null ">
+            and l.subittimestamp > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and l.subittimestamp
+            &lt; TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="searchModel.Condition ==null and (searchModel.PersonName==null or searchModel.PersonName=='') and searchModel.StartTime!=null and searchModel.EndTime==null ">
+            and l.subittimestamp > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="searchModel.Condition ==null and (searchModel.PersonName==null or searchModel.PersonName=='') and searchModel.StartTime==null and searchModel.EndTime!=null ">
+            and l.subittimestamp &lt; TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="searchModel.list.size()>0">
+            and l.id in
+            <foreach collection="searchModel.list" item="id" index="index" open="(" close=")" separator=",">
+                cast (#{id} as int)
+            </foreach>
+        </if>
+
+
+    </select>
+    <insert id="insertAuditor" parameterType="com.admin.admin.entity.dw_auditor.AuditorInformation">
+        insert into t_auditor(leaveorder,accountname,auditordatetime,leavingmessage,statuscode,states) VALUES (#{leaveorder},#{accountname},#{auditordatetime},#{leavingmessage},#{statuscode},#{states})
+    </insert>
+    <update id="updateLeaveStatus" parameterType="com.admin.admin.entity.dw_auditor.AuditorInformation">
+        update t_leave set statuscode=#{statuscode},states=#{states} WHERE leaveorder=#{leaveorder}
+    </update>
+    <delete id="deleteAuditor" parameterType="String">
+        delete from t_auditor where leaveorder=#{leaveOrder}
+    </delete>
+    <select id="getLeaveInformation" parameterType="String"
+            resultType="com.admin.admin.entity.dw_leave.LeaveInformation">
+        select * FROM t_leave WHERE leaveorder=#{leaveorder}
+    </select>
+    <update id="cancelAuditor" parameterType="String">
+        update t_auditor set statuscode=4,states='已销假' WHERE leaveorder=#{leaveorder}
+    </update>
+
+    <select id="countLeavearea" resultType="com.admin.admin.entity.dw_leave.PersonInformation">
+    select detail from dictionary    where   code  like  '%000000%'   and  kind ='06'   and detail like concat(concat('%',#{city}),'%') and code  !='440600000000' order by detail
+</select>
+
+    <select id="countLeavepersonid" resultType="com.admin.admin.entity.dw_leave.PersonInformation">
+        select personid from t_personinformation where policestation like concat(concat('%',#{city}),'%') and
+        policestation like concat(concat('%',#{area}),'%')
+        <!--        <if test="city!=null">-->
+        <!--        where policestation like concat(concat('%',#{city}),'%')-->
+        <!--        </if>-->
+        <!--        <if test="area!=null">-->
+        <!--            and policestation like concat(concat('%',#{area}),'%')-->
+        <!--        </if>-->
+    </select>
+
+    <select id="countLeave" resultType="com.admin.admin.entity.dw_leave.LeaveInformation">
+        select * from t_leave where personid =#{personid} and subittimestamp &lt;#{endTime} and subittimestamp>#{startTime};
+    </select>
+
+    <select id="getPoliceStation" resultType="com.admin.admin.entity.dw_leave.PersonInformation">
+        <if test="area.equals('佛山市公安局禅城分局')">
+            select detail from dictionary where code like '%440604%' and kind ='06' and code like '%0000%' and detail
+            like '%派出所%' and dictionary.detail not in(select detail from dictionary where code like '%440604%' and kind
+            ='06' and code like '%0000%' and detail like '%已撤销%')
+        </if>
+        <if test="area.equals('佛山市公安局南海分局')">
+            select detail from dictionary where code like '%440605%' and kind ='06' and code like '%0000%' and detail
+            like '%派出所%' and dictionary.detail not in(select detail from dictionary where code like '%440605%' and kind
+            ='06' and code like '%0000%' and detail like '%已撤销%')
+        </if>
+        <if test="area.equals('佛山市公安局三水分局')">
+            select detail from dictionary where code like '%440607%' and kind ='06' and code like '%0000%' and detail
+            like '%派出所%' and dictionary.detail not in(select detail from dictionary where code like '%440607%' and kind
+            ='06' and code like '%0000%' and detail like '%已撤销%')
+        </if>
+        <if test="area.equals('佛山市公安局高明分局')">
+            select detail from dictionary where code like '%440608%' and kind ='06' and code like '%0000%' and detail
+            like '%派出所%' and dictionary.detail not in(select detail from dictionary where code like '%440608%' and kind
+            ='06' and code like '%0000%' and detail like '%已撤销%')
+        </if>
+        <if test="area.equals('佛山市顺德区公安局')">
+            select detail from dictionary where code like '%440606%' and kind ='06' and code like '%0000%' and detail
+            like '%派出所%' and dictionary.detail not in(select detail from dictionary where code like '%440606%' and kind
+            ='06' and code like '%0000%' and detail like '%已撤销%')
+        </if>
+
+
+    </select>
+</mapper>

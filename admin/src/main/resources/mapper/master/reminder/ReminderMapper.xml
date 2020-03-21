@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.master.dw_reminder.ReminderDao">
+
+    <select id="getReminder" resultType="com.admin.admin.entity.dw_reminder.Remindersettings">
+        select * from t_remindersettings where status=true
+    </select>
+    <update id="deleteReminder">
+        update t_remindersettings set status=false
+    </update>
+
+    <insert id="SaveReminder" parameterType="com.admin.admin.entity.dw_reminder.Remindersettings"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT into t_remindersettings(code,settingname,settingday,settingtime,createtime,status)
+        VALUES (#{code},#{settingname},#{settingday},#{settingtime},#{createtime},#{status})
+    </insert>
+
+    <update id="UpdateReminder" parameterType="com.admin.admin.entity.dw_reminder.Remindersettings">
+        update t_remindersettings set code=#{code},settingname=#{settingname},settingday=#{settingday},settingtime=#{settingtime} where id=#{id}
+    </update>
+</mapper>

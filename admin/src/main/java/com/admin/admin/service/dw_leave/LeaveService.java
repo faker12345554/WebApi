@@ -1,6 +1,6 @@
 package com.admin.admin.service.dw_leave;
 
-import com.admin.admin.dao.dw_leave.LeaveDao;
+import com.admin.admin.dao.master.dw_leave.LeaveDao;
 import com.admin.admin.entity.dw_auditor.AuditorInformation;
 import com.admin.admin.entity.dw_leave.CountResult;
 import com.admin.admin.entity.dw_leave.LeaveInformation;

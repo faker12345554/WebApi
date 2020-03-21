@@ -1,6 +1,6 @@
 package com.admin.admin.service.dw_Meun;
 
-import com.admin.admin.dao.dw_meun.MeunDao;
+import com.admin.admin.dao.master.dw_meun.MeunDao;
 import com.admin.admin.entity.dw_menu.Menu;
 import com.admin.page.PageBean;
 import com.github.pagehelper.PageHelper;
