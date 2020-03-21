@@ -1,7 +1,6 @@
 package com.admin.admin.service.dw_address;
 
-import com.admin.admin.dao.dw_address.AddressDao;
-import org.apache.lucene.document.StringField;
+import com.admin.admin.dao.master.dw_address.AddressDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

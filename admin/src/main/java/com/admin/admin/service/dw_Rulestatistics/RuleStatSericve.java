@@ -1,13 +1,10 @@
 package com.admin.admin.service.dw_Rulestatistics;
 
-import com.admin.admin.dao.dw_Rulestatistics.RuleStatistics;
-import com.admin.admin.entity.dw_log.LogInformation;
+import com.admin.admin.dao.master.dw_Rulestatistics.RuleStatistics;
 import com.admin.admin.entity.dw_message.TMessage;
-import com.admin.admin.entity.dw_summons.TSummons;
 import com.admin.model.Appstatistics.HomePage;
 import com.admin.model.log.LogModel;
 import com.admin.tool.CacheUtils;
-import com.admin.tool.JudgementRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

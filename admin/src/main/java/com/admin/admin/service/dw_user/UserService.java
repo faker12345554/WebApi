@@ -1,29 +1,29 @@
 package com.admin.admin.service.dw_user;
 
-import com.admin.admin.dao.dw_user.UserDao;
+import com.admin.admin.dao.master.dw_user.UserDao;
+import com.admin.admin.dao.slave.FsgaDao;
 import com.admin.admin.entity.dw_user.User;
 import com.admin.admin.entity.dw_user.Usermodel;
 import com.admin.admin.entity.dw_userrole.UserRole;
-import com.admin.model.userrole.UserRoleModel;
 import com.admin.page.PageBean;
 import com.admin.tool.CacheUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 @Service
 public class UserService {
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private FsgaDao fsgaDao;
 
 
 
@@ -57,8 +57,8 @@ public class UserService {
 
     //登录
     public User login(String UserName, String Password) {
-
-
+        int number= fsgaDao.getid();
+        System.out.println(number);
         return userDao.login(UserName, Password);
     }
 

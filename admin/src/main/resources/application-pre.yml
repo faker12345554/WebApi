@@ -1,5 +1,7 @@
 server:
   port: 8009
+  servlet:
+    context-path: "/DwWebApi"
 
 spring:
   datasource:
@@ -7,13 +9,18 @@ spring:
     url: jdbc:postgresql://112.74.41.177:5432/legal
     username: postgres
     password: "!QAZ2wsx#EDC"
-#    initial-size: 2
-#    min-idle: 1
-#    max-active: 10
-#    max-wait: 60000
-#    time-between-eviction-runs-millis: 60000
-#    min-evictable-edle-time-millis: 300000
-#    filters: stat
+#spring:
+#  datasource:
+#    master:
+#      driver-class-name: org.postgresql.Driver
+#      url: jdbc:postgresql://112.74.41.177:5432/legal
+#      username: postgres
+#      password: "!QAZ2wsx#EDC"
+#    slave:
+#      driver-class-name: org.postgresql.Driver
+#      url: jdbc:postgresql://192.168.10.88,14333:5432/legal
+#      username: postgres
+#      password: 123456
 
 swagger:
   enabled: true
@@ -26,3 +33,15 @@ mybatis:
   mapper-locations: classpath:mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+#    initial-size: 2
+#    min-idle: 1
+#    max-active: 10
+#    max-wait: 60000
+#    time-between-eviction-runs-millis: 60000
+#    min-evictable-edle-time-millis: 300000
+#    filters: stat
+
+
+

@@ -1,32 +1,26 @@
 package com.admin.admin.service.dw_person;
 
-import com.admin.admin.dao.dw_case.CaseDao;
-import com.admin.admin.dao.dw_guaran.GuarantDao;
-import com.admin.admin.dao.dw_person.PersonDao;
-import com.admin.admin.dao.dw_task.TaskDao;
-import com.admin.admin.dao.dw_violation.ViolationDao;
+import com.admin.admin.dao.master.dw_case.CaseDao;
+import com.admin.admin.dao.master.dw_guaran.GuarantDao;
+import com.admin.admin.dao.master.dw_person.PersonDao;
+import com.admin.admin.dao.master.dw_task.TaskDao;
+import com.admin.admin.dao.master.dw_violation.ViolationDao;
 import com.admin.admin.entity.dw_case.TCaseinfo;
 import com.admin.admin.entity.dw_guarant.GuaranteeInformation;
 import com.admin.admin.entity.dw_message.TMessage;
 import com.admin.admin.entity.dw_person.Personinformation;
 import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
-import com.admin.admin.entity.dw_sysenum.Dictionary;
 import com.admin.admin.entity.dw_violation.Violationfens;
-import com.admin.admin.service.dw_violation.ViolationService;
 import com.admin.model.Appstatistics.monthnumber;
 import com.admin.model.search.SearchModel;
-import com.admin.page.PageBean;
 import com.admin.tool.CacheUtils;
 import com.admin.tool.JudgementRole;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.common.common.authenticator.CalendarAdjust;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -106,11 +100,13 @@ public class PersoinfoService {
     }
 
     //获取人员信息
-    public Personinformation getPersoin(String id, String Caseno) {
+    public Personinformation getPersoin(String id, String Caseno) throws Exception {
         Personinformation personinformation = personDao.getPersoin(id);
         GuaranteeInformation guaranteeInformation = guarantDao.getGuara(id);
+
         personinformation.setGuaranteeInformation(guaranteeInformation);
         TCaseinfo tCaseinfo = caseDao.GetCase(id, Caseno);
+
         personinformation.settCaseinfo(tCaseinfo);
         if (CacheUtils.get("UserName").toString() != null) {
             personinformation.setFounderid(CacheUtils.get("UserName").toString());

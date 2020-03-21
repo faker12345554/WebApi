@@ -1,6 +1,5 @@
 package com.admin.admin.controller.dw_violation;
 
-import com.admin.admin.entity.dw_report.Reportsettings;
 import com.admin.admin.entity.dw_violation.Violationfens;
 import com.admin.admin.service.dw_violation.ViolationService;
 import com.admin.token.tation.UserLoginToken;

@@ -1,9 +1,6 @@
 package com.admin.admin.controller.dw_sing;
 
-import com.admin.admin.entity.dw_location.Locationmation;
-import com.admin.admin.entity.dw_sing.SinginInformation;
 import com.admin.admin.service.dw_sing.SinginService;
-import com.admin.model.Execl.ExeclModel;
 import com.admin.model.search.SearchModel;
 import com.admin.model.singin.SinginModel;
 import com.admin.page.PageBean;
