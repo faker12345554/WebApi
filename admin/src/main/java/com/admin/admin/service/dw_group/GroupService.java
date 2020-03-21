@@ -1,23 +1,18 @@
 package com.admin.admin.service.dw_group;
 
-import com.admin.admin.dao.dw_userpermission.UserPermissionGroupDao;
+import com.admin.admin.dao.master.dw_userpermission.UserPermissionGroupDao;
 import com.admin.admin.entity.dw_group.Condition;
 import com.admin.admin.entity.dw_group.PermissionName;
-import com.admin.admin.entity.dw_menu.Menu;
 import com.admin.admin.entity.dw_userpermission.UserPermissionGroup;
 
 import com.admin.admin.entity.dw_userrole.UserRole;
 import com.admin.model.coordina.MenuModel;
-import com.admin.model.menu.MenuData;
-import com.admin.model.menu.ParentMenu;
-import com.admin.model.menu.SonMenu;
 import com.admin.page.PageBean;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.PublicKey;
 import java.text.SimpleDateFormat;
 import java.util.*;
 

@@ -1,6 +1,6 @@
 package com.admin.interceptor;
 
-import com.admin.admin.dao.dw_user.UserDao;
+import com.admin.admin.dao.master.dw_user.UserDao;
 import com.admin.token.tation.PassToken;
 import com.admin.token.tation.UserLoginToken;
 import com.admin.admin.entity.dw_user.User;
@@ -17,16 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.Method;
-import java.nio.charset.Charset;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 /* 这个是用来拦截的  那就是这个咯  在引用到这里的拦截*/
 

@@ -1,6 +1,6 @@
 package com.admin.admin.service.dw_userrole;
 
-import com.admin.admin.dao.dw_userrole.UserRoleDao;
+import com.admin.admin.dao.master.dw_userrole.UserRoleDao;
 import com.admin.admin.entity.dw_menu.Menu;
 import com.admin.admin.entity.dw_userrole.UserRole;
 import com.admin.model.menu.MenuData;

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.master.dw_report.ReportDao">
+
+    <select id="getReport" resultType="com.admin.admin.entity.dw_report.Reportsettings">
+        select * from t_reportsettings where status=true
+    </select>
+
+    <update id="deleteReport">
+        update t_reportsettings set status=false
+    </update>
+
+    <insert id="SaveReport" parameterType="com.admin.admin.entity.dw_report.Reportsettings" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO t_reportsettings(type,locationstime,reportcount,reporttype,reportday,begindate,typename,creattime,status)
+        VALUES(#{type},#{locationstime},#{reportcount},#{reporttype},#{reportday},#{begindate},#{typename}
+        ,#{creattime},#{status})
+    </insert>
+
+    <update id="UpdateReport" parameterType="com.admin.admin.entity.dw_report.Reportsettings">
+        update t_reportsettings set type=#{type},locationstime=#{locationstime},reportcount=#{reportcount},reporttype=#{reporttype},
+        reportday=#{reportday},begindate=#{begindate},typename=#{typename} where id=#{id}
+    </update>
+
+</mapper>

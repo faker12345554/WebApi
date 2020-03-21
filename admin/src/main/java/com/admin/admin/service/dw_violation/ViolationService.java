@@ -1,17 +1,10 @@
 package com.admin.admin.service.dw_violation;
 
-import com.admin.admin.dao.dw_violation.ViolationDao;
-import com.admin.admin.entity.dw_alarm.Alarmsettings;
-import com.admin.admin.entity.dw_user.User;
+import com.admin.admin.dao.master.dw_violation.ViolationDao;
 import com.admin.admin.entity.dw_violation.Violationfens;
-import com.admin.page.PageBean;
-import com.admin.tool.CacheUtils;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service

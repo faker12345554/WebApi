@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.master.dw_userrole.UserRoleDao">
+    <insert id="saveUserRole" parameterType="com.admin.admin.entity.dw_userrole.UserRole">
+        insert into t_userrole(rolename,menuid,createtime,status,permissionid) values (#{rolename},#{menuid},#{createtime},#{status},#{permissionid})
+    </insert>
+
+    <update id="updateUserRole" parameterType="com.admin.admin.entity.dw_userrole.UserRole">
+        update t_userrole set rolename=#{rolename},menuid=#{menuid},createtime=#{createtime},status=#{status},permissionid=#{permissionid} where roleid=#{roleid}
+    </update>
+
+    <update id="deleteUserRole">
+        update t_userrole set status=#{flag} where roleid=#{UserRoleId}
+    </update>
+    <select id="listMenu" resultType="com.admin.admin.entity.dw_menu.Menu" parameterType="int">
+        select distinct M.* from t_user as U
+        inner join t_userrole as R on R.permissionid=U.permissionid and  R.status=true
+        INNER JOIN t_menu as M on M.menuid=R.menuid and M."status"=TRUE
+        where U.id=#{UserId}
+    </select>
+
+    <select id="listUserRole" resultType="com.admin.model.userrole.UserRoleModel" parameterType="int">
+        select R.roleid,R.rolename,R.createtime,M.menuname,G.permissionname from t_user as u
+        INNER JOIN t_userrole as R on R.permissionid=u.permissionid
+        INNER JOIN t_menu as M on M.menuid=R.menuid
+        INNER JOIN t_userpermissiongroup AS G on G.permissionid=u.permissionid
+        where u.id=#{id}
+    </select>
+</mapper>

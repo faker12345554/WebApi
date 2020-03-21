@@ -1,11 +1,8 @@
 package com.admin.timer;
 
-import com.admin.admin.dao.dw_violation.ViolationDao;
-import com.admin.admin.entity.dw_message.TMessage;
+import com.admin.admin.dao.master.dw_violation.ViolationDao;
 import com.admin.admin.entity.dw_violation.Violationfens;
 import com.admin.admin.service.dw_task.Tasking;
-import com.common.common.apppush.Demo;
-import com.common.common.authenticator.CalendarAdjust;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -14,9 +11,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.text.ParseException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 //@Component注解用于对那些比较中立的类进行注释；

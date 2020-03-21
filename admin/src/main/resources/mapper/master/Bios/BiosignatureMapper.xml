@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.master.dw_biosign.BiosignatureDao">
+    <insert id="insertBiosignature" parameterType="com.admin.admin.entity.dw_bios.BiosignatureInformation">
+        insert into t_biosignature (personid, personname, type, filepath, createtime) VALUES (#{personid},#{personname},#{type},#{filepath},#{createtime})
+    </insert>
+
+    <select id="getBiosignature" resultType="com.admin.model.biosignature.BiosignatureReturnModel">
+        select personname,filepath,createtime from t_biosignature where personid=#{personid} and type=#{type}
+    </select>
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.master.dw_meun.MeunDao">
+    <select id="GetMenuList" resultType="com.admin.admin.entity.dw_menu.Menu">
+        select * from t_menu where status=true
+    </select>
+    <update id="delMeun">
+        update t_menu set status=#{falg} where menuid=#{id}
+    </update>
+
+    <select id="GetMeunbyid" resultType="com.admin.admin.entity.dw_menu.Menu" parameterType="int">
+        select * from t_menu where menuid=#{id}
+    </select>
+
+</mapper>

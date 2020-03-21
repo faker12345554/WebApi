@@ -1,6 +1,6 @@
 package com.admin.admin.service.dw_Report;
 
-import com.admin.admin.dao.dw_report.ReportDao;
+import com.admin.admin.dao.master.dw_report.ReportDao;
 import com.admin.admin.entity.dw_report.Reportsettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

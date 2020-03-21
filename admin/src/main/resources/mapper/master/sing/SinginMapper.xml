@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.master.dw_sing.SinginDao">
+    <select id="getSingin" parameterType="int" resultType="com.admin.admin.entity.dw_sing.SinginInformation">
+        select * from t_singin where id=#{id}
+    </select>
+
+    <select id="ListSingin"
+            resultType="com.admin.model.singin.SinginModel">
+        select t.id,P.suspectstatus,P.personname,P.gender,P.age,t.reportstatus,t.reporttype,P.sponsor
+        ,t.address,t.activityarea,t.createtime,t.typename,(CASE (SELECT Count(*) from t_leave where personid=t.personid
+        and starttimestamp &lt;= t.createtime AND t.createtime &lt;= endtimestamp)
+        WHEN 0 THEN '正常签到' ELSE '已请假' END) as Remark,tc.caseno,
+        tc.handleunit,P.guid,tc.handlepeson from t_singin AS t
+        inner join t_personinformation AS P on p.personid=t.personid
+        left join t_caseinfo tc on P.personid = tc.personid and tc.caseno=p.caseno
+        where p.status=#{searchModel.flag} and (t.type=2 or t.type=3 or t.type=1)
+        <if test="type==1">
+            and p.sponsoralarm=#{limit}
+        </if>
+        <if test="type!=1">
+            and p.policecode=#{limit}
+        </if>
+
+        <if test="searchModel.PersonId !=null and searchModel.PersonId!=''">
+            and t.personid=#{searchModel.PersonId}
+        </if>
+        <if test="searchModel.FuzzyCondition !=null and searchModel.FuzzyCondition!=''">
+            AND P.suspectstatus like concat('%',#{searchModel.FuzzyCondition},'%') or
+            P.personname like concat('%',#{searchModel.FuzzyCondition},'%') or
+            P.gender like concat('%',#{searchModel.FuzzyCondition},'%') or
+            P.age like concat('%',#{searchModel.FuzzyCondition},'%') or
+            t.reportstatus like concat('%',#{searchModel.FuzzyCondition},'%') or
+            t.reporttype like concat('%',#{searchModel.FuzzyCondition},'%') or
+            P.sponsor like concat('%',#{searchModel.FuzzyCondition},'%') or
+            t.address like concat('%',#{searchModel.FuzzyCondition},'%') or
+            t.activityarea like concat('%',#{searchModel.FuzzyCondition},'%') or
+            tc.handleunit like concat('%',#{searchModel.FuzzyCondition},'%') or
+            tc.caseno like concat('%',#{searchModel.FuzzyCondition},'%')
+        </if>
+        <if test="searchModel.Condition==null and searchModel.PersonName!=null">
+            and P.personname like concat('%',#{searchModel.PersonName},'%')
+        </if>
+        <if test="searchModel.Condition!=null and searchModel.PersonName==null">
+            and t.typename = #{searchModel.Condition}
+        </if>
+        <if test="searchModel.Condition !=null and searchModel.Condition !='' and searchModel.PersonName !=null and searchModel.PersonName!=''">
+            AND t.typename =#{searchModel.Condition} and P.personname=#{searchModel.PersonName}
+        </if>
+        <if test="searchModel.StartTime !=null and searchModel.StartTime!='' and searchModel.EndTime!=null and searchModel.EndTime!='' ">
+            AND t.createtime > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and t.createtime &lt;
+            TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="searchModel.StartTime !=null and searchModel.StartTime!='' and (searchModel.EndTime==null and searchModel.EndTime=='')">
+            AND t.createtime > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="(searchModel.StartTime ==null and searchModel.StartTime=='') and searchModel.EndTime !=null and searchModel.EndTime!=''">
+            AND t.createtime &lt; TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="searchModel.list.size()>0">
+            and t.id in
+            <foreach collection="searchModel.list" item="id" index="index" open="(" close=")" separator=",">
+                cast (#{id} as int)
+            </foreach>
+        </if>
+        order by t.createtime desc
+    </select>
+
+    <select id="ListAudio" parameterType="com.admin.model.search.SearchModel"
+            resultType="com.admin.model.singin.SinginModel">
+        select
+        t.id,P.suspectstatus,P.personname,P.gender,P.sponsor,P.policestation,t.calltype as reporttype,P.yjsponsoralarm,
+        t.canceltype as typename, t.createtime,t.serverurl as filepath,tc.caseno,t.canceltimestamp,t.calltimestamp,
+        tc.handleunit,P.guid
+        from t_sendphone AS t
+        inner join t_personinformation AS P on p.personid=t.personid
+        left join t_caseinfo tc on P.personid = tc.personid and tc.caseno=p.caseno
+        where p.status=#{searchModel.flag}
+        <if test="type==1">
+            and p.sponsoralarm=#{limit}
+        </if>
+        <if test="type!=1">
+            and p.policecode=#{limit}
+        </if>
+
+        <if test="searchModel.Condition ==null and searchModel.PersonName !=null">
+            and P.personname like concat('%',#{searchModel.PersonName},'%')
+        </if>
+        <if test="searchModel.Condition !=null and searchModel.PersonName ==null">
+            and t.calltype =#{searchModel.Condition}
+        </if>
+        <if test="searchModel.Condition !=null and searchModel.PersonName !=null and searchModel.StartTime!=null and searchModel.EndTime!=null">
+            and t.calltype=#{searchModel.Condition} and P.personname like concat('%',#{searchModel.PersonName},'%') and
+            t.createtime > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and t.createtime&lt;
+            TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="searchModel.Condition ==null and searchModel.PersonName !=null and searchModel.StartTime!=null and searchModel.EndTime!=null">
+            and P.personname like concat('%',#{searchModel.PersonName},'%') and t.createtime >
+            TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and t.createtime &lt;
+            TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="searchModel.Condition ==null and searchModel.PersonName ==null and searchModel.StartTime!=null and searchModel.EndTime!=null">
+            and t.createtime > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and t.createtime &lt;
+            TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="searchModel.list.size()>0">
+            and t.id in
+            <foreach collection="searchModel.list" item="id" index="index" open="(" close=")" separator=",">
+                cast (#{id} as int)
+            </foreach>
+        </if>
+
+
+    </select>
+
+
+</mapper>
