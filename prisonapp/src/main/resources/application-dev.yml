@@ -1,6 +1,7 @@
 server:
   port: 8000
-
+servlet:
+  context-path: "/DwWebApi"
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
