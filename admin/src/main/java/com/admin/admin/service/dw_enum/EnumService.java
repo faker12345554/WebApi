@@ -1,6 +1,6 @@
 package com.admin.admin.service.dw_enum;
 
-import com.admin.admin.dao.dw_enum.EnumDao;
+import com.admin.admin.dao.master.dw_enum.EnumDao;
 import com.admin.admin.entity.dw_enum.TEnum;
 import com.admin.model.enummodel.EnumModel;
 import com.admin.model.enummodel.EnumSearchModel;

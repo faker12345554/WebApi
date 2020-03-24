@@ -1,15 +1,11 @@
 package com.admin.admin.service.dw_sing;
 
-import com.admin.admin.dao.dw_sing.SinginDao;
+import com.admin.admin.dao.master.dw_sing.SinginDao;
 import com.admin.admin.entity.dw_sing.SinginInformation;
-import com.admin.admin.entity.dw_user.User;
 import com.admin.model.search.SearchModel;
 import com.admin.model.singin.SinginModel;
-import com.admin.page.PageBean;
 import com.admin.tool.CacheUtils;
 import com.admin.tool.JudgementRole;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

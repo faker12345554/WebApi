@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.master.dw_case.CaseDao">
+
+    <insert id="SaveCase" parameterType="com.admin.admin.entity.dw_case.TCaseinfo">
+        insert into t_caseinfo values(#{casecategory},#{casename},#{caseno},to_timestamp(#{receivedtime},'yyyy-MM-dd HH:mi:ss'),#{handleunit},#{handlepeson},#{personid},#{casetype},#{casedescription})
+    </insert>
+
+    <update id="UpdateCase" parameterType="com.admin.admin.entity.dw_case.TCaseinfo">
+        update t_caseinfo set casecategory=#{casecategory},casename=#{casename},caseno=#{caseno},receivedtime=#{receivedtime},handleunit=#{handleunit},handlepeson=#{handlepeson},
+        personid=#{personid},casetype=#{casetype},casedescription=#{casedescription} where personid=#{personid}
+    </update>
+
+    <select id="GetCase" parameterType="String" resultType="com.admin.admin.entity.dw_case.TCaseinfo">
+        select * from t_caseinfo where personid=#{PersonId} and caseno=#{Caseno}
+    </select>
+</mapper>

@@ -8,18 +8,18 @@ public class TCaseinfo {
   private String casecategory;
   private String casename;
   private String caseno;
-  private Date receivedtime;
+  private String receivedtime;
   private String handleunit;
   private String handlepeson;
   private String personid;
   private String casetype;
   private String casedescription;
 
-  public Date getReceivedtime() {
+  public String getReceivedtime() {
     return receivedtime;
   }
 
-  public TCaseinfo setReceivedtime(Date receivedtime) {
+  public TCaseinfo setReceivedtime(String receivedtime) {
     this.receivedtime = receivedtime;
     return this;
   }

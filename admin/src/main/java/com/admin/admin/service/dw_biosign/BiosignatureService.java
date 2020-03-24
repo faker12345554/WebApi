@@ -1,6 +1,6 @@
 package com.admin.admin.service.dw_biosign;
 
-import com.admin.admin.dao.dw_biosign.BiosignatureDao;
+import com.admin.admin.dao.master.dw_biosign.BiosignatureDao;
 import com.admin.admin.entity.dw_bios.BiosignatureInformation;
 import com.admin.model.biosignature.BiosignatureReturnModel;
 import org.springframework.beans.factory.annotation.Autowired;

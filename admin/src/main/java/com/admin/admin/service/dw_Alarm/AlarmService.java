@@ -1,6 +1,6 @@
 package com.admin.admin.service.dw_Alarm;
 
-import com.admin.admin.dao.dw_alarm.AlarmDao;
+import com.admin.admin.dao.master.dw_alarm.AlarmDao;
 import com.admin.admin.entity.dw_alarm.Alarmsettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

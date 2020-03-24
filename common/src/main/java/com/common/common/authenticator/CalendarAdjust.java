@@ -13,7 +13,7 @@ import java.util.*;
 public class CalendarAdjust {
 
 
-    public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     /**
      * 时间戳转换成日期格式字符串
      * @param seconds 精确到秒的字符串

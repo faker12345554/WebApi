@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.master.dw_log.LogDao">
+    <insert id="insertLog" parameterType="com.admin.admin.entity.dw_log.LogInformation">
+        insert into t_log(operator, modular, action, operatingtime,systemtype) values (#{operator},#{modular},#{action},#{operatingtime},#{systemtype})
+    </insert>
+    <select id="listLog" parameterType="com.admin.model.log.LogParamModel"
+            resultType="com.admin.model.log.LogReturnModel">
+        select u.accountname as operator,l.modular,l.action,l.operatingtime  from t_log as l
+        inner join t_user as u on u.id=l.operator
+        where u.accountname=#{operator} and modular=#{modular}
+    </select>
+    <select id="getNumber" parameterType="String" resultType="com.admin.model.Appstatistics.AppStatistics">
+        SELECT
+        (SELECT count(*) from t_user where phone in
+        ( SELECT contact from t_personinformation where sponsoralarm in
+        (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))))as Totalnumber,
+        ( SELECT count(distinct operator) from t_log where operator in
+        ( SELECT "id" from t_user where phone in
+        ( SELECT contact from t_personinformation where sponsoralarm in
+        (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))))
+        <if test="Days!=null and Days!=''">
+            and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{Days},'yyyy-MM-dd')
+        </if>
+        ) as Usernumber
+    </select>
+
+    <resultMap id="usermap" type="HashMap">
+        <result property="operator" column="operator" jdbcType="VARCHAR"/>
+        <result property="Days" column="Days" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="Removalrate" parameterType="String" resultMap="usermap">
+        SELECT CAST (date_part('day',to_timestamp(#{EndTime},'yyyy-MM-dd hh24:mi:ss')::timestamp - max(operatingtime)::timestamp) as text) as Days, operator
+         from t_log where operator in (SELECT id from t_user where phone in
+        (SELECT contact from t_personinformation where bailoutbegindate &lt;= now() and now() &lt;= bailoutenddate and sponsoralarm in
+        (SELECT mjbh from fsga_yw_ryb where bmbm like  concat('%',#{Areacode},'%')))) and
+         to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd') and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd')
+         group by  operator
+    </select>
+
+    <select id="gettotelnumber" parameterType="String" resultType="int">
+        SELECT "count"(distinct contact)  from t_personinformation where bailoutbegindate&lt;= now() and now() &lt;=bailoutenddate
+        and sponsoralarm in
+        (SELECT mjbh from fsga_yw_ryb where bmbm like  concat('%',#{Areacode},'%'))
+    </select>
+
+    <select id="Solarrate" resultType="com.admin.model.Appstatistics.AppStatistics">
+        SELECT count(distinct operator) as Usernumber,
+        <if test="level==1">
+            substring(to_char(operatingtime,'yyyy-MM-dd HH:mm:ss'),0,11) as Precisetime,
+        </if>
+        <if test="level==2">
+            substring(to_char(operatingtime,'yyyy-MM-dd HH:mm:ss'),0,8) as Precisetime,
+        </if>
+
+        (SELECT count(*) from t_user where phone in
+        ( SELECT contact from t_personinformation where sponsoralarm in
+        (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%')))) as Totalnumber from t_log where
+        operator in
+        ( SELECT "id" from t_user where phone in
+        ( SELECT contact from t_personinformation where sponsoralarm in
+        (SELECT mjbh from fsga_yw_ryb where bmbm like concat('%',#{Areacode},'%'))))
+        <if test="level==1">
+            and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd') and
+            to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd')
+            GROUP BY substring(to_char(operatingtime,'yyyy-MM-dd HH:mm:ss'),0,11)
+        </if>
+        <if test="level==2">
+            and to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&gt;=to_date(#{Starttime},'yyyy-MM-dd') and
+            to_date(to_char(operatingtime,'yyyy-MM-dd'),'yyyy-MM-dd')&lt;=to_date(#{EndTime},'yyyy-MM-dd')
+            GROUP BY substring(to_char(operatingtime,'yyyy-MM-dd HH:mm:ss'),0,8)
+        </if>
+
+    </select>
+    <select id="listAllLog" parameterType="com.admin.model.log.LogSearchModel"
+            resultType="com.admin.model.log.LogModel">
+        select id,operator,modular,action,operatingtime from t_log
+        <if test="date.operator!=null">
+            where operator=cast(#{date.operator} as NUMERIC)
+        </if>
+        <if test="date.operator!=null and date.modular!=null">
+            and modular like concat('%',#{date.modular},'%')
+        </if>
+        <if test="date.operator==null and date.modular!=null">
+            where modular like concat('%',#{date.modular},'%')
+        </if>
+        <if test="(date.operator!=null or date.modular!=null)and date.startTime!=null">
+            and operatingTime >= #{date.startTime}
+        </if>
+        <if test="date.operator==null and date.modular==null and date.startTime!=null">
+            where operatingTime >= #{date.startTime}
+        </if>
+        <if test="(date.operator!=null or date.modular!=null or date.startTime!=null)and date.endTime!=null">
+            and operatingTime &lt;=#{date.endTime}
+        </if>
+        <if test="date.operator==null and date.modular==null and date.startTime==null and date.endTime!=null">
+            where operatingTime &lt;=#{date.endTime}
+        </if>
+    </select>
+
+    <delete id="deleteLog">
+        delete from t_log where id=#{id}
+    </delete>
+</mapper>
