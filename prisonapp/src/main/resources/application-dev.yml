@@ -1,13 +1,16 @@
 server:
   port: 8000
-servlet:
-  context-path: "/DwWebApi"
+#servlet:
+#  context-path: "/DwPersonApp"
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://68.109.202.164:5432/legal
+    url: jdbc:postgresql://112.74.41.177/legal
     username: postgres
-    password: Xfz-1017
+    password: "!QAZ2wsx#EDC"
+#    url: jdbc:postgresql://68.109.202.164:5432/legal
+#    username: postgres
+#    password: Xfz-1017
 swagger:
   enabled: true
 

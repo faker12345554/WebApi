@@ -462,6 +462,31 @@ public class SuperviseController {
         return p.contains(point);
     }
 
+//    @UserLoginToken
+//    @ApiOperation(value = " 获取语音签到识别串")
+//    @GetMapping("/generateVoiceSignNum")
+//    public ResultSet generateVoiceSignNum(){
+//        ResultSet resultSet = new ResultSet();
+//        StringBuilder callToken = new StringBuilder("sw");
+//        Random random = new Random();
+//        for (int i = 0; i < 20; i++) {
+//            callToken =callToken+random.nextInt(10);
+//        }
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public void appPush(String recipientid,String tital,String content) throws Exception {
         ResultSet result = new ResultSet();
         superviseService.appPush( recipientid, tital, content);

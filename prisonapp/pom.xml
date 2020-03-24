@@ -104,7 +104,7 @@
     <groupId>com.prisonapp</groupId>
     <artifactId>prisonapp</artifactId>
     <name>prisonapp</name>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <build>
         <plugins>
             <plugin>
