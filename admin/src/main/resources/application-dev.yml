@@ -1,12 +1,14 @@
 server:
   port: 8009
-
+  servlet:
+    context-path: "/DwWebApi"
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://112.74.41.177:5432/legal
     username: postgres
     password: "!QAZ2wsx#EDC"
+
 #    initial-size: 100
 #    min-idle: 1
 #    max-active: -1

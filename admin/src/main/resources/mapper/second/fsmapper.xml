@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.second.fsdao">
+    <select id="getfslist" parameterType="String" resultType="com.admin.admin.entity.dw_fsgayw.FsgaYwRyb">
+       	select * from fsga_yw_ryb where substring(to_char(cq_gxsj, 'yyyy-mm-dd HH:mm:ss'),0,11)>#{Date}
+   </select>
+    <select id="getCaseing" resultType="com.admin.admin.entity.dw_case.TCaseinfo">
+        SELECT ajlxmc as casecategory,ajmc as casename,ajbh as caseno,
+        bjsj as receivedtime,sldwmc as handleunit,slrmc as handlepeson,
+        ajlxmc as casetype,zyaq as casedescription,ajzbrymc as mainperson,
+        ajxbrymc as operationperson,la_lrsj as filingtime
+        from fsga_qx_jz_aj
+    </select>
+
+    <select id="getperson" resultType="com.admin.admin.entity.dw_person.Personinformation">
+        select * from fsga_qx_jz_xyrxx
+    </select>
+</mapper>

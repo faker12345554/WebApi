@@ -9,12 +9,12 @@
         where l.personid in (SELECT t.personid from t_personinformation as t
         left JOIN t_user as u on u.accountname=t.sponsoralarm
         <if test="type==1">
-            where t.sponsoralarm=#{limit} and u.usersystem='1'
+            where t.sponsoralarm=#{limit} and u.usersystem='1' )
         </if>
         <if test="type!=1">
-            where t.policecode=#{limit}
+            where t.policecode=#{limit} )
         </if>
-        )
+
 
         <if test="searchModel.PersonId !=null and searchModel.PersonId!='' and searchModel.Condition==null">
             and l.personid=#{searchModel.PersonId}

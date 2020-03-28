@@ -9,7 +9,6 @@ import com.admin.model.log.LogReturnModel;
 import com.admin.model.log.LogSearchModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Map;
