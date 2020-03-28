@@ -7,6 +7,7 @@ import com.admin.admin.entity.dw_personmessage.TPersonmessage;
 import com.admin.admin.entity.dw_reminder.Remindersettings;
 import com.admin.admin.entity.dw_summons.TSummons;
 import com.admin.admin.entity.dw_violation.Violationfens;
+import com.admin.tool.CacheUtils;
 import com.common.common.apppush.Demo;
 import com.common.common.authenticator.CalendarAdjust;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,7 +140,7 @@ public class Tasking {
             TSummons tSummons = taskDao.GetNumber(item.getPersonid());
             //填写人员端app消息内容
             model.setModular(5);
-            model.setContent("您本月应进行传讯取证!");
+            model.setContent("您应于本月30日前， 前往"+ CacheUtils.get("department").toString()+"配合传讯取证!");
             model.setPersonid(item.getPersonid());
             model.setModularname("传讯提醒");
             model.setReadmessage(false);
@@ -163,7 +164,7 @@ public class Tasking {
                         message.setMessagetime(
                                 CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(remindersettings.getSettingday()))));
                         model.setMessagetime(CalendarAdjust.dateFormat.format(CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(remindersettings.getSettingday())))));
-                        System.out.println(model.getMessagetime());
+
                         taskDao.insertpermessage(model);
                         taskDao.SaveMessage(message);
                     } else {
@@ -171,7 +172,7 @@ public class Tasking {
                             message.setMessagetime(
                                     CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(strArr[i]))));
                             model.setMessagetime(CalendarAdjust.dateFormat.format(CalendarAdjust.timeStamp2Date(CalendarAdjust.perThridMouthTime(Integer.parseInt(strArr[i])))));
-                            System.out.println(model.getMessagetime());
+
                             taskDao.insertpermessage(model);
                             taskDao.SaveMessage(message);
                         }

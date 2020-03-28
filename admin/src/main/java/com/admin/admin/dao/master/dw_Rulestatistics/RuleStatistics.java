@@ -1,8 +1,6 @@
 package com.admin.admin.dao.master.dw_Rulestatistics;
 
-import com.admin.admin.entity.dw_log.LogInformation;
 import com.admin.admin.entity.dw_message.TMessage;
-import com.admin.admin.entity.dw_summons.TSummons;
 import com.admin.model.Appstatistics.HomePage;
 import com.admin.model.log.LogModel;
 import org.apache.ibatis.annotations.Mapper;

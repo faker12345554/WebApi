@@ -26,6 +26,7 @@ public class AlarmService {
 //            if (item.getId() != 0) {
 //                return alarmDao.UpdateAlarm(item);
 //            }
+            //DynamicDataSource.setDataSourceFlag(DynamicDataSource.MASTER_FLAG);
            // alarmDao.SaveAlarm(item);
             System.out.println( alarmDao.SaveAlarm(item));
         }

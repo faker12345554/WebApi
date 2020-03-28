@@ -1,7 +1,6 @@
 package com.admin.admin.dao.master.dw_alarm;
 
 import com.admin.admin.entity.dw_alarm.Alarmsettings;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

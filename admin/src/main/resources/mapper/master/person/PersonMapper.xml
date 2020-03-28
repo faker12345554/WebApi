@@ -91,8 +91,8 @@
     </select>
 
     <select id="getvolocation" parameterType="String" resultType="com.admin.model.Appstatistics.monthnumber">
-		SELECT (SELECT "count"(*) from t_summons where personid=#{personid} and reporttime is null) as Bailnumber,
-				(SELECT count(*) from t_personmessage where personid=#{personid} and modular=2) as supervisionnumber
+		SELECT (SELECT count(*) from t_summons where personid=#{personid} and reporttime is null) as Bailnumber,
+				(SELECT count(*) from t_location where personid=#{personid} and fscope=true) as supervisionnumber
     </select>
 
 

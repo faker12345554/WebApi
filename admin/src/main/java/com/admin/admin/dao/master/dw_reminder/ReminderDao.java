@@ -2,7 +2,6 @@ package com.admin.admin.dao.master.dw_reminder;
 
 import com.admin.admin.entity.dw_reminder.Remindersettings;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

@@ -3,7 +3,6 @@ package com.admin.admin.dao.master.dw_task;
 import com.admin.admin.entity.dw_message.TMessage;
 import com.admin.admin.entity.dw_person.Personinformation;
 import com.admin.admin.entity.dw_personmessage.TPersonmessage;
-import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
 import com.admin.admin.entity.dw_reminder.Remindersettings;
 import com.admin.admin.entity.dw_summons.TSummons;
 import com.admin.admin.entity.dw_violation.Violationfens;

@@ -6,6 +6,7 @@ import com.admin.admin.service.dw_app.MessageService;
 import com.admin.admin.service.dw_task.Tasking;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,13 +35,10 @@ public class MessageController {
         result.setMessage(ResultCode.SUCCESS.getMessage());
         return  result.setData(messageService.getNotificationList(UserId));
     }
-//    @ApiOperation("测试")
-//    @GetMapping("/Gettest")
-//    public void test() throws Exception{
-//
-//        tasking.GetMessage();
-//        tasking.GeneratedRecord();
-//
-//
-//    }
+    @ApiOperation("测试")
+    @GetMapping("/Gettest")
+    public void test() throws Exception{
+        messageService.Synchronizedpolice();
+
+    }
 }
