@@ -9,7 +9,6 @@
     </parent>
     <groupId>com.admin</groupId>
     <artifactId>admin</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>admin</name>
     <packaging>war</packaging>
     <dependencies>
@@ -37,12 +36,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
 <!--            本地运行这一段需要注释掉-->
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.springframework.boot</groupId>-->
-<!--                    <artifactId>spring-boot-starter-tomcat</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -85,15 +84,7 @@
             <artifactId>pagehelper</artifactId>
             <version>5.1.8</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>5.3.0.Final</version>
-        </dependency>
+
 
 
     </dependencies>

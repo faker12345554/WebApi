@@ -1,7 +1,7 @@
 server:
   port: 8009
-  servlet:
-    context-path: "/DwWebApi"
+#  servlet:
+#    context-path: "/DwWebApi"
 
 spring:
   datasource:
@@ -9,6 +9,7 @@ spring:
     url: jdbc:postgresql://112.74.41.177:5432/legal
     username: postgres
     password: "!QAZ2wsx#EDC"
+
 #spring:
 #  datasource:
 #    master:

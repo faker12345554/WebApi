@@ -22,8 +22,7 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
-    @Autowired
-    private FsgaDao fsgaDao;
+
 
 
 
@@ -57,8 +56,8 @@ public class UserService {
 
     //登录
     public User login(String UserName, String Password) {
-        int number= fsgaDao.getid();
-        System.out.println(number);
+//        int number= fsgaDao.getid();
+//        System.out.println(number);
         return userDao.login(UserName, Password);
     }
 

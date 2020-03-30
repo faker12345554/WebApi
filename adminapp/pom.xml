@@ -10,10 +10,8 @@
     </parent>
     <groupId>com.adminapp</groupId>
     <artifactId>app</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>app</name>
     <packaging>war</packaging>
-    <description>Demo project for Spring Boot</description>
 
 
 
@@ -60,6 +58,24 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.1.23</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>a
+        </dependency>
+
+        <dependency>
+
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <!--            本地运行这一段需要注释掉-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
 
