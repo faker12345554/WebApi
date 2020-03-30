@@ -1,7 +1,8 @@
 package com.admin.admin.service.dw_user;
 
 import com.admin.admin.dao.master.dw_user.UserDao;
-import com.admin.admin.dao.slave.FsgaDao;
+import com.admin.admin.dao.second.fsdao;
+import com.admin.admin.entity.dw_fsgayw.FsgaYwRyb;
 import com.admin.admin.entity.dw_user.User;
 import com.admin.admin.entity.dw_user.Usermodel;
 import com.admin.admin.entity.dw_userrole.UserRole;
@@ -56,8 +57,7 @@ public class UserService {
 
     //登录
     public User login(String UserName, String Password) {
-//        int number= fsgaDao.getid();
-//        System.out.println(number);
+
         return userDao.login(UserName, Password);
     }
 

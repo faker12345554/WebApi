@@ -8,11 +8,79 @@
     </insert>
 
     <update id="UpdateCase" parameterType="com.admin.admin.entity.dw_case.TCaseinfo">
-        update t_caseinfo set casecategory=#{casecategory},casename=#{casename},caseno=#{caseno},receivedtime=#{receivedtime},handleunit=#{handleunit},handlepeson=#{handlepeson},
+        update t_caseinfo set casecategory=#{casecategory},casename=#{casename},caseno=#{caseno},receivedtime=to_timestamp(#{receivedtime},'yyyy-MM-dd HH:mi:ss'),handleunit=#{handleunit},handlepeson=#{handlepeson},
         personid=#{personid},casetype=#{casetype},casedescription=#{casedescription} where personid=#{personid}
     </update>
 
     <select id="GetCase" parameterType="String" resultType="com.admin.admin.entity.dw_case.TCaseinfo">
         select * from t_caseinfo where personid=#{PersonId} and caseno=#{Caseno}
     </select>
+
+    <insert id="Synchronouscase" parameterType="java.util.List" useGeneratedKeys="true">
+        insert into t_caseinfo
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.casecategory},
+            #{item.casename},
+            #{item.caseno},
+            to_timestamp(#{item.receivedtime},'yyyy-MM-dd HH:mi:ss'),
+            #{item.handleunit},
+            #{item.handlepeson},
+            #{item.personid},
+            #{item.casetype},
+            #{item.casedescription}
+            )
+            ON conflict(caseno)
+            DO UPDATE SET casecategory=#{item.casecategory},casename=#{item.casename},caseno=#{item.caseno},
+            receivedtime=to_timestamp(#{item.receivedtime},'yyyy-MM-dd HH:mi:ss'),handleunit=#{item.handleunit},
+            handlepeson=#{item.handlepeson},personid=#{item.personid},casetype=#{item.casetype},
+            casedescription=#{item.casedescription}
+        </foreach>
+
+    </insert>
+
+    <insert id="Synchronizedpolice" parameterType="java.util.List" useGeneratedKeys="false">
+        insert  into fsga_yw_ryb values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.id},
+            #{item.mjbh},
+            #{item.mjmc},
+            #{item.dlmm},
+            #{item.bmbm},
+            #{item.bmmc},
+            #{item.bmjc},
+            #{item.ddbmbm},
+            #{item.ddbmmc},
+            #{item.ddbmjc},
+            #{item.zw},
+            #{item.jh},
+            #{item.sfzh},
+            #{item.dzyj},
+            #{item.sjhm},
+            #{item.sjly},
+            #{item.createTime},
+            #{item.updateTime},
+            #{item.remark},
+            #{item.state}
+            )
+            ON conflict(id)
+            DO UPDATE SET mjbh =#{item.mjbh}, mjmc =#{item.mjmc},
+            dlmm=#{item.dlmm},bmbm=#{item.bmbm},bmmc=#{item.bmmc},bmjc=#{item.bmjc},ddbmbm=#{item.ddbmbm},
+            ddbmmc=#{item.ddbmmc},ddbmjc=#{item.ddbmjc},zw=#{item.zw},jh=#{item.jh},sfzh=#{item.sfzh},
+            dzyj=#{item.dzyj},sjhm=#{item.sjhm},sjly=#{item.sjly},
+            createTime=#{item.createTime},updateTime=#{item.updateTime},remark=#{item.remark},state=#{item.state}
+        </foreach>
+
+    </insert>
+
+    <insert id="insertTsyn" parameterType="com.admin.admin.entity.dw_Synchron.TSynchron">
+        insert into t_Synchron values (name,datatime)
+    </insert>
+
+    <select id="GetTsyn" parameterType="int">
+       	SELECT * from t_Synchron where name=#{type} ORDER BY datatime LIMIT 1
+    </select>
+
 </mapper>

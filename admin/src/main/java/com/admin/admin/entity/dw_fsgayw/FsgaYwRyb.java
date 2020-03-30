@@ -1,4 +1,4 @@
-package com.admin.admin.entity.dw_sponsor;
+package com.admin.admin.entity.dw_fsgayw;
 
 
 public class FsgaYwRyb {
@@ -19,8 +19,8 @@ public class FsgaYwRyb {
   private String dzyj;
   private String sjhm;
   private long sjly;
-  private java.sql.Timestamp createTime;
-  private java.sql.Timestamp updateTime;
+  private java.sql.Timestamp create_time;
+  private java.sql.Timestamp update_time;
   private String remark;
   private long state;
 
@@ -170,20 +170,20 @@ public class FsgaYwRyb {
 
 
   public java.sql.Timestamp getCreateTime() {
-    return createTime;
+    return create_time;
   }
 
   public void setCreateTime(java.sql.Timestamp createTime) {
-    this.createTime = createTime;
+    this.create_time = createTime;
   }
 
 
   public java.sql.Timestamp getUpdateTime() {
-    return updateTime;
+    return update_time;
   }
 
   public void setUpdateTime(java.sql.Timestamp updateTime) {
-    this.updateTime = updateTime;
+    this.update_time = updateTime;
   }
 
 

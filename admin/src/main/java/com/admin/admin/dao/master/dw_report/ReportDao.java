@@ -2,7 +2,6 @@ package com.admin.admin.dao.master.dw_report;
 
 import com.admin.admin.entity.dw_report.Reportsettings;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
