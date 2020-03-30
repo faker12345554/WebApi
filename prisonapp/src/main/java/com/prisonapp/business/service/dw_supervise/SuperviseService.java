@@ -135,4 +135,8 @@ public class SuperviseService {
         demo.sendAndroidCustomizedcast(recipientid,"ReleaseAdminCode","取保监局工作人员App",
                 tital,content,cal.getTime());
     }
+
+    public int insertVoice(String personid,int type,int result,String filepath,String typename){
+        return  superviseDao.insertVoice(  personid, type, result, filepath,typename);
+    }
 }

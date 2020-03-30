@@ -33,6 +33,9 @@ import com.prisonapp.business.demo.util.MessageDigestUtil;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -134,34 +137,77 @@ public class VoicePrintApi {
 
 
     //将wav文件上传到储存空间，并返回一个key(file_id)来标识该文件, 后面注册声纹，声纹比对都会用到该key
+//    public String uploadFile(String bucket, String filePath, int ttl) throws Exception {
+//        if(bucket.trim().isEmpty()) {
+//            throw new Exception("args invailed:  bucket");
+//        }
+//
+//        if(filePath.trim().isEmpty()) {
+//            throw new Exception("args invailed:  filePath");
+//        }
+//
+//        File file = new File(filePath);
+//        String fileName = file.getName();
+//        FileInputStream fis = new FileInputStream(file);
+//        ByteArrayOutputStream body = new ByteArrayOutputStream();
+//        byte[] buff = new byte[1024];
+//        int len = -1;
+//        while((len = fis.read(buff)) != -1)
+//        {
+//            body.write(buff, 0, len);
+//        }
+//        byte[] bodyBytes = body.toByteArray();
+//        fis.close();
+//
+//        String path = this.genFullPath(String.format("/users/%s/bucket/%s/file/%s/ttl/%d/upload", this.userId, bucket, fileName, ttl));
+//        Map<String, String> headers = new HashMap<String,String>();
+//        headers.put(HttpHeader.HTTP_ACCESS_TOKEN, this.token);
+//        headers.put(HttpHeader.HTTP_HEADER_CONTENT_TYPE, ContentType.CONTENT_TYPE_STREAM);
+//        headers.put(HttpHeader.HTTP_HEADER_CONTENT_MD5, MessageDigestUtil.base64AndMD5(bodyBytes));
+//
+//        Request request = this.genRequest(Method.POST_BYTES, path);
+//        request.setHeaders(headers);
+//        request.setBytesBody(bodyBytes);
+//
+//        Response response = Client.execute(request);
+//        return JSON.toJSONString(response);
+//    }
+    //将wav文件上传到储存空间，并返回一个key(file_id)来标识该文件, 后面注册声纹，声纹比对都会用到该key
     public String uploadFile(String bucket, String filePath, int ttl) throws Exception {
         if(bucket.trim().isEmpty()) {
             throw new Exception("args invailed:  bucket");
         }
-        
+
         if(filePath.trim().isEmpty()) {
             throw new Exception("args invailed:  filePath");
         }
 
         File file = new File(filePath);
         String fileName = file.getName();
-        FileInputStream fis = new FileInputStream(file);        
+        //FileInputStream fis = new FileInputStream(file);
+        URL url = new URL(filePath);
+        HttpURLConnection urlconn = (HttpURLConnection) url.openConnection();
+        urlconn.setDoInput(true);
+        urlconn.connect();  //这里慢
+        urlconn.getInputStream();
+        InputStream inputStream = urlconn.getInputStream();
+
         ByteArrayOutputStream body = new ByteArrayOutputStream();
         byte[] buff = new byte[1024];
         int len = -1;
-        while((len = fis.read(buff)) != -1)
+        while((len = inputStream.read(buff)) != -1)
         {
             body.write(buff, 0, len);
         }
         byte[] bodyBytes = body.toByteArray();
-        fis.close();
+        inputStream.close();
 
         String path = this.genFullPath(String.format("/users/%s/bucket/%s/file/%s/ttl/%d/upload", this.userId, bucket, fileName, ttl));
         Map<String, String> headers = new HashMap<String,String>();
         headers.put(HttpHeader.HTTP_ACCESS_TOKEN, this.token);
         headers.put(HttpHeader.HTTP_HEADER_CONTENT_TYPE, ContentType.CONTENT_TYPE_STREAM);
         headers.put(HttpHeader.HTTP_HEADER_CONTENT_MD5, MessageDigestUtil.base64AndMD5(bodyBytes));
-        
+
         Request request = this.genRequest(Method.POST_BYTES, path);
         request.setHeaders(headers);
         request.setBytesBody(bodyBytes);

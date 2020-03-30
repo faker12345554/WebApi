@@ -134,4 +134,8 @@
         select * from t_personinformation where contact=#{accountName}
     </select>
 
+    <insert id="insertVoice">
+        insert into t_singin( personid, type, result, filepath,typename,createtime) values (#{personid},#{type},#{result},#{filepath},#{typename},current_timestamp)
+    </insert>
+
 </mapper>

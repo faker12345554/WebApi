@@ -70,4 +70,6 @@ public interface SuperviseDao {
     int insertFscope(String userId,String content);
 
     TPersoninformation RelatedId(@Param("accountName")String accountName);
+
+    int insertVoice (@Param("personid")String personid,@Param("type")int type,@Param("result")int result,@Param("filepath")String filepath,@Param("typename")String typename);
 }

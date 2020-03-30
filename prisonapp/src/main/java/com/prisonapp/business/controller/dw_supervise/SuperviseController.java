@@ -4,6 +4,8 @@ package com.prisonapp.business.controller.dw_supervise;
 import com.common.common.Uploadfiles.Upload;
 import com.common.common.apppush.Demo;
 import com.common.common.result.ResultSet;
+import com.google.common.collect.ObjectArrays;
+import com.prisonapp.business.controller.dw_voice.VoicePrintApi;
 import com.prisonapp.business.entity.dw_supervise.*;
 import com.prisonapp.business.entity.dw_user.UserModel;
 import com.prisonapp.business.service.dw_supervise.SuperviseService;
@@ -16,13 +18,21 @@ import com.prisonapp.tool.AddressResolutionUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import javafx.beans.binding.ObjectBinding;
 import net.sf.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.util.unit.DataSize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.spring.web.json.Json;
 
 import java.net.MalformedURLException;
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.geom.Point2D;
 import java.io.File;
@@ -48,7 +58,6 @@ public class SuperviseController {
     private ResultGetSuperviseTaskModel resultGetSuperviseTaskModel = new ResultGetSuperviseTaskModel();
     private Timestamp timestamp =new Timestamp();
     private Code code =new Code();
-    private UploadAudioUrl uploadAudioUrl = new UploadAudioUrl();
     private FaceRecognizeModel faceRecognizeModel = new FaceRecognizeModel();
 
     private Upload upload = new Upload();
@@ -123,6 +132,7 @@ public class SuperviseController {
     @PostMapping("/uploadAudio")
     public ResultSet uploadAudio(MultipartFile file) {
         ResultSet result = new ResultSet();
+        UploadAudioUrl uploadAudioUrl = new UploadAudioUrl();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(System.currentTimeMillis());
         //SSLEngine request = null;
@@ -462,17 +472,157 @@ public class SuperviseController {
         return p.contains(point);
     }
 
+    @UserLoginToken
+    @ApiOperation(value = " 获取语音签到识别串")
+    @GetMapping("/generateVoiceSignNum")
+    public ResultSet generateVoiceSignNum(){
+        ResultSet resultSet = new ResultSet();
+        StringBuilder signCode = new StringBuilder("sw");
+        StringBuilder number =new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 20; i++) {
+            signCode.append(random.nextInt(10));
+            if(i<8){
+                number.append(random.nextInt(10));
+            }
+        }
+        VoiceModel voiceModel = new VoiceModel();
+        voiceModel.setNumber(number.toString());
+        voiceModel.setSignCode(signCode.toString());
+        resultSet.resultCode=0;
+        resultSet.resultMsg="";
+        resultSet.data=voiceModel;
+        return resultSet;
+
+    }
+
 //    @UserLoginToken
-//    @ApiOperation(value = " 获取语音签到识别串")
-//    @GetMapping("/generateVoiceSignNum")
-//    public ResultSet generateVoiceSignNum(){
-//        ResultSet resultSet = new ResultSet();
-//        StringBuilder callToken = new StringBuilder("sw");
-//        Random random = new Random();
-//        for (int i = 0; i < 20; i++) {
-//            callToken =callToken+random.nextInt(10);
-//        }
-//    }
+    @ApiOperation(value = " 保外语音签到识别（声纹识别）")
+    @GetMapping("/voiceRecognize")
+    public ResultSet voiceRecognize(MultipartFile voice,String signCode) throws Exception {
+        ResultSet resultSet = new ResultSet();
+        ArrayList<String> arrayList =new ArrayList<>();
+        String filePath ="";
+        String pathOfLocal="";
+        Boolean find =false;//是否存在声纹
+
+        VoicePrintApi obj = new VoicePrintApi("203793248", "qhntfvf4x2a582059ji1z9vzlpr9r2cu");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(System.currentTimeMillis());
+        //将文件上传到服务器
+
+        String url = System.getProperty("user.dir") + "/../webapps/mypicture/personApp/Audio/" + formatter.format(date);
+
+        File path = new File(url);
+        if (!path.exists() && !path.isDirectory()) {
+            path.mkdirs();
+        }
+        String fileName = voice.getOriginalFilename();
+        String uploadRes = upload.upload(url, voice);
+        if (uploadRes.equals("上传成功")) {
+            filePath=getServerPath.ServerPath()+"Audio/" + formatter.format(date) + "/" + fileName;//正式的语句
+
+//            filePath ="https://pardon.cnnc626.com:8443//voiceFile//2020-03-25//123.wav";
+//            filePath ="https://pardon.cnnc626.com:8443/mypicture/personApp/Audio/2020-03-27/tjh123456.wav";//正式环境改动此处
+            obj.getAccess();
+            //调用阿里云的接口，获得fileid
+        String fileIdStr =obj.uploadFile("voiceFile", filePath, 300000000);
+        String fileId = net.sf.json.JSONObject.fromObject(net.sf.json.JSONObject.fromObject(net.sf.json.JSONObject.fromObject(fileIdStr).get("body")).get("data")).get("file_id").toString();
+        String voicePrintList = obj.getVoicePrintList("758001e8-e36b-4539-aaf7-4697b9a767c0", 0, 0);
+            //取出声纹列表中的声纹id
+           // String a ="{\"body\":\"{\\\"data\\\":[{\\\"vp_store_id\\\":\\\"a58dc17b-92c6-4300-aef3-3c4b95f98aac\\\",\\\"voice_print_id\\\":\\\"tangjihao1\\\"}],\\\"has_error\\\":false,\\\"error_message\\\":\\\"ok\\\",\\\"error_code\\\":0,\\\"request_id\\\":\\\"bafc093c-6817-11ea-b608-00163e02dfac\\\"}\",\"contentType\":\"application/json; charset=utf-8\",\"headers\":{\"Server\":\"Tengine\",\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Allow-Methods\":\"GET,POST,PUT,DELETE,HEAD,OPTIONS,PATCH\",\"Connection\":\"keep-alive\",\"Content-Length\":\"200\",\"Access-Control-Max-Age\":\"172800\",\"X-Ca-Request-Id\":\"6F3DE2CC-B334-4958-B7AB-BEC947C1F2BF\",\"Date\":\"Tue, 17 Mar 2020 06:22:51 GMT\",\"Access-Control-Allow-Headers\":\"X-Requested-With,X-Sequence,X-Ca-Key,X-Ca-Secret,X-Ca-Version,X-Ca-Timestamp,X-Ca-Nonce,X-Ca-API-Key,X-Ca-Stage,X-Ca-Client-DeviceId,X-Ca-Client-AppId,X-Ca-Signature,X-Ca-Signature-Headers,X-Ca-Signature-Method,X-Forwarded-For,X-Ca-Date,X-Ca-Request-Mode,Authorization,Content-Type,Accept,Accept-Ranges,Cache-Control,Range,Content-MD5\",\"Content-Type\":\"application/json; charset=utf-8\"},\"requestId\":\"6F3DE2CC-B334-4958-B7AB-BEC947C1F2BF\",\"statusCode\":200}";
+
+            net.sf.json.JSONObject jVoicePrintList =net.sf.json.JSONObject.fromObject(voicePrintList);
+
+            Object bodyOfList =jVoicePrintList.get("body");
+            net.sf.json.JSONObject jsonBodyOfList =net.sf.json.JSONObject.fromObject(bodyOfList);
+            if(Integer.parseInt(jsonBodyOfList.get("error_code").toString())==0){
+                String account = superviseService.faceRecognize(getPersonId()).get(0).getContact();
+                Object dataArrays =jsonBodyOfList.get("data");
+                JSONArray jDataArrays =JSONArray.fromObject(dataArrays);
+                for(int i=0;i<jDataArrays.size();i++){
+                    Object OVoice_print_id =jDataArrays.get(i);
+                    net.sf.json.JSONObject jVoice_print_id =net.sf.json.JSONObject.fromObject(OVoice_print_id);
+                    String voice_print_id =jVoice_print_id.get("voice_print_id").toString();
+                    if(voice_print_id.equals(account)){//有用的语句
+
+                        arrayList.add(account);
+                        find =true;
+                    }
+//                    if(voice_print_id.equals("SW12345670")){//正式环境改动此处
+//
+//                        arrayList.add("SW12345670");//正式环境改动此处
+//                        find =true;
+//                    }
+
+                }
+
+
+                //根据取出来的声纹id获取对比结果
+                if(find == true){
+                    String[] vpIds =new String[arrayList.size()];
+                    for (int j=0;j<arrayList.size();j++) {
+                        vpIds[j] = arrayList.get(j);
+                    }
+                    String compareResultStr =obj.compareVoicePrint("758001e8-e36b-4539-aaf7-4697b9a767c0", fileId, vpIds);
+                    net.sf.json.JSONObject compareResult =net.sf.json.JSONObject.fromObject(compareResultStr);
+                    Object compareResultBody =compareResult.get("body");
+                    net.sf.json.JSONObject JsonCompareResultBody =net.sf.json.JSONObject.fromObject(compareResultBody);
+                    if(JsonCompareResultBody.get("error_message").toString().equals("ok")){
+                        Object dataOfCompare =JsonCompareResultBody.get("data");
+                        JSONArray dataOfCompareArray =JSONArray.fromObject(dataOfCompare);
+                        VoiceRecognizeModel voiceRecognizeModel = new VoiceRecognizeModel();
+                        //生成8位随机数作为本次识别编号
+                        StringBuilder number =new StringBuilder();
+                        Random random = new Random();
+                        for (int i = 0; i < 8; i++) {
+                            number.append(random.nextInt(10));
+                        }
+                        voiceRecognizeModel.setCode(number.toString());
+                        for(int i=0;i<dataOfCompareArray.size();i++) {
+                            Object sooreObject = dataOfCompareArray.get(i);
+                            net.sf.json.JSONObject sorceJson = net.sf.json.JSONObject.fromObject(sooreObject);
+                            voiceRecognizeModel.setScore(Float.valueOf(sorceJson.get("score").toString()));
+                            if(Float.valueOf(sorceJson.get("score").toString())>0){
+                                voiceRecognizeModel.setPassed(true);
+                                  superviseService.insertVoice(getPersonId(),2,0,filePath,"语音签到");//正式环境改动此处
+
+                            }else{
+                                voiceRecognizeModel.setPassed(false);
+                                  superviseService.insertVoice(getPersonId(),2,1,filePath,"语音签到");//正式环境改动此处
+                            }
+                            voiceRecognizeModel.setUrl(filePath);
+
+                        }
+
+                        resultSet.resultCode=0;
+                        resultSet.resultMsg="";
+                        resultSet.data=voiceRecognizeModel;
+                    }else{
+
+                        resultSet.resultCode=Integer.parseInt(JsonCompareResultBody.get("error_code").toString());
+                        resultSet.resultMsg=JsonCompareResultBody.get("error_message").toString();//声纹验证失败
+                        resultSet.data=null;
+                    }
+
+                }else{
+                    resultSet.resultCode=1;
+                    resultSet.resultMsg="请先注册";
+                    resultSet.data=null;
+                }
+            }
+        }else
+        {
+            resultSet.resultCode=1;
+            resultSet.resultMsg="文件上传至服务器失败";
+            resultSet.data=null;
+        }
+
+
+
+
+        return resultSet;
+    }
 
 
 
@@ -482,8 +632,17 @@ public class SuperviseController {
 
 
 
+    @Configuration
+    public class MultipartConfig {
 
-
+        @Bean
+        public MultipartConfigElement multipartConfigElement(@Value("${multipart.maxFileSize}") String maxFileSize, @Value("${multipart.maxRequestSize}") String maxRequestSize) {
+            MultipartConfigFactory factory = new MultipartConfigFactory();
+            factory.setMaxFileSize(DataSize.parse(maxFileSize));
+            factory.setMaxRequestSize(DataSize.parse(maxRequestSize));
+            return factory.createMultipartConfig();
+        }
+    }
 
 
 
