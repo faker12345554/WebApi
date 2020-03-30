@@ -496,7 +496,7 @@ public class SuperviseController {
 
     }
 
-//    @UserLoginToken
+    @UserLoginToken
     @ApiOperation(value = " 保外语音签到识别（声纹识别）")
     @GetMapping("/voiceRecognize")
     public ResultSet voiceRecognize(MultipartFile voice,String signCode) throws Exception {
