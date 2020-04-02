@@ -400,6 +400,9 @@ public class SuperviseController {
             //画区域
             List<Point2D.Double> polygon = new ArrayList<Point2D.Double>();
             TEnclosure tEnclosure = superviseService.getPolygon(getPersonId());
+            if(tEnclosure==null){
+                return true;
+            }
             if (tEnclosure.getAreaarr() == null || "".equals(tEnclosure.getAreaarr())) {//数据库中没有坐标，只有地方名的情况
                 String path = "https://restapi.amap.com/v3/config/district?key=f0bc84013740494ba5c697ce6b707606&keywords=" + tEnclosure.getAreaname() + "&subdistrict=0&extensions=all";
                 net.sf.json.JSONObject josnResult = AddressResolutionUtil.getHttps(path);//高德api返回的结果集
