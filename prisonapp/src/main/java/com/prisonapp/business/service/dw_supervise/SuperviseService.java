@@ -62,6 +62,14 @@ public class SuperviseService {
         return superviseDao.faceRecognize(userId);
     }
 
+    public List<TVoice> getVoiceToken(){
+        return superviseDao.getVoiceToken();
+    }
+
+    public int updateVoiceToken(String userid,String accessToken){
+        return superviseDao.updateVoiceToken(userid,accessToken);
+    }
+
     public TEnum getQDLX(String typecode,String enumcode){
         return superviseDao.getQDLX(typecode,enumcode);
     }

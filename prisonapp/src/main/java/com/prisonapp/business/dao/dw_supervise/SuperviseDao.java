@@ -41,6 +41,10 @@ public interface SuperviseDao {
 
     List<TPersoninformation> faceRecognize(@Param("userId")String userId);
 
+    List<TVoice> getVoiceToken();
+
+    int updateVoiceToken(@Param("userid")String userid,@Param("accessToken")String accessToken);
+
     TEnum getQDLX(@Param("typecode")String typecode,@Param("enumcode")String enumcode);
 
     int insertFaceRecognize(String userId,int type,int result ,String upLoadFaceUrl,String typename);

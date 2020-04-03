@@ -9,7 +9,7 @@ public class ClientDemo {
     public static void main(String[] args) {
         VoicePrintApi obj = new VoicePrintApi("203793248", "qhntfvf4x2a582059ji1z9vzlpr9r2cu");
         try {
-            if (obj.getAccess()) {
+//            if (obj.getAccess()) {
 //                String res = obj.getAlgoList();
 //                String res = obj.uploadFile("voiceFile", "C:/Users/tjh/Desktop/VOICE/wav/20200313_113334.wav", 300000000);
 
@@ -24,33 +24,13 @@ public class ClientDemo {
 //                String res = obj.compareVoicePrint("ed5392a4-9700-4511-9331-43de304a7310", "1584431070572_kHKPRJJWaD_voiceFile", vpIds);
 
                 System.out.println(res);
-            }
+//            }
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
 
-    @UserLoginToken
-    @ApiOperation(value = " 上传录音文件")
-    @PostMapping("/upload")
-    public ResultSet upload() {
-        ResultSet resultSet = new ResultSet();
-        String res="";
-        VoicePrintApi obj = new VoicePrintApi("203793248", "qhntfvf4x2a582059ji1z9vzlpr9r2cu");
-        try {
-            if (obj.getAccess()) {
-                res = obj.uploadFile("voiceFile", "C:/Users/tjh/Desktop/VOICE/wav/yyh.wav", 300000000);//上传录音文件
-                System.out.println(res);
 
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        resultSet.resultCode = 0;
-        resultSet.resultMsg = "";
-        resultSet.data = res;
-        return resultSet;
-    }
 
 }

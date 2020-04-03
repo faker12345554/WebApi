@@ -36,7 +36,9 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -55,7 +57,7 @@ public class VoicePrintApi {
     }
 
     // 获取访问权限
-    public boolean getAccess() throws Exception{
+    public List<String> getAccess() throws Exception{
         String path = this.genFullPath(String.format("/user/login"));
         Request request = this.genRequest(Method.GET, path);
         
@@ -69,10 +71,13 @@ public class VoicePrintApi {
             this.userId = dataObj.get("user_id").toString();
             this.token = dataObj.get("access_token").toString();
 
-            return true;
+            List<String> list = new ArrayList<>();
+            list.add(userId);
+            list.add(token);
+            return list;
         }
 
-        return false;
+        return null;
     }
 
     // 获取算法列表
@@ -311,6 +316,11 @@ public class VoicePrintApi {
         Response response = Client.execute(request);
 
         return JSON.toJSONString(response);
+    }
+
+    public void setToken(String userId,String token){
+        this.userId = userId;
+        this.token = token;
     }
 
     private String appKey;      // app key

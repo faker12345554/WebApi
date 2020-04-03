@@ -56,8 +56,8 @@ public class SuperviseController {
     private SuperviseService superviseService;
     private ResultGetApplyLeaveListModel resultGetApplyLeaveListModel = new ResultGetApplyLeaveListModel();
     private ResultGetSuperviseTaskModel resultGetSuperviseTaskModel = new ResultGetSuperviseTaskModel();
-    private Timestamp timestamp =new Timestamp();
-    private Code code =new Code();
+    private Timestamp timestamp = new Timestamp();
+    private Code code = new Code();
     private FaceRecognizeModel faceRecognizeModel = new FaceRecognizeModel();
 
     private Upload upload = new Upload();
@@ -81,7 +81,7 @@ public class SuperviseController {
                 List<ApplyRecordModel> applyRecords = superviseService.applyRecord(item.getCode());//取出请假申请
                 Long End = Long.parseLong(item.getEndTimestamp());
                 Long Start = Long.parseLong(item.getStartTimestamp());
-                int days = (int) ((End - Start) / 86400000)+1;
+                int days = (int) ((End - Start) / 86400000) + 1;
                 //(int) ((oDate.getTime() - fDate.getTime()) / 24 * 3600 * 1000)
                 item.setApplyRecord(applyRecords);
                 item.setDays(days);
@@ -103,18 +103,18 @@ public class SuperviseController {
         ResultSet result = new ResultSet();
         String strCode = "qj" + System.currentTimeMillis();
         code.setCode(strCode);
-        TEnum tEnum =superviseService.getReview();//取出‘待审核’
+        TEnum tEnum = superviseService.getReview();//取出‘待审核’
         List<TPersoninformation> person = superviseService.getPersonname(getPersonId());
         LocalDate date = LocalDate.now(); // get the current date
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String messageContent =person.get(0).getPersonname()+"于"+date.format(formatter)+"日提交的外出申请待审批，请及时处理。";
-        String address =submitApplyLeaveModel.getProvince()+submitApplyLeaveModel.getCity()+submitApplyLeaveModel.getDistrict();
-        int res = superviseService.submitApplyLeave(submitApplyLeaveModel.getCity(),    submitApplyLeaveModel.getCityCode(),    submitApplyLeaveModel.getDistrict(),submitApplyLeaveModel.getDistrictCode(),
-                                                    submitApplyLeaveModel.getProvince(),submitApplyLeaveModel.getProvinceCode(),submitApplyLeaveModel.getReason(),  submitApplyLeaveModel.getReasonAudioUrl(),
-                                                    submitApplyLeaveModel.getEndDate(), submitApplyLeaveModel.getStartDate(),strCode,
-                                                    getPersonId(), person.get(0).getPersonname(),person.get(0).getSponsoralarm(),address,tEnum.getEnumname(),messageContent);
+        String messageContent = person.get(0).getPersonname() + "于" + date.format(formatter) + "日提交的外出申请待审批，请及时处理。";
+        String address = submitApplyLeaveModel.getProvince() + submitApplyLeaveModel.getCity() + submitApplyLeaveModel.getDistrict();
+        int res = superviseService.submitApplyLeave(submitApplyLeaveModel.getCity(), submitApplyLeaveModel.getCityCode(), submitApplyLeaveModel.getDistrict(), submitApplyLeaveModel.getDistrictCode(),
+                submitApplyLeaveModel.getProvince(), submitApplyLeaveModel.getProvinceCode(), submitApplyLeaveModel.getReason(), submitApplyLeaveModel.getReasonAudioUrl(),
+                submitApplyLeaveModel.getEndDate(), submitApplyLeaveModel.getStartDate(), strCode,
+                getPersonId(), person.get(0).getPersonname(), person.get(0).getSponsoralarm(), address, tEnum.getEnumname(), messageContent);
         if (res != 0) {
-            appPush(person.get(0).getSponsoralarm(),"【外出审批通知】",messageContent);
+            appPush(person.get(0).getSponsoralarm(), "【外出审批通知】", messageContent);
             result.resultCode = 0;
             result.resultMsg = "";
             result.data = code;
@@ -145,7 +145,7 @@ public class SuperviseController {
         }
         String fileName = file.getOriginalFilename();
         String res = upload.upload(url, file);
-        uploadAudioUrl.setUrl(getServerPath.ServerPath()+"Audio/" + formatter.format(date) + "/" + fileName);
+        uploadAudioUrl.setUrl(getServerPath.ServerPath() + "Audio/" + formatter.format(date) + "/" + fileName);
         if (res.equals("上传成功")) {
             result.resultCode = 0;
             result.resultMsg = "";
@@ -206,19 +206,19 @@ public class SuperviseController {
             String fileName = face.getOriginalFilename();
             String res = upload.upload(url, face);
             if (res.equals("上传成功")) {
-                 String upLoadFaceUrl = getServerPath.ServerPath()+"Face/"+ formatter.format(date)+"/"+fileName;//这是真正有用的
+                String upLoadFaceUrl = getServerPath.ServerPath() + "Face/" + formatter.format(date) + "/" + fileName;//这是真正有用的
                 //if(true){
-                  if (tPersoninformations != null) {
+                if (tPersoninformations != null) {
                     //将两张图片进行对比，upLoadFaceUrl为用户传进来的图片路劲，第二个为数据库中的图片路劲
                     String comparedRes = AESDecode.faceCompared(upLoadFaceUrl, tPersoninformations.get(0).getFacepath());
                     //获取json中的可信度并转换成float类型
                     JSONObject jsonObject = new JSONObject(comparedRes);
                     String similar = jsonObject.getString("confidence");
                     float num = Float.parseFloat(similar);
-                    float fSimilar = (float)(Math.round(num*100))/100;
+                    float fSimilar = (float) (Math.round(num * 100)) / 100;
                     if (fSimilar >= 75.00) {
-                        TEnum tEnum = superviseService.getQDLX("QDLX-001","1");
-                        superviseService.insertFaceRecognize(getPersonId(), 1, 0, upLoadFaceUrl,tEnum.getEnumname());
+                        TEnum tEnum = superviseService.getQDLX("QDLX-001", "1");
+                        superviseService.insertFaceRecognize(getPersonId(), 1, 0, upLoadFaceUrl, tEnum.getEnumname());
                         List<FaceRecognizeModel> faceRecognizeModels = superviseService.getFaceRecognize(getPersonId(), 1);
                         faceRecognizeModel.setCode(faceRecognizeModels.get(0).getCode());
                         faceRecognizeModel.setPassed(true);
@@ -228,8 +228,8 @@ public class SuperviseController {
                         result.resultMsg = "";
                         result.data = faceRecognizeModel;
                     } else {
-                        TEnum tEnum = superviseService.getQDLX("QDLX-001","1");
-                        superviseService.insertFaceRecognize(getPersonId(), 1, 1, upLoadFaceUrl,tEnum.getEnumname());
+                        TEnum tEnum = superviseService.getQDLX("QDLX-001", "1");
+                        superviseService.insertFaceRecognize(getPersonId(), 1, 1, upLoadFaceUrl, tEnum.getEnumname());
                         List<FaceRecognizeModel> faceRecognizeModels = superviseService.getFaceRecognize(getPersonId(), 1);
                         faceRecognizeModel.setCode(faceRecognizeModels.get(0).getCode());
                         faceRecognizeModel.setPassed(false);
@@ -259,15 +259,14 @@ public class SuperviseController {
     }
 
 
-
     @UserLoginToken
     @ApiOperation(value = " 自动上报取保监居人员位置")
     @PostMapping("/autoLocation")
     public ResultSet autoLocation(@ApiParam(name = "latitude", value = "纬度") @RequestParam(required = true) float latitude, @ApiParam(name = "longitude", value = "经度") @RequestParam(required = true) float longitude, @ApiParam(name = "locationType", value = "定位类型") @RequestParam(required = true) int locationType, @ApiParam(name = "address", value = "地址") @RequestParam(required = true) String address) throws Exception {
         ResultSet result = new ResultSet();
-        boolean fScope = getPolygon(latitude,longitude);
+        boolean fScope = getPolygon(latitude, longitude);
         if (fScope) {
-          //  superviseService.updateFscope(getPersonId(), false);
+            //  superviseService.updateFscope(getPersonId(), false);
 
         } else {
             //生成报警内容
@@ -276,14 +275,14 @@ public class SuperviseController {
             Date now = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
             String nowTime = dateFormat.format(now);
-            String content = persionName + "于" + nowTime + "未经批准离开限定区域，请及时与其取得联系。最后一次位置："+address;
-            String pushContent =persionName + "未经批准脱离管控区域，可前往查看详细违规记录，并根据规定对其采取措施。最后一次位置："+address+"更新时间:"+nowTime;
-            appPush(tPersoninformations.get(0).getSponsoralarm(),"【脱离管控区域报警通知】",pushContent);
-         //   superviseService.updateFscope(getPersonId(), true);
+            String content = persionName + "于" + nowTime + "未经批准离开限定区域，请及时与其取得联系。最后一次位置：" + address;
+            String pushContent = persionName + "未经批准脱离管控区域，可前往查看详细违规记录，并根据规定对其采取措施。最后一次位置：" + address + "更新时间:" + nowTime;
+            appPush(tPersoninformations.get(0).getSponsoralarm(), "【脱离管控区域报警通知】", pushContent);
+            //   superviseService.updateFscope(getPersonId(), true);
             superviseService.insertFscope(getPersonId(), content);
 
         }
-        int a = superviseService.autoLocation(latitude, longitude, locationType, address, getPersonId(), new Date(),!fScope);
+        int a = superviseService.autoLocation(latitude, longitude, locationType, address, getPersonId(), new Date(), !fScope);
         if (a != 0) {
             timestamp.setTimestamp(System.currentTimeMillis());
             result.resultCode = 0;
@@ -303,7 +302,7 @@ public class SuperviseController {
     public ResultSet uploadLocationError(String errorCode, String errorMsg) {
         ResultSet result = new ResultSet();
         UserModel userModel = superviseService.getUserId(getPersonId());//根据personid查出对应user表中的id（整形）以便放入操作日志
-        int a = superviseService.uploadLocationError(errorCode, errorMsg, (int)userModel.getId(), new Date());
+        int a = superviseService.uploadLocationError(errorCode, errorMsg, (int) userModel.getId(), new Date());
         if (a != 0) {
             result.resultCode = 0;
             result.resultMsg = "";
@@ -328,8 +327,8 @@ public class SuperviseController {
             Date now = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
             String nowTime = dateFormat.format(now);
-            String content = persionName +  nowTime + "手机电量低于20%，请及时与其取得联系。";
-            appPush(tPersoninformations.get(0).getSponsoralarm(),"【低电量报警通知】",content);
+            String content = persionName + nowTime + "手机电量低于20%，请及时与其取得联系。";
+            appPush(tPersoninformations.get(0).getSponsoralarm(), "【低电量报警通知】", content);
         }
         int a = superviseService.uploadBattery(percent, getPersonId(), new Date());
         result.resultCode = 0;
@@ -355,13 +354,13 @@ public class SuperviseController {
         TRemindersettings tRemindersettings = superviseService.getLocationConfigTime();//获取待办提醒的所有数据
 
         //取出定位的数据
-        TPrisonsetting tPrisonsettingLocation = superviseService.getLocationConfig(getPersonId(),1);
-        LocationModel locationModels =new LocationModel();
+        TPrisonsetting tPrisonsettingLocation = superviseService.getLocationConfig(getPersonId(), 1);
+        LocationModel locationModels = new LocationModel();
         locationModels.setEnable(tPrisonsettingLocation.isSettingcheck());
         locationModels.setTimeSpan(Integer.parseInt(tRemindersettings.getSettingday()));
 
         //设置电量的数据
-        TPrisonsetting tPrisonsettingBattery = superviseService.getLocationConfig(getPersonId(),4);
+        TPrisonsetting tPrisonsettingBattery = superviseService.getLocationConfig(getPersonId(), 4);
         Battery battery = new Battery();
         battery.setEnable(tPrisonsettingBattery.isSettingcheck());
         battery.setTimeSpan("20");
@@ -371,11 +370,11 @@ public class SuperviseController {
         getSuperviseConfigModel.setBattery(battery);
         //最后时间
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date locationDate=sdf.parse(tPrisonsettingLocation.getSettingtime());
-        Date batteryDate=sdf.parse(tPrisonsettingBattery.getSettingtime());
-        if(locationDate.getTime()>batteryDate.getTime()){
+        Date locationDate = sdf.parse(tPrisonsettingLocation.getSettingtime());
+        Date batteryDate = sdf.parse(tPrisonsettingBattery.getSettingtime());
+        if (locationDate.getTime() > batteryDate.getTime()) {
             getSuperviseConfigModel.setLastEditTime(locationDate);
-        }else{
+        } else {
             getSuperviseConfigModel.setLastEditTime(batteryDate);
         }
 
@@ -388,19 +387,19 @@ public class SuperviseController {
     @UserLoginToken
     @ApiOperation(value = " 判断是否越界")
     @GetMapping("/getPolygon")
-    public  boolean getPolygon(@ApiParam(name = "latitude", value = "纬度") float latitude, @ApiParam(name = "longitude", value = "经度") float longitude) throws MalformedURLException {
-        boolean fScope =false;
+    public boolean getPolygon(@ApiParam(name = "latitude", value = "纬度") float latitude, @ApiParam(name = "longitude", value = "经度") float longitude) throws MalformedURLException {
+        boolean fScope = false;
         try {
             //点的转型
             BigDecimal bLatitude = new BigDecimal(String.valueOf(latitude));
             double dLatitude = bLatitude.doubleValue();
             BigDecimal bLongitude = new BigDecimal(String.valueOf(longitude));
             double dLongitude = bLongitude.doubleValue();
-            Point2D.Double point = new Point2D.Double(dLongitude,dLatitude );
+            Point2D.Double point = new Point2D.Double(dLongitude, dLatitude);
             //画区域
             List<Point2D.Double> polygon = new ArrayList<Point2D.Double>();
             TEnclosure tEnclosure = superviseService.getPolygon(getPersonId());
-            if(tEnclosure==null){
+            if (tEnclosure == null) {
                 return true;
             }
             if (tEnclosure.getAreaarr() == null || "".equals(tEnclosure.getAreaarr())) {//数据库中没有坐标，只有地方名的情况
@@ -410,7 +409,7 @@ public class SuperviseController {
                 String coordinates = "";
                 for (int i = 0; i < jsonArray.size(); i++) {
                     net.sf.json.JSONObject obj = jsonArray.getJSONObject(i);
-                    coordinates = obj.getString("polyline").replace('|',';');//边界坐标
+                    coordinates = obj.getString("polyline").replace('|', ';');//边界坐标
                 }
                 String[] coordinatesArray = coordinates.split(";");
                 for (int j = 0; j < coordinatesArray.length; j++) {
@@ -431,7 +430,7 @@ public class SuperviseController {
                     polygon.add(polygonPoint);
                 }
             }
-             fScope = checkWithJdkGeneralPath(point, polygon);//点是否在区域内，则返回true时不越界，反之越界
+            fScope = checkWithJdkGeneralPath(point, polygon);//点是否在区域内，则返回true时不越界，反之越界
    /*         if (a) {
                 superviseService.updateFscope(getPersonId(), false);
                 result.resultCode = 0;
@@ -451,7 +450,7 @@ public class SuperviseController {
                 result.resultMsg = "越界了";
                 result.data = new Object();
             }*/
-        }catch (Exception ex){
+        } catch (Exception ex) {
             throw ex;
         }
         return fScope;
@@ -461,7 +460,7 @@ public class SuperviseController {
      * Param1:点的位置（经纬度）
      * Param2：区域的边界点
      * 该方法用于查看是否越界
-     * */
+     */
     public static boolean checkWithJdkGeneralPath(Point2D.Double point, List<Point2D.Double> polygon) {
         java.awt.geom.GeneralPath p = new java.awt.geom.GeneralPath();
         Point2D.Double first = polygon.get(0);
@@ -478,23 +477,23 @@ public class SuperviseController {
     @UserLoginToken
     @ApiOperation(value = " 获取语音签到识别串")
     @GetMapping("/generateVoiceSignNum")
-    public ResultSet generateVoiceSignNum(){
+    public ResultSet generateVoiceSignNum() {
         ResultSet resultSet = new ResultSet();
         StringBuilder signCode = new StringBuilder("sw");
-        StringBuilder number =new StringBuilder();
+        StringBuilder number = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < 20; i++) {
             signCode.append(random.nextInt(10));
-            if(i<8){
+            if (i < 8) {
                 number.append(random.nextInt(10));
             }
         }
         VoiceModel voiceModel = new VoiceModel();
         voiceModel.setNumber(number.toString());
         voiceModel.setSignCode(signCode.toString());
-        resultSet.resultCode=0;
-        resultSet.resultMsg="";
-        resultSet.data=voiceModel;
+        resultSet.resultCode = 0;
+        resultSet.resultMsg = "";
+        resultSet.data = voiceModel;
         return resultSet;
 
     }
@@ -502,12 +501,12 @@ public class SuperviseController {
     @UserLoginToken
     @ApiOperation(value = " 保外语音签到识别（声纹识别）")
     @GetMapping("/voiceRecognize")
-    public ResultSet voiceRecognize(MultipartFile voice,String signCode) throws Exception {
+    public ResultSet voiceRecognize(MultipartFile voice, String signCode) throws Exception {
         ResultSet resultSet = new ResultSet();
-        ArrayList<String> arrayList =new ArrayList<>();
-        String filePath ="";
-        String pathOfLocal="";
-        Boolean find =false;//是否存在声纹
+        ArrayList<String> arrayList = new ArrayList<>();
+        String filePath = "";
+        String pathOfLocal = "";
+        Boolean find = false;//是否存在声纹
 
         VoicePrintApi obj = new VoicePrintApi("203793248", "qhntfvf4x2a582059ji1z9vzlpr9r2cu");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -525,12 +524,24 @@ public class SuperviseController {
         if (uploadRes.equals("上传成功")) {
             filePath=getServerPath.ServerPath()+"Audio/" + formatter.format(date) + "/" + fileName;//正式的语句
 
-//            filePath ="https://pardon.cnnc626.com:8443//voiceFile//2020-03-25//123.wav";
-//            filePath ="https://pardon.cnnc626.com:8443/mypicture/personApp/Audio/2020-03-27/tjh123456.wav";//正式环境改动此处
-            obj.getAccess();
+//            filePath = "https://pardon.cnnc626.com:8443/mypicture/personApp/Audio/2020-03-27/tjh123456.wav";//正式环境改动此处
+            List<TPersoninformation> tPersoninformations = superviseService.faceRecognize(getPersonId());
+//            obj.getAccess();
+            List<TVoice> voices = superviseService.getVoiceToken();
+            obj.setToken(voices.get(0).getUserid(), voices.get(0).getAccess_token());
             //调用阿里云的接口，获得fileid
-        String fileIdStr =obj.uploadFile("voiceFile", filePath, 300000000);
-        String fileId = net.sf.json.JSONObject.fromObject(net.sf.json.JSONObject.fromObject(net.sf.json.JSONObject.fromObject(fileIdStr).get("body")).get("data")).get("file_id").toString();
+            String fileIdStr = obj.uploadFile("voiceFile", filePath, 300000000);
+            String fileId = "";
+            if (Integer.parseInt(net.sf.json.JSONObject.fromObject(fileIdStr).get("statusCode").toString()) == 401) {
+                List<String> list = obj.getAccess();//userid,token
+                superviseService.updateVoiceToken(list.get(0), list.get(1));
+                fileIdStr = obj.uploadFile("voiceFile", filePath, 300000000);
+                fileId = net.sf.json.JSONObject.fromObject(net.sf.json.JSONObject.fromObject(net.sf.json.JSONObject.fromObject(fileIdStr).get("body")).get("data")).get("file_id").toString();
+            } else {
+                fileId = net.sf.json.JSONObject.fromObject(net.sf.json.JSONObject.fromObject(net.sf.json.JSONObject.fromObject(fileIdStr).get("body")).get("data")).get("file_id").toString();
+            }
+
+/*
         String voicePrintList = obj.getVoicePrintList("758001e8-e36b-4539-aaf7-4697b9a767c0", 0, 0);
             //取出声纹列表中的声纹id
            // String a ="{\"body\":\"{\\\"data\\\":[{\\\"vp_store_id\\\":\\\"a58dc17b-92c6-4300-aef3-3c4b95f98aac\\\",\\\"voice_print_id\\\":\\\"tangjihao1\\\"}],\\\"has_error\\\":false,\\\"error_message\\\":\\\"ok\\\",\\\"error_code\\\":0,\\\"request_id\\\":\\\"bafc093c-6817-11ea-b608-00163e02dfac\\\"}\",\"contentType\":\"application/json; charset=utf-8\",\"headers\":{\"Server\":\"Tengine\",\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Allow-Methods\":\"GET,POST,PUT,DELETE,HEAD,OPTIONS,PATCH\",\"Connection\":\"keep-alive\",\"Content-Length\":\"200\",\"Access-Control-Max-Age\":\"172800\",\"X-Ca-Request-Id\":\"6F3DE2CC-B334-4958-B7AB-BEC947C1F2BF\",\"Date\":\"Tue, 17 Mar 2020 06:22:51 GMT\",\"Access-Control-Allow-Headers\":\"X-Requested-With,X-Sequence,X-Ca-Key,X-Ca-Secret,X-Ca-Version,X-Ca-Timestamp,X-Ca-Nonce,X-Ca-API-Key,X-Ca-Stage,X-Ca-Client-DeviceId,X-Ca-Client-AppId,X-Ca-Signature,X-Ca-Signature-Headers,X-Ca-Signature-Method,X-Forwarded-For,X-Ca-Date,X-Ca-Request-Mode,Authorization,Content-Type,Accept,Accept-Ranges,Cache-Control,Range,Content-MD5\",\"Content-Type\":\"application/json; charset=utf-8\"},\"requestId\":\"6F3DE2CC-B334-4958-B7AB-BEC947C1F2BF\",\"statusCode\":200}";
@@ -540,7 +551,7 @@ public class SuperviseController {
             Object bodyOfList =jVoicePrintList.get("body");
             net.sf.json.JSONObject jsonBodyOfList =net.sf.json.JSONObject.fromObject(bodyOfList);
             if(Integer.parseInt(jsonBodyOfList.get("error_code").toString())==0){
-                String account = superviseService.faceRecognize(getPersonId()).get(0).getContact();
+                List<TPersoninformation> tPersoninformations= superviseService.faceRecognize(getPersonId());
                 Object dataArrays =jsonBodyOfList.get("data");
                 JSONArray jDataArrays =JSONArray.fromObject(dataArrays);
                 for(int i=0;i<jDataArrays.size();i++){
@@ -558,81 +569,69 @@ public class SuperviseController {
 //                        find =true;
 //                    }
 
-                }
+                }*/
 
 
-                //根据取出来的声纹id获取对比结果
-                if(find == true){
-                    String[] vpIds =new String[arrayList.size()];
-                    for (int j=0;j<arrayList.size();j++) {
-                        vpIds[j] = arrayList.get(j);
+            //判断是否已注册
+            if (tPersoninformations.get(0).getHasvoice()) {
+                String[] vpIds = {tPersoninformations.get(0).getContact()};
+
+                String compareResultStr = obj.compareVoicePrint("758001e8-e36b-4539-aaf7-4697b9a767c0", fileId, vpIds);
+                net.sf.json.JSONObject compareResult = net.sf.json.JSONObject.fromObject(compareResultStr);
+                Object compareResultBody = compareResult.get("body");
+                net.sf.json.JSONObject JsonCompareResultBody = net.sf.json.JSONObject.fromObject(compareResultBody);
+                if (JsonCompareResultBody.get("error_message").toString().equals("ok")) {
+                    Object dataOfCompare = JsonCompareResultBody.get("data");
+                    JSONArray dataOfCompareArray = JSONArray.fromObject(dataOfCompare);
+                    VoiceRecognizeModel voiceRecognizeModel = new VoiceRecognizeModel();
+                    //生成8位随机数作为本次识别编号
+                    StringBuilder number = new StringBuilder();
+                    Random random = new Random();
+                    for (int i = 0; i < 8; i++) {
+                        number.append(random.nextInt(10));
                     }
-                    String compareResultStr =obj.compareVoicePrint("758001e8-e36b-4539-aaf7-4697b9a767c0", fileId, vpIds);
-                    net.sf.json.JSONObject compareResult =net.sf.json.JSONObject.fromObject(compareResultStr);
-                    Object compareResultBody =compareResult.get("body");
-                    net.sf.json.JSONObject JsonCompareResultBody =net.sf.json.JSONObject.fromObject(compareResultBody);
-                    if(JsonCompareResultBody.get("error_message").toString().equals("ok")){
-                        Object dataOfCompare =JsonCompareResultBody.get("data");
-                        JSONArray dataOfCompareArray =JSONArray.fromObject(dataOfCompare);
-                        VoiceRecognizeModel voiceRecognizeModel = new VoiceRecognizeModel();
-                        //生成8位随机数作为本次识别编号
-                        StringBuilder number =new StringBuilder();
-                        Random random = new Random();
-                        for (int i = 0; i < 8; i++) {
-                            number.append(random.nextInt(10));
+                    voiceRecognizeModel.setCode(number.toString());
+                    for (int i = 0; i < dataOfCompareArray.size(); i++) {
+                        Object sooreObject = dataOfCompareArray.get(i);
+                        net.sf.json.JSONObject sorceJson = net.sf.json.JSONObject.fromObject(sooreObject);
+                        voiceRecognizeModel.setScore(Float.valueOf(sorceJson.get("score").toString()));
+                        if (Float.valueOf(sorceJson.get("score").toString()) > 0) {
+                            voiceRecognizeModel.setPassed(true);
+                            superviseService.insertVoice(getPersonId(), 2, 0, filePath, "语音签到");//正式环境改动此处
+
+                        } else {
+                            voiceRecognizeModel.setPassed(false);
+                            superviseService.insertVoice(getPersonId(), 2, 1, filePath, "语音签到");//正式环境改动此处
                         }
-                        voiceRecognizeModel.setCode(number.toString());
-                        for(int i=0;i<dataOfCompareArray.size();i++) {
-                            Object sooreObject = dataOfCompareArray.get(i);
-                            net.sf.json.JSONObject sorceJson = net.sf.json.JSONObject.fromObject(sooreObject);
-                            voiceRecognizeModel.setScore(Float.valueOf(sorceJson.get("score").toString()));
-                            if(Float.valueOf(sorceJson.get("score").toString())>0){
-                                voiceRecognizeModel.setPassed(true);
-                                  superviseService.insertVoice(getPersonId(),2,0,filePath,"语音签到");//正式环境改动此处
+                        voiceRecognizeModel.setUrl(filePath);
 
-                            }else{
-                                voiceRecognizeModel.setPassed(false);
-                                  superviseService.insertVoice(getPersonId(),2,1,filePath,"语音签到");//正式环境改动此处
-                            }
-                            voiceRecognizeModel.setUrl(filePath);
-
-                        }
-
-                        resultSet.resultCode=0;
-                        resultSet.resultMsg="";
-                        resultSet.data=voiceRecognizeModel;
-                    }else{
-
-                        resultSet.resultCode=Integer.parseInt(JsonCompareResultBody.get("error_code").toString());
-                        resultSet.resultMsg=JsonCompareResultBody.get("error_message").toString();//声纹验证失败
-                        resultSet.data=null;
                     }
 
-                }else{
-                    resultSet.resultCode=1;
-                    resultSet.resultMsg="请先注册";
-                    resultSet.data=null;
+                    resultSet.resultCode = 0;
+                    resultSet.resultMsg = "";
+                    resultSet.data = voiceRecognizeModel;
+                } else {
+
+                    resultSet.resultCode = Integer.parseInt(JsonCompareResultBody.get("error_code").toString());
+                    resultSet.resultMsg = JsonCompareResultBody.get("error_message").toString();//声纹验证失败
+                    resultSet.data = null;
                 }
+
+            } else {
+                resultSet.resultCode = 1;
+                resultSet.resultMsg = "请先注册";
+                resultSet.data = null;
             }
-        }else
-        {
-            resultSet.resultCode=1;
-            resultSet.resultMsg="文件上传至服务器失败";
-            resultSet.data=null;
+
+        } else {
+            resultSet.resultCode = 1;
+            resultSet.resultMsg = "文件上传至服务器失败";
+            resultSet.data = null;
         }
-
-
 
 
         return resultSet;
     }
-
-
-
-
-
-
-
 
 
     @Configuration
@@ -648,14 +647,13 @@ public class SuperviseController {
     }
 
 
-
-    public void appPush(String recipientid,String tital,String content) throws Exception {
+    public void appPush(String recipientid, String tital, String content) throws Exception {
         ResultSet result = new ResultSet();
-        superviseService.appPush( recipientid, tital, content);
+        superviseService.appPush(recipientid, tital, content);
         return;
     }
 
-    public  String getPersonId(){
+    public String getPersonId() {
 //       String personid = personInformationUtil.getPersonId();
 
         TPersoninformation tPersoninformation = superviseService.RelatedId(TokenUtil.getTokenUserId());//根据user中的手机号去取出personid
