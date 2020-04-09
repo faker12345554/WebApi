@@ -46,15 +46,16 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                          if (userLoginToken.required()) {
                                  // 执行认证
                                 if (token == null) {
-
+                                    httpServletResponse.setStatus(401);
                                     throw new RuntimeException("无token，请重新登录");
                                      }
                                  // 获取 token 中的 user id
-                                 String userId;
+                                 String userId = null;
                                 try {
                                          userId = JWT.decode(token).getAudience().get(0);
                                      } catch (JWTDecodeException j) {
-                                         throw new RuntimeException("401");
+//                                    httpServletResponse.sendError(401,"token已过期");
+                                    throw new RuntimeException("401");
                                      }
                                 UserModel user = userDao.getUser(userId);
                                  if (user == null) {
@@ -65,7 +66,10 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                                  try {
                                         jwtVerifier.verify(token);
                                      } catch (JWTVerificationException e) {
-                                        throw new RuntimeException("401");
+//                                     httpServletResponse.setStatus(401);
+                                     httpServletResponse.sendError(401,"token已过期");
+                                     return false;
+//                                        throw new RuntimeException("401");
                                      }
                                 return true;
                              }
