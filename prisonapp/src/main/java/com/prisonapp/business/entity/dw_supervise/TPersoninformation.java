@@ -42,6 +42,7 @@ public class TPersoninformation {
   private String currentaddress;
   private String nowaddress;
   private String yjsponsoralarm;
+  private Boolean hasvoice;
 
 
   public String getPersonid() {
@@ -340,5 +341,13 @@ public class TPersoninformation {
 
   public void setGendercode(int gendercode) {
     this.gendercode = gendercode;
+  }
+
+  public Boolean getHasvoice() {
+    return hasvoice;
+  }
+
+  public void setHasvoice(Boolean hasvoice) {
+    this.hasvoice = hasvoice;
   }
 }

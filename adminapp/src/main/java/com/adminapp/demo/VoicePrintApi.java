@@ -16,27 +16,22 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.prisonapp.business.controller.dw_voice;
+package com.adminapp.demo;
 
+import com.adminapp.demo.constant.Constants;
+import com.adminapp.demo.constant.ContentType;
+import com.adminapp.demo.constant.HttpHeader;
+import com.adminapp.demo.constant.HttpSchema;
+import com.adminapp.demo.enums.Method;
+import com.adminapp.demo.util.MessageDigestUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.prisonapp.business.demo.Client;
-import com.prisonapp.business.demo.Request;
-import com.prisonapp.business.demo.Response;
-import com.prisonapp.business.demo.constant.Constants;
-import com.prisonapp.business.demo.constant.ContentType;
-import com.prisonapp.business.demo.constant.HttpHeader;
-import com.prisonapp.business.demo.constant.HttpSchema;
-import com.prisonapp.business.demo.enums.Method;
-import com.prisonapp.business.demo.util.MessageDigestUtil;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import javax.print.DocFlavor;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
+import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +52,7 @@ public class VoicePrintApi {
     }
 
     // 获取访问权限
-    public List<String> getAccess() throws Exception{
+    public boolean getAccess() throws Exception{
         String path = this.genFullPath(String.format("/user/login"));
         Request request = this.genRequest(Method.GET, path);
         
@@ -71,13 +66,10 @@ public class VoicePrintApi {
             this.userId = dataObj.get("user_id").toString();
             this.token = dataObj.get("access_token").toString();
 
-            List<String> list = new ArrayList<>();
-            list.add(userId);
-            list.add(token);
-            return list;
+            return true;
         }
 
-        return null;
+        return false;
     }
 
     // 获取算法列表
@@ -177,6 +169,7 @@ public class VoicePrintApi {
 //        Response response = Client.execute(request);
 //        return JSON.toJSONString(response);
 //    }
+
     //将wav文件上传到储存空间，并返回一个key(file_id)来标识该文件, 后面注册声纹，声纹比对都会用到该key
     public String uploadFile(String bucket, String filePath, int ttl) throws Exception {
         if(bucket.trim().isEmpty()) {
@@ -316,11 +309,6 @@ public class VoicePrintApi {
         Response response = Client.execute(request);
 
         return JSON.toJSONString(response);
-    }
-
-    public void setToken(String userId,String token){
-        this.userId = userId;
-        this.token = token;
     }
 
     private String appKey;      // app key
