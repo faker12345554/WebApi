@@ -73,8 +73,11 @@
     <select id="listSummonSetting" resultType="com.adminapp.business.entity.dw_supervise.ReminderSettingsInformation">
         select * FROM t_remindersettings WHERE code='0000000003'
     </select>
-    <select id="listViolationFensInformation" resultType="int">
-        select rangefens FROM t_violationfens WHERE violationname=#{violationName} AND code=#{Code}
+    <select id="getViolationSlightFens" resultType="int">
+        select slightfens FROM t_violationfens WHERE status=true AND violationcode=#{Code}
+    </select>
+    <select id="getViolationSeriousFens" resultType="int">
+        select seriousfens FROM t_violationfens WHERE status=true AND violationcode=#{Code}
     </select>
     <select id="listPersonSingin" resultType="com.adminapp.business.entity.dw_supervise.SinginInformation">
         select * FROM t_singin WHERE personid=#{personId} AND type=#{type}
@@ -107,7 +110,7 @@
         insert into t_prisonsetting(personid,settingname,settingcheck,settingtime,settingcode) VALUES (#{personId},#{settingName},#{settingCheck},#{settingTime},#{settingCode})
     </insert>
     <select id="getPrisonValidWay" resultType="com.adminapp.model.dw_supervise.PrisonSettingModel">
-        select settingcode AS code,settingname AS name,settingcheck AS enable FROM t_prisonsetting WHERE personid=#{personId}
+        select settingcode AS code,settingname AS name,settingcheck AS enable FROM t_prisonsetting WHERE personid=#{personId} order by t_prisonsetting.settingcode
     </select>
     <select id="getApplyLeave" resultType="com.adminapp.model.dw_supervise.LeaveListModel">
         select leaveorder AS code,statuscode AS statusCode,states AS status,personname AS applicant,subittimestamp AS applyTimestamp,
@@ -141,4 +144,16 @@
     <update id="updateHasVoice">
         update t_personinformation set hasvoice=true where personid=#{code}
     </update>
+    <select id="getAccessToken" resultType="String">
+        select access_token from t_voice
+    </select>
+    <select id="getUserId" resultType="String">
+        select userid from t_voice
+    </select>
+    <update id="updateAccessToken">
+        update t_voice set access_token=#{accessToken}, userid=#{userId}
+    </update>
+    <insert id="insertAccessToken">
+        insert into t_voice(access_token,userid) values (#{accessToken},#{userId})
+    </insert>
 </mapper>

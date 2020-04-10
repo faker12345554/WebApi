@@ -53,7 +53,9 @@ public interface SuperfineDado {
 
     List<ReminderSettingsInformation> listSummonSetting();
 
-    int listViolationFensInformation(@Param("violationName")String violationName,@Param("Code")String Code);
+    int getViolationSlightFens(@Param("Code")String Code);
+
+    int getViolationSeriousFens(@Param("Code")String Code);
 
     List<SinginInformation> listPersonSingin(@Param("personId")String personId,@Param("type")int type);
 
@@ -97,4 +99,12 @@ public interface SuperfineDado {
                             @Param("detailType")int detailType,@Param("detailName")String detailName,@Param("leaveOrder")String leaveOrder);
 
     int updateHasVoice(@Param("code")String code);
+
+    String getAccessToken();
+
+    String getUserId();
+
+    int updateAccessToken(@Param("accessToken")String accessToken,@Param("userId")String userId);
+
+    int insertAccessToken(@Param("accessToken")String accessToken,@Param("userId")String userId);
 }

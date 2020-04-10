@@ -38,8 +38,6 @@ public class SuperviseController {
     @Autowired
     private SuperviseService superviseService;
 
-    //private ResultSet rs=new ResultSet();
-
     @UserLoginToken
     @ApiOperation(value = "获取保外人员列表")
     @GetMapping("/getSuperviseList")
@@ -753,148 +751,34 @@ public class SuperviseController {
         return rs;
     }
 
-    @UserLoginToken
-    @ApiOperation(value = "获取违规记录统计")
-    @GetMapping("/getAgainstRule")
-    public ResultSet getAgainstRule(@ApiParam(name="code",value = "监居人员编号")@RequestParam(required = true)String code) {
-        ResultSet rs=new ResultSet();
-        AgainstRuleModel againstRuleModel1 = new AgainstRuleModel();
-        againstRuleModel1.setTypeCode("1");
-        againstRuleModel1.setType("脱离管控区域");
-        againstRuleModel1.setViolateCode("0");
-        againstRuleModel1.setViolate("正常");
-        againstRuleModel1.setCount(0);
-        AgainstRuleModel againstRuleModel2 = new AgainstRuleModel();
-        againstRuleModel2.setTypeCode("2");
-        againstRuleModel2.setType("传讯未及时到案");
-        againstRuleModel2.setViolateCode("0");
-        againstRuleModel2.setViolate("正常");
-        againstRuleModel2.setCount(0);
-        List<AgainstRuleModel> againstRuleModels = new ArrayList<>();
-        againstRuleModels.add(againstRuleModel1);
-        againstRuleModels.add(againstRuleModel2);
-        AgainstRuleReturnModel againstRuleReturnModel = new AgainstRuleReturnModel();
-        againstRuleReturnModel.setTotalCount(0);
-        againstRuleReturnModel.setList(againstRuleModels);
-        rs.resultCode = 0;
-        rs.resultMsg = "";
-        rs.data = againstRuleReturnModel;
-        return rs;
-    }
-    @UserLoginToken
-    @ApiOperation(value = "获取违规记录列表")
-    @GetMapping("/getAgainstRuleList")
-    public ResultSet getAgainstRuleList(@ApiParam(name="code",value = "监居人员编号")@RequestParam(required = true)String code,
-                                        @ApiParam(name="startTime",value = "开始时间戳")@RequestParam(required = false)String startTime,
-                                        @ApiParam(name="endTime",value = "结束时间戳")@RequestParam(required = false)String endTime,
-                                        @ApiParam(name="count",value = "已获取数据数")@RequestParam(required = true)int count,
-                                        @ApiParam(name="requestCount",value = "请求获取条数")@RequestParam(required = true)int requestCount,
-                                        @ApiParam(name="typeCode",value = "违规类型编号")@RequestParam(required = true)String typeCode) {
-        ResultSet rs=new ResultSet();
-        SignRecordReturnModel signRecordReturnModel = new SignRecordReturnModel();
-        List<SignRecordModel> newSignRecordModelList = new ArrayList<>();
-        signRecordReturnModel.setTotalCount(0);
-        signRecordReturnModel.setList(newSignRecordModelList);
-        rs.resultCode = 0;
-        rs.resultMsg = "";
-        rs.data = signRecordReturnModel;
-        return rs;
-    }
-
 //    @UserLoginToken
 //    @ApiOperation(value = "获取违规记录统计")
 //    @GetMapping("/getAgainstRule")
-//    public ResultSet getAgainstRule(@ApiParam(name="code",value = "监居人员编号")@RequestParam(required = true)String code){
-//
-//        PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(code);
-//        if(personAllInformationModel!=null) {
-//            List<AgainstRuleModel> againstRuleModels = new ArrayList<>();
-//            int locationViolateSlight = superviseService.listViolationFensInformation("脱离管控区域", "1");  //上报设置中位置轻微违规次数
-//            int locationViolateSerious = superviseService.listViolationFensInformation("脱离管控区域", "2"); //上报设置中位置严重违规次数
-//            int summonsViolateSlight = superviseService.listViolationFensInformation("传讯取证未报到", "1");   //上报设置中传讯轻微违规次数
-//            int summonsViolateSerious = superviseService.listViolationFensInformation("传讯取证未报到", "2");  //上报设置中传讯严重违规次数
-//
-//            List<ReportLocationModel> reportLocationModels = superviseService.listLocation(code);    //获取监居人员定位信息
-//            int locationViolateCount = 0;    //位置违规次数
-//            for (int j = 0; j < reportLocationModels.size(); j++) {         //计算位置定位违规次数
-//                ReportLocationModel reportLocationModel = reportLocationModels.get(j);
-//                boolean Fscope = reportLocationModel.isFscope();
-//                if (reportLocationModel.isFscope()) {     //判断定位位置是否违规
-//                    locationViolateCount += 1;
-//                }
-//            }
-//            AgainstRuleModel againstRuleModel1 = new AgainstRuleModel();
-//            againstRuleModel1.setTypeCode("1");
-//            againstRuleModel1.setType("越界记录");
-//            againstRuleModel1.setViolateCode("0");
-//            againstRuleModel1.setViolate("正常");
-//            againstRuleModel1.setCount(locationViolateCount);
-//            int locationViolateStatus = 0;    //违规状态为正常
-//            if (locationViolateCount >= locationViolateSlight && locationViolateCount < locationViolateSerious) {   //位置违规次数
-//                locationViolateStatus = 1;   //违规状态为轻微
-//                againstRuleModel1.setViolateCode("1");
-//                againstRuleModel1.setViolate("轻微");
-//            }
-//            if (locationViolateCount >= locationViolateSerious) {
-//                locationViolateStatus = 2;  //违规状态为严重
-//                againstRuleModel1.setViolateCode("2");
-//                againstRuleModel1.setViolate("严重");
-//            }
-//            againstRuleModels.add(againstRuleModel1);
-//
-//            int summonsViolateTimes = 0;    //传讯违规次数
-//            List<SummonsInformation> summonsInformations = superviseService.getSummonsInformation(code);
-//            for (SummonsInformation item3 : summonsInformations
-//            ) {
-//                if (item3.getReporttime() == null) {
-//                    summonsViolateTimes++;
-//                }
-//            }
-//            AgainstRuleModel againstRuleModel2 = new AgainstRuleModel();
-//            againstRuleModel2.setTypeCode("2");
-//            againstRuleModel2.setType("传讯未及时到案记录");
-//            againstRuleModel2.setViolateCode("0");
-//            againstRuleModel2.setViolate("正常");
-//            againstRuleModel2.setCount(summonsViolateTimes);
-//            int summonsViolateStatus = 0;   //传讯违规状态
-//            if (summonsViolateTimes >= summonsViolateSlight && summonsViolateTimes < summonsViolateSerious) {
-//                summonsViolateStatus = 1;
-//                againstRuleModel2.setViolateCode("1");
-//                againstRuleModel2.setViolate("轻微");
-//            }
-//            if (summonsViolateTimes >= summonsViolateSerious) {
-//                summonsViolateStatus = 2;
-//                againstRuleModel2.setViolateCode("2");
-//                againstRuleModel2.setViolate("严重");
-//            }
-//            againstRuleModels.add(againstRuleModel2);
-//
-//            Collections.sort(againstRuleModels, new Comparator<AgainstRuleModel>() {
-//                @Override
-//                public int compare(AgainstRuleModel againstRuleModel, AgainstRuleModel t1) {
-//                    int i=t1.getCount()-againstRuleModel.getCount();    //按照违规次数排序
-//                    if(i==0){     //违规次数相等再按照类型顺序排序
-//                        return Integer.parseInt(againstRuleModel.getTypeCode())-Integer.parseInt(t1.getTypeCode());
-//                    }
-//                    return i;
-//                }
-//            });
-//            AgainstRuleReturnModel againstRuleReturnModel = new AgainstRuleReturnModel();
-//            againstRuleReturnModel.setTotalCount(locationViolateCount + summonsViolateTimes);
-//            againstRuleReturnModel.setList(againstRuleModels);
-//            rs.resultCode = 0;
-//            rs.resultMsg = "";
-//            rs.data = againstRuleReturnModel;
-//        }
-//        else
-//        {
-//            rs.resultCode=1;
-//            rs.resultMsg="无此监居人员";
-//            rs.data=null;
-//        }
+//    public ResultSet getAgainstRule(@ApiParam(name="code",value = "监居人员编号")@RequestParam(required = true)String code) {
+//        ResultSet rs=new ResultSet();
+//        AgainstRuleModel againstRuleModel1 = new AgainstRuleModel();
+//        againstRuleModel1.setTypeCode("1");
+//        againstRuleModel1.setType("脱离管控区域");
+//        againstRuleModel1.setViolateCode("0");
+//        againstRuleModel1.setViolate("正常");
+//        againstRuleModel1.setCount(0);
+//        AgainstRuleModel againstRuleModel2 = new AgainstRuleModel();
+//        againstRuleModel2.setTypeCode("2");
+//        againstRuleModel2.setType("传讯未及时到案");
+//        againstRuleModel2.setViolateCode("0");
+//        againstRuleModel2.setViolate("正常");
+//        againstRuleModel2.setCount(0);
+//        List<AgainstRuleModel> againstRuleModels = new ArrayList<>();
+//        againstRuleModels.add(againstRuleModel1);
+//        againstRuleModels.add(againstRuleModel2);
+//        AgainstRuleReturnModel againstRuleReturnModel = new AgainstRuleReturnModel();
+//        againstRuleReturnModel.setTotalCount(0);
+//        againstRuleReturnModel.setList(againstRuleModels);
+//        rs.resultCode = 0;
+//        rs.resultMsg = "";
+//        rs.data = againstRuleReturnModel;
 //        return rs;
 //    }
-
 //    @UserLoginToken
 //    @ApiOperation(value = "获取违规记录列表")
 //    @GetMapping("/getAgainstRuleList")
@@ -903,162 +787,277 @@ public class SuperviseController {
 //                                        @ApiParam(name="endTime",value = "结束时间戳")@RequestParam(required = false)String endTime,
 //                                        @ApiParam(name="count",value = "已获取数据数")@RequestParam(required = true)int count,
 //                                        @ApiParam(name="requestCount",value = "请求获取条数")@RequestParam(required = true)int requestCount,
-//                                        @ApiParam(name="typeCode",value = "违规类型编号")@RequestParam(required = true)String typeCode){
-////        int locationViolateSlight = superviseService.listViolationFensInformation("脱离管控区域", "1");  //上报设置中位置轻微违规次数
-////        int locationViolateSerious = superviseService.listViolationFensInformation("脱离管控区域", "2"); //上报设置中位置严重违规次数
-////        int summonsViolateSlight = superviseService.listViolationFensInformation("传讯取证未报到", "1");   //上报设置中传讯轻微违规次数
-////        int summonsViolateSerious = superviseService.listViolationFensInformation("传讯取证未报到", "2");  //上报设置中传讯严重违规次数
-//
-//        PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(code);
-//        if(personAllInformationModel!=null){
-//            List<LocationInformation> locationRecordModels=superviseService.listViolateLocationRecord(code);   //获取监居人员越界定位信息
-//            List<SummonsInformation> summonsInformations = superviseService.getSummonsInformation(code);   //获取该监居人员传讯记录
-//            List<SummonsInformation> summonsViolateInformations=new ArrayList<>();    //获取该监居人员传讯违规记录
-//            for (SummonsInformation item : summonsInformations
-//            ) {
-//                if (item.getReporttime() == null) {
-//                    summonsViolateInformations.add(item);
-//                }
-//            }
-//
-//            String locationViolateStatus = "0";    //违规状态为正常
-//            String locationViolateType="正常";
-//            if (locationRecordModels.size() >= locationViolateSlight && locationRecordModels.size() < locationViolateSerious) {   //位置违规次数
-//                locationViolateStatus = "1";   //违规状态为轻微
-//                locationViolateType="轻微";
-//            }
-//            if (locationRecordModels.size() >= locationViolateSerious) {
-//                locationViolateStatus = "2";  //违规状态为严重
-//                locationViolateType="严重";
-//            }
-//
-//            List<AgainstRuleListModel> againstRuleListModels=new ArrayList<>();
-//            if(typeCode.equals("1")){
-//                for (LocationInformation item:locationRecordModels
-//                     ) {
-//                    AgainstRuleListModel againstRuleListModel = new AgainstRuleListModel();
-//                    againstRuleListModel.setTimestamp(item.getTimestamp());
-//                    againstRuleListModel.setAddress(item.getAddress());
-//                    againstRuleListModel.setTypeCode("1");
-//                    againstRuleListModel.setType("越界记录");
-//                    againstRuleListModel.setViolateCode(locationViolateStatus);
-//                    againstRuleListModel.setViolate(locationViolateType);
-//                    againstRuleListModels.add(againstRuleListModel);
-//                }
-//            }
-//
-//            String summonsViolateStatus = "0";   //传讯违规状态
-//            String summonsViolateType="正常";    //传讯违规描述
-//            if (summonsViolateInformations.size() >= summonsViolateSlight && summonsViolateInformations.size() < summonsViolateSerious) {
-//                summonsViolateStatus = "1";
-//                summonsViolateType="轻微";
-//            }
-//            if (summonsViolateInformations.size() >= summonsViolateSerious) {
-//                summonsViolateStatus = "2";
-//                summonsViolateType="严重";
-//            }
-//            if(typeCode.equals("2")){
-//                for (SummonsInformation item:summonsViolateInformations
-//                     ) {
-//                    AgainstRuleListModel againstRuleListModel = new AgainstRuleListModel();
-//                    againstRuleListModel.setTimestamp(item.getSummontime());
-//                    againstRuleListModel.setTypeCode("2");
-//                    againstRuleListModel.setType("传讯未及时到案记录");
-//                    againstRuleListModel.setViolateCode(summonsViolateStatus);
-//                    againstRuleListModel.setViolate(summonsViolateType);
-//                    againstRuleListModels.add(againstRuleListModel);
-//                }
-//            }
-//            if(typeCode.equals("0")){
-//                for (LocationInformation item:locationRecordModels
-//                ) {
-//                    AgainstRuleListModel againstRuleListModel = new AgainstRuleListModel();
-//                    againstRuleListModel.setTimestamp(item.getTimestamp());
-//                    againstRuleListModel.setAddress(item.getAddress());
-//                    againstRuleListModel.setTypeCode("1");
-//                    againstRuleListModel.setType("越界记录");
-//                    againstRuleListModel.setViolateCode(locationViolateStatus);
-//                    againstRuleListModel.setViolate(locationViolateType);
-//                    againstRuleListModels.add(againstRuleListModel);
-//                }
-//                for (SummonsInformation item:summonsViolateInformations
-//                ) {
-//                    AgainstRuleListModel againstRuleListModel = new AgainstRuleListModel();
-//                    againstRuleListModel.setTimestamp(item.getSummontime());
-//                    againstRuleListModel.setTypeCode("2");
-//                    againstRuleListModel.setType("传讯未及时到案记录");
-//                    againstRuleListModel.setViolateCode(summonsViolateStatus);
-//                    againstRuleListModel.setViolate(summonsViolateType);
-//                    againstRuleListModels.add(againstRuleListModel);
-//                }
-//            }
-//
-//            List<AgainstRuleListModel> newAgainstRuleListModels=new ArrayList<>();  //经过时间戳筛选之后的数据列表
-//            if(startTime!=null&&endTime==null){   //开始时间戳不为空
-//                for (AgainstRuleListModel item:againstRuleListModels
-//                     ) {
-//                    if(Long.parseLong(item.getTimestamp())>=Long.parseLong(startTime)){
-//                        newAgainstRuleListModels.add(item);
-//                    }
-//                }
-//            }
-//            if(startTime==null&&endTime!=null){   //结束时间戳不为空
-//                for (AgainstRuleListModel item:againstRuleListModels
-//                ) {
-//                    if(Long.parseLong(item.getTimestamp())<Long.parseLong(endTime)){
-//                        newAgainstRuleListModels.add(item);
-//                    }
-//                }
-//            }
-//            if(startTime==null&endTime==null){   //都为空
-//                newAgainstRuleListModels=againstRuleListModels;
-//            }
-//            if(startTime!=null&&endTime!=null){  //都不为空
-//                for (AgainstRuleListModel item:againstRuleListModels
-//                ) {
-//                    if(Long.parseLong(item.getTimestamp())>=Long.parseLong(startTime)&&Long.parseLong(item.getTimestamp())<Long.parseLong(endTime)){
-//                        newAgainstRuleListModels.add(item);
-//                    }
-//                }
-//            }
-//
-//            List<AgainstRuleListModel> againstRuleListModelList=new ArrayList<>();
-//            if (newAgainstRuleListModels.size() > count && newAgainstRuleListModels.size() <= count + requestCount) {
-//                for (int i = count; i < newAgainstRuleListModels.size(); i++) {
-//                    AgainstRuleListModel summonsInformation = newAgainstRuleListModels.get(i);
-//                    againstRuleListModelList.add(summonsInformation);
-//                }
-//            }
-//            if (newAgainstRuleListModels.size() > count + requestCount) {
-//                for (int i = count; i < count + requestCount; i++) {
-//                    AgainstRuleListModel summonsInformation = newAgainstRuleListModels.get(i);
-//                    againstRuleListModelList.add(summonsInformation);
-//                }
-//            }
-//
-//            Collections.sort(againstRuleListModelList, new Comparator<AgainstRuleListModel>() {   //排序
-//                @Override
-//                public int compare(AgainstRuleListModel againstRuleListModel, AgainstRuleListModel t1) {
-//                    long a=Long.parseLong(t1.getTimestamp());
-//                    long b=Long.parseLong(againstRuleListModel.getTimestamp());
-//                    long c=a-b;
-//                    return Integer.parseInt(String.valueOf(c));
-//                }
-//            });
-//            AgainstRuleListReturnModel againstRuleListReturnModel=new AgainstRuleListReturnModel();
-//            againstRuleListReturnModel.setTotalCount(newAgainstRuleListModels.size());
-//            againstRuleListReturnModel.setList(againstRuleListModelList);
-//            rs.resultCode=0;
-//            rs.resultMsg="";
-//            rs.data=againstRuleListReturnModel;
-//        }
-//        else{
-//            rs.resultCode=1;
-//            rs.resultMsg="无此监居人员";
-//            rs.data=null;
-//        }
+//                                        @ApiParam(name="typeCode",value = "违规类型编号")@RequestParam(required = true)String typeCode) {
+//        ResultSet rs=new ResultSet();
+//        SignRecordReturnModel signRecordReturnModel = new SignRecordReturnModel();
+//        List<SignRecordModel> newSignRecordModelList = new ArrayList<>();
+//        signRecordReturnModel.setTotalCount(0);
+//        signRecordReturnModel.setList(newSignRecordModelList);
+//        rs.resultCode = 0;
+//        rs.resultMsg = "";
+//        rs.data = signRecordReturnModel;
 //        return rs;
 //    }
+
+    @UserLoginToken
+    @ApiOperation(value = "获取违规记录统计")
+    @GetMapping("/getAgainstRule")
+    public ResultSet getAgainstRule(@ApiParam(name="code",value = "监居人员编号")@RequestParam(required = true)String code){
+        ResultSet rs=new ResultSet();
+        PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(code);
+        if(personAllInformationModel!=null) {
+            List<AgainstRuleModel> againstRuleModels = new ArrayList<>();
+            int locationViolateSlight = superviseService.getViolationSlightFens( "1");  //上报设置中位置轻微违规次数
+            int locationViolateSerious = superviseService.getViolationSeriousFens("1"); //上报设置中位置严重违规次数
+            int summonsViolateSlight = superviseService.getViolationSlightFens( "2");   //上报设置中传讯轻微违规次数
+            int summonsViolateSerious = superviseService.getViolationSeriousFens( "2");  //上报设置中传讯严重违规次数
+
+            List<ReportLocationModel> reportLocationModels = superviseService.listLocation(code);    //获取监居人员定位信息
+            int locationViolateCount = 0;    //位置违规次数
+            for (int j = 0; j < reportLocationModels.size(); j++) {         //计算位置定位违规次数
+                ReportLocationModel reportLocationModel = reportLocationModels.get(j);
+                boolean Fscope = reportLocationModel.isFscope();
+                if (reportLocationModel.isFscope()) {     //判断定位位置是否违规
+                    locationViolateCount += 1;
+                }
+            }
+            AgainstRuleModel againstRuleModel1 = new AgainstRuleModel();
+            againstRuleModel1.setTypeCode("1");
+            againstRuleModel1.setType("脱离管控区域");
+            againstRuleModel1.setViolateCode("0");
+            againstRuleModel1.setViolate("正常");
+            againstRuleModel1.setCount(locationViolateCount);
+            int locationViolateStatus = 0;    //违规状态为正常
+            if (locationViolateCount >= locationViolateSlight && locationViolateCount < locationViolateSerious) {   //位置违规次数
+                locationViolateStatus = 1;   //违规状态为轻微
+                againstRuleModel1.setViolateCode("1");
+                againstRuleModel1.setViolate("轻微");
+            }
+            if (locationViolateCount >= locationViolateSerious) {
+                locationViolateStatus = 2;  //违规状态为严重
+                againstRuleModel1.setViolateCode("2");
+                againstRuleModel1.setViolate("严重");
+            }
+            againstRuleModels.add(againstRuleModel1);
+
+            int summonsViolateTimes = 0;    //传讯违规次数
+            List<SummonsInformation> summonsInformations = superviseService.getSummonsInformation(code);
+            for (SummonsInformation item3 : summonsInformations
+            ) {
+                if (item3.getReporttime() == null||item3.getReporttime().equals("")) {
+                    summonsViolateTimes++;
+                }
+            }
+            AgainstRuleModel againstRuleModel2 = new AgainstRuleModel();
+            againstRuleModel2.setTypeCode("2");
+            againstRuleModel2.setType("传讯未及时到案记录");
+            againstRuleModel2.setViolateCode("0");
+            againstRuleModel2.setViolate("正常");
+            againstRuleModel2.setCount(summonsViolateTimes);
+            int summonsViolateStatus = 0;   //传讯违规状态
+            if (summonsViolateTimes >= summonsViolateSlight && summonsViolateTimes < summonsViolateSerious) {
+                summonsViolateStatus = 1;
+                againstRuleModel2.setViolateCode("1");
+                againstRuleModel2.setViolate("轻微");
+            }
+            if (summonsViolateTimes >= summonsViolateSerious) {
+                summonsViolateStatus = 2;
+                againstRuleModel2.setViolateCode("2");
+                againstRuleModel2.setViolate("严重");
+            }
+            againstRuleModels.add(againstRuleModel2);
+
+            Collections.sort(againstRuleModels, new Comparator<AgainstRuleModel>() {
+                @Override
+                public int compare(AgainstRuleModel againstRuleModel, AgainstRuleModel t1) {
+                    int i=t1.getCount()-againstRuleModel.getCount();    //按照违规次数排序
+                    if(i==0){     //违规次数相等再按照类型顺序排序
+                        return Integer.parseInt(againstRuleModel.getTypeCode())-Integer.parseInt(t1.getTypeCode());
+                    }
+                    return i;
+                }
+            });
+            AgainstRuleReturnModel againstRuleReturnModel = new AgainstRuleReturnModel();
+            againstRuleReturnModel.setTotalCount(locationViolateCount + summonsViolateTimes);
+            againstRuleReturnModel.setList(againstRuleModels);
+            rs.resultCode = 0;
+            rs.resultMsg = "";
+            rs.data = againstRuleReturnModel;
+        }
+        else
+        {
+            rs.resultCode=1;
+            rs.resultMsg="无此监居人员";
+            rs.data=null;
+        }
+        return rs;
+    }
+
+    @UserLoginToken
+    @ApiOperation(value = "获取违规记录列表")
+    @GetMapping("/getAgainstRuleList")
+    public ResultSet getAgainstRuleList(@ApiParam(name="code",value = "监居人员编号")@RequestParam(required = true)String code,
+                                        @ApiParam(name="startTime",value = "开始时间戳")@RequestParam(required = false)String startTime,
+                                        @ApiParam(name="endTime",value = "结束时间戳")@RequestParam(required = false)String endTime,
+                                        @ApiParam(name="count",value = "已获取数据数")@RequestParam(required = true)int count,
+                                        @ApiParam(name="requestCount",value = "请求获取条数")@RequestParam(required = true)int requestCount,
+                                        @ApiParam(name="typeCode",value = "违规类型编号")@RequestParam(required = true)String typeCode){
+        ResultSet rs=new ResultSet();
+        int locationViolateSlight = superviseService.getViolationSlightFens( "1");  //上报设置中位置轻微违规次数
+        int locationViolateSerious = superviseService.getViolationSeriousFens("1"); //上报设置中位置严重违规次数
+        int summonsViolateSlight = superviseService.getViolationSlightFens( "2");   //上报设置中传讯轻微违规次数
+        int summonsViolateSerious = superviseService.getViolationSeriousFens( "2");  //上报设置中传讯严重违规次数
+
+        PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(code);
+        if(personAllInformationModel!=null){
+            List<LocationInformation> locationRecordModels=superviseService.listViolateLocationRecord(code);   //获取监居人员越界定位信息
+            List<SummonsInformation> summonsInformations = superviseService.getSummonsInformation(code);   //获取该监居人员传讯记录
+            List<SummonsInformation> summonsViolateInformations=new ArrayList<>();    //获取该监居人员传讯违规记录
+            for (SummonsInformation item : summonsInformations
+            ) {
+                if (item.getReporttime() == null||item.getReporttime().equals("")) {
+                    summonsViolateInformations.add(item);
+                }
+            }
+
+            String locationViolateStatus = "0";    //违规状态为正常
+            String locationViolateType="正常";
+            if (locationRecordModels.size() >= locationViolateSlight && locationRecordModels.size() < locationViolateSerious) {   //位置违规次数
+                locationViolateStatus = "1";   //违规状态为轻微
+                locationViolateType="轻微";
+            }
+            if (locationRecordModels.size() >= locationViolateSerious) {
+                locationViolateStatus = "2";  //违规状态为严重
+                locationViolateType="严重";
+            }
+
+            List<AgainstRuleListModel> againstRuleListModels=new ArrayList<>();
+            if(typeCode.equals("1")){
+                for (LocationInformation item:locationRecordModels
+                     ) {
+                    AgainstRuleListModel againstRuleListModel = new AgainstRuleListModel();
+                    againstRuleListModel.setTimestamp(item.getTimestamp());
+                    againstRuleListModel.setAddress(item.getAddress());
+                    againstRuleListModel.setTypeCode("1");
+                    againstRuleListModel.setType("脱离管控区域");
+                    againstRuleListModel.setViolateCode(locationViolateStatus);
+                    againstRuleListModel.setViolate(locationViolateType);
+                    againstRuleListModels.add(againstRuleListModel);
+                }
+            }
+
+            String summonsViolateStatus = "0";   //传讯违规状态
+            String summonsViolateType="正常";    //传讯违规描述
+            if (summonsViolateInformations.size() >= summonsViolateSlight && summonsViolateInformations.size() < summonsViolateSerious) {
+                summonsViolateStatus = "1";
+                summonsViolateType="轻微";
+            }
+            if (summonsViolateInformations.size() >= summonsViolateSerious) {
+                summonsViolateStatus = "2";
+                summonsViolateType="严重";
+            }
+            if(typeCode.equals("2")){
+                for (SummonsInformation item:summonsViolateInformations
+                     ) {
+                    AgainstRuleListModel againstRuleListModel = new AgainstRuleListModel();
+                    againstRuleListModel.setTimestamp(item.getSummontime());
+                    againstRuleListModel.setTypeCode("2");
+                    againstRuleListModel.setType("传讯未及时到案记录");
+                    againstRuleListModel.setViolateCode(summonsViolateStatus);
+                    againstRuleListModel.setViolate(summonsViolateType);
+                    againstRuleListModels.add(againstRuleListModel);
+                }
+            }
+            if(typeCode.equals("0")){
+                for (LocationInformation item:locationRecordModels
+                ) {
+                    AgainstRuleListModel againstRuleListModel = new AgainstRuleListModel();
+                    againstRuleListModel.setTimestamp(item.getTimestamp());
+                    againstRuleListModel.setAddress(item.getAddress());
+                    againstRuleListModel.setTypeCode("1");
+                    againstRuleListModel.setType("越界记录");
+                    againstRuleListModel.setViolateCode(locationViolateStatus);
+                    againstRuleListModel.setViolate(locationViolateType);
+                    againstRuleListModels.add(againstRuleListModel);
+                }
+                for (SummonsInformation item:summonsViolateInformations
+                ) {
+                    AgainstRuleListModel againstRuleListModel = new AgainstRuleListModel();
+                    againstRuleListModel.setTimestamp(item.getSummontime());
+                    againstRuleListModel.setTypeCode("2");
+                    againstRuleListModel.setType("传讯未及时到案记录");
+                    againstRuleListModel.setViolateCode(summonsViolateStatus);
+                    againstRuleListModel.setViolate(summonsViolateType);
+                    againstRuleListModels.add(againstRuleListModel);
+                }
+            }
+
+            List<AgainstRuleListModel> newAgainstRuleListModels=new ArrayList<>();  //经过时间戳筛选之后的数据列表
+            if(startTime!=null&&endTime==null){   //开始时间戳不为空
+                for (AgainstRuleListModel item:againstRuleListModels
+                     ) {
+                    if(Long.parseLong(item.getTimestamp())>=Long.parseLong(startTime)){
+                        newAgainstRuleListModels.add(item);
+                    }
+                }
+            }
+            if(startTime==null&&endTime!=null){   //结束时间戳不为空
+                for (AgainstRuleListModel item:againstRuleListModels
+                ) {
+                    if(Long.parseLong(item.getTimestamp())<Long.parseLong(endTime)){
+                        newAgainstRuleListModels.add(item);
+                    }
+                }
+            }
+            if(startTime==null&endTime==null){   //都为空
+                newAgainstRuleListModels=againstRuleListModels;
+            }
+            if(startTime!=null&&endTime!=null){  //都不为空
+                for (AgainstRuleListModel item:againstRuleListModels
+                ) {
+                    if(Long.parseLong(item.getTimestamp())>=Long.parseLong(startTime)&&Long.parseLong(item.getTimestamp())<Long.parseLong(endTime)){
+                        newAgainstRuleListModels.add(item);
+                    }
+                }
+            }
+
+            List<AgainstRuleListModel> againstRuleListModelList=new ArrayList<>();
+            if (newAgainstRuleListModels.size() > count && newAgainstRuleListModels.size() <= count + requestCount) {
+                for (int i = count; i < newAgainstRuleListModels.size(); i++) {
+                    AgainstRuleListModel summonsInformation = newAgainstRuleListModels.get(i);
+                    againstRuleListModelList.add(summonsInformation);
+                }
+            }
+            if (newAgainstRuleListModels.size() > count + requestCount) {
+                for (int i = count; i < count + requestCount; i++) {
+                    AgainstRuleListModel summonsInformation = newAgainstRuleListModels.get(i);
+                    againstRuleListModelList.add(summonsInformation);
+                }
+            }
+
+            Collections.sort(againstRuleListModelList, new Comparator<AgainstRuleListModel>() {   //排序
+                @Override
+                public int compare(AgainstRuleListModel againstRuleListModel, AgainstRuleListModel t1) {
+                    long a=Long.parseLong(t1.getTimestamp());
+                    long b=Long.parseLong(againstRuleListModel.getTimestamp());
+                    long c=a-b;
+                    return Integer.parseInt(String.valueOf(c));
+                }
+            });
+            AgainstRuleListReturnModel againstRuleListReturnModel=new AgainstRuleListReturnModel();
+            againstRuleListReturnModel.setTotalCount(newAgainstRuleListModels.size());
+            againstRuleListReturnModel.setList(againstRuleListModelList);
+            rs.resultCode=0;
+            rs.resultMsg="";
+            rs.data=againstRuleListReturnModel;
+        }
+        else{
+            rs.resultCode=1;
+            rs.resultMsg="无此监居人员";
+            rs.data=null;
+        }
+        return rs;
+    }
 
     @UserLoginToken
     @ApiOperation(value = "获取签到记录列表")
@@ -1534,15 +1533,17 @@ public class SuperviseController {
         String uploadVoiceFile=upload.upload(url,voice);
         String fileName = voice.getOriginalFilename();
         String serverUrl=demo.getServerUrl();
-        String filePath=serverUrl+"/voiceFile/"+ formatter.format(date)+"/"+fileName;
-        //String filePath="https://pardon.cnnc626.com:8443//voiceFile//2020-03-25//20200313_113334.wav";
+        String filePath=serverUrl+"//voiceFile//"+ formatter.format(date)+"//"+fileName;
+        //String filePath="https://pardon.cnnc626.com:8443//voiceFile//2020-04-03//20200403122416ILgdn.wav";
        //String filePath="https://pardon.cnnc626.com:8443//voiceFile//2020-03-25//123.wav";
+        String accessToken=superviseService.getAccessToken();
+        String userId=superviseService.getUserId();
         VoicePrintApi voicePrintApi=new VoicePrintApi("203793248", "qhntfvf4x2a582059ji1z9vzlpr9r2cu");
         /*
         获取权限，获取算法列表
          */
-        boolean access=voicePrintApi.getAccess();
-        //String algoList=voicePrintApi.getAlgoList();
+        //boolean access=voicePrintApi.getAccess();
+        //String algoList=voicePrintApi.getAlgoList();\\
         //String algoList="{\"body\":\"{\\\"data\\\":[{\\\"algo_id\\\":\\\"ivector-1-iv_tx_8k-1\\\",\\\"algo_name\\\":\\\"ivector\\\",\\\"algo_version\\\":1,\\\"model_name\\\":\\\"iv_tx_8k\\\",\\\"model_version\\\":1,\\\"voice_bits_per_sample\\\":16,\\\"voice_sample_rate\\\":8000},{\\\"algo_id\\\":\\\"xvector-1-xv_tx_8k-1\\\",\\\"algo_name\\\":\\\"xvector\\\",\\\"algo_version\\\":1,\\\"model_name\\\":\\\"xv_tx_8k\\\",\\\"model_version\\\":1,\\\"voice_bits_per_sample\\\":16,\\\"voice_sample_rate\\\":8000}],\\\"has_error\\\":false,\\\"error_message\\\":\\\"ok\\\",\\\"error_code\\\":0,\\\"request_id\\\":\\\"7a5509d4-6da5-11ea-b608-00163e02dfac\\\"}\",\"contentType\":\"application/json; charset=utf-8\",\"headers\":{\"Access-Control-Allow-Headers\":\"X-Requested-With,X-Sequence,X-Ca-Key,X-Ca-Secret,X-Ca-Version,X-Ca-Timestamp,X-Ca-Nonce,X-Ca-API-Key,X-Ca-Stage,X-Ca-Client-DeviceId,X-Ca-Client-AppId,X-Ca-Signature,X-Ca-Signature-Headers,X-Ca-Signature-Method,X-Forwarded-For,X-Ca-Date,X-Ca-Request-Mode,Authorization,Content-Type,Accept,Accept-Ranges,Cache-Control,Range,Content-MD5\",\"Access-Control-Allow-Methods\":\"GET,POST,PUT,DELETE,HEAD,OPTIONS,PATCH\",\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Max-Age\":\"172800\",\"Connection\":\"keep-alive\",\"Content-Length\":\"452\",\"Content-Type\":\"application/json; charset=utf-8\",\"Date\":\"Tue, 24 Mar 2020 08:00:07 GMT\",\"Server\":\"Tengine\",\"X-Ca-Request-Id\":\"994B00D2-8A16-4726-830E-C470B1C71DF3\"},\"requestId\":\"994B00D2-8A16-4726-830E-C470B1C71DF3\",\"statusCode\":200}";
         //String algo_id=JSON.parseArray(JSON.parseObject(JSON.parseObject(algoList).getString("body")).getString("data")).getJSONObject(0).getString("algo_id");
         /*
@@ -1551,35 +1552,59 @@ public class SuperviseController {
         //String Vpstore=voicePrintApi.createVpstore(algo_id);
         //String Vpstore="{\"body\":\"{\\\"data\\\":{\\\"vpstore_id\\\":\\\"d448c490-c065-4627-b957-fa84b9a7a3cb\\\",\\\"algo_id\\\":\\\"xvector-1-xv_tx_8k-1\\\"},\\\"has_error\\\":false,\\\"error_message\\\":\\\"create vpstroe success\\\",\\\"error_code\\\":0,\\\"request_id\\\":\\\"673e431b-6e62-11ea-b608-00163e02dfac\\\"}\",\"contentType\":\"application/json; charset=utf-8\",\"headers\":{\"Access-Control-Allow-Headers\":\"X-Requested-With,X-Sequence,X-Ca-Key,X-Ca-Secret,X-Ca-Version,X-Ca-Timestamp,X-Ca-Nonce,X-Ca-API-Key,X-Ca-Stage,X-Ca-Client-DeviceId,X-Ca-Client-AppId,X-Ca-Signature,X-Ca-Signature-Headers,X-Ca-Signature-Method,X-Forwarded-For,X-Ca-Date,X-Ca-Request-Mode,Authorization,Content-Type,Accept,Accept-Ranges,Cache-Control,Range,Content-MD5\",\"Access-Control-Allow-Methods\":\"GET,POST,PUT,DELETE,HEAD,OPTIONS,PATCH\",\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Max-Age\":\"172800\",\"Connection\":\"keep-alive\",\"Content-Length\":\"221\",\"Content-Type\":\"application/json; charset=utf-8\",\"Date\":\"Wed, 25 Mar 2020 06:32:30 GMT\",\"Server\":\"Tengine\",\"X-Ca-Request-Id\":\"E7E4751C-F396-41F7-92AB-0E3C1BC6A2CC\"},\"requestId\":\"E7E4751C-F396-41F7-92AB-0E3C1BC6A2CC\",\"statusCode\":200}";
         //String vpstore_id=JSON.parseObject(JSON.parseObject(JSON.parseObject(Vpstore).getString("body")).getString("data")).getString("vpstore_id");
+        try {
         /*
         上传文件
          */
-        String uploadFile=voicePrintApi.uploadFile("bailWatch",filePath,600000);
-     //   String uploadFile1=voicePrintApi.uploadFile("bailWatch",filePath1,600000);
-        //String uploadFile="{\"body\":\"{\\\"data\\\":{\\\"bucket\\\":\\\"bailWatch\\\",\\\"file_id\\\":\\\"1585120727418_OlDQuCuVaj_bailWatch\\\"},\\\"has_error\\\":false,\\\"error_message\\\":\\\"Upload success\\\",\\\"error_code\\\":0,\\\"request_id\\\":\\\"ddf0915b-6e68-11ea-b608-00163e02dfac\\\"}\",\"contentType\":\"application/json; charset=utf-8\",\"headers\":{\"Access-Control-Allow-Headers\":\"X-Requested-With,X-Sequence,X-Ca-Key,X-Ca-Secret,X-Ca-Version,X-Ca-Timestamp,X-Ca-Nonce,X-Ca-API-Key,X-Ca-Stage,X-Ca-Client-DeviceId,X-Ca-Client-AppId,X-Ca-Signature,X-Ca-Signature-Headers,X-Ca-Signature-Method,X-Forwarded-For,X-Ca-Date,X-Ca-Request-Mode,Authorization,Content-Type,Accept,Accept-Ranges,Cache-Control,Range,Content-MD5\",\"Access-Control-Allow-Methods\":\"GET,POST,PUT,DELETE,HEAD,OPTIONS,PATCH\",\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Max-Age\":\"172800\",\"Connection\":\"keep-alive\",\"Content-Length\":\"196\",\"Content-Type\":\"application/json; charset=utf-8\",\"Date\":\"Wed, 25 Mar 2020 07:18:47 GMT\",\"Server\":\"Tengine\",\"X-Ca-Request-Id\":\"2C3171B5-2527-47EB-ACA5-9DC3D1D1176B\"},\"requestId\":\"2C3171B5-2527-47EB-ACA5-9DC3D1D1176B\",\"statusCode\":200}";
-        String file_id=JSON.parseObject(JSON.parseObject(JSON.parseObject(uploadFile).getString("body")).getString("data")).getString("file_id");
-        //String file_id1=JSON.parseObject(JSON.parseObject(JSON.parseObject(uploadFile1).getString("body")).getString("data")).getString("file_id");
-        String[] file_ID={file_id};//new String[2];
-        //file_ID[0]=file_id;
-        //file_ID[1]=file_id1;
-       // file_ID[0]=uploadFile;//"1585148195326_dTkhAMTSJu_bailWatch";
-       // file_ID[1]=uploadFile1;//"1585148225792_NycNxfaIJT_bailWatch";
+            String file_id = "";
+            String uploadFile = voicePrintApi.uploadFile("bailWatch", filePath, 600000, accessToken, userId);
+            int uploadStatusCode = Integer.valueOf(JSON.parseObject(uploadFile).getString("statusCode"));
+            if (uploadStatusCode == 401) {
+                //boolean access=voicePrintApi.getAccess();
+                //accessToken=voicePrintApi.getAccess();
+                org.json.JSONObject object = voicePrintApi.getAccess();
+                accessToken = object.getString("token");
+                userId = object.getString("userId");
+                if (superviseService.getAccessToken() != null) {
+                    int updateAccessToken = superviseService.updateAccessToken(accessToken, userId);
+                } else {
+                    int insertAccessToken = superviseService.insertAccessToken(accessToken, userId);
+                }
+                uploadFile = voicePrintApi.uploadFile("bailWatch", filePath, 600000, accessToken, userId);
+                file_id = JSON.parseObject(JSON.parseObject(JSON.parseObject(uploadFile).getString("body")).getString("data")).getString("file_id");
+            } else {
+                file_id = JSON.parseObject(JSON.parseObject(JSON.parseObject(uploadFile).getString("body")).getString("data")).getString("file_id");
+            }
+            //   String uploadFile1=voicePrintApi.uploadFile("bailWatch",filePath1,600000);
+            //String uploadFile="{\"body\":\"{\\\"data\\\":{\\\"bucket\\\":\\\"bailWatch\\\",\\\"file_id\\\":\\\"1585120727418_OlDQuCuVaj_bailWatch\\\"},\\\"has_error\\\":false,\\\"error_message\\\":\\\"Upload success\\\",\\\"error_code\\\":0,\\\"request_id\\\":\\\"ddf0915b-6e68-11ea-b608-00163e02dfac\\\"}\",\"contentType\":\"application/json; charset=utf-8\",\"headers\":{\"Access-Control-Allow-Headers\":\"X-Requested-With,X-Sequence,X-Ca-Key,X-Ca-Secret,X-Ca-Version,X-Ca-Timestamp,X-Ca-Nonce,X-Ca-API-Key,X-Ca-Stage,X-Ca-Client-DeviceId,X-Ca-Client-AppId,X-Ca-Signature,X-Ca-Signature-Headers,X-Ca-Signature-Method,X-Forwarded-For,X-Ca-Date,X-Ca-Request-Mode,Authorization,Content-Type,Accept,Accept-Ranges,Cache-Control,Range,Content-MD5\",\"Access-Control-Allow-Methods\":\"GET,POST,PUT,DELETE,HEAD,OPTIONS,PATCH\",\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Max-Age\":\"172800\",\"Connection\":\"keep-alive\",\"Content-Length\":\"196\",\"Content-Type\":\"application/json; charset=utf-8\",\"Date\":\"Wed, 25 Mar 2020 07:18:47 GMT\",\"Server\":\"Tengine\",\"X-Ca-Request-Id\":\"2C3171B5-2527-47EB-ACA5-9DC3D1D1176B\"},\"requestId\":\"2C3171B5-2527-47EB-ACA5-9DC3D1D1176B\",\"statusCode\":200}";
+
+            //String file_id1=JSON.parseObject(JSON.parseObject(JSON.parseObject(uploadFile1).getString("body")).getString("data")).getString("file_id");
+            String[] file_ID = {file_id};//new String[2];
+            //file_ID[0]=file_id;
+            //file_ID[1]=file_id1;
+            // file_ID[0]=uploadFile;//"1585148195326_dTkhAMTSJu_bailWatch";
+            // file_ID[1]=uploadFile1;//"1585148225792_NycNxfaIJT_bailWatch";
         /*
         注册声纹
          */
-        String register=voicePrintApi.registerVoicePrint("758001e8-e36b-4539-aaf7-4697b9a767c0",personAllInformationModel.getContact(),file_ID,true);
-        //String register="{\"body\":\"{\\\"data\\\":{},\\\"has_error\\\":false,\\\"error_message\\\":\\\"voice print register success\\\",\\\"error_code\\\":0,\\\"request_id\\\":\\\"204ca554-6f35-11ea-b608-00163e02dfac\\\"}\",\"contentType\":\"application/json; charset=utf-8\",\"headers\":{\"Access-Control-Allow-Headers\":\"X-Requested-With,X-Sequence,X-Ca-Key,X-Ca-Secret,X-Ca-Version,X-Ca-Timestamp,X-Ca-Nonce,X-Ca-API-Key,X-Ca-Stage,X-Ca-Client-DeviceId,X-Ca-Client-AppId,X-Ca-Signature,X-Ca-Signature-Headers,X-Ca-Signature-Method,X-Forwarded-For,X-Ca-Date,X-Ca-Request-Mode,Authorization,Content-Type,Accept,Accept-Ranges,Cache-Control,Range,Content-MD5\",\"Access-Control-Allow-Methods\":\"GET,POST,PUT,DELETE,HEAD,OPTIONS,PATCH\",\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Max-Age\":\"172800\",\"Connection\":\"keep-alive\",\"Content-Length\":\"143\",\"Content-Type\":\"application/json; charset=utf-8\",\"Date\":\"Thu, 26 Mar 2020 07:40:55 GMT\",\"Server\":\"Tengine\",\"X-Ca-Request-Id\":\"2AC3BCD1-9B6D-4BA6-861E-B0D7A8726E0C\"},\"requestId\":\"2AC3BCD1-9B6D-4BA6-861E-B0D7A8726E0C\",\"statusCode\":200}";
-        int statusCode=Integer.valueOf(JSON.parseObject(register).getString("statusCode"));
-        if(statusCode==200){
-            rs.resultCode=0;
-            rs.resultMsg="";
-            rs.data=new Object();
-        }else{
+            String register = voicePrintApi.registerVoicePrint("758001e8-e36b-4539-aaf7-4697b9a767c0", personAllInformationModel.getContact(), file_ID, true, accessToken, userId);
+            //String register="{\"body\":\"{\\\"data\\\":{},\\\"has_error\\\":false,\\\"error_message\\\":\\\"voice print register success\\\",\\\"error_code\\\":0,\\\"request_id\\\":\\\"204ca554-6f35-11ea-b608-00163e02dfac\\\"}\",\"contentType\":\"application/json; charset=utf-8\",\"headers\":{\"Access-Control-Allow-Headers\":\"X-Requested-With,X-Sequence,X-Ca-Key,X-Ca-Secret,X-Ca-Version,X-Ca-Timestamp,X-Ca-Nonce,X-Ca-API-Key,X-Ca-Stage,X-Ca-Client-DeviceId,X-Ca-Client-AppId,X-Ca-Signature,X-Ca-Signature-Headers,X-Ca-Signature-Method,X-Forwarded-For,X-Ca-Date,X-Ca-Request-Mode,Authorization,Content-Type,Accept,Accept-Ranges,Cache-Control,Range,Content-MD5\",\"Access-Control-Allow-Methods\":\"GET,POST,PUT,DELETE,HEAD,OPTIONS,PATCH\",\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Max-Age\":\"172800\",\"Connection\":\"keep-alive\",\"Content-Length\":\"143\",\"Content-Type\":\"application/json; charset=utf-8\",\"Date\":\"Thu, 26 Mar 2020 07:40:55 GMT\",\"Server\":\"Tengine\",\"X-Ca-Request-Id\":\"2AC3BCD1-9B6D-4BA6-861E-B0D7A8726E0C\"},\"requestId\":\"2AC3BCD1-9B6D-4BA6-861E-B0D7A8726E0C\",\"statusCode\":200}";
+            int statusCode = Integer.valueOf(JSON.parseObject(register).getString("statusCode"));
+            //int statusCode=200;
+            if (statusCode == 200) {
+                rs.resultCode = 0;
+                rs.resultMsg = "";
+                rs.data = new Object();
+            } else {
+                rs.resultCode = 1;
+                rs.resultMsg = "注册失败";
+                rs.data = null;
+            }
+        }catch (Exception e){
             rs.resultCode=1;
-            rs.resultMsg="注册失败";
+            rs.resultMsg=e.getMessage();
             rs.data=null;
         }
-
         return rs;
     }
 
@@ -1606,22 +1631,44 @@ public class SuperviseController {
         String uploadVoiceFile=upload.upload(url,voice);
         String fileName = voice.getOriginalFilename();
         String serverUrl=demo.getServerUrl();
-        String filePath=serverUrl+"/voiceValidateFile/"+ formatter.format(date)+"/"+fileName;
-        //String filePath="https://pardon.cnnc626.com:8443//voiceValidateFile//2020-03-27//456.wav";
+        String filePath=serverUrl+"//voiceValidateFile//"+ formatter.format(date)+"//"+fileName;
+        String accessToken=superviseService.getAccessToken();
+        String userId=superviseService.getUserId();
+        //String filePath="https://pardon.cnnc626.com:8443//voiceValidateFile//2020-04-03//20200403164030zazpe.wav";
 
         try {
             VoicePrintApi voicePrintApi = new VoicePrintApi("203793248", "qhntfvf4x2a582059ji1z9vzlpr9r2cu");
         /*
         上传文件
          */
-            boolean access=voicePrintApi.getAccess();
-            String uploadFile = voicePrintApi.uploadFile("bailWatch", filePath, 600000);
-            String file_id = JSON.parseObject(JSON.parseObject(JSON.parseObject(uploadFile).getString("body")).getString("data")).getString("file_id");
+            //boolean access=voicePrintApi.getAccess();
+            String file_id="";
+            String uploadFile=voicePrintApi.uploadFile("bailWatch",filePath,600000,accessToken,userId);
+            int uploadStatusCode=Integer.valueOf(JSON.parseObject(uploadFile).getString("statusCode"));
+            if(uploadStatusCode==401){
+                //boolean access=voicePrintApi.getAccess();
+                //accessToken=voicePrintApi.getAccess();
+                org.json.JSONObject object=voicePrintApi.getAccess();
+                accessToken=object.getString("token");
+                userId=object.getString("userId");
+                if(superviseService.getAccessToken()!=null){
+                    int updateAccessToken=superviseService.updateAccessToken(accessToken,userId);
+                }else
+                {
+                    int insertAccessToken=superviseService.insertAccessToken(accessToken,userId);
+                }
+                uploadFile=voicePrintApi.uploadFile("bailWatch",filePath,600000,accessToken,userId);
+                file_id=JSON.parseObject(JSON.parseObject(JSON.parseObject(uploadFile).getString("body")).getString("data")).getString("file_id");
+            }
+            else{
+                file_id=JSON.parseObject(JSON.parseObject(JSON.parseObject(uploadFile).getString("body")).getString("data")).getString("file_id");
+            }
+            //String file_id = JSON.parseObject(JSON.parseObject(JSON.parseObject(uploadFile).getString("body")).getString("data")).getString("file_id");
             //String file_id="1585276267323_iqIKuXvLnJ_bailWatch";
         /*
         获取声纹列表
          */
-            String voicePrintList = voicePrintApi.getVoicePrintList("758001e8-e36b-4539-aaf7-4697b9a767c0", 0, 0);
+            String voicePrintList = voicePrintApi.getVoicePrintList("758001e8-e36b-4539-aaf7-4697b9a767c0", 0, 0,accessToken,userId);
             //String voicePrintList="{\"body\":\"{\\\"data\\\":[{\\\"vp_store_id\\\":\\\"758001e8-e36b-4539-aaf7-4697b9a767c0\\\",\\\"voice_print_id\\\":\\\"SW12345670\\\"}],\\\"has_error\\\":false,\\\"error_message\\\":\\\"ok\\\",\\\"error_code\\\":0,\\\"request_id\\\":\\\"133ec247-6fd3-11ea-b608-00163e02dfac\\\"}\",\"contentType\":\"application/json; charset=utf-8\",\"headers\":{\"Access-Control-Allow-Headers\":\"X-Requested-With,X-Sequence,X-Ca-Key,X-Ca-Secret,X-Ca-Version,X-Ca-Timestamp,X-Ca-Nonce,X-Ca-API-Key,X-Ca-Stage,X-Ca-Client-DeviceId,X-Ca-Client-AppId,X-Ca-Signature,X-Ca-Signature-Headers,X-Ca-Signature-Method,X-Forwarded-For,X-Ca-Date,X-Ca-Request-Mode,Authorization,Content-Type,Accept,Accept-Ranges,Cache-Control,Range,Content-MD5\",\"Access-Control-Allow-Methods\":\"GET,POST,PUT,DELETE,HEAD,OPTIONS,PATCH\",\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Max-Age\":\"172800\",\"Connection\":\"keep-alive\",\"Content-Length\":\"201\",\"Content-Type\":\"application/json; charset=utf-8\",\"Date\":\"Fri, 27 Mar 2020 02:31:34 GMT\",\"Server\":\"Tengine\",\"X-Ca-Request-Id\":\"00AF9AA5-B453-4205-AA90-2CB2B0CED1CB\"},\"requestId\":\"00AF9AA5-B453-4205-AA90-2CB2B0CED1CB\",\"statusCode\":200}";
             //String vp_store_id = JSON.parseArray(JSON.parseObject(JSON.parseObject(voicePrintList).getString("body")).getString("data")).getJSONObject(0).getString("voice_print_id");
             JSONArray vp_store_id1 = JSON.parseArray(JSON.parseObject(JSON.parseObject(voicePrintList).getString("body")).getString("data"));
@@ -1636,14 +1683,14 @@ public class SuperviseController {
         /*
         验证声纹
          */
-            String compareVoicePrint = voicePrintApi.compareVoicePrint("758001e8-e36b-4539-aaf7-4697b9a767c0", file_id, voicePrintIds);
+            String compareVoicePrint = voicePrintApi.compareVoicePrint("758001e8-e36b-4539-aaf7-4697b9a767c0", file_id, voicePrintIds,accessToken,userId);
             int statusCode = Integer.valueOf(JSON.parseObject(compareVoicePrint).getString("statusCode"));
 
             if (statusCode == 200) {
                 //String voice_print_id = JSON.parseArray(JSON.parseObject(JSON.parseObject(compareVoicePrint).getString("body")).getString("data")).getJSONObject(1).getString("voice_print_id");
                 float score = JSON.parseArray(JSON.parseObject(JSON.parseObject(compareVoicePrint).getString("body")).getString("data")).getJSONObject(0).getFloat("score");
                 VoiceRecognizeReturnModel voiceRecognizeReturnModel = new VoiceRecognizeReturnModel();
-                if(score>80){
+                if(score>0){
                     int updateHasVoice = superviseService.updateHasVoice(code);
                     voiceRecognizeReturnModel.setCode("0");
                     voiceRecognizeReturnModel.setPassed(true);
@@ -1671,5 +1718,6 @@ public class SuperviseController {
         }
         return rs;
     }
+
 }
 
