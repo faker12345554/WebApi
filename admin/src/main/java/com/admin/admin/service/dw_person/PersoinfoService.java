@@ -256,9 +256,6 @@ public class PersoinfoService {
         }else{
             list=fsdao.getperson("1");
         }
-
-
-
         for (Personinformation item:list){
             item.setAge(CalendarAdjust.getAge(CalendarAdjust.dateFormat.parse(item.getBirthdate())));
             cal.setTime(CalendarAdjust.dateFormat.parse( item.getBailoutbegindate()));
