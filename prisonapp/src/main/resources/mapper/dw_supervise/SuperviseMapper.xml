@@ -67,6 +67,15 @@
     select * from t_personinformation where personid =#{userId}
     </select>
 
+    <select id="getVoiceToken" resultType="com.prisonapp.business.entity.dw_supervise.TVoice">
+        select * from t_voice
+    </select>
+
+    <insert id="updateVoiceToken" parameterType="string">
+
+        update t_voice set userid = #{userid},access_token = #{accessToken}
+    </insert>
+
     <select id="getQDLX" resultType="com.prisonapp.business.entity.dw_supervise.TEnum">
         select * from t_enum where typecode=#{typecode} and enumcode=#{enumcode};
     </select>
@@ -133,5 +142,9 @@
     <select id="RelatedId" resultType="com.prisonapp.business.entity.dw_supervise.TPersoninformation" parameterType="String">
         select * from t_personinformation where contact=#{accountName}
     </select>
+
+    <insert id="insertVoice">
+        insert into t_singin( personid, type, result, filepath,typename,createtime) values (#{personid},#{type},#{result},#{filepath},#{typename},current_timestamp)
+    </insert>
 
 </mapper>

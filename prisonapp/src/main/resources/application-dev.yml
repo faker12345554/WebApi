@@ -20,3 +20,8 @@ logging:
 
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
+multipart:
+  maxRequestSize: 2000MB
+  maxFileSize: 2000MB
+
+
