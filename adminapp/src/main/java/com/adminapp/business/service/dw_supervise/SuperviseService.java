@@ -214,4 +214,9 @@ public class SuperviseService {
     public int insertPersonMessage(int modular,String content,String modularName,String personId,int detailType,String detailName,String leaveOrder){
         return superfineDado.insertPersonMessage(modular, content, modularName, personId, detailType, detailName, leaveOrder);
     }
+
+    //更新取保人员声纹注册状态
+    public int updateHasVoice(String code){
+        return superfineDado.updateHasVoice(code);
+    }
 }

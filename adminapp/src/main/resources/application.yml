@@ -1,7 +1,4 @@
-# 默认为开发环境
+# 默认为开发环境 后面那一段是啥
 spring:
   profiles:
     active: dev
-  jackson:
-    serialization:
-      FAIL_ON_EMPTY_BEANS: false

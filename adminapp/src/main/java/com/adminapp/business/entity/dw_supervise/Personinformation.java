@@ -18,6 +18,7 @@ public class Personinformation {
   public String execStartDate;
   public String execEndDate;
   public String phone;
+  //private boolean hasVoice;
   //public String[] tags;
 
   public String getCode() {
@@ -143,4 +144,12 @@ public class Personinformation {
 //    this.tags = a;
 //  }
 
+
+//  public boolean isHasVoice() {
+//    return hasVoice;
+//  }
+//
+//  public void setHasVoice(boolean hasVoice) {
+//    this.hasVoice = hasVoice;
+//  }
 }

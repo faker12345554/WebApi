@@ -50,6 +50,7 @@ public class PersonAllInformationModel {
   private String suspectstatuscode;
   private String guid;
   private String violationcode;
+  private boolean hasvoice;
 
   public String getPersonid() {
     return personid;
@@ -435,5 +436,13 @@ public class PersonAllInformationModel {
 
   public void setViolationcode(String violationcode) {
     this.violationcode = violationcode;
+  }
+
+  public boolean isHasvoice() {
+    return hasvoice;
+  }
+
+  public void setHasvoice(boolean hasvoice) {
+    this.hasvoice = hasvoice;
   }
 }

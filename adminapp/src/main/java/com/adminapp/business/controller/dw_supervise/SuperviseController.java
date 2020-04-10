@@ -6,16 +6,26 @@ import com.adminapp.business.service.dw_supervise.SuperviseService;
 import com.adminapp.config.CacheUtils;
 import com.adminapp.config.token.TokenUtil;
 import com.adminapp.config.token.tation.UserLoginToken;
+import com.adminapp.demo.VoicePrintApi;
+import com.adminapp.model.demo.DemoModel;
 import com.adminapp.model.dw_supervise.*;
+import com.alibaba.fastjson.JSONArray;
+import com.common.common.Uploadfiles.Upload;
 import com.common.common.apppush.Demo;
 import com.common.common.result.ResultSet;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -1328,88 +1338,6 @@ public class SuperviseController {
             String violateName=superviseService.getViolateName("WGCD-001",personAllInformationModel.getViolationcode());
             personinformation.setViolate(violateName);
 
-//            int locationViolateSlight = superviseService.listViolationFensInformation("脱离管控区域", "1");  //上报设置中位置轻微违规次数
-//            int locationViolateSerious = superviseService.listViolationFensInformation("脱离管控区域", "2"); //上报设置中位置严重违规次数
-//            int summonsViolateSlight = superviseService.listViolationFensInformation("传讯取证未报到", "1");   //上报设置中传讯轻微违规次数
-//            int summonsViolateSerious = superviseService.listViolationFensInformation("传讯取证未报到", "2");  //上报设置中传讯严重违规次数
-//            int faceSinginSlight =superviseService.listViolationFensInformation("视频签到缺勤","1");    //上报设置中人脸签到轻微违规次数
-//            int faceSinginSerious =superviseService.listViolationFensInformation("视频签到缺勤","2");   //上报设置中人脸签到严重违规次数
-//            int voiceSinginSlight =superviseService.listViolationFensInformation("语音签到缺勤","1");   //上报设置中声纹签到轻微违规次数
-//            int voiceSinginSerious =superviseService.listViolationFensInformation("语音签到缺勤","2");  //上报设置中声纹签到严重违规次数
-//
-//            List<ReportLocationModel> reportLocationModels = superviseService.listLocation(code);    //获取监居人员定位信息
-//            int locationViolateCount = 0;    //位置违规次数
-//            for (int j = 0; j < reportLocationModels.size(); j++) {         //计算位置定位违规次数
-//                ReportLocationModel reportLocationModel = reportLocationModels.get(j);
-//                boolean Fscope = reportLocationModel.isFscope();
-//                if (reportLocationModel.isFscope()) {     //判断定位位置是否违规
-//                    locationViolateCount += 1;
-//                }
-//            }
-//            int locationViolateStatus = 0;    //违规状态为正常
-//            if (locationViolateCount >= locationViolateSlight && locationViolateCount < locationViolateSerious) {   //位置违规次数
-//                locationViolateStatus = 1;   //违规状态为轻微
-//            }
-//            if (locationViolateCount >= locationViolateSerious) {
-//                locationViolateStatus = 2;  //违规状态为严重
-//            }
-//            int summonsViolateTimes = 0;    //传讯违规次数
-//            List<SummonsInformation> summonsInformations = superviseService.getSummonsInformation(code);
-//            for (SummonsInformation item3 : summonsInformations
-//            ) {
-//                if (item3.getReporttime() == null) {
-//                    summonsViolateTimes++;
-//                }
-//            }
-//            int summonsViolateStatus = 0;   //传讯违规状态
-//            if (summonsViolateTimes >= summonsViolateSlight && summonsViolateTimes < summonsViolateSerious) {
-//                summonsViolateStatus = 1;
-//            }
-//            if (summonsViolateTimes >= summonsViolateSerious) {
-//                summonsViolateStatus = 2;
-//            }
-//            List<SinginInformation> faceSinginInformations=superviseService.listPersonSingin(code,0);   //获取人脸签到记录
-//            int faceViolateTimes=0;   //人脸签到违规次数
-//            for (SinginInformation item5:faceSinginInformations
-//            ) {
-//                if(item5.getResult()==1){     //签到状态为1时是违规状态
-//                    faceViolateTimes++;
-//                }
-//            }
-//            int faceViolateStatus=0;   //人脸违规状态
-//            if(faceViolateTimes>=faceSinginSlight&&faceViolateTimes<faceSinginSerious){
-//                faceViolateStatus=1;
-//            }
-//            if(faceViolateTimes>=faceSinginSerious){
-//                faceViolateStatus=2;
-//            }
-//            List<SinginInformation> voiceSinginInformations=superviseService.listPersonSingin(code,1);   //获取声纹签到记录
-//            int voiceViolateTimes=0;   //声纹签到违规次数
-//            for (SinginInformation item7:voiceSinginInformations
-//            ) {
-//                if(item7.getResult()==1){
-//                    voiceViolateTimes++;
-//                }
-//            }
-//            int voiceViolateStatus=0;    //声纹违规状态
-//            if(voiceViolateTimes>=voiceSinginSlight&&voiceViolateTimes<voiceSinginSerious){
-//                voiceViolateStatus=1;
-//            }
-//            if(voiceViolateTimes>=voiceSinginSerious){
-//                voiceViolateStatus=2;
-//            }
-//            if(locationViolateStatus==0&&summonsViolateStatus==0&&faceViolateStatus==0&&voiceViolateStatus==0){
-//                personinformation.setViolateCode("0");
-//                personinformation.setViolate("正常");
-//            }
-//            if(locationViolateStatus==1||summonsViolateStatus==1||faceViolateStatus==1||voiceViolateStatus==1){
-//                personinformation.setViolateCode("1");
-//                personinformation.setViolate("轻微");
-//            }
-//            if(locationViolateStatus==1||summonsViolateStatus==2||faceViolateStatus==2||voiceViolateStatus==2){
-//                personinformation.setViolateCode("2");
-//                personinformation.setViolate("严重");
-//            }
             rs.resultCode=0;
             rs.resultMsg="";
             rs.data=personinformation;
@@ -1464,88 +1392,7 @@ public class SuperviseController {
         ResultSet rs=new ResultSet();
         PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(code);
         SuperviseBaseInformation superviseBaseInformation=new SuperviseBaseInformation();
-//        int locationViolateSlight = superviseService.listViolationFensInformation("脱离管控区域", "1");  //上报设置中位置轻微违规次数
-//        int locationViolateSerious = superviseService.listViolationFensInformation("脱离管控区域", "2"); //上报设置中位置严重违规次数
-//        int summonsViolateSlight = superviseService.listViolationFensInformation("传讯取证未报到", "1");   //上报设置中传讯轻微违规次数
-//        int summonsViolateSerious = superviseService.listViolationFensInformation("传讯取证未报到", "2");  //上报设置中传讯严重违规次数
-//        int faceSinginSlight =superviseService.listViolationFensInformation("视频签到缺勤","1");    //上报设置中人脸签到轻微违规次数
-//        int faceSinginSerious =superviseService.listViolationFensInformation("视频签到缺勤","2");   //上报设置中人脸签到严重违规次数
-//        int voiceSinginSlight =superviseService.listViolationFensInformation("语音签到缺勤","1");   //上报设置中声纹签到轻微违规次数
-//        int voiceSinginSerious =superviseService.listViolationFensInformation("语音签到缺勤","2");  //上报设置中声纹签到严重违规次数
-//
-//        List<ReportLocationModel> reportLocationModels = superviseService.listLocation(code);    //获取监居人员定位信息
-//        int locationViolateCount = 0;    //位置违规次数
-//        for (int j = 0; j < reportLocationModels.size(); j++) {         //计算位置定位违规次数
-//            ReportLocationModel reportLocationModel = reportLocationModels.get(j);
-//            boolean Fscope = reportLocationModel.isFscope();
-//            if (reportLocationModel.isFscope()) {     //判断定位位置是否违规
-//                locationViolateCount += 1;
-//            }
-//        }
-//        int locationViolateStatus = 0;    //违规状态为正常
-//        if (locationViolateCount >= locationViolateSlight && locationViolateCount < locationViolateSerious) {   //位置违规次数
-//            locationViolateStatus = 1;   //违规状态为轻微
-//        }
-//        if (locationViolateCount >= locationViolateSerious) {
-//            locationViolateStatus = 2;  //违规状态为严重
-//        }
-//        int summonsViolateTimes = 0;    //传讯违规次数
-//        List<SummonsInformation> summonsInformations = superviseService.getSummonsInformation(code);
-//        for (SummonsInformation item3 : summonsInformations
-//        ) {
-//            if (item3.getReporttime() == null) {
-//                summonsViolateTimes++;
-//            }
-//        }
-//        int summonsViolateStatus = 0;   //传讯违规状态
-//        if (summonsViolateTimes >= summonsViolateSlight && summonsViolateTimes < summonsViolateSerious) {
-//            summonsViolateStatus = 1;
-//        }
-//        if (summonsViolateTimes >= summonsViolateSerious) {
-//            summonsViolateStatus = 2;
-//        }
-//        List<SinginInformation> faceSinginInformations=superviseService.listPersonSingin(code,0);   //获取人脸签到记录
-//        int faceViolateTimes=0;   //人脸签到违规次数
-//        for (SinginInformation item5:faceSinginInformations
-//        ) {
-//            if(item5.getResult()==1){     //签到状态为1时是违规状态
-//                faceViolateTimes++;
-//            }
-//        }
-//        int faceViolateStatus=0;   //人脸违规状态
-//        if(faceViolateTimes>=faceSinginSlight&&faceViolateTimes<faceSinginSerious){
-//            faceViolateStatus=1;
-//        }
-//        if(faceViolateTimes>=faceSinginSerious){
-//            faceViolateStatus=2;
-//        }
-//        List<SinginInformation> voiceSinginInformations=superviseService.listPersonSingin(code,1);   //获取声纹签到记录
-//        int voiceViolateTimes=0;   //声纹签到违规次数
-//        for (SinginInformation item7:voiceSinginInformations
-//        ) {
-//            if(item7.getResult()==1){
-//                voiceViolateTimes++;
-//            }
-//        }
-//        int voiceViolateStatus=0;    //声纹违规状态
-//        if(voiceViolateTimes>=voiceSinginSlight&&voiceViolateTimes<voiceSinginSerious){
-//            voiceViolateStatus=1;
-//        }
-//        if(voiceViolateTimes>=voiceSinginSerious){
-//            voiceViolateStatus=2;
-//        }
-//        if(locationViolateStatus==0&&summonsViolateStatus==0&&faceViolateStatus==0&&voiceViolateStatus==0){
-//            superviseBaseInformation.setViolateCode("0");
-//            superviseBaseInformation.setViolate("正常");
-//        }
-//        if(locationViolateStatus==1||summonsViolateStatus==1||faceViolateStatus==1||voiceViolateStatus==1){
-//            superviseBaseInformation.setViolateCode("1");
-//            superviseBaseInformation.setViolate("轻微");
-//        }
-//        if(locationViolateStatus==1||summonsViolateStatus==2||faceViolateStatus==2||voiceViolateStatus==2){
-//            superviseBaseInformation.setViolateCode("2");
-//            superviseBaseInformation.setViolate("严重");
-//        }
+
         String violateName=superviseService.getViolateName("WGCD-001",personAllInformationModel.getViolationcode());
         superviseBaseInformation.setViolate(violateName);
         superviseBaseInformation.setViolateCode(personAllInformationModel.getViolationcode());
@@ -1620,4 +1467,209 @@ public class SuperviseController {
         rs.data=superviseDetailModel;
         return rs;
     }
+
+    @UserLoginToken
+    @ApiOperation(value = "获取保外人员是否有语音注册记录")
+    @GetMapping("/getVoiceRegister")
+    public ResultSet getVoiceRegister(@ApiParam(name = "code",value = "取保人员唯一标识")@RequestParam(required = true)String code){
+        ResultSet rs=new ResultSet();
+        String userId=TokenUtil.getTokenUserId();
+        PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(code);
+        if(personAllInformationModel.getSponsoralarm().equals(userId)){
+            VoiceRegisterReturnModel voiceRegisterReturnModel=new VoiceRegisterReturnModel();
+            voiceRegisterReturnModel.setHasVoice(personAllInformationModel.isHasvoice());
+            rs.resultCode=0;
+            rs.resultMsg="";
+            rs.data=voiceRegisterReturnModel;
+        }
+        else{
+            rs.resultCode=1;
+            rs.resultMsg="无此取保监居人员";
+            rs.data=null;
+        }
+        return rs;
+    }
+
+    @UserLoginToken
+    @ApiOperation(value = "获取语音签到识别串")
+    @GetMapping("/generateVoiceSignNum")
+    public ResultSet generateVoiceSignNum(){
+        VoiceSignNumReturnModel voiceSignNumReturnModel=new VoiceSignNumReturnModel();
+        ResultSet rs=new ResultSet();
+        String signCode="SBC";
+        String number="";
+        Random random=new Random();
+        for(int i=0;i<8;i++){
+            signCode+=String.valueOf(random.nextInt(10));
+            number+=String.valueOf(random.nextInt(10));
+        }
+        voiceSignNumReturnModel.setSignCode(signCode);
+        voiceSignNumReturnModel.setNumber(number);
+        rs.resultCode=0;
+        rs.resultMsg="";
+        rs.data=voiceSignNumReturnModel;
+        return rs;
+    }
+
+    @UserLoginToken
+    @ApiOperation(value = "保外人员语音签到注册（声纹注册）")
+    @PostMapping("/voiceRegister")
+    public ResultSet voiceRegister(@RequestParam(required = true)String code, @RequestParam(required = false)MultipartFile voice,
+                                   @RequestParam(required = true)String signCode) throws Exception {
+        ResultSet rs=new ResultSet();
+        Upload upload=new Upload();
+        DemoModel demo=new DemoModel();
+        PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(code);
+        /*
+        上传文件至服务器
+         */
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(System.currentTimeMillis());
+        String url = System.getProperty("user.dir") + "/../webapps/voiceFile/" + formatter.format(date)+"/";    //保存图片的路径
+        File path = new File(url);
+        if (!path.exists() && !path.isDirectory()) {
+            path.setWritable(true,false);
+            path.mkdirs();
+        }
+        String uploadVoiceFile=upload.upload(url,voice);
+        String fileName = voice.getOriginalFilename();
+        String serverUrl=demo.getServerUrl();
+        String filePath=serverUrl+"/voiceFile/"+ formatter.format(date)+"/"+fileName;
+        //String filePath="https://pardon.cnnc626.com:8443//voiceFile//2020-03-25//20200313_113334.wav";
+       //String filePath="https://pardon.cnnc626.com:8443//voiceFile//2020-03-25//123.wav";
+        VoicePrintApi voicePrintApi=new VoicePrintApi("203793248", "qhntfvf4x2a582059ji1z9vzlpr9r2cu");
+        /*
+        获取权限，获取算法列表
+         */
+        boolean access=voicePrintApi.getAccess();
+        //String algoList=voicePrintApi.getAlgoList();
+        //String algoList="{\"body\":\"{\\\"data\\\":[{\\\"algo_id\\\":\\\"ivector-1-iv_tx_8k-1\\\",\\\"algo_name\\\":\\\"ivector\\\",\\\"algo_version\\\":1,\\\"model_name\\\":\\\"iv_tx_8k\\\",\\\"model_version\\\":1,\\\"voice_bits_per_sample\\\":16,\\\"voice_sample_rate\\\":8000},{\\\"algo_id\\\":\\\"xvector-1-xv_tx_8k-1\\\",\\\"algo_name\\\":\\\"xvector\\\",\\\"algo_version\\\":1,\\\"model_name\\\":\\\"xv_tx_8k\\\",\\\"model_version\\\":1,\\\"voice_bits_per_sample\\\":16,\\\"voice_sample_rate\\\":8000}],\\\"has_error\\\":false,\\\"error_message\\\":\\\"ok\\\",\\\"error_code\\\":0,\\\"request_id\\\":\\\"7a5509d4-6da5-11ea-b608-00163e02dfac\\\"}\",\"contentType\":\"application/json; charset=utf-8\",\"headers\":{\"Access-Control-Allow-Headers\":\"X-Requested-With,X-Sequence,X-Ca-Key,X-Ca-Secret,X-Ca-Version,X-Ca-Timestamp,X-Ca-Nonce,X-Ca-API-Key,X-Ca-Stage,X-Ca-Client-DeviceId,X-Ca-Client-AppId,X-Ca-Signature,X-Ca-Signature-Headers,X-Ca-Signature-Method,X-Forwarded-For,X-Ca-Date,X-Ca-Request-Mode,Authorization,Content-Type,Accept,Accept-Ranges,Cache-Control,Range,Content-MD5\",\"Access-Control-Allow-Methods\":\"GET,POST,PUT,DELETE,HEAD,OPTIONS,PATCH\",\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Max-Age\":\"172800\",\"Connection\":\"keep-alive\",\"Content-Length\":\"452\",\"Content-Type\":\"application/json; charset=utf-8\",\"Date\":\"Tue, 24 Mar 2020 08:00:07 GMT\",\"Server\":\"Tengine\",\"X-Ca-Request-Id\":\"994B00D2-8A16-4726-830E-C470B1C71DF3\"},\"requestId\":\"994B00D2-8A16-4726-830E-C470B1C71DF3\",\"statusCode\":200}";
+        //String algo_id=JSON.parseArray(JSON.parseObject(JSON.parseObject(algoList).getString("body")).getString("data")).getJSONObject(0).getString("algo_id");
+        /*
+        创建声纹库
+         */
+        //String Vpstore=voicePrintApi.createVpstore(algo_id);
+        //String Vpstore="{\"body\":\"{\\\"data\\\":{\\\"vpstore_id\\\":\\\"d448c490-c065-4627-b957-fa84b9a7a3cb\\\",\\\"algo_id\\\":\\\"xvector-1-xv_tx_8k-1\\\"},\\\"has_error\\\":false,\\\"error_message\\\":\\\"create vpstroe success\\\",\\\"error_code\\\":0,\\\"request_id\\\":\\\"673e431b-6e62-11ea-b608-00163e02dfac\\\"}\",\"contentType\":\"application/json; charset=utf-8\",\"headers\":{\"Access-Control-Allow-Headers\":\"X-Requested-With,X-Sequence,X-Ca-Key,X-Ca-Secret,X-Ca-Version,X-Ca-Timestamp,X-Ca-Nonce,X-Ca-API-Key,X-Ca-Stage,X-Ca-Client-DeviceId,X-Ca-Client-AppId,X-Ca-Signature,X-Ca-Signature-Headers,X-Ca-Signature-Method,X-Forwarded-For,X-Ca-Date,X-Ca-Request-Mode,Authorization,Content-Type,Accept,Accept-Ranges,Cache-Control,Range,Content-MD5\",\"Access-Control-Allow-Methods\":\"GET,POST,PUT,DELETE,HEAD,OPTIONS,PATCH\",\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Max-Age\":\"172800\",\"Connection\":\"keep-alive\",\"Content-Length\":\"221\",\"Content-Type\":\"application/json; charset=utf-8\",\"Date\":\"Wed, 25 Mar 2020 06:32:30 GMT\",\"Server\":\"Tengine\",\"X-Ca-Request-Id\":\"E7E4751C-F396-41F7-92AB-0E3C1BC6A2CC\"},\"requestId\":\"E7E4751C-F396-41F7-92AB-0E3C1BC6A2CC\",\"statusCode\":200}";
+        //String vpstore_id=JSON.parseObject(JSON.parseObject(JSON.parseObject(Vpstore).getString("body")).getString("data")).getString("vpstore_id");
+        /*
+        上传文件
+         */
+        String uploadFile=voicePrintApi.uploadFile("bailWatch",filePath,600000);
+     //   String uploadFile1=voicePrintApi.uploadFile("bailWatch",filePath1,600000);
+        //String uploadFile="{\"body\":\"{\\\"data\\\":{\\\"bucket\\\":\\\"bailWatch\\\",\\\"file_id\\\":\\\"1585120727418_OlDQuCuVaj_bailWatch\\\"},\\\"has_error\\\":false,\\\"error_message\\\":\\\"Upload success\\\",\\\"error_code\\\":0,\\\"request_id\\\":\\\"ddf0915b-6e68-11ea-b608-00163e02dfac\\\"}\",\"contentType\":\"application/json; charset=utf-8\",\"headers\":{\"Access-Control-Allow-Headers\":\"X-Requested-With,X-Sequence,X-Ca-Key,X-Ca-Secret,X-Ca-Version,X-Ca-Timestamp,X-Ca-Nonce,X-Ca-API-Key,X-Ca-Stage,X-Ca-Client-DeviceId,X-Ca-Client-AppId,X-Ca-Signature,X-Ca-Signature-Headers,X-Ca-Signature-Method,X-Forwarded-For,X-Ca-Date,X-Ca-Request-Mode,Authorization,Content-Type,Accept,Accept-Ranges,Cache-Control,Range,Content-MD5\",\"Access-Control-Allow-Methods\":\"GET,POST,PUT,DELETE,HEAD,OPTIONS,PATCH\",\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Max-Age\":\"172800\",\"Connection\":\"keep-alive\",\"Content-Length\":\"196\",\"Content-Type\":\"application/json; charset=utf-8\",\"Date\":\"Wed, 25 Mar 2020 07:18:47 GMT\",\"Server\":\"Tengine\",\"X-Ca-Request-Id\":\"2C3171B5-2527-47EB-ACA5-9DC3D1D1176B\"},\"requestId\":\"2C3171B5-2527-47EB-ACA5-9DC3D1D1176B\",\"statusCode\":200}";
+        String file_id=JSON.parseObject(JSON.parseObject(JSON.parseObject(uploadFile).getString("body")).getString("data")).getString("file_id");
+        //String file_id1=JSON.parseObject(JSON.parseObject(JSON.parseObject(uploadFile1).getString("body")).getString("data")).getString("file_id");
+        String[] file_ID={file_id};//new String[2];
+        //file_ID[0]=file_id;
+        //file_ID[1]=file_id1;
+       // file_ID[0]=uploadFile;//"1585148195326_dTkhAMTSJu_bailWatch";
+       // file_ID[1]=uploadFile1;//"1585148225792_NycNxfaIJT_bailWatch";
+        /*
+        注册声纹
+         */
+        String register=voicePrintApi.registerVoicePrint("758001e8-e36b-4539-aaf7-4697b9a767c0",personAllInformationModel.getContact(),file_ID,true);
+        //String register="{\"body\":\"{\\\"data\\\":{},\\\"has_error\\\":false,\\\"error_message\\\":\\\"voice print register success\\\",\\\"error_code\\\":0,\\\"request_id\\\":\\\"204ca554-6f35-11ea-b608-00163e02dfac\\\"}\",\"contentType\":\"application/json; charset=utf-8\",\"headers\":{\"Access-Control-Allow-Headers\":\"X-Requested-With,X-Sequence,X-Ca-Key,X-Ca-Secret,X-Ca-Version,X-Ca-Timestamp,X-Ca-Nonce,X-Ca-API-Key,X-Ca-Stage,X-Ca-Client-DeviceId,X-Ca-Client-AppId,X-Ca-Signature,X-Ca-Signature-Headers,X-Ca-Signature-Method,X-Forwarded-For,X-Ca-Date,X-Ca-Request-Mode,Authorization,Content-Type,Accept,Accept-Ranges,Cache-Control,Range,Content-MD5\",\"Access-Control-Allow-Methods\":\"GET,POST,PUT,DELETE,HEAD,OPTIONS,PATCH\",\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Max-Age\":\"172800\",\"Connection\":\"keep-alive\",\"Content-Length\":\"143\",\"Content-Type\":\"application/json; charset=utf-8\",\"Date\":\"Thu, 26 Mar 2020 07:40:55 GMT\",\"Server\":\"Tengine\",\"X-Ca-Request-Id\":\"2AC3BCD1-9B6D-4BA6-861E-B0D7A8726E0C\"},\"requestId\":\"2AC3BCD1-9B6D-4BA6-861E-B0D7A8726E0C\",\"statusCode\":200}";
+        int statusCode=Integer.valueOf(JSON.parseObject(register).getString("statusCode"));
+        if(statusCode==200){
+            rs.resultCode=0;
+            rs.resultMsg="";
+            rs.data=new Object();
+        }else{
+            rs.resultCode=1;
+            rs.resultMsg="注册失败";
+            rs.data=null;
+        }
+
+        return rs;
+    }
+
+    @UserLoginToken
+    @ApiOperation(value = "保外人员语音签到验证（声纹验证）")
+    @PostMapping("/voiceRecognize")
+    public ResultSet voiceRecognize(@RequestParam(required = true)String code,@RequestParam(required = false)MultipartFile voice,
+                                    @RequestParam(required = true)String signCode) throws Exception {
+        ResultSet rs=new ResultSet();
+        Upload upload=new Upload();
+        DemoModel demo=new DemoModel();
+        PersonAllInformationModel personAllInformationModel=superviseService.getPersonInformation(code);
+        /*
+        上传文件至服务器
+         */
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(System.currentTimeMillis());
+        String url = System.getProperty("user.dir") + "/../webapps/voiceValidateFile/" + formatter.format(date)+"/";    //保存图片的路径
+        File path = new File(url);
+        if (!path.exists() && !path.isDirectory()) {
+            path.setWritable(true,false);
+            path.mkdirs();
+        }
+        String uploadVoiceFile=upload.upload(url,voice);
+        String fileName = voice.getOriginalFilename();
+        String serverUrl=demo.getServerUrl();
+        String filePath=serverUrl+"/voiceValidateFile/"+ formatter.format(date)+"/"+fileName;
+        //String filePath="https://pardon.cnnc626.com:8443//voiceValidateFile//2020-03-27//456.wav";
+
+        try {
+            VoicePrintApi voicePrintApi = new VoicePrintApi("203793248", "qhntfvf4x2a582059ji1z9vzlpr9r2cu");
+        /*
+        上传文件
+         */
+            boolean access=voicePrintApi.getAccess();
+            String uploadFile = voicePrintApi.uploadFile("bailWatch", filePath, 600000);
+            String file_id = JSON.parseObject(JSON.parseObject(JSON.parseObject(uploadFile).getString("body")).getString("data")).getString("file_id");
+            //String file_id="1585276267323_iqIKuXvLnJ_bailWatch";
+        /*
+        获取声纹列表
+         */
+            String voicePrintList = voicePrintApi.getVoicePrintList("758001e8-e36b-4539-aaf7-4697b9a767c0", 0, 0);
+            //String voicePrintList="{\"body\":\"{\\\"data\\\":[{\\\"vp_store_id\\\":\\\"758001e8-e36b-4539-aaf7-4697b9a767c0\\\",\\\"voice_print_id\\\":\\\"SW12345670\\\"}],\\\"has_error\\\":false,\\\"error_message\\\":\\\"ok\\\",\\\"error_code\\\":0,\\\"request_id\\\":\\\"133ec247-6fd3-11ea-b608-00163e02dfac\\\"}\",\"contentType\":\"application/json; charset=utf-8\",\"headers\":{\"Access-Control-Allow-Headers\":\"X-Requested-With,X-Sequence,X-Ca-Key,X-Ca-Secret,X-Ca-Version,X-Ca-Timestamp,X-Ca-Nonce,X-Ca-API-Key,X-Ca-Stage,X-Ca-Client-DeviceId,X-Ca-Client-AppId,X-Ca-Signature,X-Ca-Signature-Headers,X-Ca-Signature-Method,X-Forwarded-For,X-Ca-Date,X-Ca-Request-Mode,Authorization,Content-Type,Accept,Accept-Ranges,Cache-Control,Range,Content-MD5\",\"Access-Control-Allow-Methods\":\"GET,POST,PUT,DELETE,HEAD,OPTIONS,PATCH\",\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Max-Age\":\"172800\",\"Connection\":\"keep-alive\",\"Content-Length\":\"201\",\"Content-Type\":\"application/json; charset=utf-8\",\"Date\":\"Fri, 27 Mar 2020 02:31:34 GMT\",\"Server\":\"Tengine\",\"X-Ca-Request-Id\":\"00AF9AA5-B453-4205-AA90-2CB2B0CED1CB\"},\"requestId\":\"00AF9AA5-B453-4205-AA90-2CB2B0CED1CB\",\"statusCode\":200}";
+            //String vp_store_id = JSON.parseArray(JSON.parseObject(JSON.parseObject(voicePrintList).getString("body")).getString("data")).getJSONObject(0).getString("voice_print_id");
+            JSONArray vp_store_id1 = JSON.parseArray(JSON.parseObject(JSON.parseObject(voicePrintList).getString("body")).getString("data"));
+            String vp_store_id ="";
+            for(int i=0;i<vp_store_id1.size();i++){
+                if(JSON.parseArray(JSON.parseObject(JSON.parseObject(voicePrintList).getString("body")).getString("data")).getJSONObject(i).getString("voice_print_id").equals(personAllInformationModel.getContact())){
+                    vp_store_id=JSON.parseArray(JSON.parseObject(JSON.parseObject(voicePrintList).getString("body")).getString("data")).getJSONObject(i).getString("voice_print_id");
+                    break;
+                }
+            }
+            String[] voicePrintIds = {vp_store_id};
+        /*
+        验证声纹
+         */
+            String compareVoicePrint = voicePrintApi.compareVoicePrint("758001e8-e36b-4539-aaf7-4697b9a767c0", file_id, voicePrintIds);
+            int statusCode = Integer.valueOf(JSON.parseObject(compareVoicePrint).getString("statusCode"));
+
+            if (statusCode == 200) {
+                //String voice_print_id = JSON.parseArray(JSON.parseObject(JSON.parseObject(compareVoicePrint).getString("body")).getString("data")).getJSONObject(1).getString("voice_print_id");
+                float score = JSON.parseArray(JSON.parseObject(JSON.parseObject(compareVoicePrint).getString("body")).getString("data")).getJSONObject(0).getFloat("score");
+                VoiceRecognizeReturnModel voiceRecognizeReturnModel = new VoiceRecognizeReturnModel();
+                if(score>80){
+                    int updateHasVoice = superviseService.updateHasVoice(code);
+                    voiceRecognizeReturnModel.setCode("0");
+                    voiceRecognizeReturnModel.setPassed(true);
+                    voiceRecognizeReturnModel.setScore(score);
+                    voiceRecognizeReturnModel.setUrl(filePath);
+                }
+                else{
+                    voiceRecognizeReturnModel.setCode("0");
+                    voiceRecognizeReturnModel.setPassed(false);
+                    voiceRecognizeReturnModel.setScore(score);
+                    voiceRecognizeReturnModel.setUrl(filePath);
+                }
+                rs.resultCode = 0;
+                rs.resultMsg = "";
+                rs.data = voiceRecognizeReturnModel;
+            } else {
+                rs.resultCode = 1;
+                rs.resultMsg = "验证失败";
+                rs.data = null;
+            }
+        }catch (Exception e){
+            rs.resultCode=1;
+            rs.resultMsg=e.getMessage();
+            rs.data=null;
+        }
+        return rs;
+    }
 }
+

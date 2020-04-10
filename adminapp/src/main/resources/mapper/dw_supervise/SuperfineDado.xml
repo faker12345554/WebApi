@@ -138,4 +138,7 @@
         insert into t_personmessage(modular, content, personid, modularname, messagetime, readmessage, detailtype, detailtypename, leaveorder) VALUES (#{modular},
         #{content},#{personId},#{modularName},current_timestamp,true,#{detailType},#{detailName},#{leaveOrder})
     </insert>
+    <update id="updateHasVoice">
+        update t_personinformation set hasvoice=true where personid=#{code}
+    </update>
 </mapper>

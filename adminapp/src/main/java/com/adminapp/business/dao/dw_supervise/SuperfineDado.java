@@ -95,4 +95,6 @@ public interface SuperfineDado {
 
     int insertPersonMessage(@Param("modular")int modular,@Param("content")String content,@Param("modularName")String modularName,@Param("personId")String personId,
                             @Param("detailType")int detailType,@Param("detailName")String detailName,@Param("leaveOrder")String leaveOrder);
+
+    int updateHasVoice(@Param("code")String code);
 }
