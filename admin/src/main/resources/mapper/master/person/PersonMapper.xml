@@ -6,11 +6,11 @@
         INSERT into t_personinformation(personid,personname,gender,age,birthdate,card,workunit,bailoutbegindate,bailoutenddate,sponsor,sponsoralarm,contact,address,wechatnumber,
         qqnumber,status,founderid,foundertime,modifierid,modifiertime,suspectstatus,marriage,policestation,casetype,facepath,persontags,gendercode,beforename,nation,degreeeducation,
         nativeplace,occupation,nationality,registeredarea,permanentaddress,currentaddress,nowaddress,yjsponsoralarm,exectype,keepaddress,appointaddress,province,city,area,
-        monitoraddress,suspectstatuscode,violationcode,policecode,caseno)
-        values (#{personid},#{personname},#{gender},#{age},#{birthdate},#{card},#{workunit},to_timestamp(#{bailoutbegindate},'yyyy-MM-dd HH:mi:ss'),to_timestamp(#{bailoutenddate},'yyyy-MM-dd HH:mi:ss'),#{sponsor},#{sponsoralarm},#{contact},#{address},
-        #{wechatnumber},#{qqnumber},#{status},#{founderid},to_timestamp(#{foundertime},'yyyy-MM-dd HH:mi:ss'),#{modifierid},to_timestamp(#{modifiertime},'yyyy-MM-dd HH:mi:ss'),#{suspectstatus},#{marriage},#{policestation},#{casetype},#{facepath},
+        monitoraddress,suspectstatuscode,violationcode,policecode,caseno,guid)
+        values (#{personid},#{personname},#{gender},#{age},#{birthdate},#{card},#{workunit},to_timestamp(#{bailoutbegindate},'yyyy-MM-dd HH24:mi:ss'),to_timestamp(#{bailoutenddate},'yyyy-MM-dd HH24:mi:ss'),#{sponsor},#{sponsoralarm},#{contact},#{address},
+        #{wechatnumber},#{qqnumber},#{status},#{founderid},to_timestamp(#{foundertime},'yyyy-MM-dd HH24:mi:ss'),#{modifierid},to_timestamp(#{modifiertime},'yyyy-MM-dd HH24:mi:ss'),#{suspectstatus},#{marriage},#{policestation},#{casetype},#{facepath},
         #{persontags},#{gendercode},#{beforename},#{nation},#{degreeeducation},#{nativeplace},#{occupation},#{nationality},#{registeredarea},#{permanentaddress},#{currentaddress},
-        #{nowaddress},#{yjsponsoralarm},#{exectype},#{keepaddress},#{appointaddress},#{province},#{city},#{area},#{monitoraddress},#{suspectstatuscode},#{violationcode},#{policecode},#{caseno})
+        #{nowaddress},#{yjsponsoralarm},#{exectype},#{keepaddress},#{appointaddress},#{province},#{city},#{area},#{monitoraddress},#{suspectstatuscode},#{violationcode},#{policecode},#{caseno},#{guid})
     </insert>
 
     <update id="updatePersion" parameterType="com.admin.admin.entity.dw_person.Personinformation">
@@ -20,7 +20,7 @@
         casetype=#{casetype},facepath=#{facepath},persontags=#{persontags},gendercode=#{gendercode},beforename=#{beforename},nation=#{nation},degreeeducation=#{degreeeducation},
         nativeplace=#{nativeplace},occupation=#{occupation},nationality=#{nationality},registeredarea=#{registeredarea},permanentaddress=#{permanentaddress},currentaddress=#{currentaddress},
         nowaddress=#{nowaddress},yjsponsoralarm=#{yjsponsoralarm},exectype=#{exectype},keepaddress=#{keepaddress},appointaddress=#{appointaddress},province=#{province},city=#{city},
-        area=#{area},monitoraddress=#{monitoraddress},suspectstatuscode=#{suspectstatuscode},policecode=#{policecode},caseno=#{caseno}
+        area=#{area},monitoraddress=#{monitoraddress},suspectstatuscode=#{suspectstatuscode},policecode=#{policecode},caseno=#{caseno},guid=#{guid}
         where personid=#{personid}
     </update>
 
@@ -110,6 +110,21 @@
             where fscope=true and personid=#{personid}
         </if>
     </select>
+
+    <select id="getpersonbyguid" parameterType="String" resultType="int">
+        select count(*) from t_personinformation where guid=#{guid}
+    </select>
+
+    <update id="updatePersionbyguid" parameterType="com.admin.admin.entity.dw_person.Personinformation">
+        UPDATE t_personinformation set personname=#{personname},gender=#{gender},age=#{age},birthdate=#{birthdate},card=#{card},workunit=#{workunit},bailoutbegindate=to_timestamp(#{bailoutbegindate},'yyyy-MM-dd HH24:mi:ss'),
+        bailoutenddate=to_timestamp(#{bailoutenddate},'yyyy-MM-dd HH24:mi:ss'),sponsor=#{sponsor},sponsoralarm=#{sponsoralarm},contact=#{contact},address=#{address},wechatnumber=#{wechatnumber},qqnumber=#{qqnumber},status=#{status},
+        founderid=#{founderid},modifierid=#{modifierid},modifiertime=to_timestamp(#{modifiertime},'yyyy-MM-dd HH24:mi:ss'),suspectstatus=#{suspectstatus},marriage=#{marriage},policestation=#{policestation},
+        casetype=#{casetype},facepath=#{facepath},persontags=#{persontags},gendercode=#{gendercode},beforename=#{beforename},nation=#{nation},degreeeducation=#{degreeeducation},
+        nativeplace=#{nativeplace},occupation=#{occupation},nationality=#{nationality},registeredarea=#{registeredarea},permanentaddress=#{permanentaddress},currentaddress=#{currentaddress},
+        nowaddress=#{nowaddress},yjsponsoralarm=#{yjsponsoralarm},exectype=#{exectype},keepaddress=#{keepaddress},appointaddress=#{appointaddress},province=#{province},city=#{city},
+        area=#{area},monitoraddress=#{monitoraddress},suspectstatuscode=#{suspectstatuscode},policecode=#{policecode},caseno=#{caseno},guid=#{guid}
+        where guid=#{guid}
+    </update>
 
 
 </mapper>

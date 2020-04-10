@@ -44,6 +44,9 @@ public interface PersonDao {
 
     int delconfig(TPrisonsetting tPrisonsetting);
 
+    int getpersonbyguid(String guid);
+
+    int updatePersionbyguid(Personinformation personinformation);
     /*
     查询是否重复
      */

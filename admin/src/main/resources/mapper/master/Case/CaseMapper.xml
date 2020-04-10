@@ -16,33 +16,39 @@
         select * from t_caseinfo where personid=#{PersonId} and caseno=#{Caseno}
     </select>
 
-    <insert id="Synchronouscase" parameterType="java.util.List" useGeneratedKeys="true">
+    <insert id="Synchronouscase" parameterType="com.admin.admin.entity.dw_case.TCaseinfo" >
         insert into t_caseinfo
         values
-        <foreach collection="list" item="item" index="index" separator=",">
             (
             #{item.casecategory},
             #{item.casename},
             #{item.caseno},
-            to_timestamp(#{item.receivedtime},'yyyy-MM-dd HH:mi:ss'),
+            to_timestamp(#{item.receivedtime},'yyyy-MM-dd HH24:mi:ss'),
             #{item.handleunit},
             #{item.handlepeson},
             #{item.personid},
             #{item.casetype},
-            #{item.casedescription}
-            )
-            ON conflict(caseno)
-            DO UPDATE SET casecategory=#{item.casecategory},casename=#{item.casename},caseno=#{item.caseno},
-            receivedtime=to_timestamp(#{item.receivedtime},'yyyy-MM-dd HH:mi:ss'),handleunit=#{item.handleunit},
-            handlepeson=#{item.handlepeson},personid=#{item.personid},casetype=#{item.casetype},
-            casedescription=#{item.casedescription}
-        </foreach>
+            #{item.casedescription},
+            #{item.mainperson},
+            #{item.operationperson},
+            to_date(#{item.filingtime},'yyyy-MM-dd')
 
     </insert>
 
+    <select id="recordexists" parameterType="String" resultType="int">
+       select count(*) from t_caseinfo where caseno=#{caseno}
+    </select>
+
+    <update id="Modifycaserecord" parameterType="com.admin.admin.entity.dw_case.TCaseinfo">
+        update t_caseinfo set casecategory=#{item.casecategory},casename=#{item.casename},caseno=#{item.caseno},
+            receivedtime=to_timestamp(#{item.receivedtime},'yyyy-MM-dd HH:mi:ss'),handleunit=#{item.handleunit},
+            handlepeson=#{item.handlepeson},personid=#{item.personid},casetype=#{item.casetype},
+            casedescription=#{item.casedescription},mainperson=#{item.mainperson},operationperson=#{item.operationperson},
+            filingtime= to_date(#{item.filingtime},'yyyy-MM-dd') where caseno=#{item.caseno}
+    </update>
+
     <insert id="Synchronizedpolice" parameterType="java.util.List" useGeneratedKeys="false">
-        insert  into fsga_yw_ryb values
-        <foreach collection="list" item="item" index="index" separator=",">
+        insert into fsga_yw_ryb values
             (
             #{item.id},
             #{item.mjbh},
@@ -64,23 +70,30 @@
             #{item.updateTime},
             #{item.remark},
             #{item.state}
-            )
-            ON conflict(id)
-            DO UPDATE SET mjbh =#{item.mjbh}, mjmc =#{item.mjmc},
-            dlmm=#{item.dlmm},bmbm=#{item.bmbm},bmmc=#{item.bmmc},bmjc=#{item.bmjc},ddbmbm=#{item.ddbmbm},
-            ddbmmc=#{item.ddbmmc},ddbmjc=#{item.ddbmjc},zw=#{item.zw},jh=#{item.jh},sfzh=#{item.sfzh},
-            dzyj=#{item.dzyj},sjhm=#{item.sjhm},sjly=#{item.sjly},
-            createTime=#{item.createTime},updateTime=#{item.updateTime},remark=#{item.remark},state=#{item.state}
-        </foreach>
+          )
+
 
     </insert>
+    <select id="getpolicenum" parameterType="String" resultType="int">
+        select count(*) from fsga_yw_ryb where mjbh=#{mjbh}
+    </select>
+
+    <update id="ModifyPolice" parameterType="com.admin.admin.entity.dw_fsgayw.FsgaYwRyb">
+        UPDATE fsga_yw_ryb SET mjbh =#{mjbh}, mjmc =#{mjmc},
+            dlmm=#{dlmm},bmbm=#{bmbm},bmmc=#{bmmc},bmjc=#{bmjc},ddbmbm=#{ddbmbm},
+            ddbmmc=#{ddbmmc},ddbmjc=#{ddbmjc},zw=#{zw},jh=#{item.jh},sfzh=#{sfzh},
+            dzyj=#{dzyj},sjhm=#{sjhm},sjly=#{sjly},
+            createTime=#{createTime},updateTime=#{updateTime},remark=#{remark},state=#{state}
+            where mjbh=#{mjbh}
+    </update>
+
 
     <insert id="insertTsyn" parameterType="com.admin.admin.entity.dw_Synchron.TSynchron">
-        insert into t_Synchron values (name,datatime)
+        insert into t_synchron values (#{name},to_date(#{datatime}, 'yyyy-MM-dd'))
     </insert>
 
-    <select id="GetTsyn" parameterType="int">
-       	SELECT * from t_Synchron where name=#{type} ORDER BY datatime LIMIT 1
+    <select id="GetTsyn" parameterType="int" resultType="com.admin.admin.entity.dw_Synchron.TSynchron">
+       	SELECT * from t_synchron where name=#{type} ORDER BY datatime LIMIT 1
     </select>
 
 </mapper>

@@ -2,6 +2,8 @@ package com.admin.timer;
 
 import com.admin.admin.dao.master.dw_violation.ViolationDao;
 import com.admin.admin.entity.dw_violation.Violationfens;
+import com.admin.admin.service.dw_app.MessageService;
+import com.admin.admin.service.dw_person.PersoinfoService;
 import com.admin.admin.service.dw_task.Tasking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +28,12 @@ public class Datatimer  {
     private Tasking tasking;
 
     @Autowired
+    private PersoinfoService persoinfoService;
+
+    @Autowired
+    private MessageService  messageService;
+
+    @Autowired
     private ViolationDao violationDao;
     //每天凌晨1点执行
     @Scheduled(cron = "0 0 1 * * ?")
@@ -37,7 +45,7 @@ public class Datatimer  {
     //每天凌晨2点执行
     @Scheduled(cron = "0 0 2 * * ?")
     public void job2() throws Exception {
-
+        messageService.Synchronizedpolice();
         tasking.GeneratedRecord();
     }
     //每个月1号凌晨一点执行
@@ -69,15 +77,17 @@ public class Datatimer  {
         tasking.Statisticalsummons();
     }
     //每天凌晨三点
-//    @Scheduled(cron = "0 0 3 * * ?")
-//    public void SendSummons() throws Exception{
-//    tasking.GetMessageList(4);
-//    }
-//    //每天凌晨三点
-//    @Scheduled(cron = "0 0 3 * * ?")
-//    public void SendBailout() throws Exception{
-//        tasking.GetMessageList(6);
-//    }
+    @Scheduled(cron = "0 0 3 * * ?")
+    public void SendSummons() throws Exception{
+    //tasking.GetMessageList(4);
+        messageService.Synchronouscase();
+    }
+    //每天凌晨三点
+    @Scheduled(cron = "0 0 4 * * ?")
+    public void SendBailout() throws Exception{
+        persoinfoService.getlistpernson();
+        //tasking.GetMessageList(6);
+    }
 //    //每天凌晨三点
 //    @Scheduled(cron = "0 0 3 * * ?")
 //    public void SendPrison() throws Exception{

@@ -11,9 +11,40 @@ public class TCaseinfo {
   private String receivedtime;
   private String handleunit;
   private String handlepeson;
+
+  public String getMainperson() {
+    return mainperson;
+  }
+
+  public TCaseinfo setMainperson(String mainperson) {
+    this.mainperson = mainperson;
+    return this;
+  }
+
+  public String getOperationperson() {
+    return operationperson;
+  }
+
+  public TCaseinfo setOperationperson(String operationperson) {
+    this.operationperson = operationperson;
+    return this;
+  }
+
+  public String getFilingtime() {
+    return filingtime;
+  }
+
+  public TCaseinfo setFilingtime(String filingtime) {
+    this.filingtime = filingtime;
+    return this;
+  }
+
   private String personid;
   private String casetype;
   private String casedescription;
+  private String mainperson;
+  private String operationperson;
+  private String filingtime;
 
   public String getReceivedtime() {
     return receivedtime;
