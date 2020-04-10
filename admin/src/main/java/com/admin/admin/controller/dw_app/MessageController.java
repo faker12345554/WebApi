@@ -44,6 +44,9 @@ public class MessageController {
     @ApiOperation("测试")
     @GetMapping("/Gettest")
     public void test() throws Exception{
+
+
         personDao.getlistpernson();
+
     }
 }
