@@ -38,7 +38,7 @@ public class Tasking {
             long days = CalendarAdjust.getDays(CalendarAdjust.GetYear(new Date()), CalendarAdjust.GetYear(simpleDateFormat.parse(item.getBailoutenddate())));
             // System.out.println(CalendarAdjust.getDays(CalendarAdjust.GetYear(new Date()), CalendarAdjust.GetYear(item.getBailoutenddate())));
             System.out.println(item.getBailoutenddate());
-            if (days == 15) {
+            if (days <= 15) {
                 System.out.println(item.getPersonid());
                 if (item.getSuspectstatus().equals("取保候审")) {
                     System.out.println(item.getPersonid());

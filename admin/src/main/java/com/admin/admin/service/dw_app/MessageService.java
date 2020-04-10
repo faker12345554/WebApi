@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,12 +23,9 @@ public class MessageService {
     @Autowired
     private MessageDao messageDao;
     @Autowired
-    private CaseDao  caseDao;
+    private CaseDao caseDao;
     @Autowired
     private fsdao fsdao;
-
-
-
 
 
     public int getNotificationList(String UserId) {
@@ -37,34 +35,57 @@ public class MessageService {
 
 
     //同步警务人员信息
-    public void Synchronizedpolice(){
-        TSynchron tSynchron=caseDao.GetTsyn(1);
-        List<FsgaYwRyb> list=fsdao.getfslist(tSynchron.getDatatime());
-        List<List<FsgaYwRyb>>  lists=JudgementRole.averageAssign(list,10);
-        for (List<FsgaYwRyb> item: lists){
-            caseDao.Synchronizedpolice(item);
+    public void Synchronizedpolice() {
+        TSynchron tSynchron = caseDao.GetTsyn(1);
+        List<FsgaYwRyb> list=new ArrayList<FsgaYwRyb>();
+        if (tSynchron!=null){
+            list = fsdao.getfslist(tSynchron.getDatatime());
+        }else {
+            list=fsdao.getfslist("");
         }
-        TSynchron model=new TSynchron();
+
+        if (list.size() != 0) {
+           // List<List<FsgaYwRyb>> lists = JudgementRole.averageAssign(list, 10);
+            for (FsgaYwRyb item : list) {
+                if (caseDao.getpolicenum(item.getMjbh())==1){
+                    caseDao.ModifyPolice(item);
+                }else
+                {
+                    caseDao.Synchronizedpolice(item);
+                }
+
+            }
+        }
+        TSynchron model = new TSynchron();
         model.setName(1);
         model.setDatatime(CalendarAdjust.GetYear(new Date()));
         caseDao.insertTsyn(model);
     }
 
-    private void Synchronouscase(){
-        TSynchron tSynchron=caseDao.GetTsyn(2);
-        List<TCaseinfo> list=fsdao.getCaseing();
-        List<List<TCaseinfo>>  lists=JudgementRole.averageAssign(list,10);
-        for (List<TCaseinfo> item: lists){
-            caseDao.Synchronouscase(item);
+    public void Synchronouscase() {
+        TSynchron tSynchron = caseDao.GetTsyn(2);
+        List<TCaseinfo> list=new ArrayList<TCaseinfo>();
+        if (tSynchron!=null){
+            list = fsdao.getCaseing(tSynchron.getDatatime());
+        }else{
+            list = fsdao.getCaseing("");
         }
-        TSynchron model=new TSynchron();
+
+        if (list.size() != 0) {
+            for (TCaseinfo item : list) {
+                if (caseDao.recordexists(item.getCaseno())==1){
+                    caseDao.UpdateCase(item);
+                }else{
+                    caseDao.Synchronouscase(item);
+                }
+
+            }
+        }
+        TSynchron model = new TSynchron();
         model.setName(2);
         model.setDatatime(CalendarAdjust.GetYear(new Date()));
         caseDao.insertTsyn(model);
     }
-
-
-
 
 
 }

@@ -20,10 +20,19 @@ public interface CaseDao {
     //查询案件信息
     TCaseinfo GetCase(String PersonId,String Caseno);
     //同步案件信息
-    int Synchronouscase(List<TCaseinfo> caselist);
+    int Synchronouscase(TCaseinfo tCaseinfo);
+    //判断案件是否存在
+    int recordexists(String caseno);
+    //修改案件信息
 
     //同步警务人员信息
-    int Synchronizedpolice(List<FsgaYwRyb> fslist);
+    int Synchronizedpolice(FsgaYwRyb fsgaYwRyb);
+
+    //查询民警是否重复
+    int getpolicenum(String mjbh);
+
+    //修改民警信息
+    int ModifyPolice(FsgaYwRyb fsgaYwRyb);
     //获取最后一次同步数据的时间
     TSynchron GetTsyn(int type);
 
