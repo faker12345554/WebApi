@@ -8,6 +8,7 @@ public class JudgementRole {
     public static int Distinguishroles(){
         int type=0;
        Object Role= CacheUtils.get("Role");
+       Object accountname=CacheUtils.get("accountname");
        System.out.println(Role.toString());
        if (Role.toString().equals("民警")){
            type= 1;
@@ -15,6 +16,10 @@ public class JudgementRole {
            type= 2;
        }else if(Role.toString().equals("所长")){
            type=3;
+       }else if (Role.toString().equals("请必填")){
+           if (accountname.toString().equals("admin")){
+               type=4;
+           }
        }
        return  type;
     }

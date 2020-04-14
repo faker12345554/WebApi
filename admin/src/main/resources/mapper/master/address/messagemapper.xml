@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.admin.dao.master.dw_app.MessageDao">
+    <select id="getallpolice" resultType="com.admin.admin.entity.dw_fsgayw.FsgaYwRyb" >
+        select * from fsga_yw_ryb
+    </select>
+
+    <insert id="insertuser" parameterType="com.admin.admin.entity.dw_user.User">
+    INSERT into t_user(accountname,password,aliasname,permissionid,createid,createname,
+    areacode,phone,status,usersystem,officephone,police,areaname,department,mailbox,sex,
+    station,bz,createtime,departmentnum)
+     values (#{user.accountname},#{user.password},#{user.aliasname},#{user.permissionid},#{user.createid},
+     #{user.createname},#{user.areacode},#{user.phone},#{user.status},#{user.usersystem},
+     #{user.officephone},#{user.police},#{user.areaname},#{user.department},#{user.mailbox},#{user.sex},#{user.station},
+     #{user.bz},Current_timestamp,#{user.departmentnum})
+    </insert>
+
+    <update id="updateUser" parameterType="com.admin.admin.entity.dw_user.User">
+          UPDATE t_user set accountname=#{user.accountname}, aliasname=#{user.aliasname},permissionid=#{user.permissionid},status=#{user.status},
+        createid=#{user.createid},createname=#{user.createname},areacode=#{user.areacode},phone=#{user.phone},usersystem=#{user.usersystem},officephone=#{user.officephone},police=#{user.police},areaname=#{user.areaname},
+        department=#{user.department},mailbox=#{user.mailbox},sex=#{user.sex},station=#{user.station},bz=#{user.bz},departmentnum=#{user.departmentnum}, password=#{user.password} where accountname=#{user.accountname}
+    </update>
+
+    <select id="getperson" resultType="com.admin.admin.entity.dw_person.Personinformation">
+         select * from t_personinformation where status=true
+    </select>
+</mapper>

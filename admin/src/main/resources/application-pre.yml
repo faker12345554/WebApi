@@ -9,16 +9,16 @@ server:
 
 master:
   datasource:
-    url: jdbc:postgresql://68.109.202.164:5432/legal?useUnicode=true&characterEncoding=utf8
+    url: jdbc:postgresql://112.74.41.177:5432/legal?useUnicode=true&characterEncoding=utf8
     username: postgres
-    password: "Xfz-1017"
+    password: "!QAZ2wsx#EDC"
     driverClassName: org.postgresql.Driver
     # second 数据源配置
 second:
   datasource:
-    url: jdbc:postgresql://68.109.202.164:5432/fszhxfztb?useUnicode=true&characterEncoding=utf8
+    url: jdbc:postgresql://192.168.10.88,14333:5432/fszhxfztb?useUnicode=true&characterEncoding=utf8
     username: postgres
-    password: "Xfz-1017"
+    password: 123456
     driverClassName: org.postgresql.Driver
 
 
@@ -27,7 +27,7 @@ swagger:
 
 logging:
   level:
-    root: info
+    root: debug
 
 mybatis:
   type-aliases-package: com.admin.admin.dao

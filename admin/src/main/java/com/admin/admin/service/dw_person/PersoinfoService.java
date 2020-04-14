@@ -1,5 +1,6 @@
 package com.admin.admin.service.dw_person;
 
+import com.admin.admin.dao.master.dw_app.MessageDao;
 import com.admin.admin.dao.master.dw_case.CaseDao;
 import com.admin.admin.dao.master.dw_guaran.GuarantDao;
 import com.admin.admin.dao.master.dw_person.PersonDao;
@@ -13,12 +14,14 @@ import com.admin.admin.entity.dw_guarant.GuaranteeInformation;
 import com.admin.admin.entity.dw_message.TMessage;
 import com.admin.admin.entity.dw_person.Personinformation;
 import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
+import com.admin.admin.entity.dw_user.User;
 import com.admin.admin.entity.dw_violation.Violationfens;
 import com.admin.model.Appstatistics.monthnumber;
 import com.admin.model.search.SearchModel;
 import com.admin.tool.CacheUtils;
 import com.admin.tool.JudgementRole;
 import com.common.common.authenticator.CalendarAdjust;
+import com.common.common.md5.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +30,9 @@ import java.util.*;
 
 @Service
 public class PersoinfoService {
+
+    @Autowired
+    private MessageDao messageDao;
 
     @Autowired
     private PersonDao personDao;
@@ -273,10 +279,28 @@ public class PersoinfoService {
             }else if(item.getExectype().indexOf("保证书")!=-1) {
                 item.setExectype("人保");
             }
+            User user = new User();
+            user.setAccountname(item.getContact());
+            user.setPassword(MD5Util.string2MD5("123456"));
+            user.setAliasname(item.getPersonname());
+            user.setPermissionid(0);
+            user.setStatus(true);
+            user.setCreateid(1);
+            user.setCreatename("admin");
+            user.setPhone(item.getContact());
+            user.setUsersystem(3);
+            user.setSex(item.getGender());
+            user.setDepartment(item.getPolicestation());
+            user.setDepartmentnum(item.getPolicecode());
             if (personDao.getpersonbyguid(item.getGuid())==0){
                 item.setPersonid(java.util.UUID.randomUUID().toString());
+                item.setViolationcode("0");
+                item.setStatus(true);
+
+                messageDao.insertuser(user);
                 personDao.insertPersion(item);
             }else{
+                messageDao.updateUser(user);
                 personDao.updatePersionbyguid(item);
             }
 
