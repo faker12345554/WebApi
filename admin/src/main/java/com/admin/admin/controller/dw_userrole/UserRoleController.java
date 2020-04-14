@@ -59,19 +59,19 @@ public class UserRoleController {
         return result.setData( userRoleService.deleteUserRole(!flag, UserRoleId));
     }
 
-    @UserLoginToken
+    //@UserLoginToken@RequestParam int UserId, HttpServletResponse response
     @ApiOperation("菜单")
     @GetMapping("/GetList")
-    public ResponseResult<Menu> listMenu(@RequestParam int UserId, HttpServletResponse response) {
+    public ResponseResult<Menu> listMenu() {
         ResponseResult result = new ResponseResult();
-        if (userRoleService.listMenu(UserId).isEmpty()) {
+        if (userRoleService.listMenu().isEmpty()) {
             result.setCode(ResultCode.NULLDATA.getCode());
             result.setMessage(ResultCode.NULLDATA.getMessage());
             return result.setData("该用户没有任何权限,请联系管理员");
         }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData( userRoleService.listMenu(UserId));
+        return result.setData( userRoleService.listMenu());
     }
     @UserLoginToken
     @ApiOperation("用户权限列表")

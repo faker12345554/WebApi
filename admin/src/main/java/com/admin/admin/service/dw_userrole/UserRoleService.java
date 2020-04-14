@@ -41,11 +41,11 @@ public class UserRoleService {
     }
 
     //获取所以菜单
-    public List<ParentMenu> listMenu(int UserId) {
+    public List<ParentMenu> listMenu() {
 
         List<ParentMenu> Menu = new ArrayList<ParentMenu>();
         //菜单
-        List<Menu> MenuList = userRoleDao.listMenu(UserId);
+        List<Menu> MenuList = userRoleDao.listMenu();
 
         List<Menu> mainList = new ArrayList<Menu>();
         for (Menu item : MenuList) {
