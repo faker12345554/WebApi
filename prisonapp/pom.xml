@@ -105,7 +105,7 @@
     <artifactId>prisonapp</artifactId>
     <name>prisonapp</name>
 <!--    <packaging>jar</packaging>-->
-    <packaging>wav</packaging>
+    <packaging>war</packaging>
     <build>
         <plugins>
             <plugin>

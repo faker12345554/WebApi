@@ -15,11 +15,14 @@
         tc.handleunit,P.guid,tc.handlepeson from t_singin AS t
         inner join t_personinformation AS P on p.personid=t.personid
         left join t_caseinfo tc on P.personid = tc.personid and tc.caseno=p.caseno
-        where p.status=#{searchModel.flag} and (t.type=2 or t.type=3 or t.type=1)
+        where p.status=#{searchModel.flag} and (t.type=2 or t.type=3 or t.type=1) and t.result=0
         <if test="type==1">
             and p.sponsoralarm=#{limit}
         </if>
-        <if test="type!=1">
+        <if test="type==4">
+            and p.status=true
+        </if>
+        <if test="type!=1 and type!=4">
             and p.policecode=#{limit}
         </if>
 
@@ -80,7 +83,10 @@
         <if test="type==1">
             and p.sponsoralarm=#{limit}
         </if>
-        <if test="type!=1">
+        <if test="type==4">
+            and p.status=true
+        </if>
+        <if test="type!=1 and type!=4">
             and p.policecode=#{limit}
         </if>
 

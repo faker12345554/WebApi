@@ -1,8 +1,9 @@
 package com.admin.admin.controller.dw_app;
 
 
-
+import com.admin.admin.dao.master.dw_person.PersonDao;
 import com.admin.admin.service.dw_app.MessageService;
+import com.admin.admin.service.dw_person.PersoinfoService;
 import com.admin.admin.service.dw_task.Tasking;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
@@ -25,6 +26,10 @@ public class MessageController {
     private Tasking tasking;
 
 
+    @Autowired
+    private PersoinfoService personDao;
+
+
     //  private TokenUtil tokenUtil =new TokenUtil();
 
 
@@ -33,12 +38,17 @@ public class MessageController {
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return  result.setData(messageService.getNotificationList(UserId));
+        return result.setData(messageService.getNotificationList(UserId));
     }
+
     @ApiOperation("测试")
     @GetMapping("/Gettest")
-    public void test() throws Exception{
-        messageService.Synchronizedpolice();
+    public void test() throws Exception {
+        // tasking.GetMessage();
+      // messageService.getallpolice();
+        //messageService.getallpolice();
+      //  personDao.getlistpernson();
+
 
     }
 }

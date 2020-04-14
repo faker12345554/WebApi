@@ -3,17 +3,38 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.admin.dao.second.fsdao">
     <select id="getfslist" parameterType="String" resultType="com.admin.admin.entity.dw_fsgayw.FsgaYwRyb">
-       	select * from fsga_yw_ryb where substring(to_char(cq_gxsj, 'yyyy-mm-dd HH:mm:ss'),0,11)>#{Date}
+       	select * from fsga_yw_ryb
+        <if test="Date!='1'.toString">
+            where substring(to_char(cq_gxsj, 'yyyy-mm-dd HH:mm:ss'),0,11)>#{Date}
+        </if>
    </select>
-    <select id="getCaseing" resultType="com.admin.admin.entity.dw_case.TCaseinfo">
-        SELECT ajlxmc as casecategory,ajmc as casename,ajbh as caseno,
+    <select id="getCaseing" parameterType="String" resultType="com.admin.admin.entity.dw_case.TCaseinfo">
+        SELECT ajlxmc as casecategory,fsga_qx_jz_aj.ajmc as casename,fsga_qx_jz_aj.ajbh as caseno,
         bjsj as receivedtime,sldwmc as handleunit,slrmc as handlepeson,
         ajlxmc as casetype,zyaq as casedescription,ajzbrymc as mainperson,
-        ajxbrymc as operationperson,la_lrsj as filingtime
-        from fsga_qx_jz_aj
+        ajxbrymc as operationperson,la_lrsj as filingtime,fsga_qx_jz_xyrxx.rybh as personid
+        from fsga_qx_jz_aj left join fsga_qx_jz_xyrxx
+        on fsga_qx_jz_aj.ajbh=fsga_qx_jz_xyrxx.ajbh
+        <if test="Date!='1'.toString">
+            where substring(to_char(fsga_qx_jz_aj.cq_gxsj, 'yyyy-mm-dd HH:mm:ss'),0,11)>#{Date}
+        </if>
+
     </select>
 
-    <select id="getperson" resultType="com.admin.admin.entity.dw_person.Personinformation">
-        select * from fsga_qx_jz_xyrxx
+    <select id="getperson"  parameterType="String" resultType="com.admin.admin.entity.dw_person.Personinformation">
+        select f.xm as personname,f.csrq as birthdate,f.gzdw as workunit, f.xjdz as address,
+        f.zjhm as card,f.sjhm as contact, f.create_user as founderid,f.create_time as foundertime,f.update_user as modifierid,
+        f.update_time as modifiertime,f.hyzkmc as marriage,f.xbbm as gendercode,f.xbmc as gender, f.bm as beforename,
+        f.mzmc as nation,f.hjdz as permanentaddress,f.whcdmc as degreeeducation,f.jgmc as nativeplace,f.zymc as occupation,
+        f.gjmc as nationality,q.zbdwbm as policecode, rybh as guid,w.sswsmc2 as exectype,w.wsmc as suspectstatus,
+        q.zbdwmc as policestation,w.tfsj as bailoutbegindate,q.ajzbrymc as sponsor,q.ajzbrybm as sponsoralarm,f.ajbh as caseno
+        from fsga_qx_jz_xyrxx as f
+        inner join fsga_qx_jz_asjwsb as w on f.ajbh=w.ajbh
+        inner join fsga_qx_jz_aj as q on f.ajbh=q.ajbh
+		where w.wsmc like '%取保%' or w.wsmc like '%监视居住%'
+        <if test="Date!='1'.toString">
+        and substring(to_char(f.cq_gxsj, 'yyyy-mm-dd HH:mm:ss'),0,11)>#{Date}
+        </if>
+
     </select>
 </mapper>

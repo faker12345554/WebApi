@@ -1,30 +1,38 @@
 package com.admin.admin.service.dw_person;
 
+import com.admin.admin.dao.master.dw_app.MessageDao;
 import com.admin.admin.dao.master.dw_case.CaseDao;
 import com.admin.admin.dao.master.dw_guaran.GuarantDao;
 import com.admin.admin.dao.master.dw_person.PersonDao;
 import com.admin.admin.dao.master.dw_task.TaskDao;
 import com.admin.admin.dao.master.dw_violation.ViolationDao;
+import com.admin.admin.dao.second.fsdao;
+import com.admin.admin.entity.dw_Synchron.TSynchron;
 import com.admin.admin.entity.dw_case.TCaseinfo;
+import com.admin.admin.entity.dw_fsgayw.FsgaYwRyb;
 import com.admin.admin.entity.dw_guarant.GuaranteeInformation;
 import com.admin.admin.entity.dw_message.TMessage;
 import com.admin.admin.entity.dw_person.Personinformation;
 import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
+import com.admin.admin.entity.dw_user.User;
 import com.admin.admin.entity.dw_violation.Violationfens;
 import com.admin.model.Appstatistics.monthnumber;
 import com.admin.model.search.SearchModel;
 import com.admin.tool.CacheUtils;
 import com.admin.tool.JudgementRole;
+import com.common.common.authenticator.CalendarAdjust;
+import com.common.common.md5.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class PersoinfoService {
+
+    @Autowired
+    private MessageDao messageDao;
 
     @Autowired
     private PersonDao personDao;
@@ -40,6 +48,8 @@ public class PersoinfoService {
 
     @Autowired
     private ViolationDao violationDao;
+    @Autowired
+    private fsdao fsdao;
 
 
     //新增
@@ -190,8 +200,6 @@ public class PersoinfoService {
     public List<monthnumber> getvolocation(String Personid) {
         monthnumber model = personDao.getvolocation(Personid);
         List<monthnumber> list = new ArrayList<monthnumber>();
-
-
         monthnumber number = new monthnumber();
         monthnumber number1 = new monthnumber();
         if (model.getBailnumber() != 0) {
@@ -241,7 +249,68 @@ public class PersoinfoService {
     }
 
     public List<Map<String, String>> getdetails(int id, String personid) {
+
         return personDao.getdetails(id, personid);
+    }
+
+    public void getlistpernson() throws Exception{
+        Calendar cal = Calendar.getInstance();
+        TSynchron tSynchron = caseDao.GetTsyn(3);
+        List<Personinformation> list=new ArrayList<Personinformation>();
+        if (tSynchron!=null){
+            list=fsdao.getperson(tSynchron.getDatatime());
+        }else{
+            list=fsdao.getperson("1");
+        }
+        for (Personinformation item:list){
+            item.setAge(CalendarAdjust.getAge(CalendarAdjust.dateFormat.parse(item.getBirthdate())));
+            cal.setTime(CalendarAdjust.dateFormat.parse( item.getBailoutbegindate()));
+            cal.add(Calendar.YEAR, 1);
+            item.setBailoutenddate(CalendarAdjust.dateFormat.format(cal.getTime()));
+            if (item.getSuspectstatus().indexOf("取保候审")!=-1){
+                item.setSuspectstatus("取保候审");
+                item.setSuspectstatuscode("1");
+            }else if(item.getSuspectstatus().indexOf("监视居住")!=-1){
+                item.setSuspectstatus("监视居住");
+                item.setSuspectstatuscode("2");
+            }
+            if(item.getExectype().indexOf("保证金")!=-1){
+                item.setExectype("财保");
+            }else if(item.getExectype().indexOf("保证书")!=-1) {
+                item.setExectype("人保");
+            }
+            User user = new User();
+            user.setAccountname(item.getContact());
+            user.setPassword(MD5Util.string2MD5("123456"));
+            user.setAliasname(item.getPersonname());
+            user.setPermissionid(0);
+            user.setStatus(true);
+            user.setCreateid(1);
+            user.setCreatename("admin");
+            user.setPhone(item.getContact());
+            user.setUsersystem(3);
+            user.setSex(item.getGender());
+            user.setDepartment(item.getPolicestation());
+            user.setDepartmentnum(item.getPolicecode());
+            if (personDao.getpersonbyguid(item.getGuid())==0){
+                item.setPersonid(java.util.UUID.randomUUID().toString());
+                item.setViolationcode("0");
+                item.setStatus(true);
+
+                messageDao.insertuser(user);
+                personDao.insertPersion(item);
+            }else{
+                messageDao.updateUser(user);
+                personDao.updatePersionbyguid(item);
+            }
+
+
+        }
+        TSynchron model = new TSynchron();
+        model.setName(3);
+        model.setDatatime(CalendarAdjust.GetYear(new Date()));
+        caseDao.insertTsyn(model);
+
     }
 
 }

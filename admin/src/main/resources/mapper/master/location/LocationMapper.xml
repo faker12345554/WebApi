@@ -15,7 +15,10 @@
         <if test="type==1">
             and t.sponsoralarm=#{limit}
         </if>
-        <if test="type!=1">
+        <if test="type==4">
+            and t.status=true
+        </if>
+        <if test="type!=1 and type!=4">
             and t.policecode=#{limit}
         </if>
         <if test="condition!=null and condition!=''">

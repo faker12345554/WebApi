@@ -1,11 +1,11 @@
 server:
   port: 8009
-#  servlet:
-#    context-path: "/DwWebApi"
+  servlet:
+    context-path: "/DwWebApi"
 
 
 
-# master 数据源配置
+# master 数据源配置68.109.202.164:5432
 
 master:
   datasource:
@@ -27,7 +27,7 @@ swagger:
 
 logging:
   level:
-    root: info
+    root: debug
 
 mybatis:
   type-aliases-package: com.admin.admin.dao
