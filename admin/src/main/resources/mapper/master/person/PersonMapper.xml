@@ -58,7 +58,11 @@
             select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
             left join t_caseinfo as C on C.personid=P.personid and c.caseno=p.caseno where sponsoralarm=#{limit}
         </if>
-        <if test="type!=1">
+        <if test="type==4">
+            select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
+            left join t_caseinfo as C on C.personid=P.personid and c.caseno=p.caseno where status=true
+        </if>
+        <if test="type!=1 and type!=4">
             select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
             left join t_caseinfo as C on C.personid=P.personid and c.caseno=p.caseno where policecode=#{limit}
         </if>
@@ -117,7 +121,7 @@
 
     <update id="updatePersionbyguid" parameterType="com.admin.admin.entity.dw_person.Personinformation">
         UPDATE t_personinformation set personname=#{personname},gender=#{gender},age=#{age},birthdate=#{birthdate},card=#{card},workunit=#{workunit},bailoutbegindate=to_timestamp(#{bailoutbegindate},'yyyy-MM-dd HH24:mi:ss'),
-        bailoutenddate=to_timestamp(#{bailoutenddate},'yyyy-MM-dd HH24:mi:ss'),sponsor=#{sponsor},sponsoralarm=#{sponsoralarm},contact=#{contact},address=#{address},wechatnumber=#{wechatnumber},qqnumber=#{qqnumber},status=#{status},
+        bailoutenddate=to_timestamp(#{bailoutenddate},'yyyy-MM-dd HH24:mi:ss'),sponsor=#{sponsor},sponsoralarm=#{sponsoralarm},contact=#{contact},address=#{address},wechatnumber=#{wechatnumber},qqnumber=#{qqnumber},status=true,
         founderid=#{founderid},modifierid=#{modifierid},modifiertime=to_timestamp(#{modifiertime},'yyyy-MM-dd HH24:mi:ss'),suspectstatus=#{suspectstatus},marriage=#{marriage},policestation=#{policestation},
         casetype=#{casetype},facepath=#{facepath},persontags=#{persontags},gendercode=#{gendercode},beforename=#{beforename},nation=#{nation},degreeeducation=#{degreeeducation},
         nativeplace=#{nativeplace},occupation=#{occupation},nationality=#{nationality},registeredarea=#{registeredarea},permanentaddress=#{permanentaddress},currentaddress=#{currentaddress},

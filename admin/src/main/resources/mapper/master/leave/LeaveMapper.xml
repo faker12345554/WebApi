@@ -11,7 +11,10 @@
         <if test="type==1">
             where t.sponsoralarm=#{limit} and u.usersystem='1' )
         </if>
-        <if test="type!=1">
+        <if test="type==4">
+            where t.status=true
+        </if>
+        <if test="type!=1 and type!=4">
             where t.policecode=#{limit} )
         </if>
 

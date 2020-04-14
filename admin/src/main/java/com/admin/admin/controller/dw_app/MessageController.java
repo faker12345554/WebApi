@@ -1,7 +1,6 @@
 package com.admin.admin.controller.dw_app;
 
 
-
 import com.admin.admin.dao.master.dw_person.PersonDao;
 import com.admin.admin.service.dw_app.MessageService;
 import com.admin.admin.service.dw_person.PersoinfoService;
@@ -39,11 +38,17 @@ public class MessageController {
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return  result.setData(messageService.getNotificationList(UserId));
+        return result.setData(messageService.getNotificationList(UserId));
     }
+
     @ApiOperation("测试")
     @GetMapping("/Gettest")
-    public void test() throws Exception{
-        personDao.getlistpernson();
+    public void test() throws Exception {
+        // tasking.GetMessage();
+      // messageService.getallpolice();
+        //messageService.getallpolice();
+      //  personDao.getlistpernson();
+
+
     }
 }

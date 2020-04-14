@@ -1,5 +1,5 @@
 # 默认为开发环境
 spring:
   profiles:
-    active: dev
+    active: pre
 
