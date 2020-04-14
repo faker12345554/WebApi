@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface UserRoleDao {
 
-    List<Menu> listMenu(@Param("UserId")  int UserId);
+    List<Menu> listMenu();
 
     //新增
     int saveUserRole(  UserRole userRole);
