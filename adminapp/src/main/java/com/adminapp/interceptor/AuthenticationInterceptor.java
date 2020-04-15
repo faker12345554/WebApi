@@ -68,7 +68,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                                  try {
                                         jwtVerifier.verify(token);
                                      } catch (JWTVerificationException e) {
-                                        throw new RuntimeException("401");
+                                     httpServletResponse.sendError(401,"token已过期");
+                                     return false;
+                                        //throw new RuntimeException("401");
                                      }
                                 return true;
                              }

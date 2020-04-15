@@ -119,9 +119,13 @@ public class SuperviseService {
         return superfineDado.listSummonSetting();
     }
 
-    //查找传讯违规级别
-    public int listViolationFensInformation(String violationName,String Code){
-        return superfineDado.listViolationFensInformation(violationName,Code);
+    //查找违规级别轻微分数
+    public int getViolationSlightFens(String Code){
+        return superfineDado.getViolationSlightFens(Code);
+    }
+    //查找违规级别严重分数
+    public int getViolationSeriousFens(String Code){
+        return superfineDado.getViolationSeriousFens(Code);
     }
 
     public List<SinginInformation> listPersonSingin(String personId,int type){
@@ -218,5 +222,25 @@ public class SuperviseService {
     //更新取保人员声纹注册状态
     public int updateHasVoice(String code){
         return superfineDado.updateHasVoice(code);
+    }
+
+    //获取声纹access_token
+    public String getAccessToken(){
+        return superfineDado.getAccessToken();
+    }
+
+    //获取声纹userId
+    public String getUserId(){
+        return superfineDado.getUserId();
+    }
+
+    //更新声纹access_token
+    public int updateAccessToken(String accessToken,String userId){
+        return superfineDado.updateAccessToken(accessToken,userId);
+    }
+
+    //插入声纹accessToken
+    public int insertAccessToken(String accessToken,String userId){
+        return superfineDado.insertAccessToken(accessToken,userId);
     }
 }
