@@ -82,7 +82,7 @@ public class Datatimer  {
     //tasking.GetMessageList(4);
         messageService.Synchronouscase();
     }
-    //每天凌晨三点
+    //每天凌晨4点
     @Scheduled(cron = "0 0 4 * * ?")
     public void SendBailout() throws Exception{
         persoinfoService.getlistpernson();
