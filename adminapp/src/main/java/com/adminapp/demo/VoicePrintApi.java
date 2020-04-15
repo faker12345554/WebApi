@@ -18,6 +18,7 @@
  */
 package com.adminapp.demo;
 
+import com.adminapp.business.service.dw_supervise.SuperviseService;
 import com.adminapp.demo.constant.Constants;
 import com.adminapp.demo.constant.ContentType;
 import com.adminapp.demo.constant.HttpHeader;
@@ -26,6 +27,9 @@ import com.adminapp.demo.enums.Method;
 import com.adminapp.demo.util.MessageDigestUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.print.DocFlavor;
 import java.io.*;
@@ -39,7 +43,10 @@ import java.util.Map;
 
 public class VoicePrintApi {
 
+    public SuperviseService superviseService=new SuperviseService();
+
     public VoicePrintApi(String Key, String Secret, int t) {
+
         appKey = Key;
         appSecret = Secret;
         timeout = t;
@@ -52,7 +59,7 @@ public class VoicePrintApi {
     }
 
     // 获取访问权限
-    public boolean getAccess() throws Exception{
+    public org.json.JSONObject getAccess() throws Exception{
         String path = this.genFullPath(String.format("/user/login"));
         Request request = this.genRequest(Method.GET, path);
         
@@ -63,13 +70,16 @@ public class VoicePrintApi {
         if (code == 200) {
             JSONObject bodyObj = JSON.parseObject(obj.get("body").toString());
             JSONObject dataObj = JSON.parseObject(bodyObj.get("data").toString());
-            this.userId = dataObj.get("user_id").toString();
-            this.token = dataObj.get("access_token").toString();
-
-            return true;
+            String userid = dataObj.get("user_id").toString();
+            //this.token = dataObj.get("access_token").toString();
+            String token1 = dataObj.get("access_token").toString();
+            org.json.JSONObject object=new org.json.JSONObject();
+            object.put("token",token1);
+            object.put("userId",userid);
+            return object;
         }
 
-        return false;
+        return null;
     }
 
     // 获取算法列表
@@ -171,7 +181,7 @@ public class VoicePrintApi {
 //    }
 
     //将wav文件上传到储存空间，并返回一个key(file_id)来标识该文件, 后面注册声纹，声纹比对都会用到该key
-    public String uploadFile(String bucket, String filePath, int ttl) throws Exception {
+    public String uploadFile(String bucket, String filePath, int ttl,String token,String userid) throws Exception {
         if(bucket.trim().isEmpty()) {
             throw new Exception("args invailed:  bucket");
         }
@@ -200,9 +210,9 @@ public class VoicePrintApi {
         byte[] bodyBytes = body.toByteArray();
         inputStream.close();
 
-        String path = this.genFullPath(String.format("/users/%s/bucket/%s/file/%s/ttl/%d/upload", this.userId, bucket, fileName, ttl));
+        String path = this.genFullPath(String.format("/users/%s/bucket/%s/file/%s/ttl/%d/upload", userid, bucket, fileName, ttl));
         Map<String, String> headers = new HashMap<String,String>();
-        headers.put(HttpHeader.HTTP_ACCESS_TOKEN, this.token);
+        headers.put(HttpHeader.HTTP_ACCESS_TOKEN, token);
         headers.put(HttpHeader.HTTP_HEADER_CONTENT_TYPE, ContentType.CONTENT_TYPE_STREAM);
         headers.put(HttpHeader.HTTP_HEADER_CONTENT_MD5, MessageDigestUtil.base64AndMD5(bodyBytes));
 
@@ -215,7 +225,7 @@ public class VoicePrintApi {
     }
 
     // 注册声纹， 用户自定义registerId, 如果该声纹库下已存在声纹id为registerId的声纹，若force为true则覆盖原有声纹，为false则不注册新声纹
-    public String registerVoicePrint(String vpstoreId, String registerId, String[] fileIds, boolean force) throws Exception {
+    public String registerVoicePrint(String vpstoreId, String registerId, String[] fileIds, boolean force,String token,String userid) throws Exception {
         if(vpstoreId.trim().isEmpty()) {
             throw new Exception("args invailed:  vpstoreId");
         }
@@ -228,7 +238,7 @@ public class VoicePrintApi {
             throw new Exception("args invailed:  fileIds");
         }
 
-        String path = this.genFullPath(String.format("/users/%s/vpstore/%s/voiceprint/register", this.userId, vpstoreId));
+        String path = this.genFullPath(String.format("/users/%s/vpstore/%s/voiceprint/register", userid, vpstoreId));
         Map<String, Object> body = new HashMap<String, Object>();
         body.put("register_id", registerId);
         body.put("force", force);
@@ -236,7 +246,7 @@ public class VoicePrintApi {
         byte[] bodyBytes = JSON.toJSONString(body).getBytes(Constants.ENCODING);
 
         Map<String, String> headers = new HashMap<String, String>();
-        headers.put(HttpHeader.HTTP_ACCESS_TOKEN, this.token);
+        headers.put(HttpHeader.HTTP_ACCESS_TOKEN, token);
         headers.put(HttpHeader.HTTP_HEADER_CONTENT_TYPE, ContentType.CONTENT_TYPE_STREAM);
         headers.put(HttpHeader.HTTP_HEADER_CONTENT_MD5, MessageDigestUtil.base64AndMD5(bodyBytes));
 
@@ -249,7 +259,7 @@ public class VoicePrintApi {
     }
 
     // 获取声纹列表
-    public String getVoicePrintList(String vpstoreId, int offset, int limit) throws Exception{
+    public String getVoicePrintList(String vpstoreId, int offset, int limit,String token,String userId) throws Exception{
         if(vpstoreId.trim().isEmpty()) {
             throw new Exception("args invailed:  vpstoreId");
         }
@@ -258,9 +268,9 @@ public class VoicePrintApi {
             throw new Exception("args invailed:  offset or limit");
         }
 
-        String path = this.genFullPath(String.format("/users/%s/vpstore/%s/voiceprints", this.userId, vpstoreId));
+        String path = this.genFullPath(String.format("/users/%s/vpstore/%s/voiceprints", userId, vpstoreId));
         Map<String, String> headers = new HashMap<String, String>();
-        headers.put(HttpHeader.HTTP_ACCESS_TOKEN, this.token);
+        headers.put(HttpHeader.HTTP_ACCESS_TOKEN, token);
 
         Map<String, String> querys = new HashMap<String, String>();
         querys.put("offset", String.valueOf(offset));
@@ -275,7 +285,7 @@ public class VoicePrintApi {
     }
 
     // 声纹比对，一次最多能比对10条声纹
-    public String compareVoicePrint(String vpstoreId, String fileId, String[] voicePrintIds) throws Exception {
+    public String compareVoicePrint(String vpstoreId, String fileId, String[] voicePrintIds,String token,String userId) throws Exception {
         if(vpstoreId.trim().isEmpty()) {
             throw new Exception("args invailed:  vpstoreId");
         }
@@ -292,14 +302,14 @@ public class VoicePrintApi {
             throw new Exception("args invailed:  voicePrintIds length should be <= 10 ");
         }
 
-        String path = this.genFullPath(String.format("/users/%s/vpstore/%s/voiceprint/compare", this.userId, vpstoreId));
+        String path = this.genFullPath(String.format("/users/%s/vpstore/%s/voiceprint/compare", userId, vpstoreId));
         Map<String, Object> body = new HashMap<String, Object>();
         body.put("file_id", fileId);
         body.put("voice_print_ids", voicePrintIds);
         byte[] bodyBytes = JSON.toJSONString(body).getBytes(Constants.ENCODING);
 
         Map<String, String> headers = new HashMap<String, String>();
-        headers.put(HttpHeader.HTTP_ACCESS_TOKEN, this.token);
+        headers.put(HttpHeader.HTTP_ACCESS_TOKEN, token);
         headers.put(HttpHeader.HTTP_HEADER_CONTENT_TYPE, ContentType.CONTENT_TYPE_STREAM);
         headers.put(HttpHeader.HTTP_HEADER_CONTENT_MD5, MessageDigestUtil.base64AndMD5(bodyBytes));
 
@@ -316,8 +326,11 @@ public class VoicePrintApi {
     private int timeout;
 
     private String userId;
+
     private String token;
-    
+
+
+
     //API域名
     private final static String HOST = "speaker.market.alicloudapi.com";
     private final static String BASE_PATH = "/aliyun/vpr/api/v1";

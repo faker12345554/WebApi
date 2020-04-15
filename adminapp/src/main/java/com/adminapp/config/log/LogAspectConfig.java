@@ -38,19 +38,15 @@ public class LogAspectConfig {
     private LogDao logDao;
     private static final Logger logger = LoggerFactory.getLogger(LogAspectConfig.class);
 
-
     /*
         ThreadLocal是一个本地线程副本变量工具类。
-
         主要用于将私有线程和该线程存放的副本对象做一个映射,各个线程之间的变量互不干扰,在高并发场景下,可以实现无状态的调用
         特别适用于各个线程依赖不通的变量值完成操作的场景
     */
     private final ThreadLocal<String> methodDescribe = new ThreadLocal<>();
 
-
     /*
         申明一个切点(里面是Execution表达式)  这个输出没问题的
-
         第一个 public 表示方法的修饰符,可以用*代替
         第一个 * 表示 返回值,*代表所有
         com.store.admin.controller.* 包路径,.*表示路径下的所有包
@@ -61,14 +57,11 @@ public class LogAspectConfig {
     public void adminControllerLog() {
     }
 
-
     //  获取抽象方法
     private Method getMethod(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         return methodSignature.getMethod();
     }
-
-
 
     //  避免HttpServletRequest无法转为JSON,故所以二次处理
     private String parseArgs(JoinPoint joinPoint) {
@@ -91,9 +84,6 @@ public class LogAspectConfig {
         return sb.toString();
     }
 
-
-    //  获取方法执行后的返回信息   你个垃圾，路径都不是这样搞得   @Pointcut("execution(public * com.admin.admin.controller.*.*(..))")去百度一下这句话啥意思，你个小鸡儿 .......
-    // 可以了，你要加多一个点读到下面的文件夹噢噢
     private void recordMethodLog(JoinPoint joinPoint, HttpServletRequest request) {
         Method method = getMethod(joinPoint);
         // 获取Swagger注解信息
@@ -110,8 +100,6 @@ public class LogAspectConfig {
         logger.info(value + "入参 : {} ", parseArgs(joinPoint));
     }
 
-
-
     /*
         在切点前执行方法,内容为指定的切点
     */
@@ -121,7 +109,6 @@ public class LogAspectConfig {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         recordMethodLog(joinPoint, attributes.getRequest());
     }
-
 
     /*
         在切入点return后执行,如果想对某些方法的返回参数进行处理,可以在这操作
@@ -145,7 +132,6 @@ public class LogAspectConfig {
         // remove()方法移除当前线程的副本变量值
         methodDescribe.remove();
     }
-
 
     /*
         在切入点抛出异常后处理逻辑

@@ -1,5 +1,5 @@
 server:
-  port: 8087
+  port: 8086
 #  servlet:
 #   context-path: "/DwSuperApp"
 
@@ -27,6 +27,10 @@ spring:
 
 swagger:
   enabled: true
+
+logging:
+  level:
+    root: info
 
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
