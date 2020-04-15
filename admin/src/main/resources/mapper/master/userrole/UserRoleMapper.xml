@@ -16,7 +16,7 @@
     <select id="listMenu" resultType="com.admin.admin.entity.dw_menu.Menu">
         select distinct M.* from t_userrole as U
         INNER JOIN t_menu as M on M.menuid=U.menuid and M."status"=TRUE
-        where U.status=true  and U.permissionid=1
+        where U.status=true  and U.permissionid=1 Order by M.orderid
     </select>
 
     <select id="listUserRole" resultType="com.admin.model.userrole.UserRoleModel" parameterType="int">
