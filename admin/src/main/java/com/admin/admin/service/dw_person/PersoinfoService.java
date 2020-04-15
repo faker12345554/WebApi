@@ -296,10 +296,13 @@ public class PersoinfoService {
                 item.setPersonid(java.util.UUID.randomUUID().toString());
                 item.setViolationcode("0");
                 item.setStatus(true);
-
+                item.setFounderid("admin");
                 messageDao.insertuser(user);
                 personDao.insertPersion(item);
             }else{
+                item.setViolationcode("0");
+                item.setStatus(true);
+                item.setFounderid("admin");
                 messageDao.updateUser(user);
                 personDao.updatePersionbyguid(item);
             }
