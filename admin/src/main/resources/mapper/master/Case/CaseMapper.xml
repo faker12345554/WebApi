@@ -13,25 +13,28 @@
     </update>
 
     <select id="GetCase" parameterType="String" resultType="com.admin.admin.entity.dw_case.TCaseinfo">
-        select * from t_caseinfo where  caseno=#{Caseno}
+        	select c.* from t_caseinfo as c
+				INNER JOIN t_personinformation as p on p.caseno=c.caseno
+				where  c.caseno=#{Caseno} and p.personid=#{PersonId}
     </select>
 
     <insert id="Synchronouscase" parameterType="com.admin.admin.entity.dw_case.TCaseinfo" >
         insert into t_caseinfo
         values
             (
-            #{item.casecategory},
-            #{item.casename},
-            #{item.caseno},
-            to_timestamp(#{item.receivedtime},'yyyy-MM-dd HH24:mi:ss'),
-            #{item.handleunit},
-            #{item.handlepeson},
-            #{item.personid},
-            #{item.casetype},
-            #{item.casedescription},
-            #{item.mainperson},
-            #{item.operationperson},
-            to_date(#{item.filingtime},'yyyy-MM-dd')
+            #{casecategory},
+            #{casename},
+            #{caseno},
+            to_timestamp(#{receivedtime},'yyyy-MM-dd HH24:mi:ss'),
+            #{handleunit},
+            #{handlepeson},
+            #{personid},
+            #{casetype},
+            #{casedescription},
+            #{mainperson},
+            #{operationperson},
+            to_date(#{filingtime},'yyyy-MM-dd')
+            )
 
     </insert>
 
@@ -50,26 +53,26 @@
     <insert id="Synchronizedpolice" parameterType="java.util.List" useGeneratedKeys="false">
         insert into fsga_yw_ryb values
             (
-            #{item.id},
-            #{item.mjbh},
-            #{item.mjmc},
-            #{item.dlmm},
-            #{item.bmbm},
-            #{item.bmmc},
-            #{item.bmjc},
-            #{item.ddbmbm},
-            #{item.ddbmmc},
-            #{item.ddbmjc},
-            #{item.zw},
-            #{item.jh},
-            #{item.sfzh},
-            #{item.dzyj},
-            #{item.sjhm},
-            #{item.sjly},
-            #{item.createTime},
-            #{item.updateTime},
-            #{item.remark},
-            #{item.state}
+            #{id},
+            #{mjbh},
+            #{mjmc},
+            #{dlmm},
+            #{bmbm},
+            #{bmmc},
+            #{bmjc},
+            #{ddbmbm},
+            #{ddbmmc},
+            #{ddbmjc},
+            #{zw},
+            #{jh},
+            #{sfzh},
+            #{dzyj},
+            #{sjhm},
+            #{sjly},
+            #{createTime},
+            #{updateTime},
+            #{remark},
+            #{state}
           )
 
 
