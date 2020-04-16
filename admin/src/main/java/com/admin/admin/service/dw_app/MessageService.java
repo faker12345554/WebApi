@@ -128,15 +128,15 @@ public class MessageService {
     }
 
 
-    public void getallpolice(){
-
-            List<FsgaYwRyb> fsgalist=messageDao.getallpolice();
-            for (FsgaYwRyb item:fsgalist) {
-
-
-
-            }
-    }
+//    public void getallpolice(){
+//
+//            List<FsgaYwRyb> fsgalist=messageDao.getallpolice();
+//            for (FsgaYwRyb item:fsgalist) {
+//
+//
+//
+//            }
+//    }
 
     public void getperson(){
         List<Personinformation> personlist=messageDao.getperson();

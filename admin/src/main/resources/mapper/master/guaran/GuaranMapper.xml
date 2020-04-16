@@ -8,7 +8,7 @@
     </insert>
 
     <update id="updateGuara" parameterType="com.admin.admin.entity.dw_guarant.GuaranteeInformation">
-        update t_guaranteeinformation set guaranteename=#{guaranteename},money=#{money},card=#{card},contact=#{contact},workunit=#{workunit},address=#{address},
+        update t_guaranteeinformation set guaranteename=#{guaranteename},money=#{money},card=#{card},contact=#{contact},workunit=#{workunit},address=#{address}
         ,gender=#{gender},relatetionship=#{relatetionship},job=#{job},receiptunit=#{receiptunit},paydate=to_timestamp(#{paydate},'yyyy-MM-dd HH:mi:ss'),keepbank=#{keepbank} where id=#{id}
     </update>
 
