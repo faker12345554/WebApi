@@ -46,8 +46,8 @@ public class MessageController {
     public void test() throws Exception {
         // tasking.GetMessage();
       // messageService.Synchronouscase();
-        messageService.Synchronizedpolice();
-       // personDao.getlistpernson();
+       // messageService.Synchronizedpolice();
+        personDao.getlistpernson();
 
 
     }
