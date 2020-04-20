@@ -14,9 +14,9 @@
     </insert>
 
     <update id="updatePersion" parameterType="com.admin.admin.entity.dw_person.Personinformation">
-        UPDATE t_personinformation set personname=#{personname},gender=#{gender},age=#{age},birthdate=#{birthdate},card=#{card},workunit=#{workunit},bailoutbegindate=to_timestamp(#{bailoutbegindate},'yyyy-MM-dd HH:mi:ss'),
-        bailoutenddate=to_timestamp(#{bailoutenddate},'yyyy-MM-dd HH:mi:ss'),sponsor=#{sponsor},sponsoralarm=#{sponsoralarm},contact=#{contact},address=#{address},wechatnumber=#{wechatnumber},qqnumber=#{qqnumber},status=#{status},
-        founderid=#{founderid},modifierid=#{modifierid},modifiertime=to_timestamp(#{modifiertime},'yyyy-MM-dd HH:mi:ss'),suspectstatus=#{suspectstatus},marriage=#{marriage},policestation=#{policestation},
+        UPDATE t_personinformation set personname=#{personname},gender=#{gender},age=#{age},birthdate=#{birthdate},card=#{card},workunit=#{workunit},bailoutbegindate=to_timestamp(#{bailoutbegindate},'yyyy-MM-dd HH24:mi:ss'),
+        bailoutenddate=to_timestamp(#{bailoutenddate},'yyyy-MM-dd HH24:mi:ss'),sponsor=#{sponsor},sponsoralarm=#{sponsoralarm},contact=#{contact},address=#{address},wechatnumber=#{wechatnumber},qqnumber=#{qqnumber},status=#{status},
+        founderid=#{founderid},modifierid=#{modifierid},modifiertime=to_timestamp(#{modifiertime},'yyyy-MM-dd HH24:mi:ss'),suspectstatus=#{suspectstatus},marriage=#{marriage},policestation=#{policestation},
         casetype=#{casetype},facepath=#{facepath},persontags=#{persontags},gendercode=#{gendercode},beforename=#{beforename},nation=#{nation},degreeeducation=#{degreeeducation},
         nativeplace=#{nativeplace},occupation=#{occupation},nationality=#{nationality},registeredarea=#{registeredarea},permanentaddress=#{permanentaddress},currentaddress=#{currentaddress},
         nowaddress=#{nowaddress},yjsponsoralarm=#{yjsponsoralarm},exectype=#{exectype},keepaddress=#{keepaddress},appointaddress=#{appointaddress},province=#{province},city=#{city},

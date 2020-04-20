@@ -4,11 +4,11 @@
 <mapper namespace="com.admin.admin.dao.master.dw_case.CaseDao">
 
     <insert id="SaveCase" parameterType="com.admin.admin.entity.dw_case.TCaseinfo">
-        insert into t_caseinfo values(#{casecategory},#{casename},#{caseno},to_timestamp(#{receivedtime},'yyyy-MM-dd HH:mi:ss'),#{handleunit},#{handlepeson},#{personid},#{casetype},#{casedescription})
+        insert into t_caseinfo values(#{casecategory},#{casename},#{caseno},to_timestamp(#{receivedtime},'yyyy-MM-dd HH24:mi:ss'),#{handleunit},#{handlepeson},#{personid},#{casetype},#{casedescription})
     </insert>
 
     <update id="UpdateCase" parameterType="com.admin.admin.entity.dw_case.TCaseinfo">
-        update t_caseinfo set casecategory=#{casecategory},casename=#{casename},caseno=#{caseno},receivedtime=to_timestamp(#{receivedtime},'yyyy-MM-dd HH:mi:ss'),handleunit=#{handleunit},handlepeson=#{handlepeson},
+        update t_caseinfo set casecategory=#{casecategory},casename=#{casename},caseno=#{caseno},receivedtime=to_timestamp(#{receivedtime},'yyyy-MM-dd HH24:mi:ss'),handleunit=#{handleunit},handlepeson=#{handlepeson},
         personid=#{personid},casetype=#{casetype},casedescription=#{casedescription} where personid=#{personid}
     </update>
 
