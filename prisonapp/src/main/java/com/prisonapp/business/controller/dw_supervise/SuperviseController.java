@@ -356,28 +356,42 @@ public class SuperviseController {
         //取出定位的数据
         TPrisonsetting tPrisonsettingLocation = superviseService.getLocationConfig(getPersonId(), 1);
         LocationModel locationModels = new LocationModel();
-        locationModels.setEnable(tPrisonsettingLocation.isSettingcheck());
+        if(tPrisonsettingLocation==null||tPrisonsettingLocation.equals("")){
+            locationModels.setEnable(false);
+        }else{
+            locationModels.setEnable(tPrisonsettingLocation.isSettingcheck());
+        }
         locationModels.setTimeSpan(Integer.parseInt(tRemindersettings.getSettingday()));
 
         //设置电量的数据
         TPrisonsetting tPrisonsettingBattery = superviseService.getLocationConfig(getPersonId(), 4);
         Battery battery = new Battery();
-        battery.setEnable(tPrisonsettingBattery.isSettingcheck());
+        if(tPrisonsettingBattery==null||tPrisonsettingBattery.equals("")){
+            battery.setEnable(false);
+        }else{
+            battery.setEnable(tPrisonsettingBattery.isSettingcheck());
+        }
         battery.setTimeSpan("20");
         battery.setAlarmThreshold(20.0f);
         GetSuperviseConfigModel getSuperviseConfigModel = new GetSuperviseConfigModel(); // = superviseService.getBatteryConfigTimestamp(getPersonId());
         getSuperviseConfigModel.setLocation(locationModels);
         getSuperviseConfigModel.setBattery(battery);
-        //最后时间
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date locationDate = sdf.parse(tPrisonsettingLocation.getSettingtime());
-        Date batteryDate = sdf.parse(tPrisonsettingBattery.getSettingtime());
-        if (locationDate.getTime() > batteryDate.getTime()) {
-            getSuperviseConfigModel.setLastEditTime(locationDate);
-        } else {
-            getSuperviseConfigModel.setLastEditTime(batteryDate);
-        }
+        //最后时间
+        if(tPrisonsettingLocation!=null&&tPrisonsettingBattery!=null){
 
+            Date locationDate = sdf.parse(tPrisonsettingLocation.getSettingtime());
+            Date batteryDate = sdf.parse(tPrisonsettingBattery.getSettingtime());
+            if (locationDate.getTime() > batteryDate.getTime()) {
+                getSuperviseConfigModel.setLastEditTime(locationDate);
+            } else {
+                getSuperviseConfigModel.setLastEditTime(batteryDate);
+            }
+        }
+        else{
+            Date date=sdf.parse("1970-01-01 08:00:00");
+            getSuperviseConfigModel.setLastEditTime(date);
+        }
         result.resultCode = 0;
         result.resultMsg = "";
         result.data = getSuperviseConfigModel;
