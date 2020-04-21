@@ -27,7 +27,7 @@
     </resultMap>
 
     <select id="ListMechanism" resultMap="MechanismMap">
-        SELECT distinct on (bmbm,bmmc)bmbm,bmmc from fsga_yw_ryb
+        SELECT bmbm,bmmc from fsga_yw_ryb
     </select>
 
 
