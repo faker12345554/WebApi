@@ -130,5 +130,14 @@
         where guid=#{guid}
     </update>
 
+    <resultMap id="personMap" type="HashMap">
+        <result property="personid" column="personid" jdbcType="VARCHAR"/>
+        <result property="personname" column="personname" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getpersonid"  resultMap="personMap">
+       select personid,personname from t_personinformation
+    </select>
+
 
 </mapper>

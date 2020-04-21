@@ -121,10 +121,7 @@ public class LogController {
                 model.setTotalnumber(logService.gettotelnumber(Areacode));
                 int usernumber=0;
                 for (Map<String,String> itam: countlist){
-
-
                     int Days=Integer.parseInt(itam.get("Days"));
-
                     if (Days>7){
                         usernumber+=1;
                     }

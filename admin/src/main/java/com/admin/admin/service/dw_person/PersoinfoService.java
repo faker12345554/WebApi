@@ -19,6 +19,7 @@ import com.admin.admin.entity.dw_violation.Violationfens;
 import com.admin.model.Appstatistics.monthnumber;
 import com.admin.model.search.SearchModel;
 import com.admin.tool.CacheUtils;
+import com.admin.tool.EnumDemo;
 import com.admin.tool.JudgementRole;
 import com.common.common.authenticator.CalendarAdjust;
 import com.common.common.md5.MD5Util;
@@ -212,7 +213,7 @@ public class PersoinfoService {
                 number.setMonth("严重");
                 number.setBailnumber(model.getBailnumber());
                 list.add(number);
-            }else {
+            } else {
                 number.setBailnumber(model.getBailnumber());
                 number.setMonth("正常");
                 list.add(number);
@@ -233,7 +234,7 @@ public class PersoinfoService {
                 number1.setMonth("严重");
                 number1.setBailnumber(model.getSupervisionnumber());
                 list.add(number1);
-            }else{
+            } else {
                 number1.setMonth("正常");
                 number1.setBailnumber(model.getSupervisionnumber());
                 list.add(number1);
@@ -253,30 +254,30 @@ public class PersoinfoService {
         return personDao.getdetails(id, personid);
     }
 
-    public void getlistpernson() throws Exception{
+    public void getlistpernson() throws Exception {
         Calendar cal = Calendar.getInstance();
         TSynchron tSynchron = caseDao.GetTsyn(3);
-        List<Personinformation> list=new ArrayList<Personinformation>();
-        if (tSynchron!=null){
-            list=fsdao.getperson(tSynchron.getDatatime());
-        }else{
-            list=fsdao.getperson("1");
+        List<Personinformation> list = new ArrayList<Personinformation>();
+        if (tSynchron != null) {
+            list = fsdao.getperson(tSynchron.getDatatime());
+        } else {
+            list = fsdao.getperson("1");
         }
-        for (Personinformation item:list){
+        for (Personinformation item : list) {
             item.setAge(CalendarAdjust.getAge(CalendarAdjust.dateFormat.parse(item.getBirthdate())));
-            cal.setTime(CalendarAdjust.dateFormat.parse( item.getBailoutbegindate()));
+            cal.setTime(CalendarAdjust.dateFormat.parse(item.getBailoutbegindate()));
             cal.add(Calendar.YEAR, 1);
             item.setBailoutenddate(CalendarAdjust.dateFormat.format(cal.getTime()));
-            if (item.getSuspectstatus().indexOf("取保候审")!=-1){
+            if (item.getSuspectstatus().indexOf("取保候审") != -1) {
                 item.setSuspectstatus("取保候审");
                 item.setSuspectstatuscode("1");
-            }else if(item.getSuspectstatus().indexOf("监视居住")!=-1){
+            } else if (item.getSuspectstatus().indexOf("监视居住") != -1) {
                 item.setSuspectstatus("监视居住");
                 item.setSuspectstatuscode("2");
             }
-            if(item.getExectype().indexOf("保证金")!=-1){
+            if (item.getExectype().indexOf("保证金") != -1) {
                 item.setExectype("财保");
-            }else if(item.getExectype().indexOf("保证书")!=-1) {
+            } else if (item.getExectype().indexOf("保证书") != -1) {
                 item.setExectype("人保");
             }
             User user = new User();
@@ -292,22 +293,20 @@ public class PersoinfoService {
             user.setSex(item.getGender());
             user.setDepartment(item.getPolicestation());
             user.setDepartmentnum(item.getPolicecode());
-            if (personDao.getpersonbyguid(item.getGuid())==0){
+            if (personDao.getpersonbyguid(item.getGuid()) == 0) {
                 item.setPersonid(java.util.UUID.randomUUID().toString());
                 item.setViolationcode("0");
                 item.setStatus(true);
                 item.setFounderid("admin");
                 messageDao.insertuser(user);
                 personDao.insertPersion(item);
-            }else{
+            } else {
                 item.setViolationcode("0");
                 item.setStatus(true);
                 item.setFounderid("admin");
                 messageDao.updateUser(user);
                 personDao.updatePersionbyguid(item);
             }
-
-
         }
         TSynchron model = new TSynchron();
         model.setName(3);
@@ -315,5 +314,32 @@ public class PersoinfoService {
         caseDao.insertTsyn(model);
 
     }
+
+
+
+    public void getpersonid(){
+
+        EnumDemo[] enumDemo=EnumDemo.values();
+        List<Map<String,String>> pensonList=personDao.getpersonid();
+        for (Map<String,String> item:pensonList){
+           for (String Key : item.keySet()){
+               for (int i=1;i<=4;i++){
+                   TPrisonsetting tPrisonsetting=new TPrisonsetting();
+                   tPrisonsetting.setPersonid(item.get("personid"));
+                   tPrisonsetting.setSettingcode(i);
+                   tPrisonsetting.setSettingcheck(true);
+                   tPrisonsetting.setSettingtime(new Date());
+                   for (EnumDemo demo:enumDemo){
+                       if (demo.getCode()==i){
+                           tPrisonsetting.setSettingname(demo.getMsg());
+                       }
+                   }
+                   personDao.insertprison(tPrisonsetting);
+
+               }
+           }
+        }
+    }
+
 
 }

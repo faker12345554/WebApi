@@ -60,6 +60,8 @@ public interface PersonDao {
 
     List<Map<String,String>> getdetails(@Param("id") int id, @Param("personid") String personid);
 
+    List<Map<String,String>> getpersonid();
+
 
 
 
