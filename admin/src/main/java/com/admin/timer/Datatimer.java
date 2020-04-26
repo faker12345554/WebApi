@@ -45,7 +45,7 @@ public class Datatimer  {
     //每天凌晨2点执行
     @Scheduled(cron = "0 0 2 * * ?")
     public void job2() throws Exception {
-        messageService.Synchronizedpolice();
+     //   messageService.Synchronizedpolice();
         tasking.GeneratedRecord();
     }
     //每个月1号凌晨一点执行
@@ -77,17 +77,17 @@ public class Datatimer  {
         tasking.Statisticalsummons();
     }
     //每天凌晨三点
-    @Scheduled(cron = "0 0 3 * * ?")
-    public void SendSummons() throws Exception{
-    //tasking.GetMessageList(4);
-        messageService.Synchronouscase();
-    }
-    //每天凌晨4点
-    @Scheduled(cron = "0 0 4 * * ?")
-    public void SendBailout() throws Exception{
-        persoinfoService.getlistpernson();
-        //tasking.GetMessageList(6);
-    }
+//    @Scheduled(cron = "0 0 3 * * ?")
+//    public void SendSummons() throws Exception{
+//    //tasking.GetMessageList(4);
+//        messageService.Synchronouscase();
+//    }
+//    //每天凌晨4点
+//    @Scheduled(cron = "0 0 4 * * ?")
+//    public void SendBailout() throws Exception{
+//        persoinfoService.getlistpernson();
+//        //tasking.GetMessageList(6);
+//    }
 //    //每天凌晨三点
 //    @Scheduled(cron = "0 0 3 * * ?")
 //    public void SendPrison() throws Exception{

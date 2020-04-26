@@ -4,6 +4,7 @@ package com.admin.admin.dao.master.dw_person;
 import com.admin.admin.entity.dw_person.Personinformation;
 import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
 import com.admin.model.Appstatistics.monthnumber;
+import com.admin.model.coordina.Longitude;
 import com.admin.model.search.SearchModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -60,7 +61,7 @@ public interface PersonDao {
 
     List<Map<String,String>> getdetails(@Param("id") int id, @Param("personid") String personid);
 
-    List<Map<String,String>> getpersonid();
+    List<Longitude> getpersonid();
 
 
 

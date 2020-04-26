@@ -4,55 +4,36 @@
 <mapper namespace="com.admin.admin.dao.master.dw_user.UserDao">
     <select id="listUser" parameterType="com.admin.admin.entity.dw_user.Usermodel"
             resultType="com.admin.admin.entity.dw_user.User">
-        SELECT t_user.*,fsga_yw_ryb.zw as RoleName ,fsga_yw_ryb.bmmc FROM "t_user" left join fsga_yw_ryb on
-        t_user.accountname=fsga_yw_ryb.mjbh
-        <if test="usermodel.userName!=null">
-            where t_user.accountname=#{usermodel.userName}
+        SELECT u.*,fsga_yw_ryb.zw as RoleName ,fsga_yw_ryb.bmmc FROM "t_user" as u left join fsga_yw_ryb on
+        u.accountname=fsga_yw_ryb.mjbh
+        <if test="usermodel.userName!=null and usermodel.phone==null and usermodel.status==null
+        and usermodel.startTime==null and usermodel.endTime==null">
+            where u.accountname like concat('%',#{usermodel.userName},'%')
         </if>
-        <if test="usermodel.userName!=null and usermodel.phone!=null">
-            where t_user.accountname=#{usermodel.userName}  and t_user.phone=#{usermodel.phone}
+        <if test="usermodel.userName!=null and usermodel.phone!=null and usermodel.status==null
+        and usermodel.startTime==null and usermodel.endTime==null">
+            where u.phone like concat('%',#{usermodel.phone},'%') and u.accountname like concat('%',#{usermodel.userName},'%')
         </if>
-        <if test="usermodel.userName==null and usermodel.phone!=null">
-            where t_user.phone=#{usermodel.phone}
+        <if test="usermodel.userName!=null and usermodel.phone!=null and usermodel.status!=null
+        and usermodel.startTime==null and usermodel.endTime==null">
+            where u.status=#{usermodel.status} and u.phone like concat('%',#{usermodel.phone},'%') and u.accountname like concat('%',#{usermodel.userName},'%')
         </if>
-        <if test="usermodel.userName!=null and usermodel.phone!=null and usermodel.status!=null">
-            <if test="usermodel.status.equals('正常')">
-                where t_user.phone=#{usermodel.phone} and t_user.status=true and t_user.accountname=#{usermodel.userName}
-            </if>
-            <if test="usermodel.status.equals('停用')==false">
-                where t_user.phone=#{usermodel.phone} and t_user.status=false and t_user.accountname=#{usermodel.userName}
-            </if>
+        <if test="usermodel.userName!=null and usermodel.phone!=null and usermodel.status!=null
+        and usermodel.startTime!=null and usermodel.endTime!=null">
+            where u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
+            and u.status=#{usermodel.status} and u.phone like concat('%',#{usermodel.phone},'%') and u.accountname like concat('%',#{usermodel.userName},'%')
         </if>
-        <if test="usermodel.userName==null and usermodel.phone==null and usermodel.status!=null">
-            <if test="usermodel.status.equals('正常')">
-                where t_user.status=true
-            </if>
-            <if test="usermodel.status.equals('停用')">
-                where t_user.status=false
-            </if>
+        <if test="usermodel.phone!=null">
+        where u.phone like concat('%',#{usermodel.phone},'%')
+        </if>
+        <if test="usermodel.status!=null">
+            where u.status=#{usermodel.status}
+        </if>
+        <if test="usermodel.startTime!=null and usermodel.endTime!=null">
+            where u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
         </if>
 
-        <if test="usermodel.userName!=null and usermodel.phone!=null and usermodel.status!=null and usermodel.startTime!=null and usermodel.endTime !=null">
-            where t_user.phone=#{usermodel.phone} and t_user.status=false and t_user.accountname=#{usermodel.userName}
-            and t_user.createtime >= #{usermodel.startTime}
-            and t_user.createtime &lt;= #{usermodel.endTime}
-        </if>
-        <if test="(usermodel.userName==null and usermodel.phone==null and usermodel.status==null) and usermodel.startTime!=null and usermodel.endTime !=null">
-            where t_user.createtime >= #{usermodel.startTime} and t_user.createtime &lt;= #{usermodel.endTime}
-        </if>
-        <if test="(usermodel.userName!=null and usermodel.phone!=null and usermodel.status==null and usermodel.startTime!=null) and usermodel.endTime !=null">
-            where  t_user.phone=#{usermodel.phone} and t_user.accountname=#{usermodel.userName}
-            and t_user.createtime &lt;= #{usermodel.endTime} and t_user.createtime >= #{usermodel.startTime}
-        </if>
-        <if test="usermodel.userName==null and usermodel.phone==null and usermodel.status==null and usermodel.startTime==null and usermodel.endTime!=null">
-            where t_user.createtime &lt;= #{usermodel.endTime}
-        </if>
-        <if test="usermodel.userName==null and usermodel.phone==null and usermodel.status==null and usermodel.startTime==null and usermodel.endTime==null and usermodel.userid.equals('admin')==false">
-            where t_user.createid = #{usermodel.id} or t_user.id = #{usermodel.id}
-        </if>
-        <if test="usermodel.userName!=null or usermodel.phone!=null or usermodel.status!=null or usermodel.startTime!=null or usermodel.endTime!=null and usermodel.userid.equals('admin')==false">
-            where  t_user.createid = #{usermodel.id} or t_user.id = #{usermodel.id}
-        </if>
+
     </select>
 
 

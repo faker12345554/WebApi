@@ -4,6 +4,7 @@ package com.admin.admin.controller.dw_person;
 import com.admin.admin.entity.dw_person.Personinformation;
 import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
 import com.admin.admin.entity.dw_user.User;
+import com.admin.admin.service.dw_app.MessageService;
 import com.admin.admin.service.dw_person.PersoinfoService;
 import com.admin.model.search.SearchModel;
 import com.admin.page.PageBean;
@@ -37,6 +38,8 @@ public class PersonController {
     private PersoinfoService persoinfoService;//
 
 
+    @Autowired
+    private MessageService messageService;
 
 
     //新增
@@ -220,7 +223,7 @@ public class PersonController {
 
         return rtn;
     }
-    //@UserLoginToken
+    @UserLoginToken
     @ApiOperation("获取人员违规信息")
     @GetMapping("/getvolocation")
     public ResponseResult getvolocation(String personid){
@@ -230,7 +233,7 @@ public class PersonController {
         return rtn.setData(persoinfoService.getvolocation(personid));
     }
 
-    //@UserLoginToken
+    @UserLoginToken
     @ApiOperation("查看人员违规信息")
     @GetMapping("/getdetails")
     public ResponseResult getdetails(int id,String personid,int Pageindex,int pageSize){
@@ -245,6 +248,34 @@ public class PersonController {
         //rtn.setMessage("");
         rtn.setCode(200);
         return rtn.setData(pageData);
+    }
+    @UserLoginToken
+    @ApiOperation("同步信息")
+    @GetMapping("/Synchrondata")
+    public ResponseResult SynchronData(int type) throws Exception{
+        ResponseResult result=new ResponseResult();
+        try {
+            if(type==1){ //同步所有信息
+                messageService.Synchronizedpolice();
+                persoinfoService.getlistpernson();
+                messageService.Synchronouscase();
+            }else if (type==2){ //同步主办人
+                messageService.Synchronizedpolice();
+            }else if(type==3){ //同步嫌疑人
+                persoinfoService.getlistpernson();
+                persoinfoService.getpersonid();
+            }else if (type==4){ //同步人脸照片
+                messageService.Synchronouscase();
+            }
+            result.setCode(200);
+            result.setMessage("成功");
+
+        }catch (Exception ex){
+            result.setCode(500);
+            result.setMessage(ex.toString());
+        }
+        return result;
+
     }
 
 

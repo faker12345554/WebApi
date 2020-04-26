@@ -64,7 +64,6 @@ public class MessageService {
                 user.setDepartment(item.getBmmc());
                 user.setStation(item.getZw());
                 user.setDepartmentnum(item.getBmbm());
-
                 User user1 = new User();
                 user1.setAccountname(item.getMjbh());
                 user1.setPassword(MD5Util.string2MD5("123456"));

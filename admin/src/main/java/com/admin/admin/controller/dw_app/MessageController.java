@@ -47,7 +47,9 @@ public class MessageController {
         // tasking.GetMessage();
       // messageService.Synchronouscase();
        // messageService.Synchronizedpolice();
-        personDao.getpersonid();
+        //personDao.getpersonid();
+
+        //personDao.getlistpernson();
 
 
     }
