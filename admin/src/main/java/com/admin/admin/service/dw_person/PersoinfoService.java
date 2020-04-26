@@ -17,6 +17,7 @@ import com.admin.admin.entity.dw_prisonsetting.TPrisonsetting;
 import com.admin.admin.entity.dw_user.User;
 import com.admin.admin.entity.dw_violation.Violationfens;
 import com.admin.model.Appstatistics.monthnumber;
+import com.admin.model.coordina.Longitude;
 import com.admin.model.search.SearchModel;
 import com.admin.tool.CacheUtils;
 import com.admin.tool.EnumDemo;
@@ -259,6 +260,7 @@ public class PersoinfoService {
         TSynchron tSynchron = caseDao.GetTsyn(3);
         List<Personinformation> list = new ArrayList<Personinformation>();
         if (tSynchron != null) {
+            System.out.println(tSynchron.getDatatime());
             list = fsdao.getperson(tSynchron.getDatatime());
         } else {
             list = fsdao.getperson("1");
@@ -320,12 +322,11 @@ public class PersoinfoService {
     public void getpersonid(){
 
         EnumDemo[] enumDemo=EnumDemo.values();
-        List<Map<String,String>> pensonList=personDao.getpersonid();
-        for (Map<String,String> item:pensonList){
-           for (String Key : item.keySet()){
-               for (int i=1;i<=4;i++){
+        List<Longitude> pensonList=personDao.getpersonid();
+        for (Longitude item:pensonList){
+            for (int i=1;i<=4;i++){
                    TPrisonsetting tPrisonsetting=new TPrisonsetting();
-                   tPrisonsetting.setPersonid(item.get("personid"));
+                   tPrisonsetting.setPersonid(item.getLongitude());
                    tPrisonsetting.setSettingcode(i);
                    tPrisonsetting.setSettingcheck(true);
                    tPrisonsetting.setSettingtime(new Date());
@@ -335,8 +336,6 @@ public class PersoinfoService {
                        }
                    }
                    personDao.insertprison(tPrisonsetting);
-
-               }
            }
         }
     }

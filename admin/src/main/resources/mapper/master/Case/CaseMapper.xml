@@ -96,7 +96,7 @@
     </insert>
 
     <select id="GetTsyn" parameterType="int" resultType="com.admin.admin.entity.dw_Synchron.TSynchron">
-       	SELECT * from t_synchron where name=#{type} ORDER BY datatime LIMIT 1
+       	SELECT * from t_synchron where name=#{type} ORDER BY datatime desc LIMIT 1
     </select>
 
 </mapper>

@@ -33,7 +33,7 @@ public class UserController {
 
 
 
-    @UserLoginToken
+   // @UserLoginToken
     @ApiOperation("查看用户信息列表")
    // @PostMapping("/GetList")
     @PostMapping("/GetList")
@@ -54,7 +54,7 @@ public class UserController {
 
     //获取用户
     @ApiOperation("查看用户信息")
-    @UserLoginToken
+    //@UserLoginToken
     @GetMapping("/GetUser")
     public ResponseResult getUser(@RequestParam(required = false) String UserName,@RequestParam(required = false) int usersystem, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();

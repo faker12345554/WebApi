@@ -31,7 +31,7 @@
         from fsga_qx_jz_xyrxx as f
         inner join fsga_qx_jz_asjwsb as w on f.ajbh=w.ajbh
         inner join fsga_qx_jz_aj as q on f.ajbh=q.ajbh
-		where w.wsmc like '%取保%' or w.wsmc like '%监视居住%'
+		where (w.wsmc like '%取保%' or w.wsmc like '%监视居住%')
         <if test="Date!='1'.toString">
         and substring(to_char(f.cq_gxsj, 'yyyy-mm-dd HH:mm:ss'),0,11)>#{Date}
         </if>
