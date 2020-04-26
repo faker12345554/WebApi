@@ -26,8 +26,11 @@
         <result property="bmmc" column="bmmc" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="ListMechanism" resultMap="MechanismMap">
+    <select id="ListMechanism"  parameterType="String" resultMap="MechanismMap">
         SELECT bmbm,bmmc from fsga_yw_ryb
+        <if test="#{condition}!=null">
+        where bmmc like concat('%',#{condition},'%')
+        </if>
     </select>
 
 

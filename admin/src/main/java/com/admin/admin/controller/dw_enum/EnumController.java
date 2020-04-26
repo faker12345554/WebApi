@@ -60,11 +60,11 @@ public class EnumController {
     @ApiOperation("查询派出所的信息")
     @UserLoginToken
     @GetMapping("/ListMechanism")
-    public ResponseResult ListMechanism() {
+    public ResponseResult ListMechanism( String condition) {
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData(enumService.ListMechanism());
+        return result.setData(enumService.ListMechanism(condition));
     }
 
     @ApiOperation("查询枚举信息")
