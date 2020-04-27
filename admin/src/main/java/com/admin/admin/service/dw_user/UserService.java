@@ -50,9 +50,9 @@ public class UserService {
     }
 
     //删除
-    public int deleteUser(Boolean flag, String UserName) {
+    public int deleteUser(Boolean flag, String UserName,int usersystem) {
 
-        return userDao.deleteUser(flag, UserName);
+        return userDao.deleteUser(flag, UserName,usersystem);
     }
 
     //登录
@@ -67,10 +67,10 @@ public class UserService {
 
         return userDao.getUser(UserName, usersystem);
     }
-    public User delGetUser(String UserName ) {
+    public User delGetUser(String UserName,int usersystem ) {
 
 
-        return userDao.delGetUser(UserName);
+        return userDao.delGetUser(UserName,usersystem);
     }
     //查看权限
     public List<UserRole> getmenuid(int  permissionid){

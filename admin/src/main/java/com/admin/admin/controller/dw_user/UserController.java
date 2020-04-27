@@ -127,20 +127,20 @@ public class UserController {
     @UserLoginToken
     @ApiOperation("删除用户")
     @GetMapping("/DelUser")
-    public ResponseResult deleteUser(@RequestParam boolean flag, @RequestParam String  UserName, HttpServletResponse response) {
+    public ResponseResult deleteUser(@RequestParam boolean flag, @RequestParam String  UserName,@RequestParam  int usersystem,HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         if (flag != true) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
             result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
             return result.setData("参数'flag'输入错误");
-        } else if (userService.delGetUser(UserName) == null) {
+        } else if (userService.delGetUser(UserName,usersystem) == null) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
             result.setMessage(ResultCode.PARAMS_ERROR.getMessage());
             return result.setData("参数'UserId'输入错误,该用户不存在");
         }
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
-        return result.setData( userService.deleteUser(!flag, UserName));
+        return result.setData( userService.deleteUser(!flag, UserName, usersystem));
     }
 
     //登录
