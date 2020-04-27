@@ -18,7 +18,7 @@ public interface UserDao {
     //修改用户不包括密码
     int updateUserPassword(@Param("user") User user);
     //删除
-    int deleteUser(@Param("flag") boolean flag, @Param("UserName") String UserName);
+    int deleteUser(@Param("flag") boolean flag, @Param("UserName") String UserName,@Param("usersystem") int usersystem);
     //登录
     User login(@Param("UserName") String UserName,@Param("Password") String Password);
 
@@ -28,7 +28,7 @@ public interface UserDao {
     //查看
     User getUser(@Param("UserName") String UserName,@Param("usersystem") int usersystem);
 
-    User delGetUser(@Param("UserName") String UserName);
+    User delGetUser(@Param("UserName") String UserName,@Param("usersystem") int usersystem);
 
     //获取权限
     List<UserRole> getmenuid(@Param("permissionid") int permissionid);

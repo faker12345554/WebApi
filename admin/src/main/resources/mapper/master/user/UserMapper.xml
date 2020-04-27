@@ -6,28 +6,33 @@
             resultType="com.admin.admin.entity.dw_user.User">
         SELECT u.*,fsga_yw_ryb.zw as RoleName ,fsga_yw_ryb.bmmc FROM "t_user" as u left join fsga_yw_ryb on
         u.accountname=fsga_yw_ryb.mjbh
-        <if test="usermodel.userName!=null and usermodel.phone==null and usermodel.status==null
-        and usermodel.startTime==null and usermodel.endTime==null">
-            where u.accountname like concat('%',#{usermodel.userName},'%')
-        </if>
-        <if test="usermodel.userName!=null and usermodel.phone!=null and usermodel.status==null
-        and usermodel.startTime==null and usermodel.endTime==null">
-            where u.phone like concat('%',#{usermodel.phone},'%') and u.accountname like concat('%',#{usermodel.userName},'%')
-        </if>
-        <if test="usermodel.userName!=null and usermodel.phone!=null and usermodel.status!=null
-        and usermodel.startTime==null and usermodel.endTime==null">
-            where u.status=#{usermodel.status} and u.phone like concat('%',#{usermodel.phone},'%') and u.accountname like concat('%',#{usermodel.userName},'%')
-        </if>
-        <if test="usermodel.userName!=null and usermodel.phone!=null and usermodel.status!=null
-        and usermodel.startTime!=null and usermodel.endTime!=null">
-            where u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
-            and u.status=#{usermodel.status} and u.phone like concat('%',#{usermodel.phone},'%') and u.accountname like concat('%',#{usermodel.userName},'%')
+        <if test="usermodel.userName!=null">
+            where u.aliasname like concat('%',#{usermodel.userName},'%')
+            <if test="usermodel.phone!=null">
+                and u.phone like concat('%',#{usermodel.phone},'%')
+            </if>
+            <if test="usermodel.status!=null">
+                and u.status=#{usermodel.status}
+            </if>
+            <if test="usermodel.startTime!=null and usermodel.endTime!=null">
+                and u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
+            </if>
         </if>
         <if test="usermodel.phone!=null">
-        where u.phone like concat('%',#{usermodel.phone},'%')
+            where u.phone like concat('%',#{usermodel.phone},'%')
+            <if test="usermodel.status!=null">
+                and u.status=#{usermodel.status}
+            </if>
+            <if test="usermodel.startTime!=null and usermodel.endTime!=null">
+                and u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
+            </if>
         </if>
+
         <if test="usermodel.status!=null">
             where u.status=#{usermodel.status}
+            <if test="usermodel.startTime!=null and usermodel.endTime!=null">
+                and u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
+            </if>
         </if>
         <if test="usermodel.startTime!=null and usermodel.endTime!=null">
             where u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
@@ -52,8 +57,9 @@
             and usersystem=3
         </if>
     </select>
-    <select id="delGetUser" parameterType="String" resultType="com.admin.admin.entity.dw_user.User">
-         SELECT t.*,permissionname  FROM "t_user" as t inner join t_userpermissiongroup on t_userpermissiongroup.permissionid=t.permissionid where accountname=#{UserName}
+    <select id="delGetUser" resultType="com.admin.admin.entity.dw_user.User">
+         SELECT t.*,permissionname  FROM "t_user" as t inner join t_userpermissiongroup on t_userpermissiongroup.permissionid=t.permissionid
+         where accountname=#{UserName}  and usersystem=#{usersystem}
     </select>
 
     <select id="GetUserByid" parameterType="int" resultType="com.admin.admin.entity.dw_user.User">
@@ -82,7 +88,7 @@
 
 </update>
     <update id="deleteUser">
-        update t_user set status=#{flag} where accountname=#{UserName}
+        update t_user set status=#{flag} where accountname=#{UserName} and usersystem=#{usersystem}
     </update>
 
     <select id="login" resultType="com.admin.admin.entity.dw_user.User" parameterType="String">

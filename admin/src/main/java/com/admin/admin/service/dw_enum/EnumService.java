@@ -34,9 +34,9 @@ public class EnumService {
     /**
      * 获取机构 搞得那麽複雜 没进来吗？实在是因为那个实体又臭又长,而我需要的就两个
      */
-    public List<Map<String,Object>> ListMechanism(){
+    public List<Map<String,Object>> ListMechanism(String condition){
        // System.out.println(enumDao.ListMechanism());
-        return enumDao.ListMechanism();
+        return enumDao.ListMechanism(condition);
     }
 
     /**
