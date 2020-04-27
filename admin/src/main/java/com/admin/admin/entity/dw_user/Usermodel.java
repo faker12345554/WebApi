@@ -7,7 +7,7 @@ import java.util.Date;
 public class Usermodel {
     private String userName;
     private String phone;
-    private boolean status;
+    private Boolean status;
     private Date startTime;
     private Date endTime;
     private int pageSize;
@@ -32,11 +32,11 @@ public class Usermodel {
         this.phone = phone;
     }
 
-    public boolean getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

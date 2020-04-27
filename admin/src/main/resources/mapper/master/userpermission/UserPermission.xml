@@ -6,28 +6,21 @@
         SELECT * from t_userpermissiongroup
         <if test="condition.groupName!=null">
             where permissionname=#{condition.groupName}
-            <if test="condition.status!=null" >
+            <if test="condition.status!=null">
                 and status=#{condition.status}
             </if>
             <if test="condition.startTime!=null and condition.endTime!=null">
                 and createtime &lt;= #{condition.endTime} and createtime >= #{condition.startTime}
             </if>
         </if>
-
-        <if test="condition.groupName==null">
-            <if test="condition.status!=null" >
-                where status=#{condition.status}
-                <if test="condition.startTime!=null and condition.endTime!=null">
-                    and createtime &lt;= #{condition.endTime} and createtime >= #{condition.startTime}
-                </if>
+        <if test="condition.status!=null">
+            where status=#{condition.status}
+            <if test="condition.startTime!=null and condition.endTime!=null">
+                and createtime &lt;= #{condition.endTime} and createtime >= #{condition.startTime}
             </if>
         </if>
-        <if test="condition.groupName==null">
-            <if test="condition.status==null" >
-                <if test="condition.startTime!=null and condition.endTime!=null">
-                    where createtime &lt;= #{condition.endTime} and createtime >= #{condition.startTime}
-                </if>
-            </if>
+        <if test="condition.startTime!=null and condition.endTime!=null">
+            where createtime &lt;= #{condition.endTime} and createtime >= #{condition.startTime}
         </if>
 
 

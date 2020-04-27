@@ -27,7 +27,7 @@ swagger:
 
 logging:
   level:
-    root: debug
+    root: info
 
 mybatis:
   type-aliases-package: com.admin.admin.dao

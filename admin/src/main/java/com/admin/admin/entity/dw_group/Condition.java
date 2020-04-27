@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
 
 public class Condition {
     private String  groupName;
-    private boolean status;
+    private Boolean status;
     private Date startTime;
     private Date endTime;
     private int pageSize;
@@ -22,11 +22,11 @@ public class Condition {
         this.groupName = groupName;
     }
 
-    public boolean getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

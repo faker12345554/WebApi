@@ -59,7 +59,7 @@
                 cast (#{id} as int)
             </foreach>
         </if>
-        ORDER by l.
+        ORDER by l.starttimestamp desc
 
 
     </select>
