@@ -26,10 +26,10 @@
         <result property="bmmc" column="bmmc" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="ListMechanism"  parameterType="String" resultMap="MechanismMap">
+    <select id="ListMechanism" parameterType="String" resultMap="MechanismMap">
         SELECT bmbm,bmmc from fsga_yw_ryb
         <if test="#{condition}!=null">
-        where bmmc like concat('%',#{condition},'%')
+            where bmmc like concat('%',#{condition},'%')
         </if>
     </select>
 
@@ -77,40 +77,48 @@
         select enumid,typecode,typename,enumname,status,createtime from t_enum
         <if test="date.typeName!=null">
             where typename=#{date.typeName}
-        </if>
-        <if test="date.typeName!=null and date.typeCode!=null">
-            and typecode=#{date.typeCode}
-        </if>
-        <if test="date.typeName==null and date.typeCode!=null">
-            where typecode=#{date.typeCode}
-        </if>
-        <if test="(date.typeName!=null or date.typeCode!=null) and date.status!=null">
-            <if test="date.status=='正常'">
-                and status=true
+            <if test="date.typeCode!=null">
+                and typecode=#{date.typeCode}
             </if>
-            <if test="date.status=='停用'">
-                and status=false
+            <if test="date.status!=null">
+                and status=#{date.status}
+            </if>
+            <if test=" date.typeName!=null and date.typeCode!=null">
+                and createtime &lt;=#{date.endTime} and createtime >= #{date.startTime}
             </if>
         </if>
-        <if test="date.typeName==null and date.typeCode==null and date.status!=null">
-            <if test="date.status=='正常'">
-                where status=true
+
+
+        <if test="date.typeName==null">
+            <if test="date.typeCode!=null">
+                where typecode=#{date.typeCode}
+                <if test="date.status!=null">
+                    and status=#{date.status}
+                </if>
+                <if test=" date.typeName!=null and date.typeCode!=null">
+                    and createtime &lt;=#{date.endTime} and createtime >= #{date.startTime}
+                </if>
             </if>
-            <if test="date.status=='停用'">
-                where status=false
+
+        </if>
+        <if test="date.typeName==null">
+            <if test="date.typeCode==null">
+                <if test="date.status!=null">
+                    where status=#{date.status}
+                    <if test=" date.typeName!=null and date.typeCode!=null">
+                        and createtime &lt;=#{date.endTime} and createtime >= #{date.startTime}
+                    </if>
+                </if>
             </if>
         </if>
-        <if test="(date.typeName!=null or date.typeCode!=null or date.status!=null) and date.startTime!=null">
-            and createtime >= #{date.startTime}
-        </if>
-        <if test="(date.typeName==null and date.typeCode==null and date.status==null) and date.startTime!=null">
-            where createtime >= #{date.startTime}
-        </if>
-        <if test="(date.typeName!=null or date.typeCode!=null or date.status!=null or date.startTime!=null) and date.endTime !=null">
-            and createtime &lt;=#{date.endTime}
-        </if>
-        <if test="date.typeName==null and date.typeCode==null and date.status==null and date.startTime==null and date.endTime!=null">
-            where createtime &lt;=#{date.endTime}
+        <if test="date.typeName==null">
+            <if test="date.typeCode==null">
+                <if test="date.status==null">
+                    <if test=" date.typeName!=null and date.typeCode!=null">
+                        where createtime &lt;=#{date.endTime} and createtime >= #{date.startTime}
+                    </if>
+                </if>
+            </if>
         </if>
     </select>
 

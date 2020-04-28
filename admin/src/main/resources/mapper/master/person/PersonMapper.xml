@@ -88,7 +88,7 @@
                 #{id}
             </foreach>
         </if>
-
+      Order by P.foundertime desc
     </select>
 
     <select id="ListPrison" parameterType="String" resultType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting">

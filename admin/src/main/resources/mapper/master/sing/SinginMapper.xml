@@ -26,9 +26,59 @@
             and p.policecode=#{limit}
         </if>
 
-        <if test="searchModel.PersonId !=null and searchModel.PersonId!=''">
+        <if test="searchModel.PersonId !=null">
             and t.personid=#{searchModel.PersonId}
+            <if test="searchModel.PersonName!=null">
+                and P.personname like concat('%',#{searchModel.PersonName},'%')
+            </if>
+            <if test="searchModel.Condition!=null">
+                and t.typename = #{searchModel.Condition}
+            </if>
+            <if test="searchModel.StartTime !=null and searchModel.EndTime !=null">
+                AND t.createtime > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and t.createtime &lt;
+                TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+            </if>
+
         </if>
+        <if test="searchModel.PersonId ==null">
+            <if test="searchModel.PersonName!=null">
+                and P.personname like concat('%',#{searchModel.PersonName},'%')
+            </if>
+            <if test="searchModel.Condition!=null">
+                and t.typename = #{searchModel.Condition}
+            </if>
+            <if test="searchModel.StartTime !=null and searchModel.EndTime !=null">
+                AND t.createtime > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and t.createtime &lt;
+                TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+            </if>
+
+        </if>
+        <if test="searchModel.PersonId ==null">
+            <if test="searchModel.PersonName==null">
+                <if test="searchModel.Condition!=null">
+                    and t.typename = #{searchModel.Condition}
+                    <if test="searchModel.StartTime !=null and searchModel.EndTime !=null">
+                        AND t.createtime > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and
+                        t.createtime&lt;TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+                    </if>
+                </if>
+            </if>
+
+        </if>
+
+        <if test="searchModel.PersonId ==null">
+            <if test="searchModel.PersonName==null">
+                <if test="searchModel.Condition==null">
+                    <if test="searchModel.StartTime !=null and searchModel.EndTime !=null">
+                        AND t.createtime > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and
+                        t.createtime &lt;
+                        TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+                    </if>
+                </if>
+            </if>
+        </if>
+
+
         <if test="searchModel.FuzzyCondition !=null and searchModel.FuzzyCondition!=''">
             AND P.suspectstatus like concat('%',#{searchModel.FuzzyCondition},'%') or
             P.personname like concat('%',#{searchModel.FuzzyCondition},'%') or
@@ -41,25 +91,6 @@
             t.activityarea like concat('%',#{searchModel.FuzzyCondition},'%') or
             tc.handleunit like concat('%',#{searchModel.FuzzyCondition},'%') or
             tc.caseno like concat('%',#{searchModel.FuzzyCondition},'%')
-        </if>
-        <if test="searchModel.Condition==null and searchModel.PersonName!=null">
-            and P.personname like concat('%',#{searchModel.PersonName},'%')
-        </if>
-        <if test="searchModel.Condition!=null and searchModel.PersonName==null">
-            and t.typename = #{searchModel.Condition}
-        </if>
-        <if test="searchModel.Condition !=null and searchModel.Condition !='' and searchModel.PersonName !=null and searchModel.PersonName!=''">
-            AND t.typename =#{searchModel.Condition} and P.personname=#{searchModel.PersonName}
-        </if>
-        <if test="searchModel.StartTime !=null and searchModel.StartTime!='' and searchModel.EndTime!=null and searchModel.EndTime!='' ">
-            AND t.createtime > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and t.createtime &lt;
-            TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
-        </if>
-        <if test="searchModel.StartTime !=null and searchModel.StartTime!='' and (searchModel.EndTime==null and searchModel.EndTime=='')">
-            AND t.createtime > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS')
-        </if>
-        <if test="(searchModel.StartTime ==null and searchModel.StartTime=='') and searchModel.EndTime !=null and searchModel.EndTime!=''">
-            AND t.createtime &lt; TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
         </if>
         <if test="searchModel.list.size()>0">
             and t.id in
@@ -90,26 +121,35 @@
             and p.policecode=#{limit}
         </if>
 
-        <if test="searchModel.Condition ==null and searchModel.PersonName !=null">
-            and P.personname like concat('%',#{searchModel.PersonName},'%')
-        </if>
-        <if test="searchModel.Condition !=null and searchModel.PersonName ==null">
+        <if test="earchModel.Condition !=null">
             and t.calltype =#{searchModel.Condition}
+            <if test="earchModel.PersonName !=null">
+                and P.personname like concat('%',#{searchModel.PersonName},'%')
+            </if>
+            <if test="searchModel.StartTime!=null and searchModel.EndTime!=null">
+                and t.createtime > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and t.createtime&lt;
+                TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+            </if>
         </if>
-        <if test="searchModel.Condition !=null and searchModel.PersonName !=null and searchModel.StartTime!=null and searchModel.EndTime!=null">
-            and t.calltype=#{searchModel.Condition} and P.personname like concat('%',#{searchModel.PersonName},'%') and
-            t.createtime > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and t.createtime&lt;
-            TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+        <if test="earchModel.Condition ==null">
+
+            <if test="earchModel.PersonName !=null">
+                and P.personname like concat('%',#{searchModel.PersonName},'%')
+                <if test="searchModel.StartTime!=null and searchModel.EndTime!=null">
+                    and t.createtime > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and t.createtime&lt;
+                    TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+                </if>
+            </if>
+
+            <if test="earchModel.PersonName ==null">
+                <if test="searchModel.StartTime!=null and searchModel.EndTime!=null">
+                    and t.createtime > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and t.createtime&lt;
+                    TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+                </if>
+            </if>
         </if>
-        <if test="searchModel.Condition ==null and searchModel.PersonName !=null and searchModel.StartTime!=null and searchModel.EndTime!=null">
-            and P.personname like concat('%',#{searchModel.PersonName},'%') and t.createtime >
-            TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and t.createtime &lt;
-            TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
-        </if>
-        <if test="searchModel.Condition ==null and searchModel.PersonName ==null and searchModel.StartTime!=null and searchModel.EndTime!=null">
-            and t.createtime > TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS') and t.createtime &lt;
-            TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
-        </if>
+
+
         <if test="searchModel.list.size()>0">
             and t.id in
             <foreach collection="searchModel.list" item="id" index="index" open="(" close=")" separator=",">
