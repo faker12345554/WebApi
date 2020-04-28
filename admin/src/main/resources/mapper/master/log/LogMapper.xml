@@ -84,7 +84,8 @@
                 and modular like concat('%',#{date.modular},'%')
             </if>
             <if test="date.startTime!=null and date.endTime!=null">
-                and operatingTime &lt;=#{date.endTime} and operatingTime >= #{date.startTime}
+                and substring(to_char(operatingTime,'yyyy-MM-dd'),0,11) &lt;=#{date.endTime}
+                and substring(to_char(operatingTime,'yyyy-MM-dd'),0,11) >= #{date.startTime}
             </if>
 
         </if>
@@ -92,14 +93,16 @@
             <if test="date.modular!=null">
                 where modular like concat('%',#{date.modular},'%')
                 <if test="date.startTime!=null and date.endTime!=null">
-                    and operatingTime &lt;=#{date.endTime} and operatingTime >= #{date.startTime}
+                    and substring(to_char(operatingTime,'yyyy-MM-dd'),0,11) &lt;=#{date.endTime}
+                    and substring(to_char(operatingTime,'yyyy-MM-dd'),0,11) >= #{date.startTime}
                 </if>
             </if>
         </if>
         <if test="date.operator==null">
             <if test="date.modular==null">
                 <if test="date.startTime!=null and date.endTime!=null">
-                    where operatingTime &lt;=#{date.endTime} and operatingTime >= #{date.startTime}
+                    where substring(to_char(operatingTime,'yyyy-MM-dd'),0,11) &lt;=#{date.endTime}
+                    and substring(to_char(operatingTime,'yyyy-MM-dd'),0,11) >= #{date.startTime}
                 </if>
             </if>
         </if>

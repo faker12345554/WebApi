@@ -10,21 +10,24 @@
                 and status=#{condition.status}
             </if>
             <if test="condition.startTime!=null and condition.endTime!=null">
-                and createtime &lt;= #{condition.endTime} and createtime >= #{condition.startTime}
+                and substring(to_char(createtime,'yyyy-MM-dd'),0,11) &lt;= #{condition.endTime}
+                and substring(to_char(createtime,'yyyy-MM-dd'),0,11) >= #{condition.startTime}
             </if>
         </if>
         <if test="condition.groupName==null">
             <if test="condition.status!=null">
                 where status=#{condition.status}
                 <if test="condition.startTime!=null and condition.endTime!=null">
-                    and createtime &lt;= #{condition.endTime} and createtime >= #{condition.startTime}
+                    and substring(to_char(createtime,'yyyy-MM-dd'),0,11) &lt;= #{condition.endTime}
+                    and substring(to_char(createtime,'yyyy-MM-dd'),0,11) >= #{condition.startTime}
                 </if>
             </if>
         </if>
         <if test="condition.groupName==null">
             <if test="condition.status==null">
                 <if test="condition.startTime!=null and condition.endTime!=null">
-                    where createtime &lt;= #{condition.endTime} and createtime >= #{condition.startTime}
+                    where substring(to_char(createtime,'yyyy-MM-dd'),0,11) &lt;= #{condition.endTime}
+                    and substring(to_char(createtime,'yyyy-MM-dd'),0,11) >= #{condition.startTime}
                 </if>
             </if>
         </if>

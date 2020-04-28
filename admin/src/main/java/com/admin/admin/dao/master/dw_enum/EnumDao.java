@@ -24,7 +24,7 @@ public interface EnumDao {
      * 获取所有 一定要用 List<Map<String,Object>> ？？是的
      * @return
      */
-    List<Map<String,Object>> ListMechanism(String condition);
+    List<Map<String,Object>> ListMechanism( @Param("condition") String condition);
 
     /**
      * 派出所编号

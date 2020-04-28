@@ -28,7 +28,7 @@
 
     <select id="ListMechanism" parameterType="String" resultMap="MechanismMap">
         SELECT bmbm,bmmc from fsga_yw_ryb
-        <if test="#{condition}!=null">
+        <if test="condition !=null">
             where bmmc like concat('%',#{condition},'%')
         </if>
     </select>
@@ -84,7 +84,8 @@
                 and status=#{date.status}
             </if>
             <if test=" date.typeName!=null and date.typeCode!=null">
-                and createtime &lt;=#{date.endTime} and createtime >= #{date.startTime}
+                and substring(to_char(createtime,'yyyy-MM-dd'),0,11) &lt;=#{date.endTime}
+                and substring(to_char(createtime,'yyyy-MM-dd'),0,11) >= #{date.startTime}
             </if>
         </if>
 
@@ -96,7 +97,8 @@
                     and status=#{date.status}
                 </if>
                 <if test=" date.typeName!=null and date.typeCode!=null">
-                    and createtime &lt;=#{date.endTime} and createtime >= #{date.startTime}
+                    and substring(to_char(createtime,'yyyy-MM-dd'),0,11) &lt;=#{date.endTime}
+                    and substring(to_char(createtime,'yyyy-MM-dd'),0,11) >= #{date.startTime}
                 </if>
             </if>
 
@@ -106,7 +108,8 @@
                 <if test="date.status!=null">
                     where status=#{date.status}
                     <if test=" date.typeName!=null and date.typeCode!=null">
-                        and createtime &lt;=#{date.endTime} and createtime >= #{date.startTime}
+                        and substring(to_char(createtime,'yyyy-MM-dd'),0,11) &lt;=#{date.endTime}
+                        and substring(to_char(createtime,'yyyy-MM-dd'),0,11) >= #{date.startTime}
                     </if>
                 </if>
             </if>
@@ -115,7 +118,8 @@
             <if test="date.typeCode==null">
                 <if test="date.status==null">
                     <if test=" date.typeName!=null and date.typeCode!=null">
-                        where createtime &lt;=#{date.endTime} and createtime >= #{date.startTime}
+                        where substring(to_char(createtime,'yyyy-MM-dd'),0,11) &lt;=#{date.endTime}
+                        and substring(to_char(createtime,'yyyy-MM-dd'),0,11) >= #{date.startTime}
                     </if>
                 </if>
             </if>
