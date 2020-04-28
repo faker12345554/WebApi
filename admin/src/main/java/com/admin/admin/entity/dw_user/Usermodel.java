@@ -8,8 +8,8 @@ public class Usermodel {
     private String userName;
     private String phone;
     private Boolean status;
-    private Date startTime;
-    private Date endTime;
+    private String startTime;
+    private String endTime;
     private int pageSize;
     private int pageIndex;
     private Date createtime;
@@ -40,34 +40,20 @@ public class Usermodel {
         this.status = status;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
     public void setStartTime(String startTime) throws ParseException {
-        if(startTime!=null){
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date startTimeDate=sdf.parse(startTime);
-            this.startTime = startTimeDate;
-        }else{
-            this.startTime = null;
-        }
-
+        this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
     public void setEndTime(String endTime) throws ParseException {
-        if(endTime!=null){
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date endTimeDate=sdf.parse(endTime);
-            this.endTime = endTimeDate;
-        }else{
-            this.endTime = null;
-        }
-
+        this.endTime = endTime;
     }
 
     public int getPageSize() {

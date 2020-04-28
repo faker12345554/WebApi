@@ -83,6 +83,7 @@
                 cast( #{id} as int)
             </foreach>
         </if>
+        order by l.timestamp desc
     </select>
 
     <select id="GetLocation" parameterType="int" resultType="com.admin.admin.entity.dw_location.Locationmation">
