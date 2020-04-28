@@ -185,7 +185,7 @@ public class PersoinfoService {
             List<String> list = new ArrayList<>();
 
             item.setFoundertime(sdf.format(sdf.parse(item.getFoundertime())));
-            item.setBailoutbegindate(sdf.format(sdf.parse(item.getBailoutbegindate())));
+            item.setBailoutbegindate(CalendarAdjust.GetYear(sdf.parse(item.getBailoutbegindate())));
             item.setBailoutenddate(sdf.format(sdf.parse(item.getBailoutenddate())));
 
             for (TPrisonsetting itam : prisonList) {

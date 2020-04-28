@@ -153,7 +153,7 @@ public class EnumController {
 //    }
 
     @ApiOperation(value = "查询数据字典")
-    @UserLoginToken
+    //@UserLoginToken
     @PostMapping("findEnum")
     public ResponseResult findEnum(@RequestBody(required = true) EnumSearchModel enumSearchModel) {
         ResponseResult result = new ResponseResult();

@@ -83,7 +83,7 @@
             <if test="date.status!=null">
                 and status=#{date.status}
             </if>
-            <if test=" date.typeName!=null and date.typeCode!=null">
+            <if test=" date.startTime!=null and date.endTime!=null">
                 and substring(to_char(createtime,'yyyy-MM-dd'),0,11) &lt;=#{date.endTime}
                 and substring(to_char(createtime,'yyyy-MM-dd'),0,11) >= #{date.startTime}
             </if>
@@ -96,34 +96,35 @@
                 <if test="date.status!=null">
                     and status=#{date.status}
                 </if>
-                <if test=" date.typeName!=null and date.typeCode!=null">
+                <if test=" date.startTime!=null and date.endTime!=null">
                     and substring(to_char(createtime,'yyyy-MM-dd'),0,11) &lt;=#{date.endTime}
                     and substring(to_char(createtime,'yyyy-MM-dd'),0,11) >= #{date.startTime}
                 </if>
             </if>
-
         </if>
         <if test="date.typeName==null">
             <if test="date.typeCode==null">
                 <if test="date.status!=null">
                     where status=#{date.status}
-                    <if test=" date.typeName!=null and date.typeCode!=null">
+                    <if test=" date.startTime!=null and date.endTime!=null">
                         and substring(to_char(createtime,'yyyy-MM-dd'),0,11) &lt;=#{date.endTime}
-                        and substring(to_char(createtime,'yyyy-MM-dd'),0,11) >= #{date.startTime}
+                        and substring(to_char(createtime,'yyyy-MM-dd'),0,11) >=#{date.startTime}
                     </if>
                 </if>
             </if>
         </if>
+
         <if test="date.typeName==null">
             <if test="date.typeCode==null">
                 <if test="date.status==null">
-                    <if test=" date.typeName!=null and date.typeCode!=null">
+                    <if test=" date.startTime!=null and date.endTime!=null">
                         where substring(to_char(createtime,'yyyy-MM-dd'),0,11) &lt;=#{date.endTime}
                         and substring(to_char(createtime,'yyyy-MM-dd'),0,11) >= #{date.startTime}
                     </if>
                 </if>
             </if>
         </if>
+         order by createtime desc
     </select>
 
     <select id="getOneEnum" resultType="com.admin.model.enummodel.EnumModel">

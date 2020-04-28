@@ -16,7 +16,7 @@ master:
     # second 数据源配置
 second:
   datasource:
-    url: jdbc:postgresql://192.168.10.88/fszhxfztb?useUnicode=true&characterEncoding=utf8
+    url: jdbc:postgresql://192.168.10.88,14333:5432/fszhxfztb?useUnicode=true&characterEncoding=utf8
     username: postgres
     password: 123456
     driverClassName: org.postgresql.Driver
@@ -38,11 +38,10 @@ mybatis:
 #spring:
 #  datasource:
 #    master-source:
-#      jdbcUrl: jdbc:postgresql://112.74.41.177:5432/legal?autoReconnect=true&zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
-#      username: postgres
-#      password: "!QAZ2wsx#EDC"
-#      minimumIdle: 16
-#      maximumPoolSize: 1024
+#     url: jdbc:postgresql://68.109.202.164:5432/legal?useUnicode=true&characterEncoding=utf8
+      #    username: postgres
+    #    password: "Xfz-1017"
+    #    driverClassName: org.postgresql.Driver
 #      connectionTestQuery: SELECT 1 FROM t_user
 #      driverClassName: org.postgresql.Driver
 #      dataSource:

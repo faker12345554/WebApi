@@ -77,7 +77,8 @@
     </select>
     <select id="listAllLog" parameterType="com.admin.model.log.LogSearchModel"
             resultType="com.admin.model.log.LogModel">
-        select id,operator,modular,action,operatingtime from t_log
+        select t_log.id,t_user.aliasname as UserName,modular,action,operatingtime from t_log
+        left join t_user on t_user.id=t_log.operator
         <if test="date.operator!=null">
             where operator=cast(#{date.operator} as NUMERIC)
             <if test="date.modular!=null">
@@ -106,6 +107,7 @@
                 </if>
             </if>
         </if>
+         Order by operatingTime desc
 
     </select>
 
