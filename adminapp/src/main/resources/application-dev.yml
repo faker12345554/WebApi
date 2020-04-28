@@ -1,7 +1,7 @@
 server:
-  port: 8086
+  port: 8087
 #  servlet:
-#   context-path: "/DwSuperApp"
+#   context-path: "/fsga/dw2"
 
 
 #spring:
