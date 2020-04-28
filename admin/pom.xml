@@ -11,7 +11,7 @@
     <artifactId>admin</artifactId>
     <version>1.0.0</version>
     <name>admin</name>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <dependencies>
         <dependency>
             <groupId>com.donwait</groupId>

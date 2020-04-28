@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
 public class EnumSearchModel {
     private String typeName;
     private String typeCode;
-    private String status;
+    private Boolean status;
     private Date startTime;
     private Date endTime;
     private int PageSize;
@@ -48,11 +48,11 @@ public class EnumSearchModel {
         this.typeCode = typeCode;
     }
 
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

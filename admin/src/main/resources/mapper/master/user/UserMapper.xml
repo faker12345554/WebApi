@@ -18,24 +18,36 @@
                 and u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
             </if>
         </if>
-        <if test="usermodel.phone!=null">
-            where u.phone like concat('%',#{usermodel.phone},'%')
-            <if test="usermodel.status!=null">
-                and u.status=#{usermodel.status}
-            </if>
-            <if test="usermodel.startTime!=null and usermodel.endTime!=null">
-                and u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
+        <if test="usermodel.userName==null">
+            <if test="usermodel.phone!=null">
+                where u.phone like concat('%',#{usermodel.phone},'%')
+                <if test="usermodel.status!=null">
+                    and u.status=#{usermodel.status}
+                </if>
+                <if test="usermodel.startTime!=null and usermodel.endTime!=null">
+                    and u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
+                </if>
             </if>
         </if>
 
-        <if test="usermodel.status!=null">
-            where u.status=#{usermodel.status}
-            <if test="usermodel.startTime!=null and usermodel.endTime!=null">
-                and u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
+        <if test="usermodel.userName!=null">
+            <if test="usermodel.phone==null">
+                <if test="usermodel.status!=null">
+                    where u.status=#{usermodel.status}
+                    <if test="usermodel.startTime!=null and usermodel.endTime!=null">
+                        and u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
+                    </if>
+                </if>
             </if>
         </if>
-        <if test="usermodel.startTime!=null and usermodel.endTime!=null">
-            where u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
+        <if test="usermodel.userName!=null">
+            <if test="usermodel.phone==null">
+                <if test="usermodel.status!=null">
+                    <if test="usermodel.startTime!=null and usermodel.endTime!=null">
+                        where u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
+                    </if>
+                </if>
+            </if>
         </if>
 
 
