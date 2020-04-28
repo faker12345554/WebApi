@@ -79,8 +79,8 @@
             P.modifierid like concat('%',#{searchmodel.FuzzyCondition},'%') or
             C.caseno like concat('%',#{searchmodel.FuzzyCondition},'%') or
             C.handleunit like concat('%',#{searchmodel.FuzzyCondition},'%') or
-            C.handlepeson like concat('%',#{searchmodel.FuzzyCondition},'%')
-
+            C.handlepeson like concat('%',#{searchmodel.FuzzyCondition},'%') or
+            p.policestation like concat('%',#{searchmodel.FuzzyCondition},'%')
         </if>
         <if test="searchmodel.list.size()>0">
             and P.personid in

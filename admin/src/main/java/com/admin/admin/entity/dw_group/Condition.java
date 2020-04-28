@@ -9,8 +9,8 @@ import java.util.GregorianCalendar;
 public class Condition {
     private String  groupName;
     private Boolean status;
-    private Date startTime;
-    private Date endTime;
+    private String startTime;
+    private String endTime;
     private int pageSize;
     private int pageIndex;
 
@@ -30,38 +30,22 @@ public class Condition {
         this.status = status;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
     public void setStartTime(String startTime) throws ParseException {
-        if(startTime!=null){
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date startTimeDate=sdf.parse(startTime);
-            this.startTime = startTimeDate;
-        }else{
-            this.startTime = null;
-        }
+            this.startTime = startTime;
 
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
     public void setEndTime(String endTime) throws ParseException {
-        if(endTime!=null){
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date endTimeDate=sdf.parse(endTime);
-            Calendar calendar =new GregorianCalendar();
-            calendar.setTime(endTimeDate);
-            calendar.add(calendar.DATE,1);
-            Date date = calendar.getTime();
-            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-            this.endTime = sqlDate;
-        }else{
-            this.endTime = null;
-        }
+
+            this.endTime = endTime;
 
     }
 

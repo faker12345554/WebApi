@@ -15,7 +15,8 @@
                 and u.status=#{usermodel.status}
             </if>
             <if test="usermodel.startTime!=null and usermodel.endTime!=null">
-                and u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
+                and substring(to_char(u.createtime,'yyyy-MM-dd'),0,11)  &lt;=#{usermodel.endTime}
+                and substring(to_char(u.createtime,'yyyy-MM-dd'),0,11)>=#{usermodel.startTime}
             </if>
         </if>
         <if test="usermodel.userName==null">
@@ -25,32 +26,34 @@
                     and u.status=#{usermodel.status}
                 </if>
                 <if test="usermodel.startTime!=null and usermodel.endTime!=null">
-                    and u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
+                    and substring(to_char(u.createtime,'yyyy-MM-dd'),0,11)  &lt;=#{usermodel.endTime}
+                    and substring(to_char(u.createtime,'yyyy-MM-dd'),0,11)>=#{usermodel.startTime}
                 </if>
             </if>
         </if>
 
-        <if test="usermodel.userName!=null">
+        <if test="usermodel.userName==null">
             <if test="usermodel.phone==null">
                 <if test="usermodel.status!=null">
                     where u.status=#{usermodel.status}
                     <if test="usermodel.startTime!=null and usermodel.endTime!=null">
-                        and u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
+                        and substring(to_char(u.createtime,'yyyy-MM-dd'),0,11)  &lt;=#{usermodel.endTime}
+                        and substring(to_char(u.createtime,'yyyy-MM-dd'),0,11)>=#{usermodel.startTime}
                     </if>
                 </if>
             </if>
         </if>
-        <if test="usermodel.userName!=null">
+        <if test="usermodel.userName==null">
             <if test="usermodel.phone==null">
-                <if test="usermodel.status!=null">
+                <if test="usermodel.status==null">
                     <if test="usermodel.startTime!=null and usermodel.endTime!=null">
-                        where u.createtime &lt;=#{usermodel.endTime} and u.createtime>=#{usermodel.startTime}
+                        where substring(to_char(u.createtime,'yyyy-MM-dd'),0,11)  &lt;=#{usermodel.endTime}
+                        and substring(to_char(u.createtime,'yyyy-MM-dd'),0,11)>=#{usermodel.startTime}
                     </if>
                 </if>
             </if>
         </if>
-
-
+        order by u.createtime desc
     </select>
 
 
