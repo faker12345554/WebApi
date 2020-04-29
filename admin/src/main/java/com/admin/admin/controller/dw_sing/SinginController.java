@@ -75,7 +75,7 @@ public class SinginController {
 
     }
 
-    // @UserLoginToken
+     @UserLoginToken
     @ApiOperation("查看音视频列表")
     @PostMapping("/ListAudio")
     public ResponseResult ListAudio(@RequestBody SearchModel searchModel) {
