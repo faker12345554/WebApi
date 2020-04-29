@@ -86,7 +86,7 @@ public class PersonController {
     }
 
     //获取
-    //@UserLoginToken
+    @UserLoginToken
     @ApiOperation("查看人员信息")
     @GetMapping("/getPersoin")
     public ResponseResult getPersoin(@RequestParam String id,String Caseno) throws  Exception {

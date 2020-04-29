@@ -139,15 +139,15 @@ public class GroupService {
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
         PageHelper.startPage(condition.getPageIndex(), condition.getPageSize());
         List<UserPermissionGroup> allItems = GroupDao.listGroup(condition);
-        Collections.sort(allItems, new Comparator<UserPermissionGroup>() {
-            @Override
-            public int compare(UserPermissionGroup o1, UserPermissionGroup o2) {
-                int a =o1.getPermissionid();
-                int b= o2.getPermissionid();
-                int c = a-b;
-                return c;
-            }
-        });
+//        Collections.sort(allItems, new Comparator<UserPermissionGroup>() {
+//            @Override
+//            public int compare(UserPermissionGroup o1, UserPermissionGroup o2) {
+//                int a =o1.getPermissionid();
+//                int b= o2.getPermissionid();
+//                int c = a-b;
+//                return c;
+//            }
+//        });
         PageInfo<UserPermissionGroup> info = new PageInfo<>(allItems);//全部商品
         int countNums = (int) info.getTotal();            //总记录数
         PageBean<UserPermissionGroup> pageData = new PageBean<>(condition.getPageIndex(), condition.getPageSize(), countNums);

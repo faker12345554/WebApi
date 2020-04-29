@@ -12,7 +12,7 @@
         SELECT ajlxmc as casecategory,fsga_qx_jz_aj.ajmc as casename,fsga_qx_jz_aj.ajbh as caseno,
         bjsj as receivedtime,sldwmc as handleunit,slrmc as handlepeson,
         ajlxmc as casetype,zyaq as casedescription,ajzbrymc as mainperson,
-        ajxbrymc as operationperson,la_lrsj as filingtime,fsga_qx_jz_xyrxx.rybh as personid
+        ajxbrymc as operationperson,la_lrsj as filingtime
         from fsga_qx_jz_aj left join fsga_qx_jz_xyrxx
         on fsga_qx_jz_aj.ajbh=fsga_qx_jz_xyrxx.ajbh
         <if test="Date!='1'.toString">

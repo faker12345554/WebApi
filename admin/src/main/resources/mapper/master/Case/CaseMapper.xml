@@ -18,7 +18,7 @@
 				where  c.caseno=#{Caseno} and p.personid=#{PersonId}
     </select>
 
-    <insert id="Synchronouscase" parameterType="com.admin.admin.entity.dw_case.TCaseinfo" >
+    <insert id="Synchronouscase" parameterType="com.admin.admin.entity.dw_case.TCaseinfo">
         insert into t_caseinfo
         values
             (
@@ -45,11 +45,13 @@
     <update id="Modifycaserecord" parameterType="com.admin.admin.entity.dw_case.TCaseinfo">
         update t_caseinfo set casecategory=#{item.casecategory},casename=#{item.casename},caseno=#{item.caseno},
             receivedtime=to_timestamp(#{item.receivedtime},'yyyy-MM-dd HH:mi:ss'),handleunit=#{item.handleunit},
-            handlepeson=#{item.handlepeson},personid=#{item.personid},casetype=#{item.casetype},
+            handlepeson=#{item.handlepeson},casetype=#{item.casetype},
             casedescription=#{item.casedescription},mainperson=#{item.mainperson},operationperson=#{item.operationperson},
             filingtime= to_date(#{item.filingtime},'yyyy-MM-dd') where caseno=#{item.caseno}
     </update>
-
+    <update id="updatepersond" parameterType="String">
+        update t_caseinfo set personid=#{Personid} where caseno=#{CaseNo}
+    </update>
     <insert id="Synchronizedpolice" parameterType="java.util.List" useGeneratedKeys="false">
         insert into fsga_yw_ryb values
             (

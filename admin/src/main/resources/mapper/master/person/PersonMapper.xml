@@ -55,17 +55,16 @@
 
     <select id="ListPerson"
             resultType="com.admin.admin.entity.dw_person.Personinformation">
+        select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
+        left join t_caseinfo as C on C.personid=P.personid and c.caseno=p.caseno
         <if test="type==1">
-            select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
-            left join t_caseinfo as C on C.personid=P.personid and c.caseno=p.caseno where sponsoralarm=#{limit}
+            where sponsoralarm=#{limit}
         </if>
         <if test="type==4">
-            select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
-            left join t_caseinfo as C on C.personid=P.personid and c.caseno=p.caseno where status=true
+            where status=true
         </if>
         <if test="type!=1 and type!=4">
-            select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
-            left join t_caseinfo as C on C.personid=P.personid and c.caseno=p.caseno where policecode=#{limit}
+            where policecode=#{limit}
         </if>
 
 
@@ -88,7 +87,7 @@
                 #{id}
             </foreach>
         </if>
-      Order by P.foundertime desc
+        Order by P.foundertime desc
     </select>
 
     <select id="ListPrison" parameterType="String" resultType="com.admin.admin.entity.dw_prisonsetting.TPrisonsetting">
@@ -133,7 +132,7 @@
 
 
     <select id="getpersonid" resultType="com.admin.model.coordina.Longitude">
-       select personid as longitude,personname as latitude from t_personinformation
+       select personid as longitude, caseno as latitude from t_personinformation
     </select>
 
 
