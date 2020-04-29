@@ -100,6 +100,7 @@ public class PersoinfoService {
             personinformation.setModifierid(CacheUtils.get("UserName").toString());
         }
         personinformation.setCaseno(tCaseinfo.getCaseno());
+        personinformation.setModifiertime(CalendarAdjust.dateFormat.format(new Date()));
         //personinformation.setModifiertime(new Date());
         return personDao.updatePersion(personinformation);
     }

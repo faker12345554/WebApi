@@ -36,7 +36,7 @@ public class RuleStaticController {
     private ViolationService violationService;
 
 
-    //@UserLoginToken
+    @UserLoginToken
     @ApiOperation("违规程度统计")
     @GetMapping("/getRuuleList")
     public ResponseResult getRuuleList(@RequestParam String Code,int level,int codelevel,String StartTime,String EndTime) {
