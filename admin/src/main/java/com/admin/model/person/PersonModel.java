@@ -7,11 +7,22 @@ public class PersonModel {
     private String gender;
     private int age;
     private String sponsor;
+
+    public String getCasetype() {
+        return casetype;
+    }
+
+    public PersonModel setCasetype(String casetype) {
+        this.casetype = casetype;
+        return this;
+    }
+
     private String policestation;
     private String guid;
     private String caseno;
     private String handleunit;
     private String handlepeson;
+    private String casetype;
 
     public String getCaseno() {
         return caseno;
