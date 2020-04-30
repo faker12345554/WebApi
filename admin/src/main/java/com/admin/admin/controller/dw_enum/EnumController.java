@@ -166,15 +166,15 @@ public class EnumController {
                 return result.setData("");
             }
             PageInfo<EnumModel> info = new PageInfo<>(allItems);//全部商品
-            Collections.sort(allItems, new Comparator<EnumModel>() {
-                @Override
-                public int compare(EnumModel o1, EnumModel o2) {
-                    int a =o1.getEnumid();
-                    int b= o2.getEnumid();
-                    int c = a-b;
-                    return c;
-                }
-            });
+//            Collections.sort(allItems, new Comparator<EnumModel>() {
+//                @Override
+//                public int compare(EnumModel o1, EnumModel o2) {
+//                    int a =o1.getEnumid();
+//                    int b= o2.getEnumid();
+//                    int c = a-b;
+//                    return c;
+//                }
+//            });
             int countNums = (int) info.getTotal();            //总记录数
             PageBean<EnumModel> pageData = new PageBean<>(enumSearchModel.getPageIndex(), enumSearchModel.getPageSize(), countNums);
             pageData.setTotalPage(info.getPages());//总页数
