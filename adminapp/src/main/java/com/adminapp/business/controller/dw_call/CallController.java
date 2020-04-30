@@ -275,9 +275,10 @@ public class CallController {
             Date date=new Date();
             String timestamp=String.valueOf(date.getTime());
             int updateCancelRecord=callService.updateCancelRecord(callToken,"3",timestamp);
+            JSONObject jsonObject=new JSONObject();
             rs.resultCode=0;
             rs.resultMsg="";
-            rs.data=new Object();
+            rs.data=jsonObject;
 
             //请求通话推送
             Calendar cal=new GregorianCalendar();

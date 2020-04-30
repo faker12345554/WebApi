@@ -95,6 +95,12 @@
             <version>2.3</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.donwait</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <parent>
         <groupId>com.donwait</groupId>

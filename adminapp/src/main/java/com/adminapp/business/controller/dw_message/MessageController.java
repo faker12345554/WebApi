@@ -12,6 +12,7 @@ import com.common.common.result.ResultSet;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -480,9 +481,10 @@ public class MessageController {
                 ) {
                     int updateReadMessage = messageService.updateReadMessage(Integer.parseInt(item.getCode()));
                 }
+                JSONObject jsonObject=new JSONObject();
                 rs.resultCode = 0;
                 rs.resultMsg = "";
-                rs.data = new Object();
+                rs.data = jsonObject;
             }
             else{
                 rs.resultCode=1;

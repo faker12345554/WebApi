@@ -18,6 +18,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -103,9 +104,10 @@ public class LoginController {
             if (userInformationModel.getPassword().equals(password)) {
                 int udpateUserPassword=loginService.updateUserPassword(userId,newPassword);
                 if(udpateUserPassword!=0){
+                    JSONObject jsonObject=new JSONObject();
                     rs.resultCode=0;
                     rs.resultMsg="";
-                    rs.data=new Object();
+                    rs.data=jsonObject;
                 }
                 else{
                     rs.resultCode=1;
