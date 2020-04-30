@@ -6,7 +6,7 @@
             resultType="com.admin.model.leave.LeavefModel">
         SELECT l.personname,l.states,l.leavedestination,to_char(l.starttimestamp, 'yyyy-MM-dd') as starttimestamp,l.leaveorder,
         to_char(l.endtimestamp, 'yyyy-MM-dd') as endtimestamp ,l.reason,l.subittimestamp,a.auditordatetime FROM t_leave l
-        LEFT JOIN t_auditor a ON l.leaveorder = a.leaveorder AND a.statuscode IN ('1','2','3')
+        LEFT JOIN t_auditor a ON l.leaveorder = a.leaveorder AND a.statuscode IN ('2','3')
         where l.personid in (SELECT t.personid from t_personinformation as t
         left JOIN t_user as u on u.accountname=t.sponsoralarm
         <if test="type==1">
