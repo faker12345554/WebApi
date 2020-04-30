@@ -9,6 +9,7 @@ import com.admin.model.leave.LeavefModel;
 import com.admin.model.search.SearchModel;
 import com.admin.page.PageBean;
 import com.admin.token.tation.UserLoginToken;
+import com.admin.tool.CacheUtils;
 import com.common.common.authenticator.CalendarAdjust;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
@@ -82,6 +83,7 @@ public class LeaveController {
             } else if (auditorInformation.getStates().equals("审批不通过")) {
                 auditorInformation.setStatuscode(3);
             }
+            auditorInformation.setUserid(Integer.parseInt(CacheUtils.get("UserId").toString()));
             int updateLeaveStatus = leaveService.updateLeaveStatus(auditorInformation);
             result.setCode(ResultCode.SUCCESS.getCode());
             result.setMessage(ResultCode.SUCCESS.getMessage());
