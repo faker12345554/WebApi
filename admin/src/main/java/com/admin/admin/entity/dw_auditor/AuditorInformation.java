@@ -9,6 +9,16 @@ public class AuditorInformation {
     private String states;
     private String accountname;
     private Date auditordatetime;
+    private int Userid;
+
+    public int getUserid() {
+        return Userid;
+    }
+
+    public AuditorInformation setUserid(int userid) {
+        Userid = userid;
+        return this;
+    }
 
     public String getAccountname() {
         return accountname;
