@@ -83,7 +83,7 @@ public class PersoinfoService {
             personinformation.setFounderid(CacheUtils.get("UserName").toString());
         }
 
-        //personinformation.setFoundertime(new Date().toString());
+        personinformation.setFoundertime(CalendarAdjust.dateFormat.format(new Date()));
         personinformation.setPersonid(PersonId);
         personinformation.setViolationcode("0");
         personinformation.setCaseno(tCaseinfo.getCaseno());
@@ -325,19 +325,20 @@ public class PersoinfoService {
         EnumDemo[] enumDemo=EnumDemo.values();
         List<Longitude> pensonList=personDao.getpersonid();
         for (Longitude item:pensonList){
-            for (int i=1;i<=4;i++){
-                   TPrisonsetting tPrisonsetting=new TPrisonsetting();
-                   tPrisonsetting.setPersonid(item.getLongitude());
-                   tPrisonsetting.setSettingcode(i);
-                   tPrisonsetting.setSettingcheck(true);
-                   tPrisonsetting.setSettingtime(new Date());
-                   for (EnumDemo demo:enumDemo){
-                       if (demo.getCode()==i){
-                           tPrisonsetting.setSettingname(demo.getMsg());
-                       }
-                   }
-                   personDao.insertprison(tPrisonsetting);
-           }
+            caseDao.updatepersond(item.getLongitude(),item.getLatitude());
+//            for (int i=1;i<=4;i++){
+//                   TPrisonsetting tPrisonsetting=new TPrisonsetting();
+//                   tPrisonsetting.setPersonid(item.getLongitude());
+//                   tPrisonsetting.setSettingcode(i);
+//                   tPrisonsetting.setSettingcheck(true);
+//                   tPrisonsetting.setSettingtime(new Date());
+//                   for (EnumDemo demo:enumDemo){
+//                       if (demo.getCode()==i){
+//                           tPrisonsetting.setSettingname(demo.getMsg());
+//                       }
+//                   }
+//                   personDao.insertprison(tPrisonsetting);
+//           }
         }
     }
 

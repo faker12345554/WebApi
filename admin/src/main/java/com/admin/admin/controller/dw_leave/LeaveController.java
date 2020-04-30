@@ -77,8 +77,10 @@ public class LeaveController {
         ResponseResult result = new ResponseResult();
         LeaveInformation leaveInformations = leaveService.getLeaveInformation(auditorInformation.getLeaveorder());
         if (leaveInformations != null) {
-            if (leaveInformations.getStates().equals("审批通过")){
-                leaveInformations.setStatuscode(2);
+            if (auditorInformation.getStates().equals("审批通过")) {
+                auditorInformation.setStatuscode(2);
+            } else if (auditorInformation.getStates().equals("审批不通过")) {
+                auditorInformation.setStatuscode(3);
             }
             int updateLeaveStatus = leaveService.updateLeaveStatus(auditorInformation);
             result.setCode(ResultCode.SUCCESS.getCode());

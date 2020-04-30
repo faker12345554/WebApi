@@ -108,7 +108,6 @@
             </if>
         </if>
          Order by operatingTime desc
-
     </select>
 
     <delete id="deleteLog">

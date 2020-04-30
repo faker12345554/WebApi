@@ -39,6 +39,12 @@ public interface CaseDao {
     //记录更新时间
     int insertTsyn(TSynchron tSynchron);
 
+    //修改案件信息表的人员编码
+    int updatepersond(String Personid,String CaseNo);
+
+    //根据案件编号修改案件信息
+    int Modifycaserecord(TCaseinfo tCaseinfo);
+
 
 
 }

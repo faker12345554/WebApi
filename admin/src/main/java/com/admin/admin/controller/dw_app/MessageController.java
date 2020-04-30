@@ -45,9 +45,9 @@ public class MessageController {
     @GetMapping("/Gettest")
     public void test() throws Exception {
         // tasking.GetMessage();
-      // messageService.Synchronouscase();
-       // messageService.Synchronizedpolice();
-        //personDao.getpersonid();
+       //messageService.Synchronouscase();
+       //messageService.Synchronizedpolice();
+       personDao.getpersonid();
 
         //personDao.getlistpernson();
 
