@@ -1,7 +1,7 @@
 server:
   port: 8009
   servlet:
-    context-path: "/fsga/dw1"
+    context-path: "/DwWebApi"
 
 
 

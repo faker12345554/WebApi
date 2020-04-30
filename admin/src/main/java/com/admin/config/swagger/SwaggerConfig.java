@@ -23,7 +23,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(new ApiInfoBuilder()
                         // 页面标题
-                        .title("微商城")
+                        .title("取保监居平台")
                         // 描述
                         .description("好看的皮囊千篇一律,有趣的灵魂百里挑一。")
                         // 作者信息
