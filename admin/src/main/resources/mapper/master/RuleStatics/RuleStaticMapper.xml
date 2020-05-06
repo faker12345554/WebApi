@@ -41,11 +41,8 @@
         (SELECT count(*) from t_personinformation
         where bailoutbegindate >= date_trunc('month',current_date) and
         bailoutbegindate &lt;=date_trunc('month',current_date) + interval'1 month - 1 day' and suspectstatuscode='2') as Prisonmonth,
-        ( SELECT count(*) from t_personinformation
-        where bailoutbegindate>= date_trunc('year',current_date) and
-        bailoutbegindate &lt;=date_trunc('year',current_date) + interval'1 year - 1 day'
-        or (bailoutenddate>= date_trunc('year',current_date) and
-        bailoutenddate &lt;=date_trunc('year',current_date) + interval'1 year - 1 day' )
+        (SELECT count(*) from t_personinformation
+        where status=true
          and (suspectstatuscode='2' or suspectstatuscode='1')) as bailyear,
         (SELECT count(*) from t_personinformation
         where bailoutenddate>= date_trunc('month',current_date) and

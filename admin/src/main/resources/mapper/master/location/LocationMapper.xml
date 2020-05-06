@@ -12,7 +12,7 @@
         FROM "t_personinformation" As t
         left join t_location as l on l.personid=t.personid
         INNER JOIN t_enclosure AS E on T.personid=E.personid
-        left join t_caseinfo tc on t.personid = tc.personid and tc.caseno=t.caseno
+        left join t_caseinfo tc on  tc.caseno=t.caseno
         where E.status=true
         <if test="type==1">
             and t.sponsoralarm=#{limit}
