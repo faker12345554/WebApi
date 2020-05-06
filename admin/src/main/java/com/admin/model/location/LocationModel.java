@@ -17,7 +17,7 @@ public class LocationModel extends PersonModel {
         return this;
     }
 
-    private String casetype;
+   // private String casetype;
 
 
 
@@ -51,14 +51,14 @@ public class LocationModel extends PersonModel {
     }
 
 
-    public String getCasetype() {
-        return casetype;
-    }
-
-    public LocationModel setCasetype(String casetype) {
-        this.casetype = casetype;
-        return this;
-    }
+//    public String getCasetype() {
+//        return casetype;
+//    }
+//
+//    public LocationModel setCasetype(String casetype) {
+//        this.casetype = casetype;
+//        return this;
+//    }
 
 
 }

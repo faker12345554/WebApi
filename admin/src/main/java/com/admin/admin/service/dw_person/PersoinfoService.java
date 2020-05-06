@@ -211,19 +211,27 @@ public class PersoinfoService {
         monthnumber number1 = new monthnumber();
         if (model.getBailnumber() != 0) {
             Violationfens violationfens = violationDao.GetByCriteria("2");
-            if (violationfens.getSlightfens() <= model.getBailnumber() && model.getBailnumber() < violationfens.getSeriousfens()) {
-                number.setMonth("轻微");
-                number.setBailnumber(model.getBailnumber());
-                list.add(number);
-            } else if (model.getBailnumber() >= violationfens.getSeriousfens()) {
-                number.setMonth("严重");
-                number.setBailnumber(model.getBailnumber());
-                list.add(number);
-            } else {
+            if (violationfens!=null){
+                if (violationfens.getSlightfens() <= model.getBailnumber() && model.getBailnumber() < violationfens.getSeriousfens()) {
+                    number.setMonth("轻微");
+                    number.setBailnumber(model.getBailnumber());
+                    list.add(number);
+                } else if (model.getBailnumber() >= violationfens.getSeriousfens()) {
+                    number.setMonth("严重");
+                    number.setBailnumber(model.getBailnumber());
+                    list.add(number);
+                } else {
+                    number.setBailnumber(model.getBailnumber());
+                    number.setMonth("正常");
+                    list.add(number);
+                }
+            }else {
                 number.setBailnumber(model.getBailnumber());
                 number.setMonth("正常");
                 list.add(number);
             }
+
+
         } else {
             number.setBailnumber(model.getBailnumber());
             number.setMonth("正常");
@@ -232,25 +240,31 @@ public class PersoinfoService {
 
         if (model.getSupervisionnumber() != 0) {
             Violationfens violationfens = violationDao.GetByCriteria("1");
-            if (violationfens.getSlightfens() <= model.getSupervisionnumber() && model.getSupervisionnumber() < violationfens.getSeriousfens()) {
-                number1.setMonth("轻微");
-                number1.setBailnumber(model.getSupervisionnumber());
-                list.add(number1);
-            } else if (model.getSupervisionnumber() >= violationfens.getSeriousfens()) {
-                number1.setMonth("严重");
-                number1.setBailnumber(model.getSupervisionnumber());
-                list.add(number1);
-            } else {
+            if (violationfens!=null){
+                if (violationfens.getSlightfens() <= model.getSupervisionnumber() && model.getSupervisionnumber() < violationfens.getSeriousfens()) {
+                    number1.setMonth("轻微");
+                    number1.setBailnumber(model.getSupervisionnumber());
+                    list.add(number1);
+                } else if (model.getSupervisionnumber() >= violationfens.getSeriousfens()) {
+                    number1.setMonth("严重");
+                    number1.setBailnumber(model.getSupervisionnumber());
+                    list.add(number1);
+                } else {
+                    number1.setMonth("正常");
+                    number1.setBailnumber(model.getSupervisionnumber());
+                    list.add(number1);
+                }
+            }else {
                 number1.setMonth("正常");
                 number1.setBailnumber(model.getSupervisionnumber());
                 list.add(number1);
             }
+
         } else {
             number1.setMonth("正常");
             number1.setBailnumber(model.getSupervisionnumber());
             list.add(number1);
         }
-
 
         return list;
     }
