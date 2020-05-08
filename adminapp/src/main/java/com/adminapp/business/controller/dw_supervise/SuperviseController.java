@@ -609,9 +609,10 @@ public class SuperviseController {
                 Demo demo = new Demo("5dd349b4570df37b6700045e", "4hpqbdi0wpikb7bkwamq4uwnpvkjhebz");
                 demo.sendAndroidCustomizedcast(leaveInformation1.getPersonid(),"ReleaseBailCode","外出审批通知",
                         "外出审批通知",content,cal.getTime());
+                JSONObject jsonObject=new JSONObject();
                 rs.resultCode=0;
                 rs.resultMsg="";
-                rs.data=new Object();
+                rs.data=jsonObject;
             }
             else{
                 rs.resultCode=1;
@@ -1262,9 +1263,10 @@ public class SuperviseController {
                     int status=superviseService.insertPrisonSetting(personId,item.getName(),item.isEnable(),date,Integer.parseInt(item.getCode()));
                 }
             }
+            JSONObject jsonObject=new JSONObject();
             rs.resultCode=0;
             rs.resultMsg="";
-            rs.data=new Object();
+            rs.data=jsonObject;
         }
         else
         {
@@ -1592,9 +1594,10 @@ public class SuperviseController {
             int statusCode = Integer.valueOf(JSON.parseObject(register).getString("statusCode"));
             //int statusCode=200;
             if (statusCode == 200) {
+                JSONObject jsonObject=new JSONObject();
                 rs.resultCode = 0;
                 rs.resultMsg = "";
-                rs.data = new Object();
+                rs.data = jsonObject;
             } else {
                 rs.resultCode = 1;
                 rs.resultMsg = "注册失败";

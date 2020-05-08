@@ -33,7 +33,7 @@ public class LocationController {
     /*
     定位信息列表
      */
-    @UserLoginToken
+    //@UserLoginToken
     @ApiOperation("查询定位信息")
     @GetMapping("/LocationList")
     public ResponseResult listLocationModel(@RequestParam(required = false) String Condition, @RequestParam int PageSize, @RequestParam int PageIndex,

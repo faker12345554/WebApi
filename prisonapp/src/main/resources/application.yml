@@ -4,4 +4,4 @@ spring:
     active: dev
   jackson:
     serialization:
-       FAIL_ON_EMPTY_BEANS: false
+      FAIL_ON_EMPTY_BEANS: false
