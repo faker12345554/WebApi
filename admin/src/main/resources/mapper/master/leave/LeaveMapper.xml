@@ -15,7 +15,7 @@
             and t.policecode like concat('%',#{limit},'%')
         </if>
         <if test="type==false">
-            and t.sponsoralarm=#{limit}
+            and t.sponsoralarm=#{limit} )
         </if>
         <if test="searchModel.PersonId !=null">
             and l.personid=#{searchModel.PersonId}
@@ -45,22 +45,27 @@
         </if>
         <if test="searchModel.PersonId ==null">
             <if test="searchModel.Condition==null">
+
+                <if test="searchModel.PersonName!=null">
+                    and l.personname like concat('%',#{searchModel.PersonName},'%')
+                    <if test="searchModel.StartTime!=null and searchModel.EndTime!=null">
+                        and l.subittimestamp >= TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS')
+                        and l.subittimestamp &lt;= TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+                    </if>
+                </if>
             </if>
-            <if test="searchModel.PersonName!=null">
-                and l.personname like concat('%',#{searchModel.PersonName},'%')
-            </if>
-            <if test="searchModel.StartTime!=null and searchModel.EndTime!=null">
-                and l.subittimestamp >= TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS')
-                and l.subittimestamp &lt;= TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
-            </if>
+
         </if>
         <if test="searchModel.PersonId ==null">
-            <if test="searchModel.Condition==null"></if>
-            <if test="searchModel.PersonName==null"></if>
-            <if test="searchModel.StartTime!=null and searchModel.EndTime!=null">
-                and l.subittimestamp >= TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS')
-                and l.subittimestamp &lt;= TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+            <if test="searchModel.Condition==null">
+                <if test="searchModel.PersonName==null">
+                    <if test="searchModel.StartTime!=null and searchModel.EndTime!=null">
+                        and l.subittimestamp >= TO_TIMESTAMP(#{searchModel.StartTime}, 'YYYY-MM-DD HH24:MI:SS')
+                        and l.subittimestamp &lt;= TO_TIMESTAMP(#{searchModel.EndTime}, 'YYYY-MM-DD HH24:MI:SS')
+                    </if>
+                </if>
             </if>
+
         </if>
         <if test="searchModel.list.size()>0">
             and l.id in
