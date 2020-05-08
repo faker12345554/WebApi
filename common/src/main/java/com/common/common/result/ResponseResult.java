@@ -1,14 +1,18 @@
 package com.common.common.result;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * @ClassName ResponseResult
  * @Author Wen.GD
  * @Date 2019/5/27 20:36
  **/
 public class ResponseResult<T> {
-
+    @ApiModelProperty(value = "响应编码",dataType = "Integer")
     private Integer code;
+    @ApiModelProperty(value = "提示信息",dataType = "String")
     private String message;
+    @ApiModelProperty(value = "输出结果",dataType = "Object")
     private T data;
 
     public Integer getCode() {

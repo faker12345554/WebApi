@@ -10,6 +10,7 @@ import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,7 +48,8 @@ public class UserRoleController {
     @UserLoginToken
     @ApiOperation("删除用户权限")
     @GetMapping("/DelUserRole")
-    public ResponseResult deleteUserRole(@RequestParam boolean flag, @RequestParam int UserRoleId, HttpServletResponse response) {
+    public ResponseResult deleteUserRole(@ApiParam(name = "flag", value = "状态")boolean flag,
+                                         @ApiParam(name = "UserRoleId", value = "权限组id") int UserRoleId) {
         ResponseResult result = new ResponseResult();
         if (flag != true) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
@@ -76,7 +78,9 @@ public class UserRoleController {
     @UserLoginToken
     @ApiOperation("用户权限列表")
     @GetMapping("/GetRoleList")
-    public ResponseResult<UserRoleModel> listUserRole(@RequestParam int id, int PageSize, int PageIndex, HttpServletResponse response) {
+    public ResponseResult<UserRoleModel> listUserRole( @ApiParam(name = "id", value = "用户id") int id,
+                                                       @ApiParam(name = "PageSize", value = "页面大小") int PageSize,
+                                                       @ApiParam(name = "PageIndex", value = "页码")int PageIndex) {
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());

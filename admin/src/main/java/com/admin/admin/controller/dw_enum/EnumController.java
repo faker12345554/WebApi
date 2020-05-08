@@ -35,7 +35,7 @@ public class EnumController {
     @UserLoginToken
     @ApiOperation("查询枚举信息")
     @GetMapping("/GetEnum")
-    public ResponseResult GetEnum(@RequestParam String Code) {
+    public ResponseResult GetEnum(@ApiParam(name = "Code",value = "枚举编码") String Code) {
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
@@ -45,7 +45,7 @@ public class EnumController {
     @UserLoginToken
     @ApiOperation("查询民警信息")
     @GetMapping("/GetPolice")
-    public ResponseResult GetPolice(@RequestParam String PoliceStation) {
+    public ResponseResult GetPolice(@ApiParam(name = "PoliceStation",value = "派出所名称") String PoliceStation) {
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
@@ -86,7 +86,7 @@ public class EnumController {
     @ApiOperation("查询主办人信息")
     @UserLoginToken
     @GetMapping("/ListSponsor")
-    public ResponseResult ListSponsor(@RequestParam String Code) {
+    public ResponseResult ListSponsor(@ApiParam(name = "Code", value = "派出所编码") String Code) {
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());

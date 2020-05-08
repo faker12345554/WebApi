@@ -8,6 +8,7 @@ import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,8 +59,8 @@ public class UserPermissController {
     @UserLoginToken
     @ApiOperation("删除权限组信息")
     @GetMapping("/DelGroup")
-    public ResponseResult deleteGroup(@RequestParam boolean flag,
-                                      @RequestParam int GroupId, HttpServletResponse response) {
+    public ResponseResult deleteGroup(@ApiParam(name = "flag",value = "状态") boolean flag,
+                                      @ApiParam(name = "GroupId",value = "权限组id") int GroupId, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         if (flag != true) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
@@ -78,7 +79,7 @@ public class UserPermissController {
     @UserLoginToken
     @ApiOperation("获取权限组信息")
     @GetMapping("/GetGroup")
-    public ResponseResult getGroup(@RequestParam int id, HttpServletResponse response) {
+    public ResponseResult getGroup(@ApiParam(name = "id",value = "权限组id") int id, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());

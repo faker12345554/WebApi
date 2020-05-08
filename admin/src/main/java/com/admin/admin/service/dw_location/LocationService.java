@@ -25,12 +25,12 @@ public class LocationService {
     查询定位信息
      */
     public PageBean listLocationModel(String Condition ,int PageSize,int PageIndex){
-        String limit="";
-        int type= JudgementRole.Distinguishroles();
-        if (type==1){
-            limit= CacheUtils.get("accountname").toString();
-        }else{
-            limit=CacheUtils.get("PoliceCode").toString();
+        String limit = "";
+        boolean type = JudgementRole.Distinguishroles();
+        if (type == true) {
+            limit = CacheUtils.get("PoliceCode").toString().substring(0,CacheUtils.get("PoliceCode").toString().indexOf("0"));
+        } else {
+            limit = CacheUtils.get("accountname").toString();
         }
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
         PageHelper.startPage(PageIndex, PageSize);

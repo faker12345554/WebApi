@@ -11,6 +11,7 @@ import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,7 +56,8 @@ public class UserController {
     @ApiOperation("查看用户信息")
     @UserLoginToken
     @GetMapping("/GetUser")
-    public ResponseResult getUser(@RequestParam(required = false) String UserName,@RequestParam(required = false) int usersystem, HttpServletResponse response) {
+    public ResponseResult getUser(@ApiParam(name = "UserName", value = "用户名") String UserName,
+                                  @ApiParam(name = "usersystem", value = "所属平台") int usersystem) {
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
@@ -126,7 +128,9 @@ public class UserController {
     @UserLoginToken
     @ApiOperation("删除用户")
     @GetMapping("/DelUser")
-    public ResponseResult deleteUser(@RequestParam boolean flag, @RequestParam String  UserName,@RequestParam  int usersystem,HttpServletResponse response) {
+    public ResponseResult deleteUser(@ApiParam(name = "flag", value = "状态") boolean flag,
+                                     @ApiParam(name = "UserName", value = "用户名") String  UserName,
+                                     @ApiParam(name = "usersystem", value = "所属平台") int usersystem) {
         ResponseResult result = new ResponseResult();
         if (flag != true) {
             result.setCode(ResultCode.PARAMS_ERROR.getCode());
@@ -145,8 +149,8 @@ public class UserController {
     //登录
     @ApiOperation("登录")
     @GetMapping("/Login")
-    public ResponseResult login(@RequestParam String UserName, @RequestParam String Password,
-                                HttpServletResponse response, HttpServletRequest request) {
+    public ResponseResult login(@ApiParam(name = "UserName", value = "用户名") String UserName,
+                                @ApiParam(name = "Password", value = "密码") String Password) {
         ResponseResult result = new ResponseResult();
 //        String VerCode = String.valueOf(CacheUtils.get("验证码"));
 //        if (!VerCode.equals(Code)) {
@@ -170,6 +174,7 @@ public class UserController {
             result.setMessage("账号已停用");
             return result;
         }
+        CacheUtils.put("manager",user.getManager());
         CacheUtils.put("Role",user.getRoleName(),0);
         CacheUtils.put("PoliceCode",user.getPoliceCode(),0);
         CacheUtils.put("UserId", user.getId(), 0);

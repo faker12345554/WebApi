@@ -11,6 +11,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +37,10 @@ public class LocationController {
     @UserLoginToken
     @ApiOperation("查询定位信息")
     @GetMapping("/LocationList")
-    public ResponseResult listLocationModel(@RequestParam(required = false) String Condition, @RequestParam int PageSize, @RequestParam int PageIndex,
-                                            HttpServletResponse response) {
+    public ResponseResult listLocationModel(@ApiParam(name = "Condition", value = "搜索条件") @RequestParam(required = false) String Condition,
+                                            @ApiParam(name = "PageSize", value = "页面大小") int PageSize,
+                                            @ApiParam(name = "PageIndex", value = "页码") int PageIndex
+                                            ) {
         ResponseResult result = new ResponseResult();
 
         PageBean pageBean = locationService.listLocationModel(Condition, PageSize, PageIndex);
@@ -54,7 +57,8 @@ public class LocationController {
     @UserLoginToken
     @ApiOperation("查看今日轨迹")
     @GetMapping("/TrackToday")
-    public ResponseResult ListLocation(String PersonId, String date, HttpServletResponse response) {
+    public ResponseResult ListLocation(@ApiParam(name = "PersonId", value = "人员编号")String PersonId,
+                                       @ApiParam(name = "date", value = "查询日期")String date) {
         ResponseResult result = new ResponseResult();
         List<Locationmation> todayList=locationService.ListLocation(PersonId, date);
         if (todayList.size() == 0) {
@@ -105,7 +109,7 @@ public class LocationController {
     @UserLoginToken
     @ApiOperation("查看定位信息")
     @GetMapping("/GetLocation")
-    public ResponseResult GetLocation(@RequestParam int PersonId, HttpServletResponse response) {
+    public ResponseResult GetLocation(@ApiParam(name = "PersonId", value = "定位记录id") int PersonId) {
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
@@ -115,7 +119,7 @@ public class LocationController {
     @UserLoginToken
     @ApiOperation("查看当前位置")
     @GetMapping("GetLocationByPerson")
-    public ResponseResult GetLocationByPerson(@RequestParam String PersonId) {
+    public ResponseResult GetLocationByPerson(@ApiParam(name = "PersonId", value = "取保监居人员编号")@RequestParam String PersonId) {
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());

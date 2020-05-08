@@ -41,7 +41,7 @@ public class enclosureController {
     @UserLoginToken
     @ApiOperation("删除人员行动范围信息")
     @GetMapping("/deleteEnclosure")
-    public ResponseResult deleteEnclosure(@RequestParam String personId, HttpServletResponse response) {
+    public ResponseResult deleteEnclosure(@ApiParam(name = "personId",value = "取保监居人员编号")@RequestParam String personId, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
@@ -51,7 +51,7 @@ public class enclosureController {
     @UserLoginToken
     @ApiOperation("查看人员行动范围信息")
     @GetMapping("/selectEnclosure")
-    public ResponseResult selectEnclosure(@RequestParam String personId, HttpServletResponse response) {
+    public ResponseResult selectEnclosure(@ApiParam(name = "personId",value = "取保监居人员编号") String personId, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         List<enclosure> list = enclosureService.selectEnclosure(personId);
         if (list.size() == 0) {

@@ -1,5 +1,7 @@
 package com.admin.admin.entity.dw_group;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,11 +9,17 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Condition {
+    @ApiModelProperty(value = "权限组名称",dataType = "String")
     private String  groupName;
+    @ApiModelProperty(value = "状态",dataType = "boolean")
     private Boolean status;
+    @ApiModelProperty(value = "开始日期",dataType = "String")
     private String startTime;
+    @ApiModelProperty(value = "结束日期",dataType = "String")
     private String endTime;
+    @ApiModelProperty(value = "页面大小",dataType = "int")
     private int pageSize;
+    @ApiModelProperty(value = "页码",dataType = "int")
     private int pageIndex;
 
     public String getGroupName() {

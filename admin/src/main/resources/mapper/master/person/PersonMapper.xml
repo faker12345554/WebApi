@@ -57,15 +57,14 @@
             resultType="com.admin.admin.entity.dw_person.Personinformation">
         select P.*,C.caseno,C.handleunit,C.handlepeson from t_personinformation as P
         left join t_caseinfo as C on C.personid=P.personid and c.caseno=p.caseno
-        <if test="type==1">
-            where sponsoralarm=#{limit}
+        where status=true
+        <if test="type==true">
+            and policecode like concat('%',#{limit},'%')
         </if>
-        <if test="type==4">
-            where status=true
+        <if test="type==false">
+            and sponsoralarm=#{limit}
         </if>
-        <if test="type!=1 and type!=4">
-            where policecode=#{limit}
-        </if>
+
 
 
         <if test=" searchmodel.FuzzyCondition !=null and searchmodel.FuzzyCondition !=''">

@@ -14,6 +14,9 @@ public class User {
     private String phone;
     private String createtime;
     private boolean status;
+
+
+
     private String permissionname;
     private long usersystem;
     private String officephone;
@@ -23,6 +26,15 @@ public class User {
     private String personid;
     private String mailbox;
     private String bmmc;
+    private int manager;
+    public int getManager() {
+        return manager;
+    }
+
+    public User setManager(int manager) {
+        this.manager = manager;
+        return this;
+    }
 
 
     public String getCreatetime() {

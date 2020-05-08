@@ -4,19 +4,18 @@
 <mapper namespace="com.admin.admin.dao.master.dw_leave.LeaveDao">
     <select id="getLeave" parameterType="com.admin.model.search.SearchModel"
             resultType="com.admin.model.leave.LeavefModel">
-        SELECT l.personname,l.states,l.leavedestination,to_char(l.starttimestamp, 'yyyy-MM-dd') as starttimestamp,l.leaveorder,
-        to_char(l.endtimestamp, 'yyyy-MM-dd') as endtimestamp ,l.reason,l.subittimestamp,a.auditordatetime FROM t_leave l
+        SELECT l.personname,l.states,l.leavedestination,to_char(l.starttimestamp, 'yyyy-MM-dd') as
+        starttimestamp,l.leaveorder,
+        to_char(l.endtimestamp, 'yyyy-MM-dd') as endtimestamp ,l.reason,l.subittimestamp,a.auditordatetime FROM t_leave
+        l
         LEFT JOIN t_auditor a ON l.leaveorder = a.leaveorder AND a.statuscode IN ('2','3')
         where l.personid in (SELECT t.personid from t_personinformation as t
-        left JOIN t_user as u on u.accountname=t.sponsoralarm
-        <if test="type==1">
-            where t.sponsoralarm=#{limit} and u.usersystem='1' )
+        left JOIN t_user as u on u.accountname=t.sponsoralarm where t.status=true
+        <if test="type==true">
+            and t.policecode like concat('%',#{limit},'%')
         </if>
-        <if test="type==4">
-            where t.status=true )
-        </if>
-        <if test="type!=1 and type!=4">
-            where t.policecode=#{limit} )
+        <if test="type==false">
+            and t.sponsoralarm=#{limit}
         </if>
         <if test="searchModel.PersonId !=null">
             and l.personid=#{searchModel.PersonId}

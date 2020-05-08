@@ -12,6 +12,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -36,7 +37,7 @@ public class SinginController {
     @UserLoginToken
     @ApiOperation("查看签到信息")
     @GetMapping("/getSingin")
-    public ResponseResult getSingin(@RequestParam int Id, HttpServletResponse response) {
+    public ResponseResult getSingin(@ApiParam(name = "Id", value = "签到记录id") int Id, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());

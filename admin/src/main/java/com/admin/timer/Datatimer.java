@@ -70,32 +70,33 @@ public class Datatimer  {
        // System.out.println(CalendarAdjust.GetMonth());
 
     }
-    //每个月1号凌晨4点执行
-    @Scheduled(cron = "0 0 4 1 * ?")
+    //每天凌晨4点执行
+    @Scheduled(cron = "0 0 4 * * ?")
     public void Savemessage() throws Exception{
         //tasking.GetMessage();//生成提醒消息
         tasking.ProduceMessage();
     }
     //每个月1号凌晨3点执行
-    @Scheduled(cron = "0 0 3 1 * ?")
+    @Scheduled(cron = "0 0 1 1 * ?")
     public void Statisticalsummons() throws Exception{
         tasking.Statisticalsummons();//修改取保监居的违规程度状态
     }
     //每天凌晨三点
-//    @Scheduled(cron = "0 0 3 * * ?")
-//    public void SendSummons() throws Exception{
-//    //tasking.GetMessageList(4);
-//        messageService.Synchronouscase();
-//    }
-//    //每天凌晨4点
-//    @Scheduled(cron = "0 0 4 * * ?")
-//    public void SendBailout() throws Exception{
-//        persoinfoService.getlistpernson();
-//        //tasking.GetMessageList(6);
-//    }
-//    //每天凌晨三点
-//    @Scheduled(cron = "0 0 3 * * ?")
-//    public void SendPrison() throws Exception{
-//        tasking.GetMessageList(7);
-//    }
+    @Scheduled(cron = "0 0 5 * * ?")
+    public void SendSummons() throws Exception{
+    //tasking.GetMessageList(4);
+        messageService.Synchronouscase();
+    }
+    //每天凌晨4点
+    @Scheduled(cron = "0 0 4 * * ?")
+    public void SendBailout() throws Exception{
+        persoinfoService.getlistpernson();
+        //tasking.GetMessageList(6);
+    }
+    //每天凌晨三点
+    @Scheduled(cron = "0 0 3 * * ?")
+    public void SendPrison() throws Exception{
+       // tasking.GetMessageList(7);
+        messageService.Synchronizedpolice();
+    }
 }

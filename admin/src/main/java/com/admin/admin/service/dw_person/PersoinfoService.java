@@ -181,11 +181,11 @@ public class PersoinfoService {
      */
     public List<Personinformation> ListPerson(SearchModel searchModel) throws Exception {
         String limit = "";
-        int type = JudgementRole.Distinguishroles();
-        if (type == 1) {
-            limit = CacheUtils.get("accountname").toString();
+        boolean type = JudgementRole.Distinguishroles();
+        if (type == true) {
+            limit = CacheUtils.get("PoliceCode").toString().substring(0,CacheUtils.get("PoliceCode").toString().indexOf("0"));
         } else {
-            limit = CacheUtils.get("PoliceCode").toString();
+            limit = CacheUtils.get("accountname").toString();
         }
         List<Personinformation> personList = personDao.ListPerson(searchModel, type, limit);//这里面是每个人的信息
 
