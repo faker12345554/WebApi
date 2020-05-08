@@ -12,7 +12,7 @@
         where l.personid in (SELECT t.personid from t_personinformation as t
         left JOIN t_user as u on u.accountname=t.sponsoralarm where t.status=true
         <if test="type==true">
-            and t.policecode like concat('%',#{limit},'%')
+            and t.policecode like concat('%',#{limit},'%') )
         </if>
         <if test="type==false">
             and t.sponsoralarm=#{limit} )
