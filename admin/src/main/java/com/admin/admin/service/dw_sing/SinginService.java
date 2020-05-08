@@ -21,12 +21,12 @@ public class SinginService {
     列表
      */
     public  List<SinginModel> ListSingin(SearchModel searchModel){
-        String limit="";
-        int type= JudgementRole.Distinguishroles();
-        if (type==1){
-            limit= CacheUtils.get("accountname").toString();
-        }else{
-            limit=CacheUtils.get("PoliceCode").toString();
+        String limit = "";
+        boolean type = JudgementRole.Distinguishroles();
+        if (type == true) {
+            limit = CacheUtils.get("PoliceCode").toString().substring(0,CacheUtils.get("PoliceCode").toString().indexOf("0"));
+        } else {
+            limit = CacheUtils.get("accountname").toString();
         }
 
         return singinDao.ListSingin(searchModel,type,limit);
@@ -44,12 +44,12 @@ public class SinginService {
     音视频
      */
     public  List<SinginModel> ListAudio(SearchModel searchModel){
-        String limit="";
-        int type= JudgementRole.Distinguishroles();
-        if (type==1){
-            limit= CacheUtils.get("accountname").toString();
-        }else{
-            limit=CacheUtils.get("PoliceCode").toString();
+        String limit = "";
+        boolean type = JudgementRole.Distinguishroles();
+        if (type == true) {
+            limit = CacheUtils.get("PoliceCode").toString().substring(0,CacheUtils.get("PoliceCode").toString().indexOf("0"));
+        } else {
+            limit = CacheUtils.get("accountname").toString();
         }
         return singinDao.ListAudio(searchModel,type,limit);
     }

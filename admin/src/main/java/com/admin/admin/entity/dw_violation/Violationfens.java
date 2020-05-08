@@ -1,11 +1,14 @@
 package com.admin.admin.entity.dw_violation;
 
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
 public class Violationfens {
 
   private int id;
+  @ApiModelProperty(value = "违规程度设置编码",dataType = "String")
   private String violationcode;
 
   public Date getCreatetime() {
@@ -16,14 +19,21 @@ public class Violationfens {
     this.createtime = createtime;
     return this;
   }
-
+  @ApiModelProperty(value = "违规程度设置名称",dataType = "String")
   private String violationname;
+  @ApiModelProperty(value = "轻微次数",dataType = "int")
   private int slightfens;
+  @ApiModelProperty(value = "严重次数",dataType = "int")
   private int seriousfens;
+  @ApiModelProperty(value = "创建人",dataType = "String")
   private String createperson;
+  @ApiModelProperty(value = "创建时间",dataType = "Date")
   private Date createtime;
+  @ApiModelProperty(value = "修改时间",dataType = "Date")
   private Date Modificationtime;
+  @ApiModelProperty(value = "修改标记 表示下个月生效",dataType = "String")
   private String updatemonth;
+  @ApiModelProperty(value = "启用状态 用于判断是否是下个月生效",dataType = "boolean")
   private boolean enabled;
 
   public boolean isEnabled() {

@@ -1,19 +1,31 @@
 package com.admin.admin.entity.dw_user;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Usermodel {
+    @ApiModelProperty(value = "用户名",dataType = "String")
     private String userName;
+    @ApiModelProperty(value = "手机号码",dataType = "String")
     private String phone;
+    @ApiModelProperty(value = "状态",dataType = "String")
     private Boolean status;
+    @ApiModelProperty(value = "搜索日期 开始日期",dataType = "String")
     private String startTime;
+    @ApiModelProperty(value = "搜索日期 结束日期",dataType = "String")
     private String endTime;
+    @ApiModelProperty(value = "页面大小",dataType = "int")
     private int pageSize;
+    @ApiModelProperty(value = "页码",dataType = "int")
     private int pageIndex;
+    @ApiModelProperty(value = "创建日期",dataType = "date")
     private Date createtime;
+
     private int id;
+    @ApiModelProperty(value = "用户id",dataType = "int")
     private String userid;
 
     public String getUserName() {

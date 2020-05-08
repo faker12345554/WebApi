@@ -8,6 +8,7 @@ import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class ViolationController {
     private ViolationService violationService;
 
 
-    //@UserLoginToken
+    @UserLoginToken
     @ApiOperation("新增违规分数")
     @PostMapping("/SaveViolation")
     public ResponseResult SaveViolation(@RequestBody List<Violationfens> violationfens) throws ParseException {
@@ -38,11 +39,11 @@ public class ViolationController {
                 item.setEnabled(false);
                 item.setCreatetime(new Date());
                 violationService.SaveViolation(item);
-                result.setMessage(ResultCode.SUCCESS.getMessage());
-            } else if (CalendarAdjust.getMonthDiff(CalendarAdjust.GetDate(item.getUpdatemonth()), new Date()) == 0 && violation.size() == 0) {
-                item.setStatus(true);
+                result.setMessage("设置成功");
+            } else if (violation.size() == 0) {
+                item.setStatus(false);
                 item.setCreatetime(new Date());
-                item.setModificationtime(new Date());
+                item.setUpdatemonth(CalendarAdjust.dateFormat.format( new Date()));
                 item.setEnabled(true);
                 violationService.SaveViolation(item);
                 result.setMessage("修改成功,下月起生效");
@@ -60,7 +61,8 @@ public class ViolationController {
     @UserLoginToken
     @ApiOperation("作废违规分数")
     @GetMapping("/DeleteViolation")
-    public ResponseResult DeleteViolation(@RequestParam  int id,boolean flag){
+    public ResponseResult DeleteViolation(@ApiParam(name = "id", value = "违规设置记录id")  int id,
+                                          @ApiParam(name = "flag", value = "状态")  boolean flag){
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());

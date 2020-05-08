@@ -10,7 +10,9 @@ import com.admin.token.tation.UserLoginToken;
 import com.admin.tool.CacheUtils;
 import com.common.common.result.ResponseResult;
 import com.common.common.result.ResultCode;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+@Api(value = "首页信息", tags = {"首页信息"})
 @RestController
 @RequestMapping("/RuleStatis")
 public class RuleStaticController {
@@ -39,7 +42,11 @@ public class RuleStaticController {
     @UserLoginToken
     @ApiOperation("违规程度统计")
     @GetMapping("/getRuuleList")
-    public ResponseResult getRuuleList(@RequestParam String Code,int level,int codelevel,String StartTime,String EndTime) {
+    public ResponseResult getRuuleList(@ApiParam(name = "Code", value = "派出所编码") String Code,
+                                       @ApiParam(name = "level", value = "派出所级别")int level,
+                                       @ApiParam(name = "codelevel", value = "编码级别")int codelevel,
+                                       @ApiParam(name = "StartTime", value = "搜索时间段 开始日期") String StartTime,
+                                       @ApiParam(name = "StartTime", value = "搜索时间段 结束日期")String EndTime) {
         ResponseResult result = new ResponseResult();
         List<ViotionStatics> numberList = new ArrayList<ViotionStatics>();
         if (codelevel==3){

@@ -15,6 +15,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -73,7 +74,8 @@ public class PersonController {
     @UserLoginToken
     @ApiOperation("删除人员信息")
     @GetMapping("/deletePersion")
-    public ResponseResult deletePersion(@RequestParam boolean flag, @RequestParam String PersonId, HttpServletResponse response) {
+    public ResponseResult deletePersion(@ApiParam(name = "flag", value = "状态") boolean flag,
+                                        @ApiParam(name = "PersonId", value = "人员编号") String PersonId) {
         ResponseResult result = new ResponseResult();
         if (flag == true) {
             result.setCode(ResultCode.DATA_DUPLICATION.getCode());
@@ -89,7 +91,8 @@ public class PersonController {
     @UserLoginToken
     @ApiOperation("查看人员信息")
     @GetMapping("/getPersoin")
-    public ResponseResult getPersoin(@RequestParam String id,String Caseno) throws  Exception {
+    public ResponseResult getPersoin(@ApiParam(name = "id", value = "人员编号") String id,
+                                     @ApiParam(name = "Caseno", value = "案件编号")String Caseno) throws  Exception {
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage(ResultCode.SUCCESS.getMessage());
@@ -98,7 +101,9 @@ public class PersonController {
     @UserLoginToken
     @ApiOperation("变更主办人")
     @GetMapping("/updateSponsor")
-    public ResponseResult updateSponsor(@RequestParam String Name, String id, String PersonId) {
+    public ResponseResult updateSponsor(@ApiParam(name = "Name", value = "主办人姓名")String Name,
+                                        @ApiParam(name = "id", value = "主办人编号")String id,
+                                        @ApiParam(name = "PersonId", value = "人员编号")String PersonId) {
         ResponseResult result = new ResponseResult();
         result.setCode(ResultCode.SUCCESS.getCode());
         result.setMessage("变更成功");
@@ -226,7 +231,7 @@ public class PersonController {
     @UserLoginToken
     @ApiOperation("获取人员违规信息")
     @GetMapping("/getvolocation")
-    public ResponseResult getvolocation(String personid){
+    public ResponseResult getvolocation(@ApiParam(name = "personid", value = "人员编码")String personid){
         ResponseResult rtn = new ResponseResult();
         //rtn.setMessage("");
         rtn.setCode(200);
@@ -236,7 +241,11 @@ public class PersonController {
     @UserLoginToken
     @ApiOperation("查看人员违规信息")
     @GetMapping("/getdetails")
-    public ResponseResult getdetails(int id,String personid,int Pageindex,int pageSize){
+    public ResponseResult getdetails(
+            @ApiParam(name = "id", value = "违规类型，1为传讯,2为脱离管控区域") int id,
+            @ApiParam(name = "personid", value = "人员编号")String personid,
+            @ApiParam(name = "Pageindex", value = "页码")int Pageindex,
+            @ApiParam(name = "pageSize", value = "页面大小")int pageSize){
         ResponseResult rtn = new ResponseResult();
         PageHelper.startPage(Pageindex, pageSize);
         List<Map<String,String>> allitems = persoinfoService.getdetails(id,personid);
@@ -252,7 +261,7 @@ public class PersonController {
     @UserLoginToken
     @ApiOperation("同步信息")
     @GetMapping("/Synchrondata")
-    public ResponseResult SynchronData(int type) throws Exception{
+    public ResponseResult SynchronData(@ApiParam(name = "同步信息类型", value = "int")int type) throws Exception{
         ResponseResult result=new ResponseResult();
         try {
             if(type==1){ //同步所有信息
@@ -263,7 +272,7 @@ public class PersonController {
                 messageService.Synchronizedpolice();
             }else if(type==3){ //同步嫌疑人
                 persoinfoService.getlistpernson();
-                persoinfoService.getpersonid();
+//                persoinfoService.getpersonid();
             }else if (type==4){ //同步人脸照片
                 messageService.Synchronouscase();
             }

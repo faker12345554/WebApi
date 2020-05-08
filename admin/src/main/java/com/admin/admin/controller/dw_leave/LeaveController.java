@@ -169,7 +169,10 @@ public class LeaveController {
     @ApiOperation(value = "平台外出申请统计")
     @GetMapping("/CountLeave")
     @UserLoginToken
-    public ResponseResult countLeave(@RequestParam String city,String area,String startTime, String endTime){
+    public ResponseResult countLeave(@RequestParam String city,
+                                     String area,
+                                     @ApiParam(name = "startTime", value = "开始日期") String startTime,
+                                     @ApiParam(name = "endTime", value = "结束日期")String endTime){
         ResponseResult result = new ResponseResult();
         try{
             List<CountResult> countResults =leaveService.countLeave(city,area, startTime,endTime);

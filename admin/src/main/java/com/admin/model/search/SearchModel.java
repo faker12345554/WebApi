@@ -1,17 +1,24 @@
 package com.admin.model.search;
 
 import com.admin.model.Execl.ExeclModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
 public class SearchModel extends ExeclModel {
-
+    @ApiModelProperty(value = "搜索条件1",dataType = "String")
     private String Condition;
+    @ApiModelProperty(value = "姓名",dataType = "String")
     private String PersonName;
+    @ApiModelProperty(value = "搜索开始日期",dataType = "String")
     private String StartTime;
+    @ApiModelProperty(value = "搜索结束日期",dataType = "String")
     private String EndTime;
+    @ApiModelProperty(value = "模糊查询",dataType = "String")
     private String FuzzyCondition;
+    @ApiModelProperty(value = "状态",dataType = "boolean")
     private boolean flag;
+    @ApiModelProperty(value = "页面大小",dataType = "int")
     private int PageSize;
 
     public String getStartTime() {
@@ -31,7 +38,7 @@ public class SearchModel extends ExeclModel {
         EndTime = endTime;
         return this;
     }
-
+    @ApiModelProperty(value = "页码",dataType = "int")
     private int PageIndex;
 
 

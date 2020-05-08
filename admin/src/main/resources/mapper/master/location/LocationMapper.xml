@@ -10,19 +10,16 @@
         tc.handleunit,tc.handlepeson,E.setuptime
         AS Starttime
         FROM "t_personinformation" As t
-        left join t_location as l on l.personid=t.personid
         INNER JOIN t_enclosure AS E on T.personid=E.personid
         left join t_caseinfo tc on  tc.caseno=t.caseno
         where E.status=true
-        <if test="type==1">
+        <if test="type==true">
+            and t.policecode like concat('%',#{limit},'%')
+        </if>
+        <if test="type==false">
             and t.sponsoralarm=#{limit}
         </if>
-        <if test="type==4">
-            and t.status=true
-        </if>
-        <if test="type!=1 and type!=4">
-            and t.policecode=#{limit}
-        </if>
+
         <if test="condition!=null and condition!=''">
             and(
             t.suspectstatus like concat('%',#{condition},'%') or

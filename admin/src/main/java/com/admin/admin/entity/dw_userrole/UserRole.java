@@ -1,14 +1,21 @@
 package com.admin.admin.entity.dw_userrole;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
 public class UserRole {
 
     private int roleid;
+    @ApiModelProperty(value = "权限组名称",dataType = "String")
     private String rolename;
+
     private int menuid;
+    @ApiModelProperty(value = "创建时间",dataType = "String")
     private String createtime;
+    @ApiModelProperty(value = "状态",dataType = "boolean")
     private boolean status;
+
     private int permissionid;
 
     public int getRoleid() {

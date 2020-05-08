@@ -1,8 +1,12 @@
 package com.admin.model.log;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class LogParamModel {
 
+  @ApiModelProperty(value = "操作人",dataType = "")
   private String operator;
+  @ApiModelProperty(value = "模块",dataType = "String")
   private String modular;
 
   public int getPageSize() {
@@ -32,7 +36,9 @@ public class LogParamModel {
     return this;
   }
 
+  @ApiModelProperty(value = "页面大小",dataType = "int")
   private int PageSize;
+  @ApiModelProperty(value = "页码",dataType = "int")
   private int PageIndex;
 
 

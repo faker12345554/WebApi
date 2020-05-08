@@ -14,6 +14,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,7 +60,9 @@ public class LogController {
     @UserLoginToken
     @ApiOperation(value = "统计取保监居APP使用人数")
     @GetMapping("/Statistics")
-    public ResponseResult getNumber(@RequestParam String code, @RequestParam int level, String Days) {
+    public ResponseResult getNumber(@ApiParam(name = "code", value = "派出所编码") String code,
+                                    @ApiParam(name = "level", value = "派出所级别")  int level,
+                                    @ApiParam(name = "Days", value = "截至日期") String Days) {
         ResponseResult result = new ResponseResult();
         List<AppStatistics> numberList = new ArrayList<AppStatistics>();
         List<Map<String, String>> addlist = new ArrayList<>();
@@ -103,7 +106,11 @@ public class LogController {
     @UserLoginToken
     @ApiOperation(value = "统计脱管人数")
     @GetMapping("/Removalrate")
-    public ResponseResult Removalrate(@RequestParam String code,int level,String Starttime,String endetime) {
+    public ResponseResult Removalrate(
+            @ApiParam(name = "code", value = "区域编码") String code,
+            @ApiParam(name = "level", value = "派出所级别") int level,
+            @ApiParam(name = "Starttime", value = "统计时段 开始日期") String Starttime,
+            @ApiParam(name = "Starttime", value = "统计时段 截至日期")String endetime) {
         ResponseResult result = new ResponseResult();
         List<AppStatistics> numberList = new ArrayList<AppStatistics>();
         if (level == 3) {
@@ -142,7 +149,11 @@ public class LogController {
     @UserLoginToken
     @ApiOperation(value = "统计日月活率")
     @GetMapping("/Solarrate")
-    public ResponseResult Solarrate(@RequestParam String code,int codelevel, int level,String Starttime,String endetime) {
+    public ResponseResult Solarrate(@ApiParam(name = "code", value = "区域编码") String code,
+                                    @ApiParam(name = "codelevel", value = "编码级别")int codelevel,
+                                    @ApiParam(name = "level", value = "地区级别") int level,
+                                    @ApiParam(name = "Starttime", value = "统计时段 开始日期")String Starttime,
+                                    @ApiParam(name = "endetime", value = "统计时段 结束日期")String endetime) {
         ResponseResult result = new ResponseResult();
         if (codelevel==1){
             code=code.substring(0,4);
@@ -192,7 +203,7 @@ public class LogController {
     @ApiOperation(value = "删除日志")
     @UserLoginToken
     @GetMapping("/deleteLog")
-    public ResponseResult deleteLog(@RequestParam String number){
+    public ResponseResult deleteLog(@ApiParam(name = "number", value = "日志id")String number){
         ResponseResult result = new ResponseResult();
         String[] a=number.split(",");
         for (String code:a
