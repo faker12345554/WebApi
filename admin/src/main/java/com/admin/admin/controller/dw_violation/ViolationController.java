@@ -38,11 +38,11 @@ public class ViolationController {
                 item.setEnabled(false);
                 item.setCreatetime(new Date());
                 violationService.SaveViolation(item);
-                result.setMessage(ResultCode.SUCCESS.getMessage());
-            } else if (CalendarAdjust.getMonthDiff(CalendarAdjust.GetDate(item.getUpdatemonth()), new Date()) == 0 && violation.size() == 0) {
-                item.setStatus(true);
+                result.setMessage("设置成功");
+            } else if (violation.size() == 0) {
+                item.setStatus(false);
                 item.setCreatetime(new Date());
-                item.setModificationtime(new Date());
+                item.setUpdatemonth(CalendarAdjust.dateFormat.format( new Date()));
                 item.setEnabled(true);
                 violationService.SaveViolation(item);
                 result.setMessage("修改成功,下月起生效");

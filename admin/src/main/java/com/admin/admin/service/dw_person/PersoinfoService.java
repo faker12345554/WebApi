@@ -59,7 +59,9 @@ public class PersoinfoService {
         String PersonId = java.util.UUID.randomUUID().toString();
         GuaranteeInformation guaranteeInformation = personinformation.getGuaranteeInformation();
         guaranteeInformation.setPersonid(PersonId);
-        guaranteeInformation.setPaydate(guaranteeInformation.getPaydate().substring(0,10));
+        if (guaranteeInformation.getPaydate()!="" && guaranteeInformation.getPaydate()!=null){
+            guaranteeInformation.setPaydate(guaranteeInformation.getPaydate().substring(0,10));
+        }
         guarantDao.insertGuarant(guaranteeInformation);
         TCaseinfo tCaseinfo = personinformation.gettCaseinfo();
         tCaseinfo.setPersonid(PersonId);
@@ -94,8 +96,11 @@ public class PersoinfoService {
     //修改
     public int updatePersion(Personinformation personinformation) {
         GuaranteeInformation guaranteeInformation = personinformation.getGuaranteeInformation();
-        guaranteeInformation.setPaydate(guaranteeInformation.getPaydate().substring(0,10));
-        System.out.println(guaranteeInformation.getPaydate());
+        if (guaranteeInformation.getPaydate()!="" && guaranteeInformation.getPaydate()!=null){
+            guaranteeInformation.setPaydate(guaranteeInformation.getPaydate().substring(0,10));
+        }
+
+
         guarantDao.updateGuara(guaranteeInformation);
         TCaseinfo tCaseinfo = personinformation.gettCaseinfo();
         caseDao.UpdateCase(tCaseinfo);
@@ -104,7 +109,7 @@ public class PersoinfoService {
         }
         personinformation.setCaseno(tCaseinfo.getCaseno());
         personinformation.setModifiertime(CalendarAdjust.dateFormat.format(new Date()));
-        System.out.println(CalendarAdjust.dateFormat.format(new Date()));
+
         //personinformation.setModifiertime(new Date());
         return personDao.updatePersion(personinformation);
     }

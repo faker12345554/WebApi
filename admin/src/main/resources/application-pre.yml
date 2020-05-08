@@ -21,6 +21,20 @@ second:
     password: 123456
     driverClassName: org.postgresql.Driver
 
+#master:
+#  datasource:
+#    url: jdbc:postgresql://68.109.202.164:5432/legal?useUnicode=true&characterEncoding=utf8
+#    username: postgres
+#    password: "Xfz-1017"
+#    driverClassName: org.postgresql.Driver
+#    # second 数据源配置
+#second:
+#  datasource:
+#    url: jdbc:postgresql://68.109.202.164:5432/fszhxfztb?useUnicode=true&characterEncoding=utf8
+#    username: postgres
+#    password: "Xfz-1017"
+#    driverClassName: org.postgresql.Driver
+
 
 swagger:
   enabled: true
@@ -34,54 +48,6 @@ mybatis:
   mapper-locations: classpath:mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
-#spring:
-#  datasource:
-#    master-source:
-#     url: jdbc:postgresql://68.109.202.164:5432/legal?useUnicode=true&characterEncoding=utf8
-      #    username: postgres
-    #    password: "Xfz-1017"
-    #    driverClassName: org.postgresql.Driver
-#      connectionTestQuery: SELECT 1 FROM t_user
-#      driverClassName: org.postgresql.Driver
-#      dataSource:
-#        cachePrepStmts: true
-#        prepStmtCacheSize: 1024
-#        prepStmtCacheSqlLimit: 4096
-#    slave-a-source:
-#      jdbcUrl: jdbc:postgresql://192.168.10.88,14333:5432/legal?autoReconnect=true&zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
-#      username: postgres
-#      password: 123456
-#      minimumIdle: 16
-#      maximumPoolSize: 1024
-#      connectionTestQuery: SELECT 1 FROM t_user
-#      driverClassName: org.postgresql.Driver
-#      dataSource:
-#        cachePrepStmts: true
-#        prepStmtCacheSize: 1024
-#        prepStmtCacheSqlLimit: 4096
-#spring:
-#  master:
-#    datasource:
-#      driver-class-name: org.postgresql.Driver
-#      jdbc-url: jdbc:postgresql://112.74.41.177:5432/legal
-#      username: postgres
-#      password: "!QAZ2wsx#EDC"
-#  second:
-#    datasource:
-#      driver-class-name: org.postgresql.Driver
-#      jdbc-url: jdbc:postgresql://192.168.10.88,14333:5432/legal
-#      username: postgres
-#      password: 123456
-
-#spring:
-#  datasource:
-#    driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://112.74.41.177:5432/legal
-#    username: postgres
-#    password: "!QAZ2wsx#EDC"
-
-
 
 
 

@@ -4,11 +4,11 @@
 <mapper namespace="com.admin.admin.dao.master.dw_violation.ViolationDao">
 
     <select id="ListViolation" resultType="com.admin.admin.entity.dw_violation.Violationfens">
-        select * from t_violationfens where enabled=false
+        select * from t_violationfens where status=true and enabled=false
     </select>
 
     <select id="enabledViolationList" resultType="com.admin.admin.entity.dw_violation.Violationfens">
-            select * from t_violationfens where status=true and enabled=true
+            select * from t_violationfens where status=false and enabled=true
     </select>
 
     <!--    <select id="selectViolation" resultType="com.admin.admin.entity.dw_violation.Violationfens" parameterType="int">-->
@@ -17,7 +17,7 @@
 
     <update id="UpdateViolation" parameterType="com.admin.admin.entity.dw_violation.Violationfens">
         update t_violationfens set violationcode=#{violationcode},violationname=#{violationname},slightfens=#{slightfens},seriousfens=#{seriousfens},createperson=#{createperson}
-        ,accountname=#{accountname},createtime=#{createtime},updatemonth=#{updatemonth},enabled=#{enabled} where id=#{id}
+        ,accountname=#{accountname},createtime=#{createtime},updatemonth=to_timestamp(#{updatemonth},'yyyy-MM-dd HH24:mi:ss'),enabled=#{enabled} where id=#{id}
     </update>
 
     <insert id="SaveViolation" parameterType="com.admin.admin.entity.dw_violation.Violationfens">
