@@ -18,9 +18,6 @@ public class AddressController {
     @Autowired
     private AddressService addressService;
 
-
-
-
     @GetMapping("/getaddress")
     @ApiOperation("查询公安局的数据")
     public ResponseResult getAddress(@ApiParam(name = "code",value = "派出所编码")String code,
@@ -30,7 +27,6 @@ public class AddressController {
 
         }else if(level==2) {
             code=code.substring(0,4);
-
         }else if(level==3) {
             code=code.substring(0,6);
         }else if(level==4) {
